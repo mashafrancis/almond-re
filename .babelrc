@@ -1,0 +1,17 @@
+{
+  "presets": [
+    "env"
+  ],
+  "plugins": [
+    "add-module-exports",
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "components": "./src/components/",
+        "pages": "./src/pages/",
+        "modules": "./src/store/modules/",
+        "utils": "./src/utils/"
+      }
+    }]
+  ],
+}

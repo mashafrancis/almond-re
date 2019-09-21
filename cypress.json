@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://almond.com:3000",
+  "integrationFolder": "cypress/e2e",
+  "chromeWebSecurity": false,
+  "viewportWidth": 1500,
+  "viewportHeight": 1000,
+  "requestTimeout": 10000,
+  "defaultCommandTimeout": 10000
+}

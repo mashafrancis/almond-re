@@ -1,0 +1,58 @@
+@import 'sass-rem';
+@import '../../assets/scss/variable';
+
+.toast-message {
+  position: fixed;
+  z-index: 99;
+  top: 1rem;
+  left: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: rem(320px);
+  height: rem(62px);
+  margin-top: 0;
+  margin-left: rem(-200px);
+  padding: 0 rem(15px) 0 rem(20px);
+  box-sizing: border-box;
+  border-radius: rem(4px);
+  //box-shadow: 0 rem(2px) rem(10px) 0 rgba(0, 0, 0, 0.15);
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-name: slideInDown;
+  opacity: 0.95;
+
+  &--danger {
+    //background-color: map-get($palette, danger);
+    color: map-get($grey, 100);
+  }
+
+  &--success {
+    //background-color: map-get($palette, success);
+    color: map-get($grey, 100);
+  }
+
+  &__close {
+    max-width: rem(18px);
+    margin-top: rem(-11px);
+    font-size: rem(36px);
+    font-weight: 300;
+    cursor: pointer;
+  }
+
+  &__text {
+    font-size: 1rem;
+    line-height: rem(21px);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
