@@ -14,7 +14,10 @@ const rootReducer = (state, action) => {
   switch (action.type) {
     case LOG_OUT_USER:
       return {
-        state: undefined,
+        ...state,
+        internalServerError: {
+          error: false,
+        },
       };
   }
 

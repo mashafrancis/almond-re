@@ -1,4 +1,4 @@
-import { SnackMessage } from 'store/modules/snack/interfaces';
+import { SnackMessage } from '../../store/modules/snack/interfaces';
 
 export interface SnackMessageProps {
   snack?: SnackMessage;

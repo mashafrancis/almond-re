@@ -1,4 +1,4 @@
-.cover {
+.home-cover {
   height: 100vh;
   width: 100%;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
@@ -22,114 +22,114 @@
   box-sizing: border-box;
   font-weight: 200;
 }
-.cover .logo {
+.home-cover .logo {
   height: 70px;
   margin: 71px auto auto 252px;
 }
-.cover .logo img {
+.home-cover .logo img {
   height: 100%;
 }
-.cover .home-image {
+.home-cover .home-image {
   position: fixed;
   bottom: 0;
   right: 0;
   width: 100vh;
   height: 100vh;
 }
-.cover .home-image .image-wrapper {
+.home-cover .home-image .image-wrapper {
   width: 849px;
   height: 641px;
   margin: 0 0 auto auto;
 }
-.cover .home-image .image-wrapper img {
+.home-cover .home-image .image-wrapper img {
   width: 100%;
 }
 @media screen and (max-width: 900px) {
-  .cover .logo {
+  .home-cover .logo {
     margin: 30px auto;
     text-align: center;
   }
-  .cover .home-image .image-wrapper {
+  .home-cover .home-image .image-wrapper {
     width: 800px;
     height: unset;
     margin: 0 0 auto 600px;
   }
-  .cover .home-image .image-wrapper img {
+  .home-cover .home-image .image-wrapper img {
     width: 70%;
   }
 }
 @media screen and (max-width: 600px) {
-  .cover .logo {
+  .home-cover .logo {
     margin: 30px auto;
     text-align: center;
   }
 }
 @media screen and (max-width: 500px) {
-  .cover {
+  .home-cover {
     padding: 20px 0;
   }
-  .cover .logo {
+  .home-cover .logo {
     margin: 10px auto 20px auto;
     height: 40px;
   }
-  .cover .logo img {
+  .home-cover .logo img {
     height: 55px;
   }
-  .cover .home-image {
+  .home-cover .home-image {
     position: static;
     height: unset;
   }
-  .cover .home-image .image-wrapper {
+  .home-cover .home-image .image-wrapper {
     width: 500px;
     height: unset;
     margin: 0 0 auto auto;
   }
-  .cover .home-image .image-wrapper img {
+  .home-cover .home-image .image-wrapper img {
     width: 70%;
   }
-  .cover .home-text {
+  .home-cover .home-text {
     position: static;
     width: 100%;
     padding: 150px 0 0;
     transform: translateY(-30%);
   }
-  .cover .home-text .login-button {
+  .home-cover .home-text .login-button {
     text-align: center;
   }
-  .cover .home-text .login-button button {
+  .home-cover .home-text .login-button button {
     font-size: 17px;
     height: 40px;
     width: 230px;
   }
-  .cover .home-text .login-button button .google-login-icon {
+  .home-cover .home-text .login-button button .google-login-icon {
     width: 15px;
     height: 15px;
   }
 }
 @media screen and (max-width: 340px) {
-  .cover {
+  .home-cover {
     padding: 20px 0;
   }
-  .cover .logo {
+  .home-cover .logo {
     margin: 10px auto 20px auto;
     height: 40px;
   }
-  .cover .home-image {
+  .home-cover .home-image {
     position: static;
     height: unset;
   }
-  .cover .home-image .image-wrapper {
+  .home-cover .home-image .image-wrapper {
     width: 410px;
     height: unset;
   }
 }
 @media screen and (max-height: 740px) {
-  .cover .home-text {
+  .home-cover .home-text {
     transform: translateY(-40%);
   }
 }
 @media screen and (max-height: 700px) {
-  .cover .home-text {
+  .home-cover .home-text {
     transform: translateY(-50%);
   }
 }

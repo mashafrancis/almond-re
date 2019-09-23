@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+// third party apps
+import { NavLink } from 'react-router-dom';
+
 // interfaces
 import { HomePageProps, HomePageState } from './interfaces';
 
@@ -7,11 +10,19 @@ import { HomePageProps, HomePageState } from './interfaces';
 import './HomePage.scss';
 
 const HomePage: React.FunctionComponent<HomePageProps> = () => {
+  const renderGoToDashboard = () => (
+    <React.Fragment>
+      <NavLink to={'/water-cycles'}>
+        <button className="mdc-button mdc-button--raised">
+          <span className="mdc-button__label">Go to dashboard</span>
+        </button>
+      </NavLink>
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
-      <main className="cover">
-        {/*<div className="top-component"/>*/}
-        {/*<div className="bottom-component"/>*/}
+      <main className="home-cover">
         <section className="logo">
           <img src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
                alt="Logo"/>
@@ -28,9 +39,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = () => {
               <h1>We have an idea!</h1>
               <h1>Grow hydroponically.</h1>
               <h2>Focusing on the safe production of fresh produce.</h2>
-              <button className="mdc-button mdc-button--raised">
-                <span className="mdc-button__label">Go to dashboard</span>
-              </button>
+              {renderGoToDashboard()}
             </div>
           </div>
         </section>

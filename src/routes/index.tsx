@@ -5,17 +5,17 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
-import PageNotFound from 'components/PageNotFound';
-import HomePage from 'pages/HomePage';
+import PageNotFound from '../components/PageNotFound';
+import HomePage from '../pages/HomePage';
+import WaterCyclesPage from '../pages/WaterCyclesPage';
 
 const Routes = () => (
-  <Route>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/404" component={PageNotFound} />
-        <Redirect to="/404" />
-      </Switch>
-  </Route>
+  <Switch>
+    <Route exact path="/" component={HomePage} />
+    <Route exact path="/water-cycles" component={WaterCyclesPage} />
+    <Route path="/404" component={PageNotFound} />
+    <Redirect to="/404" />
+  </Switch>
 );
 
 export default Routes;

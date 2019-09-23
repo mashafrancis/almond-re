@@ -7,7 +7,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const getFaviconUrl = () => {
-  return 'https://res.cloudinary.com/almondgreen/image/upload/v1566319103/Almond/Mask_Group_2_crzdcs.svg'
+  return 'https://res.cloudinary.com/almondgreen/image/upload/v1569311858/Almond/favicon_xczunv.png'
 };
 
 // instantiating webpack dependencies

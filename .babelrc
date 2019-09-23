@@ -1,6 +1,7 @@
 {
   "presets": [
-    "env"
+    "env",
+    "react"
   ],
   "plugins": [
     "add-module-exports",
@@ -13,5 +14,5 @@
         "utils": "./src/utils/"
       }
     }]
-  ],
+  ]
 }

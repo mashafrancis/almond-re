@@ -73,7 +73,6 @@ src/**/**/__snapshots__/*.test.tsx.snap
 /.vscode
 .vscode
 .idea/
-fonts/
 /reports
 /tmp
 Dockerfile
