@@ -1,3 +1,292 @@
+.cover {
+  height: 100vh;
+  width: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+  background-image: url("https://res.cloudinary.com/almondgreen/image/upload/v1569246769/Almond/almond-background_vsnkyd.svg");
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  margin: 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  color: #0a0a0b;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-weight: 200;
+}
+.cover .logo {
+  height: 70px;
+  margin: 71px auto auto 252px;
+}
+.cover .logo img {
+  height: 100%;
+}
+.cover .home-image {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100vh;
+  height: 100vh;
+}
+.cover .home-image .image-wrapper {
+  width: 849px;
+  height: 641px;
+  margin: 0 0 auto auto;
+}
+.cover .home-image .image-wrapper img {
+  width: 100%;
+}
+@media screen and (max-width: 900px) {
+  .cover .logo {
+    margin: 30px auto;
+    text-align: center;
+  }
+  .cover .home-image .image-wrapper {
+    width: 800px;
+    height: unset;
+    margin: 0 0 auto 600px;
+  }
+  .cover .home-image .image-wrapper img {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .cover .logo {
+    margin: 30px auto;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 500px) {
+  .cover {
+    padding: 20px 0;
+  }
+  .cover .logo {
+    margin: 10px auto 20px auto;
+    height: 40px;
+  }
+  .cover .logo img {
+    height: 55px;
+  }
+  .cover .home-image {
+    position: static;
+    height: unset;
+  }
+  .cover .home-image .image-wrapper {
+    width: 500px;
+    height: unset;
+    margin: 0 0 auto auto;
+  }
+  .cover .home-image .image-wrapper img {
+    width: 70%;
+  }
+  .cover .home-text {
+    position: static;
+    width: 100%;
+    padding: 150px 0 0;
+    transform: translateY(-30%);
+  }
+  .cover .home-text .login-button {
+    text-align: center;
+  }
+  .cover .home-text .login-button button {
+    font-size: 17px;
+    height: 40px;
+    width: 230px;
+  }
+  .cover .home-text .login-button button .google-login-icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+@media screen and (max-width: 340px) {
+  .cover {
+    padding: 20px 0;
+  }
+  .cover .logo {
+    margin: 10px auto 20px auto;
+    height: 40px;
+  }
+  .cover .home-image {
+    position: static;
+    height: unset;
+  }
+  .cover .home-image .image-wrapper {
+    width: 410px;
+    height: unset;
+  }
+}
+@media screen and (max-height: 740px) {
+  .cover .home-text {
+    transform: translateY(-40%);
+  }
+}
+@media screen and (max-height: 700px) {
+  .cover .home-text {
+    transform: translateY(-50%);
+  }
+}
 
+/* very large screen devices */
+@media all and (min-width: 1400px) {
+  .cover .home-text {
+    top: 434px;
+  }
+}
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#hero {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  position: relative;
+}
+#hero:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+#hero .hero-container {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+  text-align: left;
+}
+#hero .hero-info {
+  top: 150px;
+  left: 262px;
+  z-index: 10;
+  position: absolute;
+}
+#hero h1 {
+  color: #223242;
+  font-size: 48px;
+  width: 765px;
+  font-weight: 300;
+  margin: auto;
+  box-sizing: border-box;
+  font-family: "SF Pro Display", serif;
+}
+#hero h2 {
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-size: 26px;
+  font-weight: 400;
+  color: #223242;
+}
+#hero .btn-get-started {
+  font-family: "Product Sans", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 6px;
+  transition: 0.5s;
+  margin: 10px;
+  background-color: #3480E3;
+  border: 1px solid #3480E3;
+  color: #ffffff;
+}
+#hero .btn-get-started:hover {
+  background: #3480E3;
+}
+#hero .particles {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+
+@media (max-width: 900px) {
+  #hero {
+    background-attachment: fixed;
+  }
+  #hero .hero-info {
+    top: 250px;
+    left: 200px;
+    z-index: 10;
+    position: absolute;
+  }
+  #hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+    width: 100%;
+  }
+  #hero h2 {
+    font-size: 18px;
+    line-height: 24px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 768px) {
+  #hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+@media (max-width: 500px) {
+  #hero {
+    height: 100vh;
+    background-size: cover;
+    position: relative;
+  }
+  #hero:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  #hero .hero-container {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  #hero .hero-info {
+    top: 50px;
+    left: 10px;
+    z-index: 10;
+    position: absolute;
+  }
+  #hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+    width: 100%;
+  }
+  #hero h2 {
+    font-size: 18px;
+    line-height: 24px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
 
 /*# sourceMappingURL=HomePage.css.map */

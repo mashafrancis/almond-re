@@ -1,7 +1,7 @@
 const cssNano = require('cssnano');
 const merge = require('webpack-merge');
-const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const uglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const config = require('./webpack.config.js');
 
 module.exports = merge(config, {
@@ -12,17 +12,17 @@ module.exports = merge(config, {
   optimization: {
     runtimeChunk: 'single',
     minimizer: [
-      new uglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true
+        sourceMap: true,
       }),
-      new optimizeCSSAssetsPlugin({
+      new OptimizeCSSAssetsPlugin({
         cssProcessor: cssNano,
         cssProcessorOptions: {
           reduceIdents: false,
         },
-      })
+      }),
     ],
     splitChunks: {
       chunks: 'all',
