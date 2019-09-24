@@ -1,9 +1,9 @@
 // thunks
 import { displaySnackMessage, reducer } from './index';
 
-describe('The Toast Reducer', () => {
+describe('The Snack Reducer', () => {
   const snackMessageDefaultState = {};
-  const snackMessage = 'Trip created successfully';
+  const snackMessage = 'Time schedule created successfully';
 
   it('should return initial state', () => {
     expect(reducer(undefined, {} as any)).toEqual(snackMessageDefaultState);
@@ -13,6 +13,6 @@ describe('The Toast Reducer', () => {
     const displaySnackMessageAction = displaySnackMessage(snackMessage);
     const newSnackMessageState = reducer(snackMessageDefaultState, displaySnackMessageAction) as any;
 
-    expect(newSnackMessageState.message).toEqual('Trip created successfully');
+    expect(newSnackMessageState.message).toEqual('Time schedule created successfully');
   });
 });

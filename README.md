@@ -6,7 +6,7 @@
 Almond frontend application for the hydroponics farm
 
 <br />
-<img width="1440" alt="almond-screenshot" src="https://res.cloudinary.com/almondgreen/image/upload/v1569086730/Almond/Screenshot_2019-09-21_at_20.22.19_qqrlri.png">
+<img width="1440" alt="almond-screenshot" src="https://res.cloudinary.com/almondgreen/image/upload/v1569253162/Almond/Screenshot_2019-09-23_at_18.38.45_tajbjv.png">
 <br />
 
 ## Description

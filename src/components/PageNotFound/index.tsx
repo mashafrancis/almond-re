@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 // third-party libraries
-import { Link, NavLink } from 'react-router-dom';
+import MaterialIcon from '@material/react-material-icon';
 
 // styles
 import './PageNotFound.scss';
@@ -15,7 +15,7 @@ import { PageNotFoundProps } from './interfaces';
  *
  * @returns {JSX}
  */
-const PageNotFound: React.SFC<PageNotFoundProps> = () =>  (
+const PageNotFound: React.FunctionComponent<PageNotFoundProps> = props =>  (
   <div id="notfound">
     <div className="notfound">
       <div className="notfound-404"/>
@@ -23,11 +23,10 @@ const PageNotFound: React.SFC<PageNotFoundProps> = () =>  (
       <h2>Oops! Page Not Be Found</h2>
       <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily
         unavailable</p>
-      <NavLink to={'/'}>
-        <button className="mdc-button mdc-button--raised">
-          <span className="mdc-button__label">Back to homepage</span>
+        <button onClick={props.history.goBack} className="mdc-button mdc-button--raised">
+          <MaterialIcon className="back-button" icon="arrow_back" />
+          <span className="mdc-button__label">Back</span>
         </button>
-      </NavLink>
     </div>
   </div>
 );

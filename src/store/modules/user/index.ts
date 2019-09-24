@@ -2,7 +2,7 @@
 import { Action, AnyAction } from 'redux';
 
 // thunk action creators
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '../snack';
 
 // interfaces
 import {
@@ -12,7 +12,7 @@ import {
 } from './interfaces';
 
 // helper functions
-import { authService } from 'utils/auth';
+import { authService } from '../../../utils/auth';
 
 // types
 import {
