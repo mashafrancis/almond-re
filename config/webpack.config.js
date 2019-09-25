@@ -6,9 +6,13 @@ const {
   miniCssExtract,
   miniCssExtractPlugin,
   hashedPlugin,
+  manifestPlugin,
+  swPlugin,
+  copyPlugin
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
+const PUBLIC_PATH = process.env.PUBLIC_URL;
 
 module.exports = {
   entry: {
@@ -17,7 +21,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name].[hash:8].js',
-    publicPath: '/'
+    publicPath: PUBLIC_PATH
   },
   optimization: {
     noEmitOnErrors: true,
@@ -97,6 +101,9 @@ module.exports = {
     hashedPlugin,
     cleanWebpack,
     miniCssExtract,
+    manifestPlugin,
+    swPlugin,
+    copyPlugin
   ]
 };
 
