@@ -6,16 +6,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const getFaviconUrl = () => {
-  return 'https://res.cloudinary.com/almondgreen/image/upload/v1569311858/Almond/favicon_xczunv.png'
-};
-
 // instantiating webpack dependencies
 const cleanWebpack = new CleanWebpackPlugin();
 const htmlWebpack = new htmlWebpackPlugin({
   template: 'src/index.html',
   title: 'Almond',
-  getFaviconUrl,
+  favicon: './src/favicon.png',
   minify: {
     removeComments: true,
     collapseWhitespace: true
