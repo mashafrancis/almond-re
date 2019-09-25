@@ -6,4 +6,14 @@
   color: whitesmoke;
 }
 
+.water-schedule-table {
+  width: 86%;
+}
+
+@media (max-width: 539px) {
+  .water-schedule-table {
+    width: 100%;
+  }
+}
+
 /*# sourceMappingURL=WaterCyclesPage.css.map */
