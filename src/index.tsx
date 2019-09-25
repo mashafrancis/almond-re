@@ -8,11 +8,12 @@ import { BrowserRouter } from 'react-router-dom';
 
 // components
 import App from './App/index';
+import * as serviceWorker from './serviceWorker';
 
 // helper functions
 import store from './store';
 
-export const app = ReactDOM.render(
+ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
@@ -21,4 +22,4 @@ export const app = ReactDOM.render(
   document.getElementById('root') || document.createElement('div')
 );
 
-export default app;
+serviceWorker.register();
