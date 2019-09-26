@@ -14,6 +14,7 @@ import MaterialIcon from '@material/react-material-icon';
 import MenuSurface, { Corner } from '@material/react-menu-surface';
 import TopAppBar, {
   TopAppBarFixedAdjust,
+  TopAppBarIcon,
   TopAppBarRow,
   TopAppBarSection,
   TopAppBarTitle,
@@ -26,18 +27,23 @@ import { DashboardNavBarProps } from './interfaces';
 // styles
 import './DashboardNavBar.scss';
 
-// helpers
-import authorize from 'utils/helpers/authorize';
+const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg'
+const innerWidth = window.innerWidth;
 
 const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) => {
   const mainContentEl = React.createRef();
   const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const [isMenuOpen, setMenuOpen] = React.useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [isViewPort, setViewPort] = React.useState<boolean>(false);
   const menuAnchorEl = React.useRef<any>(null);
 
   const onDrawerClose = () => {
     setDrawerOpen(false);
+  };
+
+  const onViewPort = () => {
+    setViewPort(innerWidth !== 500);
   };
 
   const onSelectedIndex = () => {
@@ -64,6 +70,51 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
         </div>
       </div>
     </div>
+  );
+
+  const mobileBar = () => (
+    <TopAppBar className="dashboard-mobile-nav">
+      <TopAppBarRow>
+        <TopAppBarSection align="start">
+          <TopAppBarIcon navIcon tabIndex={0}>
+            <MaterialIcon
+              onClick={() => setDrawerOpen(true)}
+              hasRipple icon="menu"
+              initRipple={null}
+            />
+          </TopAppBarIcon>
+          <TopAppBarTitle>
+            <div className="drawer-logo">
+              <h2>Water Cycles</h2>
+          </div>
+          </TopAppBarTitle>
+        </TopAppBarSection>
+        <TopAppBarSection align="end" role="toolbar">
+          <div className="companion-nav">
+          <TopAppBarIcon navIcon tabIndex={0}>
+            <MaterialIcon
+              onClick={() => setDrawerOpen(true)}
+              hasRipple icon="notifications"
+              initRipple={null}
+            />
+          </TopAppBarIcon>
+          {/*<TopAppBarIcon actionItem tabIndex={0}>*/}
+          {/*  <div role="tablist"*/}
+          {/*       ref={e => menuAnchorEl.current = e}*/}
+          {/*       className="mdc-tab-bar"*/}
+          {/*       onClick={() => setMenuOpen(true)}*/}
+          {/*  >*/}
+          {/*    <span className="mini-account-menu__image">*/}
+          {/*    <img*/}
+          {/*      className="mini-account-menu__image"*/}
+          {/*      src={avatar}/>*/}
+          {/*    </span>*/}
+          {/*  </div>*/}
+          {/*</TopAppBarIcon>*/}
+          </div>
+        </TopAppBarSection>
+      </TopAppBarRow>
+    </TopAppBar>
   );
 
   const sideNav = () => (
@@ -114,6 +165,7 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
   return (
     <div className="dashboard">
       <Drawer
+        modal = {(window.innerWidth < 500)}
         open={isDrawerOpen}
         onClose={onDrawerClose}
         // innerRef={this.drawerEl}
@@ -121,8 +173,10 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
         <DrawerHeader>
           <div className="drawer-logo">
             <NavLink to={'/'}>
-              <img src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
-               alt="Logo"/>
+              <img
+                className="drawer-logo__image"
+                src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
+                alt="Logo"/>
             </NavLink>
           </div>
         </DrawerHeader>
@@ -130,7 +184,7 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
           {drawerContent()}
         </DrawerContent>
       </Drawer>
-            {topBar()}
+            {(window.innerWidth < 500) ? mobileBar() : topBar() }
       <TopAppBarFixedAdjust className="drawer-content">
         {props.component}
         </TopAppBarFixedAdjust>
