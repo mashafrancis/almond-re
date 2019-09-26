@@ -2,12 +2,16 @@ import { combineReducers } from 'redux';
 
 // reducers
 import internalServerError from './modules/internalServerError';
+import snack from './modules/snack';
+import timeSchedules from './modules/timeSchedules';
 
 // types
 import { LOG_OUT_USER } from './modules/user/types';
 
 const appReducer = combineReducers({
   internalServerError,
+  timeSchedules,
+  snack,
 });
 
 const rootReducer = (state, action) => {

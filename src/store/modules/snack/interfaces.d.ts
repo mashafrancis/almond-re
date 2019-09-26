@@ -1,4 +1,4 @@
-import { DISPLAY_SNACK_MESSAGE } from 'modules/snack/types';
+import { DISPLAY_SNACK_MESSAGE } from './types';
 
 export interface DisplaySnackMessageAction {
   type: DISPLAY_SNACK_MESSAGE;
