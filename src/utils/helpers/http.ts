@@ -11,8 +11,8 @@ const headers = {
 };
 
 const http = axios.create({
-  baseURL: 'https://kari4me-api.herokuapp.com/api/',
-  headers: authService.isAuthenticated() ? headers : '',
+  baseURL: 'https://almond-re.firebaseio.com/',
+  // headers: !authService.isAuthenticated() ? headers : '',
 });
 
 export default http;

@@ -11,7 +11,7 @@ describe('The snack action', () => {
   const snackMessageInitialState = {};
 
   it('should display a snack message', () => {
-    const snackMessage = 'Welcome to Kari4me';
+    const snackMessage = 'Welcome to Amond';
     const expectedAction = {
       snack: {
         message: snackMessage,
