@@ -1,5 +1,5 @@
 export interface InternalServerErrorMessageProps {
-  history: {
-    goBack: any;
+  history?: {
+    goBack: () => void;
   };
 }

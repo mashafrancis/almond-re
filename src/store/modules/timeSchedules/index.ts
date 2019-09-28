@@ -189,8 +189,9 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
   return http.post('almond.json', schedule)
     .then((response) => {
       dispatch(addScheduleSuccess(response.data.data));
-      dispatch(displaySnackMessage('New time schedule has been added successfully. Add another?'));
+      dispatch(displaySnackMessage('New time schedule has been added successfully.'));
       // window.location.replace('/water-cycles');
+      window.history.back();
     })
     .catch((errors) => {
       dispatch(addScheduleFailure(errors));
