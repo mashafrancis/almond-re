@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as firebase from '../../../utils/firebase';
 
 // thunks
 import { displaySnackMessage } from '../snack';
@@ -164,7 +164,7 @@ export const editScheduleFailure = (errors): EditScheduleActionFailure => ({
  * @returns {Function} action type and payload
  */
 export const getAllSchedules = () => (dispatch, getState, http) => {
-  dispatch(getSchedulesRequest());
+  // dispatch(getSchedulesRequest());
   return http.get('almond.json')
     .then((response) => {
       const data = response.data;
@@ -201,16 +201,18 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
 
 export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
-  return http.delete(`schedules/${id}`)
-    .then((response) => {
-      const message = response.data.data.message;
+  // dispatch(displaySnackMessage('Deleting time schedule', true));
+  // tslint:disable-next-line:prefer-template
+  return firebase.firebaseDatabase.ref('almond/' + id).remove()
+    .then(() => {
+      // const message = response.data.data.message;
       dispatch(deleteSingleScheduleSuccess(id));
-      dispatch(displaySnackMessage(message, true));
+      dispatch(displaySnackMessage('Time schedule deleted successfully', true));
     })
-    .catch((errors) => {
-      const error = errors.response.data.message;
-      dispatch(deleteSingleScheduleFailure(errors));
-      dispatch(displaySnackMessage(`${error}`));
+    .catch(() => {
+      // const error = errors.response.data.message;
+      dispatch(deleteSingleScheduleFailure(id));
+      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
     });
 };
 
@@ -236,7 +238,7 @@ export const editSchedule = schedule => (dispatch, getState, http) => {
 
 export const schedulesInitialState = {
   data: [],
-  schedule: [],
+  schedules: [],
   isLoading: false,
   errors: {},
 };
@@ -269,7 +271,6 @@ const reducer = (state = schedulesInitialState, action) => {
     case ADD_SCHEDULES_SUCCESS:
       return {
         ...state,
-        data: action.data,
         errors: null,
         isLoading: false,
       };

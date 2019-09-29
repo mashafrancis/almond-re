@@ -15,6 +15,7 @@ import { TableProps } from './interfaces';
  * @returns {JSX} JSX
  */
 const Table = (props: TableProps) => {
+  let count = 0;
   const { keys, values } = props;
   const tableHeaders = Object.keys(keys);
   return (
@@ -36,13 +37,13 @@ const Table = (props: TableProps) => {
         }
       </div>
       {
-        values.map((value) => {
+        values.map((value, index) => {
           return (
             <div className="tbl-columns">
-            <div className="tbl-row-number">
-              <h5>1</h5>
+            <div key={value.id} className="tbl-row-number">
+              <h5>{count = count + 1}</h5>
             </div>
-            <div key={value.id} className="tbl-row">
+            <div key={index} className="tbl-row">
               {
                 tableHeaders.map((header, index) => {
                   return (
