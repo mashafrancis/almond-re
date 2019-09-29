@@ -33,9 +33,6 @@ import {
 // pages
 import DashboardPage from '../DashboardPage';
 
-// fixtures
-import { timeSchedule } from './fixtures';
-
 // styles
 import './WaterCyclesPage.scss';
 
@@ -48,6 +45,7 @@ import {
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
     isLoading: false,
+    isEditMode: false,
     schedules: [],
     isDeleteModal: false,
     action: '',
@@ -81,11 +79,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   const TopContent = () => (
     <div className="top-buttons">
       <div className="button-schedule">
-        <NavLink to={'/water-cycles/schedule'}>
+        <Link to={'/water-cycles/schedule'}>
           <Fab className="create-schedule-button"
                icon={<MaterialIcon icon="add" initRipple={null}/>}
           />
-        </NavLink>
+        </Link>
         <h5>Add New Schedule</h5>
       </div>
       <div className="manual-schedule">
@@ -139,9 +137,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const ActionButtons = schedule => (
     <div key={schedule} className="action-buttons">
+      <span onClick={ () => setState({ ...state, id: schedule, isEditMode: true })}>
       <Link to={`${props.match.url}/edit/${schedule}`}>
         <h5>Edit</h5>
       </Link>
+      </span>
       <span id={schedule} onClick={ () => setState({ ...state, id: schedule, isDeleteModal: true })}>
       <h5 className="action-buttons__delete">Delete</h5>
       </span>

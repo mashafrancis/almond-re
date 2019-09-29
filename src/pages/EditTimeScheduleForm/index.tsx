@@ -21,26 +21,40 @@ import Button from '../../components/Button';
 
 // thunks
 import { displaySnackMessage } from '../../store/modules/snack';
-import { addNewSchedule } from '../../store/modules/timeSchedules';
+import { editSchedule } from '../../store/modules/timeSchedules';
 
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import './AddTimeScheduleForm.scss';
+import './EditTimeScheduleForm.scss';
 
 // interfaces
-import { AddTimeScheduleFormProps, AddTimeScheduleFormState } from './interfaces';
+import { EditTimeScheduleFormProps, EditTimeScheduleFormState } from './interfaces';
 
-export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormProps> = (props) => {
-  const [state, setState] = React.useState<AddTimeScheduleFormState>({
+export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormProps> = (props) => {
+  const [state, setState] = React.useState<EditTimeScheduleFormState>({
     fields: {},
     isLoading: false,
     isValid: true,
     focused: false,
+    dates: {},
     errors: {},
   });
 
-  const [selectedTimeSchedule, handleSelectedTimeSchedule] = React.useState(new Date());
+  const scheduleId = window.location.pathname
+    .replace('http://', '')
+    .split('/');
+
+  const allowed = [scheduleId[3]];
+
+  const timeValue = Object.keys(props.schedules)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = props.schedules[key];
+        return obj;
+      },      {});
+
+  const [selectedTime, handleSelectedTimeSchedule] = React.useState(timeValue[scheduleId[3]].time);
 
   /**
    * Handles the submission on successful validation
@@ -52,12 +66,12 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
   const onSubmit = (event) => {
     event.preventDefault();
     const schedule = {
-      time: selectedTimeSchedule,
+      time: selectedTime,
     };
 
     setState({ ...state, isLoading: true });
 
-    props.addNewSchedule(schedule)
+    props.editSchedule(scheduleId[3], schedule)
       .then(() => {
         setState({ ...state, isLoading: false });
       });
@@ -72,8 +86,8 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
               className="mdc-text-field--fullwidth"
               name="time_schedule"
               inputVariant="outlined"
-              label="New time schedule"
-              value={selectedTimeSchedule}
+              label="Edit time schedule"
+              value={selectedTime}
               onChange={handleSelectedTimeSchedule}
               InputProps={{
                 startAdornment: (
@@ -109,7 +123,7 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>
             <Grid item xs>
-              <h1 className="headline-2">Add a time schedule</h1>
+              <h1 className="headline-2">Edit time schedule</h1>
               <h5>The watering schedule for the pumping time is used to control
                 the number of cycles the water is going to be pumped through the system.
                 The maximum number of minutes to pump through the system is set
@@ -124,7 +138,7 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
             <Grid item xs >
               <Button
                   type="button"
-                  name={isLoading ? 'Adding...' : 'Add new schedule'}
+                  name={isLoading ? 'Editing...' : 'Edit schedule'}
                   id="cc-register"
                   onClick={onSubmit}
                   classes="mdc-button big-round-corner-button mdc-button--raised"
@@ -139,11 +153,12 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
 
 export const mapStateToProps = state => ({
   error: state.error,
+  schedules: state.timeSchedules.data,
 });
 
 export const mapDispatchToProps = dispatch => ({
-  addNewSchedule: schedule => dispatch(addNewSchedule(schedule)),
+  editSchedule: (id, schedule) => dispatch(editSchedule(id, schedule)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTimeScheduleForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditTimeScheduleForm);

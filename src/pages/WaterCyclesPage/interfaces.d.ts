@@ -13,6 +13,7 @@ export interface WaterCyclesPageProps {
 
 export interface WaterCyclesPageState {
   isLoading: boolean;
+  isEditMode: boolean;
   schedules: any;
   isDeleteModal: boolean;
   action: string;

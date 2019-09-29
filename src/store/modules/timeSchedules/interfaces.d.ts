@@ -61,6 +61,7 @@ export interface EditScheduleActionRequest {
 }
 
 export interface EditScheduleActionSuccess {
+  id: string;
   schedule: NewSchedule;
   type: EDIT_SCHEDULE_SUCCESS;
 }
