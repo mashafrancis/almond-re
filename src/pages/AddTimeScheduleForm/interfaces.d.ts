@@ -11,9 +11,6 @@ export interface AddTimeScheduleFormState {
   fields: {
     [key: string]: string | number | any
   };
-  dates: {
-    [key: string]: string | number
-  };
   errors: {
     [key: string]: string
   };

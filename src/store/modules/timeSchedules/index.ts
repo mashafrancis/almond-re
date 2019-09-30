@@ -36,6 +36,8 @@ import {
   GET_SCHEDULES_FAILURE,
 } from './types';
 
+const error = 'You are offline. Kindly check your internet connection';
+
 /**
  * Get all schedules request
  *
@@ -138,10 +140,12 @@ export const editScheduleRequest = (): EditScheduleActionRequest => ({
 /**
  * Add new schedule success
  *
+ * @param id
  * @param {Schedule} schedule
  * @returns {AddScheduleActionSuccess}
  */
-export const editScheduleSuccess = (schedule: Schedule): EditScheduleActionSuccess => ({
+export const editScheduleSuccess = (id, schedule: Schedule): EditScheduleActionSuccess => ({
+  id,
   schedule,
   type: EDIT_SCHEDULE_SUCCESS,
 });
@@ -171,10 +175,9 @@ export const getAllSchedules = () => (dispatch, getState, http) => {
       dispatch(getSchedulesSuccess(data));
       return data;
     })
-    .catch((errors) => {
-      const error = errors.response.data.errors;
-      dispatch(displaySnackMessage(`${error}`));
-      dispatch(getSchedulesFailure(errors));
+    .catch(() => {
+      dispatch(displaySnackMessage(error));
+      dispatch(getSchedulesFailure(error));
     });
 };
 
@@ -193,9 +196,9 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
       // window.location.replace('/water-cycles');
       window.history.back();
     })
-    .catch((errors) => {
-      dispatch(addScheduleFailure(errors));
-      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
+    .catch(() => {
+      dispatch(displaySnackMessage(error));
+      dispatch(addScheduleFailure(error));
     });
 };
 
@@ -203,7 +206,8 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
   // dispatch(displaySnackMessage('Deleting time schedule', true));
   // tslint:disable-next-line:prefer-template
-  return firebase.firebaseDatabase.ref('almond/' + id).remove()
+  return firebase.firebaseDatabase.ref('almond/' + id)
+    .remove()
     .then(() => {
       // const message = response.data.data.message;
       dispatch(deleteSingleScheduleSuccess(id));
@@ -211,8 +215,8 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
     })
     .catch(() => {
       // const error = errors.response.data.message;
-      dispatch(deleteSingleScheduleFailure(id));
-      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
+      dispatch(displaySnackMessage(error));
+      dispatch(deleteSingleScheduleFailure(error));
     });
 };
 
@@ -222,17 +226,26 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
  *
  * @returns {Function} action type and payload
  */
-export const editSchedule = schedule => (dispatch, getState, http) => {
+export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
   dispatch(editScheduleRequest());
-  return http.put('schedules', schedule)
-    .then((response) => {
-      dispatch(editScheduleSuccess(response.data.data));
+  // const newPostKey = firebase.firebaseDatabase.ref()
+  //   .child('almond/')
+  //   .push().key;
+  // const updates = {};
+  // // tslint:disable-next-line:prefer-template
+  // updates['/almond/' + id + '/' + newPostKey] = schedule;
+  // console.log(updates);
+  return firebase.firebaseDatabase.ref()
+    .child(`almond/${id}/`)
+    .update(schedule)
+    .then(() => {
+      dispatch(editScheduleSuccess(id, schedule));
       dispatch(displaySnackMessage('Your schedule had been updated successfully.'));
-      window.location.replace('/schedules');
+      window.history.back();
     })
-    .catch((errors) => {
-      dispatch(editScheduleFailure(errors));
-      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
+    .catch(() => {
+      dispatch(editScheduleFailure(error));
+      dispatch(displaySnackMessage(error));
     });
 };
 
@@ -306,7 +319,6 @@ const reducer = (state = schedulesInitialState, action) => {
     case EDIT_SCHEDULE_SUCCESS:
       return {
         ...state,
-        data: action.data,
         errors: null,
         isLoading: false,
       };
