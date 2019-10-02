@@ -27,7 +27,9 @@ import ToggleButton from '../../components/ToggleButton';
 import { displaySnackMessage } from '../../store/modules/snack';
 import {
   deleteSingleSchedule,
-  getAllSchedules
+  getAllSchedules,
+  getPumpStatus,
+  togglePump,
 } from '../../store/modules/timeSchedules';
 
 // pages
@@ -46,6 +48,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   const [state, setState] = React.useState<WaterCyclesPageState>({
     isLoading: false,
     isEditMode: false,
+    isChecked: window.localStorage.getItem('checked') === 'true',
     schedules: [],
     isDeleteModal: false,
     action: '',
@@ -56,6 +59,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     props.getAllSchedules()
       .then(() => setState({ ...state, schedules: props.schedules }))
       .then(() => setState({ ...state, isLoading: false }));
+      // .then(() => setState({ ...state, isChecked: Boolean(window.localStorage.getItem('checked')) }));
   },              []);
 
   React.useEffect(() => {
@@ -76,6 +80,33 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     }
   },              [state.action]);
 
+  const areEqual = (prevProps, nextProps) => {
+    return (prevProps.isChecked === nextProps.isChecked);
+  };
+
+  const handleToggleButtonOnChange = (event) => {
+    event.target.checked
+      ? props.togglePump({ status: 'ON' })
+        .then(() => props.displaySnackMessage('Manual Override ON.'))
+        .then(() => window.localStorage.setItem('checked', 'true'))
+      : props.togglePump({ status: 'OFF' })
+        .then(() => props.displaySnackMessage('Manual Override OFF.'))
+        .then(() => window.localStorage.setItem('checked', 'false'));
+  };
+
+  const ToggleManualButton = () => {
+    return (
+      <div className="manual-schedule">
+        <ToggleButton
+          classes="manual-override"
+          onChange={handleToggleButtonOnChange}
+          // isChecked={window.localStorage.getItem('checked') === 'true'}
+        />
+        <h5>Manual Override</h5>
+      </div>
+    );
+  };
+
   const TopContent = () => (
     <div className="top-buttons">
       <div className="button-schedule">
@@ -86,10 +117,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         </Link>
         <h5>Add New Schedule</h5>
       </div>
-      <div className="manual-schedule">
-        <ToggleButton classes="manual-override"/>
-        <h5>Manual Override</h5>
-      </div>
+      {ToggleManualButton()}
     </div>
   );
 
@@ -102,10 +130,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           />
         </NavLink>
       </div>
-      <div className="manual-schedule">
-        <ToggleButton classes="manual-override"/>
-        <h5>Manual Override</h5>
-      </div>
+      {ToggleManualButton()}
     </div>
   );
 
@@ -205,12 +230,15 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 export const mapStateToProps = state => ({
   error: state.error,
   schedules: state.timeSchedules.data,
+  status: state.timeSchedules.status,
 });
 
 export const mapDispatchToProps = dispatch => ({
   getAllSchedules: () => dispatch(getAllSchedules()),
   deleteSingleSchedule: id => dispatch(deleteSingleSchedule(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+  togglePump: state => dispatch(togglePump(state)),
+  getPumpStatus: () => dispatch(getPumpStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterCyclesPage);

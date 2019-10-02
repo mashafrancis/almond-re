@@ -17,7 +17,11 @@ import {
   GetAllSchedulesActionFailure,
   GetAllSchedulesActionRequest,
   GetAllSchedulesActionSuccess,
+  GetPumpStatusActionFailure,
+  GetPumpStatusActionRequest,
+  GetPumpStatusActionSuccess,
   Schedule,
+  Status,
 } from './interfaces';
 
 // types
@@ -31,6 +35,9 @@ import {
   EDIT_SCHEDULE_FAILURE,
   EDIT_SCHEDULE_REQUEST,
   EDIT_SCHEDULE_SUCCESS,
+  GET_PUMP_STATUS_FAILURE,
+  GET_PUMP_STATUS_REQUEST,
+  GET_PUMP_STATUS_SUCCESS,
   GET_SCHEDULE_REQUEST,
   GET_SCHEDULE_SUCCESS,
   GET_SCHEDULES_FAILURE,
@@ -160,6 +167,36 @@ export const editScheduleFailure = (errors): EditScheduleActionFailure => ({
   type: EDIT_SCHEDULE_FAILURE,
 });
 
+/**
+ * Get all schedules request
+ *
+ * @returns {GetAllSchedulesActionRequest}
+ */
+export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
+  type: GET_PUMP_STATUS_REQUEST,
+});
+
+/**
+ * Get all schedules success
+ *
+ * @returns {GetAllSchedulesActionSuccess}
+ * @param status
+ */
+export const getPumpStatusSuccess = (status: Status): GetPumpStatusActionSuccess => ({
+  status,
+  type: GET_PUMP_STATUS_SUCCESS,
+});
+
+/**
+ * Get all schedules failure
+ *
+ * @returns {GetAllSchedulesActionSuccess}
+ */
+export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
+  errors,
+  type: GET_PUMP_STATUS_FAILURE,
+});
+
 // actions
 /**
  * Thunk action creator
@@ -193,7 +230,6 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(addScheduleSuccess(response.data.data));
       dispatch(displaySnackMessage('New time schedule has been added successfully.'));
-      // window.location.replace('/water-cycles');
       window.history.back();
     })
     .catch(() => {
@@ -209,12 +245,10 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   return firebase.firebaseDatabase.ref('almond/' + id)
     .remove()
     .then(() => {
-      // const message = response.data.data.message;
       dispatch(deleteSingleScheduleSuccess(id));
       dispatch(displaySnackMessage('Time schedule deleted successfully', true));
     })
     .catch(() => {
-      // const error = errors.response.data.message;
       dispatch(displaySnackMessage(error));
       dispatch(deleteSingleScheduleFailure(error));
     });
@@ -228,13 +262,6 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
  */
 export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
   dispatch(editScheduleRequest());
-  // const newPostKey = firebase.firebaseDatabase.ref()
-  //   .child('almond/')
-  //   .push().key;
-  // const updates = {};
-  // // tslint:disable-next-line:prefer-template
-  // updates['/almond/' + id + '/' + newPostKey] = schedule;
-  // console.log(updates);
   return firebase.firebaseDatabase.ref()
     .child(`almond/${id}/`)
     .update(schedule)
@@ -249,11 +276,48 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
     });
 };
 
+/**
+ * Thunk action creator
+ * Toggle a pump manually
+ *
+ * @returns {Function} action type and payload
+ */
+export const togglePump = status => (dispatch, getState, http) => {
+  return firebase.firebaseDatabase.ref()
+    .child(`almond-override`)
+    .update(status)
+    .then(() => {
+      dispatch(addScheduleSuccess(status));
+    })
+    .catch(() => {
+      dispatch(displaySnackMessage(error));
+    });
+};
+
+/**
+ * Thunk action creator
+ * Set a pump manually
+ *
+ * @returns {Function} action type and payload
+ */
+export const getPumpStatus = () => (dispatch, getState, http) => {
+  dispatch(getPumpStatusRequest());
+  return firebase.firebaseDatabase.ref('/almond-override')
+    .once('value')
+    .then((snapshot) => {
+      dispatch(getPumpStatusSuccess(snapshot.val()));
+    })
+    .catch(() => {
+      dispatch(displaySnackMessage(error));
+    });
+};
+
 export const schedulesInitialState = {
   data: [],
   schedules: [],
   isLoading: false,
   errors: {},
+  status: { status: 'OFF' },
 };
 
 const reducer = (state = schedulesInitialState, action) => {
@@ -323,6 +387,24 @@ const reducer = (state = schedulesInitialState, action) => {
         isLoading: false,
       };
     case EDIT_SCHEDULE_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+        isLoading: false,
+      };
+    case GET_PUMP_STATUS_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case GET_PUMP_STATUS_SUCCESS:
+      return {
+        ...state,
+        status: action.status,
+        errors: null,
+        isLoading: false,
+      };
+    case GET_PUMP_STATUS_FAILURE:
       return {
         ...state,
         errors: action.errors,
