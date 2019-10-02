@@ -12,7 +12,12 @@ const ToggleButton = (props: ToggleButtonProps) => {
   return (
     <div className={props.classes}>
       <label className="switch">
-        <input type="checkbox"/>
+        <input
+          id="toggle-override"
+          onChange={props.onChange}
+          type="checkbox"
+          checked={props.isChecked}
+        />
         <span className="slider round"/>
       </label>
     </div>
@@ -20,3 +25,7 @@ const ToggleButton = (props: ToggleButtonProps) => {
 };
 
 export default ToggleButton;
+
+// export default React.memo(ToggleButton, (prevProps, nextProps) => {
+//   return nextProps.isChecked !== prevProps.isChecked;
+// });

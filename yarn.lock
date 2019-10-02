@@ -2015,6 +2015,16 @@
     classnames "^2.2.6"
     react "^16.4.2"
 
+"@material/react-switch@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-switch/-/react-switch-0.11.0.tgz#78df645a64d864c0ace6b2d8da3f5aa4ddc2f948"
+  integrity sha512-VPqgDwW/kYcaStZCS9+Wx4i90DOX7PyBzOXon19OQJZ0IdTAa9gOXc4XOaQtxsXnSb0zEa3scD+sj3yHqtI0Lw==
+  dependencies:
+    "@material/react-ripple" "^0.11.0"
+    "@material/switch" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.3.2"
+
 "@material/react-text-field@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-text-field/-/react-text-field-0.11.0.tgz#2a2b0a926fb7ac7291fe2105a019d2337cc099b1"
@@ -2160,6 +2170,13 @@
     "@material/typography" "^3.1.0"
     tslib "^1.9.3"
 
+"@material/selection-control@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/selection-control/-/selection-control-0.41.0.tgz#2705d77291c2e6c9db01c4f185a4966d95fd9fa4"
+  integrity sha512-rRHGiZVPoP4nxAAoeqsgTsxz9GwInGs7HIlEhPfMFygmSZVUHHsuOJXSTpOKYi8GCoKHpB0RKZsAtxM0BYAelw==
+  dependencies:
+    "@material/ripple" "^0.41.0"
+
 "@material/shape@^0.40.1":
   version "0.40.1"
   resolved "https://registry.yarnpkg.com/@material/shape/-/shape-0.40.1.tgz#bd4224902896c3d45fab353d788fe6c4866483a8"
@@ -2211,6 +2228,19 @@
     "@material/shape" "^0.43.0"
     "@material/theme" "^0.43.0"
     "@material/typography" "^0.43.0"
+
+"@material/switch@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/switch/-/switch-0.41.0.tgz#b186512dddd081b2658d07055b7b8b69ba9353d1"
+  integrity sha512-8YTrn1oisUhp6DlB1XAPeFWVr5nD88jlq9FoTVQOtGaUxaEybQD0nrsYI7OwaVm4HvSnepd2zmMvbjXKbQX4XQ==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/elevation" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/selection-control" "^0.41.0"
+    "@material/theme" "^0.41.0"
 
 "@material/textfield@^0.41.0":
   version "0.41.0"
@@ -11893,6 +11923,15 @@ react-with-styles@^3.2.3:
     object.assign "^4.1.0"
     prop-types "^15.6.2"
     react-with-direction "^1.3.0"
+
+react@^16.3.2:
+  version "16.10.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.10.1.tgz#967c1e71a2767dfa699e6ba702a00483e3b0573f"
+  integrity sha512-2bisHwMhxQ3XQz4LiJJwG3360pY965pTl/MRrZYxIBKVj4fOHoDs5aZAkYXGxDRO1Li+SyjTAilQEbOmtQJHzA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 react@^16.4.2, react@^16.9.0:
   version "16.9.0"

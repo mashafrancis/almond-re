@@ -9,6 +9,9 @@ import {
   EDIT_SCHEDULE_FAILURE,
   EDIT_SCHEDULE_REQUEST,
   EDIT_SCHEDULE_SUCCESS,
+  GET_PUMP_STATUS_FAILURE,
+  GET_PUMP_STATUS_REQUEST,
+  GET_PUMP_STATUS_SUCCESS,
   GET_SCHEDULE_REQUEST,
   GET_SCHEDULE_SUCCESS,
   GET_SCHEDULES_FAILURE,
@@ -71,9 +74,27 @@ export interface EditScheduleActionFailure {
   errors: any;
 }
 
+export interface GetPumpStatusActionRequest {
+  type: GET_PUMP_STATUS_REQUEST;
+}
+
+export interface GetPumpStatusActionSuccess {
+  status: Status;
+  type: GET_PUMP_STATUS_SUCCESS;
+}
+
+export interface GetPumpStatusActionFailure {
+  type: GET_PUMP_STATUS_FAILURE;
+  errors: any;
+}
+
 export interface Schedule {
   id?: string;
   time: string;
+}
+
+export interface Status {
+  status: string;
 }
 
 export interface NewSchedule {
