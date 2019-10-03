@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '../../store/modules/snack';
-import { socialAuthentication } from '../../store/modules/socialAuth';
+import {
+  socialAuthentication,
+  socialAuthSuccess
+} from '../../store/modules/socialAuth';
 
 // third party apps
 import { NavLink } from 'react-router-dom';
@@ -38,11 +41,14 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
             provider: 'google-oauth2',
             accessToken: response.credential.accessToken,
             accessSecret: response.credential.secret,
+            idToken: response.credential.idToken,
+            refreshToken: response.user.refreshToken,
           },
           userDetails: {
             name: response.user.displayName,
             photo: response.user.photoURL,
             email: response.user.email,
+            isNewUser: response.additionalUserInfo.isNewUser,
           },
         },
       }))
@@ -52,11 +58,17 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
 
         const tokenPayload: any = {};
         tokenPayload.provider = authData.provider;
-        tokenPayload.access_token = authData.accessToken;
+        tokenPayload.id_token = authData.idToken;
+
         const payload: any = {};
         payload.authData = tokenPayload;
         payload.userDetails = userDetails;
-        props.socialAuthentication(payload);
+        if (response.payload.userDetails.isNewUser) {
+          props.socialAuthentication(payload);
+        }
+        authService.saveToken(authData.idToken);
+        props.displaySnackMessage('You have successfully logged in.');
+        window.location.replace('/water-cycles');
       })
       .catch((error) => {
         const errorMessage = error.message;

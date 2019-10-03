@@ -1,3 +1,5 @@
+import * as firebase from '../../../utils/firebase';
+
 // third party libraries
 import { Action, AnyAction } from 'redux';
 
@@ -54,9 +56,11 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * @param userId
  */
 export const getUserDetails = userId => (dispatch, getState, http) => {
-  return http.get(`user/${userId}`, { cache: true })
-    .then((response) => {
-      return dispatch(getUserDetailsSuccess(response.data.data));
+  return firebase.firebaseDatabase.ref(`users/${userId}`)
+    .once('value')
+    .then((snapshot) => {
+      const data = (snapshot.val() && snapshot.val().userDetails) || 'Anonymous';
+      return dispatch(getUserDetailsSuccess(data));
     });
 };
 
@@ -110,7 +114,6 @@ export const reducer = (state = userInitialState, action: AnyAction) => {
     case EDIT_USER_DETAILS_SUCCESS:
       return {
         ...state,
-        center: action.userCenter,
       };
     default:
       return state;

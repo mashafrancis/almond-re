@@ -65,7 +65,7 @@ export const socialAuthentication = payload => (dispatch, getState, http) => {
         .once('value')
         .then((snapshot) => {
           const data = (snapshot.val() && snapshot.val().authData) || 'Anonymous';
-          authService.saveToken(data.access_token);
+          authService.saveToken(data.id_token);
           dispatch(socialAuthSuccess(data.response));
           dispatch(displaySnackMessage('You have successfully logged in.'));
           window.location.replace('/water-cycles');
