@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // reducers
 import internalServerError from './modules/internalServerError';
 import snack from './modules/snack';
+import socialAuth from './modules/socialAuth';
 import timeSchedules from './modules/timeSchedules';
 
 // types
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   internalServerError,
   timeSchedules,
   snack,
+  socialAuth,
 });
 
 const rootReducer = (state, action) => {

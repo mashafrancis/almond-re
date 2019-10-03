@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+
+// thunks
+import { displaySnackMessage } from '../../store/modules/snack';
+import { socialAuthentication } from '../../store/modules/socialAuth';
 
 // third party apps
 import { NavLink } from 'react-router-dom';
@@ -6,17 +11,73 @@ import { NavLink } from 'react-router-dom';
 // interfaces
 import { HomePageProps, HomePageState } from './interfaces';
 
+// utils
+import { auth, GoogleProvider } from '../../utils/firebase';
+
+// types
+import { SOCIAL_GOOGLE_PROVIDER } from '../../store/modules/socialAuth/types';
+
+// helpers
+import { authService } from '../../utils/auth';
+
 // styles
 import './HomePage.scss';
 
-const HomePage: React.FunctionComponent<HomePageProps> = () => {
+const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
+  const [state, setState] = React.useState<HomePageState>({
+    isLoading: false,
+  });
+
+  const getSocialAuthData = () => {
+    auth
+      .signInWithPopup(GoogleProvider)
+      .then(response => ({
+        type: SOCIAL_GOOGLE_PROVIDER,
+        payload: {
+          authData: {
+            provider: 'google-oauth2',
+            accessToken: response.credential.accessToken,
+            accessSecret: response.credential.secret,
+          },
+          userDetails: {
+            name: response.user.displayName,
+            photo: response.user.photoURL,
+            email: response.user.email,
+          },
+        },
+      }))
+      .then((response) => {
+        const { authData } = response.payload;
+        const { userDetails } = response.payload;
+
+        const tokenPayload: any = {};
+        tokenPayload.provider = authData.provider;
+        tokenPayload.access_token = authData.accessToken;
+        const payload: any = {};
+        payload.authData = tokenPayload;
+        payload.userDetails = userDetails;
+        props.socialAuthentication(payload);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        props.displaySnackMessage(errorMessage);
+      });
+  };
+
   const renderGoToDashboard = () => (
     <React.Fragment>
-      <NavLink to={'/water-cycles'}>
-        <button className="mdc-button mdc-button--raised">
-          <span className="mdc-button__label">Go to dashboard</span>
+      {authService.isAuthenticated()
+      ?
+        <NavLink to={'/water-cycles'}>
+          <button className="mdc-button mdc-button--raised">
+            <span className="mdc-button__label">Go to dashboard</span>
+          </button>
+        </NavLink>
+      :
+        <button className="mdc-button mdc-button--raised" onClick={getSocialAuthData}>
+          <span className="mdc-button__label">Login with Google</span>
         </button>
-      </NavLink>
+      }
     </React.Fragment>
   );
 
@@ -48,4 +109,13 @@ const HomePage: React.FunctionComponent<HomePageProps> = () => {
   );
 };
 
-export default HomePage;
+export const mapStateToProps = state => ({
+  isLoading: state.isLoading,
+});
+
+export const mapDispatchToProps = dispatch => ({
+  socialAuthentication: payload => dispatch(socialAuthentication(payload)),
+  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
