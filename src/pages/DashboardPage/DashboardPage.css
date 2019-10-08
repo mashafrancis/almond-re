@@ -21,6 +21,8 @@ body, html {
 .dashboard .mdc-top-app-bar--fixed-adjust {
   padding: 64px 10px 20px;
   width: -webkit-fill-available;
+  margin-bottom: 100px;
+  overflow-y: auto;
 }
 .dashboard .mdc-card {
   border-radius: 8px;
@@ -212,7 +214,6 @@ body, html {
 }
 
 .top-buttons {
-  margin: 200px 0 0 0;
   height: 74px;
   position: relative;
   text-align: center;
@@ -266,6 +267,8 @@ body, html {
 @media (max-width: 539px) {
   .dashboard .bottom-buttons {
     margin: 0;
+    display: inline-flex;
+    align-items: center;
   }
   .dashboard .bottom-buttons .button-schedule {
     position: relative;
@@ -278,7 +281,8 @@ body, html {
     display: flex;
   }
   .dashboard .bottom-buttons .create-schedule-button {
-    bottom: 28px;
+    position: fixed !important;
+    bottom: 22px;
     margin-left: 36px;
     margin-top: 28px;
     right: 24px;
@@ -332,13 +336,13 @@ body, html {
     display: none;
   }
   .dashboard .manual-schedule {
-    bottom: 28px;
+    bottom: 14px;
     position: fixed !important;
     text-align: center;
     display: flex;
   }
   .dashboard .manual-override {
-    margin-top: 10px;
+    margin-top: 14px;
     margin-right: 12px;
   }
 }

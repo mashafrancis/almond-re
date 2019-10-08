@@ -123,6 +123,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const BottomContent = () => (
     <div className="bottom-buttons">
+      {ToggleManualButton()}
       <div className="button-schedule">
         <NavLink to={'/water-cycles/schedule'}>
           <Fab className="create-schedule-button"
@@ -130,7 +131,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           />
         </NavLink>
       </div>
-      {ToggleManualButton()}
     </div>
   );
 
