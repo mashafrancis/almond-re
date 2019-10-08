@@ -29,3 +29,13 @@
     --mdc-ripple-fg-opacity: 0.32;
   }
 }
+
+@media (max-width: 539px) {
+  .mdc-snackbar {
+    bottom: 74px;
+  }
+}
+
+//.mdc-snackbar__surface {
+//  background-color: #55D69C;
+//}

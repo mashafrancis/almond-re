@@ -302,6 +302,7 @@
 
     &__title {
       color: rgba(6, 6, 6, 0.81);
+      margin-left: 60px;
     }
 
     &__navigation-icon {
@@ -334,6 +335,7 @@
     background-color: rgba(8, 56, 119, 0.92);
     color: #f1f1f1;
     min-height: 4rem !important;
+    justify-content: center;
     //border-radius: 0 0 30px 30px;
     //box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .08);
   }
@@ -353,9 +355,12 @@
     }
 
     h5 {
-      margin-top: 6px;
+      margin-top: 18px;
       margin-bottom: 6px;
-      font-size: 14px;
+      margin-left: 10px;
+      font-size: 16px;
+      color: whitesmoke;
+      font-weight: 500;
     }
 
     img {
@@ -383,11 +388,29 @@
     flex-direction: column;
     width: 100%;
     text-align: center;
+    height: 100px;
   }
 
   .mdc-drawer .mdc-list-item:nth-last-child(1) {
     margin-bottom: 14px;
-}
+  }
+
+  .mini-account-menu__image {
+    background-size: 36px 36px;
+    border-radius: 50%;
+    min-width: 36px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    margin-top: 10px;
+    width: auto;
+    height: 70px;
+  }
+
+  .mdc-drawer__header {
+    background-color: rgba(17, 17, 17, 0.91);
+  }
 
   //    .drawer-container {
   //      display: flex;
@@ -416,6 +439,16 @@
 
     &__image {
       height: 30px
+    }
+  }
+
+  .mdc-top-app-bar {
+    &__title {
+      margin-left: 0;
+    }
+
+    &__navigation-icon {
+      color: rgba(234, 239, 245, 0.81) !important;
     }
   }
 }
