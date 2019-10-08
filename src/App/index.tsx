@@ -2,6 +2,7 @@
 import * as React from 'react';
 
 // third party libraries
+import useAsyncEffect from '@n1ru4l/use-async-effect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -28,20 +29,17 @@ const App: React.FunctionComponent<AppProps> = (props) => {
   const [state, setState] = React.useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
     isGettingUserDetails: true,
+    users: [],
   });
 
-  React.useEffect(() => {
+  useAsyncEffect(function* () {
     const user = authService.getUser();
 
     if (state.isUserAuthenticated) {
-      try {
-        props.getUserDetails(user.userdata.id)
-          .then(() => setState({ ...state, isGettingUserDetails: false }));
-      } catch {
-        setState({ ...state, isGettingUserDetails: false });
-      }
+      props.getUserDetails(user.email);
+      setState({ ...state, isGettingUserDetails: false });
     }
-  },              []);
+  },             []);
 
   const { isUserAuthenticated, isGettingUserDetails } = state;
 
@@ -61,7 +59,7 @@ const App: React.FunctionComponent<AppProps> = (props) => {
 
 export const mapStateToProps = state => ({
   serverError: state.internalServerError,
-  user: state.user,
+  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

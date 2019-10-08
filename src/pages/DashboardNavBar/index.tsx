@@ -6,6 +6,9 @@ import Drawer, {
   DrawerHeader,
 } from '@material/react-drawer';
 import List, {
+  ListDivider,
+  ListGroup,
+  ListGroupSubheader,
   ListItem,
   ListItemGraphic,
   ListItemText
@@ -22,36 +25,44 @@ import TopAppBar, {
 import { NavLink, Redirect } from 'react-router-dom';
 
 // interfaces
-import { DashboardNavBarProps } from './interfaces';
+import {
+  DashboardNavBarProps,
+  DashboardNavBarState
+} from './interfaces';
 
 // styles
 import './DashboardNavBar.scss';
 
-const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg'
-const innerWidth = window.innerWidth;
+const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
+const viewPort = window.innerWidth;
 
 const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) => {
+  const [state, setState] = React.useState<DashboardNavBarState>({
+    isDrawerOpen: false,
+    isMenuOpen: false,
+    selectedIndex: 0,
+    isLoading: true,
+  });
+
   const mainContentEl = React.createRef();
-  const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-  const [isMenuOpen, setMenuOpen] = React.useState<boolean>(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [isViewPort, setViewPort] = React.useState<boolean>(false);
   const menuAnchorEl = React.useRef<any>(null);
 
-  const onDrawerClose = () => {
-    setDrawerOpen(false);
+  const onDrawerOpenClose = () => {
+    setState({ ...state, isDrawerOpen: false });
   };
 
-  const onViewPort = () => {
-    setViewPort(innerWidth !== 500);
+  const onMenuOpenClose = () => {
+    setState({ ...state, isMenuOpen: !state.isMenuOpen });
   };
 
   const onSelectedIndex = () => {
-    setSelectedIndex(1);
+    setState({ ...state, selectedIndex: 1 });
   };
 
+  const { user, logoutUser } = props;
+
   const topBar = () => (
-    <div className="dashboard-nav">
+    <div className="dashboard-nav">;
       <div className="dashboard-nav__left-section">
         <div className="dashboard-nav__left-section__title">
           <h2>Water Cycles</h2>
@@ -66,7 +77,7 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
       </div>
       <div className="dashboard-nav__right-section">
         <div className="dashboard-nav__right-section__name">
-          <h2>User: John Doe</h2>
+          <h2>User: {user.name || 'Anonymous'}</h2>
         </div>
       </div>
     </div>
@@ -78,8 +89,9 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
         <TopAppBarSection align="start">
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setDrawerOpen(true)}
-              hasRipple icon="menu"
+              onClick={() => setState({ ...state, isDrawerOpen: true })}
+              hasRipple
+              icon="notes"
               initRipple={null}
             />
           </TopAppBarIcon>
@@ -93,68 +105,46 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
           <div className="companion-nav">
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => setState({ ...state, isDrawerOpen: true })}
               hasRipple icon="notifications"
               initRipple={null}
             />
           </TopAppBarIcon>
-          {/*<TopAppBarIcon actionItem tabIndex={0}>*/}
-          {/*  <div role="tablist"*/}
-          {/*       ref={e => menuAnchorEl.current = e}*/}
-          {/*       className="mdc-tab-bar"*/}
-          {/*       onClick={() => setMenuOpen(true)}*/}
-          {/*  >*/}
-          {/*    <span className="mini-account-menu__image">*/}
-          {/*    <img*/}
-          {/*      className="mini-account-menu__image"*/}
-          {/*      src={avatar}/>*/}
-          {/*    </span>*/}
-          {/*  </div>*/}
-          {/*</TopAppBarIcon>*/}
           </div>
         </TopAppBarSection>
       </TopAppBarRow>
     </TopAppBar>
   );
 
-  const sideNav = () => (
-    <div className="side-nav">
-      <div className="side-nav__top">
-        <List twoLine>
-          <ListItem onClick={() => setDrawerOpen(false)}>
-            <ListItemGraphic graphic={<MaterialIcon icon="explore" initRipple={null}/>}/>
-            <ListItemText secondaryText="Explore"/>
-          </ListItem>
-        </List>
-      </div>
-    </div>
-  );
-
   const drawerContent = () => (
     <React.Fragment>
-      <List singleSelection selectedIndex={selectedIndex}>
+      <List
+        singleSelection
+        selectedIndex={state.selectedIndex}
+        handleSelect={onSelectedIndex}
+      >
         <NavLink to={'/water-cycles'}>
-          <ListItem className="mdc-list-item--activated" onClick={() => setDrawerOpen(false)}>
+          <ListItem className="mdc-list-item--activated" onClick={onDrawerOpenClose}>
             <ListItemText primaryText="Water Cycles"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/environmental-control'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem onClick={onDrawerOpenClose}>
             <ListItemText primaryText="Environmental Control"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/quality-control'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem onClick={onDrawerOpenClose}>
             <ListItemText primaryText="Quality Control"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/energy-usage'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem onClick={onDrawerOpenClose}>
             <ListItemText primaryText="Energy Usage"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/maintenance'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem onClick={onDrawerOpenClose}>
             <ListItemText primaryText="Maintenance Schedule"/>
           </ListItem>
         </NavLink>
@@ -162,15 +152,61 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
     </React.Fragment>
   );
 
-  return (
-    <div className="dashboard">
-      <Drawer
-        modal = {(window.innerWidth < 500)}
-        open={isDrawerOpen}
-        onClose={onDrawerClose}
-        // innerRef={this.drawerEl}
-      >
-        <DrawerHeader>
+  const mobileDrawerContent = () => (
+    <React.Fragment>
+      <ListGroup>
+        <ListDivider tag="div" />
+        {drawerContent()}
+        <ListDivider tag="div" />
+        <ListGroupSubheader tag="h2">Do more with your account</ListGroupSubheader>
+        <NavLink to={'/settings'}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Settings"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Notifications"/>
+          </ListItem>
+        </NavLink>
+        <ListItem onClick={logoutUser}>
+          <ListItemText primaryText="Logout"/>
+          <ListItemGraphic graphic={<MaterialIcon icon="exit_to_app"/>} />
+        </ListItem>
+      </ListGroup>
+    </React.Fragment>
+  );
+
+  const mobileDrawerHeader = () => {
+    return (
+    <React.Fragment>
+      <DrawerHeader>
+        <div className="drawer-logo">
+          <div role="tablist"
+               ref={e => menuAnchorEl.current = e}
+               className="mdc-tab-bar"
+               onClick={onMenuOpenClose}
+          >
+            <div className="header-image">
+                <span className="mini-account-menu__image">
+                <img
+                  className="mini-account-menu__image"
+                  src={user.photo || avatar}
+                  alt="avatar"
+                />
+                  <h5>{user.name || 'Anonymous'}</h5>
+                </span>
+            </div>
+          </div>
+        </div>
+      </DrawerHeader>
+    </React.Fragment>
+    );
+  };
+
+  const drawerHeader = () => (
+    <React.Fragment>
+      <DrawerHeader>
           <div className="drawer-logo">
             <NavLink to={'/'}>
               <img
@@ -180,11 +216,23 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
             </NavLink>
           </div>
         </DrawerHeader>
+    </React.Fragment>
+  );
+
+  return (
+    <div className="dashboard">
+      <Drawer
+        modal = {(viewPort < 500)}
+        open={state.isDrawerOpen}
+        onClose={onDrawerOpenClose}
+        // innerRef={this.drawerEl}
+      >
+        {(viewPort < 500) ? mobileDrawerHeader() : drawerHeader() }
         <DrawerContent>
-          {drawerContent()}
+          {(viewPort < 500) ? mobileDrawerContent() : drawerContent() }
         </DrawerContent>
       </Drawer>
-            {(window.innerWidth < 500) ? mobileBar() : topBar() }
+            {(viewPort < 500) ? mobileBar() : topBar() }
       <TopAppBarFixedAdjust className="drawer-content">
         {props.component}
         </TopAppBarFixedAdjust>

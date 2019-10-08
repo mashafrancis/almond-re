@@ -6,6 +6,13 @@ export interface DashboardNavBarProps {
     url: string;
   };
   component: any;
-  user?: UserDetails;
-  logoutUser?: () => void;
+  user: UserDetails;
+  logoutUser: () => void;
+}
+
+export interface DashboardNavBarState {
+  isDrawerOpen: boolean;
+  isMenuOpen: boolean;
+  selectedIndex: number;
+  isLoading: boolean;
 }

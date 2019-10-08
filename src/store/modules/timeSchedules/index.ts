@@ -205,7 +205,7 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
  * @returns {Function} action type and payload
  */
 export const getAllSchedules = () => (dispatch, getState, http) => {
-  // dispatch(getSchedulesRequest());
+  dispatch(getSchedulesRequest());
   return http.get('timeSchedule/schedules.json')
     .then((response) => {
       const data = response.data;
