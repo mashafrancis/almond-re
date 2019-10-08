@@ -22,4 +22,5 @@ export interface WaterCyclesPageState {
   isDeleteModal: boolean;
   action: string;
   id: string;
+  statusClass: string;
 }

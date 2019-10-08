@@ -62,7 +62,7 @@ const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) =
   const { user, logoutUser } = props;
 
   const topBar = () => (
-    <div className="dashboard-nav">;
+    <div className="dashboard-nav">
       <div className="dashboard-nav__left-section">
         <div className="dashboard-nav__left-section__title">
           <h2>Water Cycles</h2>

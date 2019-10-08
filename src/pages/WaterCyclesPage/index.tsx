@@ -53,6 +53,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     isDeleteModal: false,
     action: '',
     id: '',
+    statusClass: '',
   });
 
   React.useEffect(() => {
@@ -88,10 +89,18 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     event.target.checked
       ? props.togglePump({ status: 'ON' })
         .then(() => props.displaySnackMessage('Manual Override ON.'))
+        .then(() => setState({ ...state, statusClass: 'tbl-status' }))
         .then(() => window.localStorage.setItem('checked', 'true'))
       : props.togglePump({ status: 'OFF' })
         .then(() => props.displaySnackMessage('Manual Override OFF.'))
+        .then(() => setState({ ...state, statusClass: '' }))
         .then(() => window.localStorage.setItem('checked', 'false'));
+  };
+
+  const handleToggleStatusChange = (event) => {
+    event.target.checked
+    ? setState({ ...state, statusClass: 'tbl-status' })
+    : setState({ ...state, statusClass: '' });
   };
 
   const ToggleManualButton = () => {
@@ -192,6 +201,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         <Table
           keys={tableHeaders}
           values={tableValues}
+          statusClass={state.statusClass}
         />
       </div>
     );
