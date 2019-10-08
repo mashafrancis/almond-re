@@ -18,3 +18,23 @@ export const auth: any = firebase.auth();
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
 export const firebaseDatabase = firebase.database();
+
+export const userData = () => {
+  const user = firebase.auth().currentUser;
+  let name, email, photoUrl, uid, emailVerified;
+  if (user != null) {
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid;
+  }
+
+  return {
+    name,
+    email,
+    photoUrl,
+    emailVerified,
+    uid,
+  };
+};

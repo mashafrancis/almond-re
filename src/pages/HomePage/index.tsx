@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '../../store/modules/snack';
-import { socialAuthentication } from '../../store/modules/socialAuth';
+import {
+  socialAuthentication,
+  socialAuthSuccess
+} from '../../store/modules/socialAuth';
 
 // third party apps
 import { NavLink } from 'react-router-dom';
@@ -38,6 +41,8 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
             provider: 'google-oauth2',
             accessToken: response.credential.accessToken,
             accessSecret: response.credential.secret,
+            idToken: response.credential.idToken,
+            refreshToken: response.user.refreshToken,
           },
           userDetails: {
             name: response.user.displayName,
@@ -50,12 +55,12 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
         const { authData } = response.payload;
         const { userDetails } = response.payload;
 
-        const tokenPayload: any = {};
-        tokenPayload.provider = authData.provider;
-        tokenPayload.access_token = authData.accessToken;
-        const payload: any = {};
-        payload.authData = tokenPayload;
-        payload.userDetails = userDetails;
+        const payload = {
+          idToken: authData.idToken,
+          name: userDetails.name,
+          photo: userDetails.photo,
+          email: userDetails.email,
+        };
         props.socialAuthentication(payload);
       })
       .catch((error) => {

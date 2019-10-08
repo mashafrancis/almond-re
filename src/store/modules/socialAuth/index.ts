@@ -64,8 +64,8 @@ export const socialAuthentication = payload => (dispatch, getState, http) => {
       firebase.firebaseDatabase.ref(`users/${Object.values(response.data)[0]}`)
         .once('value')
         .then((snapshot) => {
-          const data = (snapshot.val() && snapshot.val().authData) || 'Anonymous';
-          authService.saveToken(data.access_token);
+          const data = snapshot.val() || 'Anonymous';
+          authService.saveToken(data.idToken);
           dispatch(socialAuthSuccess(data.response));
           dispatch(displaySnackMessage('You have successfully logged in.'));
           window.location.replace('/water-cycles');

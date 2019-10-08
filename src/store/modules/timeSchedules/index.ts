@@ -205,8 +205,8 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
  * @returns {Function} action type and payload
  */
 export const getAllSchedules = () => (dispatch, getState, http) => {
-  // dispatch(getSchedulesRequest());
-  return http.get('almond.json')
+  dispatch(getSchedulesRequest());
+  return http.get('timeSchedule/schedules.json')
     .then((response) => {
       const data = response.data;
       dispatch(getSchedulesSuccess(data));
@@ -226,7 +226,7 @@ export const getAllSchedules = () => (dispatch, getState, http) => {
  */
 export const addNewSchedule = schedule => (dispatch, getState, http) => {
   dispatch(addScheduleRequest());
-  return http.post('almond.json', schedule)
+  return http.post('timeSchedule/schedules.json', schedule)
     .then((response) => {
       dispatch(addScheduleSuccess(response.data.data));
       dispatch(displaySnackMessage('New time schedule has been added successfully.'));
@@ -240,9 +240,7 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
 
 export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
-  // dispatch(displaySnackMessage('Deleting time schedule', true));
-  // tslint:disable-next-line:prefer-template
-  return firebase.firebaseDatabase.ref('almond/' + id)
+  return firebase.firebaseDatabase.ref(`timeSchedule/schedules/${id}`)
     .remove()
     .then(() => {
       dispatch(deleteSingleScheduleSuccess(id));
@@ -263,7 +261,7 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
 export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
   dispatch(editScheduleRequest());
   return firebase.firebaseDatabase.ref()
-    .child(`almond/${id}/`)
+    .child(`timeSchedule/schedules/${id}/`)
     .update(schedule)
     .then(() => {
       dispatch(editScheduleSuccess(id, schedule));
@@ -284,7 +282,7 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
  */
 export const togglePump = status => (dispatch, getState, http) => {
   return firebase.firebaseDatabase.ref()
-    .child(`almond-override`)
+    .child(`timeSchedule/manual-override`)
     .update(status)
     .then(() => {
       dispatch(addScheduleSuccess(status));
@@ -302,7 +300,7 @@ export const togglePump = status => (dispatch, getState, http) => {
  */
 export const getPumpStatus = () => (dispatch, getState, http) => {
   dispatch(getPumpStatusRequest());
-  return firebase.firebaseDatabase.ref('/almond-override')
+  return firebase.firebaseDatabase.ref('/timeSchedule/manual-override')
     .once('value')
     .then((snapshot) => {
       dispatch(getPumpStatusSuccess(snapshot.val()));
