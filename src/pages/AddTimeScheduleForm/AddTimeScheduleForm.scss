@@ -41,3 +41,8 @@
   line-height: 1.25rem;
   color: #7D7D7D;
 }
+
+.mdc-text-field--fullwidth:not(.mdc-text-field--textarea):not(.mdc-text-field--disabled) {
+    background-color: #ffffff7a;
+}
+
