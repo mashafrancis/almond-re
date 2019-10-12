@@ -52,7 +52,7 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
   const onSubmit = (event) => {
     event.preventDefault();
     const schedule = {
-      time: selectedTimeSchedule,
+      schedule: selectedTimeSchedule,
     };
 
     setState({ ...state, isLoading: true });

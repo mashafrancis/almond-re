@@ -2,6 +2,7 @@ const path = require('path');
 const {importer} = require('./webpack.util');
 const {
   cleanWebpack,
+  definePlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin,
@@ -103,7 +104,8 @@ module.exports = {
     miniCssExtract,
     manifestPlugin,
     swPlugin,
-    copyPlugin
+    copyPlugin,
+    definePlugin,
   ]
 };
 

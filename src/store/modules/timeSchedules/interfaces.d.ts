@@ -89,8 +89,8 @@ export interface GetPumpStatusActionFailure {
 }
 
 export interface Schedule {
-  id?: string;
-  time: string;
+  _id: string;
+  schedule: string;
 }
 
 export interface Status {
@@ -98,5 +98,5 @@ export interface Status {
 }
 
 export interface NewSchedule {
-  time: string;
+  schedule: string;
 }

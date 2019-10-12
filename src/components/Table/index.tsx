@@ -40,10 +40,10 @@ const Table = (props: TableProps) => {
         values.map((value, index) => {
           return (
             <div className="tbl-columns">
-            <div key={value.id} className={`tbl-row-number ${props.statusClass}`}>
+            <div key={index} className={`tbl-row-number ${props.statusClass}`}>
               <h5>{count = count + 1}</h5>
             </div>
-            <div key={index} className={`tbl-row ${props.statusClass}`}>
+            <div key={value.id} className={`tbl-row ${props.statusClass}`}>
               {
                 tableHeaders.map((header, index) => {
                   return (

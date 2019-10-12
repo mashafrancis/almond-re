@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Redux from 'redux';
 
 // third-party libraries
 import Dialog, {
@@ -15,7 +16,8 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
-import { connect } from 'react-redux';
+import * as Pusher from 'pusher-js';
+import { connect, useDispatch } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 // components
@@ -64,6 +66,21 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   },              []);
 
   React.useEffect(() => {
+    Pusher.logToConsole = true;
+    const pusher = new Pusher('e33acdd6256d35e8e26b', {
+      cluster: 'ap2',
+      forceTLS: true,
+    });
+    const channel = pusher.subscribe('schedule');
+    channel.bind('created', (data) => {
+      console.log(data);
+      const updatedSchedule = state.schedules.push(data.schedule);
+      console.log('updated', updatedSchedule);
+      setState({ ...state, schedules: updatedSchedule });
+    });
+  },              []);
+
+  React.useEffect(() => {
     switch (state.action) {
       case 'delete':
         props.deleteSingleSchedule(state.id);
@@ -87,11 +104,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
-      ? props.togglePump({ status: 'ON' })
+      ? props.togglePump({ status: 'on' })
         .then(() => props.displaySnackMessage('Manual Override ON.'))
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
         .then(() => window.localStorage.setItem('checked', 'true'))
-      : props.togglePump({ status: 'OFF' })
+      : props.togglePump({ status: 'off' })
         .then(() => props.displaySnackMessage('Manual Override OFF.'))
         .then(() => setState({ ...state, statusClass: '' }))
         .then(() => window.localStorage.setItem('checked', 'false'));
@@ -169,30 +186,31 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     </Dialog>
   );
 
-  const ActionButtons = schedule => (
-    <div key={schedule} className="action-buttons">
-      <span onClick={ () => setState({ ...state, id: schedule, isEditMode: true })}>
-      <Link to={`${props.match.url}/edit/${schedule}`}>
+  const ActionButtons = id => (
+    <div key={id} className="action-buttons">
+      <span onClick={ () => setState({ ...state, id, isEditMode: true })}>
+      <Link to={`${props.match.url}/edit/${id}`}>
         <h5>Edit</h5>
       </Link>
       </span>
-      <span id={schedule} onClick={ () => setState({ ...state, id: schedule, isDeleteModal: true })}>
+      <span id={id} onClick={ () => setState({ ...state, id, isDeleteModal: true })}>
       <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
   );
 
-  const TableContent = (timeSchedule) => {
+  const TableContent = (schedules) => {
+    console.log(state.schedules);
     const tableHeaders = {
       Time: { valueKey: 'time', colWidth: '40' },
       Actions: { valueKey: 'actions', colWidth: '40' },
       Status: { valueKey: 'status' },
     };
 
-    const tableValues = timeSchedule.map(schedule => ({
-      id: schedule,
-      time: `${moment(schedule[1].time).format('LT')}`,
-      actions: ActionButtons(schedule[0]),
+    const tableValues = schedules.map(schedule => ({
+      id: schedule._id,
+      time: `${moment(schedule.schedule).format('LT')}`,
+      actions: ActionButtons(schedule._id),
       status: <ToggleButton classes={''}/>,
     }));
 
@@ -208,6 +226,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   };
 
   const WaterCyclesPageComponent = () => {
+    const { schedules } = props;
     return (
       <Grid>
         <Row>
@@ -221,7 +240,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             {(window.innerWidth < 539) ? BottomContent() : TopContent()}
             {!props.schedules || undefined
               ? BlankContent()
-              : TableContent(Object.entries(props.schedules))}
+              : TableContent(schedules)}
           </Cell>
         </Row>
       </Grid>
@@ -239,7 +258,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
 export const mapStateToProps = state => ({
   error: state.error,
-  schedules: state.timeSchedules.data,
+  schedules: state.timeSchedules.schedules,
   status: state.timeSchedules.status,
 });
 

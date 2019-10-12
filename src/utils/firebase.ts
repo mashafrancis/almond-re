@@ -21,6 +21,7 @@ export const firebaseDatabase = firebase.database();
 
 export const userData = () => {
   const user = firebase.auth().currentUser;
+  // tslint:disable-next-line:one-variable-per-declaration
   let name, email, photoUrl, uid, emailVerified;
   if (user != null) {
     name = user.displayName;

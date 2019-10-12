@@ -206,9 +206,9 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
  */
 export const getAllSchedules = () => (dispatch, getState, http) => {
   dispatch(getSchedulesRequest());
-  return http.get('timeSchedule/schedules.json')
+  return http.get('schedule', { cache: true })
     .then((response) => {
-      const data = response.data;
+      const data = response.data.data;
       dispatch(getSchedulesSuccess(data));
       return data;
     })
@@ -226,7 +226,7 @@ export const getAllSchedules = () => (dispatch, getState, http) => {
  */
 export const addNewSchedule = schedule => (dispatch, getState, http) => {
   dispatch(addScheduleRequest());
-  return http.post('timeSchedule/schedules.json', schedule)
+  return http.post('schedule', schedule)
     .then((response) => {
       dispatch(addScheduleSuccess(response.data.data));
       dispatch(displaySnackMessage('New time schedule has been added successfully.'));
@@ -240,13 +240,13 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
 
 export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
-  return firebase.firebaseDatabase.ref(`timeSchedule/schedules/${id}`)
-    .remove()
-    .then(() => {
+  return http.delete(`schedule/${id}`)
+    .then((response) => {
       dispatch(deleteSingleScheduleSuccess(id));
-      dispatch(displaySnackMessage('Time schedule deleted successfully', true));
+      const message = response.data.message;
+      displaySnackMessage(message);
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch(displaySnackMessage(error));
       dispatch(deleteSingleScheduleFailure(error));
     });
@@ -311,7 +311,6 @@ export const getPumpStatus = () => (dispatch, getState, http) => {
 };
 
 export const schedulesInitialState = {
-  data: [],
   schedules: [],
   isLoading: false,
   errors: {},
@@ -328,7 +327,7 @@ const reducer = (state = schedulesInitialState, action) => {
     case GET_SCHEDULE_SUCCESS:
       return {
         ...state,
-        data: action.schedules,
+        schedules: action.schedules,
         errors: null,
         isLoading: false,
       };

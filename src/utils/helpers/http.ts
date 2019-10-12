@@ -11,7 +11,7 @@ const headers = {
 };
 
 const http = axios.create({
-  baseURL: 'https://almond-re.firebaseio.com/',
+  baseURL: process.env.ALMOND_API,
   // headers: !authService.isAuthenticated() ? headers : '',
 });
 
