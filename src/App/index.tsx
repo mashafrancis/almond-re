@@ -2,7 +2,6 @@
 import * as React from 'react';
 
 // third party libraries
-import useAsyncEffect from '@n1ru4l/use-async-effect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -21,6 +20,7 @@ import { AppProps, AppState } from './interfaces';
 
 // helper functions
 import { authService } from '../utils/auth';
+import * as Hooks from '../utils/hooks';
 
 // styles
 import './App.scss';
@@ -28,22 +28,29 @@ import './App.scss';
 const App: React.FunctionComponent<AppProps> = (props) => {
   const [state, setState] = React.useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
-    isGettingUserDetails: true,
     users: [],
   });
 
-  useAsyncEffect(function* () {
+  Hooks.useAsyncEffect(function* () {
     const user = authService.getUser();
 
     if (state.isUserAuthenticated) {
-      props.getUserDetails(user.email);
-      setState({ ...state, isGettingUserDetails: false });
+      try {
+        yield props.getUserDetails(user.email);
+      } catch {
+        setState({ ...state, isUserAuthenticated: true });
+      }
     }
-  },             []);
+  },                   []);
 
-  const { isUserAuthenticated, isGettingUserDetails } = state;
+  const checkUserDetailsAndAuthentication = (
+    isGettingUserDetails: boolean,
+    isUserAuthenticated: boolean) => (isGettingUserDetails && isUserAuthenticated);
 
-  return isGettingUserDetails && isUserAuthenticated
+  const { isUserAuthenticated } = state;
+  const { isGettingUserDetails } = props;
+
+  return checkUserDetailsAndAuthentication(isGettingUserDetails, isUserAuthenticated)
       ? <Loader />
       : <React.Fragment>
         <SnackBar />
@@ -60,6 +67,7 @@ const App: React.FunctionComponent<AppProps> = (props) => {
 export const mapStateToProps = state => ({
   serverError: state.internalServerError,
   user: state.user.user,
+  isGettingUserDetails: state.user.isGettingUserDetails,
 });
 
 export const mapDispatchToProps = dispatch => ({

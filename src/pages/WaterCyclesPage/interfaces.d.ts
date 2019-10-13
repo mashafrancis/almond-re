@@ -12,10 +12,10 @@ export interface WaterCyclesPageProps {
   match: {
     url: string
   };
+  isLoading: boolean;
 }
 
 export interface WaterCyclesPageState {
-  isLoading: boolean;
   isEditMode: boolean;
   isChecked: boolean;
   schedules: any;

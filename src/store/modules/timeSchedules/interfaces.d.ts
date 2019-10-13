@@ -19,11 +19,13 @@ import {
 
 export interface GetAllSchedulesActionRequest {
   type: GET_SCHEDULE_REQUEST;
+  isLoading: boolean;
 }
 
 export interface GetAllSchedulesActionSuccess {
   schedules: Schedule[];
   type: GET_SCHEDULE_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface GetAllSchedulesActionFailure {
@@ -33,11 +35,13 @@ export interface GetAllSchedulesActionFailure {
 
 export interface AddScheduleActionRequest {
   type: ADD_SCHEDULES_REQUEST;
+  isLoading: boolean;
 }
 
 export interface AddScheduleActionSuccess {
   schedule: NewSchedule;
   type: ADD_SCHEDULES_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface AddSchedulesActionFailure {
@@ -47,11 +51,13 @@ export interface AddSchedulesActionFailure {
 
 export interface DeleteScheduleActionRequest {
   type: DELETE_SCHEDULE_REQUEST;
+  isLoading: boolean;
 }
 
 export interface DeleteScheduleActionSuccess {
   id: string;
   type: DELETE_SCHEDULE_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface DeleteScheduleActionFailure {
@@ -61,12 +67,14 @@ export interface DeleteScheduleActionFailure {
 
 export interface EditScheduleActionRequest {
   type: EDIT_SCHEDULE_REQUEST;
+  isLoading: boolean;
 }
 
 export interface EditScheduleActionSuccess {
   id: string;
   schedule: NewSchedule;
   type: EDIT_SCHEDULE_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface EditScheduleActionFailure {

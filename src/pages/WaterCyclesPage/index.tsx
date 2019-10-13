@@ -19,9 +19,11 @@ import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 // components
+import LazyLoader from '../../components/LazyLoader';
 import Loader from '../../components/Loader';
 import Table from '../../components/Table';
 import ToggleButton from '../../components/ToggleButton';
+import WaterCyclesPageLoader from '../../placeholders/WaterCyclesPageSkeletonLoader';
 
 // thunks
 import { displaySnackMessage } from '../../store/modules/snack';
@@ -46,7 +48,6 @@ import {
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
-    isLoading: false,
     isEditMode: false,
     isChecked: window.localStorage.getItem('checked') === 'true',
     schedules: [],
@@ -58,8 +59,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   React.useEffect(() => {
     props.getAllSchedules()
-      .then(() => setState({ ...state, schedules: props.schedules }))
-      .then(() => setState({ ...state, isLoading: false }));
+      .then(() => setState({ ...state, schedules: props.schedules }));
       // .then(() => setState({ ...state, isChecked: Boolean(window.localStorage.getItem('checked')) }));
   },              []);
 
@@ -72,7 +72,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           .then(() => setState({
             ...state,
             action: '',
-            isDeleteModal: false, isLoading: false,
+            isDeleteModal: false,
           }));
         break;
       case 'dismiss':
@@ -197,13 +197,16 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     }));
 
     return (
-      <div className="water-schedule-table">
-        <Table
-          keys={tableHeaders}
-          values={tableValues}
-          statusClass={state.statusClass}
-        />
-      </div>
+      props.isLoading ? (<WaterCyclesPageLoader/>) :
+     <LazyLoader height={110}>
+        <div className="water-schedule-table">
+          <Table
+            keys={tableHeaders}
+            values={tableValues}
+            statusClass={state.statusClass}
+          />
+        </div>
+     </LazyLoader>
     );
   };
 
@@ -230,9 +233,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   return (
     <DashboardPage component={
-      state.isLoading
-        ? Loader()
-        : WaterCyclesPageComponent()
+        WaterCyclesPageComponent()
     }/>
   );
 };
@@ -241,6 +242,7 @@ export const mapStateToProps = state => ({
   error: state.error,
   schedules: state.timeSchedules.data,
   status: state.timeSchedules.status,
+  isLoading: state.timeSchedules.isLoading,
 });
 
 export const mapDispatchToProps = dispatch => ({

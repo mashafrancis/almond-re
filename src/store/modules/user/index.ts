@@ -10,6 +10,7 @@ import { displaySnackMessage } from '../snack';
 import {
   EditUserDetailsSuccess,
   GetAllUsersSuccess,
+  GetUserDetailsActionRequest,
   GetUserDetailsActionSuccess,
   UserDetails,
 } from './interfaces';
@@ -21,6 +22,7 @@ import { authService } from '../../../utils/auth';
 import {
   EDIT_USER_DETAILS_SUCCESS,
   GET_ALL_USERS_SUCCESS,
+  GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   LOG_OUT_USER,
 } from './types';
@@ -28,11 +30,23 @@ import {
 /**
  * Get userDetails success action creator
  *
+ * @returns {GetUserDetailsActionRequest}
+ */
+export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
+  type: GET_USER_DETAILS_REQUEST,
+  isGettingUserDetails: true,
+});
+
+/**
+ * Get userDetails success action creator
+ *
  * @returns {GetUserDetailsActionSuccess}
  */
-export const getUserDetailsSuccess = (user: any): GetUserDetailsActionSuccess => {
-  return { user, type: GET_USER_DETAILS_SUCCESS };
-};
+export const getUserDetailsSuccess = (user: UserDetails): GetUserDetailsActionSuccess => ({
+  user,
+  type: GET_USER_DETAILS_SUCCESS,
+  isGettingUserDetails: false,
+});
 
 /**
  * Get userDetails success action creator
@@ -66,6 +80,7 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * @returns {Function}
  */
 export const getUserDetails = userId => (dispatch, getState, http) => {
+  dispatch(getUserDetailsRequest());
   return firebase.firebaseDatabase.ref('users')
     .orderByChild('email')
     .equalTo(userId)
@@ -114,6 +129,7 @@ export const logoutUser = () => (dispatch) => {
 const userInitialState = {
   user: {},
   users: [],
+  isGettingUserDetails: true,
 };
 
 /**
@@ -126,10 +142,16 @@ const userInitialState = {
  */
 export const reducer = (state = userInitialState, action: AnyAction) => {
   switch (action.type) {
+    case GET_USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        isGettingUserDetails: action.isGettingUserDetails,
+      };
     case GET_USER_DETAILS_SUCCESS:
       return {
         ...state,
         user: action.user,
+        isGettingUserDetails: action.isGettingUserDetails,
       };
     case EDIT_USER_DETAILS_SUCCESS:
       return {

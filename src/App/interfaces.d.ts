@@ -6,12 +6,12 @@ export interface AppProps {
   serverError: { error: boolean };
   user: UserDetails;
   users: any;
-  getUserDetails: (userId) => Promise<any>;
+  getUserDetails: any;
   getAllUsers: () => Promise<any>;
+  isGettingUserDetails: boolean;
 }
 
 export interface AppState {
-  isGettingUserDetails: boolean;
   isUserAuthenticated: boolean;
   users: UserDetails[];
 }
