@@ -52,6 +52,7 @@ const error = 'You are offline. Kindly check your internet connection';
  */
 export const getSchedulesRequest = (): GetAllSchedulesActionRequest => ({
   type: GET_SCHEDULE_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -63,6 +64,7 @@ export const getSchedulesRequest = (): GetAllSchedulesActionRequest => ({
 export const getSchedulesSuccess = (schedules: Schedule[]): GetAllSchedulesActionSuccess => ({
   schedules,
   type: GET_SCHEDULE_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -82,6 +84,7 @@ export const getSchedulesFailure = (errors): GetAllSchedulesActionFailure => ({
  */
 export const addScheduleRequest = (): AddScheduleActionRequest => ({
   type: ADD_SCHEDULES_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -93,6 +96,7 @@ export const addScheduleRequest = (): AddScheduleActionRequest => ({
 export const addScheduleSuccess = (schedule: Schedule): AddScheduleActionSuccess => ({
   schedule,
   type: ADD_SCHEDULES_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -112,6 +116,7 @@ export const addScheduleFailure = (errors): AddSchedulesActionFailure => ({
  */
 export const deleteSingleScheduleRequest = (): DeleteScheduleActionRequest => ({
   type: DELETE_SCHEDULE_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -123,6 +128,7 @@ export const deleteSingleScheduleRequest = (): DeleteScheduleActionRequest => ({
 export const deleteSingleScheduleSuccess = (id): DeleteScheduleActionSuccess => ({
   id,
   type: DELETE_SCHEDULE_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -142,6 +148,7 @@ export const deleteSingleScheduleFailure = (errors): DeleteScheduleActionFailure
  */
 export const editScheduleRequest = (): EditScheduleActionRequest => ({
   type: EDIT_SCHEDULE_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -155,6 +162,7 @@ export const editScheduleSuccess = (id, schedule: Schedule): EditScheduleActionS
   id,
   schedule,
   type: EDIT_SCHEDULE_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -323,49 +331,45 @@ const reducer = (state = schedulesInitialState, action) => {
     case GET_SCHEDULE_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.isLoading,
       };
     case GET_SCHEDULE_SUCCESS:
       return {
         ...state,
         data: action.schedules,
         errors: null,
-        isLoading: false,
+        isLoading: action.isLoading,
       };
     case GET_SCHEDULES_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
       };
     case ADD_SCHEDULES_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.isLoading,
       };
     case ADD_SCHEDULES_SUCCESS:
       return {
         ...state,
         errors: null,
-        isLoading: false,
+        isLoading: action.isLoading,
       };
     case ADD_SCHEDULES_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
       };
     case DELETE_SCHEDULE_REQUEST:
       return {
         ...state,
-        isLoading: true,
       };
     case DELETE_SCHEDULE_SUCCESS:
       return {
         ...state,
         schedule: action.schedule,
         errors: null,
-        isLoading: false,
       };
     case DELETE_SCHEDULE_FAILURE:
       return {
@@ -376,19 +380,16 @@ const reducer = (state = schedulesInitialState, action) => {
     case EDIT_SCHEDULE_REQUEST:
       return {
         ...state,
-        isLoading: true,
       };
     case EDIT_SCHEDULE_SUCCESS:
       return {
         ...state,
         errors: null,
-        isLoading: false,
       };
     case EDIT_SCHEDULE_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
       };
     case GET_PUMP_STATUS_REQUEST:
       return {
@@ -406,7 +407,6 @@ const reducer = (state = schedulesInitialState, action) => {
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
       };
     default:
       return state;

@@ -3,14 +3,19 @@ import {
   EDIT_USER_DETAILS_SUCCESS,
   GET_ALL_USERS_SUCCESS,
   GET_USER_DETAILS_FAILURE,
+  GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
 } from './types';
 
-import { UserRole } from 'modules/userRoles/interfaces';
+export interface GetUserDetailsActionRequest {
+  type: GET_USER_DETAILS_REQUEST;
+  isGettingUserDetails: boolean;
+}
 
 export interface GetUserDetailsActionSuccess {
   user: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
+  isGettingUserDetails: boolean;
 }
 
 export interface GetUserDetailsActionFailure {
