@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page should be rendered properly 1`] = `
+<Fragment>
+  <main
+    className="home-cover"
+  >
+    <section
+      className="logo"
+    >
+      <img
+        alt="Logo"
+        src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
+      />
+    </section>
+    <section
+      className="home-image"
+    >
+      <div
+        className="image-wrapper"
+      >
+        <img
+          alt="Almond Image"
+          src="https://res.cloudinary.com/almondgreen/image/upload/v1569235553/Almond/analyze_dqyrcp.svg"
+        />
+      </div>
+    </section>
+    <section
+      id="hero"
+    >
+      <div
+        className="hero-container"
+      >
+        <div
+          className="hero-info"
+        >
+          <h1>
+            We have an idea!
+          </h1>
+          <h1>
+            Grow hydroponically.
+          </h1>
+          <h2>
+            Focusing on the safe production of fresh produce.
+          </h2>
+          <NavLink
+            to="/water-cycles"
+          >
+            <button
+              className="mdc-button mdc-button--raised"
+            >
+              <span
+                className="mdc-button__label"
+              >
+                Go to dashboard
+              </span>
+            </button>
+          </NavLink>
+        </div>
+      </div>
+    </section>
+  </main>
+</Fragment>
+`;

@@ -15,7 +15,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+client/coverage
 
 # nyc test coverage
 .nyc_output
@@ -33,7 +33,7 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+../node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -55,14 +55,14 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+client/.env
 
 # next.js build output
 .next
 
 /node_modules
 .DS_Store
-.env
+client/.env
 .nyc_output
 /build
 /coverage

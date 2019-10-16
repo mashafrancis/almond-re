@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lazy Loader should render the lazy loader component 1`] = `
+<LazyLoader
+  $$typeof={Symbol(react.element)}
+  _owner={null}
+  _store={Object {}}
+  props={Object {}}
+  type="div"
+>
+  <LazyLoad
+    $$typeof={Symbol(react.element)}
+    _owner={null}
+    _store={Object {}}
+    debounce={true}
+    elementType="div"
+    offset={-100}
+    offsetBottom={0}
+    offsetHorizontal={0}
+    offsetLeft={0}
+    offsetRight={0}
+    offsetTop={0}
+    offsetVertical={0}
+    overflow={true}
+    props={Object {}}
+    scroll={true}
+    throttle={250}
+    type="div"
+  >
+    <div
+      className="LazyLoad"
+      style={
+        Object {
+          "height": undefined,
+          "width": undefined,
+        }
+      }
+    />
+  </LazyLoad>
+</LazyLoader>
+`;
