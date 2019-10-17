@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table component should render correctly 1`] = `
+<Fragment>
+  <div
+    className="tbl-header"
+  >
+    <div
+      className="tbl-header__column--35"
+      key="0"
+    >
+      Assignee
+    </div>
+    <div
+      className="tbl-header__column"
+      key="1"
+    >
+      Asset Tag
+    </div>
+    <div
+      className="tbl-header__column"
+      key="2"
+    >
+      Date Added
+    </div>
+    <div
+      className="tbl-header__column"
+      key="3"
+    >
+      Serial Number
+    </div>
+    <div
+      className="tbl-header__column"
+      key="4"
+    >
+      Warranty
+    </div>
+  </div>
+  <div
+    className="tbl-columns"
+  >
+    <div
+      className="tbl-row-number"
+      key="1"
+    >
+      <h5>
+        1
+      </h5>
+    </div>
+    <div
+      className="tbl-row"
+      key="0"
+    >
+      <div
+        className="tbl-row__column--35"
+        key="0"
+      >
+        Yaba
+      </div>
+      <div
+        className="tbl-row__column"
+        key="1"
+      >
+        AND/WEYA/WYRUHS
+      </div>
+      <div
+        className="tbl-row__column"
+        key="2"
+      >
+        07 June 2018
+      </div>
+      <div
+        className="tbl-row__column"
+        key="3"
+      >
+        C0ABDJFGSKSJK
+      </div>
+      <div
+        className="tbl-row__column"
+        key="4"
+      >
+        Expired
+      </div>
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Table component should render header value if provided 1`] = `
+<Fragment>
+  <div
+    className="tbl-header"
+  >
+    <div
+      className="tbl-header__column--35"
+      key="0"
+    >
+      Change Assignee
+    </div>
+    <div
+      className="tbl-header__column"
+      key="1"
+    >
+      Asset Tag
+    </div>
+    <div
+      className="tbl-header__column"
+      key="2"
+    >
+      Date Added
+    </div>
+    <div
+      className="tbl-header__column"
+      key="3"
+    >
+      Serial Number
+    </div>
+    <div
+      className="tbl-header__column"
+      key="4"
+    >
+      Warranty
+    </div>
+  </div>
+  <div
+    className="tbl-columns"
+  >
+    <div
+      className="tbl-row-number"
+      key="1"
+    >
+      <h5>
+        1
+      </h5>
+    </div>
+    <div
+      className="tbl-row"
+      key="0"
+    >
+      <div
+        className="tbl-row__column--35"
+        key="0"
+      >
+        Yaba
+      </div>
+      <div
+        className="tbl-row__column"
+        key="1"
+      >
+        AND/WEYA/WYRUHS
+      </div>
+      <div
+        className="tbl-row__column"
+        key="2"
+      >
+        07 June 2018
+      </div>
+      <div
+        className="tbl-row__column"
+        key="3"
+      >
+        C0ABDJFGSKSJK
+      </div>
+      <div
+        className="tbl-row__column"
+        key="4"
+      >
+        Expired
+      </div>
+    </div>
+  </div>
+</Fragment>
+`;
