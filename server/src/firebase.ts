@@ -1,7 +1,5 @@
 import * as firebase from 'firebase-admin'
 
-
-
 const params = {
   type: process.env.TYPE,
   projectId: process.env.PROJECT_ID,
