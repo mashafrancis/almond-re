@@ -84,12 +84,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
-      ? props.togglePump({ status: 1 })
-        .then(() => props.displaySnackMessage('Manual Override ON.'))
+      ? props.togglePump({ status: '1' })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
         .then(() => window.localStorage.setItem('checked', 'true'))
-      : props.togglePump({ status: 0 })
-        .then(() => props.displaySnackMessage('Manual Override OFF.'))
+      : props.togglePump({ status: '0' })
         .then(() => setState({ ...state, statusClass: '' }))
         .then(() => window.localStorage.setItem('checked', 'false'));
   };
@@ -255,7 +253,7 @@ export const mapDispatchToProps = dispatch => ({
   getAllSchedules: () => dispatch(getAllSchedules()),
   deleteSingleSchedule: id => dispatch(deleteSingleSchedule(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-  togglePump: state => dispatch(togglePump(state)),
+  togglePump: status => dispatch(togglePump(status)),
   getPumpStatus: () => dispatch(getPumpStatus()),
 });
 
