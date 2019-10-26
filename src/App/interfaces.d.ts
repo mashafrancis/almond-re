@@ -6,7 +6,7 @@ export interface AppProps {
   serverError: { error: boolean };
   user: UserDetails;
   users: any;
-  getUserDetails: any;
+  getUserDetails: () => Promise<any>;
   getAllUsers: () => Promise<any>;
   isGettingUserDetails: boolean;
 }

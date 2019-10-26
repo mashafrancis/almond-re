@@ -25,6 +25,7 @@ import Loader from 'components/Loader';
 import Switch from 'components/SwitchButton';
 import Table from 'components/Table';
 import ToggleButton from 'components/ToggleButton';
+import { authService } from 'utils/auth';
 import WaterCyclesPageLoader from '../../placeholders/WaterCyclesPageSkeletonLoader';
 
 // thunks

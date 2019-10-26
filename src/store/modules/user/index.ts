@@ -1,5 +1,3 @@
-import * as firebase from 'utils/firebase';
-
 // third party libraries
 import { Action, AnyAction } from 'redux';
 
@@ -10,6 +8,7 @@ import { displaySnackMessage } from '../snack';
 import {
   EditUserDetailsSuccess,
   GetAllUsersSuccess,
+  GetUserDetailsActionFailure,
   GetUserDetailsActionRequest,
   GetUserDetailsActionSuccess,
   UserDetails,
@@ -22,6 +21,7 @@ import { authService } from 'utils/auth';
 import {
   EDIT_USER_DETAILS_SUCCESS,
   GET_ALL_USERS_SUCCESS,
+  GET_USER_DETAILS_FAILURE,
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   LOG_OUT_USER,
@@ -46,6 +46,16 @@ export const getUserDetailsSuccess = (user: UserDetails): GetUserDetailsActionSu
   user,
   type: GET_USER_DETAILS_SUCCESS,
   isGettingUserDetails: false,
+});
+
+/**
+ * Get userDetails failure action creator
+ *
+ * @returns {GetUserDetailsActionFailure}
+ */
+export const getUserDetailsFailure = (errors): GetUserDetailsActionFailure => ({
+  errors,
+  type: GET_USER_DETAILS_FAILURE,
 });
 
 /**
@@ -79,15 +89,16 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  *
  * @returns {Function}
  */
-export const getUserDetails = userId => (dispatch, getState, http) => {
+export const getUserDetails = () => (dispatch, getState, http) => {
   dispatch(getUserDetailsRequest());
-  return firebase.firebaseDatabase.ref('users')
-    .orderByChild('email')
-    .equalTo(userId)
-    .on('value', (snapshot) => {
-      const data = Object.values(snapshot.val());
-      dispatch(getUserDetailsSuccess(data[0]));
-      return data;
+  return http.get('me')
+    .then((response) => {
+      dispatch(getUserDetailsSuccess(response.data.data));
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(getUserDetailsFailure(message));
+      dispatch(displaySnackMessage('Failed to fetch your details. Kindly reload page.'));
     });
 };
 

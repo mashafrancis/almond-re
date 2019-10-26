@@ -11,7 +11,7 @@ export interface SocialAuthActionRequest {
 
 export interface SocialAuthActionSuccess {
   type: SOCIAL_AUTH_SUCCESS;
-  payload: any;
+  url?: any;
 }
 
 export interface SocialAuthActionFailure {

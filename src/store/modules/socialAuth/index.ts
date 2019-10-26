@@ -34,8 +34,8 @@ export const socialAuthRequest = (): SocialAuthActionRequest => ({
  *
  * @returns {SocialAuthActionSuccess}
  */
-export const socialAuthSuccess = (payload): SocialAuthActionSuccess => ({
-  payload,
+export const socialAuthSuccess = (url): SocialAuthActionSuccess => ({
+  url,
   type: SOCIAL_AUTH_SUCCESS,
 });
 
@@ -59,22 +59,18 @@ export const socialAuthFailure = (errors): SocialAuthActionFailure => ({
  */
 export const socialAuthentication = payload => (dispatch, getState, http) => {
   dispatch(socialAuthRequest());
-  return http.post('users.json', payload)
+  return http.post('auth/social/google')
     .then((response) => {
-      firebase.firebaseDatabase.ref(`users/${Object.values(response.data)[0]}`)
-        .once('value')
-        .then((snapshot) => {
-          const data = snapshot.val() || 'Anonymous';
-          authService.saveToken(data.idToken);
-          dispatch(socialAuthSuccess(data.response));
-          dispatch(displaySnackMessage('You have successfully logged in.'));
-          window.location.replace('/water-cycles');
-        });
+      // authService.saveToken(response.data.response.data.token);
+      // dispatch(socialAuthSuccess(response));
+      // const message = response.data.response.message;
+      // dispatch(displaySnackMessage(`${message}`));
+      // window.location.replace('/water-cycles');
     })
     .catch((errors) => {
       const error = 'Something went wrong with the authentication. Kindly try again.';
       dispatch(socialAuthFailure(errors));
-      dispatch(displaySnackMessage(`${error}`));
+      dispatch(displaySnackMessage(`${errors.message}`));
     });
 };
 

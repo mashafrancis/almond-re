@@ -20,6 +20,7 @@ export interface GetUserDetailsActionSuccess {
 
 export interface GetUserDetailsActionFailure {
   type: GET_USER_DETAILS_FAILURE;
+  errors: any;
 }
 
 export interface GetAllUsersSuccess {
@@ -37,10 +38,10 @@ export interface EditUserDetailsFailure {
 }
 
 interface UserDetails {
-  id?: string;
-  username?: string;
-  name?: string;
-  email?: string;
-  photo?: string;
-  userId?: string;
+  id: string;
+  name: string;
+  email: string;
+  photo: string;
+  role: string;
+  isVerified?: boolean;
 }
