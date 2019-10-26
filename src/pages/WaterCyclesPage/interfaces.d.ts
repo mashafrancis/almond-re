@@ -1,3 +1,4 @@
+import { Location } from 'history';
 import { Schedule, Status } from 'modules/timeSchedules/interfaces';
 
 export interface WaterCyclesPageProps {
@@ -13,6 +14,7 @@ export interface WaterCyclesPageProps {
     url: string
   };
   isLoading: boolean;
+  location: Location;
 }
 
 export interface WaterCyclesPageState {

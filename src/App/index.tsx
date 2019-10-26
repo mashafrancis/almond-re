@@ -2,6 +2,7 @@
 import * as React from 'react';
 
 // third party libraries
+import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -20,8 +21,6 @@ import { AppProps, AppState } from './interfaces';
 
 // helper functions
 import { authService } from 'utils/auth';
-import { initializeGA, logPageView } from 'utils/helpers/googleAnalytics';
-import { initializeGTM } from 'utils/helpers/googleTagManager';
 import * as Hooks from 'utils/hooks';
 
 // styles
@@ -33,15 +32,19 @@ const App: React.FunctionComponent<AppProps> = (props) => {
     users: [],
   });
 
-  Hooks.useAsyncEffect(function* () {
-    initializeGTM();
-    initializeGA();
-    logPageView(window.location.pathname);
-    const user = authService.getUser();
+  React.useEffect(() => {
+    const { location: { search } } = props;
+    const { socialToken } = queryString.parse(search);
+    if (socialToken) {
+      authService.saveToken(socialToken);
+      window.location.replace(process.env.PUBLIC_URL);
+    }
+  },              []);
 
+  Hooks.useAsyncEffect(function* () {
     if (state.isUserAuthenticated) {
       try {
-        yield props.getUserDetails(user.email);
+        yield props.getUserDetails();
       } catch {
         setState({ ...state, isUserAuthenticated: true });
       }
@@ -76,7 +79,7 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  getUserDetails: userId => dispatch(getUserDetails(userId)),
+  getUserDetails: () => dispatch(getUserDetails()),
 });
 
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(App);

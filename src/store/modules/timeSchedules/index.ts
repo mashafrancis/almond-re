@@ -1,5 +1,3 @@
-import * as firebase from 'utils/firebase';
-
 // thunks
 import { displaySnackMessage } from '../snack';
 
@@ -289,16 +287,7 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const togglePump = status => (dispatch, getState, http) => {
-  return firebase.firebaseDatabase.ref()
-    .child(`timeSchedule/manual-override`)
-    .update(status)
-    .then(() => {
-      dispatch(addScheduleSuccess(status));
-    })
-    .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(displaySnackMessage(message));
-    });
+  return console.log('Class: , Function: , Line 290 ON():', 'ON');
 };
 
 /**
@@ -309,15 +298,7 @@ export const togglePump = status => (dispatch, getState, http) => {
  */
 export const getPumpStatus = () => (dispatch, getState, http) => {
   dispatch(getPumpStatusRequest());
-  return firebase.firebaseDatabase.ref('/timeSchedule/manual-override')
-    .once('value')
-    .then((snapshot) => {
-      dispatch(getPumpStatusSuccess(snapshot.val()));
-    })
-    .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(displaySnackMessage(message));
-    });
+  return console.log('Class: , Function: , Line 290 ON():', 'ON');
 };
 
 export const schedulesInitialState = {

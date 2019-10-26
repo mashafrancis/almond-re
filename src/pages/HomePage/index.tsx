@@ -3,22 +3,12 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
-import {
-  socialAuthentication,
-  socialAuthSuccess
-} from 'modules/socialAuth';
 
 // third party apps
 import { NavLink } from 'react-router-dom';
 
 // interfaces
-import { HomePageProps, HomePageState } from './interfaces';
-
-// utils
-import { auth, GoogleProvider } from 'utils/firebase';
-
-// types
-import { SOCIAL_GOOGLE_PROVIDER } from 'modules/socialAuth/types';
+import { HomePageProps} from './interfaces';
 
 // helpers
 import { authService } from 'utils/auth';
@@ -27,46 +17,8 @@ import { authService } from 'utils/auth';
 import './HomePage.scss';
 
 const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
-  const [state, setState] = React.useState<HomePageState>({
-    isLoading: false,
-  });
-
-  const getSocialAuthData = () => {
-    auth
-      .signInWithPopup(GoogleProvider)
-      .then(response => ({
-        type: SOCIAL_GOOGLE_PROVIDER,
-        payload: {
-          authData: {
-            provider: 'google-oauth2',
-            accessToken: response.credential.accessToken,
-            accessSecret: response.credential.secret,
-            idToken: response.credential.idToken,
-            refreshToken: response.user.refreshToken,
-          },
-          userDetails: {
-            name: response.user.displayName,
-            photo: response.user.photoURL,
-            email: response.user.email,
-          },
-        },
-      }))
-      .then((response) => {
-        const { authData } = response.payload;
-        const { userDetails } = response.payload;
-
-        const payload = {
-          idToken: authData.idToken,
-          name: userDetails.name,
-          photo: userDetails.photo,
-          email: userDetails.email,
-        };
-        props.socialAuthentication(payload);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        props.displaySnackMessage(errorMessage);
-      });
+  const handleLogin = () => {
+    window.location.replace(process.env.SOCIAL_AUTH_URL);
   };
 
   const renderGoToDashboard = () => (
@@ -79,7 +31,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
           </button>
         </NavLink>
       :
-        <button className="mdc-button mdc-button--raised" onClick={getSocialAuthData}>
+        <button className="mdc-button mdc-button--raised" onClick={handleLogin}>
           <span className="mdc-button__label">Login with Google</span>
         </button>
       }
@@ -119,7 +71,6 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  socialAuthentication: payload => dispatch(socialAuthentication(payload)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
