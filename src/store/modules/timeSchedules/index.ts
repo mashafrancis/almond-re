@@ -287,7 +287,14 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const togglePump = status => (dispatch, getState, http) => {
-  return console.log('Class: , Function: , Line 290 ON():', 'ON');
+  return http.post('pump', status)
+    .then((response) => {
+      dispatch(displaySnackMessage(response.data.message));
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(displaySnackMessage(message));
+    });
 };
 
 /**
@@ -297,7 +304,7 @@ export const togglePump = status => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const getPumpStatus = () => (dispatch, getState, http) => {
-  dispatch(getPumpStatusRequest());
+  // dispatch(getPumpStatusRequest());
   return console.log('Class: , Function: , Line 290 ON():', 'ON');
 };
 

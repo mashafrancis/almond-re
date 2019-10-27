@@ -8,7 +8,7 @@ import { displaySnackMessage } from 'modules/snack';
 import { NavLink } from 'react-router-dom';
 
 // interfaces
-import { HomePageProps} from './interfaces';
+import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from 'utils/auth';
