@@ -33,8 +33,6 @@ const WaterCyclesPageLoader = () => {
       {TableRow()}
       {TableRow()}
       {TableRow()}
-      {TableRow()}
-      {TableRow()}
     </div>
   );
 };

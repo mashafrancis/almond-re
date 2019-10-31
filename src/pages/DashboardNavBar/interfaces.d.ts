@@ -15,4 +15,11 @@ export interface DashboardNavBarState {
   isMenuOpen: boolean;
   selectedIndex: number;
   isLoading: boolean;
+  isFeedbackMenuOpen: boolean;
+  isFeedbackModal: boolean;
+  action: string;
+  feedback: '';
+  fields: {
+    [key: string]: string | number
+  };
 }

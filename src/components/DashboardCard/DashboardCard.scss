@@ -1,0 +1,53 @@
+.mdc-card {
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+.dashboard-card {
+  width: 100%;
+  //height: 100px;
+  //background-color: #FFFFFF;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  color: #657783;
+  //display: flex;
+  margin-top: 10px;
+  margin-bottom: 14px;
+
+  p {
+    font-size: 14px;
+  }
+
+  .card-body {
+    margin: 6px 14px 6px 14px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    width: unset;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+
+    &__title {
+      font-size: 18px;
+      margin: 0 14px 0 14px;
+      color: rgba(0, 0, 0, 0.87);
+      font-weight: 500;
+    }
+
+    &__right-header {
+      display: flex;
+      width: auto;
+      margin-right: 20px;
+    }
+  }
+}
+
+.dashboard-card-header {
+  display: flex;
+  width: auto;
+}

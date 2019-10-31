@@ -1,8 +1,9 @@
 {
-  "name": "almond-re",
+  "author": "Francis Masha",
+  "name": "almond",
   "short_name": "almond",
   "theme_color": "#1eb4e9",
-  "background_color": "#fafafa",
+  "background_color": "#3480E3",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

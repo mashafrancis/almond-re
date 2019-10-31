@@ -21,12 +21,16 @@ import { AppProps, AppState } from './interfaces';
 
 // helper functions
 import { authService } from 'utils/auth';
+import { initializeGA, logPageView } from 'utils/helpers/googleAnalytics';
 import * as Hooks from 'utils/hooks';
 
 // styles
 import './App.scss';
 
 const App: React.FunctionComponent<AppProps> = (props) => {
+  initializeGA();
+  logPageView(window.location.pathname);
+
   const [state, setState] = React.useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
     users: [],
