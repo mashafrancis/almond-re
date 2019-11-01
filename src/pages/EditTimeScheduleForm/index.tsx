@@ -13,16 +13,15 @@ import {
   TimePicker,
 } from '@material-ui/pickers';
 import MaterialIcon from '@material/react-material-icon';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { editSchedule } from 'modules/timeSchedules';
+import { displaySnackMessage } from '@modules/snack';
+import { editSchedule } from '@modules/timeSchedules';
 
 // styles
 import 'react-date-range/dist/styles.css';
@@ -30,7 +29,10 @@ import 'react-date-range/dist/theme/default.css';
 import './EditTimeScheduleForm.scss';
 
 // interfaces
-import { EditTimeScheduleFormProps, EditTimeScheduleFormState } from './interfaces';
+import {
+  EditTimeScheduleFormProps,
+  EditTimeScheduleFormState
+} from './interfaces';
 
 export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormProps> = (props) => {
   const [state, setState] = React.useState<EditTimeScheduleFormState>({
@@ -46,7 +48,6 @@ export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormP
     .replace('http://', '')
     .split('/');
 
-  // @ts-ignore
   const timeValue = props.schedules.filter(schedule => schedule._id === scheduleId[3]);
   const scheduleToEdit = new Date(timeValue[0].schedule);
 
@@ -149,7 +150,7 @@ export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormP
 
 export const mapStateToProps = state => ({
   error: state.error,
-  schedules: state.timeSchedules.data,
+  schedules: state.timeSchedules.schedules,
 });
 
 export const mapDispatchToProps = dispatch => ({

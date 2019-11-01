@@ -8,7 +8,7 @@ import './Table.scss';
 import { TableProps } from './interfaces';
 
 /**
- * Returns Table component for assets
+ * Returns Table components for assets
  *
  * @param {TableProps} props
  *
@@ -38,7 +38,6 @@ const Table = (props: TableProps) => {
       {
         values.map((value) => {
           return (
-            <div className="tbl-columns">
             <div key={value.id} className={`tbl-row ${props.statusClass}`}>
               {
                 tableHeaders.map((header, index) => {
@@ -52,7 +51,6 @@ const Table = (props: TableProps) => {
                   );
                 })
               }
-            </div>
             </div>
           );
         })

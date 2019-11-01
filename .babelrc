@@ -5,14 +5,20 @@
   ],
   "plugins": [
     "add-module-exports",
-    ["module-resolver", {
-      "root": ["./src"],
-      "alias": {
-        "components": "./src/components/",
-        "pages": "./src/pages/",
-        "modules": "./src/store/modules/",
-        "utils": "./src/utils/"
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "@component": "./src/components/",
+          "@pages": "./src/pages/",
+          "@placeholders": "./src/placeholders/",
+          "@modules": "./src/store/modules/",
+          "@utils": "./src/utils/"
+        }
       }
-    }]
+    ]
   ]
 }

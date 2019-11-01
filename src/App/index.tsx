@@ -8,78 +8,82 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 // components
-import InternalServerErrorMessage from 'components/InternalServerErrorMessage';
-import Loader from 'components/Loader';
-import SnackBar from 'components/SnackBar';
+import ErrorBoundary from '@components/ErrorBoundary';
+import Loader from '@components/Loader';
+import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
 
 // thunk action creators
-import { getUserDetails } from 'modules/user';
+import { getUserDetails } from '@modules/user';
 
 // interfaces
 import { AppProps, AppState } from './interfaces';
 
 // helper functions
-import { authService } from 'utils/auth';
-import { initializeGA, logPageView } from 'utils/helpers/googleAnalytics';
-import * as Hooks from 'utils/hooks';
+import { authService } from '@utils/auth';
+import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // styles
 import './App.scss';
 
-const App: React.FunctionComponent<AppProps> = (props) => {
-  initializeGA();
-  logPageView(window.location.pathname);
-
-  const [state, setState] = React.useState<AppState>({
+export class App extends React.Component<AppProps, AppState> {
+  state = {
     isUserAuthenticated: authService.isAuthenticated(),
-    users: [],
-  });
+    isFetchingUserDetails: true,
+  };
 
-  React.useEffect(() => {
-    const { location: { search } } = props;
+  async componentDidMount() {
+    initializeGA();
+    logPageView(window.location.pathname);
+
+    if (this.state.isUserAuthenticated) {
+      try {
+        await this.props.getUserDetails();
+        this.setState({ isFetchingUserDetails: false });
+
+      } catch {
+        this.setState({
+          isFetchingUserDetails: false,
+        });
+      }
+    }
+
+    const { location: { search } } = this.props;
     const { socialToken } = queryString.parse(search);
     if (socialToken) {
       authService.saveToken(socialToken);
       window.location.replace(process.env.PUBLIC_URL);
     }
-  },              []);
+  }
 
-  Hooks.useAsyncEffect(function* () {
-    if (state.isUserAuthenticated) {
-      try {
-        yield props.getUserDetails();
-      } catch {
-        setState({ ...state, isUserAuthenticated: true });
-      }
-    }
-  },                   []);
+  render() {
+    const checkUserDetailsAndAuthentication = (
+      hasFetchedUserDetails: boolean,
+      isUserAuthenticated: boolean) => (hasFetchedUserDetails && isUserAuthenticated);
 
-  const checkUserDetailsAndAuthentication = (
-    isGettingUserDetails: boolean,
-    isUserAuthenticated: boolean) => (isGettingUserDetails && isUserAuthenticated);
+    const { isUserAuthenticated, isFetchingUserDetails } = this.state;
 
-  const { isUserAuthenticated } = state;
-  const { isGettingUserDetails } = props;
-
-  return checkUserDetailsAndAuthentication(isGettingUserDetails, isUserAuthenticated)
-      ? <Loader />
-      : <React.Fragment>
-        <SnackBar />
-        <>
-          {
-            location.pathname !== '/'
-            && isUserAuthenticated
-          }
-          { props.serverError.error ? <InternalServerErrorMessage /> : <Routes /> }
-        </>
-      </React.Fragment>;
-};
+    return (checkUserDetailsAndAuthentication(isFetchingUserDetails, isUserAuthenticated) ? <Loader/> :
+        <ErrorBoundary>
+          <React.Fragment>
+            <SnackBar/>
+            <>
+              {
+                location.pathname !== '/'
+                && isUserAuthenticated
+              }
+              {<Routes/>}
+            </>
+          </React.Fragment>
+        </ErrorBoundary>
+    );
+  }
+}
 
 export const mapStateToProps = state => ({
   serverError: state.internalServerError,
   user: state.user.user,
-  isGettingUserDetails: state.user.isGettingUserDetails,
+  isFetchingUserDetails: state.user.isFetchingUserDetails,
 });
 
 export const mapDispatchToProps = dispatch => ({

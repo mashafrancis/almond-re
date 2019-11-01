@@ -3,14 +3,14 @@ import * as React from 'react';
 
 // third party libraries
 import { mount } from 'enzyme';
-import { createBrowserHistory } from 'history';
+import * as history from 'history';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 // helper functions
-import http from 'utils/helpers/http';
+import http from '@utils/helpers/http';
 
 import reducer from './store/rootReducer';
 
@@ -125,15 +125,15 @@ export const axiosMockAdapter = (response, error) => {
 };
 
 // mock router context instead of using Memory Router
-export const routerContext = {
-  context: {
-    router: {
-      history: createBrowserHistory(),
-      route: {
-        location: { pathname: '/' },
-        match: { isExact: true },
-      },
-    },
-  },
-  childContextTypes: { router: () => null },
-};
+// export const routerContext = {
+//   context: {
+//     router: {
+//       history: history.createBrowserHistory(),
+//       route: {
+//         location: { pathname: '/' },
+//         match: { isExact: true },
+//       },
+//     },
+//   },
+//   childContextTypes: { router: () => null },
+// };

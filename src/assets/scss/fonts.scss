@@ -1,0 +1,19 @@
+@import './variables';
+
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 300;
+  src: url('../fonts/sanfranciscodisplay-ultralight-webfont.woff');
+}
+
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 400;
+  src: url('../fonts/sanfranciscodisplay-thin-webfont.woff');
+}
+
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 500;
+  src: url('../fonts/sanfranciscodisplay-regular-webfont.woff');
+}

@@ -3,7 +3,7 @@ import * as React from 'react';
 
 // third party libraries
 import MaterialIcon from '@material/react-material-icon';
-import * as moment from 'moment';
+import moment from 'moment';
 import {
   VerticalTimeline,
   VerticalTimelineElement

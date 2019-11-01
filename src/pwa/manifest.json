@@ -1,19 +1,20 @@
 {
-  "name": "almond-re",
+  "author": "Francis Masha",
+  "name": "almond",
   "short_name": "almond",
-  "theme_color": "#1eb4e9",
-  "background_color": "#fafafa",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "../public/index.html?utm_source=homescreen",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "logo192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "logo.png",
+      "src": "logo512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

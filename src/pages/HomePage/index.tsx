@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 
 // third party apps
 import { NavLink } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { HomePageProps } from './interfaces';
 
 // helpers
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 // styles
 import './HomePage.scss';

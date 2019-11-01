@@ -5,8 +5,8 @@ import * as Cookies from 'cookies-js';
 import store from '../../store';
 import { axiosMockAdapter, expiredToken, token } from '../../testHelpers';
 import { authService } from '../auth';
-import http from './http';
 import CacheHandler from './CacheHandler';
+import http from './http';
 
 describe.skip('The http axios instance helper function', () => {
   authService.logoutUser = jest.fn();
@@ -69,7 +69,7 @@ describe.skip('The http axios instance helper function', () => {
     });
   });
 
-  it('should render 500 error component', (done) => {
+  it('should render 500 error components', (done) => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(null, serverErrorMock);
 

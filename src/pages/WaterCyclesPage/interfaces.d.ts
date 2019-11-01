@@ -1,5 +1,5 @@
+import { Schedule, Status } from '@modules/timeSchedules/interfaces';
 import { Location } from 'history';
-import { Schedule, Status } from 'modules/timeSchedules/interfaces';
 
 export interface WaterCyclesPageProps {
   getAllSchedules: () => Promise<any>;
@@ -7,6 +7,7 @@ export interface WaterCyclesPageProps {
   displaySnackMessage?: (message) => Promise<any>;
   togglePump?: (state) => Promise<any>;
   getPumpStatus: () => Promise<any>;
+  toggleScheduleStatus: (id, enabled) => Promise<any>;
   status?: Status;
   error?: object;
   schedules: Schedule[];
@@ -15,14 +16,15 @@ export interface WaterCyclesPageProps {
   };
   isLoading: boolean;
   location: Location;
+  enabled: boolean;
 }
 
 export interface WaterCyclesPageState {
   isEditMode: boolean;
-  isChecked: boolean;
   schedules: any;
   isDeleteModal: boolean;
   action: string;
   id: string;
   statusClass: string;
+  isEnabled: boolean;
 }

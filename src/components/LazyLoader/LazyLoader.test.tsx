@@ -16,7 +16,7 @@ describe('Lazy Loader', () => {
     wrapper = mount(<LazyLoader {...props} />);
   });
 
-  it('should render the lazy loader component', () => {
+  it('should render the lazy loader components', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

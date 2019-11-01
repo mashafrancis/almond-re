@@ -14,7 +14,7 @@
   margin-bottom: 0;
 }
 .log-card__info {
-  background-color: rgba(25, 103, 210, 0.12) !important;
+  background-color: #e6f4ea !important;
 }
 .log-card__error {
   background-color: rgba(210, 43, 53, 0.12) !important;
@@ -24,7 +24,7 @@
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 6px;
-  color: rgba(25, 103, 210, 0.87);
+  color: #0E5827;
 }
 .log-card .log-details-info__date {
   display: inline-block;
@@ -32,7 +32,7 @@
 .log-card .log-details-info__date p {
   margin: 0 0 10px;
   line-height: 1;
-  color: rgba(25, 103, 210, 0.87);
+  color: #0E5827;
   font-weight: 300;
   font-size: 12px;
 }
@@ -41,7 +41,7 @@
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 6px;
-  color: rgba(210, 43, 53, 0.87);
+  color: #821721;
 }
 .log-card .log-details-error__date {
   display: inline-block;
@@ -49,7 +49,7 @@
 .log-card .log-details-error__date p {
   margin: 0 0 10px;
   line-height: 1;
-  color: rgba(210, 43, 53, 0.87);
+  color: #821721;
   font-weight: 300;
   font-size: 12px;
 }

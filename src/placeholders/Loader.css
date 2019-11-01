@@ -17,10 +17,4 @@
   animation: loading 1.5s infinite ease-in-out;
 }
 
-@keyframes loading {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 /*# sourceMappingURL=Loader.css.map */

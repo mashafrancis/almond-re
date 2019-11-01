@@ -5,11 +5,11 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
-import PageNotFound from 'components/PageNotFound';
-import AddTimeScheduleForm from 'pages/AddTimeScheduleForm';
-import EditTimeScheduleForm from 'pages/EditTimeScheduleForm';
-import HomePage from 'pages/HomePage';
-import WaterCyclesPage from 'pages/WaterCyclesPage';
+import PageNotFound from '@components/PageNotFound';
+import AddTimeScheduleForm from '@pages/AddTimeScheduleForm';
+import EditTimeScheduleForm from '@pages/EditTimeScheduleForm';
+import HomePage from '@pages/HomePage';
+import WaterCyclesPage from '@pages/WaterCyclesPage';
 
 const Routes = () => (
   <Switch>

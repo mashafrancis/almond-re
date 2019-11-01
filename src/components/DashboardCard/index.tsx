@@ -1,25 +1,9 @@
 import * as React from 'react';
 
-// components
-import Button from 'components/Button';
-
 // third-party libraries
-import Card, {
-  CardActionButtons,
-  CardActionIcons,
-  CardActions,
-  CardMedia,
-  CardPrimaryContent
-} from '@material/react-card';
-import Fab from '@material/react-fab';
-import {
-  Cell,
-} from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
-import * as moment from 'moment';
+import Card from '@material/react-card';
 
 // interfaces
-import { Typography } from '@material-ui/core';
 import { DashboardCardProps } from './interfaces';
 
 // styles

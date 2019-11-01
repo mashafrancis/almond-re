@@ -11,14 +11,14 @@ const props = {
   history: { goBack: jest.fn() },
 };
 
-describe('PageNotFound component', () => {
+describe('PageNotFound components', () => {
   const wrapper = shallow(<PageNotFound { ...props }/>);
 
   it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render the Page Not Found component', () => {
+  it('should render the Page Not Found components', () => {
     expect(wrapper.find('.notfound').length).toEqual(1);
   });
 });

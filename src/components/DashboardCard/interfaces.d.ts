@@ -1,5 +1,3 @@
-import { Trip } from 'modules/trips/interfaces';
-
 export interface DashboardCardProps {
   heading: string;
   body: any;

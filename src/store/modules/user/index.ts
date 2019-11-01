@@ -15,7 +15,7 @@ import {
 } from './interfaces';
 
 // helper functions
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 // types
 import {
@@ -34,7 +34,7 @@ import {
  */
 export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
   type: GET_USER_DETAILS_REQUEST,
-  isGettingUserDetails: true,
+  isFetchingUserDetails: true,
 });
 
 /**
@@ -45,7 +45,7 @@ export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
 export const getUserDetailsSuccess = (user: UserDetails): GetUserDetailsActionSuccess => ({
   user,
   type: GET_USER_DETAILS_SUCCESS,
-  isGettingUserDetails: false,
+  isFetchingUserDetails: false,
 });
 
 /**
@@ -140,7 +140,7 @@ export const logoutUser = () => (dispatch) => {
 const userInitialState = {
   user: {},
   users: [],
-  isGettingUserDetails: true,
+  isFetchingUserDetails: false,
 };
 
 /**
@@ -156,13 +156,13 @@ export const reducer = (state = userInitialState, action: AnyAction) => {
     case GET_USER_DETAILS_REQUEST:
       return {
         ...state,
-        isGettingUserDetails: action.isGettingUserDetails,
+        isFetchingUserDetails: action.hasFetchedUserDetails,
       };
     case GET_USER_DETAILS_SUCCESS:
       return {
         ...state,
         user: action.user,
-        isGettingUserDetails: action.isGettingUserDetails,
+        isFetchingUserDetails: action.hasFetchedUserDetails,
       };
     case EDIT_USER_DETAILS_SUCCESS:
       return {

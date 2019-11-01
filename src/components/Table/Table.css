@@ -603,6 +603,7 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 21px;
+  color: #333333;
 }
 
 .tbl-row {
@@ -660,8 +661,11 @@
   margin: 0;
   font-weight: 400;
 }
+.action-buttons__edit {
+  color: #1967d2;
+}
 .action-buttons__delete {
-  color: #E53167;
+  color: #9E143E !important;
   margin-left: 20px !important;
 }
 
@@ -1347,7 +1351,7 @@
     font-size: 14px;
   }
   .action-buttons__delete {
-    color: #E53167;
+    color: #9E143E !important;
     margin-left: 20px !important;
   }
 }

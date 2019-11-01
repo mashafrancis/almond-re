@@ -3,15 +3,20 @@ import * as React from 'react';
 
 // third party libraries
 import { mount } from 'enzyme';
+import { createBrowserHistory } from 'history';
 
 // components
 import InternalServerErrorMessage from './index';
 
 describe('Internal Server Error Message', () => {
+  let history;
+  if (window.location.pathname !== '/') {
+    window.history.replaceState(null, null, '/');
+  }
+  history = createBrowserHistory();
   const props = {
-    history: {
-      goBack: jest.fn(),
-    },
+    history,
+    errorButton: jest.fn(),
   };
   let wrapper;
 
@@ -23,7 +28,7 @@ describe('Internal Server Error Message', () => {
     wrapper = null;
   });
 
-  it('should render the Internal Server Error component', () => {
+  it('should render the Internal Server Error components', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

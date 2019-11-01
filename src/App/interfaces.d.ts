@@ -8,10 +8,10 @@ export interface AppProps {
   users: any;
   getUserDetails: () => Promise<any>;
   getAllUsers: () => Promise<any>;
-  isGettingUserDetails: boolean;
+  isFetchingUserDetails: boolean;
 }
 
 export interface AppState {
   isUserAuthenticated: boolean;
-  users: UserDetails[];
+  isFetchingUserDetails: boolean;
 }

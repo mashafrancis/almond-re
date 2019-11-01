@@ -16,12 +16,12 @@ import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { addNewSchedule } from 'modules/timeSchedules';
+import { displaySnackMessage } from '@modules/snack';
+import { addNewSchedule } from '@modules/timeSchedules';
 
 // styles
 import 'react-date-range/dist/styles.css';
