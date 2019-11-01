@@ -92,3 +92,4 @@ dist/
 /server/node_modules
 
 !/.env
+src/pages/WaterCyclesPage/__snapshots__/

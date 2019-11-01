@@ -77,7 +77,7 @@ function registerValidSW(swUrl, config) {
               }
             } else {
               // At this point, everything has been precached.
-              // It's the perfect time to display a
+              // It's the perfect date to display a
               // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
 

@@ -1,0 +1,57 @@
+.log-card {
+  border: none !important;
+  margin-bottom: 8px !important;
+  margin-top: 0 !important;
+}
+.log-card .log-details {
+  position: relative;
+  margin: 0.5em 10px;
+}
+.log-card .log-details:first-child {
+  margin-top: 0;
+}
+.log-card .log-details:last-child {
+  margin-bottom: 0;
+}
+.log-card__info {
+  background-color: rgba(25, 103, 210, 0.12) !important;
+}
+.log-card__error {
+  background-color: rgba(210, 43, 53, 0.12) !important;
+}
+.log-card .log-details-info__header h5 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  color: rgba(25, 103, 210, 0.87);
+}
+.log-card .log-details-info__date {
+  display: inline-block;
+}
+.log-card .log-details-info__date p {
+  margin: 0 0 10px;
+  line-height: 1;
+  color: rgba(25, 103, 210, 0.87);
+  font-weight: 300;
+  font-size: 12px;
+}
+.log-card .log-details-error__header h5 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  color: rgba(210, 43, 53, 0.87);
+}
+.log-card .log-details-error__date {
+  display: inline-block;
+}
+.log-card .log-details-error__date p {
+  margin: 0 0 10px;
+  line-height: 1;
+  color: rgba(210, 43, 53, 0.87);
+  font-weight: 300;
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=ActivityLogCard.css.map */

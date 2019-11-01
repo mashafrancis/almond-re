@@ -7,7 +7,7 @@ import * as ReactGA from 'react-ga';
  * @returns void
  */
 export const initializeGA = () =>
-ReactGA.initialize(process.env.GOOGLE_PROPERTY_ID, {
+ReactGA.initialize(process.env.GOOGLE_TRACKING_ID, {
   testMode: process.env.NODE_ENV === 'test',
 });
 

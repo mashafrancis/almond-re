@@ -26,10 +26,4 @@
   --mdc-ripple-fg-opacity: 0.32;
 }
 
-@media (max-width: 539px) {
-  .mdc-snackbar {
-    bottom: 74px;
-  }
-}
-
 /*# sourceMappingURL=App.css.map */

@@ -5,7 +5,7 @@ import CacheHandler from './helpers/CacheHandler';
  * Wraps an axios instance and caches it's get requests
  *
  * @param {Object} axiosInstance
- * @param {number} defaultTtl default time to live for caches
+ * @param {number} defaultTtl default date to live for caches
  * @param {CacheHandler} cacheManager a class that exposes utilities for managing cache invalidation
  *
  * @returns {Object}

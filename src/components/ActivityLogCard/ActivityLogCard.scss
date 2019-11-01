@@ -1,0 +1,74 @@
+.log-card {
+  border: none !important;
+  margin-bottom: 8px !important;
+  margin-top: 0 !important;
+
+  .log-details {
+    position: relative;
+    margin: 0.5em 10px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__info {
+    background-color: rgba(25, 103, 210, 0.12) !important;
+  }
+
+  &__error {
+    background-color: rgba(210, 43, 53, 0.12) !important;
+  }
+
+  .log-details-info {
+    &__header {
+      h5 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 10px;
+        margin-bottom: 6px;
+        color: rgba(25, 103, 210, 0.87);
+      }
+    }
+
+    &__date {
+      display: inline-block;
+
+      p {
+        margin: 0 0 10px;
+        line-height: 1.0;
+        color: rgba(25, 103, 210, 0.87);
+        font-weight: 300;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .log-details-error {
+    &__header {
+      h5 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 10px;
+        margin-bottom: 6px;
+        color: rgba(210, 43, 53, 0.87);
+      }
+    }
+
+    &__date {
+      display: inline-block;
+
+      p {
+        margin: 0 0 10px;
+        line-height: 1.0;
+        color: rgba(210, 43, 53, 0.87);
+        font-weight: 300;
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -83,6 +83,7 @@ const definePlugin = new webpack.DefinePlugin({
   'process.env.GOOGLE_PROPERTY_ID': JSON.stringify(process.env.GOOGLE_PROPERTY_ID),
   'process.env.SERVICE_ACCOUNT': JSON.stringify(process.env.SERVICE_ACCOUNT),
   'process.env.SOCIAL_AUTH_URL': JSON.stringify(process.env.SOCIAL_AUTH_URL),
+  'process.env.GOOGLE_TRACKING_ID': JSON.stringify(process.env.GOOGLE_TRACKING_ID),
 
 });
 
