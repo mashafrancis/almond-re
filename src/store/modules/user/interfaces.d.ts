@@ -9,13 +9,13 @@ import {
 
 export interface GetUserDetailsActionRequest {
   type: GET_USER_DETAILS_REQUEST;
-  isGettingUserDetails: boolean;
+  isFetchingUserDetails: boolean;
 }
 
 export interface GetUserDetailsActionSuccess {
   user: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
-  isGettingUserDetails: boolean;
+  isFetchingUserDetails: boolean;
 }
 
 export interface GetUserDetailsActionFailure {

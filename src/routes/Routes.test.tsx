@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 // components
 import Routes from './index';
 
-describe.skip('The Route component', () => {
+describe.skip('The Route components', () => {
   it('should register a route for the / page', () => {
     const wrapper = shallow(
       <Routes />
@@ -20,5 +20,26 @@ describe.skip('The Route component', () => {
       <Routes />
     );
     expect(wrapper.find({ path: '/water-cycles' }).length).toBe(1);
+  });
+
+  it('should register a route for adding new water schedule', () => {
+    const wrapper = shallow(
+      <Routes />
+    );
+    expect(wrapper.find({ path: '/water-cycles/schedule' }).length).toBe(1);
+  });
+
+  it('should register a route for editing a water schedule', () => {
+    const wrapper = shallow(
+      <Routes />
+    );
+    expect(wrapper.find({ path: '/water-cycles/edit/:id' }).length).toBe(1);
+  });
+
+  it('should register a route for 404', () => {
+    const wrapper = shallow(
+      <Routes />
+    );
+    expect(wrapper.find({ path: '/404' }).length).toBe(1);
   });
 });

@@ -10,6 +10,8 @@ const NativeControl: React.FunctionComponent<NativeControlProps> = ({ rippleActi
       type="checkbox"
       role="switch"
       className="mdc-switch__native-control"
+      aria-label="switch"
+      aria-checked="false"
       ref={rippleActivatorRef}
       {...otherProps}
     />

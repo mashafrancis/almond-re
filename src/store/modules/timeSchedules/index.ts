@@ -1,6 +1,5 @@
 // thunks
 import { displaySnackMessage } from '../snack';
-
 // interfaces
 import {
   AddScheduleActionRequest,
@@ -14,14 +13,15 @@ import {
   EditScheduleActionSuccess,
   GetAllSchedulesActionFailure,
   GetAllSchedulesActionRequest,
-  GetAllSchedulesActionSuccess,
-  GetPumpStatusActionFailure,
+  GetAllSchedulesActionSuccess, GetPumpStatusActionFailure,
   GetPumpStatusActionRequest,
   GetPumpStatusActionSuccess,
   Schedule,
   Status,
+  TogglePumpStatusActionFailure,
+  TogglePumpStatusActionRequest,
+  TogglePumpStatusActionSuccess,
 } from './interfaces';
-
 // types
 import {
   ADD_SCHEDULES_FAILURE,
@@ -32,13 +32,15 @@ import {
   DELETE_SCHEDULE_SUCCESS,
   EDIT_SCHEDULE_FAILURE,
   EDIT_SCHEDULE_REQUEST,
-  EDIT_SCHEDULE_SUCCESS,
-  GET_PUMP_STATUS_FAILURE,
+  EDIT_SCHEDULE_SUCCESS, GET_PUMP_STATUS_FAILURE,
   GET_PUMP_STATUS_REQUEST,
   GET_PUMP_STATUS_SUCCESS,
   GET_SCHEDULE_REQUEST,
   GET_SCHEDULE_SUCCESS,
   GET_SCHEDULES_FAILURE,
+  TOGGLE_PUMP_STATUS_FAILURE,
+  TOGGLE_PUMP_STATUS_REQUEST,
+  TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
 
 /**
@@ -177,6 +179,38 @@ export const editScheduleFailure = (errors): EditScheduleActionFailure => ({
  *
  * @returns {GetAllSchedulesActionRequest}
  */
+export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
+  type: TOGGLE_PUMP_STATUS_REQUEST,
+});
+
+/**
+ * Get all schedules success
+ *
+ * @returns {GetAllSchedulesActionSuccess}
+ * @param id
+ * @param enabled
+ */
+export const togglePumpStatusSuccess = (id, enabled: Status): TogglePumpStatusActionSuccess => ({
+  id,
+  enabled,
+  type: TOGGLE_PUMP_STATUS_SUCCESS,
+});
+
+/**
+ * Get all schedules failure
+ *
+ * @returns {GetAllSchedulesActionSuccess}
+ */
+export const togglePumpStatusFailure = (errors): TogglePumpStatusActionFailure => ({
+  errors,
+  type: TOGGLE_PUMP_STATUS_FAILURE,
+});
+
+/**
+ * Get all schedules request
+ *
+ * @returns {GetAllSchedulesActionRequest}
+ */
 export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
   type: GET_PUMP_STATUS_REQUEST,
 });
@@ -185,10 +219,10 @@ export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
  * Get all schedules success
  *
  * @returns {GetAllSchedulesActionSuccess}
- * @param status
+ * @param enabled
  */
-export const getPumpStatusSuccess = (status: Status): GetPumpStatusActionSuccess => ({
-  status,
+export const getPumpStatusSuccess = (enabled: Status): GetPumpStatusActionSuccess => ({
+  enabled,
   type: GET_PUMP_STATUS_SUCCESS,
 });
 
@@ -219,14 +253,13 @@ export const getAllSchedules = () => (dispatch, getState, http) => {
     })
     .catch((error) => {
       const message = error.response.data.message;
-      // dispatch(displaySnackMessage(message));
       dispatch(getSchedulesFailure(message));
     });
 };
 
 /**
  * Thunk action creator
- * Add a new schedules
+ * Add a new schedule
  *
  * @returns {Function} action type and payload
  */
@@ -245,6 +278,12 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
     });
 };
 
+/**
+ * Thunk action creator
+ * Delete a schedule
+ *
+ * @returns {Function} action type and payload
+ */
 export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
   return http.delete(`schedules/${id}`)
@@ -261,7 +300,7 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
 
 /**
  * Thunk action creator
- * Add a new schedules
+ * Edit a schedule
  *
  * @returns {Function} action type and payload
  */
@@ -287,9 +326,28 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const togglePump = status => (dispatch, getState, http) => {
-  return http.post('pump', status)
+  return http.patch('pump', status)
     .then((response) => {
       dispatch(displaySnackMessage(response.data.message));
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(displaySnackMessage(message));
+    });
+};
+
+/**
+ * Thunk action creator
+ * Toggle a pump manually
+ *
+ * @returns {Function} action type and payload
+ */
+export const getPumpStatus = () => (dispatch, getState, http) => {
+  return http.get('pump')
+    .then((response) => {
+      const data = response.data.data[0].enabled;
+      dispatch(getPumpStatusSuccess(data));
+      return data;
     })
     .catch((error) => {
       const message = error.response.data.message;
@@ -303,17 +361,24 @@ export const togglePump = status => (dispatch, getState, http) => {
  *
  * @returns {Function} action type and payload
  */
-export const getPumpStatus = () => (dispatch, getState, http) => {
-  // dispatch(getPumpStatusRequest());
-  return console.log('Class: , Function: , Line 290 ON():', 'ON');
+export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) => {
+  return http.patch(`schedules/${id}`, enabled)
+    .then((response) => {
+      dispatch(togglePumpStatusSuccess(id, response.data.data));
+      dispatch(displaySnackMessage(response.data.message));
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(togglePumpStatusFailure(message));
+      dispatch(displaySnackMessage(message));
+    });
 };
 
 export const schedulesInitialState = {
-  data: [],
   schedules: [],
+  enabled: false,
   isLoading: true,
   errors: {},
-  status: { status: 'OFF' },
 };
 
 const reducer = (state = schedulesInitialState, action) => {
@@ -326,14 +391,13 @@ const reducer = (state = schedulesInitialState, action) => {
     case GET_SCHEDULE_SUCCESS:
       return {
         ...state,
-        data: action.schedules,
+        schedules: action.schedules,
         errors: null,
         isLoading: action.isLoading,
       };
     case GET_SCHEDULES_FAILURE:
       return {
         ...state,
-        data: action.schedules,
         errors: action.errors,
         isLoading: action.isLoading,
       };
@@ -383,17 +447,30 @@ const reducer = (state = schedulesInitialState, action) => {
         ...state,
         errors: action.errors,
       };
-    case GET_PUMP_STATUS_REQUEST:
+    case TOGGLE_PUMP_STATUS_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
+    case TOGGLE_PUMP_STATUS_SUCCESS:
+      return {
+        ...state,
+        errors: null,
+      };
+    case TOGGLE_PUMP_STATUS_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+      };
+    case GET_PUMP_STATUS_REQUEST:
+      return {
+        ...state,
+      };
     case GET_PUMP_STATUS_SUCCESS:
       return {
         ...state,
-        status: action.status,
+        enabled: action.enabled,
         errors: null,
-        isLoading: false,
       };
     case GET_PUMP_STATUS_FAILURE:
       return {

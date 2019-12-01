@@ -7,7 +7,7 @@ import { shallow } from 'enzyme';
 // components
 import Table from './index';
 
-describe('Table component', () => {
+describe('Table components', () => {
   const props = {
     keys: {
       Assignee: { valueKey: 'assignee', colWidth: '35' },

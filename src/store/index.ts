@@ -4,8 +4,8 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import thunk from 'redux-thunk';
 
-import cacheAxiosInstance from 'utils/cacheAxiosInstance';
-import http from 'utils/helpers/http';
+import cacheAxiosInstance from '@utils/cacheAxiosInstance';
+import http from '@utils/helpers/http';
 
 import rootReducer from './rootReducer';
 

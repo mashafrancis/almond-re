@@ -1,5 +1,6 @@
+import { History } from 'history';
+
 export interface InternalServerErrorMessageProps {
-  history?: {
-    goBack: () => void;
-  };
+  history?: History;
+  errorButton?: any;
 }

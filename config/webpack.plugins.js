@@ -6,11 +6,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const PUBLIC_PATH = process.env.PUBLIC_URL;
-
 
 // instantiating webpack dependencies
 const cleanWebpack = new CleanWebpackPlugin();
@@ -19,40 +18,33 @@ const htmlWebpack = new htmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body',
   title: 'Almond',
-  favicon: './public/favicon.png',
+  favicon: './public/favicon.ico',
+  materialIcons: 'https://fonts.googleapis.com/icon?family=Material+Icons',
   minify: {
     removeComments: true,
-    collapseWhitespace: true
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    useShortDoctype: true,
+    removeEmptyAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    keepClosingSlash: true,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyURLs: true,
   },
 });
-const miniCssExtract = new miniCssExtractPlugin();
+const miniCssExtract = new miniCssExtractPlugin({
+  filename: '[name].[hash].css',
+  chunkFilename: '[id].[hash].css',
+});
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const hashedPlugin = new webpack.HashedModuleIdsPlugin();
 const manifestPlugin = new ManifestPlugin({
   fileName: './public/asset-manifest.json', // Not to confuse with manifest.json
 });
 
-const swPlugin = new SWPrecacheWebpackPlugin({
-  // By default, a cache-busting query parameter is appended to requests
-  // used to populate the caches, to ensure the responses are fresh.
-  // If a URL is already hashed by Webpack, then there is no concern
-  // about it being stale, and the cache-busting can be skipped.
-  dontCacheBustUrlsMatching: /\.\w{8}\./,
-  filename: 'service-worker.js',
-  logger(message) {
-    if (message.indexOf('Total precache size is') === 0) {
-      // This message occurs for every build and is a bit too noisy.
-      return;
-    }
-    console.log(message);
-  },
-  minify: true, // minify and uglify the script
-  navigateFallback: PUBLIC_PATH + 'index.html',
-  staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-});
-
 const copyPlugin = new CopyWebpackPlugin([
-  { from: 'src/pwa' }, // define the path of the files to be copied
+  { from: 'public' }, // define the path of the files to be copied
 ]);
 
 // call dotenv and it will return an Object with a parsed key
@@ -84,7 +76,12 @@ const definePlugin = new webpack.DefinePlugin({
   'process.env.SERVICE_ACCOUNT': JSON.stringify(process.env.SERVICE_ACCOUNT),
   'process.env.SOCIAL_AUTH_URL': JSON.stringify(process.env.SOCIAL_AUTH_URL),
   'process.env.GOOGLE_TRACKING_ID': JSON.stringify(process.env.GOOGLE_TRACKING_ID),
+});
 
+const workBoxPlugin = new WorkboxPlugin.GenerateSW({
+  swDest: 'sWorker.js',
+  include: [/\.html$/, /\.js$/, /\.css$/],
+  exclude: '/node_modules'
 });
 
 module.exports = {
@@ -96,6 +93,6 @@ module.exports = {
   hotModuleReplacementPlugin,
   hashedPlugin,
   manifestPlugin,
-  swPlugin,
   copyPlugin,
+  workBoxPlugin,
 };

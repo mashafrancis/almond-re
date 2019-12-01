@@ -1,6 +1,6 @@
 export interface HomePageProps {
   displaySnackMessage?: (message) => Promise<any>;
-  socialAuthentication?: (payload) => Promise<any>;
+  socialAuthentication?: () => Promise<any>;
 }
 
 export interface HomePageState {

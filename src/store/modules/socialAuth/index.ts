@@ -1,24 +1,22 @@
-import * as firebase from 'utils/firebase';
-
 // thunk
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import {
   SocialAuthActionFailure,
   SocialAuthActionRequest,
   SocialAuthActionSuccess
-} from 'modules/socialAuth/interfaces';
+} from '@modules/socialAuth/interfaces';
 
 // types
 import {
   SOCIAL_AUTH_FAILURE,
   SOCIAL_AUTH_REQUEST,
   SOCIAL_AUTH_SUCCESS
-} from 'modules/socialAuth/types';
+} from '@modules/socialAuth/types';
 
 // helpers
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 /**
  * Social authentication request
@@ -55,16 +53,16 @@ export const socialAuthFailure = (errors): SocialAuthActionFailure => ({
  * Social authentication for a user
  *
  * @returns {Function} action type and payload
- * @param payload
  */
-export const socialAuthentication = payload => (dispatch, getState, http) => {
+export const socialAuthentication = () => (dispatch, getState, http) => {
   dispatch(socialAuthRequest());
-  return http.post('auth/social/google')
+  return http.get(process.env.SOCIAL_AUTH_URL)
     .then((response) => {
+      window.location.replace(process.env.SOCIAL_AUTH_URL);
       // authService.saveToken(response.data.response.data.token);
-      // dispatch(socialAuthSuccess(response));
-      // const message = response.data.response.message;
-      // dispatch(displaySnackMessage(`${message}`));
+      dispatch(socialAuthSuccess(response));
+      const message = response.data.response.message;
+      dispatch(displaySnackMessage(`${message}`));
       // window.location.replace('/water-cycles');
     })
     .catch((errors) => {

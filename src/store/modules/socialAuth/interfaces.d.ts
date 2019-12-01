@@ -3,7 +3,7 @@ import {
   SOCIAL_AUTH_PROVIDER,
   SOCIAL_AUTH_REQUEST,
   SOCIAL_AUTH_SUCCESS
-} from 'modules/socialAuth/types';
+} from '@modules/socialAuth/types';
 
 export interface SocialAuthActionRequest {
   type: SOCIAL_AUTH_REQUEST;

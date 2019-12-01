@@ -20,14 +20,12 @@
 
 .tbl-header {
   display: flex;
-  //padding-top: 1.25rem;
   padding-bottom: 0.8rem;
   border-radius: 0.25rem;
   font-size: 15px;
   font-weight: 300;
   line-height: 21px;
-  //margin-left: 64px;
-  //color: #3480E3;
+  color: #333333;
 }
 
 .tbl-row {
@@ -91,8 +89,12 @@
     font-weight: 400;
   }
 
+  &__edit {
+    color: #1967d2;
+  }
+
   &__delete {
-    color: #E53167;
+    color: #9E143E !important;
     margin-left: 20px !important;
   }
 }
@@ -208,7 +210,7 @@
     }
 
     &__delete {
-      color: #E53167;
+      color: #9E143E !important;
       margin-left: 20px !important;
     }
   }

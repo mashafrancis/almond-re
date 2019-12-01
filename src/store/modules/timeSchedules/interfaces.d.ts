@@ -15,6 +15,9 @@ import {
   GET_SCHEDULE_REQUEST,
   GET_SCHEDULE_SUCCESS,
   GET_SCHEDULES_FAILURE,
+  TOGGLE_PUMP_STATUS_FAILURE,
+  TOGGLE_PUMP_STATUS_REQUEST,
+  TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
 
 export interface GetAllSchedulesActionRequest {
@@ -83,12 +86,27 @@ export interface EditScheduleActionFailure {
   errors: any;
 }
 
+export interface TogglePumpStatusActionRequest {
+  type: TOGGLE_PUMP_STATUS_REQUEST;
+}
+
+export interface TogglePumpStatusActionSuccess {
+  id: string;
+  enabled: Status;
+  type: TOGGLE_PUMP_STATUS_SUCCESS;
+}
+
+export interface TogglePumpStatusActionFailure {
+  type: TOGGLE_PUMP_STATUS_FAILURE;
+  errors: any;
+}
+
 export interface GetPumpStatusActionRequest {
   type: GET_PUMP_STATUS_REQUEST;
 }
 
 export interface GetPumpStatusActionSuccess {
-  status: Status;
+  enabled: Status;
   type: GET_PUMP_STATUS_SUCCESS;
 }
 
@@ -99,11 +117,13 @@ export interface GetPumpStatusActionFailure {
 
 export interface Schedule {
   id?: string;
+  _id?: string;
   schedule: string;
+  enabled?: boolean;
 }
 
 export interface Status {
-  status: string;
+  enabled: boolean;
 }
 
 export interface NewSchedule {

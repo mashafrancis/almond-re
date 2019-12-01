@@ -6,6 +6,6 @@ export interface DisplaySnackMessageAction {
 }
 
 export interface SnackMessage {
-  message: string;
+  message: string | null | undefined;
   withName: boolean;
 }

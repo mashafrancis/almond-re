@@ -8,33 +8,41 @@ const {
   miniCssExtractPlugin,
   hashedPlugin,
   manifestPlugin,
-  swPlugin,
+  workBoxPlugin,
   copyPlugin
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
 const PUBLIC_PATH = process.env.PUBLIC_URL;
 
+
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
+    styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.css'),
+    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css')
   },
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name].[hash:8].js',
+    chunkFilename: "[name].[hash:8].bundle.js",
     publicPath: PUBLIC_PATH
   },
   optimization: {
     noEmitOnErrors: true,
     namedChunks: true,
+    splitChunks: {
+      chunks: "all",
+    }
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      pages: path.resolve(__dirname, '..', 'src/pages/'),
-      components: path.resolve(__dirname, '..', 'src/components/'),
-      modules: path.resolve(__dirname, '../src/store/modules'),
-      utils: path.resolve(__dirname, '../src/utils')
+      '@pages': path.resolve(__dirname, '..', 'src/pages/'),
+      '@components': path.resolve(__dirname, '..', 'src/components/'),
+      '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
+      '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
+      '@utils': path.resolve(__dirname, '..', 'src/utils')
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
@@ -68,14 +76,18 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              importer
+              importer,
+              includePaths: ['../node_modules'],
             }
           },
         ]
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          /node_modules\/@material/
+        ],
         use: {
           loader: 'babel-loader',
           options: {
@@ -94,6 +106,9 @@ module.exports = {
         enforce: 'pre',
         test: /\.js$/,
         loader: 'source-map-loader',
+        exclude: [
+          /node_modules\/@material/
+        ],
       },
     ]
   },
@@ -104,7 +119,7 @@ module.exports = {
     cleanWebpack,
     miniCssExtract,
     manifestPlugin,
-    swPlugin,
+    workBoxPlugin,
     copyPlugin
   ]
 };

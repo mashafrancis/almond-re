@@ -3,4 +3,5 @@ export interface TableProps {
   values: any;
   activeAssetHeaders?: any;
   statusClass?: string;
+  enabledClass?: string;
 }

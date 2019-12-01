@@ -1,12 +1,13 @@
 import * as Cookie from 'cookies-js';
+import * as Cookies from 'js-cookie';
 import * as jwtDecode from 'jwt-decode';
 
 export const authService = {
   saveToken(token) {
-    return Cookie.set('jwt-token', token);
+    return Cookies.set('jwt-token', token);
   },
   getToken() {
-    return Cookie.get('jwt-token');
+    return Cookies.get('jwt-token');
   },
   decodeToken() {
     return jwtDecode(this.getToken());

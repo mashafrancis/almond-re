@@ -1,5 +1,3 @@
-import ActivityLogCard from 'components/ActivityLogCard';
-import TimelineComponent from 'components/TimelineComponent';
 import * as React from 'react';
 
 // third-party libraries
@@ -17,29 +15,27 @@ import {
 import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // components
-import DashboardCard from 'components/DashboardCard';
-import LazyLoader from 'components/LazyLoader';
-import Loader from 'components/Loader';
-import Switch from 'components/SwitchButton';
-import Table from 'components/Table';
-import ToggleButton from 'components/ToggleButton';
-import { authService } from 'utils/auth';
-import WaterCyclesPageLoader from '../../placeholders/WaterCyclesPageSkeletonLoader';
+import ActivityLogCard from '@components/ActivityLogCard';
+import DashboardCard from '@components/DashboardCard';
+import Switch from '@components/SwitchButton';
+import Table from '@components/Table';
+import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 import {
   deleteSingleSchedule,
   getAllSchedules,
   getPumpStatus,
   togglePump,
-} from 'modules/timeSchedules';
+  toggleScheduleStatus,
+} from '@modules/timeSchedules';
 
 // pages
-import DashboardPage from '../DashboardPage';
+import DashboardContainer from '../DashboardContainer';
 
 // styles
 import './WaterCyclesPage.scss';
@@ -56,12 +52,12 @@ import { activityLogs } from './fixtures';
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
     isEditMode: false,
-    isChecked: window.localStorage.getItem('checked') === 'true',
     schedules: [],
     isDeleteModal: false,
     action: '',
     id: '',
     statusClass: '',
+    isEnabled: false,
   });
 
   React.useEffect(() => {
@@ -74,7 +70,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         break;
     }
     props.getAllSchedules()
-      .then(() => setState({ ...state, schedules: props.schedules }))
       .then(() => setState({
         ...state,
         action: '',
@@ -82,24 +77,30 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       }));
   },              [state.action]);
 
+  React.useEffect(() => {
+    props.getPumpStatus()
+      .then(() => setState({ ...state, schedules: props.schedules }))
+      .then(() => setState({ ...state, isEnabled: props.enabled }));
+  },              [state.isEnabled]);
+
   const areEqual = (prevProps, nextProps) => {
     return (prevProps.isChecked === nextProps.isChecked);
   };
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
-      ? props.togglePump({ status: '1' })
+      ? props.togglePump({ enabled: true })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
-        .then(() => window.localStorage.setItem('checked', 'true'))
-      : props.togglePump({ status: '0' })
-        .then(() => setState({ ...state, statusClass: '' }))
-        .then(() => window.localStorage.setItem('checked', 'false'));
+      : props.togglePump({ enabled: false })
+        .then(() => setState({ ...state, statusClass: '' }));
   };
 
-  const handleToggleStatusChange = (event) => {
+  const handleToggleStatusChange = (event, schedule) => {
     event.target.checked
-    ? setState({ ...state, statusClass: 'tbl-status' })
-    : setState({ ...state, statusClass: '' });
+    ? props.toggleScheduleStatus(schedule._id,  { enabled: true })
+      .then(() => window.localStorage.setItem('checked', 'true'))
+    :  props.toggleScheduleStatus(schedule._id,  { enabled: false })
+      .then(() => window.localStorage.setItem('checked', 'true'));
   };
 
   const ToggleManualButton = () => {
@@ -133,45 +134,27 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     </button>
   );
 
-  const BlankContent = () => (
+  const BlankContent = message => (
     <React.Fragment>
       <div className="blank-content">
-        <h2>Click the + to add a new pump time schedule or toggle the manual
-          override to turn on and off the pump
-        </h2>
+        <h2>{message}</h2>
       </div>
     </React.Fragment>
   );
 
-  const BlankLogContent = () => (
-    <React.Fragment>
-      <div className="blank-content">
-        <h2>There are no logs available currently.
-        </h2>
-      </div>
-    </React.Fragment>
-  );
-
-  const SubHeaderContent = () => (
-    <React.Fragment>
-      <div className="main-subheader">
-        <h3>Water Cycles</h3>
-      </div>
-    </React.Fragment>
-  );
-
-  const DeleteModal = () => (
+  const DeleteModal = (id: string) => (
     <Dialog
       open={state.isDeleteModal}
       onClose={ action => setState({ ...state, action, isDeleteModal: false }) }
+      id={id}
     >
       <DialogTitle>DELETE TIME SCHEDULE</DialogTitle>
       <DialogContent>
         <h5>Do you confirm deletion of time schedule?</h5>
       </DialogContent>
       <DialogFooter>
-        <DialogButton action="delete">Delete</DialogButton>
-        <DialogButton action="dismiss" isDefault>Dismiss</DialogButton>
+        <DialogButton action="delete" isDefault>Delete</DialogButton>
+        <DialogButton action="dismiss">Dismiss</DialogButton>
       </DialogFooter>
     </Dialog>
   );
@@ -179,13 +162,14 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   const ActionButtons = schedule => (
     <div key={schedule} className="action-buttons">
       <span onClick={ () => setState({ ...state, id: schedule, isEditMode: true })}>
-      <Link to={`${props.match.url}/edit/${schedule}`}>
-        <h5>Edit</h5>
-      </Link>
+        <Link to={`${props.match.url}/edit/${schedule}`}>
+          <h5 className="action-buttons__edit">Edit</h5>
+        </Link>
       </span>
       <span id={schedule} onClick={ () => setState({ ...state, id: schedule, isDeleteModal: true })}>
-      <h5 className="action-buttons__delete">Delete</h5>
+        <h5 className="action-buttons__delete">Delete</h5>
       </span>
+      {DeleteModal(`${schedule}abc`)}
     </div>
   );
 
@@ -200,16 +184,19 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       id: schedule,
       time: `${moment(schedule[1].schedule).format('LT')}`,
       actions: ActionButtons(schedule[1]._id),
-      status: <Switch />,
+      status: <Switch
+                checked={schedule[1].enabled}
+                onClick={e => handleToggleStatusChange(e, schedule[1])}
+              />,
     }));
 
     return (
       props.isLoading ? (<WaterCyclesPageLoader/>) :
-        <Table
-          keys={tableHeaders}
-          values={tableValues}
-          statusClass={state.statusClass}
-        />
+      <Table
+        keys={tableHeaders}
+        values={tableValues}
+        statusClass={state.statusClass}
+      />
     );
   };
 
@@ -232,7 +219,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     );
   };
 
-  const waterCyclesPageHeader = () => (
+  const WaterCyclesPageHeader = () => (
     <React.Fragment>
         <p>
           The watering schedule for the pumping time is used to control the number of cycles
@@ -247,19 +234,21 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       <Grid>
         <Row>
           <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-            {(window.innerWidth < 539) && SubHeaderContent()}
+            {(window.innerWidth < 539) && <div className="main-subheader"><h3>Water Cycles</h3></div>}
           </Cell>
         </Row>
         <Row>
           <Cell columns={5} desktopColumns={5} tabletColumns={8} phoneColumns={4}>
-            {/*<LazyLoader height={200}>*/}
             <DashboardCard
               classes="schedules-available"
               heading="Water Schedules"
-              body={props.schedules ? TableContent(Object.entries(props.schedules)) : BlankContent()}
+              body={(props.schedules.length > 0)
+                ? TableContent(Object.entries(props.schedules))
+                : BlankContent(
+                'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
+              )}
               actionItem={ScheduleButton()}
             />
-            {/*</LazyLoader>*/}
           </Cell>
             <Cell columns={3} desktopColumns={3} tabletColumns={4} phoneColumns={4}>
               <DashboardCard
@@ -270,7 +259,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                   <Switch
                     className="manual-override"
                     onChange={handleToggleButtonOnChange}
-                    // isChecked={window.localStorage.getItem('checked') === 'true'}
+                    checked={props.enabled}
                   />
                 }
               />
@@ -283,51 +272,46 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
               <DashboardCard
                 classes=""
                 heading="About"
-                body={waterCyclesPageHeader()}
+                body={WaterCyclesPageHeader()}
               />
             </Cell>
           <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
             <DashboardCard
                 classes="recent-activities-available"
                 heading="Recent Activity"
-                body={activityLogs.length ? ActivityLogs() : BlankLogContent()}
+                body={activityLogs.length
+                  ? ActivityLogs()
+                  : BlankContent(
+                    'There are no logs available currently.'
+                  )}
                 actionItem={ClearLogsButton()}
               />
           </Cell>
         </Row>
-        <Row>
-          {/*<Cell columns={5} desktopColumns={5} tabletColumns={2} phoneColumns={4}>*/}
-          {/*  <DashboardCard*/}
-          {/*    classes=""*/}
-          {/*    heading="Recent Activity"*/}
-          {/*    body={activityLogs.length ? ActivityLogs() : BlankLogContent()}*/}
-          {/*    actionItem={ClearLogsButton()}*/}
-          {/*  />*/}
-          {/*</Cell>*/}
-        </Row>
-        {DeleteModal()}
       </Grid>
     );
   };
 
   return (
-    <DashboardPage component={ WaterCyclesPageComponent() }/>
+    <DashboardContainer component={ WaterCyclesPageComponent() }/>
   );
 };
 
 export const mapStateToProps = state => ({
   error: state.error,
-  schedules: state.timeSchedules.data,
+  schedules: state.timeSchedules.schedules,
   status: state.timeSchedules.status,
   isLoading: state.timeSchedules.isLoading,
+  enabled: state.timeSchedules.enabled,
 });
 
 export const mapDispatchToProps = dispatch => ({
-  getAllSchedules: () => dispatch(getAllSchedules()),
   deleteSingleSchedule: id => dispatch(deleteSingleSchedule(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-  togglePump: status => dispatch(togglePump(status)),
+  getAllSchedules: () => dispatch(getAllSchedules()),
   getPumpStatus: () => dispatch(getPumpStatus()),
+  togglePump: status => dispatch(togglePump(status)),
+  toggleScheduleStatus: (id, enabled) => dispatch(toggleScheduleStatus(id, enabled)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterCyclesPage);

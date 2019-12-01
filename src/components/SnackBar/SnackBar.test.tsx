@@ -5,12 +5,12 @@ import * as React from 'react';
 import SnackBar, { mapStateToProps } from './index';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '../../store/modules/snack';
 
 // helpers
 import { mountWithRedux } from '../../testHelpers';
 
-describe('The SnackBar component', () => {
+describe('The SnackBar components', () => {
   const SAMPLE_SNACK_MESSAGE = 'Time schedule created successfully.';
   const props = {
     snack: {

@@ -8,7 +8,7 @@ import MaterialIcon from '@material/react-material-icon';
 import './InternalServerError.scss';
 
 // interfaces
-import { InternalServerErrorMessageProps } from '../../components/InternalServerErrorMessage/interfaces';
+import { InternalServerErrorMessageProps } from './interfaces';
 
 const InternalServerErrorMessage: React.FunctionComponent<InternalServerErrorMessageProps> = (props) => {
   return (
@@ -20,10 +20,11 @@ const InternalServerErrorMessage: React.FunctionComponent<InternalServerErrorMes
         <p>We are experiencing an internal server problem.</p>
         <p>Please try again later or contact support <span
           className="mail">almond.froyo@gmail.com</span></p>
-          <button onClick={props.history.goBack} className="mdc-button mdc-button--raised">
-            <MaterialIcon className="back-button" icon="arrow_back" />
-            <span className="mdc-button__label">Back to homepage</span>
-          </button>
+        <button onClick={(): void => props.history.push('/')} className="mdc-button mdc-button--raised">
+          <MaterialIcon className="back-button" icon="arrow_back" />
+          <span className="mdc-button__label">Back to homepage</span>
+        </button>
+        {props.errorButton}
       </div>
     </div>
   );

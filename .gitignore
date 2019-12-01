@@ -34,6 +34,7 @@ build/Release
 
 # Dependency directories
 ../node_modules/
+node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -55,15 +56,13 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-client/.env
+.env
 
 # next.js build output
 .next
 
 /node_modules
 .DS_Store
-.env
-.nyc_output
 /build
 /coverage
 yarn-error.log
@@ -75,7 +74,6 @@ src/**/**/__snapshots__/*.test.tsx.snap
 .idea/
 /reports
 /tmp
-Dockerfile
 cypress/screenshots
 cypress/videos
 reports/
@@ -83,13 +81,6 @@ tmp/
 /dist
 dist/
 .cache
-!/server/node_modules/
-/client/node_modules/
-
-# dependencies
-/client/node_modules
-
-/server/node_modules
-
-!/.env
-src/pages/WaterCyclesPage/__snapshots__/
+.idea/*
+.idea/dictionaries/masha.xml
+/.env
