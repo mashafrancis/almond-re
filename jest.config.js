@@ -47,10 +47,10 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/interface.d.ts', '!src/**/*interfaces.d.ts'],
   coverageThreshold: {
     global: {
-      'branches': 30,
-      'functions': 30,
-      'lines': 30,
-      'statements': 35
+      'branches': 10,
+      'functions': 10,
+      'lines': 10,
+      'statements': 15
     }
   },
   setupFiles: [
@@ -63,4 +63,4 @@ module.exports = {
   snapshotSerializers: ['enzyme-to-json/serializer'],
   setupFilesAfterEnv: ['<rootDir>/src/setupEnzyme.ts'],
   testEnvironment: 'node'
-}
+};

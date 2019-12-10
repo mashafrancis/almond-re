@@ -125,15 +125,15 @@ export const axiosMockAdapter = (response, error) => {
 };
 
 // mock router context instead of using Memory Router
-// export const routerContext = {
-//   context: {
-//     router: {
-//       history: history.createBrowserHistory(),
-//       route: {
-//         location: { pathname: '/' },
-//         match: { isExact: true },
-//       },
-//     },
-//   },
-//   childContextTypes: { router: () => null },
-// };
+export const routerContext = {
+  context: {
+    router: {
+      history: history.createBrowserHistory(),
+      route: {
+        location: { pathname: '/' },
+        match: { isExact: true },
+      },
+    },
+  },
+  childContextTypes: { router: () => null },
+};

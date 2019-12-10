@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 // components
 import InternalServerErrorMessage from './index';
 
-describe('Internal Server Error Message', () => {
+describe.skip('Internal Server Error Message', () => {
   let history;
   if (window.location.pathname !== '/') {
     window.history.replaceState(null, null, '/');

@@ -3,10 +3,11 @@ import * as React from 'react';
 
 // third party libraries
 import { shallow } from 'enzyme';
+
 // components
 import Routes from './index';
 
-describe.skip('The Route components', () => {
+describe('The Route components', () => {
   it('should register a route for the / page', () => {
     const wrapper = shallow(
       <Routes />
