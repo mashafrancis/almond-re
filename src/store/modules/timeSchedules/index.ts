@@ -1,5 +1,6 @@
 // thunks
 import { displaySnackMessage } from '../snack';
+
 // interfaces
 import {
   AddScheduleActionRequest,
@@ -16,6 +17,7 @@ import {
   GetAllSchedulesActionSuccess, GetPumpStatusActionFailure,
   GetPumpStatusActionRequest,
   GetPumpStatusActionSuccess,
+  NewSchedule,
   Schedule,
   Status,
   TogglePumpStatusActionFailure,
@@ -23,6 +25,7 @@ import {
   TogglePumpStatusActionSuccess,
 } from './interfaces';
 // types
+
 import {
   ADD_SCHEDULES_FAILURE,
   ADD_SCHEDULES_REQUEST,
@@ -89,10 +92,10 @@ export const addScheduleRequest = (): AddScheduleActionRequest => ({
 /**
  * Add new schedule success
  *
- * @param {Schedule} schedule
+ * @param {NewSchedule} schedule
  * @returns {AddScheduleActionSuccess}
  */
-export const addScheduleSuccess = (schedule: Schedule): AddScheduleActionSuccess => ({
+export const addScheduleSuccess = (schedule: NewSchedule): AddScheduleActionSuccess => ({
   schedule,
   type: ADD_SCHEDULES_SUCCESS,
   isLoading: false,

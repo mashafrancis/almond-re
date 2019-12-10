@@ -33,11 +33,7 @@ import { AddTimeScheduleFormProps, AddTimeScheduleFormState } from './interfaces
 
 export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormProps> = (props) => {
   const [state, setState] = React.useState<AddTimeScheduleFormState>({
-    fields: {},
     isLoading: false,
-    isValid: true,
-    focused: false,
-    errors: {},
   });
 
   const [selectedTimeSchedule, handleSelectedTimeSchedule] = React.useState(new Date());
@@ -113,7 +109,7 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
               <h5>The watering schedule for the pumping time is used to control
                 the number of cycles the water is going to be pumped through the system.
                 The maximum number of minutes to pump through the system is set
-                at default to be 15 mins.
+                at default to be 15 minutes.
               </h5>
             </Grid>
             <Grid container direction="row" spacing={2}>

@@ -5,7 +5,7 @@ import * as ReactDOM from 'react-dom';
 // third party packages
 import * as Sentry from '@sentry/browser';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // components
 import App from './App';
@@ -24,9 +24,9 @@ if (process.env.NODE_ENV === 'production') {
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router>
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root') || document.createElement('div')
 );

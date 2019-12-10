@@ -1,4 +1,4 @@
-import { UserDetails } from 'modules/user/interfaces';
+import { UserDetails } from '@modules/user/interfaces';
 
 export interface DashboardContainerProps {
   drawerEl?: object;

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 // reducers
+import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
 import snack from '@modules/snack';
 import socialAuth from '@modules/socialAuth';
@@ -16,17 +17,17 @@ const appReducer = combineReducers({
   snack,
   socialAuth,
   user,
+  device,
 });
 
 const rootReducer = (state, action) => {
-  switch (action.type) {
-    case LOG_OUT_USER:
-      return {
-        ...state,
-        internalServerError: {
-          error: false,
-        },
-      };
+  if (action.type === LOG_OUT_USER) {
+    return {
+      ...state,
+      internalServerError: {
+        error: false,
+      },
+    };
   }
 
   return appReducer(state, action);
