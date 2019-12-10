@@ -23,6 +23,7 @@
     "outDir": "./build",
     "allowJs": true,
     "noEmit": false,
+    "importHelpers": false,
     "jsx": "react",
     "baseUrl": "./",
     "paths": {

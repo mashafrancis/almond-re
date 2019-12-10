@@ -11,7 +11,7 @@ describe('Lazy Loader', () => {
   let wrapper;
 
   beforeEach(() => {
-    const props = <div></div>;
+    const props = <div/>;
 
     wrapper = mount(<LazyLoader {...props} />);
   });

@@ -6,7 +6,7 @@ import Dialog, {
   DialogContent,
   DialogFooter,
   DialogTitle
-} from '@material/react-dialog/index';
+} from '@material/react-dialog';
 import TextField, {
   HelperText,
   Input

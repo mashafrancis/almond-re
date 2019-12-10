@@ -13,6 +13,7 @@ import {
   Row
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
+import Switch from '@material/react-switch';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -20,7 +21,6 @@ import { Link } from 'react-router-dom';
 // components
 import ActivityLogCard from '@components/ActivityLogCard';
 import DashboardCard from '@components/DashboardCard';
-import Switch from '@components/SwitchButton';
 import Table from '@components/Table';
 import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
 
