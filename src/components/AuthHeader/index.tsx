@@ -11,17 +11,17 @@ import { AuthHeaderProps } from './interfaces';
 
 const notificationsIcon = (link, name) => (
   <React.Fragment>
-      <span className="register-toolbar-actions">
-        <div className="register__logo">
-          <span className="product-logo-text">{name}</span>
-        </div>
-          <Button
-            type="button"
-            name="notifications_none"
-            classes="mdc-icon-button material-icons"
-            aria_label="Notifications"
-          />
-      </span>
+    <span className="register-toolbar-actions">
+      <div className="register__logo">
+        <span className="product-logo-text">{name}</span>
+      </div>
+        <Button
+          type="button"
+          name="notifications_none"
+          classes="mdc-icon-button material-icons"
+          aria_label="Notifications"
+        />
+    </span>
   </React.Fragment>
 );
 

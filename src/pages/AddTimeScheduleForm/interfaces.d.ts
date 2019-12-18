@@ -6,12 +6,4 @@ export interface AddTimeScheduleFormProps {
 
 export interface AddTimeScheduleFormState {
   isLoading: boolean;
-  isValid: boolean;
-  focused: boolean;
-  fields: {
-    [key: string]: string | number | any
-  };
-  errors: {
-    [key: string]: string
-  };
 }

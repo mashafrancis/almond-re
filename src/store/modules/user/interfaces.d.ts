@@ -44,4 +44,10 @@ interface UserDetails {
   photo: string;
   role: string;
   isVerified?: boolean;
+  device?: [
+    {
+      _id: string;
+      verified: boolean;
+    }
+  ];
 }

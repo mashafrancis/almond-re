@@ -1,13 +1,22 @@
+<div align="center">
+
+## almond-fe
+
 [![CircleCI](https://circleci.com/gh/mashafrancis/almond-re.svg?style=svg)](https://circleci.com/gh/mashafrancis/almond-re)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dbebee07d6ea948658c1/maintainability)](https://codeclimate.com/github/mashafrancis/almond-re/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dbebee07d6ea948658c1/test_coverage)](https://codeclimate.com/github/mashafrancis/almond-re/test_coverage)
 
-# almond-fe
-Almond frontend application for the hydroponics farm
+</div>
 
-<br />
-<img width="1440" alt="almond-screenshot" src="https://res.cloudinary.com/almondgreen/image/upload/v1569253162/Almond/Screenshot_2019-09-23_at_18.38.45_tajbjv.png">
-<br />
+<div align="center">
+
+    Almond frontend application for the hydroponics farm
+
+  [![Butternut](../public/img/readme.svg)](https://almond-re-staging.herokuapp.com/)
+
+  #### Simple but complicated butternut
+
+</div>
 
 ## Description
 This application will be used in a hydroponics farm control system to be used at home with limited space, in greenhouses and indoors as well.

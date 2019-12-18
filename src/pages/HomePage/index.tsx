@@ -21,11 +21,15 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     window.location.replace(process.env.SOCIAL_AUTH_URL);
   };
 
+  const isDeviceVerified = () => {
+    return props.user.device[0].verified;
+  };
+
   const renderGoToDashboard = () => (
     <React.Fragment>
       {authService.isAuthenticated()
       ?
-        <NavLink to={'/water-cycles'}>
+        <NavLink to={props.user.device[0].verified ? '/water-cycles' : '/my-device'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>
@@ -47,7 +51,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
         </section>
         <section className="home-image">
           <div className="image-wrapper">
-            <img src="https://res.cloudinary.com/almondgreen/image/upload/v1569235553/Almond/analyze_dqyrcp.svg"
+            <img src="https://res.cloudinary.com/almondgreen/image/upload/v1576510738/Almond/homepage_e7ugfb.svg"
                  alt="Almond Image"/>
           </div>
         </section>
@@ -68,6 +72,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
 
 export const mapStateToProps = state => ({
   isLoading: state.isLoading,
+  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({
