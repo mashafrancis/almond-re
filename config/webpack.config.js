@@ -26,7 +26,7 @@ module.exports = {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name].[hash:8].js',
     chunkFilename: "[name].[hash:8].bundle.js",
-    publicPath: PUBLIC_PATH
+    publicPath: '/'
   },
   optimization: {
     noEmitOnErrors: true,

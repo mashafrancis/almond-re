@@ -1,37 +1,48 @@
 // react libraries
+import { Location } from 'history';
 import * as React from 'react';
 
-// third-party libraries
-import { shallow } from 'enzyme';
+// third party
+import { mount } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 
-// helpers
-import { routerContext } from '../../testHelpers';
+// components
+import { WaterCyclesPage } from './index';
 
-import WaterCyclesPage from './index';
-
-describe.skip('Water Cycle Page', () => {
+describe.skip('The Water Cycles Page', () => {
   let wrapper;
   let props;
-  let instance;
+  let waterCyclesPageInstance;
 
   beforeEach(() => {
     props = {
+      getAllSchedules: jest.fn(() => Promise.resolve()),
+      deleteSingleSchedule: jest.fn(() => Promise.resolve()),
+      displaySnackMessage: jest.fn(() => Promise.resolve()),
+      togglePump: jest.fn(() => Promise.resolve()),
+      getPumpStatus: jest.fn(() => Promise.resolve()),
+      toggleScheduleStatus: jest.fn(() => Promise.resolve()),
+      schedules: [],
+      match: {
+        url: '/water-cycles',
+      },
       isLoading: false,
-      displaySnackMessage: jest.fn(),
+      location: Location,
+      enabled: true,
     };
-    wrapper = shallow(<WaterCyclesPage {...props} />, routerContext).dive();
-    instance = wrapper.instance();
-    wrapper.setState({
-      isLoading: false,
-    });
+    wrapper = mount(
+      <BrowserRouter>
+        <WaterCyclesPage {...props}/>
+      </BrowserRouter>
+    );
+    waterCyclesPageInstance = wrapper.find(WaterCyclesPage).instance();
   });
 
-  // afterEach(() => {
-  //   wrapper.unmount();
-  // });
+  afterEach(() => {
+    wrapper = props = null;
+  });
 
-  it('should be rendered properly', () => {
-    // expect(wrapper.find('.head-title').exists).toBeTruthy();
+  it('should render properly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
