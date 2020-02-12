@@ -110,13 +110,15 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   };
 
   const renderBottomNavigation = () => (
-    <BottomNavigation
-      showLabels
-      className={classes.bottom}
-    >
-      <BottomNavigationAction label="SKIP" icon={<ArrowForwardIcon />} />
-    </BottomNavigation>
-);
+    <NavLink to={'/water-cycles'}>
+      <BottomNavigation
+        showLabels
+        className={classes.bottom}
+      >
+        <BottomNavigationAction label="SKIP" icon={<ArrowForwardIcon />} />
+      </BottomNavigation>
+    </NavLink>
+  );
 
   return (() => {
     const { isLoading } = state;

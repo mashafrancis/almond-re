@@ -43,7 +43,7 @@ const backArrow = (link, name) => (
   </React.Fragment>
 );
 
-const AuthHeader: React.FunctionComponent<AuthHeaderProps> = props => (
+export const AuthHeader: React.FunctionComponent<AuthHeaderProps> = props => (
   <React.Fragment>
     <header>
         {backArrow(props.backwardLink, props.backwardButtonName)}

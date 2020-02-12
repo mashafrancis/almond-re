@@ -269,11 +269,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                 body=""
                 actionItem={<h2 className="next-time-schedule">4:00PM</h2>}
               />
-              <DashboardCard
-                classes=""
-                heading="About"
-                body={WaterCyclesPageHeader()}
-              />
             </Cell>
           <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
             <DashboardCard

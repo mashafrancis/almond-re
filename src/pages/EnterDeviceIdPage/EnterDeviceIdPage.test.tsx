@@ -1,28 +1,80 @@
 // react libraries
 import * as React from 'react';
 
-// third-party libraries
-import { mount } from 'enzyme';
+// third party
+import { mount, shallow } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 
-import AddTimeScheduleForm from '@pages/AddTimeScheduleForm';
+// components
+import {
+  EnterDeviceIdPage,
+  mapDispatchToProps,
+  mapStateToProps
+} from './index';
 
-describe.skip('Add Time Schedule Form', () => {
+describe('The EnterDeviceId Page', () => {
   let wrapper;
+  let shallowWrapper;
   let props;
+
+  props = {
+    addNewDevice: jest.fn(() => Promise.resolve()),
+    displaySnackMessage: jest.fn(),
+    isLoading: false,
+  };
+
+  beforeAll(() => {
+    wrapper = mount(
+      <BrowserRouter>
+        <EnterDeviceIdPage {...props} />
+      </BrowserRouter>
+      );
+  });
 
   beforeEach(() => {
     props = {
-      addNewSchedule: jest.fn(),
+      addNewDevice: jest.fn(() => Promise.resolve()),
       displaySnackMessage: jest.fn(),
+      isLoading: false,
     };
-    wrapper = mount(<AddTimeScheduleForm { ...props } />);
   });
+
+  shallowWrapper = shallow(<EnterDeviceIdPage {...props} />);
 
   afterEach(() => {
-    wrapper.unmount();
+    wrapper = shallowWrapper = props = null;
   });
 
-  it('should be rendered properly', () => {
+  it('should render properly', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  describe('mapStateToProps function', () => {
+    it('should return the expected props object', () => {
+      const state = {
+        device: {
+          isLoading: false,
+        },
+      };
+      const props = mapStateToProps(state);
+
+      expect(props.isLoading).toEqual(state.device.isLoading);
+    });
+  });
+
+  describe('mapDispatchToState function', () => {
+    let dispatch;
+    let props;
+
+    beforeEach(() => {
+      dispatch = jest.fn(() => Promise.resolve());
+      props = mapDispatchToProps(dispatch);
+    });
+
+    it('should dispatch addNewDevice when it is called', () => {
+      props.addNewDevice();
+
+      expect(dispatch).toHaveBeenCalled();
+    });
   });
 });

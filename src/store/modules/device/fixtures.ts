@@ -1,5 +1,3 @@
-import { users } from '@pages/HomePage/fixtures';
-
 export const newDevice = {
   data: {
     success: true,
