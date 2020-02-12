@@ -24,7 +24,7 @@ import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
 
 // thunk
-import { addNewDevice } from '@modules/device';
+import { verifyUserDevice } from '@modules/device';
 import { displaySnackMessage } from '@modules/snack';
 
 // styles
@@ -53,7 +53,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
     setState({ ...state, isLoading: true });
 
-    props.addNewDevice(device)
+    props.verifyUserDevice(device)
       .then(() => {
         setState({ ...state, isLoading: false });
       });
@@ -168,7 +168,7 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  addNewDevice: device => dispatch(addNewDevice(device)),
+  verifyUserDevice: id => dispatch(verifyUserDevice(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 

@@ -21,15 +21,11 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     window.location.replace(process.env.SOCIAL_AUTH_URL);
   };
 
-  const isDeviceVerified = () => {
-    return props.user.device[0].verified;
-  };
-
   const renderGoToDashboard = () => (
     <React.Fragment>
       {authService.isAuthenticated()
       ?
-        <NavLink to={props.user.device[0].verified ? '/water-cycles' : '/my-device'}>
+        <NavLink to={(props.user.devices.length > 0) ? '/water-cycles' : '/my-device'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>

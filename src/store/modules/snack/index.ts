@@ -9,15 +9,12 @@ import { DISPLAY_SNACK_MESSAGE } from './types';
  *
  * @returns {DisplaySnackMessageAction}
  * @param message
- * @param withName
  */
 export const displaySnackMessage = (
   message: string,
-  withName: boolean = false
 ): DisplaySnackMessageAction => ({
   snack: {
     message,
-    withName,
   },
   type: DISPLAY_SNACK_MESSAGE,
 });
@@ -32,12 +29,11 @@ export const reducer = (
   state = {},
   action: DisplaySnackMessageAction
 ) => {
-  switch (action.type) {
-    case DISPLAY_SNACK_MESSAGE:
-      return action.snack;
-    default:
-      return state;
+  if (action.type === DISPLAY_SNACK_MESSAGE) {
+    return action.snack;
   }
+  return state;
+
 };
 
 export default reducer;

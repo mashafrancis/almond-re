@@ -7,6 +7,7 @@ import snack from '@modules/snack';
 import socialAuth from '@modules/socialAuth';
 import timeSchedules from '@modules/timeSchedules';
 import user from '@modules/user';
+import userRoles from '@modules/userRoles';
 
 // types
 import { LOG_OUT_USER } from '@modules/user/types';
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   socialAuth,
   user,
   device,
+  userRoles,
 });
 
 const rootReducer = (state, action) => {

@@ -39,7 +39,7 @@ export const menuItemsBottom = [
   },
   {
     navLink: '/help',
-    icon: 'open_in_new',
+    icon: 'help',
     primaryText: 'Help',
   },
   {
