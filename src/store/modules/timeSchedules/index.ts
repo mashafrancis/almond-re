@@ -239,16 +239,15 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
   type: GET_PUMP_STATUS_FAILURE,
 });
 
-// actions
 /**
  * Thunk action creator
  * Get all schedules
  *
  * @returns {Function} action type and payload
  */
-export const getAllSchedules = () => (dispatch, getState, http) => {
+export const getAllSchedules = deviceId => (dispatch, getState, http) => {
   dispatch(getSchedulesRequest());
-  return http.get('/schedules')
+  return http.get(`/schedules?device=${deviceId}`)
     .then((response) => {
       const data = response.data.data;
       dispatch(getSchedulesSuccess(data));
@@ -345,16 +344,16 @@ export const togglePump = status => (dispatch, getState, http) => {
  *
  * @returns {Function} action type and payload
  */
-export const getPumpStatus = () => (dispatch, getState, http) => {
-  return http.get('pump')
+export const getPumpStatus = deviceId => (dispatch, getState, http) => {
+  return http.get(`/pump?device=${deviceId}`)
     .then((response) => {
       const data = response.data.data[0].enabled;
       dispatch(getPumpStatusSuccess(data));
       return data;
     })
-    .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(displaySnackMessage(message));
+    .catch(() => {
+      // const message = 'Unable to turn the pump ON/OFF. Kindly check network connectivity.';
+      dispatch(displaySnackMessage(''));
     });
 };
 

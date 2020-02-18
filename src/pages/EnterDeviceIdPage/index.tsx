@@ -26,6 +26,7 @@ import Button from '@components/Button';
 // thunk
 import { verifyUserDevice } from '@modules/device';
 import { displaySnackMessage } from '@modules/snack';
+import { getUserDetails } from '@modules/user';
 
 // styles
 import 'react-date-range/dist/styles.css';
@@ -45,7 +46,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
     setDeviceId(e.target.value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     const device = {
       id: deviceId,
@@ -54,8 +55,16 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
     setState({ ...state, isLoading: true });
 
     props.verifyUserDevice(device)
-      .then(() => {
+      .then(async () => {
+        await props.getUserDetails();
         setState({ ...state, isLoading: false });
+
+        const devicePresent = props.user.devices.find(device => device.id === deviceId);
+        if (devicePresent) {
+          await props.displaySnackMessage('The ID is already in your available devices. Add another or SKIP.');
+        } else {
+          props.history.push('/analytics');
+        }
       });
   };
 
@@ -91,7 +100,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
       <React.Fragment>
         <div className="form-cell">
           <TextField
-            label="Device ID"
+            label="Enter new device ID"
             defaultValue={deviceId}
             className={`${classes.root} mdc-text-field--fullwidth`}
             variant="outlined"
@@ -110,7 +119,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   };
 
   const renderBottomNavigation = () => (
-    <NavLink to={'/water-cycles'}>
+    <NavLink to={'/analytics'}>
       <BottomNavigation
         showLabels
         className={classes.bottom}
@@ -147,12 +156,12 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
             </Grid>
             <Grid item xs >
               <Button
-                  type="button"
-                  name={isLoading ? 'Adding...' : 'Add new device ID'}
-                  id="cc-register"
-                  onClick={onSubmit}
-                  classes="mdc-button big-round-corner-button mdc-button--raised"
-                />
+                type="button"
+                name={isLoading ? 'Adding...' : 'Add new device ID'}
+                id="cc-register"
+                onClick={onSubmit}
+                classes="mdc-button big-round-corner-button mdc-button--raised"
+              />
             </Grid>
             {renderBottomNavigation()}
           </Grid>
@@ -165,11 +174,13 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 export const mapStateToProps = state => ({
   error: state.error,
   isLoading: state.device.isLoading,
+  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({
   verifyUserDevice: id => dispatch(verifyUserDevice(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+  getUserDetails: () => dispatch(getUserDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnterDeviceIdPage);

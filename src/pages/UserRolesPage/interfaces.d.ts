@@ -33,11 +33,11 @@ export interface UserRolesPageState {
 }
 
 export interface Permissions {
-  id: string;
+  _id: string;
   type: string;
 }
 
 export interface Resources {
-  id: string;
+  _id: string;
   name: string;
 }

@@ -6,11 +6,21 @@ export const MenuContext = React.createContext({
   setOpen: (_open: boolean) => {},
   setSelectedIndex: (_selectedIndex: number) => {},
   logoutUser: () => null,
+  setDeviceModalOpen: (_open: boolean) => {},
 });
 
 export const UserContext = React.createContext({
+  id: '',
   name: '',
+  email: '',
   photo: '',
+  role: '',
+  isVerified: true,
+  devices: [],
+  activeDevice: {
+    id: '',
+    _id: '',
+  },
 });
 
 export const ScheduleTableContext = React.createContext({
@@ -18,4 +28,8 @@ export const ScheduleTableContext = React.createContext({
   ActionButtons: (_schedule: {}) => {},
   handleToggleStatusChange: (_event: any, _schedule: {}) => {},
   statusClass: '',
+});
+
+export const DeviceContext = React.createContext({
+  controlledDevice: '',
 });

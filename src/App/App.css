@@ -26,4 +26,26 @@
   --mdc-ripple-fg-opacity: 0.32;
 }
 
+@media (min-width: 539px) {
+  .mdc-snackbar {
+    position: fixed;
+    z-index: 99;
+    top: 1rem;
+    left: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    margin-top: 0;
+    margin-left: -200px;
+    padding: 0 15px 0 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    animation-name: slideInDown;
+    opacity: 0.95;
+  }
+}
+
 /*# sourceMappingURL=App.css.map */

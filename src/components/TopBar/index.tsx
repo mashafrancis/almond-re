@@ -12,23 +12,55 @@ import TopAppBar, {
 import { NavLink } from 'react-router-dom';
 
 // utils
-import { MenuContext } from '../Context';
+import { DeviceContext, MenuContext, UserContext } from '../Context';
 
 // interface
 import { TopBarProps } from './interfaces';
 
 const viewPort = window.innerWidth;
 
-export const TopBar: React.FunctionComponent<TopBarProps> = props => (
-  <MenuContext.Consumer>
-    {({ setOpen }) => (
-      <TopAppBar className="dashboard-mobile-nav">
+export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
+  const device = React.useContext(UserContext);
+  const menu = React.useContext(MenuContext);
+
+  const renderDeviceDisplay = () => (
+    <div className="topbar-device-id" onClick={() => menu.setDeviceModalOpen(true)}>
+      <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
+      <MaterialIcon
+        onClick={() => menu.setDeviceModalOpen(true)}
+        hasRipple icon="arrow_drop_down"
+        initRipple={null}
+      />
+    </div>
+  );
+
+  const renderTopIcons = () => (
+    <div className="companion-nav">
+      {
+        props.topIcons.map((topIcon, index) => {
+          return (
+            <TopAppBarIcon key={index} navIcon tabIndex={0}>
+              <MaterialIcon
+                onClick={topIcon.clickEvent}
+                hasRipple icon={topIcon.icon}
+                initRipple={null}
+              />
+            </TopAppBarIcon>
+          );
+        })
+      }
+      {(viewPort > 539) && props.photoImage}
+    </div>
+  );
+
+  return (
+    <TopAppBar className="dashboard-mobile-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
           {(viewPort < 539) &&
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setOpen(true)}
+              onClick={() => menu.setOpen(true)}
               hasRipple icon="notes" initRipple={null}/>
           </TopAppBarIcon>}
           <TopAppBarTitle>
@@ -39,36 +71,17 @@ export const TopBar: React.FunctionComponent<TopBarProps> = props => (
                 alt="Logo"/>
             </NavLink>
           </TopAppBarTitle>
-          {
-            viewPort > 539 &&
-            <React.Fragment>
-              <div className="topbar-divider topbar-lockup-divider" />
-              <div className="topbar-title">
-                <h4>{props.pageTitle}</h4>
-              </div>
-            </React.Fragment>
-          }
-        </TopAppBarSection>
-        <TopAppBarSection align="end" role="toolbar">
-          <div className="companion-nav">
-            {
-              props.topIcons.map((topIcon, index) => {
-                return (
-                  <TopAppBarIcon key={index} navIcon tabIndex={0}>
-                    <MaterialIcon
-                      onClick={topIcon.clickEvent}
-                      hasRipple icon={topIcon.icon}
-                      initRipple={null}
-                    />
-                  </TopAppBarIcon>
-                );
-              })
-            }
-            {(viewPort > 539) && props.photoImage}
+          <div className="topbar-divider topbar-lockup-divider"/>
+          <div className="topbar-title">
+            <h4>{props.pageTitle}</h4>
           </div>
+        </TopAppBarSection>
+
+        <TopAppBarSection align="end" role="toolbar">
+          {renderDeviceDisplay()}
+          {renderTopIcons()}
         </TopAppBarSection>
       </TopAppBarRow>
     </TopAppBar>
-    )}
-  </MenuContext.Consumer>
-);
+  );
+};

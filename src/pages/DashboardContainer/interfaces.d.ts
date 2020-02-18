@@ -9,6 +9,14 @@ export interface DashboardContainerProps {
   user?: UserDetails;
   logoutUser?: () => void;
   title: string;
+  activateDevice?: (id) => Promise<any>;
+  getUserDetails: () => Promise<any>;
+  activeDevice: {
+    id: string;
+    _id: string;
+    verified?: boolean;
+    user?: UserDetails;
+  };
 }
 
 export interface DashboardContainerState {
@@ -18,6 +26,12 @@ export interface DashboardContainerState {
   isLoading: boolean;
   isFeedbackMenuOpen: boolean;
   isFeedbackModal: boolean;
+  isSelectDeviceModalOpen: boolean;
+  device: string;
+  activeDevice: {
+    id: string;
+    _id: string;
+  };
   action: string;
   feedback: '';
   menu: {

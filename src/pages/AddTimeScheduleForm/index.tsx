@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 // components
 import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
+import { UserContext } from '@components/Context';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -37,18 +38,13 @@ export const AddTimeScheduleForm: React.FunctionComponent<AddTimeScheduleFormPro
   });
 
   const [selectedTimeSchedule, handleSelectedTimeSchedule] = React.useState(new Date());
+  const device = React.useContext(UserContext);
 
-  /**
-   * Handles the submission on successful validation
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
   const onSubmit = (event) => {
     event.preventDefault();
     const schedule = {
       schedule: selectedTimeSchedule,
+      deviceId: device.activeDevice._id,
     };
 
     setState({ ...state, isLoading: true });

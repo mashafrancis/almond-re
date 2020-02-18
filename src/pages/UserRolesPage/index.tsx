@@ -1,5 +1,3 @@
-import { UserRole } from '@modules/userRoles/interfaces';
-import UserRolesPageLoader from '@placeholders/UserRolesPageSkeletonLoader';
 import * as React from 'react';
 
 // react libraries
@@ -13,8 +11,14 @@ import MaterialIcon from '@material/react-material-icon';
 import DashboardContainer from '@pages/DashboardContainer';
 
 // components
-import Loader from '@components/Loader';
-import Dialog, { DialogButton, DialogContent, DialogFooter, DialogTitle } from '@material/react-dialog/index';
+import Button from '@components/Button';
+import FormField from '@components/FormField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 // Third party libraries
 import { connect } from 'react-redux';
@@ -26,14 +30,22 @@ import './UserRolesPage.scss';
 import PermissionAccess from '@components/PermissionAccess';
 import Restrict from '@components/Restrict';
 import Table from '@components/Table';
+import UserRolesPageLoader from '@placeholders/UserRolesPageSkeletonLoader';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import { deleteUserRole, editUserRole, getUserRoles } from '@modules/userRoles';
-import { Link } from 'react-router-dom';
+import {
+  createUserRole,
+  deleteUserRole,
+  editUserRole,
+  getUserRoles
+} from '@modules/userRoles';
 
 // interfaces
-import { UserRolesPageProps, UserRolesPageState } from './interfaces';
+import {
+  UserRolesPageProps,
+  UserRolesPageState
+} from './interfaces';
 
 export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props) => {
   const [state, setState] = React.useState<UserRolesPageState>({
@@ -49,10 +61,6 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     isEditMode: false,
     action: '',
     id: '',
-    errors: {
-      title: '',
-      description: '',
-    },
   });
 
   /*
@@ -60,118 +68,71 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
    */
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
-    switch (state.action) {
-      case 'delete':
-        props.deleteUserRole(state.selectedRole._id)
-          .then(() => setState({ ...state, showDeleteModal: false }));
-        break;
-      case 'dismiss':
-        setState({ ...state, showDeleteModal: false });
-        break;
-    }
-    props.getUserRoles()
-      .then(() => setState({
-        ...state,
-        isLoading: false,
-        resources: props.userRoles.resources,
-        permissions: props.userRoles.permissions,
-      }));
-  },              [state.action]);
+    const getRoles = async () => {
+      await props.getUserRoles();
+    };
+
+    getRoles().then(() => setResourcesPermissions);
+  },              []);
+
+  React.useEffect(() => {
+    onResetPermission();
+  },              [state.isModalOpen]);
+
+  const setResourcesPermissions = () => {
+    setState({
+      ...state,
+      isLoading: false,
+      permissions: props.userRoles.permissions,
+      resources: props.userRoles.resources,
+    });
+  };
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   /**
    * This function renders the delete and edit
    *
    * @param action
    * @param authOption
-   * @param {assets} asset
+   * @param role
    * @param actionMethod
    * @param className
    *
    * @return {JSX}
    */
-  const renderAction = (action: string, authOption: string, asset, actionMethod, className: string) => (
+  const renderAction = (action: string, authOption: string, role, actionMethod, className: string) => (
     // <Restrict authorize={authOption}>
-    <span className={className} onClick={asset && actionMethod(asset)}>
+    <span className={className} onClick={role && actionMethod(role)}>
       {action}
     </span>
     // </Restrict>
   );
 
-  /**
-   * Fetch asset categories once component is mounted.
-   *
-   * @returns {JSX}
-   * @param role
-   */
   const userRolesListAction = role => (
     <div className="user-roles-page__table__action-buttons">
-      {renderAction('Edit', 'roles:edit', role, getCurrentPermissions, 'edit')}
+      {renderAction('Edit', 'roles:edit', role, toggleEditRoleModal, 'edit')}
       {renderAction('Delete', 'roles:delete', role, handleRoleDelete, 'delete')}
     </div>
   );
 
-  const ActionButtons = (role: UserRole) => (
-    <div key={role._id} className="action-buttons">
-      <span onClick={ () => setState({ ...state, id: role._id, isEditMode: true })}>
-        <Link to={`${props.match.url}/edit/${role._id}`}>
-          <h5 className="action-buttons__edit">Edit</h5>
-        </Link>
-      </span>
-      <span
-        id={role._id}
-        onClick={ () => setState({
-          ...state,
-          id: role._id,
-          selectedRole: {
-            ...state.selectedRole,
-            // [e.target.name]: e.target.value,
-          },
-          showDeleteModal: true })}
-      >
-        <h5 className="action-buttons__delete">Delete</h5>
-      </span>
-    </div>
-  );
+  const toggleModal = () => setState({
+    ...state,
+    title: '',
+    description: '',
+    isModalOpen: !state.isModalOpen,
+    isRequestSent: false,
+    isEditMode: false,
+  });
 
-   /**
-    * This function resets the resources with permissionIds
-    *
-    * @returns {void}
-    */
-  const onResetAccessPermissions = () => {
-    setState({
-      ...state,
-      resources: state.resources
-        .map(resource => resource.permissionIds ? {
-          id: resource.id,
-          name: resource.name,
-        } : {
-          ...resource,
-        }),
-    });
-  };
-
-  /**
-   * This function resets the resources state in the
-   * PermissionAccess component
-   */
-  const onResetPermission = () => {
-    onResetAccessPermissions();
-  };
-
-  /**
-   * Toggles edit role modal
-   *
-   * @param {Object} userRole
-   * @returns {JSX}
-   */
-  const getCurrentPermissions = userRole => () => {
+  const toggleEditRoleModal = userRole => () => {
     const currentPermissions = userRole.resourceAccessLevels.reduce(
       (resourceAccessLevels, accessLevel) => {
         const formattedResource = {
-          id: accessLevel.resource.id,
+          _id: accessLevel.resource._id,
           name: accessLevel.resource.name,
-          permissionIds: accessLevel.permissions.map(permission => permission.id),
+          permissionIds: accessLevel.permission.map(permission => permission._id),
         };
 
         return [...resourceAccessLevels, formattedResource];
@@ -179,7 +140,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
       []
     );
 
-    const resources = this.props.userRoles.resources;
+    const resources = props.userRoles.resources;
 
     const currentResources = resources.map((resource) => {
       let newResource = resource;
@@ -188,51 +149,102 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           newResource = res;
         }
       });
-
       return newResource;
     });
 
     setState({
       ...state,
       resources: currentResources,
+      permissions: props.userRoles.permissions,
       selectedRole: userRole,
       isEditMode: true,
       isModalOpen: !state.isModalOpen,
     });
   };
 
-  // /**
-  //  * Updates state when any of the input fields change
-  //  *
-  //  * @param {Event} event
-  //  *
-  //  * @returns {void}
-  //  */
-  // const handleFieldChange = (event) => {
-  //   this.state.isEditMode
-  //     ? this.setState({
-  //       selectedRole: {
-  //         ...this.state.selectedRole,
-  //         [event.target.name]: event.target.value,
-  //       },
-  //     })
-  //     : this.setState({
-  //       ...this.state,
-  //       [event.target.name]: event.target.value,
-  //       errors: {
-  //         ...this.state.errors,
-  //         [event.target.name]: '',
-  //       },
-  //     });
-  // };
+  const toggleDeleteModal = () => {
+    setState({
+      ...state,
+      showDeleteModal: !state.showDeleteModal,
+    });
+  };
 
-  /**
-   * This method is called to save the selected role and toggle the modal
-   *
-   * @memberof UserRolesPage
-   * @param {string} selectedRole
-   * @returns {void}
-   */
+  const handleCreateNewRole = () => {
+    const { title, description, resources } = state;
+
+    const updatedResources = resources
+      .filter(resource => resource.permissionIds !== undefined && resource.permissionIds.length !== 0)
+      .map(resource => ({
+        resourceId: resource._id,
+        name: resource.name,
+        permissionIds: resource.permissionIds,
+      }));
+
+    const userRole = {
+      title: title.trim(),
+      description: description.trim(),
+      resourceAccessLevels: updatedResources,
+    };
+
+    if (updatedResources.length === 0) {
+      return props.displaySnackMessage('Please, check at least one permission');
+    }
+
+    setState({ ...state, isRequestSent: true });
+    props.createNewRole(userRole)
+      .then(() => {
+        setState({ ...state, isRequestSent: false });
+        onResetPermission();
+        toggleModal();
+      });
+  };
+
+  const handleRoleUpdate = () => {
+    const { _id, title, description } = state.selectedRole;
+
+    const updatedResources = state.resources
+      .filter(resource => resource.permissionIds !== undefined)
+      .map(resource => ({
+        resourceId: resource._id,
+        name: resource.name,
+        permissionIds: resource.permissionIds,
+      }));
+
+    if (!updatedResources.find(resource => resource.permissionIds.length)) {
+      return props.displaySnackMessage('Please, check at least one permission');
+    }
+
+    const roleUpdatePayload = {
+      _id,
+      title: title.trim(),
+      description: description.trim(),
+      resourceAccessLevels: updatedResources,
+    };
+
+    setState({ ...state, isRequestSent: true });
+    props.editUserRole(roleUpdatePayload)
+      .then(() => {
+        setState({ ...state, isRequestSent: false });
+        onResetPermission();
+        toggleModal();
+      });
+  };
+
+  const onResetAccessPermissions = () => {
+    setState({
+      ...state,
+      resources: state.resources
+        .map(resource => resource.permissionIds ? {
+          _id: resource._id,
+          name: resource.name,
+        } : {
+          ...resource,
+        }),
+    });
+  };
+
+  const onResetPermission = () => onResetAccessPermissions();
+
   const handleRoleDelete = selectedRole => () => {
     setState({
       ...state,
@@ -241,89 +253,145 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     });
   };
 
-  // /**
-  //  * This method initializes the action to update a role
-  //  *
-  //  * @memberof UserRolesPage
-  //  *
-  //  * @returns {void}
-  //  */
-  // const onRoleUpdateSubmit = () => {
-  //   const { id, title, description } = this.state.selectedRole;
-  //
-  //   const updatedResources = this.state.resources
-  //     .filter(resource => resource.permissionIds !== undefined)
-  //     .map(resource => ({
-  //       resourceId: resource.id,
-  //       name: resource.name,
-  //       permissionIds: resource.permissionIds,
-  //     }));
-  //
-  //   if (!updatedResources.find(resource => resource.permissionIds.length)) {
-  //     return this.props.displaySnackMessage('Please, check at least one permission');
-  //   }
-  //
-  //   const roleUpdatePayload = {
-  //     id,
-  //     title: title.trim(),
-  //     description: description.trim(),
-  //     resourceAccessLevels: updatedResources,
-  //   };
-  //
-  //   this.setState({ isRequestSent: true });
-  //   this.props.editUserRole(roleUpdatePayload)
-  //     .then(() => {
-  //       this.setState({ isRequestSent: false });
-  //       // if (this.props.successType.type === 'success') {
-  //       //   this.onResetPermission();
-  //       //   this.toggleModal();
-  //       // }
-  //     });
-  // };
+  const onRoleDeleteSubmit = async () => {
+    await props.deleteUserRole(state.selectedRole._id);
+    toggleDeleteModal();
+  };
 
-  /**
-   * This function is use to get resources state from the
-   * PermissionAccess component to update the resources state
-   * so it can be used to add a new user role
-   *
-   * @param {array} resources
-   * @returns {void}
-   */
   const getResourcePermissions = resources => setState({ ...state, resources });
 
-  const renderNewRoleButton = () => (
-    <Link to={'/user-roles/:add'}>
-      {/*<Restrict authorize={['roles:add']}>*/}
-      <button className="mdc-button">
-        <MaterialIcon
-          hasRipple icon="add"
-          initRipple={null}
+  const fieldStateChanged = (field: keyof UserRolesPageState) => (state) => {
+    setState({ ...state, [field]: state.errors.length === 0 });
+  };
+
+  const validateTitleDescription = (value) => {
+    const hasSpecialCharacters = (char) => {
+      const code = char.charCodeAt(0);
+      return (!(code > 64 && code < 91) && !(code > 96 && code < 123) && !(code === 32));
+    };
+
+    for (const char of value) {
+      if (hasSpecialCharacters(char)) { throw new Error('Field should contain only letters'); }
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { value, name } = e;
+    setState(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const RenderNewRoleButton = () => (
+    <button className="mdc-button" onClick={toggleModal}>
+      <MaterialIcon
+        hasRipple icon="add"
+        initRipple={null}
+      />
+      <span className="mdc-button__label">New Role</span>
+    </button>
+  );
+
+  const RenderModalContent = () => (
+    <React.Fragment>
+      <div className="form-cell">
+        <FormField
+          id="title"
+          labelText="Role Name"
+          type="text"
+          leadingIcon={<MaterialIcon role="button" icon="mood" initRipple={null}/>}
+          aria-describedby="title-helper-text"
+          required
+          validator={validateTitleDescription}
+          value={state.isEditMode ? state.selectedRole.title : state.title}
+          onStateChanged={(e) => { fieldStateChanged('title'); handleInputChange(e); }}
         />
-        <span className="mdc-button__label">New Role</span>
-      </button>
-      {/*</Restrict>*/}
-    </Link>
+      </div>
+      <div className="form-cell">
+        <FormField
+          id="description"
+          labelText="Role Description"
+          type="text"
+          leadingIcon={<MaterialIcon role="button" icon="grain" initRipple={null}/>}
+          aria-describedby="description-helper-text"
+          required
+          validator={validateTitleDescription}
+          value={state.isEditMode ? state.selectedRole.description : state.description}
+          onStateChanged={(e) => { fieldStateChanged('description'); handleInputChange(e); }}
+        />
+      </div>
+      <PermissionAccess
+        resources={props.userRoles.resources}
+        permissions={props.userRoles.permissions}
+        getResources={getResourcePermissions}
+      />
+    </React.Fragment>
+  );
+
+  const UserRolePageModal = () => (
+    <React.Fragment>
+      <Dialog
+        open={state.isModalOpen}
+        fullScreen={fullScreen}
+        onClose={() => setState({ ...state, isModalOpen: false })}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          <p className="headline-3">
+            {state.isEditMode ? 'Edit Role' : 'Create a new role'}
+          </p>
+        </DialogTitle>
+        <DialogContent className="register">
+          {RenderModalContent()}
+        </DialogContent>
+        <DialogActions>
+          <button className="mdc-button" onClick={toggleModal}>
+            <span className="mdc-button__label">Dismiss</span>
+          </button>
+          <Button
+            type="button"
+            name={state.isEditMode ? 'Update role' : 'Create new role'}
+            id="cc-roles"
+            disabled={!(state.title && state.description)}
+            onClick={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
+            classes="mdc-button big-round-corner-button mdc-button--raised"
+          />
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 
   const DeleteRoleModal = role => (
     <Dialog
       open={state.showDeleteModal}
-      onClose={ action => setState({ ...state, action, showDeleteModal: false }) }
+      onClose={ () => setState({ ...state, showDeleteModal: false }) }
       id={role}
     >
-      <DialogTitle>DELETE ROLE</DialogTitle>
+      <DialogTitle>
+        <p className="headline-3">Delete Role</p>
+      </DialogTitle>
       <DialogContent>
-        <h4>{`Permanently delete '${state.selectedRole.title} User' Role`}</h4>
+        <h4 className="headline-4">{`Permanently delete '${state.selectedRole.title} User' Role`}</h4>
         <h5>
           {state.selectedRole && state.selectedRole.users > 0
             ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
             : 'This cannot be undone'}
         </h5>
       </DialogContent>
-      <DialogFooter>
-        <DialogButton action="dismiss">Dismiss</DialogButton>
-        <DialogButton action="delete" isDefault>Delete</DialogButton>
-      </DialogFooter>
+      <DialogActions>
+        <button className="mdc-button" onClick={toggleDeleteModal}>
+          <span className="mdc-button__label">Dismiss</span>
+        </button>
+        <Button
+          type="button"
+          name="Delete"
+          disabled={state.selectedRole && state.selectedRole.users > 0}
+          id="cc-delete"
+          onClick={onRoleDeleteSubmit}
+          classes="mdc-button big-round-corner-button mdc-button--raised"
+        />
+      </DialogActions>
     </Dialog>
   );
 
@@ -364,7 +432,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           <DashboardCard
             classes=""
             heading=""
-            actionItem={ renderNewRoleButton() }
+            actionItem={ RenderNewRoleButton() }
             body={
               <React.Fragment>
                 <div className="user-roles-page__table">
@@ -373,6 +441,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
               </React.Fragment>
               }
           />
+          { UserRolePageModal() }
           { DeleteRoleModal(state.selectedRole._id) }
         </Cell>
       </Row>
@@ -389,12 +458,12 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
 
 export const mapStateToProps = state => ({
   userRoles: state.userRoles,
-  successType: state.toast,
   isLoading: state.userRoles.isLoading,
 });
 
 export const mapDispatchToProps = dispatch => ({
   getUserRoles: () => dispatch(getUserRoles()),
+  createNewRole: userRole => dispatch(createUserRole(userRole)),
   deleteUserRole: userRoleId => dispatch(deleteUserRole(userRoleId)),
   editUserRole: userRoleToUpdate => dispatch(editUserRole(userRoleToUpdate)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),

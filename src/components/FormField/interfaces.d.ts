@@ -22,6 +22,7 @@ export interface FormFieldProps {
   trailingIcon?: any;
   onLeadingIconSelect?: any;
   updateState?: any;
+  value?: string;
 }
 
 export interface FormFieldState {

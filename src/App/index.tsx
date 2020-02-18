@@ -23,6 +23,9 @@ import { AppProps, AppState } from './interfaces';
 import { authService } from '@utils/auth';
 import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
+// context
+import { UserContext } from '@components/Context';
+
 // styles
 import './App.scss';
 
@@ -62,8 +65,30 @@ export class App extends React.Component<AppProps, AppState> {
       isUserAuthenticated: boolean) => (hasFetchedUserDetails && isUserAuthenticated);
 
     const { isUserAuthenticated, isFetchingUserDetails } = this.state;
+    const {
+      id,
+      name,
+      email,
+      photo,
+      role,
+      isVerified,
+      devices,
+      activeDevice,
+    } = this.props.user;
 
     return (checkUserDetailsAndAuthentication(isFetchingUserDetails, isUserAuthenticated) ? <Loader/> :
+      <UserContext.Provider
+        value={{
+          id,
+          name,
+          email,
+          photo,
+          role,
+          isVerified,
+          devices,
+          activeDevice,
+        }}
+      >
         <ErrorBoundary>
           <React.Fragment>
             <SnackBar/>
@@ -76,6 +101,7 @@ export class App extends React.Component<AppProps, AppState> {
             </>
           </React.Fragment>
         </ErrorBoundary>
+      </UserContext.Provider>
     );
   }
 }

@@ -1,12 +1,13 @@
 import { Schedule, Status } from '@modules/timeSchedules/interfaces';
+import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
 
 export interface WaterCyclesPageProps {
-  getAllSchedules: () => Promise<any>;
+  getAllSchedules: (id) => Promise<any>;
   deleteSingleSchedule: (id) => void;
   displaySnackMessage?: (message) => Promise<any>;
   togglePump?: (state) => Promise<any>;
-  getPumpStatus: () => Promise<any>;
+  getPumpStatus: (id) => Promise<any>;
   toggleScheduleStatus: (id, enabled) => Promise<any>;
   status?: Status;
   error?: object;
@@ -17,6 +18,7 @@ export interface WaterCyclesPageProps {
   isLoading: boolean;
   location: Location;
   enabled: boolean;
+  devices: Device[];
 }
 
 export interface WaterCyclesPageState {

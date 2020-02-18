@@ -15,6 +15,7 @@ export interface GetUserRolesActionSuccess {
   userRoles: UserRole[];
   permissions?: Permissions;
   resources?: Resources;
+  isLoading: boolean;
   type: GET_USER_ROLES_SUCCESS;
 }
 

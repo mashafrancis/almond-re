@@ -1,4 +1,7 @@
 import {
+  ACTIVATE_DEVICE_FAILURE,
+  ACTIVATE_DEVICE_REQUEST,
+  ACTIVATE_DEVICE_SUCCESS,
   ADD_DEVICE_FAILURE,
   ADD_DEVICE_REQUEST,
   ADD_DEVICE_SUCCESS,
@@ -29,7 +32,7 @@ export interface UserVerifyDeviceActionRequest {
 }
 
 export interface UserVerifyDeviceActionSuccess {
-  schedule: VerifyDevice;
+  id: VerifyDevice;
   type: USER_VERIFY_DEVICE_SUCCESS;
   isLoading: boolean;
 }
@@ -39,10 +42,33 @@ export interface UserVerifyDeviceActionFailure {
   errors: any;
 }
 
+export interface ActivateDeviceActionRequest {
+  type: ACTIVATE_DEVICE_REQUEST;
+  isLoading: boolean;
+}
+
+export interface ActivateDeviceActionSuccess {
+  activeDevice: Device;
+  type: ACTIVATE_DEVICE_SUCCESS;
+  isLoading: boolean;
+}
+
+export interface ActivateDeviceActionFailure {
+  type: ACTIVATE_DEVICE_FAILURE;
+  errors: any;
+}
+
 export interface NewDevice {
   device: string;
 }
 
 export interface VerifyDevice {
   id: string;
+}
+
+export interface Device {
+  id: string;
+  _id: string;
+  verified: boolean;
+  user?: string;
 }

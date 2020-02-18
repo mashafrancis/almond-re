@@ -116,19 +116,19 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
   </React.Fragment>
 );
 
-export const MenuContent: React.FunctionComponent<MenuContentProps> = props => (
-  <MenuContext.Consumer>
-    {({ isOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser }) => (
-      <Drawer
-        modal = {(viewPort < 539)}
-        open={isOpen}
-        onClose={() => setOpen(false)}
-        >
-        {mobileDrawerHeader(setOpen, props.name, props.photo)}
-        <DrawerContent>
-          {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser)}
-        </DrawerContent>
-      </Drawer>
-    )}
-  </MenuContext.Consumer>
-);
+export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) => {
+  const menu = React.useContext(MenuContext);
+  const { isOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser } = menu;
+  return (
+    <Drawer
+      modal={(viewPort < 539)}
+      open={isOpen}
+      onClose={() => setOpen(false)}
+    >
+      {mobileDrawerHeader(setOpen, props.name, props.photo)}
+      <DrawerContent>
+        {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser)}
+      </DrawerContent>
+    </Drawer>
+  );
+};

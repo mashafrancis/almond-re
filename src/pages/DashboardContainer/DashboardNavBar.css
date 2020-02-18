@@ -45,12 +45,27 @@
   .dashboard .topbar-title {
     color: #1967d2;
     background-color: rgba(25, 103, 210, 0.15);
-    padding: 4px 100px;
+    padding: 4px 70px;
     border: 1px solid #dadce0;
     border-radius: 4px;
   }
   .dashboard .topbar-title h4 {
     font-weight: 500;
+    font-size: 18px;
+  }
+  .dashboard .topbar-device-id {
+    color: rgba(244, 244, 244, 0.97);
+    background-color: rgba(17, 17, 17, 0.8);
+    padding: 4px 60px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    display: flex;
+    cursor: pointer;
+  }
+  .dashboard .topbar-device-id h4 {
+    font-weight: 500;
+    font-size: 18px;
+    padding-right: 10px;
   }
   .dashboard .drawer-icon {
     margin: 0 0.5rem;
@@ -237,7 +252,7 @@ footer {
     width: -webkit-fill-available;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 539px) {
   .mdc-top-app-bar {
     background-color: #d6dae04d;
     color: #000000;
@@ -334,6 +349,18 @@ footer {
 
   .mdc-drawer__header {
     background-color: rgba(17, 17, 17, 0.91);
+  }
+
+  .topbar-lockup-divider {
+    display: none;
+  }
+
+  .topbar-title {
+    display: none;
+  }
+
+  .topbar-device-id {
+    display: none;
   }
 }
 @media (max-width: 360px) {

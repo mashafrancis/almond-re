@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 
 // components
 import ActivityLogCard from '@components/ActivityLogCard';
+import { DeviceContext, MenuContext, UserContext } from '@components/Context';
 import DashboardCard from '@components/DashboardCard';
 import Table from '@components/Table';
 import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
@@ -60,6 +61,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     isEnabled: false,
   });
 
+  const menu = React.useContext(MenuContext);
+  const user = React.useContext(UserContext);
+
   React.useEffect(() => {
     switch (state.action) {
       case 'delete':
@@ -69,16 +73,16 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         setState({ ...state, isDeleteModal: false });
         break;
     }
-    props.getAllSchedules()
+    props.getAllSchedules(user.activeDevice._id)
       .then(() => setState({
         ...state,
         action: '',
         isDeleteModal: false,
       }));
-  },              [state.action]);
+  },              [state.action, user.activeDevice]);
 
   React.useEffect(() => {
-    props.getPumpStatus()
+    props.getPumpStatus(user.activeDevice._id)
       .then(() => setState({ ...state, schedules: props.schedules }))
       .then(() => setState({ ...state, isEnabled: props.enabled }));
   },              [state.isEnabled]);
@@ -89,17 +93,17 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
-      ? props.togglePump({ enabled: true })
+      ? props.togglePump({ enabled: true, deviceId: user.activeDevice._id, })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
-      : props.togglePump({ enabled: false })
+      : props.togglePump({ enabled: false, deviceId: user.activeDevice._id, })
         .then(() => setState({ ...state, statusClass: '' }));
   };
 
   const handleToggleStatusChange = (event, schedule) => {
     event.target.checked
-    ? props.toggleScheduleStatus(schedule._id,  { enabled: true })
+    ? props.toggleScheduleStatus(schedule._id,  { enabled: true, deviceId: user.activeDevice._id, })
       .then(() => window.localStorage.setItem('checked', 'true'))
-    :  props.toggleScheduleStatus(schedule._id,  { enabled: false })
+    :  props.toggleScheduleStatus(schedule._id,  { enabled: false, deviceId: user.activeDevice._id, })
       .then(() => window.localStorage.setItem('checked', 'true'));
   };
 
@@ -234,7 +238,16 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       <Grid>
         <Row>
           <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-            {(window.innerWidth < 539) && <div className="main-subheader"><h3>Water Cycles</h3></div>}
+            <div className="main-subheader">
+              <h3>Water Cycles</h3>
+              <div className="device-header-container" onClick={() => menu.setOpen(true)}>
+                <h3 className="main-subheader__device-id">
+                  {`Device ID: ${user.activeDevice.id}`}
+                  <MaterialIcon
+                    hasRipple icon="arrow_drop_down" initRipple={null}/>
+                </h3>
+              </div>
+            </div>
           </Cell>
         </Row>
         <Row>
@@ -301,13 +314,15 @@ export const mapStateToProps = state => ({
   status: state.timeSchedules.status,
   isLoading: state.timeSchedules.isLoading,
   enabled: state.timeSchedules.enabled,
+  devices: state.user.user.devices,
+  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({
   deleteSingleSchedule: id => dispatch(deleteSingleSchedule(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-  getAllSchedules: () => dispatch(getAllSchedules()),
-  getPumpStatus: () => dispatch(getPumpStatus()),
+  getAllSchedules: deviceId => dispatch(getAllSchedules(deviceId)),
+  getPumpStatus: id => dispatch(getPumpStatus(id)),
   togglePump: status => dispatch(togglePump(status)),
   toggleScheduleStatus: (id, enabled) => dispatch(toggleScheduleStatus(id, enabled)),
 });
