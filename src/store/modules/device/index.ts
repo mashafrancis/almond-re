@@ -1,19 +1,23 @@
 // thunks
-import { displaySnackMessage } from '../snack';
-
 import {
   AddDeviceActionFailure,
   AddDeviceActionRequest,
   AddDeviceActionSuccess,
-  NewDevice
+  NewDevice,
+  UserVerifyDeviceActionFailure,
+  UserVerifyDeviceActionRequest,
+  VerifyDevice
 } from '@modules/device/interfaces';
 
 import {
   ADD_DEVICE_FAILURE,
   ADD_DEVICE_REQUEST,
-  ADD_DEVICE_SUCCESS
+  ADD_DEVICE_SUCCESS,
+  USER_VERIFY_DEVICE_FAILURE,
+  USER_VERIFY_DEVICE_REQUEST,
+  USER_VERIFY_DEVICE_SUCCESS
 } from '@modules/device/types';
-import http from '@utils/helpers/http';
+import { displaySnackMessage } from '../snack';
 
 /**
  * Add a new device request
@@ -48,6 +52,38 @@ export const addDeviceFailure = (errors): AddDeviceActionFailure => ({
 });
 
 /**
+ * Add a new device request
+ *
+ * @returns {UserVerifyDeviceActionRequest}
+ */
+export const verifyDeviceRequest = (): UserVerifyDeviceActionRequest => ({
+  type: USER_VERIFY_DEVICE_REQUEST,
+  isLoading: true,
+});
+
+/**
+ * Add new device success
+ *
+ * @returns {AddDeviceActionSuccess}
+ * @param id
+ */
+export const verifyDeviceSuccess = (id: VerifyDevice): { isLoading: boolean; type: string; id: VerifyDevice } => ({
+  id,
+  type: USER_VERIFY_DEVICE_SUCCESS,
+  isLoading: false,
+});
+
+/**
+ * Add new schedule failure
+ *
+ * @returns {UserVerifyDeviceActionFailure}
+ */
+export const verifyDeviceFailure = (errors): UserVerifyDeviceActionFailure => ({
+  errors,
+  type: USER_VERIFY_DEVICE_FAILURE,
+});
+
+/**
  * Thunk action creator
  * Add a new device
  *
@@ -55,7 +91,7 @@ export const addDeviceFailure = (errors): AddDeviceActionFailure => ({
  */
 export const addNewDevice = device => (dispatch, getState, http) => {
   dispatch(addDeviceRequest());
-  return http.post('my-device', device)
+  return http.post('devices', device)
     .then((response) => {
       dispatch(addDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
@@ -64,6 +100,21 @@ export const addNewDevice = device => (dispatch, getState, http) => {
     .catch((error) => {
       const message = error.response.data.message;
       dispatch(addDeviceFailure(message));
+      dispatch(displaySnackMessage(message));
+    });
+};
+
+export const verifyUserDevice = id => (dispatch, getState, http) => {
+  dispatch(verifyDeviceRequest());
+  return http.post('my-device', id)
+    .then((response) => {
+      dispatch(verifyDeviceSuccess(response.data.data));
+      dispatch(displaySnackMessage(response.data.message));
+      // window.location.replace('/water-cycles');
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(verifyDeviceFailure(message));
       dispatch(displaySnackMessage(message));
     });
 };
@@ -89,6 +140,23 @@ export const reducer = (state = deviceInitialState, action) => {
         data: [action.device, ...state.data],
       };
     case ADD_DEVICE_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+      };
+    case USER_VERIFY_DEVICE_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case USER_VERIFY_DEVICE_SUCCESS:
+      return {
+        ...state,
+        errors: null,
+        isLoading: action.isLoading,
+        data: [action.device, ...state.data],
+      };
+    case USER_VERIFY_DEVICE_FAILURE:
       return {
         ...state,
         errors: action.errors,

@@ -288,7 +288,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   };
 
   return (
-    <DashboardContainer component={ WaterCyclesPageComponent() }/>
+    <DashboardContainer
+      title="Water Cycles"
+      component={ WaterCyclesPageComponent() }
+    />
   );
 };
 

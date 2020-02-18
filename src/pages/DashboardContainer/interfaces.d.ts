@@ -8,6 +8,7 @@ export interface DashboardContainerProps {
   component?: any;
   user?: UserDetails;
   logoutUser?: () => void;
+  title: string;
 }
 
 export interface DashboardContainerState {

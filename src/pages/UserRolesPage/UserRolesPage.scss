@@ -1,0 +1,146 @@
+@import '../../assets/scss/variables';
+
+.user-roles-page {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__heading {
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 22px;
+      color: #333333;
+    }
+  }
+
+  &__table {
+    &__action-buttons {
+      cursor: pointer;
+      color: #1967d2;
+
+      .delete {
+        margin-left: 20px;
+        color: #9E143E;
+
+        @media (max-width: 539px) {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .tbl-row {
+      font-size: 15px;
+    }
+
+    @media (max-width: 539px) {
+      .tbl-row {
+        font-size: 12px;
+        height: auto;
+      }
+
+      .tbl-header, .tbl-row {
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+    }
+  }
+}
+
+.add-role-form {
+  &__header {
+    margin-right: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  &__close-button {
+    margin: -25px;
+    font-weight: 300;
+    cursor: pointer;
+    color: #333333;
+    float: right;
+    transform: scale(1.8, 1.2);
+  }
+
+  &__close-button:hover {
+    font-weight: 400;
+  }
+
+  &__content {
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    &__row {
+      margin-top: 30px;
+      margin-bottom: 24px;
+
+      .input-box-group__control {
+        width: 360px;
+      }
+
+      .row-label {
+        margin-bottom: 8px;
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 21px;
+        color: rgba(0, 0, 0, 0.57);
+      }
+    }
+  }
+}
+
+.permissions {
+  background-color: rgba(25, 103, 210, 0.03);
+  width: auto;
+  padding-bottom: 25px;
+  border-radius: 8px;
+  border: 1px solid #dadce0;
+
+  &__tbl-header {
+    display: flex;
+    padding-top: 25px;
+    padding-left: 24px;
+
+    &__column {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 17px;
+      color: rgba(25, 103, 210, 0.87);
+      padding-right: 11px;
+
+      @media (max-width: 539px) {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .access-levels {
+    padding-right: 11px;
+  }
+
+  &__tbl-body {
+    padding-top: 25px;
+    padding-left: 24px;
+  }
+
+  &__tbl-row {
+    display: flex;
+    margin-bottom: 28px;
+
+    &__item {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 20px;
+      color: rgba(37, 37, 37, 0.67);
+      @media (max-width: 539px) {
+        font-size: 13px;
+      }
+    }
+
+    .header {
+      padding-top: 11px;
+    }
+  }
+}

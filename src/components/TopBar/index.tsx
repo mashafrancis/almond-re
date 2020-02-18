@@ -44,7 +44,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = props => (
             <React.Fragment>
               <div className="topbar-divider topbar-lockup-divider" />
               <div className="topbar-title">
-                <h4>Water Cycles</h4>
+                <h4>{props.pageTitle}</h4>
               </div>
             </React.Fragment>
           }

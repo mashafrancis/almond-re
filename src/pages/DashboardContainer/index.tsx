@@ -128,7 +128,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   ];
 
-  const { component, user } = props;
+  const { component, user, title } = props;
   const { isOpen, selectedIndex } = state.menu;
   const { isFeedbackModal, feedback, action } = state;
 
@@ -144,7 +144,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     >
         <div className="dashboard">
           <MenuContent name={user.name} photo={user.photo}/>
-          <TopBar photoImage={photoImage()} topIcons={topIcons}/>
+          <TopBar pageTitle={title} photoImage={photoImage()} topIcons={topIcons}/>
           <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
           {feedbackMenu()}
           <FeedbackDialogModal

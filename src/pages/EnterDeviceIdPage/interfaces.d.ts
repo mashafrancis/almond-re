@@ -1,5 +1,5 @@
 export interface EnterDeviceIdPageProps {
-  addNewDevice: (device) => Promise<any>;
+  verifyUserDevice: (id) => Promise<any>;
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
   isLoading: boolean;

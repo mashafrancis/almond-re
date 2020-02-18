@@ -137,3 +137,46 @@ export const routerContext = {
   },
   childContextTypes: { router: () => null },
 };
+
+/**
+ * Returns the full permission state for a particular resource
+ *
+ * @param {string} resource
+ *
+ * @returns {Object}
+ */
+export const fullPermissionsState = resource => ({
+  user: {
+    permissions: {
+      [resource]: {
+        fullAccess: true,
+        edit: true,
+        delete: true,
+        view: true,
+        add: true,
+      },
+    },
+  },
+});
+
+/**
+ * Returns the view only permission state for a particular resource
+ *
+ * @param {string} resource
+ *
+ * @returns {Object}
+ */
+export const viewOnlyPermissionsState = resource => ({
+  user: {
+    permissions: {
+      [resource]: {
+        fullAccess: false,
+        edit: false,
+        delete: false,
+        view: true,
+        add: false,
+      },
+    },
+  },
+});
+

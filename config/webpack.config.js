@@ -19,7 +19,7 @@ const PUBLIC_PATH = process.env.PUBLIC_URL;
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
-    styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.css'),
+    // styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.css'),
     fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css')
   },
   output: {
@@ -77,7 +77,7 @@ module.exports = {
             options: {
               sourceMap: true,
               importer,
-              includePaths: ['../node_modules'],
+              includePaths: ['./node_modules'],
             }
           },
         ]

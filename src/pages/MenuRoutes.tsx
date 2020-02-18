@@ -9,9 +9,9 @@ import { WaterCyclesPage } from '@pages/WaterCyclesPage';
 
 export const Menus = [
   {
-    navLink: '/overview',
+    navLink: '/analytics',
     icon: 'widgets',
-    primaryText: 'Overview',
+    primaryText: 'Analytics',
     component: WaterCyclesPage,
   },
   {
