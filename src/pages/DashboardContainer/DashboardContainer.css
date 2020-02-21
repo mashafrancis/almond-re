@@ -1,5 +1,5 @@
 body, html {
-  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif;
+  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
   font-size: 16px;
   font-weight: 400;
   margin: 0;
@@ -13,6 +13,9 @@ body, html {
   height: 100vh;
   overflow: auto;
   font-family: "Google Sans", sans-serif !important;
+}
+.dashboard .MuiFormLabel-root {
+  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
 }
 .dashboard .mdc-top-app-bar {
   background-color: #fff;
@@ -36,7 +39,6 @@ body, html {
   height: 44px;
 }
 .dashboard .mdc-drawer .mdc-list-item {
-  font-family: "Google Sans";
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-size: 0.875rem;
@@ -304,6 +306,12 @@ body, html {
   margin-top: 18px;
   margin-right: 12px;
 }
+.top-buttons .main-subheader {
+  display: none;
+}
+.top-buttons .main-subheader h3 {
+  display: none;
+}
 
 @media (max-width: 539px) {
   .dashboard .bottom-buttons {
@@ -368,13 +376,25 @@ body, html {
     align-items: center;
     justify-content: space-between;
   }
+  .dashboard .main-subheader .device-header-container {
+    display: flex;
+  }
+  .dashboard .main-subheader__device-id {
+    color: rgba(244, 244, 244, 0.97) !important;
+    background-color: rgba(17, 17, 17, 0.8) !important;
+    padding: 4px 20px !important;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    display: flex;
+    cursor: pointer;
+  }
   .dashboard .main-subheader h3 {
     margin-top: 20px;
     background-color: rgba(25, 103, 210, 0.11);
-    padding: 6px 40px;
+    padding: 6px 30px;
     color: #134995;
     border-radius: 6px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
   }
 }
@@ -403,6 +423,15 @@ body, html {
 .register header {
   display: flex;
   justify-content: space-between;
+}
+
+@media (min-width: 539px) {
+  .main-subheader {
+    display: none;
+  }
+  .main-subheader h3 {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=DashboardContainer.css.map */

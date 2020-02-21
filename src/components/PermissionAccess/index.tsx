@@ -92,8 +92,8 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
           return Object.values(this.mappedPermissions)
             .filter(
               currentPermissionId => currentPermissionId !== permissionId
-              &&
-              currentPermissionId !== this.mappedPermissions['full access']
+                &&
+                currentPermissionId !== this.mappedPermissions['full access']
             );
         }
 
@@ -120,21 +120,16 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
    * @returns {boolean}
    */
   isResourcePermissionActive(resourceId, permissionId) {
-    let isActive = false;
+    // let isActive = false;
     // get the resource in question
     const resource = this.state.resources.filter(resource => resource._id === resourceId)[0];
     /*
      * it's active if it has the 'full access' toggled on or
      * if the permission for this checkbox has been toggled on
      */
-    if (
-      resource.permissionIds &&
+    return resource.permissionIds &&
       (resource.permissionIds.includes(this.mappedPermissions['full access']) ||
-      resource.permissionIds.includes(permissionId))
-    ) {
-      isActive = true;
-    }
-    return isActive;
+        resource.permissionIds.includes(permissionId));
   }
 
   render() {
@@ -148,9 +143,9 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
               {
                 Object.keys(this.mappedPermissions)
                   .map(permissionString => ((
-                    <div key={permissionString} className="permissions__tbl-header__column">
-                      {`${capitalize(permissionString)}`}
-                    </div>)
+                      <div key={permissionString} className="permissions__tbl-header__column">
+                        {`${capitalize(permissionString)}`}
+                      </div>)
                   ))
               }
             </div>
@@ -163,8 +158,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
                       Object.keys(this.mappedPermissions).map(permission => (
                         <div key={`${resource.name}-${permission}}`} className="permissions__tbl-row__item">
                           <Checkbox
-                            checked={this.props.resources &&
-                              this.isResourcePermissionActive(resource._id, this.mappedPermissions[permission])}
+                            checked={
+                              this.props.resources && this.isResourcePermissionActive(
+                                resource._id,
+                                this.mappedPermissions[permission])
+                            }
                             name={`${resource.name}-${permission}`}
                             onChange={this.togglePermission(resource._id, permission)}
                           />
@@ -173,10 +171,10 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
                     }
                   </div>
                 ))
-            }
+              }
+            </div>
           </div>
         </div>
-      </div>
       </React.Fragment>
     );
   }

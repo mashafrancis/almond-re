@@ -23,6 +23,9 @@ import Button from '@components/Button';
 import { displaySnackMessage } from '@modules/snack';
 import { editSchedule } from '@modules/timeSchedules';
 
+// context
+import { UserContext } from '@components/Context';
+
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -44,6 +47,8 @@ export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormP
     errors: {},
   });
 
+  const device = React.useContext(UserContext);
+
   const scheduleId = window.location.pathname
     .replace('http://', '')
     .split('/');
@@ -64,6 +69,7 @@ export const EditTimeScheduleForm: React.FunctionComponent<EditTimeScheduleFormP
     event.preventDefault();
     const schedule = {
       schedule: selectedTime,
+      deviceId: device.activeDevice._id,
     };
 
     setState({ ...state, isLoading: true });

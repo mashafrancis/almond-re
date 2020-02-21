@@ -1,10 +1,11 @@
+import { UserContext } from '@components/Context';
 import * as React from 'react';
-import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 
 // third party apps
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // interfaces
@@ -17,6 +18,8 @@ import { authService } from '@utils/auth';
 import './HomePage.scss';
 
 const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
+  const user = React.useContext(UserContext);
+
   const handleLogin = () => {
     window.location.replace(process.env.SOCIAL_AUTH_URL);
   };
@@ -25,7 +28,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     <React.Fragment>
       {authService.isAuthenticated()
       ?
-        <NavLink to={(props.user.devices.length > 0) ? '/water-cycles' : '/my-device'}>
+        <NavLink to={(user.devices.length === 0 || null || undefined) ? '/my-device' : '/analytics'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>
@@ -68,7 +71,6 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
 
 export const mapStateToProps = state => ({
   isLoading: state.isLoading,
-  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

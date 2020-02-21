@@ -18,6 +18,7 @@ describe('Device reducer', () => {
     isLoading: true,
     errors: {},
     data: [],
+    activeDevice: '',
   };
 
   const addDeviceRequest = {

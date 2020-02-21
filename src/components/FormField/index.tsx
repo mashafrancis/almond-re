@@ -3,7 +3,10 @@ import * as React from 'react';
 // interfaces
 import { FormFieldProps, FormFieldState } from '@components/FormField/interfaces';
 // nodejs library to set properties for components
-import TextField, { HelperText, Input } from '@material/react-text-field';
+import TextField, { HelperText, Input } from '@components/TextField';
+
+// styles
+// import './FormField.scss';
 
 export class FormField extends React.Component<FormFieldProps, FormFieldState> {
   constructor(props) {
@@ -57,6 +60,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
       id,
       placeholder,
       children,
+      ...props
     } = this.props;
     const hasErrors = errors.length > 0;
 
@@ -78,7 +82,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
           </HelperText>}
       >
         <Input
-          value={value}
+          value={value || props.value}
           name={labelText}
           id={id}
           type={type}

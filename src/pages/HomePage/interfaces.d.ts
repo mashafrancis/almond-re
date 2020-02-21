@@ -5,4 +5,3 @@ export interface HomePageProps {
   socialAuthentication?: () => Promise<any>;
   user?: UserDetails;
 }
-

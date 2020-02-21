@@ -31,7 +31,7 @@ export class SnackBar extends React.Component<
      * hideToastMessage has already been called.
      */
     if (this.state.snack.message !== '') {
-      setTimeout(this.hideSnackMessage, 6000);
+      setTimeout(this.hideSnackMessage, 8000);
     }
   }
 
@@ -52,7 +52,7 @@ export class SnackBar extends React.Component<
           ? (
               <Snackbar
                 message={this.state.snack.message}
-                timeoutMs={6000}
+                timeoutMs={8000}
                 actionText="DISMISS"
               />
             )

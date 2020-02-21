@@ -44,10 +44,12 @@ interface UserDetails {
   photo: string;
   role: string;
   isVerified?: boolean;
-  devices?: [
-    {
-      _id: string;
-      verified: boolean;
-    }
-  ];
+  devices?: Device[];
+  activeDevice?: Device;
+}
+
+export interface Device {
+  _id: string;
+  id: string;
+  verified?: boolean;
 }

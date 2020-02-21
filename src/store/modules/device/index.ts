@@ -1,15 +1,20 @@
 // thunks
 import {
+  ActivateDeviceActionFailure,
+  ActivateDeviceActionRequest, ActivateDeviceActionSuccess,
   AddDeviceActionFailure,
   AddDeviceActionRequest,
-  AddDeviceActionSuccess,
+  AddDeviceActionSuccess, Device,
   NewDevice,
   UserVerifyDeviceActionFailure,
   UserVerifyDeviceActionRequest,
+  UserVerifyDeviceActionSuccess,
   VerifyDevice
 } from '@modules/device/interfaces';
 
 import {
+  ACTIVATE_DEVICE_FAILURE,
+  ACTIVATE_DEVICE_REQUEST, ACTIVATE_DEVICE_SUCCESS,
   ADD_DEVICE_FAILURE,
   ADD_DEVICE_REQUEST,
   ADD_DEVICE_SUCCESS,
@@ -67,7 +72,7 @@ export const verifyDeviceRequest = (): UserVerifyDeviceActionRequest => ({
  * @returns {AddDeviceActionSuccess}
  * @param id
  */
-export const verifyDeviceSuccess = (id: VerifyDevice): { isLoading: boolean; type: string; id: VerifyDevice } => ({
+export const verifyDeviceSuccess = (id: VerifyDevice): UserVerifyDeviceActionSuccess => ({
   id,
   type: USER_VERIFY_DEVICE_SUCCESS,
   isLoading: false,
@@ -81,6 +86,39 @@ export const verifyDeviceSuccess = (id: VerifyDevice): { isLoading: boolean; typ
 export const verifyDeviceFailure = (errors): UserVerifyDeviceActionFailure => ({
   errors,
   type: USER_VERIFY_DEVICE_FAILURE,
+});
+
+/**
+ * Activate device request
+ *
+ * @returns {UserVerifyDeviceActionRequest}
+ */
+export const activateDeviceRequest = (): ActivateDeviceActionRequest => ({
+  type: ACTIVATE_DEVICE_REQUEST,
+  isLoading: true,
+});
+
+/**
+ * Activate device success
+ *
+ * @returns {AddDeviceActionSuccess}
+ * @param activeDevice
+ */
+export const activateDeviceSuccess = (activeDevice: Device):
+  { isLoading: boolean; activeDevice: Device; type: string } => ({
+    activeDevice,
+    type: ACTIVATE_DEVICE_SUCCESS,
+    isLoading: false,
+  });
+
+/**
+ * Activate device failure
+ *
+ * @returns {UserVerifyDeviceActionFailure}
+ */
+export const activateDeviceFailure = (errors): ActivateDeviceActionFailure => ({
+  errors,
+  type: ACTIVATE_DEVICE_FAILURE,
 });
 
 /**
@@ -110,7 +148,20 @@ export const verifyUserDevice = id => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(verifyDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
-      // window.location.replace('/water-cycles');
+    })
+    .catch((error) => {
+      const message = error.response.data.message;
+      dispatch(verifyDeviceFailure(message));
+      dispatch(displaySnackMessage(message));
+    });
+};
+
+export const activateDevice = id => (dispatch, getState, http) => {
+  dispatch(activateDeviceRequest());
+  return http.patch('active-device', id)
+    .then((response) => {
+      dispatch(activateDeviceSuccess(response.data.data));
+      dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {
       const message = error.response.data.message;
@@ -123,6 +174,7 @@ export const deviceInitialState = {
   isLoading: true,
   errors: {},
   data: [],
+  activeDevice: {},
 };
 
 export const reducer = (state = deviceInitialState, action) => {
@@ -157,6 +209,23 @@ export const reducer = (state = deviceInitialState, action) => {
         data: [action.device, ...state.data],
       };
     case USER_VERIFY_DEVICE_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+      };
+    case ACTIVATE_DEVICE_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case ACTIVATE_DEVICE_SUCCESS:
+      return {
+        ...state,
+        errors: null,
+        isLoading: action.isLoading,
+        activeDevice: action.activeDevice,
+      };
+    case ACTIVATE_DEVICE_FAILURE:
       return {
         ...state,
         errors: action.errors,

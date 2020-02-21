@@ -50,6 +50,7 @@ export const getUserRolesSuccess = (allRolesAndPermissions): GetUserRolesActionS
   userRoles: allRolesAndPermissions.data,
   permissions: allRolesAndPermissions.permissions,
   resources: allRolesAndPermissions.resources,
+  isLoading: false,
   type: GET_USER_ROLES_SUCCESS,
 });
 
@@ -107,7 +108,6 @@ export const createUserRole = userRole => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(createUserRoleSuccess(response.data.data));
       dispatch(displaySnackMessage('User Role successfully created'));
-      window.history.back();
     })
     .catch(error =>
       dispatch(displaySnackMessage(error.response.data.message))
@@ -138,7 +138,7 @@ export const deleteUserRole = id => (dispatch, getState, http) => {
  */
 export const getUserRoles = () => (dispatch, getState, http) => {
   dispatch(getUserRolesRequest());
-  return http.get('/roles?include=permissions&include=resources', { cache: true })
+  return http.get('/roles?include=permissions&include=resources')
     .then(response => dispatch(getUserRolesSuccess(response.data)))
     .catch((error) => {
       dispatch(getUserRolesFailure(error.message));
