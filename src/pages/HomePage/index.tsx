@@ -1,4 +1,4 @@
-import { UserContext } from '@components/Context';
+import { UserContext } from '@utils/context/Context';
 import * as React from 'react';
 
 // thunks
@@ -28,7 +28,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     <React.Fragment>
       {authService.isAuthenticated()
       ?
-        <NavLink to={(user.devices.length === 0 || null || undefined) ? '/my-device' : '/analytics'}>
+        <NavLink to={(user.devices.length === 0 || null || undefined) ? '/my-device' : '/dashboard'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>

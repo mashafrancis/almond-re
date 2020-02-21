@@ -54,18 +54,17 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
     setState({ ...state, isLoading: true });
 
-    props.verifyUserDevice(device)
-      .then(async () => {
-        await props.getUserDetails();
-        setState({ ...state, isLoading: false });
-
-        const devicePresent = props.user.devices.find(device => device.id === deviceId);
-        if (devicePresent) {
-          await props.displaySnackMessage('The ID is already in your available devices. Add another or SKIP.');
-        } else {
-          props.history.push('/analytics');
-        }
-      });
+    const devicePresent = props.user.devices.find(device => device.id === deviceId);
+    if (devicePresent) {
+      await props.displaySnackMessage('The ID is already in your available devices. Add another or skip.');
+      setState({ ...state, isLoading: false });
+    } else {
+      props.verifyUserDevice(device)
+        .then(async () => {
+          await props.getUserDetails();
+          setState({ ...state, isLoading: false });
+        });
+    }
   };
 
   const useStyles = makeStyles((theme: Theme) =>

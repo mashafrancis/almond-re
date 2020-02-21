@@ -2,10 +2,6 @@ import * as React from 'react';
 
 // third-party libraries
 import { createStyles, TextField, Theme } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -19,19 +15,24 @@ import {
 import { connect } from 'react-redux';
 
 // components;
-import {
-  DeviceContext,
-  MenuContext,
-  UserContext
-} from '@components/Context';
+import PageBottomNavigation from '@components/BottomNavigation';
 import FeedbackDialogModal from '@components/FeedbackDialogModal';
+import FormModal from '@components/FormModal';
 import { MenuContent } from '@components/MenuContent';
 import MenuModal from '@components/MenuModal';
+import { Menus } from '@components/MenuRoutes';
 import { TopBar } from '@components/TopBar';
+
+// utils
+import {
+  MenuContext,
+  UserContext
+} from '@utils/context';
 
 // thunks
 import { activateDevice } from '@modules/device';
 import { getUserDetails, logoutUser } from '@modules/user';
+import { useViewport } from '../../hooks';
 
 // interfaces
 import {
@@ -40,17 +41,14 @@ import {
 } from './interfaces';
 
 // styles
-import '@pages/DashboardContainer/DashboardNavBar.scss';
-import '../../assets/scss/RegisterPage.scss';
+// import '@pages/DashboardContainer/DashboardNavBar.scss';
+// import '../../assets/scss/RegisterPage.scss';
 import './DashboardContainer.scss';
-
-const viewPort = window.innerWidth;
 
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (props) => {
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
     isMenuOpen: false,
-    selectedIndex: 0,
     isLoading: true,
     isFeedbackMenuOpen: false,
     isFeedbackModal: false,
@@ -63,34 +61,38 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     action: '',
     fields: {},
     feedback: '',
-    menu: {
-      isOpen: false,
-      selectedIndex: 0,
+    selectedIndex: {
+      group: 0,
+      item: 0,
     },
   });
 
   const user = React.useContext(UserContext);
 
+  const { width } = useViewport();
+  const breakpoint = 539;
+
   React.useEffect(() => {
     setState({
       ...state,
       activeDevice: user.activeDevice,
-      device: props.user.activeDevice ? props.user.activeDevice.id : '#no device',
+      device: props.user.activeDevice.id,
     });
-  },              [props.user.activeDevice]);
+  },              [props.user.activeDevice.id]);
+
+  React.useEffect(() => {
+    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+    if (selectedIndex) {
+      setState({ ...state, selectedIndex });
+    } else {
+      const initialSelectedIndex =  { group: 0, item: 0 };
+      window.localStorage.setItem('selectedIndex', JSON.stringify(initialSelectedIndex));
+    }
+  },              []);
 
   const menuAnchorEl = React.useRef<any>(null);
 
-  const setOpen = (isOpen: boolean) => {
-    const menu = state.menu;
-    setState({
-      ...state,
-      menu: {
-        ...menu,
-        isOpen: menu.isOpen = isOpen,
-      },
-    });
-  };
+  const setOpen = (isOpen: boolean) => setState({ ...state, isMenuOpen: isOpen });
 
   const setDeviceModalOpen = (isModalOpen: boolean) => {
     setState({
@@ -99,7 +101,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     });
   };
 
-  const setSelectedIndex = () => setState({ ...state, selectedIndex: 1 });
+  const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
+    setState({ ...state, selectedIndex });
+    window.localStorage.setItem('selectedIndex', JSON.stringify(selectedIndex));
+  };
 
   const onFeedbackMenuOpenClose = () => setState({ ...state, isFeedbackMenuOpen: false });
 
@@ -142,7 +147,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
            onClick={() => setState({ ...state, isOpen: true })}
       >
         <span className="mini-account-menu__image">
-          {(viewPort > 539) &&
+          {(width > breakpoint) &&
           <img
             className="mini-account-menu__image"
             src={user.photo}
@@ -167,7 +172,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           onClick={() => setState({ ...state, isFeedbackModal: true, isFeedbackMenuOpen: false })}
         >
           <h5>Send feedback</h5>
-          <MaterialIcon hasRipple icon="feedback" initRipple={null}/></div>
+          <MaterialIcon hasRipple icon="feedback" initRipple={null}/>
+        </div>
       }/>
     </MenuSurface>
   );
@@ -193,56 +199,50 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 
   const styles = useStyles(props);
 
+  const selectDeviceContent = devices => (
+    <TextField
+      id="device"
+      select
+      variant="outlined"
+      label="device"
+      fullWidth
+      size="small"
+      value={state.device}
+      onChange={handleInputChange}
+      SelectProps={{
+        classes: {
+          selectMenu: styles.selectHeight,
+        },
+      }}
+      InputLabelProps={{
+        classes: {
+          focused: styles.focused,
+          root: styles.labelColor,
+        },
+      }}
+      InputProps={{
+        startAdornment: <InputAdornment position="start">
+          <AllOutTwoToneIcon style={{ color: '#1967D2' }} />
+        </InputAdornment>,
+      }}>
+      {devices.map(device => (
+        <MenuItem key={device.id} value={device.id}>
+          <h4 className="headline-4">{device.id}</h4>
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+
   const SelectDeviceModal = devices => (
-    <Dialog
-      open={state.isSelectDeviceModalOpen}
+    <FormModal
+      isModalOpen={state.isSelectDeviceModalOpen}
+      title="Select the device ID"
       onClose={handleSelectDeviceModal}
-    >
-      <DialogTitle>
-        <p className="headline-3">Select the device ID</p>
-      </DialogTitle>
-      <DialogContent>
-        <TextField
-          id="device"
-          select
-          variant="outlined"
-          label="device"
-          fullWidth
-          size="small"
-          value={state.device}
-          onChange={handleInputChange}
-          SelectProps={{
-            classes: {
-              selectMenu: styles.selectHeight,
-            },
-          }}
-          InputLabelProps={{
-            classes: {
-              focused: styles.focused,
-              root: styles.labelColor,
-            },
-          }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">
-              <AllOutTwoToneIcon style={{ color: '#1967D2' }} />
-            </InputAdornment>,
-          }}>
-          {devices.map(device => (
-            <MenuItem key={device.id} value={device.id}>
-              <h4 className="headline-4">{device.id}</h4>
-            </MenuItem>
-          ))}
-        </TextField>
-      </DialogContent>
-      <DialogActions>
-        <button className="mdc-button" onClick={handleSelectDeviceModal}>
-          <span className="mdc-button__label">Dismiss</span>
-        </button>
-        <button className="mdc-button" onClick={handleSelectDevice}>
-          <span className="mdc-button__label">Confirm</span>
-        </button>
-      </DialogActions>
-    </Dialog>
+      content={selectDeviceContent(devices)}
+      submitButtonName="Select Device"
+      onSubmit={handleSelectDevice}
+      onDismiss={handleSelectDeviceModal}
+    />
   );
 
   const topIcons = [
@@ -256,14 +256,14 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   ];
 
-  const { component, title } = props;
-  const { isOpen, selectedIndex } = state.menu;
+  const { history } = props;
   const { isFeedbackModal, feedback, action } = state;
+  const { selectedIndex, isMenuOpen } = state;
 
   return (
     <MenuContext.Provider
       value={{
-        isOpen,
+        isMenuOpen,
         selectedIndex,
         setSelectedIndex,
         setOpen,
@@ -271,32 +271,28 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
         setDeviceModalOpen,
       }}
     >
-      <DeviceContext.Provider
-        value={{
-          controlledDevice: props.activeDevice.id,
-        }}
-      >
-        <div className="dashboard">
-          <MenuContent
-            name={user.name}
-            photo={user.photo}
-          />
-          <TopBar
-            pageTitle={title}
-            photoImage={photoImage()}
-            topIcons={topIcons}
-          />
-          <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
-          {FeedbackMenu()}
-          {SelectDeviceModal(user.devices)}
-          <FeedbackDialogModal
-            isFeedbackModal={isFeedbackModal}
-            action={action}
-            inputValue={feedback}
-            handleFeedbackInputChange={handleFeedbackInputChange}
-          />
-        </div>
-      </DeviceContext.Provider>
+      <div className="dashboard">
+        <MenuContent
+          name={user.name}
+          photo={user.photo}
+        />
+        <TopBar
+          photoImage={photoImage()}
+          topIcons={topIcons}
+        />
+          <TopAppBarFixedAdjust>
+            {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
+          </TopAppBarFixedAdjust>
+        { width < breakpoint && <PageBottomNavigation/> }
+        {FeedbackMenu()}
+        {SelectDeviceModal(user.devices)}
+        <FeedbackDialogModal
+          isFeedbackModal={isFeedbackModal}
+          action={action}
+          inputValue={feedback}
+          handleFeedbackInputChange={handleFeedbackInputChange}
+        />
+      </div>
     </MenuContext.Provider>
   );
 };
