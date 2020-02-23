@@ -3,7 +3,7 @@ import * as React from 'react';
 // interfaces
 import { FormFieldProps, FormFieldState } from '@components/FormField/interfaces';
 // nodejs library to set properties for components
-import TextField, { HelperText, Input } from '@components/TextField';
+import TextField, { HelperText, Input } from '../../atomic/TextField';
 
 // styles
 // import './FormField.scss';

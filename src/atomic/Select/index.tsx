@@ -20,10 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import FloatingLabel from '@components/FloatingLabel';
-import LineRipple from '@components/LineRipple';
-import { Corner } from '@components/MenuSurface';
-import NotchedOutline from '@components/NotchedOutline';
 import * as React from 'react';
 
 import { MDCSelectAdapter } from '@material/select/adapter';
@@ -31,11 +27,14 @@ import { MDCSelectFoundation } from '@material/select/foundation';
 import MDCSelectHelperTextFoundation from '@material/select/helper-text/foundation';
 import MDCSelectIconFoundation from '@material/select/icon/foundation';
 import classnames from 'classnames';
+import FloatingLabel from '../FloatingLabel';
+import LineRipple from '../LineRipple';
+import NotchedOutline from '../NotchedOutline';
 
 import { BaseSelect, BaseSelectProps } from './BaseSelect';
 import { EnhancedChild } from './EnhancedSelect'; // eslint-disable-line @typescript-eslint/no-unused-vars
-import { SelectHelperTextProps } from './helper-text/index';
-import { SelectIconProps } from './icon/index';
+import { SelectHelperTextProps } from './helper-text';
+import { SelectIconProps } from './icon';
 import Option, { OptionProps } from './Option'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 const { cssClasses } = MDCSelectFoundation;
@@ -538,4 +537,4 @@ export {
   MenuListItemGraphic as OptionGraphic,
   MenuListItemMeta as OptionMeta,
   MenuListItemText as OptionText,
-} from '@components/Menu';
+} from '../Menu';

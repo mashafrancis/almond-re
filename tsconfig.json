@@ -31,7 +31,8 @@
       "@placeholders/*": ["src/placeholders/*"],
       "@pages/*": ["src/pages/*"],
       "@modules/*": ["src/store/modules/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@atomic": ["src/atomic/*"]
     }
   },
   "include": [

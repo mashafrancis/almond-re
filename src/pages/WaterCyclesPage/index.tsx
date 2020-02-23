@@ -60,6 +60,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     showScheduleModal: false,
     scheduleToEdit: '',
     isActionDone: false,
+    isLoading: false,
   });
 
   const menu = React.useContext(MenuContext);
@@ -68,6 +69,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   const [selectedTimeSchedule, handleSelectedTimeSchedule] = React.useState(new Date());
 
   React.useEffect(() => {
+    setState({ ...state, isLoading: true });
     const getSchedules = async () => {
       await props.getAllSchedules(user.activeDevice._id);
     };
@@ -76,7 +78,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   React.useEffect(() => {
     props.getPumpStatus(user.activeDevice._id)
-      // .then(() => setState({ ...state, schedules: props.schedules }))
       .then(() => setState({ ...state, isEnabled: props.enabled }));
   },              [state.isEnabled]);
 
@@ -190,7 +191,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   const DeleteScheduleModal = () => (
     <FormModal
       isModalOpen={state.isDeleteModal}
-      content={'Do you confirm deletion of time schedule?'}
+      content={<p className="delete-modal-content">Do you confirm deletion of time schedule?</p>}
       onClose={toggleScheduleDeleteModal}
       title="Delete Time Schedule"
       submitButtonName="Delete schedule"

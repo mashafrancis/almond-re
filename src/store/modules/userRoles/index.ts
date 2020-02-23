@@ -72,10 +72,11 @@ export const getUserRolesFailure = (errors): GetUserRolesActionFailure => ({
  *
  *
  * @returns {UserDeleteRolesSuccess}
- * @param userRoleId
+ * @param id
  */
-export const deleteUserRolesSuccess = (userRoleId: string): UserDeleteRolesSuccess => ({
-  userRoleId, type: DELETE_USER_ROLES_SUCCESS,
+export const deleteUserRolesSuccess = (id: string): UserDeleteRolesSuccess => ({
+  id,
+  type: DELETE_USER_ROLES_SUCCESS,
 });
 
 /**
@@ -85,12 +86,12 @@ export const deleteUserRolesSuccess = (userRoleId: string): UserDeleteRolesSucce
  *
  * @param {UserRole[], string} userRole
  *
- * @param userRoleId
+ * @param id
  * @returns {UserEditRolesSuccess}
  */
-export const editUserRoleSuccess = (userRole, userRoleId: string): UserEditRolesSuccess => ({
+export const editUserRoleSuccess = (userRole, id: string): UserEditRolesSuccess => ({
+  id,
   userRole,
-  userRoleId,
   type: EDIT_USER_ROLES_SUCCESS,
 });
 
@@ -199,12 +200,12 @@ const reducer = (state = userRoleInitialState, action) => {
     case DELETE_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [...state.data].filter(userRole => action.userRoleId !== userRole.id),
+        data: [...state.data].filter(userRole => action.id !== userRole._id),
       };
     case EDIT_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [...state.data].map(role => role.id === action.userRole.id ? ({
+        data: [...state.data].map(role => role.id === action.userRole._id ? ({
           ...role,
           ...action.userRole,
         }) : role),

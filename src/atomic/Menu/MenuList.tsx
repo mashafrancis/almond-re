@@ -22,9 +22,9 @@
 
 import * as React from 'react';
 
-import List, { ListProps } from '@components/List';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MDCMenuFoundation } from '@material/menu/foundation';
+import List, { ListProps } from '../List';
 
 type RefCallback<T> = (node: T | null) => void;
 

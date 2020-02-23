@@ -388,7 +388,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
             classes=""
-            heading=""
+            heading="Roles available"
             actionItem={
               <ActionButton
                 name="Add role"

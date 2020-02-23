@@ -21,9 +21,6 @@
 // THE SOFTWARE.
 import * as React from 'react';
 
-import FloatingLabel from '@components/FloatingLabel';
-import LineRipple from '@components/LineRipple';
-import NotchedOutline from '@components/NotchedOutline';
 import {
   MDCTextFieldAdapter,
   MDCTextFieldInputAdapter,
@@ -34,6 +31,9 @@ import {
 } from '@material/textfield/adapter';
 import { MDCTextFieldFoundation } from '@material/textfield/foundation';
 import classnames from 'classnames';
+import FloatingLabel from '../FloatingLabel';
+import LineRipple from '../LineRipple';
+import NotchedOutline from '../NotchedOutline';
 import CharacterCounter, { CharacterCounterProps } from './character-counter';
 import HelperText, { HelperTextProps } from './helper-text';
 import Icon, { IconProps } from './icon';

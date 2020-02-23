@@ -28,10 +28,13 @@
   align-items: center;
 }
 .dashboard-card .card-header__title {
-  font-size: 18px;
+  font-size: 14px !important;
   margin: 0 14px 0 14px;
-  color: rgba(0, 0, 0, 0.87);
   font-weight: 500;
+  background-color: rgba(25, 103, 210, 0.11);
+  padding: 6px 20px;
+  color: #1967d2;
+  border-radius: 6px;
 }
 .dashboard-card .card-header__right-header {
   display: flex;
