@@ -3,8 +3,10 @@ import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
 
 export interface WaterCyclesPageProps {
+  addNewSchedule: (schedule) => Promise<any>;
+  editSchedule: (id, schedule) => Promise<any>;
   getAllSchedules: (id) => Promise<any>;
-  deleteSingleSchedule: (id) => void;
+  deleteSingleSchedule: (id) => Promise<any>;
   displaySnackMessage?: (message) => Promise<any>;
   togglePump?: (state) => Promise<any>;
   getPumpStatus: (id) => Promise<any>;
@@ -25,8 +27,11 @@ export interface WaterCyclesPageState {
   isEditMode: boolean;
   schedules: any;
   isDeleteModal: boolean;
-  action: string;
-  id: string;
+  scheduleId: string;
   statusClass: string;
   isEnabled: boolean;
+  isFormModalOpen: boolean;
+  showScheduleModal: boolean;
+  scheduleToEdit: string;
+  isActionDone: boolean;
 }

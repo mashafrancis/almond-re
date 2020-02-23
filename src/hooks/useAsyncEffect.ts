@@ -1,18 +1,5 @@
 import * as React from 'react';
 
-export function useFormInput(initialValue) {
-  const [value, setValue] = React.useState(initialValue);
-
-  function handleChange({ target }) {
-    setValue(target.value);
-  }
-
-  return {
-    value,
-    onChange: handleChange,
-  };
-}
-
 /*
  * https://dev.to/n1ru4l/homebrew-react-hooks-useasynceffect-or-how-to-handle-async-operations-with-useeffect-1fa8
  */
@@ -62,9 +49,7 @@ export const useAsyncEffect = (generator, deps = []) => {
         // abort further generator invocation on
         // 1. Unmount
         // 2. Dependency Array Change
-        if (ignore) {
-          return;
-        }
+        if (ignore) { return; }
       } while (res.done === false);
     };
     runGenerator();

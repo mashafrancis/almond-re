@@ -1,3 +1,5 @@
+import ActionButton from '@components/ActionButton';
+import FormModal from '@components/FormModal';
 import * as React from 'react';
 
 // react libraries
@@ -126,6 +128,8 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     isEditMode: false,
   });
 
+  const toggleDeleteModal = () => setState({ ...state, showDeleteModal: !state.showDeleteModal });
+
   const toggleEditRoleModal = userRole => () => {
     const currentPermissions = userRole.resourceAccessLevels.reduce(
       (resourceAccessLevels, accessLevel) => {
@@ -159,13 +163,6 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
       selectedRole: userRole,
       isEditMode: true,
       isModalOpen: !state.isModalOpen,
-    });
-  };
-
-  const toggleDeleteModal = () => {
-    setState({
-      ...state,
-      showDeleteModal: !state.showDeleteModal,
     });
   };
 
@@ -283,16 +280,6 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     }));
   };
 
-  const RenderNewRoleButton = () => (
-    <button className="mdc-button" onClick={toggleModal}>
-      <MaterialIcon
-        hasRipple icon="add"
-        initRipple={null}
-      />
-      <span className="mdc-button__label">New Role</span>
-    </button>
-  );
-
   const RenderModalContent = () => (
     <React.Fragment>
       <div className="form-cell">
@@ -330,69 +317,39 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
   );
 
   const UserRolePageModal = () => (
-    <React.Fragment>
-      <Dialog
-        open={state.isModalOpen}
-        fullScreen={fullScreen}
-        onClose={() => setState({ ...state, isModalOpen: false })}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title">
-          <p className="headline-3">
-            {state.isEditMode ? 'Edit Role' : 'Create a new role'}
-          </p>
-        </DialogTitle>
-        <DialogContent className="register">
-          {RenderModalContent()}
-        </DialogContent>
-        <DialogActions>
-          <button className="mdc-button" onClick={toggleModal}>
-            <span className="mdc-button__label">Dismiss</span>
-          </button>
-          <Button
-            type="button"
-            name={state.isEditMode ? 'Update role' : 'Create new role'}
-            id="cc-roles"
-            disabled={!(state.title && state.description)}
-            onClick={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
-            classes="mdc-button big-round-corner-button mdc-button--raised"
-          />
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+    <FormModal
+      fullScreen={fullScreen}
+      isModalOpen={state.isModalOpen}
+      content={RenderModalContent()}
+      onClose={() => setState({ ...state, isModalOpen: false })}
+      disabled={!(state.title && state.description)}
+      title={state.isEditMode ? 'Edit user role' : 'Create a new role'}
+      submitButtonName={state.isEditMode ? 'Update role' : 'Create role'}
+      onSubmit={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
+      onDismiss={toggleModal}
+    />
   );
 
-  const DeleteRoleModal = role => (
-    <Dialog
-      open={state.showDeleteModal}
-      onClose={ () => setState({ ...state, showDeleteModal: false }) }
-      id={role}
-    >
-      <DialogTitle>
-        <p className="headline-3">Delete Role</p>
-      </DialogTitle>
-      <DialogContent>
-        <h4 className="headline-4">{`Permanently delete '${state.selectedRole.title} User' Role`}</h4>
-        <h5>
+  const DeleteRoleModal = () => (
+    <FormModal
+      isModalOpen={state.showDeleteModal}
+      content={
+        <React.Fragment>
+          <h4 className="headline-4">{`Permanently delete '${state.selectedRole.title} User' Role`}</h4>
+          <h5>
           {state.selectedRole && state.selectedRole.users > 0
-            ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
-            : 'This cannot be undone'}
-        </h5>
-      </DialogContent>
-      <DialogActions>
-        <button className="mdc-button" onClick={toggleDeleteModal}>
-          <span className="mdc-button__label">Dismiss</span>
-        </button>
-        <Button
-          type="button"
-          name="Delete"
-          disabled={state.selectedRole && state.selectedRole.users > 0}
-          id="cc-delete"
-          onClick={onRoleDeleteSubmit}
-          classes="mdc-button big-round-corner-button mdc-button--raised"
-        />
-      </DialogActions>
-    </Dialog>
+              ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
+              : 'This cannot be undone'}
+          </h5>
+        </React.Fragment>
+      }
+      onClose={toggleDeleteModal}
+      title="Delete Role"
+      submitButtonName="Delete role"
+      onSubmit={onRoleDeleteSubmit}
+      onDismiss={toggleDeleteModal}
+      disabled={state.selectedRole && state.selectedRole.users > 0}
+    />
   );
 
   const TableContent = (userRoles) => {
@@ -412,7 +369,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     }));
 
     return (
-      props.isLoading ? (<UserRolesPageLoader/>) :
+      // props.isLoading ? (<UserRolesPageLoader/>) :
       <Table
         keys={tableHeaders}
         values={tableValues}
@@ -420,7 +377,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     );
   };
 
-  const UserRolesPageComponent = () => (
+  return (
     <Grid>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
@@ -432,27 +389,26 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           <DashboardCard
             classes=""
             heading=""
-            actionItem={ RenderNewRoleButton() }
+            actionItem={
+              <ActionButton
+                name="Add role"
+                icon="add"
+                handleClick={toggleModal}
+              />
+            }
             body={
               <React.Fragment>
                 <div className="user-roles-page__table">
                   { TableContent(Object.entries(props.userRoles.data)) }
                 </div>
               </React.Fragment>
-              }
+            }
           />
           { UserRolePageModal() }
-          { DeleteRoleModal(state.selectedRole._id) }
+          { DeleteRoleModal() }
         </Cell>
       </Row>
     </Grid>
-  );
-
-  return (
-    <DashboardContainer
-      title="User Roles"
-      component={ UserRolesPageComponent() }
-    />
   );
 };
 

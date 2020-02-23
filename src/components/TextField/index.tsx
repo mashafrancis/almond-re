@@ -42,7 +42,7 @@ import Input, { InputProps } from './Input';
 const cssClasses = MDCTextFieldFoundation.cssClasses;
 
 export interface Props<T extends HTMLElement = HTMLInputElement> {
-  // InputProps<T> includes the prop `id`, which we use below in the constructor
+  // InputProps<T> includes the prop `scheduleId`, which we use below in the constructor
   'children.props'?: InputProps<T>;
   children: React.ReactElement<Input<T>>;
   className?: string;

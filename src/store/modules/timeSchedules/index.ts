@@ -271,7 +271,6 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(addScheduleSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
-      window.history.back();
     })
     .catch((error) => {
       const message = error.response.data.message;
@@ -312,7 +311,6 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(editScheduleSuccess(id, response.data.data));
       dispatch(displaySnackMessage(response.data.message));
-      window.history.back();
     })
     .catch((error) => {
       const message = error.response.data.message;

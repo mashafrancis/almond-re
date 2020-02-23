@@ -1,7 +1,9 @@
 // react libraries
+import * as React from 'react';
+
 // third party libraries
 import { shallow } from 'enzyme';
-import * as React from 'react';
+
 // components
 import Routes from './index';
 
@@ -12,16 +14,8 @@ describe('The Route components', () => {
     expect(wrapper.find({ path: '/' }).length).toBe(1);
   });
 
-  it('should register a route for water cycles', () => {
-    expect(wrapper.find({ path: '/water-cycles' }).length).toBe(1);
-  });
-
-  it('should register a route for adding new water schedule', () => {
-    expect(wrapper.find({ path: '/water-cycles/schedule' }).length).toBe(1);
-  });
-
-  it('should register a route for editing a water schedule', () => {
-    expect(wrapper.find({ path: '/water-cycles/edit/:id' }).length).toBe(1);
+  it('should register a route for dashboard', () => {
+    expect(wrapper.find({ path: '/dashboard' }).length).toBe(1);
   });
 
   it('should register a route for 404', () => {

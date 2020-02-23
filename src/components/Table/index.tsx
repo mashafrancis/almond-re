@@ -14,7 +14,7 @@ import { TableProps } from './interfaces';
  *
  * @returns {JSX} JSX
  */
-const Table = (props: TableProps) => {
+const Table: (props: TableProps) => any = (props: TableProps) => {
   const { keys, values } = props;
   const tableHeaders = Object.keys(keys);
   return (

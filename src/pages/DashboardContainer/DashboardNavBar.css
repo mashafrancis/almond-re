@@ -69,10 +69,9 @@
   }
   .dashboard .drawer-icon {
     margin: 0 0.5rem;
-    color: #80868b;
-    width: 16px;
-    height: 16px;
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    font-size: 20px;
     font-feature-settings: "liga";
     word-break: normal;
     font-weight: normal;

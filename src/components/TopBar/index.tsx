@@ -3,7 +3,6 @@ import * as React from 'react';
 // third-party libraries
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, {
-  TopAppBarFixedAdjust,
   TopAppBarIcon,
   TopAppBarRow,
   TopAppBarSection,
@@ -12,16 +11,18 @@ import TopAppBar, {
 import { NavLink } from 'react-router-dom';
 
 // utils
-import { DeviceContext, MenuContext, UserContext } from '../Context';
+import { MenuContext, UserContext } from '@utils/context/Context';
+import { useViewport } from '../../hooks';
 
 // interface
 import { TopBarProps } from './interfaces';
 
-const viewPort = window.innerWidth;
-
 export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const device = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
+
+  const { width } = useViewport();
+  const breakpoint = 539;
 
   const renderDeviceDisplay = () => (
     <div className="topbar-device-id" onClick={() => menu.setDeviceModalOpen(true)}>
@@ -49,7 +50,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
           );
         })
       }
-      {(viewPort > 539) && props.photoImage}
+      {(width > breakpoint) && props.photoImage}
     </div>
   );
 
@@ -57,7 +58,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
     <TopAppBar className="dashboard-mobile-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
-          {(viewPort < 539) &&
+          {(width < breakpoint) &&
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
               onClick={() => menu.setOpen(true)}
@@ -72,13 +73,10 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
             </NavLink>
           </TopAppBarTitle>
           <div className="topbar-divider topbar-lockup-divider"/>
-          <div className="topbar-title">
-            <h4>{props.pageTitle}</h4>
-          </div>
+          {renderDeviceDisplay()}
         </TopAppBarSection>
 
         <TopAppBarSection align="end" role="toolbar">
-          {renderDeviceDisplay()}
           {renderTopIcons()}
         </TopAppBarSection>
       </TopAppBarRow>

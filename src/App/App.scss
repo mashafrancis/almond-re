@@ -1,3 +1,28 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif;
+}
+
+.mdc-snackbar {
+  z-index: 999 !important;
+  margin: 8px;
+  position: fixed;
+  height: 150px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .mdc-snackbar__action {
   &:not(:disabled) {
     color: #3480E3 !important;

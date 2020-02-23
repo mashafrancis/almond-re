@@ -148,11 +148,12 @@ export const verifyUserDevice = id => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(verifyDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
+      window.location.replace('/dashboard');
     })
     .catch((error) => {
       const message = error.response.data.message;
-      dispatch(verifyDeviceFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(verifyDeviceFailure(message));
     });
 };
 

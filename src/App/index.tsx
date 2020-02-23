@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Loader from '@components/Loader';
 import SnackBar from '@components/SnackBar';
+import { ViewportProvider } from '../hooks';
 import Routes from '../routes';
 
 // thunk action creators
@@ -24,7 +25,7 @@ import { authService } from '@utils/auth';
 import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // context
-import { UserContext } from '@components/Context';
+import { UserContext } from '@utils/context';
 
 // styles
 import './App.scss';
@@ -89,18 +90,20 @@ export class App extends React.Component<AppProps, AppState> {
           activeDevice,
         }}
       >
-        <ErrorBoundary>
-          <React.Fragment>
-            <SnackBar/>
-            <>
-              {
-                location.pathname !== '/'
-                && isUserAuthenticated
-              }
-              {<Routes/>}
-            </>
-          </React.Fragment>
-        </ErrorBoundary>
+        <ViewportProvider>
+          <ErrorBoundary>
+            <React.Fragment>
+              <SnackBar/>
+              <>
+                {
+                  location.pathname !== '/'
+                  && isUserAuthenticated
+                }
+                {<Routes/>}
+              </>
+            </React.Fragment>
+          </ErrorBoundary>
+        </ViewportProvider>
       </UserContext.Provider>
     );
   }
