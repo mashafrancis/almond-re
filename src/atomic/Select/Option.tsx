@@ -22,7 +22,7 @@
 
 import * as React from 'react';
 
-import { MenuListItem, MenuListItemProps } from '@components/Menu'; // eslint-disable-line no-unused-vars
+import { MenuListItem, MenuListItemProps } from '../Menu'; // eslint-disable-line no-unused-vars
 
 export type OptionProps<T extends HTMLElement = HTMLElement> = BaseOptionProps &
   (T extends HTMLOptionElement
