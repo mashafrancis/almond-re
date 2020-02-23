@@ -1,7 +1,8 @@
 // thunks
 import {
   ActivateDeviceActionFailure,
-  ActivateDeviceActionRequest, ActivateDeviceActionSuccess,
+  ActivateDeviceActionRequest,
+  ActivateDeviceActionSuccess,
   AddDeviceActionFailure,
   AddDeviceActionRequest,
   AddDeviceActionSuccess, Device,
@@ -14,7 +15,8 @@ import {
 
 import {
   ACTIVATE_DEVICE_FAILURE,
-  ACTIVATE_DEVICE_REQUEST, ACTIVATE_DEVICE_SUCCESS,
+  ACTIVATE_DEVICE_REQUEST,
+  ACTIVATE_DEVICE_SUCCESS,
   ADD_DEVICE_FAILURE,
   ADD_DEVICE_REQUEST,
   ADD_DEVICE_SUCCESS,

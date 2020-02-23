@@ -16,7 +16,8 @@
           "@pages": "./src/pages/",
           "@placeholders": "./src/placeholders/",
           "@modules": "./src/store/modules/",
-          "@utils": "./src/utils/"
+          "@utils": "./src/utils/",
+          "@atomic": "./src/atomic"
         }
       }
     ]

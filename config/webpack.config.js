@@ -42,7 +42,8 @@ module.exports = {
       '@components': path.resolve(__dirname, '..', 'src/components/'),
       '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
       '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
-      '@utils': path.resolve(__dirname, '..', 'src/utils')
+      '@utils': path.resolve(__dirname, '..', 'src/utils'),
+      '@atomic': path.resolve(__dirname, '..', 'src/atomic')
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },

@@ -22,7 +22,7 @@
 
 import * as React from 'react';
 
-import { ListItem, ListItemProps } from '@components/List';
+import { ListItem, ListItemProps } from '../List';
 
 export interface MenuListItemProps<T extends HTMLElement = HTMLElement>
   extends ListItemProps<T> {
