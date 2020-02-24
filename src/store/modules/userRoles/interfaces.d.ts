@@ -31,12 +31,12 @@ export interface CreateUserRolesActionSuccess {
 }
 
 export interface UserDeleteRolesSuccess {
-  userRoleId: string;
+  id: string;
   type: DELETE_USER_ROLES_SUCCESS;
 }
 
 export interface UserEditRolesSuccess {
-  userRoleId: String;
+  id: String;
   userRole: UserRole;
   type: EDIT_USER_ROLES_SUCCESS;
 }

@@ -474,4 +474,13 @@ body, html {
   color: #3480E3 !important;
 }
 
+.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above, .mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  transform: translateY(-130%) translateX(-42px) scale(0.75) !important;
+}
+
+.delete-modal-content {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
 /*# sourceMappingURL=DashboardContainer.css.map */

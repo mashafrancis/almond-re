@@ -411,6 +411,7 @@ const reducer = (state = schedulesInitialState, action) => {
     case ADD_SCHEDULES_SUCCESS:
       return {
         ...state,
+        schedules: [action.schedule, ...state.schedules],
         errors: null,
         isLoading: action.isLoading,
       };
@@ -426,7 +427,7 @@ const reducer = (state = schedulesInitialState, action) => {
     case DELETE_SCHEDULE_SUCCESS:
       return {
         ...state,
-        schedule: action.schedule,
+        schedules: [...state.schedules].filter(schedule => action.id !== schedule._id),
         errors: null,
       };
     case DELETE_SCHEDULE_FAILURE:
@@ -442,6 +443,10 @@ const reducer = (state = schedulesInitialState, action) => {
     case EDIT_SCHEDULE_SUCCESS:
       return {
         ...state,
+        schedules: [...state.schedules].map(schedule => schedule._id === action.schedule._id ? ({
+          ...schedule,
+          ...action.schedule,
+        }) : schedule),
         errors: null,
       };
     case EDIT_SCHEDULE_FAILURE:
@@ -457,6 +462,7 @@ const reducer = (state = schedulesInitialState, action) => {
     case TOGGLE_PUMP_STATUS_SUCCESS:
       return {
         ...state,
+        enabled: action.enabled,
         errors: null,
       };
     case TOGGLE_PUMP_STATUS_FAILURE:
