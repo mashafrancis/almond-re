@@ -159,14 +159,19 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const onAddEditScheduleSubmit = (event) => {
     event.preventDefault();
-    const { isEditMode } = state;
+    const {
+      isEditMode,
+      scheduleId,
+      scheduleToEdit,
+    } = state;
+
     const schedule = {
-      schedule: isEditMode ? state.scheduleToEdit : selectedTimeSchedule,
+      schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
       deviceId: user.activeDevice._id,
     };
 
     isEditMode
-      ? props.editSchedule(state.scheduleId, schedule).then(closeScheduleModal)
+      ? props.editSchedule(scheduleId, schedule).then(closeScheduleModal)
       : props.addNewSchedule(schedule).then(closeScheduleModal);
   };
 
@@ -176,7 +181,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     </div>
   );
 
-  const AddEditModal = () => (
+  const AddEditScheduleModal = () => (
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderTimeScheduleForm()}
@@ -323,7 +328,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
               />
             }
           />
-          {AddEditModal()}
+          {AddEditScheduleModal()}
           {DeleteScheduleModal()}
         </Cell>
           <Cell columns={3} desktopColumns={3} tabletColumns={4} phoneColumns={4}>

@@ -19,6 +19,7 @@ describe('Device reducer', () => {
     errors: {},
     data: [],
     activeDevice: '',
+    devices: [],
   };
 
   const addDeviceRequest = {

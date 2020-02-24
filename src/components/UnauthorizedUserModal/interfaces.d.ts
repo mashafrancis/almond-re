@@ -1,5 +1,5 @@
 export interface UnauthorizedUserModalProps {
-  userName: {
+  user: {
     name: string,
     [key: string]: any,
   };

@@ -4,6 +4,7 @@ import MaterialIcon from '@material/react-material-icon';
 
 // pages
 import AnalyticsPage from '@pages/AnalyticsPage';
+import DeviceManagementPage from '@pages/DeviceManagementPage';
 import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
 import EnvironmentControlPage from '@pages/EnvironmentControlPage';
 import QualityCheckPage from '@pages/QualityCheckPage';
@@ -43,7 +44,7 @@ export const Menus: MenuComponentProps[][] = [
     {
       icon: 'local_florist',
       primaryText: 'Maintenance Schedule',
-      component: WaterCyclesPage,
+      component: DeviceManagementPage,
     },
   ],
   [

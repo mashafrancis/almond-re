@@ -38,7 +38,7 @@ const Table: (props: TableProps) => any = (props: TableProps) => {
       {
         values.map((value) => {
           return (
-            <div key={value.id} className={`tbl-row ${props.statusClass}`}>
+            <div key={value._id} className={`tbl-row ${props.statusClass}`}>
               {
                 tableHeaders.map((header, index) => {
                   return (

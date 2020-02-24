@@ -54,43 +54,37 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
     setState({ ...state, isLoading: true });
 
-    const devicePresent = props.user.devices.find(device => device.id === deviceId);
-    if (devicePresent) {
-      await props.displaySnackMessage('The ID is already in your available devices. Add another or skip.');
-      setState({ ...state, isLoading: false });
-    } else {
-      props.verifyUserDevice(device)
-        .then(async () => {
-          await props.getUserDetails();
-          setState({ ...state, isLoading: false });
-        });
-    }
+    props.verifyUserDevice(device)
+      .then(async () => {
+        await props.getUserDetails();
+        setState({ ...state, isLoading: false });
+      });
   };
 
   const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      '& input:valid + fieldset': {
-        borderColor: '#1967d2',
+    createStyles({
+      root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& input:valid + fieldset': {
+          borderColor: '#1967d2',
+        },
+        '& input:valid:focus + fieldset': {
+          borderLeftWidth: 6,
+          borderColor: '#1967d2',
+          padding: '4px !important', // override inline-style
+        },
       },
-      '& input:valid:focus + fieldset': {
-        borderLeftWidth: 6,
-        borderColor: '#1967d2',
-        padding: '4px !important', // override inline-style
+      margin: {
+        margin: theme.spacing(1),
       },
-    },
-    margin: {
-      margin: theme.spacing(1),
-    },
-    bottom: {
-      position: 'fixed',
-      bottom: 0,
-      right: 0,
-    },
-  })
-);
+      bottom: {
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+      },
+    })
+  );
 
   const classes = useStyles(props);
 

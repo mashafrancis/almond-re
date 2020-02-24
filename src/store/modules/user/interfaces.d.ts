@@ -56,4 +56,8 @@ export interface Device {
   _id: string;
   id: string;
   verified?: boolean;
+  isEnabled: boolean;
+  user: {
+    name: string;
+  };
 }

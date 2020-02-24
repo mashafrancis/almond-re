@@ -18,6 +18,7 @@ import Modal from '@components/Modal';
 import PermissionAccess from '@components/PermissionAccess';
 import Restrict from '@components/Restrict';
 import Table from '@components/Table';
+import Chip from '@material-ui/core/Chip';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserRolesPageLoader from '@placeholders/UserRolesPageSkeletonLoader';
@@ -97,9 +98,9 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
    */
   const renderAction = (action: string, authOption: string, role, actionMethod, className: string) => (
     // <Restrict authorize={authOption}>
-    <span className={className} onClick={role && actionMethod(role)}>
-      {action}
-    </span>
+      <span className={className} onClick={role && actionMethod(role)}>
+        {action}
+      </span>
     // </Restrict>
   );
 
@@ -354,7 +355,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
       id: role[1]._id,
       title: role[1].title,
       description: role[1].description,
-      userCount: role[1].userCount,
+      userCount: <Chip className="MuiChip-root-enabled" label={role[1].userCount} />,
       actions: userRolesListAction(role[1]),
     }));
 
