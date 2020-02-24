@@ -15,13 +15,14 @@ const Routes = () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route exact path="/my-device" component={EnterDeviceIdPage} />
-    <Route exact path="/dashboard" component={DashboardContainer} />
-    {/*<AuthenticatedRoute*/}
-    {/*  exact*/}
-    {/*  authorize="analytics:view"*/}
-    {/*  path="/analytics"*/}
-    {/*  component={EnergyMonitoringPage}*/}
-    {/*/>*/}
+    {/*<Route exact path="/dashboard" component={DashboardContainer} />*/}
+    <AuthenticatedRoute
+      exact
+      path="/dashboard"
+      authorize="dashboard:view"
+      component={DashboardContainer}
+      fallbackView={<Unauthorized showModal={true} />}
+    />
     <Route path="/404" component={PageNotFound} />
     <Redirect to="/404" />
   </Switch>

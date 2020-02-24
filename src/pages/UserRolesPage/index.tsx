@@ -1,8 +1,7 @@
-import ActionButton from '@components/ActionButton';
-import FormModal from '@components/FormModal';
+// react libraries
 import * as React from 'react';
 
-// react libraries
+// Third party libraries
 import DashboardCard from '@components/DashboardCard';
 import {
   Cell,
@@ -10,29 +9,21 @@ import {
   Row
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
-import DashboardContainer from '@pages/DashboardContainer';
-
-// components
-import Button from '@components/Button';
-import FormField from '@components/FormField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-// Third party libraries
 import { connect } from 'react-redux';
 
-// styles
-import './UserRolesPage.scss';
-
 // components
+import ActionButton from '@components/ActionButton';
+import FormField from '@components/FormField';
+import Modal from '@components/Modal';
 import PermissionAccess from '@components/PermissionAccess';
 import Restrict from '@components/Restrict';
 import Table from '@components/Table';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserRolesPageLoader from '@placeholders/UserRolesPageSkeletonLoader';
+
+// styles
+import './UserRolesPage.scss';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -136,7 +127,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
         const formattedResource = {
           _id: accessLevel.resource._id,
           name: accessLevel.resource.name,
-          permissionIds: accessLevel.permission.map(permission => permission._id),
+          permissionIds: accessLevel.permissions.map(permission => permission._id),
         };
 
         return [...resourceAccessLevels, formattedResource];
@@ -159,7 +150,6 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     setState({
       ...state,
       resources: currentResources,
-      permissions: props.userRoles.permissions,
       selectedRole: userRole,
       isEditMode: true,
       isModalOpen: !state.isModalOpen,
@@ -317,13 +307,13 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
   );
 
   const UserRolePageModal = () => (
-    <FormModal
+    <Modal
       fullScreen={fullScreen}
       isModalOpen={state.isModalOpen}
-      content={RenderModalContent()}
+      renderContent={() => RenderModalContent()}
       onClose={() => setState({ ...state, isModalOpen: false })}
       disabled={!(state.title && state.description)}
-      title={state.isEditMode ? 'Edit user role' : 'Create a new role'}
+      renderHeader={() => state.isEditMode ? 'Edit user role' : 'Create a new role'}
       submitButtonName={state.isEditMode ? 'Update role' : 'Create role'}
       onSubmit={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
       onDismiss={toggleModal}
@@ -331,20 +321,20 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
   );
 
   const DeleteRoleModal = () => (
-    <FormModal
+    <Modal
       isModalOpen={state.showDeleteModal}
-      content={
+      renderContent={() =>
         <React.Fragment>
-          <h4 className="headline-4">{`Permanently delete '${state.selectedRole.title} User' Role`}</h4>
-          <h5>
+          <h4 className="headline-4">{`Permanently delete ${state.selectedRole.title} role`}</h4>
+          <p className="delete-modal-content">
           {state.selectedRole && state.selectedRole.users > 0
               ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
               : 'This cannot be undone'}
-          </h5>
+          </p>
         </React.Fragment>
       }
       onClose={toggleDeleteModal}
-      title="Delete Role"
+      renderHeader={() => 'Delete Role'}
       submitButtonName="Delete role"
       onSubmit={onRoleDeleteSubmit}
       onDismiss={toggleDeleteModal}

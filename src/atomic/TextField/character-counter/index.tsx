@@ -49,7 +49,7 @@ export default class CharacterCounter extends React.Component<
 
   get adapter(): MDCTextFieldCharacterCounterAdapter {
     return {
-      // Please manage content through JSX
+      // Please manage renderContent through JSX
       setContent: () => undefined,
     };
   }

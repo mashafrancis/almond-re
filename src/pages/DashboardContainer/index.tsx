@@ -17,10 +17,10 @@ import { connect } from 'react-redux';
 // components;
 import PageBottomNavigation from '@components/BottomNavigation';
 import FeedbackDialogModal from '@components/FeedbackDialogModal';
-import FormModal from '@components/FormModal';
 import { MenuContent } from '@components/MenuContent';
 import MenuModal from '@components/MenuModal';
 import { Menus } from '@components/MenuRoutes';
+import Modal from '@components/Modal';
 import { TopBar } from '@components/TopBar';
 
 // utils
@@ -234,11 +234,11 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   );
 
   const SelectDeviceModal = devices => (
-    <FormModal
+    <Modal
       isModalOpen={state.isSelectDeviceModalOpen}
-      title="Select the device ID"
+      renderHeader={() => 'Select the device ID'}
+      renderContent={() => selectDeviceContent(devices)}
       onClose={handleSelectDeviceModal}
-      content={selectDeviceContent(devices)}
       submitButtonName="Select Device"
       onSubmit={handleSelectDevice}
       onDismiss={handleSelectDeviceModal}
@@ -298,7 +298,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 };
 
 export const mapStateToProps = state => ({
-  user: state.user.user,
+  user: state.user,
   activeDevice: state.device.activeDevice,
 });
 

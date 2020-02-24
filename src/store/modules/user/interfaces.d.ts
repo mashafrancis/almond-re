@@ -1,3 +1,4 @@
+import { UserRole } from '@modules/userRoles/interfaces';
 import {
   EDIT_USER_DETAILS_FAILURE,
   EDIT_USER_DETAILS_SUCCESS,
@@ -13,7 +14,7 @@ export interface GetUserDetailsActionRequest {
 }
 
 export interface GetUserDetailsActionSuccess {
-  user: UserDetails;
+  userDetails: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
   isFetchingUserDetails: boolean;
 }
@@ -37,15 +38,18 @@ export interface EditUserDetailsFailure {
   type: EDIT_USER_DETAILS_FAILURE;
 }
 
+import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+
 interface UserDetails {
   id: string;
   name: string;
   email: string;
   photo: string;
-  role: string;
   isVerified?: boolean;
   devices?: Device[];
   activeDevice?: Device;
+  roles?: UserRole;
+  permissions?: FormattedPermissions;
 }
 
 export interface Device {

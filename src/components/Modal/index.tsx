@@ -1,7 +1,7 @@
-import ActionButton from '@components/ActionButton';
 import * as React from 'react';
 
 // components
+import ActionButton from '@components/ActionButton';
 import Button from '@components/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,15 +9,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // interfaces
-import { FormModalProps } from '@components/FormModal/interfaces';
+import { ModalProps } from '@components/Modal/interfaces';
 
-const FormModal: React.FunctionComponent<FormModalProps> = (props) => {
+const Modal: React.FunctionComponent<ModalProps> = (props) => {
   const {
     isModalOpen,
-    content,
+    renderContent,
     fullScreen,
     onClose,
-    title,
+    renderHeader,
     submitButtonName,
     disabled,
     onSubmit,
@@ -33,11 +33,11 @@ const FormModal: React.FunctionComponent<FormModalProps> = (props) => {
     >
       <DialogTitle id="responsive-dialog-title">
         <p className="headline-3">
-          {title}
+          {renderHeader()}
         </p>
       </DialogTitle>
       <DialogContent className="register">
-        {content}
+        {renderContent()}
       </DialogContent>
       <DialogActions>
         <ActionButton
@@ -57,4 +57,4 @@ const FormModal: React.FunctionComponent<FormModalProps> = (props) => {
   );
 };
 
-export default FormModal;
+export default Modal;
