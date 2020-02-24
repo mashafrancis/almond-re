@@ -10,11 +10,16 @@ import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 // helpers
 import authorize from '@utils/helpers/authorize';
 
+// @ts-ignore
 const RestrictedRoute: React.FunctionComponent<RestrictedRouteProps> = (props) => {
   if (!props.authorize || authorize(props.authorize, { strict: props.strict })) {
     return (
       <Route { ...props } />
     );
+  }
+
+  if (props.fallbackView) {
+    return props.fallbackView;
   }
 
   return (

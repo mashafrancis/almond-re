@@ -71,7 +71,6 @@ export class App extends React.Component<AppProps, AppState> {
       name,
       email,
       photo,
-      role,
       isVerified,
       devices,
       activeDevice,
@@ -84,7 +83,6 @@ export class App extends React.Component<AppProps, AppState> {
           name,
           email,
           photo,
-          role,
           isVerified,
           devices,
           activeDevice,
@@ -111,7 +109,7 @@ export class App extends React.Component<AppProps, AppState> {
 
 export const mapStateToProps = state => ({
   serverError: state.internalServerError,
-  user: state.user.user,
+  user: state.user,
   isFetchingUserDetails: state.user.isFetchingUserDetails,
 });
 

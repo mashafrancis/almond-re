@@ -16,8 +16,8 @@ import { Link } from 'react-router-dom';
 import ActionButton from '@components/ActionButton';
 import ActivityLogCard from '@components/ActivityLogCard';
 import DashboardCard from '@components/DashboardCard';
-import FormModal from '@components/FormModal';
 import Loader from '@components/Loader';
+import Modal from '@components/Modal';
 import Table from '@components/Table';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment } from '@material-ui/core';
@@ -177,11 +177,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   );
 
   const AddEditModal = () => (
-    <FormModal
+    <Modal
       isModalOpen={state.isFormModalOpen}
-      content={RenderTimeScheduleForm()}
+      renderContent={() => RenderTimeScheduleForm()}
       onClose={() => setState({ ...state, isFormModalOpen: false })}
-      title={state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'}
+      renderHeader={() => state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'}
       submitButtonName={state.isEditMode ? 'Update schedule' : 'Create new schedule'}
       onSubmit={onAddEditScheduleSubmit}
       onDismiss={closeScheduleModal}
@@ -189,11 +189,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   );
 
   const DeleteScheduleModal = () => (
-    <FormModal
+    <Modal
       isModalOpen={state.isDeleteModal}
-      content={<p className="delete-modal-content">Do you confirm deletion of time schedule?</p>}
+      renderContent={() => <p className="delete-modal-content">Do you confirm deletion of time schedule?</p>}
       onClose={toggleScheduleDeleteModal}
-      title="Delete Time Schedule"
+      renderHeader={() => 'Delete Time Schedule'}
       submitButtonName="Delete schedule"
       onSubmit={handleScheduleDelete}
       onDismiss={toggleScheduleDeleteModal}
@@ -375,8 +375,8 @@ export const mapStateToProps = state => ({
   status: state.timeSchedules.status,
   isLoading: state.timeSchedules.isLoading,
   enabled: state.timeSchedules.enabled,
-  devices: state.user.user.devices,
-  user: state.user.user,
+  devices: state.user.devices,
+  user: state.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

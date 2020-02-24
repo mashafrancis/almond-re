@@ -29,7 +29,7 @@ const Button = (props: ButtonProps) => {
     : `button ${size} ${type}`;
 
   /**
-   * This evaluates whether to show a spinner or the button content
+   * This evaluates whether to show a spinner or the button renderContent
    * depending on the button's isLoading state
    *
    * @param {ButtonProps} props

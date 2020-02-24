@@ -74,7 +74,7 @@ export default class HelperText extends React.Component<
         this.setState(prevState => ({ ...prevState, [attr]: value })),
       removeAttr: (attr: keyof HelperTextState) =>
         this.setState(prevState => ({ ...prevState, [attr]: null })),
-      // Please manage content through JSX
+      // Please manage renderContent through JSX
       setContent: () => undefined,
     };
   }

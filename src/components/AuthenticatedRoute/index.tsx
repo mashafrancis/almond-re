@@ -25,13 +25,13 @@ const renderComponent = Component => (props) => {
 const AuthenticatedRoute = (props) => {
   const { component: Component, ...rest } = props;
 
-  if (authService.isAuthenticated()) {
+  if (!authService.isAuthenticated()) {
     localStorage.setItem('locationReferrer', props.location.pathname);
     displaySnackMessage('You need to login to continue');
 
     return (
       <React.Fragment>
-        <Redirect to="/analytics" />
+        <Redirect to="/" />
       </React.Fragment>
     );
   }

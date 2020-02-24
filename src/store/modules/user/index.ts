@@ -16,6 +16,7 @@ import {
 
 // helper functions
 import { authService } from '@utils/auth';
+import formatPermissions from '@utils/helpers/formatPermissions';
 
 // types
 import {
@@ -42,8 +43,8 @@ export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
  *
  * @returns {GetUserDetailsActionSuccess}
  */
-export const getUserDetailsSuccess = (user: UserDetails): GetUserDetailsActionSuccess => ({
-  user,
+export const getUserDetailsSuccess = (userDetails: UserDetails): GetUserDetailsActionSuccess => ({
+  userDetails,
   type: GET_USER_DETAILS_SUCCESS,
   isFetchingUserDetails: false,
 });
@@ -138,9 +139,8 @@ export const logoutUser = () => (dispatch) => {
 };
 
 const userInitialState = {
-  user: {},
-  users: [],
-  isFetchingUserDetails: false,
+  ...authService.getUser().UserInfo,
+  permissions: {},
 };
 
 /**
@@ -153,25 +153,15 @@ const userInitialState = {
  */
 export const reducer = (state = userInitialState, action: AnyAction) => {
   switch (action.type) {
-    case GET_USER_DETAILS_REQUEST:
-      return {
-        ...state,
-        isFetchingUserDetails: action.hasFetchedUserDetails,
-      };
     case GET_USER_DETAILS_SUCCESS:
       return {
         ...state,
-        user: action.user,
-        isFetchingUserDetails: action.hasFetchedUserDetails,
+        ...action.userDetails,
+        permissions: formatPermissions(action.userDetails.roles[0]),
       };
     case EDIT_USER_DETAILS_SUCCESS:
       return {
         ...state,
-      };
-    case GET_ALL_USERS_SUCCESS:
-      return {
-        ...state,
-        users: action.users,
       };
     default:
       return state;

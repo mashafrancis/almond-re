@@ -19,7 +19,6 @@ export const UserContext = React.createContext({
   name: '',
   email: '',
   photo: '',
-  role: '',
   isVerified: true,
   devices: [],
   activeDevice: {
