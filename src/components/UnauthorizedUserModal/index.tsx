@@ -31,7 +31,7 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
       <Modal
         isModalOpen={this.props.showModal}
         renderHeader={() => (
-          <h3 className="headline-3">Welcome, {this.props.userName && this.props.userName.name || 'User'}!</h3>
+          <h3 className="headline-3">Welcome, {this.props.user && this.props.user.name || 'User'}!</h3>
         )}
         renderContent={() => (
           <div>
@@ -48,7 +48,7 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
 }
 
 export const mapStateToProps = state => ({
-  user: state.user.user,
+  user: state.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

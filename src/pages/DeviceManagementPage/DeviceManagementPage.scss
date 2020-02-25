@@ -1,0 +1,31 @@
+.MuiChip-root {
+  font-size: 0.72rem;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-weight: 500 !important;
+  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
+
+  @media (max-width: 539px) {
+    font-size: 0.72rem !important;
+    height: 26px;
+  }
+}
+
+.MuiChip-root-unverified {
+  background-color: rgba(66, 133, 244, 0.15) !important;
+  color: #1967d2 !important;
+}
+
+.MuiChip-root-enabled {
+  background-color: rgba(14, 88, 39, 0.15) !important;
+  color: #0E5827 !important;
+}
+
+.MuiChip-root-disabled {
+  background-color: rgba(210, 43, 53, 0.15) !important;
+  color: #821721 !important;
+}
+
+.MuiChip-label {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}

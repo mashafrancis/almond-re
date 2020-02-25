@@ -5,6 +5,15 @@ import {
   ADD_DEVICE_FAILURE,
   ADD_DEVICE_REQUEST,
   ADD_DEVICE_SUCCESS,
+  DELETE_DEVICE_FAILURE,
+  DELETE_DEVICE_REQUEST,
+  DELETE_DEVICE_SUCCESS,
+  EDIT_DEVICE_FAILURE,
+  EDIT_DEVICE_REQUEST,
+  EDIT_DEVICE_SUCCESS,
+  GET_DEVICES_FAILURE,
+  GET_DEVICES_REQUEST,
+  GET_DEVICES_SUCCESS,
   USER_VERIFY_DEVICE_FAILURE,
   USER_VERIFY_DEVICE_REQUEST,
   USER_VERIFY_DEVICE_SUCCESS,
@@ -55,6 +64,56 @@ export interface ActivateDeviceActionSuccess {
 
 export interface ActivateDeviceActionFailure {
   type: ACTIVATE_DEVICE_FAILURE;
+  errors: any;
+}
+
+export interface GetAllDevicesActionRequest {
+  type: GET_DEVICES_REQUEST;
+  isLoading: boolean;
+}
+
+export interface GetAllDevicesActionSuccess {
+  devices: Device[];
+  type: GET_DEVICES_SUCCESS;
+  isLoading: boolean;
+}
+
+export interface GetAllDevicesActionFailure {
+  type: GET_DEVICES_FAILURE;
+  errors: any;
+  isLoading: boolean;
+}
+
+export interface DeleteDeviceActionRequest {
+  type: DELETE_DEVICE_REQUEST;
+  isLoading: boolean;
+}
+
+export interface DeleteDeviceActionSuccess {
+  id: string;
+  type: DELETE_DEVICE_SUCCESS;
+  isLoading: boolean;
+}
+
+export interface DeleteDeviceActionFailure {
+  type: DELETE_DEVICE_FAILURE;
+  errors: any;
+}
+
+export interface EditDeviceActionRequest {
+  type: EDIT_DEVICE_REQUEST;
+  isLoading: boolean;
+}
+
+export interface EditDeviceActionSuccess {
+  id: string;
+  device: NewDevice;
+  type: EDIT_DEVICE_SUCCESS;
+  isLoading: boolean;
+}
+
+export interface EditDeviceActionFailure {
+  type: EDIT_DEVICE_FAILURE;
   errors: any;
 }
 
