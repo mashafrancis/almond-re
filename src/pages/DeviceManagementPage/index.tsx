@@ -165,10 +165,6 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     </div>
   );
 
-  const chipContent = (label, classes) => (
-    <Chip className={classes} label={label}  />
-  );
-
   const deviceStatus = (device) => {
     const verified = device[1].verified;
     const enabled = device[1].enabled;
@@ -199,7 +195,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 
     const tableValues = devices.map(device => ({
       deviceId: device[1].id,
-      user: device[1].user ? device[1].user.name : '#Not assigned',
+      user: device[1].user ? device[1].user.name : 'N/A',
       status: deviceStatus(device),
       actions: ActionButtons(device[1]._id),
     }));
@@ -218,8 +214,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 
     return (
       <React.Fragment>
-        <h5>Add a 7 digit device identifier for the user to configure.
-        </h5>
+        <h5>Add a 7 digit device identifier for the user to configure.</h5>
         <div className="form-cell">
           <TextField
             label={`${isEditMode ? 'Update' : 'Add new'} device ID`}

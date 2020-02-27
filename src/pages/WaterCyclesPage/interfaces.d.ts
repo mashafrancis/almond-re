@@ -35,4 +35,5 @@ export interface WaterCyclesPageState {
   scheduleToEdit: string;
   isActionDone: boolean;
   isLoading: boolean;
+  selectedTimeSchedule: any;
 }

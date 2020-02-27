@@ -7,6 +7,7 @@ import AnalyticsPage from '@pages/AnalyticsPage';
 import DeviceManagementPage from '@pages/DeviceManagementPage';
 import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
 import EnvironmentControlPage from '@pages/EnvironmentControlPage';
+import PeoplePage from '@pages/PeoplePage';
 import QualityCheckPage from '@pages/QualityCheckPage';
 import UserRolesPage from '@pages/UserRolesPage';
 import WaterCyclesPage from '@pages/WaterCyclesPage';
@@ -51,7 +52,7 @@ export const Menus: MenuComponentProps[][] = [
     {
       icon: 'settings',
       primaryText: 'Settings',
-      component: WaterCyclesPage,
+      component: PeoplePage,
     },
     {
       icon: 'help',

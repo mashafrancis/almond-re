@@ -205,7 +205,7 @@ const reducer = (state = userRoleInitialState, action) => {
     case EDIT_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [...state.data].map(role => role.id === action.userRole._id ? ({
+        data: [...state.data].map(role => role._id === action.userRole._id ? ({
           ...role,
           ...action.userRole,
         }) : role),

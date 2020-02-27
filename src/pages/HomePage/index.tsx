@@ -42,7 +42,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
   );
 
   return (
-    <React.Fragment>
+    <div className="background-cover">
       <main className="home-cover">
         <section className="logo">
           <img src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
@@ -65,7 +65,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
           </div>
         </section>
       </main>
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -7,7 +7,6 @@ import { displaySnackMessage } from '../snack';
 // interfaces
 import {
   EditUserDetailsSuccess,
-  GetAllUsersSuccess,
   GetUserDetailsActionFailure,
   GetUserDetailsActionRequest,
   GetUserDetailsActionSuccess,
@@ -21,7 +20,6 @@ import formatPermissions from '@utils/helpers/formatPermissions';
 // types
 import {
   EDIT_USER_DETAILS_SUCCESS,
-  GET_ALL_USERS_SUCCESS,
   GET_USER_DETAILS_FAILURE,
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
@@ -60,15 +58,6 @@ export const getUserDetailsFailure = (errors): GetUserDetailsActionFailure => ({
 });
 
 /**
- * Get userDetails success action creator
- *
- * @returns {GetAllUsersSuccess}
- */
-export const getAllUsersSuccess = (users: UserDetails[]): GetAllUsersSuccess => {
-  return { users, type: GET_ALL_USERS_SUCCESS };
-};
-
-/**
  * Edit user center success action creator
  *
  * @returns {EditUserDetailsSuccess}
@@ -100,14 +89,6 @@ export const getUserDetails = () => (dispatch, getState, http) => {
       const message = error.response.data.message;
       dispatch(getUserDetailsFailure(message));
       dispatch(displaySnackMessage('Failed to fetch your details. Kindly reload page.'));
-    });
-};
-
-export const getAllUsers = () => (dispatch, getState, http) => {
-  return http.get('user.json')
-    .then((response) => {
-      dispatch(getAllUsersSuccess(response.data));
-      return response.data;
     });
 };
 

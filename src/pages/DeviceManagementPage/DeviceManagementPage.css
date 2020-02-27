@@ -6,7 +6,7 @@
 }
 @media (max-width: 539px) {
   .MuiChip-root {
-    font-size: 0.72rem !important;
+    font-size: 0.6rem !important;
     height: 26px;
   }
 }
@@ -24,11 +24,6 @@
 .MuiChip-root-disabled {
   background-color: rgba(210, 43, 53, 0.15) !important;
   color: #821721 !important;
-}
-
-.MuiChip-label {
-  padding-left: 8px !important;
-  padding-right: 8px !important;
 }
 
 /*# sourceMappingURL=DeviceManagementPage.css.map */

@@ -110,7 +110,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 
   const handleFeedbackInputChange = e => setState({ ...state, [e.target.name as string]: e.target.value });
 
-  const handleSelectDeviceModal = () => {
+  const handleSelectDeviceModal = () => setState({ ...state, isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen });
+
+  const handleCloseDeviceModal = () => {
     setState({
       ...state,
       isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen,
@@ -241,7 +243,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       onClose={handleSelectDeviceModal}
       submitButtonName="Select Device"
       onSubmit={handleSelectDevice}
-      onDismiss={handleSelectDeviceModal}
+      onDismiss={handleCloseDeviceModal}
     />
   );
 

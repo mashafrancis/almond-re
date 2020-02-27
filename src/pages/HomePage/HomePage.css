@@ -3,7 +3,6 @@
   width: 100%;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
-  background-image: url("https://res.cloudinary.com/almondgreen/image/upload/v1569246769/Almond/almond-background_vsnkyd.svg");
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;

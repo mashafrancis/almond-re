@@ -251,9 +251,7 @@ export const getAllSchedules = deviceId => (dispatch, getState, http) => {
   dispatch(getSchedulesRequest());
   return http.get(`/schedules?device=${deviceId}`)
     .then((response) => {
-      const data = response.data.data;
-      dispatch(getSchedulesSuccess(data));
-      return data;
+      dispatch(getSchedulesSuccess(response.data.data));
     })
     .catch((error) => {
       const message = error.response.data.message;

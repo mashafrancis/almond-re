@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // reducers
 import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
+import people from '@modules/people';
 import snack from '@modules/snack';
 import socialAuth from '@modules/socialAuth';
 import timeSchedules from '@modules/timeSchedules';
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   user,
   device,
   userRoles,
+  people,
 });
 
 const rootReducer = (state, action) => {
