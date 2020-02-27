@@ -1,0 +1,41 @@
+.table-image {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  max-width: fit-content;
+}
+
+.mini-username {
+  background-size: 22px 22px;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  width: auto;
+  position: relative;
+  text-transform: capitalize;
+  max-width: fit-content;
+}
+.mini-username__image {
+  vertical-align: middle;
+  width: 1.75rem;
+  margin-right: 1.25rem;
+  border-radius: 50%;
+}
+
+.table-roles {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  max-width: fit-content;
+  display: flex;
+  width: auto;
+  cursor: pointer;
+}
+.table-roles h5 {
+  margin: 0;
+  padding-left: 10px;
+}
+
+/*# sourceMappingURL=PeoplePage.css.map */

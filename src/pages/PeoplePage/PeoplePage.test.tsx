@@ -7,9 +7,9 @@ import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import { EnergyMonitoringPage } from './index';
+import { PeoplePage } from './index';
 
-describe.skip('The Analytics Page', () => {
+describe.skip('The People Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
@@ -25,10 +25,10 @@ describe.skip('The Analytics Page', () => {
     };
     wrapper = mount(
       <BrowserRouter>
-        <EnergyMonitoringPage {...props}/>
+        <PeoplePage {...props}/>
       </BrowserRouter>
     );
-    waterCyclesPageInstance = wrapper.find(EnergyMonitoringPage).instance();
+    waterCyclesPageInstance = wrapper.find(PeoplePage).instance();
   });
 
   afterEach(() => {

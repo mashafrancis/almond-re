@@ -61,12 +61,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     scheduleToEdit: '',
     isActionDone: false,
     isLoading: false,
+    selectedTimeSchedule: new Date(),
   });
 
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
-
-  const [selectedTimeSchedule, handleSelectedTimeSchedule] = React.useState(new Date());
 
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -100,6 +99,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       :  props.toggleScheduleStatus(schedule._id,  { enabled: false, deviceId: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'true'));
   };
+
+  const handleAddTimeSchedule = value => setState({ ...state, selectedTimeSchedule: value });
 
   const handleEditTimeChange = (value) => {
     setState(prevState => ({
@@ -163,6 +164,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       isEditMode,
       scheduleId,
       scheduleToEdit,
+      selectedTimeSchedule,
     } = state;
 
     const schedule = {
@@ -262,7 +264,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   };
 
   const RenderTimeScheduleForm = () => {
-    const { isEditMode } = state;
+    const { isEditMode, selectedTimeSchedule, scheduleToEdit } = state;
 
     return (
       <React.Fragment>
@@ -273,8 +275,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
               name="time_schedule"
               inputVariant="outlined"
               label="time schedule"
-              value={isEditMode ? state.scheduleToEdit : selectedTimeSchedule}
-              onChange={isEditMode ? handleEditTimeChange : handleSelectedTimeSchedule}
+              value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
+              onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

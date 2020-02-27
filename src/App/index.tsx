@@ -67,7 +67,7 @@ export class App extends React.Component<AppProps, AppState> {
 
     const { isUserAuthenticated, isFetchingUserDetails } = this.state;
     const {
-      id,
+      _id,
       name,
       email,
       photo,
@@ -79,7 +79,7 @@ export class App extends React.Component<AppProps, AppState> {
     return (checkUserDetailsAndAuthentication(isFetchingUserDetails, isUserAuthenticated) ? <Loader/> :
       <UserContext.Provider
         value={{
-          id,
+          _id,
           name,
           email,
           photo,

@@ -36,7 +36,7 @@ export interface UserDeleteRolesSuccess {
 }
 
 export interface UserEditRolesSuccess {
-  id: String;
+  id: string;
   userRole: UserRole;
   type: EDIT_USER_ROLES_SUCCESS;
 }
@@ -59,7 +59,7 @@ export interface ResourceAccessLevel {
 
 export interface UserRole {
   description: string;
-  users?: Number;
+  users?: number;
   title: string;
   _id: string;
   resourceAccessLevels?: ResourceAccessLevel[];
