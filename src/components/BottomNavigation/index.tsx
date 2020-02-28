@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 // components
-import { BottomNavigationMenus } from '@components/MenuRoutes';
+import { AdminBottomNavigationMenus, BottomNavigationMenus } from '@components/MenuRoutes';
 
 // third party
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { makeStyles } from '@material-ui/core/styles';
-import { MenuContext } from '@utils/context';
+import { MenuContext, UserContext } from '@utils/context';
 
 // styles
 import './BottomNavigation.scss';
@@ -22,7 +22,10 @@ const useStyles = makeStyles({
 
 export const PageBottomNavigation: React.FunctionComponent = () => {
   const menu = React.useContext(MenuContext);
+  const user = React.useContext(UserContext);
   const { setSelectedIndex } = menu;
+
+  const checkIsAdmin = () => user.isAdmin ? AdminBottomNavigationMenus : BottomNavigationMenus;
 
   // @ts-ignore
   const classes = useStyles();
@@ -39,7 +42,7 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
       showLabels
     >
       {
-        BottomNavigationMenus.map((menu, index) => (
+        checkIsAdmin().map((menu, index) => (
           <BottomNavigationAction
             key={index}
             onClick={() => setSelectedIndex({ group: 0, item: index })}

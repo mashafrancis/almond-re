@@ -20,6 +20,7 @@ import { TopBarProps } from './interfaces';
 export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const device = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
+  const user = React.useContext(UserContext);
 
   const { width } = useViewport();
   const breakpoint = 539;
@@ -50,7 +51,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
           );
         })
       }
-      {(width > breakpoint) && props.photoImage}
+      <span onClick={props.openProfileDialog}>{(width > breakpoint) && props.photoImage}</span>
     </div>
   );
 
@@ -73,7 +74,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
             </NavLink>
           </TopAppBarTitle>
           <div className="topbar-divider topbar-lockup-divider"/>
-          {renderDeviceDisplay()}
+          {!user.isAdmin && renderDeviceDisplay()}
         </TopAppBarSection>
 
         <TopAppBarSection align="end" role="toolbar">

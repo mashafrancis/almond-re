@@ -686,10 +686,6 @@ p.anchor-label {
   font-size: 2.5rem;
 }
 
-.mdc-layout-grid {
-  max-width: 1240px;
-}
-
 .text-italics {
   font-style: italic;
 }

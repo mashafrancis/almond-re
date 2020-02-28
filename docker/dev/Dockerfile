@@ -46,4 +46,4 @@ ENV PORT 3000
 EXPOSE $PORT
 
 # Run app when the container launches
-CMD ["yarn", "start:heroku"]
+CMD ["yarn", "start:dev"]

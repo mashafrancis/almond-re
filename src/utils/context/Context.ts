@@ -25,6 +25,7 @@ export const UserContext = React.createContext({
     id: '',
     _id: '',
   },
+  isAdmin: false,
 });
 
 export const ScheduleTableContext = React.createContext({

@@ -15,7 +15,7 @@ import WaterCyclesPage from '@pages/WaterCyclesPage';
 // interfaces
 import { MenuBottomProps, MenuComponentProps } from '@components/MenuRoutes/interfaces';
 
-export const Menus: MenuComponentProps[][] = [
+export const UserMenus: MenuComponentProps[][] = [
   [
     {
       icon: 'widgets',
@@ -57,12 +57,54 @@ export const Menus: MenuComponentProps[][] = [
     {
       icon: 'help',
       primaryText: 'Help',
-      component: WaterCyclesPage,
+      component: AnalyticsPage,
     },
     {
       icon: 'open_in_new',
       primaryText: 'Send feedback',
+      component: AnalyticsPage,
+    },
+  ],
+];
+
+export const AdminMenus: MenuComponentProps[][] = [
+  [
+    {
+      icon: 'widgets',
+      primaryText: 'Analytics',
+      component: AnalyticsPage,
+    },
+    {
+      icon: 'all_out',
+      primaryText: 'Devices',
+      component: DeviceManagementPage,
+    },
+    {
+      icon: 'people',
+      primaryText: 'People',
+      component: PeoplePage,
+    },
+    {
+      icon: 'bubble_chart',
+      primaryText: 'Roles',
       component: UserRolesPage,
+    },
+    {
+      icon: 'spa',
+      primaryText: 'Requests',
+      component: UserRolesPage,
+    },
+  ],
+  [
+    {
+      icon: 'settings',
+      primaryText: 'Settings',
+      component: PeoplePage,
+    },
+    {
+      icon: 'help',
+      primaryText: 'Help',
+      component: AnalyticsPage,
     },
   ],
 ];
@@ -92,5 +134,33 @@ export const BottomNavigationMenus: MenuBottomProps[] = [
     icon: <MaterialIcon hasRipple icon="memory" initRipple={null}/>,
     label: 'Energy',
     value: 'energy',
+  },
+];
+
+export const AdminBottomNavigationMenus: MenuBottomProps[] = [
+  {
+    icon: <MaterialIcon hasRipple icon="widgets" initRipple={null}/>,
+    label: 'Analytics',
+    value: 'analytics',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="all_out" initRipple={null}/>,
+    label: 'Devices',
+    value: 'devices',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="people" initRipple={null}/>,
+    label: 'People',
+    value: 'people',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="bubble_chart" initRipple={null}/>,
+    label: 'Roles',
+    value: 'roles',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="spa" initRipple={null}/>,
+    label: 'Requests',
+    value: 'requests',
   },
 ];

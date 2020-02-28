@@ -19,7 +19,7 @@ const PUBLIC_PATH = process.env.PUBLIC_URL;
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
-    // styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.css'),
+    styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss'),
     fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css')
   },
   output: {
@@ -30,7 +30,6 @@ module.exports = {
   },
   optimization: {
     noEmitOnErrors: true,
-    namedChunks: true,
     splitChunks: {
       chunks: "all",
     }

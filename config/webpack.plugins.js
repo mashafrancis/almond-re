@@ -98,7 +98,7 @@ const copyPlugin = new CopyWebpackPlugin([
 const workBoxPlugin = new WorkboxPlugin.GenerateSW({
   swDest: 'sWorker.js',
   include: [/\.html$/, /\.js$/, /\.css$/],
-  exclude: '/node_modules'
+  exclude: ['/node_modules']
 });
 
 module.exports = {

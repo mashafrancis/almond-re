@@ -35,16 +35,16 @@ background:
 start:
 	@ ${INFO} "Building required docker images"
 	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) build web
-	@ ${INFO} "Build Completed successfully"
+	@ ${SUCCESS} "Build Completed successfully"
 	@ echo " "
 	@ ${INFO} "Starting local development server"
-	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) up web
+	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) up
 
 #@-- command to stop the application container --@#
 stop:
 	${INFO} "Stop development server containers"
 	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) down -v
-	${INFO} "All containers stopped successfully"
+	${SUCCESS} "All containers stopped successfully"
 
 #@-- command to test the application --@#
 test:background
@@ -54,12 +54,12 @@ test:background
 #@-- command to remove the images created --@#
 clean:
 	${INFO} "Cleaning your local environment"
-	${INFO} "Note all ephemeral volumes will be destroyed"
+	${EXTRA} "Note all ephemeral volumes will be destroyed"
 	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) down -v
 	@ docker images -q -f label=application=$(PROJECT_NAME) | xargs -I ARGS docker rmi -f ARGS
 	${INFO} "Removing dangling images"
 	@ docker system prune
-	${INFO} "Clean complete"
+	${SUCCESS} "Clean complete"
 
 #@-- command to ssh into service container --@#
 ssh:background

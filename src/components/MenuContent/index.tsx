@@ -16,8 +16,9 @@ import List, {
 import MaterialIcon from '@material/react-material-icon';
 
 // components
-import { Menus } from '@components/MenuRoutes';
-import { MenuContext } from '@utils/context';
+import { AdminMenus, UserMenus } from '@components/MenuRoutes';
+import { MenuContext, UserContext } from '@utils/context';
+import { useViewport } from '../../hooks';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -58,7 +59,7 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
   );
 };
 
-const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => (
+const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser, checkIsAdmin) => (
   <React.Fragment>
     <ListGroup>
       {(viewPort < 539) && <ListDivider tag="div" />}
@@ -67,7 +68,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
         selectedIndex={selectedIndex.item}
       >
         {
-          Menus.map((group, groupIndex) => (
+          checkIsAdmin().map((group, groupIndex) => (
             <React.Fragment key={groupIndex} >
               {group.map((item, itemIndex) => (
                 <ListItem
@@ -104,16 +105,25 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
 
 export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) => {
   const menu = React.useContext(MenuContext);
+  const user = React.useContext(UserContext);
+
+  const { width } = useViewport();
+  const breakpoint = 539;
+
   const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser } = menu;
+  const { isAdmin } = user;
+
+  const checkIsAdmin = () => isAdmin ? AdminMenus : UserMenus;
+
   return (
     <Drawer
-      modal={(viewPort < 539)}
+      modal={(width < breakpoint)}
       open={isMenuOpen}
       onClose={() => setOpen(false)}
     >
       {mobileDrawerHeader(setOpen, props.name, props.photo)}
       <DrawerContent>
-        {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser)}
+        {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser, checkIsAdmin)}
       </DrawerContent>
     </Drawer>
   );
