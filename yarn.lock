@@ -1609,18 +1609,6 @@
     "@material/typography" "^5.0.0"
     tslib "^1.9.3"
 
-"@material/menu-surface@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@material/menu-surface/-/menu-surface-0.41.0.tgz#13b3f0824096216ae10b6f63d78c2ee3e4fb76b3"
-  integrity sha512-HiGFrEIF8DCfEtS8mRtc6MCcK2CJNCh0U6KWWeSIXv+9nW2oiN09piuULXM7aU46wETvfweVcgvHNJvBAXnXjQ==
-  dependencies:
-    "@material/animation" "^0.41.0"
-    "@material/base" "^0.41.0"
-    "@material/elevation" "^0.41.0"
-    "@material/rtl" "^0.40.1"
-    "@material/shape" "^0.41.0"
-    "@material/theme" "^0.41.0"
-
 "@material/menu-surface@^1.0.1", "@material/menu-surface@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@material/menu-surface/-/menu-surface-1.1.1.tgz#d930f940e31a1bc32a2c9e3f15d5e60d43871cde"
@@ -1895,16 +1883,6 @@
     "@material/react-ripple" "^0.11.0"
     classnames "^2.2.6"
     react "^16.4.2"
-
-"@material/react-menu-surface@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@material/react-menu-surface/-/react-menu-surface-0.11.0.tgz#5b5e4318f482d0648a4ad28f32cf05f71049574b"
-  integrity sha512-gHgnbW4Synw9ILeMNqRFJoY5jHMDJdFWhSebM1ObuPDlAvtI1tYKHNdjp0XRePWIQZdw7nGabLoRTEPmmpxWKw==
-  dependencies:
-    "@material/menu-surface" "^0.41.0"
-    classnames "^2.2.6"
-    react "^16.4.2"
-    react-dom "^16.4.2"
 
 "@material/react-menu-surface@^0.15.0":
   version "0.15.0"
@@ -11404,7 +11382,7 @@ react-dates@^21.5.0:
     react-with-styles "^4.1.0"
     react-with-styles-interface-css "^6.0.0"
 
-react-dom@^16.12.0, react-dom@^16.4.2:
+react-dom@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
   integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
