@@ -1,4 +1,4 @@
 node_modules
 tests/
-docker-heroku/
+docker/docker-heroku/
 docker/

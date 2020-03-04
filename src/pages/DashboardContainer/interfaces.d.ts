@@ -1,4 +1,5 @@
 import { UserDetails } from '@modules/user/interfaces';
+import { UserRole } from '@modules/userRoles/interfaces';
 
 export interface DashboardContainerProps {
   drawerEl?: object;
@@ -20,6 +21,8 @@ export interface DashboardContainerProps {
     verified?: boolean;
     user?: UserDetails;
   };
+  roles: UserRole[];
+  updatePerson: (id, role) => Promise<any>;
 }
 
 export interface DashboardContainerState {
@@ -43,4 +46,8 @@ export interface DashboardContainerState {
   fields: {
     [key: string]: string | number
   };
+  isChangeRoleDialogOpen: boolean;
+  anchorEl: null | HTMLElement;
+  roleSelected: string;
+  roleId: string;
 }

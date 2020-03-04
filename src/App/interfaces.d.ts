@@ -14,4 +14,5 @@ export interface AppProps {
 export interface AppState {
   isUserAuthenticated: boolean;
   isFetchingUserDetails: boolean;
+  isAdmin: boolean;
 }

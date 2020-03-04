@@ -22,6 +22,7 @@ import { AppProps, AppState } from './interfaces';
 
 // helper functions
 import { authService } from '@utils/auth';
+import checkUserRole from '@utils/helpers/checkUserRole';
 import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // context
@@ -34,6 +35,7 @@ export class App extends React.Component<AppProps, AppState> {
   state = {
     isUserAuthenticated: authService.isAuthenticated(),
     isFetchingUserDetails: true,
+    isAdmin: false,
   };
 
   async componentDidMount() {
@@ -58,6 +60,8 @@ export class App extends React.Component<AppProps, AppState> {
       authService.saveToken(socialToken);
       window.location.replace(process.env.PUBLIC_URL);
     }
+
+    this.setState({ isAdmin: !checkUserRole(this.props.user.currentRole.title, 'User') });
   }
 
   render() {
@@ -65,7 +69,7 @@ export class App extends React.Component<AppProps, AppState> {
       hasFetchedUserDetails: boolean,
       isUserAuthenticated: boolean) => (hasFetchedUserDetails && isUserAuthenticated);
 
-    const { isUserAuthenticated, isFetchingUserDetails } = this.state;
+    const { isUserAuthenticated, isFetchingUserDetails, isAdmin } = this.state;
     const {
       _id,
       name,
@@ -86,6 +90,7 @@ export class App extends React.Component<AppProps, AppState> {
           isVerified,
           devices,
           activeDevice,
+          isAdmin,
         }}
       >
         <ViewportProvider>

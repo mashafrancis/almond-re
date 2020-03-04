@@ -1,8 +1,10 @@
 const merge = require('webpack-merge');
+const cssNano = require('cssnano');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const config = require('./webpack.config.js');
 
 module.exports = merge(config, {
@@ -12,31 +14,17 @@ module.exports = merge(config, {
   devtool: 'source-map',
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true, // set to true if you want JS source maps
-        uglifyOptions: {
-          parse: {
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-          },
-          mangle: {
-            safari10: true,
-          },
-          output: {
-            ecma: 5,
-            comments: false,
-            // Turned on because emoji and regex is not minified properly using default
-            ascii_only: true,
-          },
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessor: cssNano,
+        cssProcessorOptions: {
+          reduceIdents: false,
         },
       }),
-      new OptimizeCSSAssetsPlugin({}),
     ],
     // Keep the runtime chunk separated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
@@ -59,18 +47,18 @@ module.exports = merge(config, {
         },
       },
     },
-    plugins: [
-      new CompressionPlugin(),
-      new webpack.optimize.AggressiveMergingPlugin(),
-      new webpack.optimize.ModuleConcatenationPlugin(),
-      new CleanWebpackPlugin(['dist']),
-    ],
-    node: {
-      dgram: 'empty',
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
+    // plugins: [
+    //   new CompressionPlugin(),
+    //   new webpack.optimize.AggressiveMergingPlugin(),
+    //   new webpack.optimize.ModuleConcatenationPlugin(),
+    //   new CleanWebpackPlugin(),
+    // ],
+    // node: {
+    //   dgram: 'empty',
+    //   fs: 'empty',
+    //   net: 'empty',
+    //   tls: 'empty',
+    //   child_process: 'empty',
+    // },
   },
 });

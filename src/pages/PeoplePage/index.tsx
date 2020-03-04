@@ -138,7 +138,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
         }}>
         {roles.map(role => (
           <MenuItem key={role._id} value={role.title}>
-            <h5 className="heading-4">{role.title}</h5>
+            <h4>{role.title}</h4>
           </MenuItem>
         ))}
       </TextField>
