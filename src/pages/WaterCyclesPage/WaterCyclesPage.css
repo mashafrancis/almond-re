@@ -23,7 +23,7 @@
 .blank-content h2 {
   color: rgba(87, 93, 96, 0.47);
   font-size: 30px;
-  font-family: "San Francisco", serif;
+  font-family: "San Francisco", serif !important;
   font-weight: 100;
   margin-top: 10px;
   line-height: 40px;
@@ -32,13 +32,11 @@
 }
 
 .MuiInputBase-input {
-  font-family: "Google Sans", sans-serif !important;
   font-size: 24px !important;
 }
 
 .MuiTypography-h2 {
   font-size: 3.85rem;
-  font-family: "Google Sans", sans-serif !important;
 }
 
 .MuiPickersToolbar-toolbar {
@@ -113,7 +111,7 @@
   }
   .blank-content h2 {
     font-size: 30px;
-    font-family: "San Francisco", serif;
+    font-family: "San Francisco", serif !important;
     font-weight: 300;
     margin-top: 50px;
     line-height: 50px;

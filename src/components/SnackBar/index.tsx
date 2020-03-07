@@ -39,6 +39,7 @@ export class SnackBar extends React.Component<
     this.setState({
       snack: {
         message: '',
+        // @ts-ignore
         withName: false,
       },
     });

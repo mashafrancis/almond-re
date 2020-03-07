@@ -181,7 +181,7 @@
   font-weight: 300;
   margin: auto;
   box-sizing: border-box;
-  font-family: "San Francisco", serif;
+  font-family: "San Francisco", serif !important;
 }
 #hero h2 {
   padding-top: 30px;
@@ -191,7 +191,6 @@
   color: #223242;
 }
 #hero .btn-get-started {
-  font-family: "Product Sans", sans-serif;
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 1px;

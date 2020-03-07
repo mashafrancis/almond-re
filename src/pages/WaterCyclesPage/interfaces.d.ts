@@ -36,4 +36,5 @@ export interface WaterCyclesPageState {
   isActionDone: boolean;
   isLoading: boolean;
   selectedTimeSchedule: any;
+  hasError: boolean;
 }

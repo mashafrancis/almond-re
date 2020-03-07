@@ -7,7 +7,7 @@ const {
 
 module.exports = merge(config, {
   output: {
-    publicPath: 'http://almond.com:3000/'
+    filename: '[name].js'
   },
   optimization: {
     namedModules: true,
@@ -15,7 +15,7 @@ module.exports = merge(config, {
   devServer: {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../src/assets'),
-    publicPath: 'http://almond.com:3000/',
+    publicPath: 'http://froyo.almond.com:3000/',
     hot: true,
     overlay: true,
     port: 3000,

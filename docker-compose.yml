@@ -1,15 +1,16 @@
 version: '3'
 services:
   web:
+    container_name: web
     build:
       context: ./
-      dockerfile: docker/release/Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - .:/app
       - /app/node_modules
     ports:
       - '3000:80'
-    command:
-      - nginx
-      - -g
-      - daemon off;
+#    command:
+#      - nginx
+#      - -g
+#      - daemon off;

@@ -577,6 +577,10 @@ body, html {
   color: #3480E3 !important;
 }
 
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #3480E3 !important;
+}
+
 .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above, .mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above {
   transform: translateY(-130%) translateX(-42px) scale(0.75) !important;
 }
