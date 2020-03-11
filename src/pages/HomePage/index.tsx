@@ -21,7 +21,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
   const user = React.useContext(UserContext);
 
   const handleLogin = () => {
-    window.location.replace(process.env.SOCIAL_AUTH_URL);
+    window.location.replace('https://almond-be.herokuapp.com/api/auth/google');
   };
 
   const renderGoToDashboard = () => (

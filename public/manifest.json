@@ -1,12 +1,12 @@
 {
   "author": "Francis Masha",
-  "name": "almond",
+  "name": "Almond",
   "short_name": "almond",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
+  "theme_color": "#00ADB5",
+  "background_color": "#FAFAFA",
   "display": "standalone",
   "scope": "/",
-  "start_url": "https://almond-re-staging.herokuapp.com/",
+  "start_url": ".",
   "icons": [
     {
       "src": "./logo192.png",
