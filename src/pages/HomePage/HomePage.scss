@@ -218,7 +218,7 @@
     font-weight: 300;
     margin: auto;
     box-sizing: border-box;
-    font-family: "San Francisco", serif;
+    font-family: "San Francisco", serif !important;
   }
 
   h2 {
@@ -230,7 +230,6 @@
   }
 
   .btn-get-started {
-    font-family: "Product Sans", sans-serif;
     font-weight: 500;
     font-size: 16px;
     letter-spacing: 1px;

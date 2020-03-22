@@ -1,3 +1,4 @@
+import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
 import * as React from 'react';
 
 // third-party libraries
@@ -62,6 +63,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     isActionDone: false,
     isLoading: false,
     selectedTimeSchedule: new Date(),
+    hasError: false,
   });
 
   const menu = React.useContext(MenuContext);
@@ -80,9 +82,29 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       .then(() => setState({ ...state, isEnabled: props.enabled }));
   },              [state.isEnabled]);
 
-  const areEqual = (prevProps, nextProps) => {
-    return (prevProps.isChecked === nextProps.isChecked);
-  };
+  React.useEffect(() => {
+    const { selectedTimeSchedule } = state;
+    const schedules = [...new Set(props.schedules.map(item => item.schedule))];
+    const validate = validateOneHourTime(schedules, selectedTimeSchedule);
+    if (validate) {
+      setState({ ...state, hasError: true });
+    } else if (validate === false || undefined) {
+      setState({ ...state, hasError: false });
+    }
+  },              [state.selectedTimeSchedule]);
+
+  // React.useEffect(() => {
+  //   const { scheduleToEdit } = state;
+  //   const schedules = [...new Set(props.schedules.map(item => item.schedule))];
+  //   const validateEdit = validateOneHourTime(schedules, scheduleToEdit);
+  //   if (validateEdit) {
+  //     setState({ ...state, hasError: true });
+  //   } else if (validateEdit === false || undefined) {
+  //     setState({ ...state, hasError: false });
+  //   }
+  // },              [state.scheduleToEdit]);
+
+  const areEqual = (prevProps, nextProps) => (prevProps.isChecked === nextProps.isChecked);
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
@@ -141,6 +163,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         scheduleToEdit: '',
         showScheduleModal: false,
         isFormModalOpen: false,
+        hasError: false,
       });
     }
 
@@ -148,6 +171,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       ...state,
       showScheduleModal: false,
       isFormModalOpen: false,
+      hasError: false,
     });
   };
 
@@ -192,6 +216,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       submitButtonName={state.isEditMode ? 'Update schedule' : 'Create new schedule'}
       onSubmit={onAddEditScheduleSubmit}
       onDismiss={closeScheduleModal}
+      disabled={state.hasError}
     />
   );
 
@@ -264,7 +289,12 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   };
 
   const RenderTimeScheduleForm = () => {
-    const { isEditMode, selectedTimeSchedule, scheduleToEdit } = state;
+    const {
+      isEditMode,
+      selectedTimeSchedule,
+      scheduleToEdit,
+      hasError,
+    } = state;
 
     return (
       <React.Fragment>
@@ -277,6 +307,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
               label="time schedule"
               value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
               onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
+              {...(hasError ? { error: true } : {})}
+              {...(hasError ? { helperText: 'Schedule time has to be at least one hour apart' } : {})}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

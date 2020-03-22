@@ -5,7 +5,7 @@ h4,
 h5,
 h6,
 p {
-  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif;
+  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
 }
 
 .mdc-snackbar {
