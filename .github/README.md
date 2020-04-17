@@ -1,6 +1,6 @@
 <div align="center">
 
-## almond-fe
+## almond-re
 
 [![CircleCI](https://circleci.com/gh/mashafrancis/almond-re.svg?style=svg)](https://circleci.com/gh/mashafrancis/almond-re)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dbebee07d6ea948658c1/maintainability)](https://codeclimate.com/github/mashafrancis/almond-re/maintainability)
@@ -12,9 +12,9 @@
 
     Almond frontend application for the hydroponics farm
 
-  [![Butternut](../public/img/readme.svg)](https://almond-re-staging.herokuapp.com/)
+  [![Almond](../public/img/readme.svg)](https://almond-re-staging.herokuapp.com/)
 
-  #### Simple but complicated butternut
+  #### Simple but complicated almond
 
 </div>
 
@@ -36,7 +36,7 @@ This application will be used in a hydroponics farm control system to be used at
 
 ### Development set up
 1. Install [`Node JS`](https://nodejs.org/en/).
-2. To clone, run `git clone https://github.com/mashafrancis/almond-fe`.
+2. To clone, run `git clone https://github.com/mashafrancis/almond-re`.
 3. `cd` into the root of the **project directory**.
 4. Install [`yarn`](https://yarnpkg.com/en/docs/install#mac-stable).
 5. Run `yarn install` on the terminal to install dependencies.
@@ -58,7 +58,7 @@ This application will be used in a hydroponics farm control system to be used at
 
 ### Development server
 
-Run `yarn start:dev` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `yarn start:dev` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
 
 ### Build
 
