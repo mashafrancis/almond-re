@@ -8,7 +8,7 @@ export interface WaterCyclesPageProps {
   getAllSchedules: (id) => Promise<any>;
   deleteSingleSchedule: (id) => Promise<any>;
   displaySnackMessage?: (message) => Promise<any>;
-  togglePump?: (state) => Promise<any>;
+  togglePump: (state) => Promise<any>;
   getPumpStatus: (id) => Promise<any>;
   toggleScheduleStatus: (id, enabled) => Promise<any>;
   status?: Status;

@@ -176,7 +176,7 @@ const userRoleInitialState = {
   isLoading: true,
 };
 
-const reducer = (state = userRoleInitialState, action) => {
+const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialState, action) => {
   switch (action.type) {
     case GET_USER_ROLES_REQUEST:
       return {

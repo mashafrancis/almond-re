@@ -100,7 +100,6 @@ class TextField<T extends HTMLElement = HTMLInputElement> extends React.Componen
     } = this.props;
 
     return classnames(cssClasses.ROOT, Array.from(classList), className, {
-      [cssClasses.DENSE]: dense,
       [cssClasses.DISABLED]: disabled,
       [cssClasses.FOCUSED]: isFocused,
       [cssClasses.INVALID]: !isValid,

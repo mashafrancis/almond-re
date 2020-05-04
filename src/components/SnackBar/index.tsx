@@ -30,7 +30,7 @@ export class SnackBar extends React.Component<
      * avoid infinite recursion; if toast type is already '',
      * hideToastMessage has already been called.
      */
-    if (this.state.snack.message !== '') {
+    if (this.state.snack?.message !== '') {
       setTimeout(this.hideSnackMessage, 8000);
     }
   }
@@ -49,7 +49,7 @@ export class SnackBar extends React.Component<
     return (
       <React.Fragment>
         {
-          this.state.snack.message
+          this.state.snack?.message
           ? (
               <Snackbar
                 message={this.state.snack.message}

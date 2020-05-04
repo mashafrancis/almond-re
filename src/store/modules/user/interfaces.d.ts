@@ -29,15 +29,15 @@ export interface EditUserDetailsSuccess {
 
 import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
 
-interface UserDetails {
+export interface UserDetails {
   _id: string;
   name: string;
   email: string;
   photo: string;
-  isVerified?: boolean;
-  devices?: Device[];
-  activeDevice?: Device;
-  roles?: UserRole[];
+  isVerified: boolean;
+  devices: Device[];
+  activeDevice: Device;
+  roles: UserRole[];
   permissions?: FormattedPermissions;
   currentRole?: UserRole;
 }
@@ -45,7 +45,7 @@ interface UserDetails {
 export interface Device {
   _id: string;
   id: string;
-  verified?: boolean;
+  verified: boolean;
   isEnabled: boolean;
   user: {
     name: string;

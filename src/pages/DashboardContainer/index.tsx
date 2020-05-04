@@ -32,6 +32,8 @@ import {
 import Modal from '@components/Modal';
 import { TopBar } from '@components/TopBar';
 
+// const Modal = React.lazy(() => import('@components/Modal'));
+
 // utils
 import {
   MenuContext,
@@ -96,7 +98,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   },              []);
 
   React.useEffect(() => {
-    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') || '{}');
     if (selectedIndex) {
       setState({ ...state, selectedIndex });
     } else {

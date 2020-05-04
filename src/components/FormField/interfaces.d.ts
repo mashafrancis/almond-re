@@ -28,6 +28,6 @@ export interface FormFieldProps {
 export interface FormFieldState {
   value: string;
   dirty: boolean;
-  errors: any;
+  errors: any[];
   name: string;
 }

@@ -28,7 +28,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
     const isEmpty = value.length === 0;
     const requiredMissing = this.state.dirty && required && isEmpty;
 
-    let errors = [];
+    let errors: string[] = [];
 
     if (requiredMissing) {
       errors = [...errors, `${labelText} is required`];

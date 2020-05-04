@@ -12,7 +12,7 @@
 
     Almond frontend application for the hydroponics farm
 
-  [![Almond](../public/img/readme.svg)](https://almond-re-staging.herokuapp.com/)
+  [![Almond](../public/images/readme.svg)](https://almond-re-staging.herokuapp.com/)
 
   #### Simple but complicated almond
 

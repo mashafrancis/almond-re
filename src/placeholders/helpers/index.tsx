@@ -14,7 +14,7 @@ import '../Loader.scss';
  * @returns JSX
  */
 export const renderContent = (numberOfContents, className) => {
-  let elements = [];
+  let elements: any[] = [];
 
   for (let i = 1; i <= numberOfContents; i += 1) {
     const content = <span key={i} className="loading" />;

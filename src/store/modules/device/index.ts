@@ -350,7 +350,9 @@ export const deviceInitialState = {
   devices: [],
 };
 
-export const reducer = (state = deviceInitialState, action) => {
+export const reducer = (state: {
+  isLoading: boolean, errors: object, data: Device[], activeDevice: object, devices: any[]
+  } = deviceInitialState, action) => {
   switch (action.type) {
     case ADD_DEVICE_REQUEST:
       return {

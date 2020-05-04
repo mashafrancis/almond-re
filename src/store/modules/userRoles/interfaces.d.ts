@@ -1,4 +1,3 @@
-import { Permissions, Resources } from '@pages/UserRolesPage/interfaces';
 import {
   CREATE_USER_ROLES_SUCCESS,
   DELETE_USER_ROLES_SUCCESS,
@@ -13,8 +12,8 @@ export interface GetUserRolesActionRequest {
 
 export interface GetUserRolesActionSuccess {
   userRoles: UserRole[];
-  permissions?: Permissions;
-  resources?: Resources;
+  permissions?: Permission;
+  resources?: Resource;
   isLoading: boolean;
   type: GET_USER_ROLES_SUCCESS;
 }
@@ -52,15 +51,15 @@ export interface Permission {
 }
 
 export interface ResourceAccessLevel {
-  permissions?: Permission[];
-  resource?: Resource;
+  permissions: Permission[];
+  resource: Resource;
   [key: string]: any;
 }
 
 export interface UserRole {
   description: string;
-  users?: number;
+  users: number;
   title: string;
   _id: string;
-  resourceAccessLevels?: ResourceAccessLevel[];
+  resourceAccessLevels: ResourceAccessLevel[];
 }

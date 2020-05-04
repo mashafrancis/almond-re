@@ -47,6 +47,7 @@ import {
   TOGGLE_PUMP_STATUS_REQUEST,
   TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
+import {AnyAction} from "redux";
 
 /**
  * Get all schedules request
@@ -381,7 +382,9 @@ export const schedulesInitialState = {
   errors: {},
 };
 
-const reducer = (state = schedulesInitialState, action) => {
+const reducer = (state: {
+  schedules: Schedule[], enabled: boolean,isLoading: boolean, errors: object,
+} = schedulesInitialState, action: AnyAction) => {
   switch (action.type) {
     case GET_SCHEDULE_REQUEST:
       return {
