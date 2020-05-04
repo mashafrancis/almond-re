@@ -1,5 +1,6 @@
 // thunks
 import {
+  deviceInitialState,
   reducer,
 } from '@modules/device/index';
 
@@ -14,14 +15,6 @@ import {
 import { requestPayload } from '@modules/device/fixtures';
 
 describe('Device reducer', () => {
-  const deviceInitialState = {
-    isLoading: true,
-    errors: {},
-    data: [],
-    activeDevice: '',
-    devices: [],
-  };
-
   const addDeviceRequest = {
     type: ADD_DEVICE_REQUEST,
     isLoading: true,

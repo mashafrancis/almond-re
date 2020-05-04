@@ -15,13 +15,14 @@ import HomePage from '@pages/HomePage';
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
-    <AuthenticatedRoute
-      exact
-      path="/my-device"
-      authorize="my-device:view"
-      component={EnterDeviceIdPage}
-      fallbackView={<Unauthorized showModal={true} />}
-    />
+    <Route exact path="/my-device" component={EnterDeviceIdPage} />
+    {/*<AuthenticatedRoute*/}
+    {/*  exact*/}
+    {/*  path="/my-device"*/}
+    {/*  authorize="my-device:view"*/}
+    {/*  component={EnterDeviceIdPage}*/}
+    {/*  fallbackView={<Unauthorized showModal={true} />}*/}
+    {/*/>*/}
     <AuthenticatedRoute
       exact
       path="/dashboard"

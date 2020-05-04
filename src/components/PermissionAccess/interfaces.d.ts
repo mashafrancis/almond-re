@@ -1,12 +1,13 @@
-import { Permissions, Resources } from '@pages/UserRolesPage/interfaces';
+import {Permission, Resource} from "@modules/userRoles/interfaces";
+
 
 export interface PermissionAccessProps {
-  resources: Resources[];
-  permissions: Permissions[];
+  resources: Resource[];
+  permissions: Permission[];
   getResources: (state) => void;
 }
 
 export interface PermissionAccessState {
-  resources: Resources[];
-  permissions: Permissions[];
+  resources: Resource[];
+  permissions: Permission[];
 }

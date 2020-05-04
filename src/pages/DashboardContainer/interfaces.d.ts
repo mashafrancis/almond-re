@@ -10,10 +10,10 @@ export interface DashboardContainerProps {
     push: (url: string) => void;
   };
   component?: any;
-  user?: UserDetails;
-  logoutUser?: () => void;
+  user: UserDetails;
+  logoutUser: () => void;
   title: string;
-  activateDevice?: (id) => Promise<any>;
+  activateDevice: (id) => Promise<any>;
   getUserDetails: () => Promise<any>;
   activeDevice: {
     id: string;

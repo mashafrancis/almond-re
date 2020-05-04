@@ -73,7 +73,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser, che
               {group.map((item, itemIndex) => (
                 <ListItem
                   key={`${groupIndex}.${itemIndex}`}
-                  className={(selectedIndex.group === groupIndex && selectedIndex.item === itemIndex) && 'mdc-list-item--selected'}
+                  className={(selectedIndex.group === groupIndex && selectedIndex.item === itemIndex) ? 'mdc-list-item--selected' : ''}
                   onClick={() => setSelectedIndex({ group: groupIndex, item: itemIndex }) }
                 >
                   <ListItemGraphic

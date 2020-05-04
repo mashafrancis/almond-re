@@ -29,7 +29,7 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
 
   // @ts-ignore
   const classes = useStyles();
-  const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+  const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') ?? '{group: 0, item: 0}');
   const [value, setValue] = React.useState(selectedIndex === null || undefined || false ? 0 : selectedIndex.item);
 
   return (

@@ -58,7 +58,7 @@ export const socialAuthentication = () => (dispatch, getState, http) => {
   dispatch(socialAuthRequest());
   return http.get(process.env.SOCIAL_AUTH_URL)
     .then((response) => {
-      window.location.replace(process.env.SOCIAL_AUTH_URL);
+      window.location.replace(process.env.SOCIAL_AUTH_URL || '');
       // authService.saveToken(response.data.response.data.token);
       dispatch(socialAuthSuccess(response));
       const message = response.data.response.message;

@@ -9,6 +9,8 @@ import { PermissionAccessProps, PermissionAccessState } from './interfaces';
 
 // helpers
 import capitalize from '../../utils/helpers/capitalize';
+import ensure from "@utils/helpers/arrayCheck";
+import { Permission, Resource } from "@modules/userRoles/interfaces";
 
 class PermissionAccess extends React.Component<PermissionAccessProps, PermissionAccessState> {
   /*
@@ -38,9 +40,9 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
        * and end with delete
        */
       Object.keys(this.mappedPermissions)
-        .forEach((permissionString) => {
-          this.mappedPermissions[permissionString] = this.state.permissions
-            .find(permissionObject => permissionObject.type.toLowerCase() === permissionString)._id;
+        .forEach((permissionString: string) => {
+          // @ts-ignore
+          this.mappedPermissions[permissionString] = ensure(this.state.permissions.find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString))._id;
         });
     }
   }
@@ -53,11 +55,12 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
       });
 
       Object.keys(this.mappedPermissions)
-        .forEach((permissionString) => {
-          const permissionKey = this.state.permissions
-            .find(permissionObject => permissionObject.type.toLowerCase() === permissionString);
+        .forEach((permissionString: string) => {
+          const permissionKey = ensure(this.state.permissions
+            .find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString));
 
           if (permissionKey) {
+            // @ts-ignore
             this.mappedPermissions[permissionString] = permissionKey._id;
           }
         });
@@ -103,8 +106,9 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
       };
     }
     this.setState({
-      resources: this.state.resources.map(resource => resource._id === resourceId ? ({
+      resources: this.state.resources.map((resource: Resource) => resource._id === resourceId ? ({
         ...resource,
+        // @ts-ignore
         permissionIds: getNewPermissionIds(resource.permissionIds || []),
       }) : resource),
     },            () => this.props.getResources(this.state.resources));
@@ -122,7 +126,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
   isResourcePermissionActive(resourceId, permissionId) {
     // let isActive = false;
     // get the resource in question
-    const resource = this.state.resources.filter(resource => resource._id === resourceId)[0];
+    const resource: any = this.state.resources.filter((resource: Resource) => resource._id === resourceId)[0];
     /*
      * it's active if it has the 'full access' toggled on or
      * if the permission for this checkbox has been toggled on
@@ -151,7 +155,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
             </div>
             <div className="permissions__tbl-body">
               {
-                this.state.resources && this.state.resources.map(resource => (
+                this.state.resources && this.state.resources.map((resource: Resource) => (
                   <div key={resource._id} className="permissions__tbl-row">
                     <div className="permissions__tbl-row__item header">{resource.name}</div>
                     {

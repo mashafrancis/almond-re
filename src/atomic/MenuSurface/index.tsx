@@ -165,10 +165,10 @@ class MenuSurface extends React.Component<MenuSurfaceProps, MenuSurfaceState> {
       setPosition: (position: Partial<MDCMenuDistance>) => {
         this.setState(prevState =>
                         ({...prevState,
-                          styleLeft: 'left' in position ? position.left : null,
-                          styleRight: 'right' in position ? position.right : null,
-                          styleTop: 'top' in position ? position.top : null,
-                          styleBottom: 'bottom' in position ? position.bottom : null})
+                          styleLeft: 'left' in position ? position.left : undefined,
+                          styleRight: 'right' in position ? position.right : undefined,
+                          styleTop: 'top' in position ? position.top : undefined,
+                          styleBottom: 'bottom' in position ? position.bottom : undefined})
         );
       },
       setMaxHeight: (maxHeight: string) => this.setState({ maxHeight }),

@@ -1,5 +1,5 @@
 const path = require('path');
-const {importer} = require('./webpack.util');
+const {materialImporter} = require('./webpack.util');
 const {
   definePlugin,
   cleanWebpack,
@@ -9,12 +9,12 @@ const {
   hashedPlugin,
   manifestPlugin,
   workBoxPlugin,
-  copyPlugin
+  copyPlugin,
+  contextReplacementPlugin
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
 const PUBLIC_PATH = process.env.PUBLIC_URL;
-
 
 module.exports = {
   entry: {
@@ -23,17 +23,21 @@ module.exports = {
     fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css')
   },
   output: {
-    path: path.join(__dirname, '..', 'dist'),
+    // `filename` provides a template for naming your bundles (remember to use `[name]`)
     filename: '[name].[hash:8].js',
+    // `chunkFilename` provides a template for naming code-split bundles (optional)
     chunkFilename: "[name].[hash:8].bundle.js",
+    // `path` is the folder where Webpack will place your bundles
+    path: path.join(__dirname, '..', 'dist'),
+    // `publicPath` is where Webpack will load your bundles from (optional)
     publicPath: '/'
   },
-  optimization: {
-    noEmitOnErrors: true,
-    splitChunks: {
-      chunks: "all",
-    }
-  },
+  // optimization: {
+  //   noEmitOnErrors: true,
+  //   splitChunks: {
+  //     chunks: "all",
+  //   }
+  // },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
@@ -50,9 +54,31 @@ module.exports = {
     rules: [
       {
         test: /\.(woff(2)?|ttf|eot|svg|png|jpg|jpeg|gif)$/,
-        use: {
-          loader: 'file-loader'
-        }
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              optipng: {
+                enabled: !isDevMode
+              },
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false
+              },
+              webp: {
+                quality: 75
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.(scss|css)$/,
@@ -76,8 +102,12 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              importer,
-              includePaths: ['./node_modules'],
+              importer: materialImporter,
+              // Prefer Dart Sass
+              implementation: require('sass'),
+              sassOptions: {
+                includePaths: ['./node_modules']
+              },
             }
           },
         ]
@@ -119,7 +149,8 @@ module.exports = {
     cleanWebpack,
     miniCssExtract,
     manifestPlugin,
-    workBoxPlugin,
-    copyPlugin
+    // workBoxPlugin,
+    copyPlugin,
+    contextReplacementPlugin
   ]
 };

@@ -66,7 +66,6 @@ const htmlWebpack = new htmlWebpackPlugin({
   inject: 'body',
   title: 'Almond',
   favicon: './public/favicon.ico',
-  materialIcons: 'https://fonts.googleapis.com/icon?family=Material+Icons',
   minify: {
     removeComments: true,
     collapseWhitespace: true,
@@ -94,6 +93,8 @@ const copyPlugin = new CopyWebpackPlugin([
   { from: 'public' }, // define the path of the files to be copied
 ]);
 
+const contextReplacementPlugin = new webpack.ContextReplacementPlugin(
+  /\.\/locale$/,'empty-module', false, /js$/)
 
 const workBoxPlugin = new WorkboxPlugin.GenerateSW({
   swDest: 'sWorker.js',
@@ -111,5 +112,6 @@ module.exports = {
   hashedPlugin,
   manifestPlugin,
   copyPlugin,
+  contextReplacementPlugin,
   workBoxPlugin,
 };

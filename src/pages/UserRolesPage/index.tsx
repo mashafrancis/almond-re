@@ -40,6 +40,11 @@ import {
   UserRolesPageProps,
   UserRolesPageState
 } from './interfaces';
+import {
+  Resource,
+  ResourceAccessLevel,
+  UserRole
+} from "@modules/userRoles/interfaces";
 
 export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props) => {
   const [state, setState] = React.useState<UserRolesPageState>({
@@ -136,7 +141,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
       []
     );
 
-    const resources = props.userRoles.resources;
+    const resources: Resource[] = props.userRoles.resources;
 
     const currentResources = resources.map((resource) => {
       let newResource = resource;
@@ -190,7 +195,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
   const handleRoleUpdate = () => {
     const { _id, title, description } = state.selectedRole;
 
-    const updatedResources = state.resources
+    const updatedResources: any = state.resources
       .filter(resource => resource.permissionIds !== undefined)
       .map(resource => ({
         resourceId: resource._id,
@@ -210,7 +215,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     };
 
     setState({ ...state, isRequestSent: true });
-    props.editUserRole(roleUpdatePayload)
+    props.editUserRole(roleUpdatePayload as UserRole)
       .then(() => {
         setState({ ...state, isRequestSent: false });
         onResetPermission();
