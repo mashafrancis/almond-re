@@ -1,10 +1,8 @@
 import * as React from 'react';
 
-// third party apps
-import * as Sentry from '@sentry/browser';
-
 // components
 import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
+import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 
 // interfaces
 import { ErrorBoundaryState } from '@components/ErrorBoundary/interfaces';
@@ -19,21 +17,17 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryState> {
     hasError: false,
   };
 
-  componentDidCatch(error, errorInfo) {
-    Sentry.withScope((scope) => {
-      scope.setExtras(errorInfo);
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId });
-    });
-  }
-
   render() {
     if (this.state.hasError) {
       // render fallback UI
       return (
         <InternalServerErrorMessage
-          errorButton={<button className="mdc-button mdc-button--outlined" onClick={
-            () => Sentry.showReportDialog({ eventId: this.state.eventId })}>Report error</button>}
+          errorButton={
+            <button onClick={() => window.location.replace('/')} className="mdc-button mdc-button--raised">
+              <ArrowBackRoundedIcon />
+              <span className="mdc-button__label">Back</span>
+            </button>
+          }
         />
       );
     }

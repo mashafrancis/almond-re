@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') ?? '{}');
 
 export const MenuContext = React.createContext({
   isMenuOpen: false,
@@ -10,7 +10,7 @@ export const MenuContext = React.createContext({
   },
   setOpen: (_open: boolean) => {},
   setSelectedIndex: (_selectedIndex: {group: number, item: number}) => {},
-  logoutUser: () => null,
+  logoutUser: () => {},
   setDeviceModalOpen: (_open: boolean) => {},
 });
 
@@ -20,19 +20,17 @@ export const UserContext = React.createContext({
   email: '',
   photo: '',
   isVerified: true,
-  devices: [],
+  devices: [{
+    _id: '',
+    id: '',
+    verified: false,
+    isEnabled: false,
+  }],
   activeDevice: {
     id: '',
     _id: '',
   },
   isAdmin: false,
-});
-
-export const ScheduleTableContext = React.createContext({
-  schedules: [],
-  ActionButtons: (_schedule: {}) => {},
-  handleToggleStatusChange: (_event: any, _schedule: {}) => {},
-  statusClass: '',
 });
 
 export const ViewportContext = React.createContext({

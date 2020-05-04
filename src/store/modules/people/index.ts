@@ -116,7 +116,8 @@ const peopleInitialState = {
  *
  * @returns {Object} state
  */
-export const reducer = (state = peopleInitialState, action: AnyAction) => {
+export const reducer = (state: {
+  people: UserDetails[] } = peopleInitialState, action: AnyAction) => {
   switch (action.type) {
     case GET_ALL_PEOPLE_REQUEST:
       return {

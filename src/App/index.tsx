@@ -58,10 +58,10 @@ export class App extends React.Component<AppProps, AppState> {
     const { socialToken } = queryString.parse(search);
     if (socialToken) {
       authService.saveToken(socialToken);
-      window.location.replace(process.env.PUBLIC_URL);
+      window.location.replace(process.env.PUBLIC_URL ?? 'http://froyo.almond.com:3000/');
     }
 
-    this.setState({ isAdmin: !checkUserRole(this.props.user.currentRole.title, 'User') });
+    this.setState({ isAdmin: !checkUserRole(this.props.user?.currentRole?.title, 'User') });
   }
 
   render() {

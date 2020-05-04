@@ -33,17 +33,26 @@ module.exports = merge(config, {
       chunks: 'all',
       maxInitialRequests: Infinity,
       minSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 6,
+      automaticNameDelimiter: '~',
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
-            // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            // npm package names are URL-safe, but some servers don't like @ symbols
-            return `${packageName.replace('@', '')}`;
+          reuseExistingChunk: true,
+          name(module, chunks, cacheGroupKey) {
+            const moduleFileName = module.identifier().split('/').reduceRight(item => item).replace('@', '');
+            const allChunksNames = chunks.map((item) => item.name).join('~');
+            return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
           },
+          // name(module) {
+          //   // get the name. E.g. node_modules/packageName/not/this/part.js
+          //   // or node_modules/packageName
+          //   const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+          //
+          //   // npm package names are URL-safe, but some servers don't like @ symbols
+          //   return `${packageName.replace('@', '')}`;
+          // },
         },
       },
     },

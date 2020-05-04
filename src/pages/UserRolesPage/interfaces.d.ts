@@ -1,16 +1,16 @@
-import { UserRole } from '@modules/userRoles/interfaces';
+import {Permission, Resource, UserRole} from '@modules/userRoles/interfaces';
 
 export interface UserRolesPageProps {
   userRoles: {
     data: UserRole[];
-    permissions?: Permissions[];
-    resources?: Resources[];
+    permissions: Permission[] | any[];
+    resources: Resource[] | any[];
   };
   getUserRoles: () => Promise<any>;
   deleteUserRole: (id) => Promise<any>;
   editUserRole: (userRole: UserRole) => Promise<any>;
   createNewRole: (userRole) => Promise<any>;
-  displaySnackMessage?: (message) => Promise<any>;
+  displaySnackMessage: (message) => Promise<any>;
   match: {
     url: string
   };
@@ -30,14 +30,4 @@ export interface UserRolesPageState {
   [key: string]: any;
   action: string;
   id: string;
-}
-
-export interface Permissions {
-  _id: string;
-  type: string;
-}
-
-export interface Resources {
-  _id: string;
-  name: string;
 }

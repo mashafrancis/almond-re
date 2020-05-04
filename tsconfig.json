@@ -15,16 +15,18 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+//    "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "removeComments": true,
     "skipLibCheck": true,
     "module": "commonjs",
     "pretty": true,
     "sourceMap": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "allowJs": true,
     "noEmit": false,
-    "importHelpers": false,
+    "importHelpers": true,
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
@@ -43,6 +45,11 @@
     "node_modules",
     "tests",
     "dist",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "nginx",
+    "public",
+    "jest",
+    "src/setupMocks.ts",
+    "src/setupEnzyme.ts"
   ]
 }

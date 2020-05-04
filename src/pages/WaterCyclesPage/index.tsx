@@ -9,7 +9,7 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import Switch from '@material/react-switch';
-import * as moment from 'moment';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -88,7 +88,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     const validate = validateOneHourTime(schedules, selectedTimeSchedule);
     if (validate) {
       setState({ ...state, hasError: true });
-    } else if (validate === false || undefined) {
+    } else if (!validate || undefined) {
       setState({ ...state, hasError: false });
     }
   },              [state.selectedTimeSchedule]);
