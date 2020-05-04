@@ -33,7 +33,3 @@ export const UserContext = React.createContext({
   isAdmin: false,
 });
 
-export const ViewportContext = React.createContext({
-  width: 0,
-  height: 0,
-});

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import * as moment from 'moment';
 
 export const validateOneHourTime = (schedules: string[], newTime: string) => {
   const oneHour = 60 * 60 * 1000;

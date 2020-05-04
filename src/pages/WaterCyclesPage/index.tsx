@@ -9,7 +9,7 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import Switch from '@material/react-switch';
-import moment from 'moment';
+import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -25,6 +25,8 @@ import { IconButton, InputAdornment } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
 import { MenuContext, UserContext } from '@utils/context';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -48,6 +50,9 @@ import {
 
 // fixtures
 import { activityLogs } from './fixtures';
+import FaceIcon from "@material-ui/icons/Face";
+import CardInfo from "@components/CardInfo";
+import GeneralCardInfo from "@components/GeneralInfoCard";
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -245,8 +250,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const TableContent = (timeSchedule) => {
     const tableHeaders = {
-      Time: { valueKey: 'time', colWidth: '40' },
-      Actions: { valueKey: 'actions', colWidth: '50' },
+      Time: { valueKey: 'time', colWidth: '30' },
+      Actions: { valueKey: 'actions', colWidth: '45' },
       Status: { valueKey: 'status' },
     };
 
@@ -337,61 +342,42 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             <div className="device-header-container" onClick={() => menu.setDeviceModalOpen(true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
-                <MaterialIcon
-                  hasRipple icon="arrow_drop_down" initRipple={null}/>
+                <MaterialIcon hasRipple icon="arrow_drop_down" initRipple={null}/>
               </h3>
             </div>
           </div>
         </Cell>
       </Row>
       <Row>
-        <Cell columns={5} desktopColumns={5} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes="schedules-available"
-            heading="Water Schedules"
-            body={(props.schedules.length > 0)
-              ? TableContent(Object.entries(props.schedules))
-              : BlankContent(
-              'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
-            )}
+        <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
+          <GeneralCardInfo
+            mainHeader="Manual Override"
+            subHeader="Pump water directly into the system"
+            icon={<BlurCircularIcon className="content-icon general-info-icon" />}
             actionItem={
-              <ActionButton
-                name="Add schedule"
-                icon="add"
-                handleClick={showScheduleModal('Add')}
+              <Switch
+                className="manual-override"
+                onChange={handleToggleButtonOnChange}
+                checked={props.enabled}
               />
             }
           />
+          <CardInfo
+            mainHeader="Water Schedules"
+            subHeader="Create a new water schedule for your pump cycle"
+            icon={<OpacityIcon className="content-icon" />}
+            buttonName="Add schedule"
+            onClick={showScheduleModal('Add')}
+          />
+          {(props.schedules.length > 0)
+            ? TableContent(Object.entries(props.schedules))
+            : BlankContent(
+              'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
+            )}
           {AddEditScheduleModal()}
           {DeleteScheduleModal()}
         </Cell>
-          <Cell columns={3} desktopColumns={3} tabletColumns={4} phoneColumns={4}>
-            <DashboardCard
-              classes=""
-              heading="Manual Override"
-              body={
-                <div className="manual-schedule">
-                  <p>
-                    The manual override for your automated pump schedules used for switching the pump on/off anytime.
-                  </p>
-                </div>
-              }
-              actionItem={
-                <Switch
-                  className="manual-override"
-                  onChange={handleToggleButtonOnChange}
-                  checked={props.enabled}
-                />
-              }
-            />
-            <DashboardCard
-              classes=""
-              heading="Next Schedule:"
-              body=""
-              actionItem={<h2 className="next-time-schedule">4:00PM</h2>}
-            />
-          </Cell>
-        <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
+        <Cell columns={5} desktopColumns={5} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
               classes="recent-activities-available"
               heading="Recent Activity"

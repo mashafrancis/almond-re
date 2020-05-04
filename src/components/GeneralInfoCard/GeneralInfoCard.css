@@ -1,0 +1,50 @@
+.mdc-card {
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+.dashboard-card {
+  width: 100%;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  color: #657783;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+.dashboard-card p {
+  font-size: 14px;
+}
+.dashboard-card .card-body {
+  margin: 6px 14px 6px 14px;
+}
+.dashboard-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  width: unset;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+.dashboard-card .card-header__title {
+  font-size: 14px !important;
+  margin: 0 14px 0 14px;
+  font-weight: 500;
+  background-color: rgba(25, 103, 210, 0.11);
+  padding: 6px 20px;
+  color: #1967d2;
+  border-radius: 6px;
+}
+.dashboard-card .card-header__right-header {
+  display: flex;
+  width: auto;
+  margin-right: 20px;
+}
+
+.dashboard-card-header {
+  display: flex;
+  width: auto;
+}
+
+/*# sourceMappingURL=DashboardCard.css.map */

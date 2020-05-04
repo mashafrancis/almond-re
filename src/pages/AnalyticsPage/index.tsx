@@ -8,6 +8,11 @@ import {
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 
+// components
+import OpacityIcon from '@material-ui/icons/Opacity';
+import MemoryIcon from '@material-ui/icons/Memory';
+import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 
@@ -22,6 +27,7 @@ import {
   AnalyticsPageProps,
   AnalyticsPageState
 } from './interfaces';
+import AnalyticsCard from "@components/AnalyticsCard";
 
 export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props) => {
   const [state, setState] = React.useState<AnalyticsPageState>({
@@ -36,9 +42,30 @@ export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props
 
   return (
     <Grid>
-      <Row>
-        <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-          {(window.innerWidth < 539) && <div className="main-subheader"><h3>Analytics</h3></div>}
+      <Row className="analytics-page">
+        <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
+          <AnalyticsCard
+            colorClass="card-color-blue"
+            icon={<OpacityIcon className="content-icon" />}
+            mainInfo="Next water schedule"
+            subInfo="14:00 PM"
+          />
+        </Cell>
+        <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
+          <AnalyticsCard
+            colorClass="card-color-yellow"
+            icon={<WbIncandescentIcon className="content-icon" />}
+            mainInfo="Water Temperature"
+            subInfo="18 &#8451;"
+          />
+        </Cell>
+        <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
+          <AnalyticsCard
+            colorClass="card-color-purple"
+            icon={<MemoryIcon className="content-icon" />}
+            mainInfo="Daily power usage"
+            subInfo="30 KWatts"
+          />
         </Cell>
       </Row>
     </Grid>

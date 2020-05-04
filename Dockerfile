@@ -1,6 +1,6 @@
 # STAGE 1: build
 # base image
-FROM node:12.16.1-alpine AS build
+FROM node:13.13.0-alpine AS build
 
 LABEL maintainer="Francis Masha" MAINTAINER="Francis Masha <francismasha96@gmail.com>"
 LABEL application="almond-re"
@@ -78,7 +78,7 @@ RUN setcap 'cap_net_bind_service=+ep' /etc/nginx/nginx.conf
 USER nginx:nginx
 
 # fire up nginx
-#EXPOSE 80
+EXPOSE 80
 
 #ENTRYPOINT ["/app/entrypoint.sh"]
 

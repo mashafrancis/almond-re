@@ -40,7 +40,7 @@ export const UserMenus: MenuComponentProps[][] = [
     {
       icon: 'memory',
       primaryText: 'Energy Usage',
-      component: UserRolesPage,
+      component: EnergyMonitoringPage,
     },
     {
       icon: 'local_florist',

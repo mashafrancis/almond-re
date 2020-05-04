@@ -35,7 +35,8 @@
       "@pages/*": ["src/pages/*"],
       "@modules/*": ["src/store/modules/*"],
       "@utils/*": ["src/utils/*"],
-      "@atomic": ["src/atomic/*"]
+      "@atomic/*": ["src/atomic/*"],
+      "@context/*": ["src/context/*"]
     }
   },
   "include": [

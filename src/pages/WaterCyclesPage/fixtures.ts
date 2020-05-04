@@ -20,7 +20,7 @@ export const activityLogs = [
   {
     type: 'error',
     date: '2019-10-30T08:00:42.767Z',
-    message: 'Pump successfully crashed by dragon!',
+    message: 'Pump crashed by dragon!',
   },
   {
     type: 'error',

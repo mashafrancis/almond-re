@@ -69,11 +69,11 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
             <NavLink to={'/'}>
               <img
                 className="drawer-logo__image"
-                src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
+                src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
                 alt="Logo"/>
             </NavLink>
           </TopAppBarTitle>
-          <div className="topbar-divider topbar-lockup-divider"/>
+          {/*<div className="topbar-divider topbar-lockup-divider"/>*/}
           {!user.isAdmin && renderDeviceDisplay()}
         </TopAppBarSection>
 

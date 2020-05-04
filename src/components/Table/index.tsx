@@ -24,12 +24,10 @@ const Table: (props: TableProps) => any = (props: TableProps) => {
           tableHeaders.map((header, index) => {
             return (
               <div key={index} className={keys[header].colWidth
-                ? `tbl-header__column--${keys[header].colWidth}`
+                ? `tbl-header__column--${keys[header].colWidth }`
                 : 'tbl-header__column'}
               >
-                {
-                  keys[header].value || header
-                }
+                <span className="header-text">{ keys[header].value || header } </span>
               </div>
             );
           })
@@ -38,7 +36,7 @@ const Table: (props: TableProps) => any = (props: TableProps) => {
       {
         values.map((value) => {
           return (
-            <div key={value._id} className={`tbl-row ${props.statusClass}`}>
+            <div key={value.id} className={`tbl-row ${props.statusClass}`}>
               {
                 tableHeaders.map((header, index) => {
                   return (
@@ -46,7 +44,7 @@ const Table: (props: TableProps) => any = (props: TableProps) => {
                       ? `tbl-row__column--${keys[header].colWidth}`
                       : 'tbl-row__column'}
                     >
-                      {value[keys[header].valueKey]}
+                      <span className="content-text">{value[keys[header].valueKey]}</span>
                     </div>
                   );
                 })

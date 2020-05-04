@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // third-party libraries
 import Card from '@material/react-card';
-import moment from 'moment';
+import * as moment from 'moment';
 
 // interfaces
 import { ActivityLogCardProps } from './interfaces';

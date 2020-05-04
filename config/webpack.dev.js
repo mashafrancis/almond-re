@@ -12,6 +12,7 @@ module.exports = merge(config, {
   optimization: {
     namedModules: true,
   },
+  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../src/assets'),

@@ -45,6 +45,8 @@ import {
   ResourceAccessLevel,
   UserRole
 } from "@modules/userRoles/interfaces";
+import CardInfo from "@components/CardInfo";
+import FaceIcon from "@material-ui/icons/Face";
 
 export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props) => {
   const [state, setState] = React.useState<UserRolesPageState>({
@@ -350,10 +352,10 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
 
   const TableContent = (userRoles) => {
     const tableHeaders = {
-      Role: { valueKey: 'title', colWidth: '20' },
-      Description: { valueKey: 'description', colWidth: '40' },
+      Role: { valueKey: 'title', colWidth: '15' },
+      Description: { valueKey: 'description', colWidth: '50' },
       Users: { valueKey: 'userCount', colWidth: '15' },
-      Actions: { valueKey: 'actions', colWidth: '5' },
+      Actions: { valueKey: 'actions' },
     };
 
     const tableValues = userRoles.map(role => ({
@@ -376,30 +378,17 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
   return (
     <Grid>
       <Row>
-        <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-          {(window.innerWidth < 539) && <div className="main-subheader"><h3>User Roles</h3></div>}
-        </Cell>
-      </Row>
-      <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes=""
-            heading="Roles available"
-            actionItem={
-              <ActionButton
-                name="Add role"
-                icon="add"
-                handleClick={toggleModal}
-              />
-            }
-            body={
-              <React.Fragment>
-                <div className="user-roles-page__table">
-                  { TableContent(Object.entries(props.userRoles.data)) }
-                </div>
-              </React.Fragment>
-            }
+          <CardInfo
+            mainHeader="User Roles"
+            subHeader="Create a new role for users with Almond"
+            icon={<FaceIcon className="content-icon" />}
+            buttonName="Add role"
+            onClick={toggleModal}
           />
+          <div className="user-roles-page__table">
+            { TableContent(Object.entries(props.userRoles.data)) }
+          </div>
           { UserRolePageModal() }
           { DeleteRoleModal() }
         </Cell>
