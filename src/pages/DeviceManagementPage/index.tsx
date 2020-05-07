@@ -9,8 +9,6 @@ import {
 import { connect } from 'react-redux';
 
 // components
-import ActionButton from '@components/ActionButton';
-import DashboardCard from '@components/DashboardCard';
 import Modal from '@components/Modal';
 import Table from '@components/Table';
 import Chip from '@material-ui/core/Chip';
@@ -36,6 +34,8 @@ import {
   DeviceManagementProps,
   DeviceManagementState
 } from './interfaces';
+import CardInfo from "@components/CardInfo";
+import FaceIcon from "@material-ui/icons/Face";
 
 export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps> = (props) => {
   const [state, setState] = React.useState<DeviceManagementState>({
@@ -169,8 +169,8 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     const verified = device[1].verified;
     const enabled = device[1].enabled;
 
-    if (!verified) { return <Chip className="MuiChip-root-unverified" label="Not Verified"  />; }
-    if (verified && !enabled) { return <Chip className="MuiChip-root-disabled" label="Disabled"  />; }
+    if (!verified) { return <Chip className="MuiChip-root-unverified" label="Not Verified" />; }
+    if (verified && !enabled) { return <Chip className="MuiChip-root-disabled" label="Disabled" />; }
     return <Chip className="MuiChip-root-enabled" label="Enabled"  />;
 
     // switch (device) {
@@ -188,12 +188,13 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
   const TableContent = (devices) => {
     const tableHeaders = {
       DeviceID: { valueKey: 'deviceId', colWidth: '20' },
-      User: { valueKey: 'user', colWidth: '30' },
+      User: { valueKey: 'user', colWidth: '25' },
       Status: { valueKey: 'status', colWidth: '25' },
-      Actions: { valueKey: 'actions', colWidth: '5' },
+      Actions: { valueKey: 'actions' },
     };
 
     const tableValues = devices.map(device => ({
+      id: device[1].id,
       deviceId: device[1].id,
       user: device[1].user ? device[1].user.name : 'N/A',
       status: deviceStatus(device),
@@ -263,24 +264,16 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     <Grid>
       <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes=""
-            heading="Device Management"
-            actionItem={
-              <ActionButton
-                name="Add device"
-                icon="add"
-                handleClick={showDeviceModal('Add')}
-              />
-            }
-            body={
-              <React.Fragment>
-                <div className="user-roles-page__table">
-                  { TableContent(Object.entries(props.devices)) }
-                </div>
-              </React.Fragment>
-            }
+          <CardInfo
+            mainHeader="Device Management"
+            subHeader="Add a new device to the database for the user"
+            icon={<PhonelinkSetupSharpIcon className="content-icon" />}
+            buttonName="New device"
+            onClick={showDeviceModal('Add')}
           />
+          <div className="user-roles-page__table">
+            { TableContent(Object.entries(props.devices)) }
+          </div>
           {AddEditDeviceModal()}
           {DeleteDeviceModal()}
         </Cell>

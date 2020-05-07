@@ -11,7 +11,6 @@ import { compose } from 'redux';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Loader from '@components/Loader';
 import SnackBar from '@components/SnackBar';
-import { ViewportProvider } from '../hooks';
 import Routes from '../routes';
 
 // thunk action creators
@@ -30,6 +29,7 @@ import { UserContext } from '@utils/context';
 
 // styles
 import './App.scss';
+import {ViewportProvider} from "@context/ViewportContext";
 
 export class App extends React.Component<AppProps, AppState> {
   state = {

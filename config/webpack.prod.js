@@ -28,7 +28,9 @@ module.exports = merge(config, {
     ],
     // Keep the runtime chunk separated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
-    runtimeChunk: true,
+    runtimeChunk: {
+      name: "runtime"
+    },
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
@@ -37,23 +39,29 @@ module.exports = merge(config, {
       maxAsyncRequests: 6,
       automaticNameDelimiter: '~',
       cacheGroups: {
-        vendor: {
+        vendors: {
           test: /[\\/]node_modules[\\/]/,
           reuseExistingChunk: true,
-          name(module, chunks, cacheGroupKey) {
-            const moduleFileName = module.identifier().split('/').reduceRight(item => item).replace('@', '');
-            const allChunksNames = chunks.map((item) => item.name).join('~');
-            return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
-          },
-          // name(module) {
-          //   // get the name. E.g. node_modules/packageName/not/this/part.js
-          //   // or node_modules/packageName
-          //   const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-          //
-          //   // npm package names are URL-safe, but some servers don't like @ symbols
-          //   return `${packageName.replace('@', '')}`;
+          // name(module, chunks, cacheGroupKey) {
+          //   const moduleFileName = module.identifier().split('/').reduceRight(item => item).replace('@', '');
+          //   const allChunksNames = chunks.map((item) => item.name).join('~');
+          //   return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
           // },
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `${packageName.replace('@', '')}`;
+          },
         },
+        // Split code common to all chunks to its own chunk
+        commons: {
+          name: "commons",    // The name of the chunk containing all common code
+          chunks: "initial",
+          minChunks: 2        // This is the number of modules
+        }
       },
     },
     // plugins: [

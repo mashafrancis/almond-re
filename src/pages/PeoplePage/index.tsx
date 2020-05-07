@@ -10,15 +10,14 @@ import {
 import { connect } from 'react-redux';
 
 // component
-import ActionButton from '@components/ActionButton';
-import DashboardCard from '@components/DashboardCard';
 import Modal from '@components/Modal';
 import Table from '@components/Table';
 import { createStyles, TextField, Theme } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import FaceIcon from '@material-ui/icons/Face';
-import MaterialIcon from '@material/react-material-icon';
+import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 
 // thunks
 import { getAllPeople, updatePerson } from '@modules/people';
@@ -33,6 +32,27 @@ import {
   PeoplePageProps,
   PeoplePageState
 } from './interfaces';
+import Chip from "@material-ui/core/Chip";
+import GeneralCardInfo from "@components/GeneralInfoCard";
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  focused: {},
+  listItemPadding: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  selectHeight: {
+    height: '1.25em',
+  },
+  labelColor: {
+    '&$focused': {
+      color: `rgba(${25},${103},${210},${0.87})`,
+    },
+  },
+  font: {
+    fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
+  },
+}));
 
 export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
   const [state, setState] = React.useState<PeoplePageState>({
@@ -43,6 +63,8 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     roleId: '',
     userId: '',
   });
+
+  const styles = useStyles(props);
 
   React.useEffect(() => {
     const getAllPeople = async () => {
@@ -56,6 +78,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
   },              []);
 
   const toggleRoleSelectOpen = (event) => {
+    event.persist();
     setState({
       ...state,
       isSelectOpen: !state.isSelectOpen,
@@ -73,7 +96,13 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     event.preventDefault();
     const { roleId, userId } = state;
 
-    props.updatePerson(userId, { role: roleId }).then(toggleRoleSelectOpen);
+    props.updatePerson(userId, { role: roleId }).then(() =>
+      setState({
+        ...state,
+        isSelectOpen: !state.isSelectOpen,
+        userId: '',
+      })
+    );
   };
 
   const userNamePhoto = user => (
@@ -86,27 +115,6 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
       <span>{user[1].name || 'Anonymous'}</span>
     </span>
   );
-
-  const useStyles = makeStyles((theme: Theme) => createStyles({
-    focused: {},
-    listItemPadding: {
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-    selectHeight: {
-      height: '1.25em',
-    },
-    labelColor: {
-      '&$focused': {
-        color: `rgba(${25},${103},${210},${0.87})`,
-      },
-    },
-    font: {
-      fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
-    },
-  }));
-
-  const styles = useStyles(props);
 
   const selectRoleContent = roles => (
     <React.Fragment>
@@ -160,12 +168,10 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
   const rolesSelectMore = (role, id) => {
     return (
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
-      <h5 id={id}>{role}</h5>
-      <MaterialIcon
+      <h6 id={id}>{role}</h6>
+      <ArrowDropDownRoundedIcon
         id={id}
         onClick={toggleRoleSelectOpen}
-        hasRipple icon="more_horiz"
-        initRipple={null}
       />
     </div>
     );
@@ -173,15 +179,20 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
 
   const TableContent = (users) => {
     const tableHeaders = {
-      Name: { valueKey: 'name', colWidth: '50' },
+      Name: { valueKey: 'name', colWidth: '40' },
+      Devices: { valueKey: 'devices' },
       Role: { valueKey: 'role' },
       Status: { valueKey: 'status' },
     };
 
     const tableValues = users.map(user => ({
+      id: user[1]._id,
       name: userNamePhoto(user),
-      role: rolesSelectMore(user[1].currentRole.title, user[1]._id),
-      status: user[1]._id,
+      devices: user[1].devices[0].id,
+      role: rolesSelectMore(user[1].currentRole?.title, user[1]._id),
+      status: user[1].isVerified
+        ? <Chip className="MuiChip-root-enabled" label="Active" />
+        : <Chip className="MuiChip-root-unverified" label="Inactive" />
     }));
 
     return (
@@ -196,23 +207,14 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     <Grid>
       <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes=""
-            heading="People"
-            actionItem={
-              <ActionButton
-                name="Filter"
-                icon="filter_list"
-              />
-            }
-            body={
-              <React.Fragment>
-                <div className="user-roles-page__table">
-                  { TableContent(Object.entries(props.people)) }
-                </div>
-              </React.Fragment>
-            }
+          <GeneralCardInfo
+            mainHeader="People"
+            subHeader="List of all users under Almond"
+            icon={<PeopleAltOutlinedIcon className="content-icon general-info-icon" />}
           />
+          <div className="user-roles-page__table">
+            { TableContent(Object.entries(props.people)) }
+          </div>
           {SelectRoleModal(props.roles)}
         </Cell>
       </Row>

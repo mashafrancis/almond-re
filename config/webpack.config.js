@@ -1,5 +1,5 @@
 const path = require('path');
-const {materialImporter} = require('./webpack.util');
+const {importer} = require('./webpack.util');
 const {
   definePlugin,
   cleanWebpack,
@@ -8,9 +8,9 @@ const {
   miniCssExtractPlugin,
   hashedPlugin,
   manifestPlugin,
-  workBoxPlugin,
   copyPlugin,
-  contextReplacementPlugin
+  contextReplacementPlugin,
+  bundleAnalyzerPlugin
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
@@ -32,12 +32,12 @@ module.exports = {
     // `publicPath` is where Webpack will load your bundles from (optional)
     publicPath: '/'
   },
-  // optimization: {
-  //   noEmitOnErrors: true,
-  //   splitChunks: {
-  //     chunks: "all",
-  //   }
-  // },
+  optimization: {
+    noEmitOnErrors: true,
+    splitChunks: {
+      chunks: "all",
+    }
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
@@ -46,7 +46,8 @@ module.exports = {
       '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
       '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
       '@utils': path.resolve(__dirname, '..', 'src/utils'),
-      '@atomic': path.resolve(__dirname, '..', 'src/atomic')
+      '@atomic': path.resolve(__dirname, '..', 'src/atomic'),
+      '@context': path.resolve(__dirname, '..', 'src/context'),
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
@@ -54,31 +55,9 @@ module.exports = {
     rules: [
       {
         test: /\.(woff(2)?|ttf|eot|svg|png|jpg|jpeg|gif)$/,
-        use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              },
-              optipng: {
-                enabled: !isDevMode
-              },
-              pngquant: {
-                quality: [0.65, 0.90],
-                speed: 4
-              },
-              gifsicle: {
-                interlaced: false
-              },
-              webp: {
-                quality: 75
-              }
-            }
-          }
-        ]
+        use: {
+          loader: 'file-loader'
+        },
       },
       {
         test: /\.(scss|css)$/,
@@ -102,12 +81,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              importer: materialImporter,
-              // Prefer Dart Sass
-              implementation: require('sass'),
-              sassOptions: {
-                includePaths: ['./node_modules']
-              },
+              importer
             }
           },
         ]
@@ -137,7 +111,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'source-map-loader',
         exclude: [
-          /node_modules\/@material/
+          /node_modules\/@material/,
+          /src\/atomic/
         ],
       },
     ]
@@ -149,8 +124,8 @@ module.exports = {
     cleanWebpack,
     miniCssExtract,
     manifestPlugin,
-    // workBoxPlugin,
     copyPlugin,
-    contextReplacementPlugin
+    contextReplacementPlugin,
+    bundleAnalyzerPlugin
   ]
 };

@@ -7,7 +7,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const PUBLIC_PATH = process.env.PUBLIC_URL;
 
@@ -57,7 +57,6 @@ const definePlugin = new webpack.DefinePlugin({
   'process.env.REDIRECT_DEVICE_URL': JSON.stringify(process.env.REGISTER_DEVICE_URL),
 });
 
-
 // instantiating webpack dependencies
 const cleanWebpack = new CleanWebpackPlugin();
 const htmlWebpack = new htmlWebpackPlugin({
@@ -80,8 +79,9 @@ const htmlWebpack = new htmlWebpackPlugin({
   },
 });
 const miniCssExtract = new miniCssExtractPlugin({
-  filename: '[name].[hash].css',
-  chunkFilename: '[scheduleId].[hash].css',
+  filename: '[name].[contenthash].css',
+  chunkFilename: '[id].[contenthash].css',
+  ignoreOrder: true  // Enabled to remove warnings about conflicting order
 });
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const hashedPlugin = new webpack.HashedModuleIdsPlugin();
@@ -93,14 +93,12 @@ const copyPlugin = new CopyWebpackPlugin([
   { from: 'public' }, // define the path of the files to be copied
 ]);
 
+const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
+  openAnalyzer: false
+})
+
 const contextReplacementPlugin = new webpack.ContextReplacementPlugin(
   /\.\/locale$/,'empty-module', false, /js$/)
-
-const workBoxPlugin = new WorkboxPlugin.GenerateSW({
-  swDest: 'sWorker.js',
-  include: [/\.html$/, /\.js$/, /\.css$/],
-  exclude: ['/node_modules']
-});
 
 module.exports = {
   cleanWebpack,
@@ -113,5 +111,5 @@ module.exports = {
   manifestPlugin,
   copyPlugin,
   contextReplacementPlugin,
-  workBoxPlugin,
+  bundleAnalyzerPlugin,
 };

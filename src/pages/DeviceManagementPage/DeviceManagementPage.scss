@@ -29,3 +29,15 @@
 //  padding-left: 8px !important;
 //  padding-right: 8px !important;
 //}
+
+.device-image {
+  background-image: url("../../assets/images/device.svg");
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin-top: 20px;
+  width: 100%;
+
+  @media (max-width: 539px) {
+    display: none;
+  }
+}

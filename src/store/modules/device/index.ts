@@ -303,7 +303,9 @@ export const activateDevice = id => (dispatch, getState, http) => {
 
 export const getAllDevices = () => (dispatch, getState, http) => {
   dispatch(getDevicesRequest());
-  return http.get('devices')
+  const abortController = new AbortController();
+  const signal = abortController.signal;
+  return http.get('devices', { signal: signal })
     .then((response) => {
       dispatch(getDevicesSuccess(response.data.data));
     })

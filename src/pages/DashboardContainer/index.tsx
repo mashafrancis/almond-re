@@ -98,7 +98,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   },              []);
 
   React.useEffect(() => {
-    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') || '{}');
+    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
     if (selectedIndex) {
       setState({ ...state, selectedIndex });
     } else {

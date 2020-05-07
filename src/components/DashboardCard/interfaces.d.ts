@@ -1,5 +1,5 @@
 export interface DashboardCardProps {
-  heading: string;
+  heading?: string;
   body: any;
   redirect?: (cardId: string) => void;
   actionItem?: any;

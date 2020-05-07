@@ -39,7 +39,9 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
               You are currently not authorised to access Almond.
               Please contact almond.froyo@gmail.com for more details
             </p>
-            <Button isActive name="OK" onClick={this.logoutAndRedirectUser} />
+            <button className="mdc-button mdc-button--raised" onClick={this.logoutAndRedirectUser}>
+              <span className="mdc-button__label">OK</span>
+            </button>
           </div>
         )}
       />
