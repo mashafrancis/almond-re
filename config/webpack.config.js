@@ -9,8 +9,7 @@ const {
   hashedPlugin,
   manifestPlugin,
   copyPlugin,
-  contextReplacementPlugin,
-  bundleAnalyzerPlugin
+  contextReplacementPlugin
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
@@ -125,7 +124,6 @@ module.exports = {
     miniCssExtract,
     manifestPlugin,
     copyPlugin,
-    contextReplacementPlugin,
-    bundleAnalyzerPlugin
+    contextReplacementPlugin
   ]
 };

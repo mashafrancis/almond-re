@@ -7,7 +7,6 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const PUBLIC_PATH = process.env.PUBLIC_URL;
 
@@ -93,9 +92,9 @@ const copyPlugin = new CopyWebpackPlugin([
   { from: 'public' }, // define the path of the files to be copied
 ]);
 
-const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
-  openAnalyzer: false
-})
+// const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
+//   openAnalyzer: false
+// })
 
 const contextReplacementPlugin = new webpack.ContextReplacementPlugin(
   /\.\/locale$/,'empty-module', false, /js$/)
@@ -111,5 +110,4 @@ module.exports = {
   manifestPlugin,
   copyPlugin,
   contextReplacementPlugin,
-  bundleAnalyzerPlugin,
 };
