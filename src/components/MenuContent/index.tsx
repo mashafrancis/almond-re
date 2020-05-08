@@ -17,8 +17,9 @@ import MaterialIcon from '@material/react-material-icon';
 
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
-import { MenuContext, UserContext } from '@utils/context';
+import { UserContext } from '@utils/context';
 import { useViewport } from '../../hooks';
+import { MenuContext } from "@context/MenuContext";
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -59,7 +60,7 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
   );
 };
 
-const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser, checkIsAdmin) => (
+const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin) => (
   <React.Fragment>
     <ListGroup>
       {(viewPort < 539) && <ListDivider tag="div" />}
@@ -89,10 +90,6 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser, che
             )
           )
         }
-        <ListItem onClick={logoutUser} className="mdc-list-item--logout">
-          <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon="exit_to_app"/>} />
-          <ListItemText primaryText="Logout"/>
-        </ListItem>
       </List>
     </ListGroup>
     <footer className="drawer-footer">
@@ -110,10 +107,11 @@ export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) =>
   const { width } = useViewport();
   const breakpoint = 539;
 
-  const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser } = menu;
+  const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex } = menu;
   const { isAdmin } = user;
 
   const checkIsAdmin = () => isAdmin ? AdminMenus : UserMenus;
+  const { name, photo } = props;
 
   return (
     <Drawer
@@ -121,9 +119,9 @@ export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) =>
       open={isMenuOpen}
       onClose={() => setOpen(false)}
     >
-      {mobileDrawerHeader(setOpen, props.name, props.photo)}
+      {mobileDrawerHeader(setOpen, name, photo)}
       <DrawerContent>
-        {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser, checkIsAdmin)}
+        {drawerContent(selectedIndex, setSelectedIndex, setOpen, checkIsAdmin)}
       </DrawerContent>
     </Drawer>
   );

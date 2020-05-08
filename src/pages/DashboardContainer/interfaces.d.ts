@@ -27,11 +27,9 @@ export interface DashboardContainerProps {
 
 export interface DashboardContainerState {
   isOpen: boolean;
-  isMenuOpen: boolean;
   isLoading: boolean;
   isFeedbackMenuOpen: boolean;
   isFeedbackModal: boolean;
-  isSelectDeviceModalOpen: boolean;
   device: string;
   activeDevice: {
     id: string;
@@ -39,10 +37,6 @@ export interface DashboardContainerState {
   };
   action: string;
   feedback: '';
-  selectedIndex: {
-    group: number;
-    item: number
-  };
   fields: {
     [key: string]: string | number
   };

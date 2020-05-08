@@ -16,6 +16,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import PhonelinkSetupSharpIcon from '@material-ui/icons/PhonelinkSetupSharp';
+import Pagination from '@material-ui/lab/Pagination';
 
 // thunks
 import {
@@ -37,6 +38,31 @@ import {
 import CardInfo from "@components/CardInfo";
 import FaceIcon from "@material-ui/icons/Face";
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& input:valid + fieldset': {
+        borderColor: '#1967d2',
+      },
+      '& input:valid:focus + fieldset': {
+        borderLeftWidth: 6,
+        borderColor: '#1967d2',
+        padding: '4px !important', // override inline-style
+      },
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    bottom: {
+      position: 'fixed',
+      bottom: 0,
+      right: 0,
+    },
+  })
+);
+
 export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps> = (props) => {
   const [state, setState] = React.useState<DeviceManagementState>({
     isEditMode: false,
@@ -56,30 +82,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     getDevices().then(() => setState({ ...state, devices: props.devices }));
   },              [props.activeDevice]);
 
-  const useStyles = makeStyles((theme: Theme) =>
-     createStyles({
-       root: {
-         display: 'flex',
-         flexWrap: 'wrap',
-         '& input:valid + fieldset': {
-           borderColor: '#1967d2',
-         },
-         '& input:valid:focus + fieldset': {
-           borderLeftWidth: 6,
-           borderColor: '#1967d2',
-           padding: '4px !important', // override inline-style
-         },
-       },
-       margin: {
-         margin: theme.spacing(1),
-       },
-       bottom: {
-         position: 'fixed',
-         bottom: 0,
-         right: 0,
-       },
-     })
-  );
+  const classes = useStyles(props);
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, selectedDevice: e.target.value });
@@ -187,7 +190,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 
   const TableContent = (devices) => {
     const tableHeaders = {
-      DeviceID: { valueKey: 'deviceId', colWidth: '20' },
+      DeviceID: { valueKey: 'deviceId', colWidth: '25' },
       User: { valueKey: 'user', colWidth: '25' },
       Status: { valueKey: 'status', colWidth: '25' },
       Actions: { valueKey: 'actions' },
@@ -211,7 +214,6 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 
   const RenderDeviceForm = () => {
     const { isEditMode, selectedDevice, deviceToEdit } = state;
-    const classes = useStyles(props);
 
     return (
       <React.Fragment>
@@ -273,6 +275,9 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
           />
           <div className="user-roles-page__table">
             { TableContent(Object.entries(props.devices)) }
+            {/*<div className={classes.root}>*/}
+            {/*  <Pagination count={5} color="primary" />*/}
+            {/*</div>*/}
           </div>
           {AddEditDeviceModal()}
           {DeleteDeviceModal()}

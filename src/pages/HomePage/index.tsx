@@ -16,6 +16,7 @@ import { authService } from '@utils/auth';
 
 // styles
 import './HomePage.scss';
+import Logo from "@components/Logo";
 
 const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
   const user = React.useContext(UserContext);
@@ -45,8 +46,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     <div className="background-cover">
       <main className="home-cover">
         <section className="logo">
-          <img src="https://res.cloudinary.com/almondgreen/image/upload/v1569118232/Almond/logo1_ifvhvk.png"
-               alt="Logo"/>
+          <Logo />
         </section>
         <section className="home-image">
           <div className="image-wrapper">

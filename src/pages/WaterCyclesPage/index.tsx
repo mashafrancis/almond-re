@@ -27,6 +27,9 @@ import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
 import { MenuContext, UserContext } from '@utils/context';
 import OpacityIcon from '@material-ui/icons/Opacity';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
+import FaceIcon from "@material-ui/icons/Face";
+import CardInfo from "@components/CardInfo";
+import GeneralCardInfo from "@components/GeneralInfoCard";
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -50,9 +53,7 @@ import {
 
 // fixtures
 import { activityLogs } from './fixtures';
-import FaceIcon from "@material-ui/icons/Face";
-import CardInfo from "@components/CardInfo";
-import GeneralCardInfo from "@components/GeneralInfoCard";
+import {AreaChartDisplay, DoughnutChartDisplay} from "@components/Charts";
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -274,24 +275,24 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     );
   };
 
-  const ActivityLogs = () => {
-    return (
-      <React.Fragment>
-      {
-        activityLogs.map((logs, index) => {
-          return (
-            <ActivityLogCard
-              key={index}
-              log={logs.message}
-              date={logs.date}
-              type={logs.type}
-            />
-          );
-        })
-      }
-      </React.Fragment>
-    );
-  };
+  // const ActivityLogs = () => {
+  //   return (
+  //     <React.Fragment>
+  //     {
+  //       activityLogs.map((logs, index) => {
+  //         return (
+  //           <ActivityLogCard
+  //             key={index}
+  //             log={logs.message}
+  //             date={logs.date}
+  //             type={logs.type}
+  //           />
+  //         );
+  //       })
+  //     }
+  //     </React.Fragment>
+  //   );
+  // };
 
   const RenderTimeScheduleForm = () => {
     const {
@@ -349,7 +350,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         </Cell>
       </Row>
       <Row>
-        <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
+        <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
           <GeneralCardInfo
             mainHeader="Manual Override"
             subHeader="Pump water directly into the system"
@@ -369,25 +370,33 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             buttonName="Add schedule"
             onClick={showScheduleModal('Add')}
           />
-          {(props.schedules.length > 0)
-            ? TableContent(Object.entries(props.schedules))
-            : BlankContent(
-              'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
-            )}
+          <DashboardCard
+            classes="recent-activities-available"
+            heading="Water Schedules"
+            body={
+              (props.schedules.length > 0)
+                ? TableContent(Object.entries(props.schedules))
+                : BlankContent(
+                'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
+                )
+            }
+          />
           {AddEditScheduleModal()}
           {DeleteScheduleModal()}
         </Cell>
-        <Cell columns={5} desktopColumns={5} tabletColumns={8} phoneColumns={4}>
+        <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
               classes="recent-activities-available"
-              heading="Recent Activity"
-              body={activityLogs.length
-                ? ActivityLogs()
-                : BlankContent(
-                  'There are no logs available currently.'
-                )}
-              actionItem={<ActionButton name="Clear logs" icon="delete_outline" />}
-            />
+              heading="Water Temperature"
+              body={<AreaChartDisplay />}
+              actionItem={<ActionButton name="Filter" icon="filter_list" />}
+          />
+          <DashboardCard
+            classes="recent-activities-available"
+            heading="Water Tank Level"
+            body={<DoughnutChartDisplay />}
+            // actionItem={<ActionButton name="Refresh" icon="update" />}
+          />
         </Cell>
       </Row>
     </Grid>
