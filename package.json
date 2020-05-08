@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "webpack-dev-server --config config/webpack.dev.js --mode development --host froyo.almond.com",
     "start:prod": "node server.js",
-    "start": "node server.js",
+    "start": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "start:heroku": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "build": "webpack --config config/webpack.prod.js --mode production",
     "workbox:inject": "workbox injectManifest workbox-config.js",
