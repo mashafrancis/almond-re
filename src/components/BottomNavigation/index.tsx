@@ -7,7 +7,8 @@ import { AdminBottomNavigationMenus, BottomNavigationMenus } from '@components/M
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { makeStyles } from '@material-ui/core/styles';
-import { MenuContext, UserContext } from '@utils/context';
+import { UserContext } from '@utils/context';
+import { MenuContext } from "@context/MenuContext";
 
 // styles
 import './BottomNavigation.scss';

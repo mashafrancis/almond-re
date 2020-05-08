@@ -1,0 +1,30 @@
+.main-logo {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  height: 100px;
+
+  &__image {
+    background-size: 36px 36px;
+    border-radius: 50%;
+    //min-width: 36px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    margin-top: 10px;
+    width: auto;
+    height: 70px;
+
+    h4 {
+      font: 500 26px/28px 'Google Sans',Roboto,Helvetica Neue,sans-serif;
+      margin-left: 6px;
+      color: rgba(0, 0, 0, 0.8);
+      @media (max-width: 539px) {
+        //display: none;
+      }
+    }
+  }
+}

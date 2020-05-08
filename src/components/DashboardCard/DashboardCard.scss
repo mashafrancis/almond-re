@@ -1,6 +1,6 @@
 .mdc-card {
-  background-color: #f9f9f9;
-  //margin-top: 20px;
+  //background-color: #f9f9f9;
+  margin-bottom: 10px;
 }
 
 .dashboard-card {
@@ -47,6 +47,12 @@
       display: flex;
       width: auto;
       margin-right: 20px;
+    }
+  }
+  @media (max-width: 539px) {
+    .tbl-header, .tbl-row {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
     }
   }
 }

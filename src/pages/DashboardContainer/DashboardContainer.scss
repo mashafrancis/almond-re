@@ -28,6 +28,14 @@ body, html {
   font-weight: 400;
 }
 
+.photo-menu {
+  top: 40px !important;
+}
+
+.activity-logs-drawer {
+  margin: 10px 8px;
+}
+
 .dashboard {
   display: flex;
   flex-direction: row;
@@ -56,6 +64,7 @@ body, html {
 
     &__navigation-icon {
       color: rgba(0, 0, 0, 0.87) !important;
+      margin-right: 10px !important;
     }
   }
 
@@ -125,7 +134,7 @@ body, html {
   }
 
   .mdc-top-app-bar--fixed-adjust {
-    padding: 64px 10px 20px;
+    padding: 64px 10px 30px;
     width: -webkit-fill-available;
     margin-bottom: 20px;
     overflow-y: auto;
@@ -256,6 +265,7 @@ body, html {
 
       &__navigation-icon {
         color: rgba(0, 0, 0, 0.87) !important;
+        margin-right: 2px;
       }
     }
 

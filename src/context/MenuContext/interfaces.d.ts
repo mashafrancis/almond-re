@@ -12,4 +12,5 @@ export interface MenuContextState {
     item: number
   };
   isSelectDeviceModalOpen: boolean;
+  isActivityDrawerOpen: boolean;
 }

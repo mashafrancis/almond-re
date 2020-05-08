@@ -26,10 +26,11 @@ import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // context
 import { UserContext } from '@utils/context';
+import { ViewportProvider } from "@context/ViewportContext";
+import { MenuProvider } from "@context/MenuContext";
 
 // styles
 import './App.scss';
-import {ViewportProvider} from "@context/ViewportContext";
 
 export class App extends React.Component<AppProps, AppState> {
   state = {
@@ -93,20 +94,22 @@ export class App extends React.Component<AppProps, AppState> {
           isAdmin,
         }}
       >
-        <ViewportProvider>
-          <ErrorBoundary>
-            <React.Fragment>
-              <SnackBar/>
-              <>
-                {
-                  location.pathname !== '/'
-                  && isUserAuthenticated
-                }
-                {<Routes/>}
-              </>
-            </React.Fragment>
-          </ErrorBoundary>
-        </ViewportProvider>
+        <MenuProvider>
+          <ViewportProvider>
+            <ErrorBoundary>
+              <React.Fragment>
+                <SnackBar/>
+                <>
+                  {
+                    location.pathname !== '/'
+                    && isUserAuthenticated
+                  }
+                  {<Routes/>}
+                </>
+              </React.Fragment>
+            </ErrorBoundary>
+          </ViewportProvider>
+        </MenuProvider>
       </UserContext.Provider>
     );
   }
