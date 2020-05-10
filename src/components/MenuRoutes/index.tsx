@@ -44,7 +44,7 @@ export const UserMenus: MenuComponentProps[][] = [
     },
     {
       icon: 'local_florist',
-      primaryText: 'Maintenance Schedule',
+      primaryText: 'Support',
       component: DeviceManagementPage,
     },
   ],

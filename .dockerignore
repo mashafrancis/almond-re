@@ -2,3 +2,10 @@ node_modules
 tests/
 docker/docker-heroku/
 docker/
+
+.circleci/
+.git/
+.env
+.env.example
+.gitignore
+README.md

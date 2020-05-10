@@ -103,6 +103,7 @@
     "moment": "^2.25.1",
     "moment-timezone": "^0.5.28",
     "moxios": "^0.4.0",
+    "mqtt-react-hooks": "^1.2.0",
     "node-fetch": "^2.6.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.7.2",

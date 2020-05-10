@@ -142,3 +142,39 @@
     }
   }
 }
+
+.charts {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  font-weight: 300;
+  grid-column: 1/5;
+
+  &__donut-chart-card {
+    width: 30%;
+    height: rem(267px);
+    margin-right: rem(29px);
+
+    &__content {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+
+  &__bar-chart-card {
+    width: 70%;
+    height: 36.5rem;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__date-range {
+      position: absolute;
+      top: 26.5rem;
+      right: 1.625rem;
+      box-shadow: rem(1px) rem(1px) rem(81px) rgba(41, 60, 74, 0.18);
+    }
+  }
+}
