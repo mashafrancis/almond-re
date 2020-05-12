@@ -74,15 +74,6 @@ self.addEventListener('fetch', (event) => {
         });
     })
   );
-  event.respondWith(
-    fetch(event.request)
-      .catch(() => {
-        return caches.open(CACHE_NAME)
-          .then((cache) => {
-            return cache.match('offline.html');
-          });
-      })
-  );
 });
 
 // if (workbox) {

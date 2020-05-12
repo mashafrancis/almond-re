@@ -1,7 +1,7 @@
 export interface CardInfoProps {
   mainHeader: string;
   subHeader?: string;
-  buttonName: string;
+  buttonName?: string;
   onClick?: any;
   icon?: any;
 }

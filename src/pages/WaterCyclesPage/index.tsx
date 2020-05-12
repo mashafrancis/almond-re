@@ -50,10 +50,8 @@ import {
   WaterCyclesPageProps,
   WaterCyclesPageState
 } from './interfaces';
-
-// fixtures
-import { activityLogs } from './fixtures';
-import {AreaChartDisplay, DoughnutChartDisplay} from "@components/Charts";
+import {DonutDisplay} from "@components/DonutDisplay";
+import {AreaChardDisplay} from "@components/AreaChartDisplay";
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -111,6 +109,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   // },              [state.scheduleToEdit]);
 
   const areEqual = (prevProps, nextProps) => (prevProps.isChecked === nextProps.isChecked);
+
+  const waterLevel = 32;
+  const heightOfTank = 100; // units in centimeters
+  const heightOfWater = ((heightOfTank - waterLevel)/heightOfTank) * 100
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
@@ -275,25 +277,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     );
   };
 
-  // const ActivityLogs = () => {
-  //   return (
-  //     <React.Fragment>
-  //     {
-  //       activityLogs.map((logs, index) => {
-  //         return (
-  //           <ActivityLogCard
-  //             key={index}
-  //             log={logs.message}
-  //             date={logs.date}
-  //             type={logs.type}
-  //           />
-  //         );
-  //       })
-  //     }
-  //     </React.Fragment>
-  //   );
-  // };
-
   const RenderTimeScheduleForm = () => {
     const {
       isEditMode,
@@ -388,13 +371,27 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           <DashboardCard
               classes="recent-activities-available"
               heading="Water Temperature"
-              body={<AreaChartDisplay />}
+              body={
+                <AreaChardDisplay
+                  backgroundColor={'rgba(25, 103, 210, 0.2)'}
+                  chartColor={'#1967D2'}
+                  chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
+                />
+              }
               actionItem={<ActionButton name="Filter" icon="filter_list" />}
           />
           <DashboardCard
-            classes="recent-activities-available"
+            classes="recent-activities-available "
             heading="Water Tank Level"
-            body={<DoughnutChartDisplay />}
+            body={
+              <DonutDisplay
+                backgroundColor={['#CCCCCC', '#36A2EB']}
+                hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
+                data={[waterLevel, (heightOfTank - waterLevel)]}
+                donutInfo={heightOfWater}
+                halfDonut={false}
+              />
+            }
             // actionItem={<ActionButton name="Refresh" icon="update" />}
           />
         </Cell>

@@ -47,6 +47,7 @@ export class App extends React.Component<AppProps, AppState> {
       try {
         await this.props.getUserDetails();
         this.setState({ isFetchingUserDetails: false });
+        this.setState({ isAdmin: !checkUserRole(this.props.user?.currentRole?.title, 'User') });
 
       } catch {
         this.setState({
@@ -61,8 +62,6 @@ export class App extends React.Component<AppProps, AppState> {
       authService.saveToken(socialToken);
       window.location.replace(process.env.PUBLIC_URL ?? 'http://froyo.almond.com:3000/');
     }
-
-    this.setState({ isAdmin: !checkUserRole(this.props.user?.currentRole?.title, 'User') });
   }
 
   render() {
