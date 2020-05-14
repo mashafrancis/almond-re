@@ -10,9 +10,13 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
+import MoodIcon from '@material-ui/icons/Mood';
+import GrainIcon from '@material-ui/icons/Grain';
+import CardInfo from "@components/CardInfo";
+import FaceIcon from "@material-ui/icons/Face";
+
 
 // components
-import ActionButton from '@components/ActionButton';
 import FormField from '@components/FormField';
 import Modal from '@components/Modal';
 import PermissionAccess from '@components/PermissionAccess';
@@ -45,8 +49,6 @@ import {
   ResourceAccessLevel,
   UserRole
 } from "@modules/userRoles/interfaces";
-import CardInfo from "@components/CardInfo";
-import FaceIcon from "@material-ui/icons/Face";
 
 export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props) => {
   const [state, setState] = React.useState<UserRolesPageState>({
@@ -285,7 +287,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           id="title"
           labelText="Role Name"
           type="text"
-          leadingIcon={<MaterialIcon role="button" icon="mood" initRipple={null}/>}
+          leadingIcon={<MoodIcon />}
           aria-describedby="title-helper-text"
           required
           validator={validateTitleDescription}
@@ -298,7 +300,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           id="description"
           labelText="Role Description"
           type="text"
-          leadingIcon={<MaterialIcon role="button" icon="grain" initRipple={null}/>}
+          leadingIcon={<GrainIcon/>}
           aria-describedby="description-helper-text"
           required
           validator={validateTitleDescription}

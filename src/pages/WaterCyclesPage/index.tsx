@@ -11,7 +11,6 @@ import MaterialIcon from '@material/react-material-icon';
 import Switch from '@material/react-switch';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 // components
 import ActionButton from '@components/ActionButton';
@@ -24,12 +23,15 @@ import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
-import { MenuContext, UserContext } from '@utils/context';
+import { UserContext } from '@utils/context';
 import OpacityIcon from '@material-ui/icons/Opacity';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 import FaceIcon from "@material-ui/icons/Face";
 import CardInfo from "@components/CardInfo";
 import GeneralCardInfo from "@components/GeneralInfoCard";
+import { DonutDisplay } from "@components/DonutDisplay";
+import { AreaChardDisplay } from "@components/AreaChartDisplay";
+import { MenuContext } from "@context/MenuContext";
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -50,8 +52,6 @@ import {
   WaterCyclesPageProps,
   WaterCyclesPageState
 } from './interfaces';
-import {DonutDisplay} from "@components/DonutDisplay";
-import {AreaChardDisplay} from "@components/AreaChartDisplay";
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -318,12 +318,13 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     );
   };
 
+  // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
     <Grid>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">
-            <div className="device-header-container" onClick={() => menu.setDeviceModalOpen(true)}>
+            <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null,true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
                 <MaterialIcon hasRipple icon="arrow_drop_down" initRipple={null}/>
@@ -369,6 +370,20 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
         </Cell>
         <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
+            classes="recent-activities-available "
+            heading="Water Tank Level"
+            body={
+              <DonutDisplay
+                backgroundColor={['#CCCCCC', '#36A2EB']}
+                hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
+                data={[waterLevel, (heightOfTank - waterLevel)]}
+                donutInfo={`${heightOfWater}%`}
+                halfDonut={false}
+              />
+            }
+            // actionItem={<ActionButton name="Refresh" icon="update" />}
+          />
+          <DashboardCard
               classes="recent-activities-available"
               heading="Water Temperature"
               body={
@@ -379,20 +394,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                 />
               }
               actionItem={<ActionButton name="Filter" icon="filter_list" />}
-          />
-          <DashboardCard
-            classes="recent-activities-available "
-            heading="Water Tank Level"
-            body={
-              <DonutDisplay
-                backgroundColor={['#CCCCCC', '#36A2EB']}
-                hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
-                data={[waterLevel, (heightOfTank - waterLevel)]}
-                donutInfo={heightOfWater}
-                halfDonut={false}
-              />
-            }
-            // actionItem={<ActionButton name="Refresh" icon="update" />}
           />
         </Cell>
       </Row>

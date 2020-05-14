@@ -85,3 +85,4 @@ dist/
 .idea/dictionaries/masha.xml
 /.env
 /.firebase/
+/.env.production

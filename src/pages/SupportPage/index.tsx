@@ -3,15 +3,15 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import SettingsIcon from '@material-ui/icons/Settings';
 import {displaySnackMessage} from "@modules/snack";
 import {connect} from "react-redux";
 import GeneralCardInfo from "@components/GeneralInfoCard";
+import SpaIcon from '@material-ui/icons/Spa';
 
 // interfaces
-import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
+import {SupportPageProps} from "@pages/SupportPage/interfaces";
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) => {
+export const SupportPage: React.FunctionComponent<SupportPageProps> = (props) => {
   return (
     <React.Fragment>
       <Grid>
@@ -19,15 +19,15 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) 
           <Cell columns={7} desktopColumns={7} tabletColumns={8}
                 phoneColumns={4}>
             {(window.innerWidth < 539) &&
-            <div className="main-subheader"><h3>Settings</h3></div>}
+            <div className="main-subheader"><h3>Help</h3></div>}
           </Cell>
         </Row>
         <Row>
           <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
             <GeneralCardInfo
-              mainHeader="Settings"
-              subHeader="Adjust your preferences for better experience"
-              icon={<SettingsIcon className="content-icon general-info-icon" />}
+              mainHeader="Support"
+              subHeader="Need help? Ask for support from our maintenance team"
+              icon={<SpaIcon className="content-icon general-info-icon" />}
             />
           </Cell>
         </Row>
@@ -44,4 +44,4 @@ export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SupportPage);

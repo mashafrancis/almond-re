@@ -20,5 +20,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root') || document.createElement('div')
 );
-
-// serviceWorker.register();

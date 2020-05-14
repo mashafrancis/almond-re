@@ -20,6 +20,7 @@ export interface GetUserDetailsActionSuccess {
 export interface GetUserDetailsActionFailure {
   type: GET_USER_DETAILS_FAILURE;
   errors: any;
+  isFetchingUserDetails: boolean;
 }
 
 export interface EditUserDetailsSuccess {
@@ -39,7 +40,7 @@ export interface UserDetails {
   activeDevice: Device;
   roles: UserRole[];
   permissions?: FormattedPermissions;
-  currentRole?: UserRole;
+  currentRole: UserRole;
 }
 
 export interface Device {

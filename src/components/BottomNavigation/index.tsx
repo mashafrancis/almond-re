@@ -31,8 +31,9 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
   // @ts-ignore
   const classes = useStyles();
   const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
-  const [value, setValue] = React.useState(selectedIndex === null || undefined || false ? 0 : selectedIndex.item);
+  const [value, setValue] = React.useState(selectedIndex.item ?? 0);
 
+  // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
     <BottomNavigation
       value={value}
@@ -46,7 +47,7 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
         checkIsAdmin().map((menu, index) => (
           <BottomNavigationAction
             key={index}
-            onClick={() => setSelectedIndex({ group: 0, item: index })}
+            onClick={setSelectedIndex.bind(null,{ group: 0, item: index })}
             label={menu.label}
             icon={menu.icon}
           />

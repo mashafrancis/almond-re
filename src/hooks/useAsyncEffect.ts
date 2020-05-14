@@ -50,7 +50,7 @@ export const useAsyncEffect = (generator, deps = []) => {
         // 1. Unmount
         // 2. Dependency Array Change
         if (ignore) { return; }
-      } while (res.done === false);
+      } while (!res.done);
     };
     runGenerator();
 

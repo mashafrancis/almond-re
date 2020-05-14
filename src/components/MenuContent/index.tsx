@@ -79,7 +79,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin) =
                 >
                   <ListItemGraphic
                     className="drawer-icon"
-                    graphic={<MaterialIcon icon={item.icon}/>}
+                    graphic={item.icon}
                   />
                   <ListItemText tabIndex={0} primaryText={item.primaryText}/>
                 </ListItem>)

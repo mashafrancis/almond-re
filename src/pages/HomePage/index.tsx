@@ -13,6 +13,7 @@ import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
+import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
 // styles
 import './HomePage.scss';
@@ -20,16 +21,14 @@ import Logo from "@components/Logo";
 
 const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
   const user = React.useContext(UserContext);
-
-  const handleLogin = () => {
-    window.location.replace(process.env.SOCIAL_AUTH_URL ?? '');
-  };
+  const { devices } = user;
+  const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
   const renderGoToDashboard = () => (
     <React.Fragment>
       {authService.isAuthenticated()
       ?
-        <NavLink to={(user.devices.length === 0 || null || undefined) ? '/my-device' : '/dashboard'}>
+        <NavLink to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>

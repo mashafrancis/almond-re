@@ -3,14 +3,15 @@ import {
   MenuContextProps,
   MenuContextState
 } from "@context/MenuContext/interfaces";
+import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
 const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
 
 const MenuContext = React.createContext({
   isMenuOpen: false,
   selectedIndex: {
-    group: selectedIndex === null || undefined || false ? 0 : selectedIndex.group,
-    item: selectedIndex === null || undefined || false ? 0 : selectedIndex.item,
+    group: isArrayNotNull(selectedIndex) ? selectedIndex.group : 0,
+    item: isArrayNotNull(selectedIndex) ? selectedIndex.item : 0,
   },
   isSelectDeviceModalOpen: false,
   isActivityDrawerOpen: false,
@@ -40,24 +41,14 @@ const MenuProvider = ({ children }: MenuContextProps) => {
     setState({ ...state, selectedIndex });
     window.localStorage.setItem('selectedIndex', JSON.stringify(selectedIndex));
   };
-  const setDeviceModalOpen = (isModalOpen: boolean) => {
-    setState({
-      ...state,
-      isSelectDeviceModalOpen: isModalOpen,
-    });
-  };
+
+  const setDeviceModalOpen = (isModalOpen: boolean) => setState({ ...state, isSelectDeviceModalOpen: isModalOpen });
 
   const toggleActivityDrawer = (isActivityDrawerOpen: boolean) => setState({ ...state, isActivityDrawerOpen: isActivityDrawerOpen })
 
   const handleSelectDeviceModal = () => setState({ ...state, isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen });
 
-  const handleCloseDeviceModal = () => {
-    setState({
-      ...state,
-      isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen,
-      // device: '',
-    });
-  };
+  const handleCloseDeviceModal = () => setState({ ...state, isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen });
 
   const {
     selectedIndex,

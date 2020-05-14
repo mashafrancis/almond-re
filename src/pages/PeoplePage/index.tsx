@@ -59,7 +59,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     people: [],
     isFetchingRoles: false,
     isSelectOpen: false,
-    roleSelect: '',
+    roleSelect: 'User',
     roleId: '',
     userId: '',
   });
@@ -118,12 +118,12 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
 
   const selectRoleContent = roles => (
     <React.Fragment>
-      <h5>Change the role for the specific user.</h5>
+      {/*<h5>Change the role for the specific user.</h5>*/}
       <TextField
-        id="device"
+        id="role"
         select
         variant="outlined"
-        label="device"
+        label="Assign user role"
         fullWidth
         size="small"
         value={state.roleSelect}
@@ -156,7 +156,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
   const SelectRoleModal = roles => (
     <Modal
       isModalOpen={state.isSelectOpen}
-      renderHeader={() => 'Select user role'}
+      renderHeader={() => 'Assign new role to user'}
       renderContent={() => selectRoleContent(roles)}
       onClose={toggleRoleSelectOpen}
       submitButtonName="Update role"
@@ -188,7 +188,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     const tableValues = users.map(user => ({
       id: user[1]._id,
       name: userNamePhoto(user),
-      devices: user[1].devices[0].id,
+      devices: user[1]?.devices[0]?.id || '(Device not added)',
       role: rolesSelectMore(user[1].currentRole?.title, user[1]._id),
       status: user[1].isVerified
         ? <Chip className="MuiChip-root-enabled" label="Active" />

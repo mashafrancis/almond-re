@@ -7,12 +7,11 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
+import GeneralCardInfo from "@components/GeneralInfoCard";
+import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-
-// pages
-import DashboardContainer from '../DashboardContainer';
 
 // styles
 import './EnergyMonitoringPage.scss';
@@ -39,6 +38,15 @@ export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageP
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           {(window.innerWidth < 539) && <div className="main-subheader"><h3>EnergyMonitoring</h3></div>}
+        </Cell>
+      </Row>
+      <Row>
+        <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+          <GeneralCardInfo
+            mainHeader="Energy Monitoring"
+            subHeader="Power readings from the system and daily usage"
+            icon={<MemoryTwoToneIcon className="content-icon general-info-icon" />}
+          />
         </Cell>
       </Row>
     </Grid>

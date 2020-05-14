@@ -31,7 +31,7 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
   }
 });
 
-export const DonutDisplay: React.FunctionComponent<DonutDisplayProps> = (props) => {
+export const DonutDisplay: (props) => any = (props) => {
   const {
     backgroundColor,
     hoverBackgroundColor,
@@ -50,7 +50,7 @@ export const DonutDisplay: React.FunctionComponent<DonutDisplayProps> = (props) 
     options: {
       elements: {
         center: {
-          text: `${donutInfo}%`,
+          text: donutInfo,
           color: '#4e4e4e', // Default is #000000
           textYHeight: halfDonut ? 1.2 : 2
         }
@@ -65,7 +65,6 @@ export const DonutDisplay: React.FunctionComponent<DonutDisplayProps> = (props) 
       rotation: halfDonut ? Math.PI : -0.5 * Math.PI,
       circumference: halfDonut ? Math.PI : 2 * Math.PI,
     },
-    // text: `${donutInfo}%`
   }
 
   return (

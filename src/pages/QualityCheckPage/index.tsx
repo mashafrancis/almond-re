@@ -10,9 +10,8 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-
-// pages
-import DashboardContainer from '../DashboardContainer';
+import SecurityTwoToneIcon from '@material-ui/icons/SecurityTwoTone';
+import GeneralCardInfo from "@components/GeneralInfoCard";
 
 // styles
 import './QualityCheckPage.scss';
@@ -39,6 +38,15 @@ export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = 
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           {(window.innerWidth < 539) && <div className="main-subheader"><h3>QualityCheck</h3></div>}
+        </Cell>
+      </Row>
+      <Row>
+        <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+          <GeneralCardInfo
+            mainHeader="Quality Check"
+            subHeader="Tests for water quality, salts and ph level"
+            icon={<SecurityTwoToneIcon className="content-icon general-info-icon" />}
+          />
         </Cell>
       </Row>
     </Grid>

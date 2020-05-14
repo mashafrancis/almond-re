@@ -1,6 +1,6 @@
 # STAGE 1: build
 # base image
-FROM node:13.13.0-alpine AS build
+FROM node:14-alpine AS build
 
 LABEL maintainer="Francis Masha" MAINTAINER="Francis Masha <francismasha96@gmail.com>"
 LABEL application="almond-re"
@@ -80,8 +80,8 @@ USER nginx:nginx
 # fire up nginx
 EXPOSE 80
 
-#ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+#CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
 
 #CMD ["nginx","-g","daemon off;"]

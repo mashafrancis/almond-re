@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AllOutTwoToneIcon from '@material-ui/icons/AllOutTwoTone';
 import FaceIcon from '@material-ui/icons/Face';
-import MaterialIcon from '@material/react-material-icon';
 import MenuSurface, { Corner } from '@material/react-menu-surface';
 import {
   TopAppBarFixedAdjust,
@@ -20,6 +19,13 @@ import {
 } from '@material/react-top-app-bar';
 import { connect } from 'react-redux';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import MoodIcon from '@material-ui/icons/Mood';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HelpIcon from '@material-ui/icons/Help';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 // components;
 import PageBottomNavigation from '@components/BottomNavigation';
@@ -58,6 +64,25 @@ import {
 // import '../../assets/scss/RegisterPage.scss';
 import './DashboardContainer.scss';
 
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  focused: {},
+  listItemPadding: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  selectHeight: {
+    height: '1.25em',
+  },
+  labelColor: {
+    '&$focused': {
+      color: `rgba(${25},${103},${210},${0.87})`,
+    },
+  },
+  font: {
+    fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
+  },
+}));
+
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (props) => {
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
@@ -77,6 +102,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     roleSelected: '',
     roleId: '',
   });
+
+  const styles = useStyles(props);
 
   const user = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
@@ -100,7 +127,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       ...state,
       activeDevice: user.activeDevice,
       device: user.activeDevice.id,
-      // roleSelected: props.user.currentRole.title,
+      roleSelected: props.user.currentRole.title,
     });
   },              []);
 
@@ -202,32 +229,11 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           onClick={() => setState({ ...state, isFeedbackModal: true, isFeedbackMenuOpen: false })}
         >
           <h5>Send feedback</h5>
-          <MaterialIcon hasRipple icon="feedback" initRipple={null}/>
+          <FeedbackIcon />
         </div>
       }/>
     </MenuSurface>
   );
-
-  const useStyles = makeStyles((theme: Theme) => createStyles({
-    focused: {},
-    listItemPadding: {
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-    selectHeight: {
-      height: '1.25em',
-    },
-    labelColor: {
-      '&$focused': {
-        color: `rgba(${25},${103},${210},${0.87})`,
-      },
-    },
-    font: {
-      fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
-    },
-  }));
-
-  const styles = useStyles(props);
 
   const selectDeviceContent = devices => (
     <TextField
@@ -318,8 +324,29 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       open={Boolean(state.anchorEl)}
       onClose={handleProfileClose}
     >
-      <MenuItem onClick={toggleRoleChangeDialog}>Change role</MenuItem>
-      <MenuItem onClick={logoutUser}>Logout</MenuItem>
+      {width < breakpoint && <React.Fragment>
+        <MenuItem onClick={toggleRoleChangeDialog}>
+          <ListItemIcon style={{ minWidth: '36px' }}><SettingsIcon /></ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={toggleRoleChangeDialog}>
+          <ListItemIcon style={{ minWidth: '36px' }}><HelpIcon /></ListItemIcon>
+          Help
+        </MenuItem>
+        <MenuItem onClick={toggleRoleChangeDialog}>
+          <ListItemIcon style={{ minWidth: '36px' }}><OpenInNewIcon /></ListItemIcon>
+          Send Feedback
+        </MenuItem>
+      </React.Fragment>}
+
+      <MenuItem onClick={toggleRoleChangeDialog}>
+        <ListItemIcon style={{ minWidth: '36px' }}><MoodIcon /></ListItemIcon>
+        Change role
+      </MenuItem>
+      <MenuItem onClick={logoutUser}>
+        <ListItemIcon style={{ minWidth: '36px' }}><ExitToAppIcon /></ListItemIcon>
+        Logout
+      </MenuItem>
     </Menu>
   );
 

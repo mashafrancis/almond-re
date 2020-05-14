@@ -49,10 +49,10 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
             heading="Air Temperature"
             body={
               <DonutDisplay
-                backgroundColor={['#FF6384', '#CCCCCC']}
-                hoverBackgroundColor={['#FF6384', '#CCCCCC']}
+                backgroundColor={['#36A2EB', '#CCCCCC']}
+                hoverBackgroundColor={['#36A2EB', '#CCCCCC']}
                 data={[20, 50]}
-                donutInfo={40}
+                donutInfo={`${18}degs`}
                 halfDonut
               />
               }
@@ -67,7 +67,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 backgroundColor={['#FFCE56', '#CCCCCC']}
                 hoverBackgroundColor={['#FFCE56', '#CCCCCC']}
                 data={[40, 50]}
-                donutInfo={80}
+                donutInfo={`${80}%`}
                 halfDonut
               />
             }
@@ -95,8 +95,8 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
             heading="Daily Temperature Chart"
             body={
               <AreaChardDisplay
-                backgroundColor={'rgba(255,99,132,0.2)'}
-                chartColor={'#FF6384'}
+                backgroundColor={'rgba(25, 103, 210, 0.2)'}
+                chartColor={'#36A2EB'}
                 chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
               />
             }

@@ -3,4 +3,5 @@ export interface AnalyticsCardProps {
   mainInfo: string;
   subInfo: string;
   colorClass?: string;
+  onClick?: () => void;
 }

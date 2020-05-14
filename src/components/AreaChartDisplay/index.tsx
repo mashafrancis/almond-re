@@ -16,7 +16,7 @@ export const AreaChardDisplay: React.FunctionComponent<AreaChartDisplayProps> = 
       {
         // label: 'Temperature',
         fill: true,
-        lineTension: 0.2,
+        lineTension: 0.5,
         backgroundColor: backgroundColor,
         borderColor: chartColor,
         borderCapStyle: 'round',

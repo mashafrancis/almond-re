@@ -6,8 +6,6 @@
  *
  * @returns {boolean}
  */
-const checkUserRole = (role, baseRole) => {
-  return role.toLowerCase() === baseRole.toLowerCase();
-};
+const checkUserRole = (role, baseRole) => role.toLowerCase() === baseRole.toLowerCase();
 
 export default checkUserRole;
