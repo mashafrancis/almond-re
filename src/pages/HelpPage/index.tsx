@@ -7,11 +7,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import {displaySnackMessage} from "@modules/snack";
 import {connect} from "react-redux";
 import GeneralCardInfo from "@components/GeneralInfoCard";
+import {HelpPageProps} from "@pages/HelpPage/interfaces";
+import HelpIcon from '@material-ui/icons/Help';
 
 // interfaces
-import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) => {
+export const HelpPage: React.FunctionComponent<HelpPageProps> = (props) => {
   return (
     <React.Fragment>
       <Grid>
@@ -19,15 +20,15 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) 
           <Cell columns={7} desktopColumns={7} tabletColumns={8}
                 phoneColumns={4}>
             {(window.innerWidth < 539) &&
-            <div className="main-subheader"><h3>Settings</h3></div>}
+            <div className="main-subheader"><h3>Help</h3></div>}
           </Cell>
         </Row>
         <Row>
           <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
             <GeneralCardInfo
-              mainHeader="Settings"
-              subHeader="Adjust your preferences for better experience"
-              icon={<SettingsIcon className="content-icon general-info-icon" />}
+              mainHeader="Help"
+              subHeader="Get more information more about the system"
+              icon={<HelpIcon className="content-icon general-info-icon" />}
             />
           </Cell>
         </Row>
@@ -44,4 +45,4 @@ export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(HelpPage);

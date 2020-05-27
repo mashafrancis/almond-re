@@ -55,6 +55,7 @@ export const getUserDetailsSuccess = (userDetails: UserDetails): GetUserDetailsA
 export const getUserDetailsFailure = (errors): GetUserDetailsActionFailure => ({
   errors,
   type: GET_USER_DETAILS_FAILURE,
+  isFetchingUserDetails: false,
 });
 
 /**
@@ -83,7 +84,7 @@ export const getUserDetails = () => (dispatch, getState, http) => {
   dispatch(getUserDetailsRequest());
   return http.get('me')
     .then((response) => {
-      dispatch(getUserDetailsSuccess(response.data.data));
+      return dispatch(getUserDetailsSuccess(response.data.data));
     })
     .catch((error) => {
       const message = error.response.data.message;
@@ -122,6 +123,8 @@ export const logoutUser = () => (dispatch) => {
 const userInitialState = {
   ...authService.getUser().UserInfo,
   permissions: {},
+  isFetchingUserDetails: false,
+  errors: {},
 };
 
 /**
@@ -134,12 +137,24 @@ const userInitialState = {
  */
 export const reducer = (state = userInitialState, action: AnyAction) => {
   switch (action.type) {
+    case GET_USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        isFetchingUserDetails: action.isFetchingUserDetails
+      }
     case GET_USER_DETAILS_SUCCESS:
       return {
         ...state,
         ...action.userDetails,
+        isFetchingUserDetails: action.isFetchingUserDetails,
         permissions: formatPermissions(action.userDetails.roles[0]),
       };
+    case GET_USER_DETAILS_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+        isFetchingUserDetails: action.isFetchingUserDetails,
+      }
     case EDIT_USER_DETAILS_SUCCESS:
       return {
         ...state,

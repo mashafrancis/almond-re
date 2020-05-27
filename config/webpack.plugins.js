@@ -35,7 +35,6 @@ const processedDotenvConfigs = parseConfigs(dotenvConfigs);
 
 const definePlugin = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-  'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
   'process.env.ALMOND_API': JSON.stringify(process.env.ALMOND_API),
   'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
   'process.env.FIREBASE_APIKEY': JSON.stringify(process.env.FIREBASE_APIKEY),
@@ -54,6 +53,7 @@ const definePlugin = new webpack.DefinePlugin({
   'process.env.SOCIAL_AUTH_URL': JSON.stringify(process.env.SOCIAL_AUTH_URL),
   'process.env.GOOGLE_TRACKING_ID': JSON.stringify(process.env.GOOGLE_TRACKING_ID),
   'process.env.REDIRECT_DEVICE_URL': JSON.stringify(process.env.REGISTER_DEVICE_URL),
+  'process.env.MQTT_SERVER': JSON.stringify(process.env.MQTT_SERVER)
 });
 
 // instantiating webpack dependencies

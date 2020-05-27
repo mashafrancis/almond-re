@@ -2,7 +2,6 @@ import * as React from 'react';
 
 // third-party libraries
 import Badge from '@material-ui/core/Badge';
-import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, {
   TopAppBarIcon,
   TopAppBarRow,
@@ -15,6 +14,7 @@ import Avatar from '@material-ui/core/Avatar';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 // utils
 import { UserContext } from '@utils/context/Context';
@@ -79,11 +79,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const renderDeviceDisplay = () => (
     <div className="topbar-device-id" onClick={() => menu.setDeviceModalOpen(true)}>
       <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-      <MaterialIcon
-        onClick={() => menu.setDeviceModalOpen(true)}
-        hasRipple icon="arrow_drop_down"
-        initRipple={null}
-      />
+      <ArrowDropDownIcon onClick={menu.setDeviceModalOpen.bind(null,true)} />
     </div>
   );
 
@@ -96,7 +92,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
       }}
       variant="dot"
     >
-      <TimelineIcon onClick={() => menu.toggleActivityDrawer(true)} />
+      <TimelineIcon onClick={menu.toggleActivityDrawer.bind(null,true)} />
     </StyledBadge>
   );
 

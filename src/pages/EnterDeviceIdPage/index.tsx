@@ -20,13 +20,16 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // components
-import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
+import {Cell, Row} from "@material/react-layout-grid";
+import MaterialIcon from "@material/react-material-icon";
+import NavigationHeader from "@components/NavigationHeader";
 
 // thunk
 import { verifyUserDevice } from '@modules/device';
 import { displaySnackMessage } from '@modules/snack';
 import { getUserDetails } from '@modules/user';
+import { UserContext } from "@utils/context";
 
 // styles
 import 'react-date-range/dist/styles.css';
@@ -46,11 +49,11 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
     setDeviceId(e.target.value);
   };
 
+  const user = React.useContext(UserContext);
+
   const onSubmit = async (event) => {
     event.preventDefault();
-    const device = {
-      id: deviceId,
-    };
+    const device = { id: deviceId };
 
     setState({ ...state, isLoading: true });
 
@@ -87,6 +90,8 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   );
 
   const classes = useStyles(props);
+  const { activeDevice } = user;
+  const { history } = props;
 
   const renderDeviceTextField = () => {
     return (
@@ -101,7 +106,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PhonelinkSetupSharpIcon />
+                  <PhonelinkSetupSharpIcon style={{ color: '#1967D2' }} />
                 </InputAdornment>
               ),
             }}
@@ -111,57 +116,47 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
     );
   };
 
-  const renderBottomNavigation = () => (
-    <NavLink to={'/analytics'}>
-      <BottomNavigation
-        showLabels
-        className={classes.bottom}
-      >
-        <BottomNavigationAction label="SKIP" icon={<ArrowForwardIcon />} />
-      </BottomNavigation>
-    </NavLink>
+  const { isLoading } = state;
+  return (
+    <div className="register">
+      <NavigationHeader
+        forwardButtonName={activeDevice ? 'Skip' : 'Home'}
+        backwardButtonName="Back"
+        forwardLink={activeDevice ? '/dashboard' : '/'}
+        backwardLink={'/'}
+      />
+      <Container maxWidth="sm">
+      <Grid>
+        <Row>
+          <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+            <h1 className="headline-2">Add device identifier</h1>
+            <h5>The device ID will help you to control your purchased device from Almond.
+              Kindly enter the 6 digit figure to start using your system. Configuration with
+              the device might take a few minutes to complete.
+            </h5>
+          </Cell>
+        </Row>
+        <Row className="device-id-page">
+          <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+          {renderDeviceTextField()}
+          </Cell>
+        </Row>
+        <Row className="device-id-page">
+          <Cell columns={8} desktopColumns={8} tabletColumns={4} phoneColumns={2}>
+            <Button
+              type="button"
+              name={isLoading ? 'Adding...' : 'Add new device ID'}
+              id="cc-register"
+              onClick={onSubmit}
+              classes="mdc-button big-round-corner-button mdc-button--raised"
+            />
+          </Cell>
+          {/*{ props.user?.activeDevice && skipButton() }*/}
+        </Row>
+      </Grid>
+      </Container>
+    </div>
   );
-
-  return (() => {
-    const { isLoading } = state;
-
-    return (
-      <div className="register">
-        <AuthHeader
-          forwardButtonName=""
-          backwardButtonName=""
-          forwardLink={'/'}
-          backwardLink={'/'}
-        />
-        <Container maxWidth="sm">
-          <Grid container direction="column" spacing={2}>
-            <Grid item xs>
-              <h1 className="headline-2">Add device identifier</h1>
-              <h5>The device ID will help you to control your purchased device from Almond.
-                Kindly enter the 6 digit figure to start using your system. Configuration with
-                the device might take a few minutes to complete.
-              </h5>
-            </Grid>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs>
-                {renderDeviceTextField()}
-              </Grid>
-            </Grid>
-            <Grid item xs >
-              <Button
-                type="button"
-                name={isLoading ? 'Adding...' : 'Add new device ID'}
-                id="cc-register"
-                onClick={onSubmit}
-                classes="mdc-button big-round-corner-button mdc-button--raised"
-              />
-            </Grid>
-            {renderBottomNavigation()}
-          </Grid>
-        </Container>
-      </div>
-    );
-  })();
 };
 
 export const mapStateToProps = state => ({

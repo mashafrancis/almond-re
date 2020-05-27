@@ -18,10 +18,7 @@ const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-  if (authService.isExpired()) {
-    authService.redirectUser();
-  }
-
+  if (authService.isExpired()) authService.redirectUser();
   return config;
 });
 

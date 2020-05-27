@@ -1,14 +1,29 @@
 import * as React from 'react';
 
-import MaterialIcon from '@material/react-material-icon';
+import WidgetsRoundedIcon from '@material-ui/icons/WidgetsRounded';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import ControlCameraIcon from '@material-ui/icons/ControlCamera';
+import SecurityIcon from '@material-ui/icons/Security';
+import MemoryIcon from '@material-ui/icons/Memory';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HelpIcon from '@material-ui/icons/Help';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import AllOutIcon from '@material-ui/icons/AllOut';
+import PeopleIcon from '@material-ui/icons/People';
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import SpaIcon from '@material-ui/icons/Spa';
 
 // pages
 import AnalyticsPage from '@pages/AnalyticsPage';
 import DeviceManagementPage from '@pages/DeviceManagementPage';
 import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
 import EnvironmentControlPage from '@pages/EnvironmentControlPage';
+import HelpPage from "@pages/HelpPage";
 import PeoplePage from '@pages/PeoplePage';
 import QualityCheckPage from '@pages/QualityCheckPage';
+import SettingsPage from '@pages/SettingsPage';
+import SupportPage from "@pages/SupportPage";
 import UserRolesPage from '@pages/UserRolesPage';
 import WaterCyclesPage from '@pages/WaterCyclesPage';
 
@@ -18,49 +33,49 @@ import { MenuBottomProps, MenuComponentProps } from '@components/MenuRoutes/inte
 export const UserMenus: MenuComponentProps[][] = [
   [
     {
-      icon: 'widgets',
+      icon: <WidgetsRoundedIcon />,
       primaryText: 'Analytics',
       component: AnalyticsPage,
     },
     {
-      icon: 'opacity',
+      icon: <OpacityIcon />,
       primaryText: 'Water Cycles',
       component: WaterCyclesPage,
     },
     {
-      icon: 'control_camera',
+      icon: <ControlCameraIcon />,
       primaryText: 'Environmental Control',
       component: EnvironmentControlPage,
     },
     {
-      icon: 'security',
+      icon: <SecurityIcon />,
       primaryText: 'Quality Control',
       component: QualityCheckPage,
     },
     {
-      icon: 'memory',
+      icon: <MemoryIcon />,
       primaryText: 'Energy Usage',
       component: EnergyMonitoringPage,
     },
     {
-      icon: 'local_florist',
+      icon: <LocalFloristIcon />,
       primaryText: 'Support',
-      component: DeviceManagementPage,
+      component: SupportPage,
     },
   ],
   [
     {
-      icon: 'settings',
+      icon: <SettingsIcon />,
       primaryText: 'Settings',
-      component: PeoplePage,
+      component: SettingsPage,
     },
     {
-      icon: 'help',
+      icon: <HelpIcon />,
       primaryText: 'Help',
-      component: AnalyticsPage,
+      component: HelpPage,
     },
     {
-      icon: 'open_in_new',
+      icon: <OpenInNewIcon />,
       primaryText: 'Send feedback',
       component: AnalyticsPage,
     },
@@ -70,68 +85,68 @@ export const UserMenus: MenuComponentProps[][] = [
 export const AdminMenus: MenuComponentProps[][] = [
   [
     {
-      icon: 'widgets',
+      icon: <WidgetsRoundedIcon />,
       primaryText: 'Analytics',
       component: AnalyticsPage,
     },
     {
-      icon: 'all_out',
+      icon: <AllOutIcon />,
       primaryText: 'Devices',
       component: DeviceManagementPage,
     },
     {
-      icon: 'people',
+      icon: <PeopleIcon />,
       primaryText: 'People',
       component: PeoplePage,
     },
     {
-      icon: 'bubble_chart',
+      icon: <BubbleChartIcon />,
       primaryText: 'Roles',
       component: UserRolesPage,
     },
     {
-      icon: 'spa',
-      primaryText: 'Requests',
-      component: UserRolesPage,
+      icon: <SpaIcon />,
+      primaryText: 'Support',
+      component: SupportPage,
     },
   ],
   [
     {
-      icon: 'settings',
+      icon: <SettingsIcon />,
       primaryText: 'Settings',
       component: PeoplePage,
     },
     {
-      icon: 'help',
+      icon: <HelpIcon />,
       primaryText: 'Help',
-      component: AnalyticsPage,
+      component: HelpPage,
     },
   ],
 ];
 
 export const BottomNavigationMenus: MenuBottomProps[] = [
   {
-    icon: <MaterialIcon hasRipple icon="widgets" initRipple={null}/>,
+    icon: <WidgetsRoundedIcon />,
     label: 'Analytics',
     value: 'analytics',
   },
   {
-    icon: <MaterialIcon hasRipple icon="opacity" initRipple={null}/>,
+    icon: <OpacityIcon />,
     label: 'Water',
     value: 'water',
   },
   {
-    icon: <MaterialIcon hasRipple icon="control_camera" initRipple={null}/>,
+    icon: <ControlCameraIcon />,
     label: 'Environmental',
     value: 'environment',
   },
   {
-    icon: <MaterialIcon hasRipple icon="security" initRipple={null}/>,
+    icon: <SecurityIcon />,
     label: 'Quality',
     value: 'quality',
   },
   {
-    icon: <MaterialIcon hasRipple icon="memory" initRipple={null}/>,
+    icon: <MemoryIcon />,
     label: 'Energy',
     value: 'energy',
   },
@@ -139,27 +154,27 @@ export const BottomNavigationMenus: MenuBottomProps[] = [
 
 export const AdminBottomNavigationMenus: MenuBottomProps[] = [
   {
-    icon: <MaterialIcon hasRipple icon="widgets" initRipple={null}/>,
+    icon: <WidgetsRoundedIcon />,
     label: 'Analytics',
     value: 'analytics',
   },
   {
-    icon: <MaterialIcon hasRipple icon="all_out" initRipple={null}/>,
+    icon: <AllOutIcon />,
     label: 'Devices',
     value: 'devices',
   },
   {
-    icon: <MaterialIcon hasRipple icon="people" initRipple={null}/>,
+    icon: <OpenInNewIcon />,
     label: 'People',
     value: 'people',
   },
   {
-    icon: <MaterialIcon hasRipple icon="bubble_chart" initRipple={null}/>,
+    icon: <BubbleChartIcon />,
     label: 'Roles',
     value: 'roles',
   },
   {
-    icon: <MaterialIcon hasRipple icon="spa" initRipple={null}/>,
+    icon: <SpaIcon />,
     label: 'Requests',
     value: 'requests',
   },

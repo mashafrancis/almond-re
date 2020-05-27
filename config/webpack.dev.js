@@ -14,6 +14,9 @@ module.exports = merge(config, {
   },
   devtool: 'source-map',
   devServer: {
+    proxy: {
+      '/api': 'http://localhost:8080/'
+    },
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../src/assets'),
     publicPath: 'http://froyo.almond.com:3000/',

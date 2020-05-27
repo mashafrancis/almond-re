@@ -11,11 +11,12 @@ const AnalyticsCard: React.FunctionComponent<AnalyticsCardProps> = (props) => {
     icon,
     mainInfo,
     subInfo,
-    colorClass
+    colorClass,
+    onClick
   } = props;
 
   return (
-    <div className="analytics-card">
+    <div className="analytics-card" onClick={onClick}>
       <div className={`card-content ${colorClass}`}>
         {icon}
         <div className="card-content__body">
