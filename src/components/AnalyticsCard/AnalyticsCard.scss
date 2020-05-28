@@ -19,7 +19,7 @@
         color: #202124;
 
         @media (max-width: 539px) {
-          font: 400 14px/16px 'Google Sans',Roboto,Helvetica Neue,sans-serif;
+          font: 400 16px/18px 'Google Sans',Roboto,Helvetica Neue,sans-serif;
         }
       }
 
@@ -38,7 +38,11 @@
 
     &__info {
       h4 {
-        font: 600 18px/20px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
+        font: 600 36px/40px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
+
+        @media (max-width: 539px) {
+          font: 600 26px/30px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
+        }
       }
     }
 

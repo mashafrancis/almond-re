@@ -45,7 +45,6 @@ module.exports = {
       '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
       '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
       '@utils': path.resolve(__dirname, '..', 'src/utils'),
-      '@atomic': path.resolve(__dirname, '..', 'src/atomic'),
       '@context': path.resolve(__dirname, '..', 'src/context'),
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
@@ -80,7 +79,12 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              importer
+              // Prefer `dart-sass`
+              implementation: require('sass'),
+              sassOptions: {
+                fiber: require('fibers'),
+                importer
+              }
             }
           },
         ]

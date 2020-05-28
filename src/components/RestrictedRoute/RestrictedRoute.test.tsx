@@ -15,10 +15,12 @@ describe.skip('The RestrictedRoute component', () => {
   let wrapper;
   const props = {
     fallbackView: null,
+    strict: true,
+    redirectTo: '/'
   };
 
   beforeEach(() => {
-    wrapper = shallow(<RestrictedRoute path="/settings" component={() => <div />} {...props} />);
+    wrapper = shallow(<RestrictedRoute path="/dashboard" component={() => <div />} {...props} />);
   });
 
   it('should render Route if authorize prop is not passed', () => {

@@ -1,91 +1,72 @@
 export const userRoles = [
   {
     description: 'default description',
-    id: '-LPQEUQL0-SsOtBVWIqV',
+    _id: '5e439f32fd05da507cdk3k49',
     resourceAccessLevels: [{
       permissions: [
         {
-          id: '-LPQEUQw7ldP_9WPpZVH',
+          _id: '5e439ed9fd05da507ca0161c',
           type: 'Full Access',
         },
         {
-          id: '-LPQEUQwN8W2-47PBNHX',
+          _id: '5e44f86b2eeeee195403efcb',
           type: 'View',
         },
         {
-          id: '-LPQEUQwICD_sDKxauqD',
+          _id: '5e456d694df0c437590ebc3e',
           type: 'Edit',
         },
         {
-          id: '-LPQEUQw1mSrxxj95BrV',
+          _id: '5e439f32fd05da507ca0161e',
           type: 'Add',
+        },
+        {
+          _id: '5e45bc5228c0d70f4a9363a3',
+          type: 'Delete',
         },
       ],
       resource: {
-        id: '-LPQEUR9VoWVCJVR338i',
-        name: 'Centers',
+        _id: '-LPQEUR9VoWVCJVR338i',
+        name: 'People',
       },
     }],
-    title: 'People Coordinator',
-    userCount: 1,
+    title: 'User',
+    users: 1,
     data: [],
   },
   {
-    description: 'reports to the operations team',
-    id: '-LPQEUQLa-uiTYNwxouO',
+    description: 'default description',
+    _id: '5e439f32fd05da507cdk3k49',
     resourceAccessLevels: [{
       permissions: [
         {
-          id: '-LPQEUQwN8W2-47PBNHX',
-          type: 'View',
-        },
-        {
-          id: '-LPQEUQwICD_sDKxauqD',
-          type: 'Edit',
-        },
-        {
-          id: '-LPQEUQw1mSrxxj95BrV',
-          type: 'Add',
-        },
-      ],
-      resource: {
-        id: '-LPQEUR9VoWVCJVR338i',
-        name: 'Centers',
-      },
-    }],
-    title: 'Operations Manager',
-    userCount: 1,
-    data: [],
-  },
-  {
-    description: 'reports to the operations manager',
-    id: '-LPQEUQLTR4qgE_0-mwi',
-    resourceAccessLevels: [{
-      permissions: [
-        {
-          id: '-LPQEUQw7ldP_9WPpZVH',
+          _id: '5e439ed9fd05da507ca0161c',
           type: 'Full Access',
         },
         {
-          id: '-LPQEUQwN8W2-47PBNHX',
+          _id: '5e44f86b2eeeee195403efcb',
           type: 'View',
         },
         {
-          id: '-LPQEUQwICD_sDKxauqD',
+          _id: '5e456d694df0c437590ebc3e',
           type: 'Edit',
         },
         {
-          id: '-LPQEUQw1mSrxxj95BrV',
+          _id: '5e439f32fd05da507ca0161e',
           type: 'Add',
+        },
+        {
+          _id: '5e45bc5228c0d70f4a9363a3',
+          type: 'Delete',
         },
       ],
       resource: {
-        id: '-LPQEUR9VoWVCJVR338i',
-        name: 'Centers',
+        _id: '-LPQEUR9VoWVCJVR338i',
+        name: 'Devices',
       },
     }],
-    title: 'Operations Assistant',
-    userCount: 1,
+    title: 'Admin',
+    users: 1,
     data: [],
-  },
+  }
 ];

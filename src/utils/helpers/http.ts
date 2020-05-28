@@ -32,7 +32,7 @@ http.interceptors.response.use(
       CacheHandler.cacheInvalidationRegister[endpoint] = requestTimestamp;
 
       if (endpoint === '/roles') {
-        CacheHandler.cacheInvalidationRegister['/user-roles'] = requestTimestamp;
+        CacheHandler.cacheInvalidationRegister['/dashboard'] = requestTimestamp;
       }
     }
 

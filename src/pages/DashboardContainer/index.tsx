@@ -324,7 +324,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       open={Boolean(state.anchorEl)}
       onClose={handleProfileClose}
     >
-      {width < breakpoint && <React.Fragment>
+      {width < breakpoint && <div>
         <MenuItem onClick={toggleRoleChangeDialog}>
           <ListItemIcon style={{ minWidth: '36px' }}><SettingsIcon /></ListItemIcon>
           Settings
@@ -337,7 +337,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           <ListItemIcon style={{ minWidth: '36px' }}><OpenInNewIcon /></ListItemIcon>
           Send Feedback
         </MenuItem>
-      </React.Fragment>}
+      </div>}
 
       <MenuItem onClick={toggleRoleChangeDialog}>
         <ListItemIcon style={{ minWidth: '36px' }}><MoodIcon /></ListItemIcon>

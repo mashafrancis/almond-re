@@ -162,7 +162,6 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 export const mapStateToProps = state => ({
   error: state.error,
   isLoading: state.device.isLoading,
-  user: state.user.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

@@ -18,9 +18,7 @@ const RestrictedRoute: React.FunctionComponent<RestrictedRouteProps> = (props) =
     );
   }
 
-  if (props.fallbackView) {
-    return props.fallbackView;
-  }
+  if (props.fallbackView) { return props.fallbackView; }
 
   return (
     <Redirect to={props.redirectTo} />

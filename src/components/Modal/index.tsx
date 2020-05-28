@@ -32,7 +32,7 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
       aria-labelledby="responsive-dialog-title"
     >
       <DialogTitle id="responsive-dialog-title">
-        <p className="headline-3">
+        <p className="headline-3 modal-header">
           {renderHeader()}
         </p>
       </DialogTitle>

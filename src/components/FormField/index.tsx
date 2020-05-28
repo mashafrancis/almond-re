@@ -2,8 +2,8 @@ import * as React from 'react';
 
 // interfaces
 import { FormFieldProps, FormFieldState } from '@components/FormField/interfaces';
+import TextField, { HelperText, Input } from "@material/react-text-field";
 // nodejs library to set properties for components
-import TextField, { HelperText, Input } from '../../atomic/TextField';
 
 // styles
 // import './FormField.scss';

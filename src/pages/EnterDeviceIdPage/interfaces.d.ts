@@ -1,4 +1,3 @@
-import { UserDetails } from '@modules/user/interfaces';
 import { History } from 'history';
 
 export interface EnterDeviceIdPageProps {
@@ -8,7 +7,6 @@ export interface EnterDeviceIdPageProps {
   isLoading: boolean;
   history: History;
   getUserDetails: () => Promise<any>;
-  user?: UserDetails;
 }
 
 export interface EnterDeviceIdPageState {

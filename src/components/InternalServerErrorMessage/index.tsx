@@ -16,11 +16,7 @@ const InternalServerErrorMessage: (props) => any = (props) => {
         <h2>Sorry. It is not you. It is us.</h2>
         <p>We are experiencing an internal server problem.</p>
         <p>Please try again later or contact support <span className="mail">almond.froyo@gmail.com</span></p>
-        <NavLink to={'/'}>
-          <button className="mdc-button mdc-button--raised">
-            <span className="mdc-button__label">Back to homepage</span>
-          </button>
-        </NavLink>
+        {props.errorButton}
       </div>
     </div>
   );

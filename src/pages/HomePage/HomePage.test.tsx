@@ -7,14 +7,18 @@ import { shallow } from 'enzyme';
 import HomePage from './index';
 
 describe.skip('Home Page', () => {
-  const wrapper = shallow(<HomePage />);
+  // const props = {
+  //   displaySnackMessage: jest.fn(() => Promise.resolve()),
+  // };
 
   it('should be rendered properly', () => {
+    const wrapper = shallow(<HomePage />);
     expect(wrapper.find('button').exists).toBeTruthy();
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render dashboard button which redirects to "/water-cycles', () => {
-    expect(wrapper.find('a[href="/water-cycles"]')).toBeTruthy();
+  it('should render dashboard button which redirects to "/dashboard', () => {
+    const wrapper = shallow(<HomePage />);
+    expect(wrapper.find('a[href="/dashboard"]')).toBeTruthy();
   });
 });

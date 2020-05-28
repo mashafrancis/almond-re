@@ -2,9 +2,9 @@
 
 ## almond-re
 
-[![CircleCI](https://circleci.com/gh/mashafrancis/almond-re.svg?style=svg)](https://circleci.com/gh/mashafrancis/almond-re)
-[![Maintainability](https://api.codeclimate.com/v1/badges/dbebee07d6ea948658c1/maintainability)](https://codeclimate.com/github/mashafrancis/almond-re/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/dbebee07d6ea948658c1/test_coverage)](https://codeclimate.com/github/mashafrancis/almond-re/test_coverage)
+[![CircleCI](https://circleci.com/gh/almond-hydroponics/almond-re.svg?style=svg)](https://circleci.com/gh/almond-hydroponics/almond-re)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1787ab6745c18d366de9/maintainability)](https://codeclimate.com/github/almond-hydroponics/almond-re/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1787ab6745c18d366de9/test_coverage)](https://codeclimate.com/github/almond-hydroponics/almond-re/test_coverage)
 
 </div>
 

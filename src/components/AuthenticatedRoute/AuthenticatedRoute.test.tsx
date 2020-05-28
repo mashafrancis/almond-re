@@ -3,14 +3,14 @@ import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
 // third-party libraries
-import * as Cookies from 'cookies-js';
+import * as Cookies from 'js-cookie';
 import { mount } from 'enzyme';
 
 // components
 import AuthenticatedRoute from './';
 
-describe.skip('The AuthenticatedRoute component', () => {
-  const TestComponent = () => <div></div>;
+describe('The AuthenticatedRoute component', () => {
+  const TestComponent = () => <div/>;
 
   it('mounts the component if the user is authenticated', () => {
     const authToken = 'SOME_RANDOM_TOKEN';
@@ -25,15 +25,15 @@ describe.skip('The AuthenticatedRoute component', () => {
   });
 
   it('redirects the user to root (/) if the user is NOT authenticated', () => {
-    Cookies.expire('jwt-token');
+    Cookies.remove('jwt-token');
 
     const props = {
       location: {
-        pathname: '/analytics',
+        pathname: '/dashboard',
       },
     };
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/settings/people']} initialIndex={0}>
+      <MemoryRouter initialEntries={['/dashboard']} initialIndex={0}>
         <AuthenticatedRoute component={TestComponent} {...props} />
       </MemoryRouter>
     );

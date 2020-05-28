@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 // interfaces
 import { SnackMessageProps, SnackMessageState } from './interfaces';
 
+import './SnackBar.scss';
+
 export class SnackBar extends React.Component<
   SnackMessageProps,
   SnackMessageState
@@ -20,39 +22,22 @@ export class SnackBar extends React.Component<
     };
   }
 
-  componentDidUpdate({ snack: snack }) {
-    if (this.props.snack !== snack) {
-      this.setState({ snack: this.props.snack });
-    }
-
-    /*
-     * This lifecycle is called for updates to both state and props, hence the need to
-     * avoid infinite recursion; if toast type is already '',
-     * hideToastMessage has already been called.
-     */
-    if (this.state.snack?.message !== '') {
-      setTimeout(this.hideSnackMessage, 8000);
-    }
+  componentDidUpdate({ snack }) {
+    if (this.props.snack !== snack) { this.setState({ snack: this.props.snack}); }
+    if (this.state.snack.message !== '') { setTimeout(this.hideSnackMessage, 8000); }
   }
 
-  private hideSnackMessage = () => {
-    this.setState({
-      snack: {
-        message: '',
-        // @ts-ignore
-        withName: false,
-      },
-    });
-  }
+  private hideSnackMessage = () => this.setState({ snack: { message: '' }});
 
   render() {
+    const { snack } = this.state;
     return (
       <React.Fragment>
         {
-          this.state.snack?.message
+          snack.message
           ? (
               <Snackbar
-                message={this.state.snack.message}
+                message={snack.message}
                 timeoutMs={8000}
                 actionText="DISMISS"
               />

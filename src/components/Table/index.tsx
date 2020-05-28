@@ -27,7 +27,7 @@ const Table: (props: TableProps) => any = (props: TableProps) => {
                 ? `tbl-header__column--${keys[header].colWidth }`
                 : 'tbl-header__column'}
               >
-                <span className="header-text">{ keys[header].value || header } </span>
+                <span className="header-text">{ keys[header].value || header }</span>
               </div>
             );
           })

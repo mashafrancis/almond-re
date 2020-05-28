@@ -18,6 +18,10 @@ describe('The cacheAxiosInstance util', () => {
     cachedInstance = cacheAxiosInstance(dummyAxios, 1000, cacheHandler);
   });
 
+  afterEach((done) => {
+    done();
+  });
+
   it('should cache get requests if config object is passed and cache is set to true', () => {
     return Promise
       .all([

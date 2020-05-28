@@ -1,5 +1,4 @@
 // react libraries
-import { Location } from 'history';
 import * as React from 'react';
 
 // third party
@@ -12,23 +11,20 @@ import { AnalyticsPage } from './index';
 describe.skip('The Analytics Page', () => {
   let wrapper;
   let props;
-  let waterCyclesPageInstance;
+  let analyticsPageInstance;
 
   beforeEach(() => {
     props = {
       match: {
         url: '/analytics',
       },
-      isLoading: false,
-      location: Location,
-      enabled: true,
     };
     wrapper = mount(
       <BrowserRouter>
         <AnalyticsPage {...props}/>
       </BrowserRouter>
     );
-    waterCyclesPageInstance = wrapper.find(AnalyticsPage).instance();
+    analyticsPageInstance = wrapper.find(AnalyticsPage).instance();
   });
 
   afterEach(() => {

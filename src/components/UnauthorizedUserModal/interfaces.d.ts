@@ -3,6 +3,6 @@ export interface UnauthorizedUserModalProps {
     name: string,
     [key: string]: any,
   };
-  showModal: boolean;
+  isModalOpen: boolean;
   logoutUser: () => void;
 }

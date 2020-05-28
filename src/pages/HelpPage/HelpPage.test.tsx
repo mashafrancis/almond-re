@@ -7,22 +7,28 @@ import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import { PeoplePage } from './index';
+import { HelpPage } from './index';
 
-describe.skip('The People Page', () => {
+describe.skip('The HelpPage', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
 
   beforeEach(() => {
     props = {
+      match: {
+        url: '/analytics',
+      },
+      isLoading: false,
+      location: Location,
+      enabled: true,
     };
     wrapper = mount(
       <BrowserRouter>
-        <PeoplePage {...props}/>
-      </BrowserRouter>
-    );
-    waterCyclesPageInstance = wrapper.find(PeoplePage).instance();
+        <HelpPage {...props}/>
+    </BrowserRouter>
+  );
+    waterCyclesPageInstance = wrapper.find(HelpPage).instance();
   });
 
   afterEach(() => {

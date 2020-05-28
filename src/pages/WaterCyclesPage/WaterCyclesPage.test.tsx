@@ -8,13 +8,20 @@ import { BrowserRouter } from 'react-router-dom';
 
 // components
 import { WaterCyclesPage } from './index';
+import {act} from "react-dom/test-utils";
+import { render } from "react-dom";
 
 describe.skip('The Water Cycles Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
+  let container = null;
 
   beforeEach(() => {
+    // @ts-ignore
+    container = document.createElement("div");
+    // @ts-ignore
+    document.body.appendChild(container);
     props = {
       getAllSchedules: jest.fn(() => Promise.resolve()),
       deleteSingleSchedule: jest.fn(() => Promise.resolve()),
@@ -24,7 +31,7 @@ describe.skip('The Water Cycles Page', () => {
       toggleScheduleStatus: jest.fn(() => Promise.resolve()),
       schedules: [],
       match: {
-        url: '/water-cycles',
+        url: '/dashboard',
       },
       isLoading: false,
       location: Location,

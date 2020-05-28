@@ -1,6 +1,6 @@
 module.exports = {
   verbose: true,
-  testURL: "http://localhost/",
+  testURL: 'http://localhost/',
   roots: [
     '<rootDir>/src'
   ],
@@ -11,7 +11,6 @@ module.exports = {
     }
   },
   transform: {
-    // '^.+\\.tsx?$': 'ts-jest',
     '^.+\\.(ts|tsx)$': 'ts-jest',
     // '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js'
   },
@@ -47,10 +46,10 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/interface.d.ts', '!src/**/*interfaces.d.ts'],
   coverageThreshold: {
     global: {
-      'branches': 10,
-      'functions': 10,
-      'lines': 10,
-      'statements': 15
+      'branches': 30,
+      'functions': 30,
+      'lines': 30,
+      'statements': 35
     }
   },
   setupFiles: [
@@ -61,6 +60,9 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: ['/node_modules', '<rootDir>/src/index.tsx', 'src/store/index.tsx|rootReducer.ts'],
   snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/src/setupEnzyme.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/src/setupEnzyme.ts',
+    '<rootDir>/tests/setup.js',
+  ],
   testEnvironment: 'node'
 };

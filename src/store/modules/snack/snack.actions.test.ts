@@ -11,11 +11,10 @@ describe('The snack action', () => {
   const snackMessageInitialState = {};
 
   it('should display a snack message', () => {
-    const snackMessage = 'Welcome to Amond';
+    const snackMessage = 'Welcome to Almond';
     const expectedAction = {
       snack: {
         message: snackMessage,
-        withName: false,
       },
       type: DISPLAY_SNACK_MESSAGE,
     };

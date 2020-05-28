@@ -9,13 +9,13 @@ import {
 import { connect } from 'react-redux';
 
 // components
-import OpacityIcon from '@material-ui/icons/Opacity';
-import MemoryIcon from '@material-ui/icons/Memory';
-import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+import OpacityTwoToneIcon from '@material-ui/icons/OpacityTwoTone';
+import BlurLinearTwoToneIcon from '@material-ui/icons/BlurLinearTwoTone';
 import WavesIcon from "@material-ui/icons/Waves";
 import BlurOnIcon from '@material-ui/icons/BlurOn';
 import AnalyticsCard from "@components/AnalyticsCard";
-import GradientIcon from '@material-ui/icons/Gradient';
+import ScheduleTwoToneIcon from '@material-ui/icons/ScheduleTwoTone';
+import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -54,16 +54,16 @@ export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props
           <AnalyticsCard
             onClick={() => setSelectedIndex({ group: 0, item: 1 })}
             colorClass="card-color-blue"
-            icon={<OpacityIcon className="content-icon" />}
-            mainInfo="Next water schedule"
-            subInfo="14:00 PM"
+            icon={<OpacityTwoToneIcon className="content-icon" />}
+            mainInfo="Water Level"
+            subInfo="70 %"
           />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
             onClick={() => setSelectedIndex({ group: 0, item: 1 })}
             colorClass="card-color-yellow"
-            icon={<WbIncandescentIcon className="content-icon" />}
+            icon={<BlurLinearTwoToneIcon className="content-icon" />}
             mainInfo="Water Temperature"
             subInfo="18 &#8451;"
           />
@@ -72,9 +72,9 @@ export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props
           <AnalyticsCard
             onClick={() => setSelectedIndex({ group: 0, item: 1 })}
             colorClass="card-color-brown"
-            icon={<GradientIcon className="content-icon" />}
-            mainInfo="Tank Water Level"
-            subInfo="70 %"
+            icon={<ScheduleTwoToneIcon className="content-icon" />}
+            mainInfo="Next schedule"
+            subInfo="14:00"
           />
         </Cell>
       </Row>
@@ -101,9 +101,9 @@ export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props
           <AnalyticsCard
             onClick={() => setSelectedIndex({ group: 0, item: 3 })}
             colorClass="card-color-purple"
-            icon={<MemoryIcon className="content-icon" />}
-            mainInfo="Daily power usage"
-            subInfo="30 KWatts"
+            icon={<MemoryTwoToneIcon className="content-icon" />}
+            mainInfo="Power usage"
+            subInfo="30 KW"
           />
         </Cell>
       </Row>

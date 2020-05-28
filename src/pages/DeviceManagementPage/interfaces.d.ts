@@ -5,7 +5,7 @@ export interface DeviceManagementProps {
   editDevice: (id, device) => Promise<any>;
   addNewDevice: (device) => Promise<any>;
   deleteDevice: (id) => Promise<any>;
-  displaySnackMessage?: (message) => Promise<any>;
+  displaySnackMessage: (message) => Promise<any>;
   devices: Device[];
   activeDevice: string;
 }
