@@ -10,8 +10,8 @@ import Table from './index';
 describe('Table components', () => {
   const props = {
     keys: {
-      Assignee: { valueKey: 'assignee', colWidth: '35' },
-      'Asset Tag': { valueKey: 'assetTag' },
+      Client: { valueKey: 'client', colWidth: '35' },
+      'Device Id': { valueKey: 'deviceId' },
       'Date Added': { valueKey: 'date' },
       'Serial Number': { valueKey: 'serialNumber' },
       Warranty: { valueKey: 'warranty' },
@@ -19,9 +19,8 @@ describe('Table components', () => {
     values:
     [
       {
-        assignee: 'Yaba',
-        assetTag: 'AND/WEYA/WYRUHS',
-        category: 'string',
+        client: 'Masha',
+        deviceId: 'ABC123',
         date: '07 June 2018',
         id: 1,
         serialNumber: 'C0ABDJFGSKSJK',
@@ -35,18 +34,18 @@ describe('Table components', () => {
 
   it('should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.tbl-header__column--35').text()).toEqual('Assignee');
+    expect(wrapper.find('.tbl-header__column--35').text()).toEqual('Client');
   });
 
   it('should render header value if provided', () => {
     wrapper.setProps({
       ...props,
       keys: { ...props.keys,
-        Assignee: { ...props.keys.Assignee, value: 'Change Assignee' },
+        Client: { ...props.keys.Client, value: 'Francis Masha' },
       },
     });
 
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.tbl-header__column--35').text()).toEqual('Change Assignee');
+    expect(wrapper.find('.tbl-header__column--35').text()).toEqual('Francis Masha');
   });
 });

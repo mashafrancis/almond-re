@@ -5,5 +5,5 @@ export interface RestrictedRouteProps extends RouteProps {
   authorize?: string | string[];
   redirectTo: string;
   strict: boolean;
-  fallbackView?: React.FunctionComponent;
+  fallbackView?: React.FunctionComponent | null;
 }

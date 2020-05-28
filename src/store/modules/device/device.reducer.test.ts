@@ -36,7 +36,6 @@ describe('Device reducer', () => {
 
   it('should handle ADD_DEVICE_REQUEST', () => {
     const newDeviceState = reducer(deviceInitialState, addDeviceRequest);
-
     expect(newDeviceState).toEqual({
       ...deviceInitialState,
     });
@@ -44,16 +43,11 @@ describe('Device reducer', () => {
 
   it('should handle ADD_DEVICE_SUCCESS', () => {
     const newDeviceState = reducer(deviceInitialState, addDeviceSuccess);
-
     expect(newDeviceState.isLoading).toEqual(false);
   });
 
-  it.skip('should handle ADD_DEVICE_FAILURE', () => {
+  it('should handle ADD_DEVICE_FAILURE', () => {
     const newDeviceState = reducer(deviceInitialState, addDeviceFailure);
-
-    expect(newDeviceState).toEqual({
-      ...deviceInitialState,
-      errors: deviceInitialState.errors,
-    });
+    expect(newDeviceState.isLoading).toBeFalsy();
   });
 });

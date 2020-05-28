@@ -1,5 +1,5 @@
 // third-party libraries
-import * as Cookies from 'cookies-js';
+import * as Cookies from 'js-cookie';
 
 // helpers
 import store from '../../store';
@@ -9,9 +9,21 @@ import CacheHandler from './CacheHandler';
 import http from './http';
 
 describe.skip('The http axios instance helper function', () => {
-  authService.logoutUser = jest.fn();
-  authService.redirectUser = jest.fn();
-  window.location.replace = jest.fn();
+  beforeEach(() => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: { assign: jest.fn() }
+    });
+
+    Object.defineProperty(window.location, 'replace', {
+      writable: true,
+      value: { assign: jest.fn() }
+    });
+
+    authService.logoutUser = jest.fn();
+    authService.redirectUser = jest.fn();
+    window.location.replace = jest.fn();
+  });
 
   const response = {
     status: 200,
@@ -42,7 +54,7 @@ describe.skip('The http axios instance helper function', () => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(response, null);
 
-    http('/people').then(() => {
+    http('/dashboard').then(() => {
       expect(authService.logoutUser).not.toHaveBeenCalled();
       expect(window.location.replace).not.toHaveBeenCalled();
       done();
@@ -53,7 +65,7 @@ describe.skip('The http axios instance helper function', () => {
     Cookies.set('jwt-token', expiredToken);
     axiosMockAdapter(response, null);
 
-    http('/people').then(() => {
+    http('/dashboard').then(() => {
       expect(authService.redirectUser).toHaveBeenCalled();
       done();
     });
@@ -63,7 +75,7 @@ describe.skip('The http axios instance helper function', () => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(null, error);
 
-    http('/people').catch(() => {
+    http('/dashboard').catch(() => {
       expect(authService.redirectUser).toHaveBeenCalled();
       done();
     });
@@ -73,7 +85,7 @@ describe.skip('The http axios instance helper function', () => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(null, serverErrorMock);
 
-    http('/people').catch(() => {
+    http('/dashboard').catch(() => {
       expect(store.dispatch).toHaveBeenCalled();
       done();
     });

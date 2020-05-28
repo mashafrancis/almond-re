@@ -1,5 +1,4 @@
 // react libraries
-import { Location } from 'history';
 import * as React from 'react';
 
 // third party
@@ -9,26 +8,27 @@ import { BrowserRouter } from 'react-router-dom';
 // components
 import { DeviceManagementPage } from './index';
 
-describe.skip('The Analytics Page', () => {
+describe.skip('The DeviceManagement Page', () => {
   let wrapper;
   let props;
-  let waterCyclesPageInstance;
+  let deviceManagementPageInstance;
 
   beforeEach(() => {
     props = {
-      match: {
-        url: '/analytics',
-      },
-      isLoading: false,
-      location: Location,
-      enabled: true,
+      getAllDevices: jest.fn(() => Promise.resolve()),
+      editDevice: jest.fn(() => Promise.resolve()),
+      addNewDevice: jest.fn(() => Promise.resolve()),
+      deleteDevice: jest.fn(() => Promise.resolve()),
+      displaySnackMessage: jest.fn(() => Promise.resolve()),
+      devices: [],
+      activeDevice: '',
     };
     wrapper = mount(
       <BrowserRouter>
         <DeviceManagementPage {...props}/>
       </BrowserRouter>
     );
-    waterCyclesPageInstance = wrapper.find(DeviceManagementPage).instance();
+    deviceManagementPageInstance = wrapper.find(DeviceManagementPage).instance();
   });
 
   afterEach(() => {

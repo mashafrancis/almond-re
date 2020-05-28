@@ -9,19 +9,13 @@ import { BrowserRouter } from 'react-router-dom';
 // components
 import { QualityCheckPage } from './index';
 
-describe.skip('The Analytics Page', () => {
+describe.skip('The QualityCheck Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
 
   beforeEach(() => {
     props = {
-      match: {
-        url: '/analytics',
-      },
-      isLoading: false,
-      location: Location,
-      enabled: true,
     };
     wrapper = mount(
       <BrowserRouter>

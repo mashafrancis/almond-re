@@ -33,6 +33,7 @@ export interface AddDeviceActionSuccess {
 export interface AddDeviceActionFailure {
   type: ADD_DEVICE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface UserVerifyDeviceActionRequest {
@@ -49,6 +50,7 @@ export interface UserVerifyDeviceActionSuccess {
 export interface UserVerifyDeviceActionFailure {
   type: USER_VERIFY_DEVICE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface ActivateDeviceActionRequest {

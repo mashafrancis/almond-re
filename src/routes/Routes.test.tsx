@@ -18,6 +18,10 @@ describe('The Route components', () => {
     expect(wrapper.find({ path: '/dashboard' }).length).toBe(1);
   });
 
+  it('should register a route for my-device', () => {
+    expect(wrapper.find({ path: '/my-device' }).length).toBe(1);
+  });
+
   it('should register a route for 404', () => {
     expect(wrapper.find({ path: '/404' }).length).toBe(1);
   });

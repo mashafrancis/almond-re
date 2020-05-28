@@ -13,7 +13,7 @@ import { Restrict } from '@components/Restrict';
 describe.skip('The Restrict component', () => {
   it('should render children prop if user has required access', () => {
     const wrapper = mount(
-      <Restrict authorize={['centers:edit']}>
+      <Restrict authorize={['analytics:edit']}>
         <button />
       </Restrict>
     );

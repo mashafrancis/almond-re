@@ -19,7 +19,6 @@ const EmailField: React.FunctionComponent<EmailFieldProps> = (props) => {
 
   return (
     <FormField
-      id="email"
       labelText="Email"
       type="text"
       leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}

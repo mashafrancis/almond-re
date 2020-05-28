@@ -32,12 +32,14 @@ import GeneralCardInfo from "@components/GeneralInfoCard";
 import { DonutDisplay } from "@components/DonutDisplay";
 import { AreaChardDisplay } from "@components/AreaChartDisplay";
 import { MenuContext } from "@context/MenuContext";
+import ScheduleTwoToneIcon from '@material-ui/icons/ScheduleTwoTone';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 import {
   addNewSchedule,
-  deleteSingleSchedule, editSchedule,
+  deleteSingleSchedule,
+  editSchedule,
   getAllSchedules,
   getPumpStatus,
   togglePump,
@@ -350,7 +352,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           <CardInfo
             mainHeader="Water Schedules"
             subHeader="Create a new water schedule for your pump cycle"
-            icon={<OpacityIcon className="content-icon" />}
+            icon={<ScheduleTwoToneIcon className="content-icon" />}
             buttonName="Add schedule"
             onClick={showScheduleModal('Add')}
           />

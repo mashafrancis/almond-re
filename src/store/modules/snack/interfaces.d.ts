@@ -6,5 +6,5 @@ export interface DisplaySnackMessageAction {
 }
 
 export interface SnackMessage {
-  message: string | null | undefined;
+  message: string;
 }

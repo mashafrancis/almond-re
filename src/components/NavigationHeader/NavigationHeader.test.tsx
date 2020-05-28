@@ -6,7 +6,7 @@ import { mount, shallow } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import { AuthHeader } from './index';
+import NavigationHeader from "./index";
 
 describe('The Auth Header Component', () => {
   let wrapper;
@@ -22,7 +22,7 @@ describe('The Auth Header Component', () => {
   beforeAll(() => {
     wrapper = mount(
       <BrowserRouter>
-        <AuthHeader {...props}/>
+        <NavigationHeader {...props}/>
       </BrowserRouter>
     );
   });

@@ -9,19 +9,13 @@ import { BrowserRouter } from 'react-router-dom';
 // components
 import { EnvironmentControlPage } from './index';
 
-describe.skip('The Analytics Page', () => {
+describe.skip('The EnvironmentalControl Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
 
   beforeEach(() => {
     props = {
-      match: {
-        url: '/analytics',
-      },
-      isLoading: false,
-      location: Location,
-      enabled: true,
     };
     wrapper = mount(
       <BrowserRouter>

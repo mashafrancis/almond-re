@@ -47,7 +47,7 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
         checkIsAdmin().map((menu, index) => (
           <BottomNavigationAction
             key={index}
-            onClick={setSelectedIndex.bind(null,{ group: 0, item: index })}
+            onClick={() => setSelectedIndex({ group: 0, item: index })}
             label={menu.label}
             icon={menu.icon}
           />

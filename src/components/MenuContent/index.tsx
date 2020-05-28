@@ -28,7 +28,6 @@ import { MenuContentProps } from './interfaces';
 import '@pages/DashboardContainer/DashboardNavBar.scss';
 
 const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
-const viewPort = window.innerWidth;
 
 const mobileHeader = (name, photo) => (
   <div className="header-image">
@@ -43,7 +42,7 @@ const mobileHeader = (name, photo) => (
 </div>
 );
 
-const mobileDrawerHeader = (setOpen, name, photo) => {
+const mobileDrawerHeader = (setOpen, name, photo, viewWidth) => {
   return (
   <React.Fragment>
     <DrawerHeader>
@@ -52,7 +51,7 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
              className="mdc-tab-bar"
              onClick={() => setOpen(false)}
         >
-          {(viewPort < 539) && mobileHeader(name, photo)}
+          {viewWidth && mobileHeader(name, photo)}
         </div>
       </div>
     </DrawerHeader>
@@ -60,10 +59,10 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
   );
 };
 
-const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin) => (
+const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth) => (
   <React.Fragment>
     <ListGroup>
-      {(viewPort < 539) && <ListDivider tag="div" />}
+      {viewWidth && <ListDivider tag="div" />}
       <List
         singleSelection
         selectedIndex={selectedIndex.item}
@@ -106,6 +105,7 @@ export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) =>
 
   const { width } = useViewport();
   const breakpoint = 539;
+  const viewWidth = (width < breakpoint)
 
   const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex } = menu;
   const { isAdmin } = user;
@@ -115,13 +115,13 @@ export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) =>
 
   return (
     <Drawer
-      modal={(width < breakpoint)}
+      modal={viewWidth}
       open={isMenuOpen}
       onClose={() => setOpen(false)}
     >
-      {mobileDrawerHeader(setOpen, name, photo)}
+      {mobileDrawerHeader(setOpen, name, photo, viewWidth)}
       <DrawerContent>
-        {drawerContent(selectedIndex, setSelectedIndex, setOpen, checkIsAdmin)}
+        {drawerContent(selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth)}
       </DrawerContent>
     </Drawer>
   );

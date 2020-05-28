@@ -86,6 +86,7 @@ export const addDeviceSuccess = (device: NewDevice): { isLoading: boolean; type:
 export const addDeviceFailure = (errors): AddDeviceActionFailure => ({
   errors,
   type: ADD_DEVICE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -118,6 +119,7 @@ export const verifyDeviceSuccess = (id: VerifyDevice): UserVerifyDeviceActionSuc
 export const verifyDeviceFailure = (errors): UserVerifyDeviceActionFailure => ({
   errors,
   type: USER_VERIFY_DEVICE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -346,14 +348,14 @@ export const deleteDevice = id => (dispatch, getState, http) => {
 
 export const deviceInitialState = {
   isLoading: true,
-  errors: {},
+  errors: null,
   data: [],
   activeDevice: {},
   devices: [],
 };
 
 export const reducer = (state: {
-  isLoading: boolean, errors: object, data: Device[], activeDevice: object, devices: any[]
+  isLoading: boolean, errors: any, data: Device[], activeDevice: object, devices: any[]
   } = deviceInitialState, action) => {
   switch (action.type) {
     case ADD_DEVICE_REQUEST:
@@ -372,6 +374,7 @@ export const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     case USER_VERIFY_DEVICE_REQUEST:
       return {
@@ -389,6 +392,7 @@ export const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     case ACTIVATE_DEVICE_REQUEST:
       return {

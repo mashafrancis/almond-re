@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 // components
 import { EnergyMonitoringPage } from './index';
 
-describe.skip('The Analytics Page', () => {
+describe.skip('The EnergyMonitoring Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;

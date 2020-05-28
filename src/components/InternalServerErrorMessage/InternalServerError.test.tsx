@@ -8,15 +8,9 @@ import { createBrowserHistory } from 'history';
 // components
 import InternalServerErrorMessage from './index';
 
-describe.skip('Internal Server Error Message', () => {
-  let history;
-  if (window.location.pathname !== '/') {
-    window.history.replaceState(null, null, '/');
-  }
-  history = createBrowserHistory();
+describe('Internal Server Error Message', () => {
   const props = {
-    history,
-    errorButton: jest.fn(),
+    errorButton: <div />
   };
   let wrapper;
 

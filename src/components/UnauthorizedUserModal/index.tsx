@@ -5,7 +5,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // components
-import Button from '@components/Button';
 import Modal from '@components/Modal';
 
 // thunk action creators
@@ -23,19 +22,19 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
   logoutAndRedirectUser = () => {
     this.props.logoutUser();
     localStorage.removeItem('triedToAuthenticate');
-    location.reload();
+    window.location.reload();
   }
 
   render() {
     return (
       <Modal
-        isModalOpen={this.props.showModal}
+        isModalOpen={this.props.isModalOpen}
         renderHeader={() => `Welcome, ${this.props.user && this.props.user.name || 'User'}`}
         renderContent={() => (
           <div>
-            <p className="headline-4">
+            <p className="headline-4 modal-content">
               You are currently not authorised to access Almond.
-              Please contact almond.froyo@gmail.com for more details
+              Please contact almond.froyo@gmail.com for more details.
             </p>
           </div>
         )}

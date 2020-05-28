@@ -15,6 +15,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// import StyledBadge from "@components/StyledBadge";
 
 // utils
 import { UserContext } from '@utils/context/Context';
@@ -23,6 +24,7 @@ import { MenuContext } from "@context/MenuContext";
 
 // interface
 import { TopBarProps } from './interfaces';
+import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
 const StyledBadge = withStyles((theme: Theme) =>
   createStyles({
@@ -76,10 +78,42 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
 
   const classes = useStyles();
 
+  const DeviceActiveBadge = withStyles((theme: Theme) =>
+    createStyles({
+      badge: {
+        // backgroundColor: '#76ff03',
+        backgroundColor: '#ff1744',
+        // color: '#76ff03',
+        color: '#ff1744',
+        boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+        top: '50%',
+        left: '-8%',
+        '&::after': {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          animation: '$ripple 1.2s infinite ease-in-out',
+          border: '0.8px solid currentColor',
+          content: '""',
+        },
+      },
+    }),
+  )(Badge);
+
   const renderDeviceDisplay = () => (
     <div className="topbar-device-id" onClick={() => menu.setDeviceModalOpen(true)}>
-      <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-      <ArrowDropDownIcon onClick={menu.setDeviceModalOpen.bind(null,true)} />
+      <DeviceActiveBadge
+         variant="dot"
+         overlap="circle"
+         anchorOrigin={{
+           vertical: 'top',
+           horizontal: 'left',
+         }}
+      >
+        <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
+        <ArrowDropDownIcon onClick={menu.setDeviceModalOpen.bind(null,true)} />
+      </DeviceActiveBadge>
     </div>
   );
 
@@ -91,6 +125,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
         horizontal: 'right',
       }}
       variant="dot"
+      invisible={isArrayNotNull(notifications.length)}
     >
       <TimelineIcon onClick={menu.toggleActivityDrawer.bind(null,true)} />
     </StyledBadge>
@@ -100,28 +135,23 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const notifications = ['true'];
 
   const notificationsIcon = () => (
-    notifications.length > 0 ?
+    isArrayNotNull(notifications.length) ? <NotificationsNoneIcon /> :
       <StyledBadge
-        overlap="circle"
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
         }}
+        overlap="circle"
+        invisible={isArrayNotNull(notifications.length)}
         variant="dot"
       >
         <NotificationsIcon style={{ color: '#1967D2' }}/>
       </StyledBadge>
-      :
-      <NotificationsNoneIcon />
   )
 
   const topIcons = [
-    {
-      icon: timeLineIcon(),
-    },
-    {
-      icon: notificationsIcon(),
-    },
+    { icon: timeLineIcon() },
+    { icon: notificationsIcon() },
   ];
 
   const renderTopIcons = () => (
@@ -142,12 +172,6 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
     <TopAppBar className="dashboard-mobile-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
-          {/*{(width < breakpoint) &&*/}
-          {/*<TopAppBarIcon navIcon tabIndex={0}>*/}
-          {/*  <MaterialIcon*/}
-          {/*    onClick={() => menu.setOpen(true)}*/}
-          {/*    hasRipple icon="notes" initRipple={null}/>*/}
-          {/*</TopAppBarIcon>}*/}
           <TopAppBarTitle>
             <NavLink to={'/'}>
               <img

@@ -1,4 +1,3 @@
-import * as Cookie from 'cookies-js';
 import * as Cookies from 'js-cookie';
 import * as jwtDecode from 'jwt-decode';
 
@@ -25,11 +24,10 @@ export const authService = {
     return this.getToken() ? this.decodeToken() : {};
   },
   logoutUser() {
-    Cookie.expire('jwt-token', { path: '/' });
+    Cookies.remove('jwt-token', { path: '/' });
   },
   redirectUser() {
     const referrer = window.location.pathname;
-
     this.logoutUser();
     localStorage.setItem('sessionError', 'Your session has expired, please log in to continue.');
     localStorage.setItem('locationReferrer', referrer);
