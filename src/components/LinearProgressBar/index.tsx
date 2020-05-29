@@ -1,7 +1,7 @@
 // import react library
 import * as React from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import withStyles from "@material-ui/core/styles/withStyles";
+import { LinearProgress } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const ColorLinearProgress = withStyles({
   colorPrimary: {

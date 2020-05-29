@@ -2,51 +2,55 @@ import * as React from 'react';
 
 // third-party libraries
 import {
-  createStyles,
-  TextField,
-  Theme
-} from '@material-ui/core';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import AllOutTwoToneIcon from '@material-ui/icons/AllOutTwoTone';
-import FaceIcon from '@material-ui/icons/Face';
-import MenuSurface, { Corner } from '@material/react-menu-surface';
-import {
   TopAppBarFixedAdjust,
   TopAppBarIcon
 } from '@material/react-top-app-bar';
 import { connect } from 'react-redux';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import MoodIcon from '@material-ui/icons/Mood';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { Theme, withStyles, makeStyles, createStyles } from '@material-ui/core/styles';
+import {
+  SwipeableDrawer,
+  MenuItem,
+  ListItemIcon,
+  TextField,
+  InputAdornment,
+  Menu,
+  Fade,
+  Backdrop
+} from "@material-ui/core";
+import MenuSurface, { Corner } from '@material/react-menu-surface';
+
+// icons
+import {
+  Feedback,
+  Mood,
+  ExitToApp,
+  Settings,
+  Help,
+  OpenInNew,
+  AllOutTwoTone,
+  Face
+} from '@material-ui/icons';
 
 // components;
-import PageBottomNavigation from '@components/BottomNavigation';
-import FeedbackDialogModal from '@components/FeedbackDialogModal';
-import { MenuContent } from '@components/MenuContent';
-import MenuModal from '@components/MenuModal';
 import {
   AdminMenus,
   UserMenus
 } from '@components/MenuRoutes';
-import Modal from '@components/Modal';
-import { TopBar } from '@components/TopBar';
+import LinearProgressBar from "@components/LinearProgressBar";
 
-// const Modal = React.lazy(() => import('@components/Modal'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const MenuModal = React.lazy(() => import('@components/MenuModal'));
+const MenuContent = React.lazy(() => import('@components/MenuContent'));
+const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
+const FeedbackDialogModal = React.lazy(() => import('@components/FeedbackDialogModal'));
+const TopBar = React.lazy(() => import('@components/TopBar'));
+const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
 
 // utils
 import { UserContext } from '@utils/context';
 import { useViewport } from '../../hooks';
 import { MenuContext } from "@context/MenuContext";
-import { activityLogs } from "@pages/WaterCyclesPage/fixtures";
-import ActivityLogCard from "@components/ActivityLogCard";
+import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
 // thunks
 import { activateDevice } from '@modules/device';
@@ -81,6 +85,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   font: {
     fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    // color: '#fff',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)'
+  },
 }));
 
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (props) => {
@@ -110,6 +119,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 
   const { width } = useViewport();
   const breakpoint = 539;
+
+  const { history, activityLogs } = props;
+  const { isFeedbackModal, feedback, action } = state;
 
   const {
     selectedIndex,
@@ -229,7 +241,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           onClick={() => setState({ ...state, isFeedbackModal: true, isFeedbackMenuOpen: false })}
         >
           <h5>Send feedback</h5>
-          <FeedbackIcon />
+          <Feedback />
         </div>
       }/>
     </MenuSurface>
@@ -258,7 +270,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       }}
       InputProps={{
         startAdornment: <InputAdornment position="start">
-          <AllOutTwoToneIcon style={{ color: '#1967D2' }} />
+          <AllOutTwoTone style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
       {devices.map(device => (
@@ -292,7 +304,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       }}
       InputProps={{
         startAdornment: <InputAdornment position="start">
-          <FaceIcon style={{ color: '#1967D2' }} />
+          <Face style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
       {props.user.roles.map((role, index) => (
@@ -326,25 +338,25 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     >
       {width < breakpoint && <div>
         <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><SettingsIcon /></ListItemIcon>
+          <ListItemIcon style={{ minWidth: '36px' }}><Settings/></ListItemIcon>
           Settings
         </MenuItem>
         <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><HelpIcon /></ListItemIcon>
+          <ListItemIcon style={{ minWidth: '36px' }}><Help/></ListItemIcon>
           Help
         </MenuItem>
         <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><OpenInNewIcon /></ListItemIcon>
+          <ListItemIcon style={{ minWidth: '36px' }}><OpenInNew/></ListItemIcon>
           Send Feedback
         </MenuItem>
       </div>}
 
       <MenuItem onClick={toggleRoleChangeDialog}>
-        <ListItemIcon style={{ minWidth: '36px' }}><MoodIcon /></ListItemIcon>
+        <ListItemIcon style={{ minWidth: '36px' }}><Mood/></ListItemIcon>
         Change role
       </MenuItem>
       <MenuItem onClick={logoutUser}>
-        <ListItemIcon style={{ minWidth: '36px' }}><ExitToAppIcon /></ListItemIcon>
+        <ListItemIcon style={{ minWidth: '36px' }}><ExitToApp/></ListItemIcon>
         Logout
       </MenuItem>
     </Menu>
@@ -367,16 +379,20 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       <div className="activity-logs-drawer">
         <h5 className="card-header__title">Recent Activities</h5>
         {
-          activityLogs.map((logs, index) => {
+          isArrayNotNull(activityLogs) ?
+          activityLogs.map(logs => {
             return (
               <ActivityLogCard
-                key={index}
-                log={logs.message}
-                date={logs.date}
-                type={logs.type}
+                key={logs._id}
+                log={logs.actionDesc}
+                date={logs.createdAt}
+                type='info'
               />
             );
-          })
+          }) :
+          <div className="blank-content">
+            <h2>No logs found!</h2>
+          </div>
         }
       </div>
     );
@@ -386,15 +402,12 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     <SwipeableDrawer
       anchor="right"
       open={isActivityDrawerOpen}
-      onClose={() => toggleActivityDrawer(false)}
-      onOpen={() => toggleActivityDrawer(true)}
+      onClose={toggleActivityDrawer.bind(null,false, true)}
+      onOpen={toggleActivityDrawer.bind(null,true, true)}
     >
       { ActivityLogs() }
     </SwipeableDrawer>
   );
-
-  const { history } = props;
-  const { isFeedbackModal, feedback, action } = state;
 
   const checkIsAdmin = () => user.isAdmin ? AdminMenus : UserMenus;
 
@@ -405,12 +418,14 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
         photo={user.photo}
       />
       <TopBar
+        isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
         photoImage={photoImage()}
         openProfileDialog={handleProfileClickOpen}
-      />
-        <TopAppBarFixedAdjust>
+      >
+        <React.Suspense fallback={<LinearProgressBar />} >
           {React.createElement(checkIsAdmin()[selectedIndex.group][selectedIndex.item].component, { history })}
-        </TopAppBarFixedAdjust>
+        </React.Suspense>
+      </TopBar>
       { width < breakpoint && <PageBottomNavigation/> }
       {FeedbackMenu()}
       {SelectDeviceModal(user.devices)}
@@ -431,6 +446,8 @@ export const mapStateToProps = state => ({
   user: state.user,
   activeDevice: state.device.activeDevice,
   roles: state.userRoles.data,
+  activityLogs: state.activityLogs,
+  loading: state.loading,
 });
 
 export const mapDispatchToProps = dispatch => ({

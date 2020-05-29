@@ -3,10 +3,16 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import SettingsIcon from '@material-ui/icons/Settings';
-import {displaySnackMessage} from "@modules/snack";
 import {connect} from "react-redux";
-import GeneralCardInfo from "@components/GeneralInfoCard";
+
+// components
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+import {
+  Settings
+} from '@material-ui/icons';
+
+// thunk
+import { displaySnackMessage } from "@modules/snack";
 
 // interfaces
 import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
@@ -27,7 +33,7 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) 
             <GeneralCardInfo
               mainHeader="Settings"
               subHeader="Adjust your preferences for better experience"
-              icon={<SettingsIcon className="content-icon general-info-icon" />}
+              icon={<Settings className="content-icon general-info-icon" />}
             />
           </Cell>
         </Row>

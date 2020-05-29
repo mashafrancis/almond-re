@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Line } from "react-chartjs-2";
 import './AreaCharts.scss';
-import {AreaChartDisplayProps} from "@components/AreaChartDisplay/interfaces";
+import { AreaChartDisplayProps } from "@components/AreaChartDisplay/interfaces";
 
-export const AreaChardDisplay: React.FunctionComponent<AreaChartDisplayProps> = (props) => {
+const AreaChardDisplay: React.FunctionComponent<AreaChartDisplayProps> = (props) => {
   const {
     chartData,
     backgroundColor,
@@ -47,3 +47,5 @@ export const AreaChardDisplay: React.FunctionComponent<AreaChartDisplayProps> = 
     </div>
   );
 }
+
+export default AreaChardDisplay;

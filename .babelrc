@@ -8,6 +8,42 @@
     "syntax-dynamic-import",
     "@babel/plugin-syntax-dynamic-import",
     [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/core",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-core"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/core/styles",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-styles"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/core/colors",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-colors"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/icons",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-icons"
+    ],
+    [
       "module-resolver",
       {
         "root": [
@@ -19,7 +55,9 @@
           "@placeholders": "./src/placeholders/",
           "@modules": "./src/store/modules/",
           "@utils": "./src/utils/",
-          "@context": "./src/context/"
+          "@context": "./src/context/",
+          "@material-ui/core": "@material-ui/core/es",
+          "@material-ui/icons": "@material-ui/icons/esm"
         }
       }
     ]

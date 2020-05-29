@@ -9,14 +9,18 @@ import {
 import { connect } from 'react-redux';
 
 // components
-import Modal from '@components/Modal';
-import Table from '@components/Table';
-import Chip from '@material-ui/core/Chip';
-import InputAdornment from '@material-ui/core/InputAdornment';
+const CardInfo = React.lazy(() => import('@components/CardInfo'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const Table = React.lazy(() => import('@components/Table'));
+import {
+  InputAdornment,
+  Chip,
+  TextField
+} from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import PhonelinkSetupSharpIcon from '@material-ui/icons/PhonelinkSetupSharp';
-import Pagination from '@material-ui/lab/Pagination';
+import { PhonelinkSetupSharp } from '@material-ui/icons';
+import LinearProgressBar from "@components/LinearProgressBar";
+import { Pagination } from '@material-ui/lab';
 
 // thunks
 import {
@@ -35,8 +39,6 @@ import {
   DeviceManagementProps,
   DeviceManagementState
 } from './interfaces';
-import CardInfo from "@components/CardInfo";
-import FaceIcon from "@material-ui/icons/Face";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -228,7 +230,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PhonelinkSetupSharpIcon />
+                  <PhonelinkSetupSharp />
                 </InputAdornment>
               ),
             }}
@@ -269,16 +271,18 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
           <CardInfo
             mainHeader="Device Management"
             subHeader="Add a new device to the database for the user"
-            icon={<PhonelinkSetupSharpIcon className="content-icon" />}
+            icon={<PhonelinkSetupSharp className="content-icon" />}
             buttonName="New device"
             onClick={showDeviceModal('Add')}
           />
-          <div className="user-roles-page__table">
-            { TableContent(Object.entries(props.devices)) }
-            {/*<div className={classes.root}>*/}
-            {/*  <Pagination count={5} color="primary" />*/}
-            {/*</div>*/}
-          </div>
+          <React.Suspense fallback={<LinearProgressBar />}>
+            <div className="user-roles-page__table">
+              { TableContent(Object.entries(props.devices)) }
+              {/*<div className={classes.root}>*/}
+              {/*  <Pagination count={5} color="primary" />*/}
+              {/*</div>*/}
+            </div>
+          </React.Suspense>
           {AddEditDeviceModal()}
           {DeleteDeviceModal()}
         </Cell>

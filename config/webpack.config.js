@@ -46,6 +46,8 @@ module.exports = {
       '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
       '@utils': path.resolve(__dirname, '..', 'src/utils'),
       '@context': path.resolve(__dirname, '..', 'src/context'),
+      '@material-ui/core': '@material-ui/core/esm',
+      '@material-ui/icons': '@material-ui/icons/esm'
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
@@ -93,7 +95,8 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: [
           /node_modules/,
-          /node_modules\/@material/
+          /node_modules\/@material/,
+          /node_modules\/(?!(@material-ui\/core\/es)\/).*/,
         ],
         use: {
           loader: 'babel-loader',

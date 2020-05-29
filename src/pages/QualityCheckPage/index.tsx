@@ -8,10 +8,14 @@ import {
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 
+// components
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+import {
+  SecurityTwoTone
+} from '@material-ui/icons';
+
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import SecurityTwoToneIcon from '@material-ui/icons/SecurityTwoTone';
-import GeneralCardInfo from "@components/GeneralInfoCard";
 
 // styles
 import './QualityCheckPage.scss';
@@ -45,7 +49,7 @@ export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = 
           <GeneralCardInfo
             mainHeader="Quality Check"
             subHeader="Tests for water quality, salts and ph level"
-            icon={<SecurityTwoToneIcon className="content-icon general-info-icon" />}
+            icon={<SecurityTwoTone className="content-icon general-info-icon" />}
           />
         </Cell>
       </Row>

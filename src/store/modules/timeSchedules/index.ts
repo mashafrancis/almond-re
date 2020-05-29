@@ -25,8 +25,8 @@ import {
   TogglePumpStatusActionRequest,
   TogglePumpStatusActionSuccess,
 } from './interfaces';
-// types
 
+// types
 import {
   ADD_SCHEDULES_FAILURE,
   ADD_SCHEDULES_REQUEST,
@@ -47,7 +47,8 @@ import {
   TOGGLE_PUMP_STATUS_REQUEST,
   TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
-import {AnyAction} from "redux";
+import { AnyAction } from "redux";
+import { logActivity } from "@modules/activityLogs";
 
 /**
  * Get all schedules request
@@ -196,8 +197,7 @@ export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
  * @param id
  * @param enabled
  */
-export const togglePumpStatusSuccess = (id, enabled: Status): TogglePumpStatusActionSuccess => ({
-  id,
+export const togglePumpStatusSuccess = (enabled: Status): TogglePumpStatusActionSuccess => ({
   enabled,
   type: TOGGLE_PUMP_STATUS_SUCCESS,
 });
@@ -329,6 +329,10 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
 export const togglePump = status => (dispatch, getState, http) => {
   return http.patch('pump', status)
     .then((response) => {
+      const data = response.data.data.scheduleOverride.enabled;
+      // dispatch(getPumpStatusSuccess(data));
+      dispatch(togglePumpStatusSuccess(data));
+      dispatch(logActivity(response.data.data.activityHistory));
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {
@@ -348,7 +352,6 @@ export const getPumpStatus = deviceId => (dispatch, getState, http) => {
     .then((response) => {
       const data = response.data.data[0].enabled;
       dispatch(getPumpStatusSuccess(data));
-      return data;
     })
     .catch(() => {
       // const message = 'Unable to turn the pump ON/OFF. Kindly check network connectivity.';
@@ -365,7 +368,6 @@ export const getPumpStatus = deviceId => (dispatch, getState, http) => {
 export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) => {
   return http.patch(`schedules/${id}`, enabled)
     .then((response) => {
-      dispatch(togglePumpStatusSuccess(id, response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {

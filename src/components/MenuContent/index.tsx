@@ -13,7 +13,6 @@ import List, {
   ListItemGraphic,
   ListItemText
 } from '@material/react-list';
-import MaterialIcon from '@material/react-material-icon';
 
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
@@ -99,7 +98,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
   </React.Fragment>
 );
 
-export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) => {
+const MenuContent: React.FunctionComponent<MenuContentProps> = (props) => {
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
 
@@ -126,3 +125,5 @@ export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) =>
     </Drawer>
   );
 };
+
+export default MenuContent;

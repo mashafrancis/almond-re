@@ -13,26 +13,28 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 
 // components
+const CardInfo = React.lazy(() => import('@components/CardInfo'));
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const Table = React.lazy(() => import('@components/Table'));
+const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
+const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
+const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
+
 import ActionButton from '@components/ActionButton';
-import ActivityLogCard from '@components/ActivityLogCard';
-import DashboardCard from '@components/DashboardCard';
-import Loader from '@components/Loader';
-import Modal from '@components/Modal';
-import Table from '@components/Table';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
-import WaterCyclesPageLoader from '@placeholders/WaterCyclesPageSkeletonLoader';
-import { UserContext } from '@utils/context';
-import OpacityIcon from '@material-ui/icons/Opacity';
-import BlurCircularIcon from '@material-ui/icons/BlurCircular';
-import FaceIcon from "@material-ui/icons/Face";
-import CardInfo from "@components/CardInfo";
-import GeneralCardInfo from "@components/GeneralInfoCard";
-import { DonutDisplay } from "@components/DonutDisplay";
-import { AreaChardDisplay } from "@components/AreaChartDisplay";
-import { MenuContext } from "@context/MenuContext";
-import ScheduleTwoToneIcon from '@material-ui/icons/ScheduleTwoTone';
+import LinearProgressBar from '@components/LinearProgressBar';
+
+// icons
+import {
+  Opacity,
+  BlurCircular,
+  Face,
+  ScheduleTwoTone,
+  AddAlarmTwoTone
+} from '@material-ui/icons';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -45,6 +47,8 @@ import {
   togglePump,
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
+import { MenuContext } from "@context/MenuContext";
+import { UserContext } from '@utils/context';
 
 // styles
 import './WaterCyclesPage.scss';
@@ -86,7 +90,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   React.useEffect(() => {
     props.getPumpStatus(user.activeDevice._id)
       .then(() => setState({ ...state, isEnabled: props.enabled }));
-  },              [state.isEnabled]);
+  },              [user.activeDevice._id]);
 
   React.useEffect(() => {
     const { selectedTimeSchedule } = state;
@@ -129,7 +133,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       ? props.toggleScheduleStatus(schedule._id,  { enabled: true, deviceId: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'true'))
       :  props.toggleScheduleStatus(schedule._id,  { enabled: false, deviceId: user.activeDevice._id })
-        .then(() => window.localStorage.setItem('checked', 'true'));
+        .then(() => window.localStorage.setItem('checked', 'false'));
   };
 
   const handleAddTimeSchedule = value => setState({ ...state, selectedTimeSchedule: value });
@@ -340,7 +344,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           <GeneralCardInfo
             mainHeader="Manual Override"
             subHeader="Pump water directly into the system"
-            icon={<BlurCircularIcon className="content-icon general-info-icon" />}
+            icon={<BlurCircular className="content-icon general-info-icon" />}
             actionItem={
               <Switch
                 className="manual-override"
@@ -352,7 +356,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
           <CardInfo
             mainHeader="Water Schedules"
             subHeader="Create a new water schedule for your pump cycle"
-            icon={<ScheduleTwoToneIcon className="content-icon" />}
+            icon={<ScheduleTwoTone className="content-icon" />}
             buttonName="Add schedule"
             onClick={showScheduleModal('Add')}
           />
@@ -360,8 +364,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             classes="recent-activities-available"
             heading="Water Schedules"
             body={
-              (props.schedules.length > 0)
-                ? TableContent(Object.entries(props.schedules))
+              (props.schedules.length > 0) ?
+                <React.Suspense fallback={<LinearProgressBar />}>
+                  {TableContent(Object.entries(props.schedules))}
+                </React.Suspense>
                 : BlankContent(
                 'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
                 )
@@ -419,7 +425,7 @@ export const mapDispatchToProps = dispatch => ({
   deleteSingleSchedule: scheduleId => dispatch(deleteSingleSchedule(scheduleId)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
   getAllSchedules: deviceId => dispatch(getAllSchedules(deviceId)),
-  getPumpStatus: scheduleId => dispatch(getPumpStatus(scheduleId)),
+  getPumpStatus: deviceId => dispatch(getPumpStatus(deviceId)),
   togglePump: status => dispatch(togglePump(status)),
   toggleScheduleStatus: (scheduleId, enabled) => dispatch(toggleScheduleStatus(scheduleId, enabled)),
 });

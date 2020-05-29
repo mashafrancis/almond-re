@@ -1,31 +1,33 @@
 import * as React from 'react';
 
-import WidgetsRoundedIcon from '@material-ui/icons/WidgetsRounded';
-import OpacityIcon from '@material-ui/icons/Opacity';
-import ControlCameraIcon from '@material-ui/icons/ControlCamera';
-import SecurityIcon from '@material-ui/icons/Security';
-import MemoryIcon from '@material-ui/icons/Memory';
-import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import AllOutIcon from '@material-ui/icons/AllOut';
-import PeopleIcon from '@material-ui/icons/People';
-import BubbleChartIcon from '@material-ui/icons/BubbleChart';
-import SpaIcon from '@material-ui/icons/Spa';
+import {
+  WidgetsRounded,
+  Opacity,
+  ControlCamera,
+  Security,
+  Memory,
+  LocalFlorist,
+  Settings,
+  Help,
+  OpenInNew,
+  AllOut,
+  People,
+  BubbleChart,
+  Spa
+} from '@material-ui/icons';
 
 // pages
-import AnalyticsPage from '@pages/AnalyticsPage';
-import DeviceManagementPage from '@pages/DeviceManagementPage';
-import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
-import EnvironmentControlPage from '@pages/EnvironmentControlPage';
-import HelpPage from "@pages/HelpPage";
-import PeoplePage from '@pages/PeoplePage';
-import QualityCheckPage from '@pages/QualityCheckPage';
-import SettingsPage from '@pages/SettingsPage';
-import SupportPage from "@pages/SupportPage";
-import UserRolesPage from '@pages/UserRolesPage';
-import WaterCyclesPage from '@pages/WaterCyclesPage';
+const AnalyticsPage = React.lazy(() => import('@pages/AnalyticsPage'));
+const DeviceManagementPage = React.lazy(() => import('@pages/DeviceManagementPage'));
+const EnergyMonitoringPage = React.lazy(() => import('@pages/EnergyMonitoringPage'));
+const EnvironmentControlPage = React.lazy(() => import('@pages/EnvironmentControlPage'));
+const HelpPage = React.lazy(() => import('@pages/HelpPage'));
+const PeoplePage = React.lazy(() => import('@pages/PeoplePage'));
+const QualityCheckPage = React.lazy(() => import('@pages/QualityCheckPage'));
+const SettingsPage = React.lazy(() => import('@pages/SettingsPage'));
+const SupportPage = React.lazy(() => import('@pages/SupportPage'));
+const UserRolesPage = React.lazy(() => import('@pages/UserRolesPage'));
+const WaterCyclesPage = React.lazy(() => import('@pages/WaterCyclesPage'));
 
 // interfaces
 import { MenuBottomProps, MenuComponentProps } from '@components/MenuRoutes/interfaces';
@@ -33,49 +35,49 @@ import { MenuBottomProps, MenuComponentProps } from '@components/MenuRoutes/inte
 export const UserMenus: MenuComponentProps[][] = [
   [
     {
-      icon: <WidgetsRoundedIcon />,
+      icon: <WidgetsRounded/>,
       primaryText: 'Analytics',
       component: AnalyticsPage,
     },
     {
-      icon: <OpacityIcon />,
+      icon: <Opacity/>,
       primaryText: 'Water Cycles',
       component: WaterCyclesPage,
     },
     {
-      icon: <ControlCameraIcon />,
+      icon: <ControlCamera/>,
       primaryText: 'Environmental Control',
       component: EnvironmentControlPage,
     },
     {
-      icon: <SecurityIcon />,
+      icon: <Security/>,
       primaryText: 'Quality Control',
       component: QualityCheckPage,
     },
     {
-      icon: <MemoryIcon />,
+      icon: <Memory/>,
       primaryText: 'Energy Usage',
       component: EnergyMonitoringPage,
     },
     {
-      icon: <LocalFloristIcon />,
+      icon: <LocalFlorist/>,
       primaryText: 'Support',
       component: SupportPage,
     },
   ],
   [
     {
-      icon: <SettingsIcon />,
+      icon: <Settings/>,
       primaryText: 'Settings',
       component: SettingsPage,
     },
     {
-      icon: <HelpIcon />,
+      icon: <Help/>,
       primaryText: 'Help',
       component: HelpPage,
     },
     {
-      icon: <OpenInNewIcon />,
+      icon: <OpenInNew/>,
       primaryText: 'Send feedback',
       component: AnalyticsPage,
     },
@@ -85,39 +87,39 @@ export const UserMenus: MenuComponentProps[][] = [
 export const AdminMenus: MenuComponentProps[][] = [
   [
     {
-      icon: <WidgetsRoundedIcon />,
+      icon: <WidgetsRounded/>,
       primaryText: 'Analytics',
       component: AnalyticsPage,
     },
     {
-      icon: <AllOutIcon />,
+      icon: <AllOut/>,
       primaryText: 'Devices',
       component: DeviceManagementPage,
     },
     {
-      icon: <PeopleIcon />,
+      icon: <People/>,
       primaryText: 'People',
       component: PeoplePage,
     },
     {
-      icon: <BubbleChartIcon />,
+      icon: <BubbleChart/>,
       primaryText: 'Roles',
       component: UserRolesPage,
     },
     {
-      icon: <SpaIcon />,
+      icon: <Spa/>,
       primaryText: 'Support',
       component: SupportPage,
     },
   ],
   [
     {
-      icon: <SettingsIcon />,
+      icon: <Settings/>,
       primaryText: 'Settings',
       component: PeoplePage,
     },
     {
-      icon: <HelpIcon />,
+      icon: <Help/>,
       primaryText: 'Help',
       component: HelpPage,
     },
@@ -126,27 +128,27 @@ export const AdminMenus: MenuComponentProps[][] = [
 
 export const BottomNavigationMenus: MenuBottomProps[] = [
   {
-    icon: <WidgetsRoundedIcon />,
+    icon: <WidgetsRounded/>,
     label: 'Analytics',
     value: 'analytics',
   },
   {
-    icon: <OpacityIcon />,
+    icon: <Opacity/>,
     label: 'Water',
     value: 'water',
   },
   {
-    icon: <ControlCameraIcon />,
+    icon: <ControlCamera/>,
     label: 'Environmental',
     value: 'environment',
   },
   {
-    icon: <SecurityIcon />,
+    icon: <Security/>,
     label: 'Quality',
     value: 'quality',
   },
   {
-    icon: <MemoryIcon />,
+    icon: <Memory/>,
     label: 'Energy',
     value: 'energy',
   },
@@ -154,27 +156,27 @@ export const BottomNavigationMenus: MenuBottomProps[] = [
 
 export const AdminBottomNavigationMenus: MenuBottomProps[] = [
   {
-    icon: <WidgetsRoundedIcon />,
+    icon: <WidgetsRounded/>,
     label: 'Analytics',
     value: 'analytics',
   },
   {
-    icon: <AllOutIcon />,
+    icon: <AllOut/>,
     label: 'Devices',
     value: 'devices',
   },
   {
-    icon: <OpenInNewIcon />,
+    icon: <People/>,
     label: 'People',
     value: 'people',
   },
   {
-    icon: <BubbleChartIcon />,
+    icon: <BubbleChart/>,
     label: 'Roles',
     value: 'roles',
   },
   {
-    icon: <SpaIcon />,
+    icon: <Spa/>,
     label: 'Requests',
     value: 'requests',
   },

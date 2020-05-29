@@ -8,6 +8,12 @@ import {
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 
+// components
+const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
+const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
+const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
+import ActionButton from "@components/ActionButton";
+
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 
@@ -19,10 +25,6 @@ import {
   EnvironmentControlPageProps,
   EnvironmentControlPageState
 } from './interfaces';
-import DashboardCard from "@components/DashboardCard";
-import ActionButton from "@components/ActionButton";
-import {DonutDisplay} from "@components/DonutDisplay";
-import {AreaChardDisplay} from "@components/AreaChartDisplay";
 
 export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = (props) => {
   const [state, setState] = React.useState<EnvironmentControlPageState>({
@@ -52,7 +54,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 backgroundColor={['#36A2EB', '#CCCCCC']}
                 hoverBackgroundColor={['#36A2EB', '#CCCCCC']}
                 data={[20, 50]}
-                donutInfo={`${18}degs`}
+                donutInfo={`${18} \u00b0C`}
                 halfDonut
               />
               }

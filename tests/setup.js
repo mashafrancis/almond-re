@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom');
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'https://localhost' });
+const jsdom = new JSDOM('<!doctype html><html lang="en"><body/></html>', { url: 'https://localhost' });
 const { window } = jsdom;
 
 function copyProps(src, target) {
@@ -9,6 +9,25 @@ function copyProps(src, target) {
     ...Object.getOwnPropertyDescriptors(target),
   });
 }
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+})
+
+// Object.defineProperty(Cookies, 'remove', {
+//   writable: true,
+//   value: '',
+// })
 
 global.window = window;
 global.document = window.document;
@@ -23,3 +42,17 @@ global.cancelAnimationFrame = function (id) {
 };
 
 copyProps(window, global);
+
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
+  jest.spyOn(console, 'warn').mockImplementation(() => {})
+});
+
+afterAll(() => {
+  console.error.mockRestore()
+  console.warn.mockRestore()
+});
+
+afterEach((done) => {
+  done();
+});

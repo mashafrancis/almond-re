@@ -9,10 +9,10 @@ import { compose } from 'redux';
 
 // components
 import ErrorBoundary from '@components/ErrorBoundary';
-import Loader from '@components/Loader';
 import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
 import LinearProgressBar from "@components/LinearProgressBar";
+import { Transition } from 'react-transition-group';
 
 // thunk action creators
 import { getUserDetails } from '@modules/user';
@@ -32,6 +32,7 @@ import { MenuProvider } from "@context/MenuContext";
 
 // styles
 import './App.scss';
+import { Fade } from "@material-ui/core";
 
 const useEffectAsync = (effect, inputs) => {
   React.useEffect(() => {
@@ -42,13 +43,14 @@ const useEffectAsync = (effect, inputs) => {
 export const App: React.FunctionComponent<AppProps> = (props) => {
   const [state, setState] = React.useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
-    isFetchingUserDetails: true,
+    loading: 'idle',
     isAdmin: false,
   });
+  const timerRef = React.useRef<number>();
 
   const {
     user,
-    isFetchingUserDetails
+    loading
   } = props;
 
   useEffectAsync(async () => {
@@ -63,7 +65,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
               isAdmin: !checkUserRole(response.userDetails.currentRole.title, 'User') })
           });
       } catch {
-        setState({ ...state, isFetchingUserDetails: false })
+        setState({ ...state, loading: 'error' })
       }
     }
   }, []);
@@ -73,8 +75,12 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
     const { socialToken } = queryString.parse(search);
     if (socialToken) {
       authService.saveToken(socialToken);
-      window.location.replace(process.env.PUBLIC_URL ?? 'http://froyo.almond.com:3000/');
+      window.location.replace(process.env.PUBLIC_URL as string);
     }
+  }, []);
+
+  React.useEffect(() => () => {
+    clearTimeout(timerRef.current);
   }, []);
 
   const checkUserDetailsAndAuthentication = (
@@ -92,8 +98,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
     activeDevice,
   } = user;
 
-  return (checkUserDetailsAndAuthentication(isFetchingUserDetails, isUserAuthenticated) ?
-    <LinearProgressBar /> :
+  return (
     <UserContext.Provider
       value={{
         _id,
@@ -116,7 +121,19 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
                   location.pathname !== '/'
                   && isUserAuthenticated
                 }
-                {<Routes/>}
+                {
+                  <React.Suspense fallback={
+                    <Fade
+                      in={props.loading === 'requesting'}
+                      style={{ transitionDelay: props.loading === 'requesting' ? '800ms' : '0ms' }}
+                      unmountOnExit
+                    >
+                      <LinearProgressBar />
+                    </Fade>
+                  }>
+                    <Routes/>
+                  </React.Suspense>
+                  }
               </>
             </React.Fragment>
           </ErrorBoundary>
@@ -129,7 +146,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
 export const mapStateToProps = state => ({
   serverError: state.internalServerError,
   user: state.user,
-  isFetchingUserDetails: state.user.isFetchingUserDetails,
+  loading: state.loading,
 });
 
 export const mapDispatchToProps = dispatch => ({

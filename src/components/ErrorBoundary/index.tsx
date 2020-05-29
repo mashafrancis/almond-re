@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // components
 import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
-import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
+import { ArrowBackRounded } from "@material-ui/icons";
 
 // interfaces
 import { ErrorBoundaryState } from '@components/ErrorBoundary/interfaces';
@@ -24,7 +24,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryState> {
         <InternalServerErrorMessage
           errorButton={
             <button onClick={() => window.location.replace('/')} className="mdc-button mdc-button--raised">
-              <ArrowBackRoundedIcon />
+              <ArrowBackRounded />
               <span className="mdc-button__label">Back</span>
             </button>
           }

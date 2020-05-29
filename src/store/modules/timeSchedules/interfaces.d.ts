@@ -91,7 +91,6 @@ export interface TogglePumpStatusActionRequest {
 }
 
 export interface TogglePumpStatusActionSuccess {
-  id: string;
   enabled: Status;
   type: TOGGLE_PUMP_STATUS_SUCCESS;
 }
