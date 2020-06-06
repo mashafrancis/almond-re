@@ -23,6 +23,7 @@ import {
   UPDATE_PERSON_DETAILS_FAILURE,
   UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
+import {loadingError, loadingRequest, loadingSuccess} from "@modules/loading";
 
 /**
  * Get all users action creator
@@ -73,14 +74,17 @@ export const updatePersonFailure = (errors): UpdatePersonFailure => ({
 });
 
 export const getAllPeople = () => (dispatch, getState, http) => {
-  dispatch(getAllPeopleRequest());
+  // dispatch(getAllPeopleRequest());
+  dispatch(loadingRequest('requesting'))
   return http.get('people')
     .then((response) => {
       dispatch(getAllPeopleSuccess(response.data.data));
+      dispatch(loadingSuccess('success'));
     })
     .catch((error) => {
       const message = error.response.data.message;
       dispatch(getAllPeopleFailure(message));
+      dispatch(loadingError('error'))
       dispatch(displaySnackMessage('Failed to fetch your all users. Kindly reload the page.'));
     });
 };

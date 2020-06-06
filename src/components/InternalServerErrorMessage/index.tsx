@@ -7,7 +7,7 @@ import { Link, NavLink } from 'react-router-dom';
 // styles
 import './InternalServerError.scss';
 
-const InternalServerErrorMessage: (props) => any = (props) => {
+const InternalServerErrorMessage: (props: any) => any = (props) => {
   return (
     <div id="internal-server-error">
       <div className="server-error">

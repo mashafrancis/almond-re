@@ -15,13 +15,14 @@ class CacheHandler {
    * @returns {string}
    */
   static extractUrlEndpoint = (url: string | undefined, apiBaseUrl: string | undefined | any = process.env.ALMOND_API): string => {
-    let baselessUrl = url?.replace(apiBaseUrl, '');
+    // @ts-ignore
+    let baselessUrl = url.replace(apiBaseUrl, '');
 
-    if (baselessUrl === '' || baselessUrl?.indexOf('?') === 1) {
+    if (baselessUrl === '' || baselessUrl.indexOf('?') === 1) {
       return '/';
     }
 
-    baselessUrl = baselessUrl?.indexOf('/') === 0 ? baselessUrl : `/${baselessUrl}`;
+    baselessUrl = baselessUrl.indexOf('/') === 0 ? baselessUrl : `/${baselessUrl}`;
     const endpoints = baselessUrl.match(/\/[\w\-]+/);
 
     // @ts-ignore

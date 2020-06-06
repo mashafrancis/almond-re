@@ -76,6 +76,12 @@ module.exports = {
         "enforceForArrowConditionals": false
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+      }
+    ],
     "no-param-reassign": 0,
     "prefer-template": 0,
     "prefer-promise-reject-errors": 0,

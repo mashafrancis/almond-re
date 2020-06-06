@@ -45,7 +45,7 @@ export const expiredToken = expiredTokenString.replace(/(\r\n|\n|\r)/gm, '');
  * @param {object} initialState
  * @param {object} extraArgument 3rd argument to pass to thunks, after dispatch and getState
  */
-export const mockStore = (extraArgument, initialState = {}) => createStore(
+export const mockStore = (extraArgument: {}, initialState = {}) => createStore(
   reducer,
   initialState,
   applyMiddleware(thunk.withExtraArgument(extraArgument)

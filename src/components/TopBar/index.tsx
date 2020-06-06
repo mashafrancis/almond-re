@@ -1,82 +1,85 @@
 import * as React from 'react';
 
 // third-party libraries
-import Badge from '@material-ui/core/Badge';
-import TopAppBar, {
-  TopAppBarIcon,
-  TopAppBarRow,
-  TopAppBarSection,
-  TopAppBarTitle,
-} from '@material/react-top-app-bar';
+import {
+  Avatar,
+  Badge,
+  useScrollTrigger,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Container,
+  IconButton,
+  Typography
+} from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { Theme, makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-// import StyledBadge from "@components/StyledBadge";
+
+// icons
+import {
+  Timeline,
+  NotificationsNone,
+  Notifications,
+  ArrowDropDown
+} from '@material-ui/icons';
 
 // utils
 import { UserContext } from '@utils/context/Context';
 import { useViewport } from '../../hooks';
 import { MenuContext } from "@context/MenuContext";
-
-// interface
-import { TopBarProps } from './interfaces';
 import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
-const StyledBadge = withStyles((theme: Theme) =>
-  createStyles({
-    badge: {
-      backgroundColor: '#1967D2',
-      color: '#1967D2',
-      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-      '&::after': {
-        position: 'absolute',
-        // top: 0,
-        // left: 0,
-        width: '100%',
-        height: '100%',
-        borderRadius: '50%',
-        animation: '$ripple 1.2s infinite ease-in-out',
-        border: '1px solid currentColor',
-        content: '""',
-      },
-    },
-    '@keyframes ripple': {
-      '0%': {
-        transform: 'scale(.8)',
-        opacity: 1,
-      },
-      '100%': {
-        transform: 'scale(2.4)',
-        opacity: 0,
-      },
-    },
-  }),
-)(Badge);
+// interface
+import { ElevationBarProps, TopBarProps } from './interfaces';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-  }),
-);
+// styles
+import {
+  useTopBarStyles,
+  StyledBadge
+} from "@components/TopBar/styles";
+import '@pages/DashboardContainer/DashboardNavBar.scss'
 
-export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
+const ElevationScroll = (props: ElevationBarProps) => {
+  const { window, children } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+};
+
+const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const device = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
 
+  const {
+    name,
+    photo,
+    isAdmin
+  } = user;
+
+  const {
+    activityLogsViewed,
+    toggleActivityDrawer,
+    setDeviceModalOpen
+  } = menu;
+
+  const {
+    photoImage,
+    openProfileDialog,
+    isActivityLogsEmpty,
+    children
+  } = props;
+
   const { width } = useViewport();
   const breakpoint = 539;
 
-  const classes = useStyles();
+  const classes = useTopBarStyles();
 
   const DeviceActiveBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -93,7 +96,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
           width: '100%',
           height: '100%',
           borderRadius: '50%',
-          animation: '$ripple 1.2s infinite ease-in-out',
+          // animation: '$ripple 1.2s infinite ease-in-out',
           border: '0.8px solid currentColor',
           content: '""',
         },
@@ -102,7 +105,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   )(Badge);
 
   const renderDeviceDisplay = () => (
-    <div className="topbar-device-id" onClick={() => menu.setDeviceModalOpen(true)}>
+    <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
          variant="dot"
          overlap="circle"
@@ -112,7 +115,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
          }}
       >
         <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-        <ArrowDropDownIcon onClick={menu.setDeviceModalOpen.bind(null,true)} />
+        <ArrowDropDown onClick={setDeviceModalOpen.bind(null,true)} />
       </DeviceActiveBadge>
     </div>
   );
@@ -125,9 +128,9 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
         horizontal: 'right',
       }}
       variant="dot"
-      invisible={isArrayNotNull(notifications.length)}
+      invisible={isActivityLogsEmpty != activityLogsViewed}
     >
-      <TimelineIcon onClick={menu.toggleActivityDrawer.bind(null,true)} />
+      <Timeline onClick={toggleActivityDrawer.bind(null,true, true)} />
     </StyledBadge>
   );
 
@@ -135,7 +138,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const notifications = ['true'];
 
   const notificationsIcon = () => (
-    isArrayNotNull(notifications.length) ? <NotificationsNoneIcon /> :
+    isArrayNotNull(notifications.length) ? <NotificationsNone /> :
       <StyledBadge
         anchorOrigin={{
           vertical: 'bottom',
@@ -145,49 +148,53 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
         invisible={isArrayNotNull(notifications.length)}
         variant="dot"
       >
-        <NotificationsIcon style={{ color: '#1967D2' }}/>
+        <Notifications style={{ color: '#1967D2' }}/>
       </StyledBadge>
   )
 
   const topIcons = [
     { icon: timeLineIcon() },
     { icon: notificationsIcon() },
+    { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} /> }
   ];
 
   const renderTopIcons = () => (
-    <div className="companion-nav">
-      {
-        topIcons.map((topIcon, index) => (
-            <TopAppBarIcon key={index} navIcon tabIndex={0}>
-              <span>{topIcon.icon}</span>
-            </TopAppBarIcon>
+    <div className={classes.sectionEnd}>
+        {
+          topIcons.map((topIcon, index) => (
+            <span key={index} className="top-bar-icons">{topIcon.icon}</span>
+            )
           )
-        )
-      }
-      <Avatar alt={user.name} src={user.photo} onClick={props.openProfileDialog} />
+        }
     </div>
   );
 
   return (
-    <TopAppBar className="dashboard-mobile-nav">
-      <TopAppBarRow>
-        <TopAppBarSection align="start">
-          <TopAppBarTitle>
-            <NavLink to={'/'}>
+    <React.Fragment>
+      <CssBaseline />
+      <ElevationScroll { ...props }>
+        <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed">
+          <Toolbar variant="dense">
+            <div className="appbar-section appbar-section-start">
+              <NavLink to={'/'}>
               <img
                 className="drawer-logo__image"
                 src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
                 alt="Logo"/>
-            </NavLink>
-          </TopAppBarTitle>
-          {/*<div className="topbar-divider topbar-lockup-divider"/>*/}
-          {!user.isAdmin && renderDeviceDisplay()}
-        </TopAppBarSection>
-
-        <TopAppBarSection align="end" role="toolbar">
-          {renderTopIcons()}
-        </TopAppBarSection>
-      </TopAppBarRow>
-    </TopAppBar>
+              </NavLink>
+            {!isAdmin && renderDeviceDisplay()}
+            </div>
+            <div className="appbar-section appbar-section-end">
+              {renderTopIcons()}
+            </div>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className="mdc-top-app-bar--fixed-adjust">
+        { children }
+      </div>
+    </React.Fragment>
   );
 };
+
+export default TopBar;

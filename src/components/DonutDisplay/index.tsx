@@ -31,7 +31,7 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
   }
 });
 
-export const DonutDisplay: (props) => any = (props) => {
+const DonutDisplay: (props) => any = (props) => {
   const {
     backgroundColor,
     hoverBackgroundColor,
@@ -74,3 +74,4 @@ export const DonutDisplay: (props) => any = (props) => {
   )
 }
 
+export default DonutDisplay;

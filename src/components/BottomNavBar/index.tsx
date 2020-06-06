@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 // third party
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FolderIcon from '@material-ui/icons/Folder';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import RestoreIcon from '@material-ui/icons/Restore';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import {
+  Favorite,
+  Folder,
+  LocationOn,
+  Restore
+} from '@material-ui/icons';
 
 // styles
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,10 +30,10 @@ const BottomNavigationBar = () => {
 
   return (
     <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-      <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+      <BottomNavigationAction label="Recents" value="recents" icon={<Restore />} />
+      <BottomNavigationAction label="Favorites" value="favorites" icon={<Favorite />} />
+      <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOn />} />
+      <BottomNavigationAction label="Folder" value="folder" icon={<Folder />} />
     </BottomNavigation>
   );
 }

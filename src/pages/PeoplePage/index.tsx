@@ -10,14 +10,20 @@ import {
 import { connect } from 'react-redux';
 
 // component
-import Modal from '@components/Modal';
-import Table from '@components/Table';
-import { createStyles, TextField, Theme } from '@material-ui/core';
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const Table = React.lazy(() => import('@components/Table'));
+import { TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import FaceIcon from '@material-ui/icons/Face';
-import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import { Chip } from "@material-ui/core";
+import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+
+// icons
+import {
+  Face,
+  ArrowDropDownRounded,
+  PeopleAltOutlined
+} from '@material-ui/icons';
 
 // thunks
 import { getAllPeople, updatePerson } from '@modules/people';
@@ -32,8 +38,7 @@ import {
   PeoplePageProps,
   PeoplePageState
 } from './interfaces';
-import Chip from "@material-ui/core/Chip";
-import GeneralCardInfo from "@components/GeneralInfoCard";
+import LinearProgressBar from "@components/LinearProgressBar";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   focused: {},
@@ -141,7 +146,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
         }}
         InputProps={{
           startAdornment: <InputAdornment position="start">
-            <FaceIcon style={{ color: '#1967D2' }} />
+            <Face style={{ color: '#1967D2' }} />
           </InputAdornment>,
         }}>
         {roles.map(role => (
@@ -169,7 +174,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     return (
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
       <h6 id={id}>{role}</h6>
-      <ArrowDropDownRoundedIcon
+      <ArrowDropDownRounded
         id={id}
         onClick={toggleRoleSelectOpen}
       />
@@ -188,8 +193,8 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     const tableValues = users.map(user => ({
       id: user[1]._id,
       name: userNamePhoto(user),
-      devices: user[1]?.devices[0]?.id || '(Device not added)',
-      role: rolesSelectMore(user[1].currentRole?.title, user[1]._id),
+      devices: user[1].devices[0].id || '(Device not added)',
+      role: rolesSelectMore(user[1].currentRole.title, user[1]._id),
       status: user[1].isVerified
         ? <Chip className="MuiChip-root-enabled" label="Active" />
         : <Chip className="MuiChip-root-unverified" label="Inactive" />
@@ -210,11 +215,13 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
           <GeneralCardInfo
             mainHeader="People"
             subHeader="List of all users under Almond"
-            icon={<PeopleAltOutlinedIcon className="content-icon general-info-icon" />}
+            icon={<PeopleAltOutlined className="content-icon general-info-icon" />}
           />
-          <div className="user-roles-page__table">
-            { TableContent(Object.entries(props.people)) }
-          </div>
+          <React.Suspense fallback={<LinearProgressBar />}>
+            <div className="user-roles-page__table">
+              { TableContent(Object.entries(props.people)) }
+            </div>
+          </React.Suspense>
           {SelectRoleModal(props.roles)}
         </Cell>
       </Row>

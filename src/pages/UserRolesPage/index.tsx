@@ -2,30 +2,37 @@
 import * as React from 'react';
 
 // Third party libraries
-import DashboardCard from '@components/DashboardCard';
 import {
   Cell,
   Grid,
   Row
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
-import MoodIcon from '@material-ui/icons/Mood';
-import GrainIcon from '@material-ui/icons/Grain';
-import CardInfo from "@components/CardInfo";
-import FaceIcon from "@material-ui/icons/Face";
 
+// icons
+import {
+  Mood,
+  Grain,
+  Face,
+  PhonelinkSetupSharp
+} from '@material-ui/icons';
 
 // components
 import FormField from '@components/FormField';
-import Modal from '@components/Modal';
 import PermissionAccess from '@components/PermissionAccess';
 import Restrict from '@components/Restrict';
-import Table from '@components/Table';
-import Chip from '@material-ui/core/Chip';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import UserRolesPageLoader from '@placeholders/UserRolesPageSkeletonLoader';
+import LinearProgressBar from "@components/LinearProgressBar";
+import {
+  Chip,
+  InputAdornment,
+  TextField
+} from "@material-ui/core";
+
+const CardInfo = React.lazy(() => import('@components/CardInfo'));
+const Table = React.lazy(() => import('@components/Table'));
+const Modal = React.lazy(() => import('@components/Modal'));
 
 // styles
 import './UserRolesPage.scss';
@@ -49,6 +56,7 @@ import {
   ResourceAccessLevel,
   UserRole
 } from "@modules/userRoles/interfaces";
+import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
 
 export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props) => {
   const [state, setState] = React.useState<UserRolesPageState>({
@@ -287,7 +295,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           id="title"
           labelText="Role Name"
           type="text"
-          leadingIcon={<MoodIcon />}
+          leadingIcon={<Mood />}
           aria-describedby="title-helper-text"
           required
           validator={validateTitleDescription}
@@ -300,7 +308,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           id="description"
           labelText="Role Description"
           type="text"
-          leadingIcon={<GrainIcon/>}
+          leadingIcon={<Grain />}
           aria-describedby="description-helper-text"
           required
           validator={validateTitleDescription}
@@ -384,13 +392,15 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
           <CardInfo
             mainHeader="User Roles"
             subHeader="Create a new role for users with Almond"
-            icon={<FaceIcon className="content-icon" />}
+            icon={<Face className="content-icon" />}
             buttonName="Add role"
             onClick={toggleModal}
           />
-          <div className="user-roles-page__table">
-            { TableContent(Object.entries(props.userRoles.data)) }
-          </div>
+          <React.Suspense fallback={<LinearProgressBar />}>
+            <div className="user-roles-page__table">
+              { TableContent(Object.entries(props.userRoles.data)) }
+            </div>
+          </React.Suspense>
           { UserRolePageModal() }
           { DeleteRoleModal() }
         </Cell>

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
 // reducers
+import activityLogs from '@modules/activityLogs';
 import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
+import loading from '@modules/loading';
 import people from '@modules/people';
 import snack from '@modules/snack';
 import socialAuth from '@modules/socialAuth';
@@ -22,6 +24,8 @@ const appReducer = combineReducers({
   device,
   userRoles,
   people,
+  activityLogs,
+  loading,
 });
 
 const rootReducer = (state, action) => {

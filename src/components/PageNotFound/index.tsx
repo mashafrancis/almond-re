@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 // third-party libraries
-import MaterialIcon from '@material/react-material-icon';
+import { ArrowBackRounded } from "@material-ui/icons";
 
 // styles
 import './PageNotFound.scss';
@@ -23,10 +23,10 @@ const PageNotFound: React.FunctionComponent<PageNotFoundProps> = props =>  (
       <h2>Oops! Page Not Be Found</h2>
       <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily
         unavailable</p>
-        <button onClick={props.history.goBack} className="mdc-button mdc-button--raised">
-          <MaterialIcon className="back-button" icon="arrow_back" />
-          <span className="mdc-button__label">Back</span>
-        </button>
+      <button onClick={props.history.goBack} className="mdc-button mdc-button--raised">
+        <ArrowBackRounded />
+        <span className="mdc-button__label">Back</span>
+      </button>
     </div>
   </div>
 );

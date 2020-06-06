@@ -3,14 +3,20 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import SettingsIcon from '@material-ui/icons/Settings';
-import {displaySnackMessage} from "@modules/snack";
-import {connect} from "react-redux";
-import GeneralCardInfo from "@components/GeneralInfoCard";
-import {HelpPageProps} from "@pages/HelpPage/interfaces";
-import HelpIcon from '@material-ui/icons/Help';
+import { connect } from "react-redux";
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+
+// icons
+import {
+  Settings,
+  Help
+} from '@material-ui/icons';
+
+// thunks
+import { displaySnackMessage } from "@modules/snack";
 
 // interfaces
+import { HelpPageProps } from "@pages/HelpPage/interfaces";
 
 export const HelpPage: React.FunctionComponent<HelpPageProps> = (props) => {
   return (
@@ -28,7 +34,7 @@ export const HelpPage: React.FunctionComponent<HelpPageProps> = (props) => {
             <GeneralCardInfo
               mainHeader="Help"
               subHeader="Get more information more about the system"
-              icon={<HelpIcon className="content-icon general-info-icon" />}
+              icon={<Help className="content-icon general-info-icon" />}
             />
           </Cell>
         </Row>

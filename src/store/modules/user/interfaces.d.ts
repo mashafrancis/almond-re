@@ -8,19 +8,19 @@ import {
 
 export interface GetUserDetailsActionRequest {
   type: GET_USER_DETAILS_REQUEST;
-  isFetchingUserDetails: boolean;
+  isFetchingUserDetails: string;
 }
 
 export interface GetUserDetailsActionSuccess {
   userDetails: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
-  isFetchingUserDetails: boolean;
+  isFetchingUserDetails: string;
 }
 
 export interface GetUserDetailsActionFailure {
   type: GET_USER_DETAILS_FAILURE;
   errors: any;
-  isFetchingUserDetails: boolean;
+  isFetchingUserDetails: string;
 }
 
 export interface EditUserDetailsSuccess {

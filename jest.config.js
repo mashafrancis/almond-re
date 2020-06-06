@@ -12,7 +12,9 @@ module.exports = {
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
-    // '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js'
+    // '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js',
+    // "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/@material-ui/core/esm",
+    "^.+\\.[t|j]sx?$": "babel-jest"
   },
   testRegex: '(roots/.*|(\\.|/)(test))\\.(ts|tsx)?$',
   moduleFileExtensions: [
@@ -58,11 +60,20 @@ module.exports = {
     '<rootDir>/node_modules/regenerator-runtime/runtime',
     '<rootDir>/src/setupMocks.ts',
   ],
-  coveragePathIgnorePatterns: ['/node_modules', '<rootDir>/src/index.tsx', 'src/store/index.tsx|rootReducer.ts'],
+  coveragePathIgnorePatterns: [
+    '/node_modules',
+    '<rootDir>/src/index.tsx',
+    'src/store/index.tsx|rootReducer.ts'
+  ],
   snapshotSerializers: ['enzyme-to-json/serializer'],
   setupFilesAfterEnv: [
     '<rootDir>/src/setupEnzyme.ts',
     '<rootDir>/tests/setup.js',
   ],
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+  // transformIgnorePatterns: [
+  //   "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+  //   "^.+\\.module\\.(css|sass|scss)$",
+  //   "node_modules/(?!(@material-ui)/)"
+  // ]
 };

@@ -2,11 +2,36 @@ import * as React from 'react';
 
 // interfaces
 import { FormFieldProps, FormFieldState } from '@components/FormField/interfaces';
-import TextField, { HelperText, Input } from "@material/react-text-field";
+import {
+  InputAdornment, MenuItem,
+  TextField, withStyles
+} from "@material-ui/core";
 // nodejs library to set properties for components
 
 // styles
 // import './FormField.scss';
+
+const ValidationTextField = withStyles({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginBottom: '12px',
+    '& input:valid + fieldset': {
+      // borderColor: '#1967D2',
+      borderWidth: 1,
+    },
+    '& input:invalid + fieldset': {
+      borderColor: '#f44336',
+      borderWidth: 2,
+    },
+    '& input:valid:focus + fieldset': {
+      borderColor: '#1967D2',
+      borderLeftWidth: 6,
+      padding: '4px !important', // override inline-style
+    },
+  },
+})(TextField);
+
 
 export class FormField extends React.Component<FormFieldProps, FormFieldState> {
   constructor(props) {
@@ -65,31 +90,52 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
     const hasErrors = errors.length > 0;
 
     return (
-      <TextField
+      <ValidationTextField
+        id={id}
         className="mdc-text-field--fullwidth"
-        outlined
+        variant="outlined"
         label={labelText}
-        leadingIcon={leadingIcon}
-        onLeadingIconSelect={onLeadingIconSelect}
-        trailingIcon={trailingIcon}
-        helperText={
-          <HelperText
-            className="mdc-text-field-invalid-helper"
-            isValidationMessage={hasErrors && errors[0]}
-            persistent={hasErrors && errors[0]}
-            validation={hasErrors && errors[0]}>
-            {errors[0]}
-          </HelperText>}
-      >
-        <Input
-          value={value || props.value}
-          name={labelText}
-          id={id}
-          type={type}
-          isValid={!(hasErrors && errors[0])}
-          required={required}
-          onChange={this.hasChanged}/>
-      </TextField>
+        fullWidth
+        // required
+        size="small"
+        value={value || props.value}
+        onChange={this.hasChanged}
+        error={hasErrors && !!errors[0]}
+        helperText={errors[0]}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        InputProps={{
+          startAdornment: <InputAdornment position="start">
+            { leadingIcon }
+          </InputAdornment>,
+        }}>
+      </ValidationTextField>
+      // <TextField
+      //   className="mdc-text-field--fullwidth"
+      //   outlined
+      //   label={labelText}
+      //   leadingIcon={leadingIcon}
+      //   onLeadingIconSelect={onLeadingIconSelect}
+      //   trailingIcon={trailingIcon}
+      //   helperText={
+      //     <HelperText
+      //       className="mdc-text-field-invalid-helper"
+      //       isValidationMessage={hasErrors && errors[0]}
+      //       persistent={hasErrors && errors[0]}
+      //       validation={hasErrors && errors[0]}>
+      //       {errors[0]}
+      //     </HelperText>}
+      // >
+      //   <Input
+      //     value={value || props.value}
+      //     name={labelText}
+      //     id={id}
+      //     type={type}
+      //     isValid={!(hasErrors && errors[0])}
+      //     required={required}
+      //     onChange={this.hasChanged}/>
+      // </TextField>
     );
   }
 }

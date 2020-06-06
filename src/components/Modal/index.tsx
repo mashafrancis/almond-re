@@ -3,10 +3,12 @@ import * as React from 'react';
 // components
 import ActionButton from '@components/ActionButton';
 import Button from '@components/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from '@material-ui/core';
 
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';

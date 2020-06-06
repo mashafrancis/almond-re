@@ -26,6 +26,7 @@ describe('AuthService object', () => {
 
   describe.skip('LogoutUser function', () => {
     it('should call Cookie.remove to make user token expired', () => {
+      // @ts-ignore
       Cookies.remove = jest.fn();
       authService.logoutUser();
 

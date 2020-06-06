@@ -4,25 +4,25 @@ import * as React from 'react';
 import {
   Container,
   Grid,
+  BottomNavigation,
+  BottomNavigationAction,
+  InputAdornment,
+  TextField
 } from '@material-ui/core';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import {
   createStyles,
   makeStyles,
   Theme,
 } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import PhonelinkSetupSharpIcon from '@material-ui/icons/PhonelinkSetupSharp';
+import {
+  ArrowForward,
+  PhonelinkSetupSharp
+} from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 // components
 import Button from '@components/Button';
-import {Cell, Row} from "@material/react-layout-grid";
-import MaterialIcon from "@material/react-material-icon";
+import { Cell, Row } from "@material/react-layout-grid";
 import NavigationHeader from "@components/NavigationHeader";
 
 // thunk
@@ -39,7 +39,7 @@ import './EnterDeviceIdPage.scss';
 // interfaces
 import { EnterDeviceIdPageProps, EnterDeviceIdPageState } from './interfaces';
 
-export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (props) => {
+const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (props) => {
   const [state, setState] = React.useState<EnterDeviceIdPageState>({
     isLoading: false,
   });
@@ -51,15 +51,15 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
   const user = React.useContext(UserContext);
 
-  const onSubmit = async (event) => {
+  const onSubmit = event => {
     event.preventDefault();
     const device = { id: deviceId };
 
     setState({ ...state, isLoading: true });
 
     props.verifyUserDevice(device)
-      .then(async () => {
-        await props.getUserDetails();
+      .then(() => {
+        // await props.getUserDetails();
         setState({ ...state, isLoading: false });
       });
   };
@@ -106,7 +106,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PhonelinkSetupSharpIcon style={{ color: '#1967D2' }} />
+                  <PhonelinkSetupSharp style={{ color: '#1967D2' }} />
                 </InputAdornment>
               ),
             }}
@@ -151,7 +151,6 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />
           </Cell>
-          {/*{ props.user?.activeDevice && skipButton() }*/}
         </Row>
       </Grid>
       </Container>

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
-      "es2015",
+      "es6",
       "es2017",
       "esnext.asynciterable",
       "dom"
@@ -16,12 +16,14 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "strictNullChecks": true,
+//    "strict": true,
 //    "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
 //    "esModuleInterop": true,
+//    "noImplicitAny": true,
     "removeComments": true,
     "skipLibCheck": true,
-    "module": "es2015",
+    "module": "esnext",
     "pretty": true,
     "sourceMap": true,
     "outDir": "./dist",
@@ -47,6 +49,7 @@
     "tests",
     "dist",
     "**/*.test.tsx",
+    "./src/**/*test.tsx",
     "nginx",
     "public",
     "jest",

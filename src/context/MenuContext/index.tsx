@@ -15,12 +15,13 @@ const MenuContext = React.createContext({
   },
   isSelectDeviceModalOpen: false,
   isActivityDrawerOpen: false,
+  activityLogsViewed: false,
   setOpen: (_open: boolean) => {},
   setSelectedIndex: (_selectedIndex: {group: number, item: number}) => {},
   setDeviceModalOpen: (_open: boolean) => {},
   handleSelectDeviceModal: () => {},
   handleCloseDeviceModal: () => {},
-  toggleActivityDrawer: (_isActivityDrawerOpen: boolean) => {}
+  toggleActivityDrawer: (_isActivityDrawerOpen: boolean, _activityLogsViewed: boolean) => {}
 });
 
 const MenuProvider = ({ children }: MenuContextProps) => {
@@ -33,6 +34,7 @@ const MenuProvider = ({ children }: MenuContextProps) => {
     },
     isSelectDeviceModalOpen: false,
     isActivityDrawerOpen: false,
+    activityLogsViewed: false
   });
 
   const setOpen = (isOpen: boolean) => setState({ ...state, isMenuOpen: isOpen });
@@ -44,7 +46,11 @@ const MenuProvider = ({ children }: MenuContextProps) => {
 
   const setDeviceModalOpen = (isModalOpen: boolean) => setState({ ...state, isSelectDeviceModalOpen: isModalOpen });
 
-  const toggleActivityDrawer = (isActivityDrawerOpen: boolean) => setState({ ...state, isActivityDrawerOpen: isActivityDrawerOpen })
+  const toggleActivityDrawer = (isActivityDrawerOpen: boolean, activityLogsViewed: boolean) => setState({
+    ...state,
+    isActivityDrawerOpen: isActivityDrawerOpen,
+    activityLogsViewed: activityLogsViewed
+  })
 
   const handleSelectDeviceModal = () => setState({ ...state, isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen });
 
@@ -54,7 +60,8 @@ const MenuProvider = ({ children }: MenuContextProps) => {
     selectedIndex,
     isMenuOpen,
     isSelectDeviceModalOpen,
-    isActivityDrawerOpen
+    isActivityDrawerOpen,
+    activityLogsViewed
   } = state;
 
   return (
@@ -63,6 +70,7 @@ const MenuProvider = ({ children }: MenuContextProps) => {
       selectedIndex,
       isSelectDeviceModalOpen,
       isActivityDrawerOpen,
+      activityLogsViewed,
       setSelectedIndex,
       setOpen,
       setDeviceModalOpen,

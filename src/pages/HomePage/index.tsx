@@ -1,8 +1,8 @@
-import { UserContext } from '@utils/context/Context';
 import * as React from 'react';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
+import { UserContext } from '@utils/context/Context';
 
 // third party apps
 import { connect } from 'react-redux';

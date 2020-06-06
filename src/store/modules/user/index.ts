@@ -25,6 +25,7 @@ import {
   GET_USER_DETAILS_SUCCESS,
   LOG_OUT_USER,
 } from './types';
+import {loadingError, loadingRequest, loadingSuccess} from "@modules/loading";
 
 /**
  * Get userDetails success action creator
@@ -33,7 +34,7 @@ import {
  */
 export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
   type: GET_USER_DETAILS_REQUEST,
-  isFetchingUserDetails: true,
+  isFetchingUserDetails: 'requesting',
 });
 
 /**
@@ -44,7 +45,7 @@ export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
 export const getUserDetailsSuccess = (userDetails: UserDetails): GetUserDetailsActionSuccess => ({
   userDetails,
   type: GET_USER_DETAILS_SUCCESS,
-  isFetchingUserDetails: false,
+  isFetchingUserDetails: 'success',
 });
 
 /**
@@ -55,7 +56,7 @@ export const getUserDetailsSuccess = (userDetails: UserDetails): GetUserDetailsA
 export const getUserDetailsFailure = (errors): GetUserDetailsActionFailure => ({
   errors,
   type: GET_USER_DETAILS_FAILURE,
-  isFetchingUserDetails: false,
+  isFetchingUserDetails: 'error',
 });
 
 /**
@@ -81,13 +82,16 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * @returns {Function}
  */
 export const getUserDetails = () => (dispatch, getState, http) => {
-  dispatch(getUserDetailsRequest());
+  // dispatch(getUserDetailsRequest());
+  dispatch(loadingRequest('requesting'));
   return http.get('me')
     .then((response) => {
+      dispatch(loadingSuccess('success'));
       return dispatch(getUserDetailsSuccess(response.data.data));
     })
     .catch((error) => {
       const message = error.response.data.message;
+      dispatch(loadingError('error'));
       dispatch(getUserDetailsFailure(message));
       dispatch(displaySnackMessage('Failed to fetch your details. Kindly reload page.'));
     });

@@ -45,7 +45,7 @@ const Button = (props: ButtonProps) => {
         )
       : (
           <React.Fragment>
-            {props.icon && <img src={props.icon} />} {props.name}
+            {props.icon && <img src={props.icon}  alt="button"/>} {props.name}
           </React.Fragment>
         );
   };
