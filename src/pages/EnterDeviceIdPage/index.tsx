@@ -37,9 +37,13 @@ import 'react-date-range/dist/theme/default.css';
 import './EnterDeviceIdPage.scss';
 
 // interfaces
-import { EnterDeviceIdPageProps, EnterDeviceIdPageState } from './interfaces';
+import {
+  EnterDeviceIdPageProps,
+  EnterDeviceIdPageState,
+  StateToProps
+} from './interfaces';
 
-const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (props) => {
+export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (props) => {
   const [state, setState] = React.useState<EnterDeviceIdPageState>({
     isLoading: false,
   });
@@ -51,7 +55,7 @@ const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (prop
 
   const user = React.useContext(UserContext);
 
-  const onSubmit = event => {
+  const onSubmit = (event: React.ChangeEvent) => {
     event.preventDefault();
     const device = { id: deviceId };
 
@@ -158,14 +162,14 @@ const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (prop
   );
 };
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state: StateToProps) => ({
   error: state.error,
   isLoading: state.device.isLoading,
 });
 
-export const mapDispatchToProps = dispatch => ({
-  verifyUserDevice: id => dispatch(verifyUserDevice(id)),
-  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+export const mapDispatchToProps = (dispatch: any) => ({
+  verifyUserDevice: (id: string) => dispatch(verifyUserDevice(id)),
+  displaySnackMessage: (message: string) => dispatch(displaySnackMessage(message)),
   getUserDetails: () => dispatch(getUserDetails()),
 });
 

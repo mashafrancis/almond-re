@@ -11,7 +11,7 @@ import {
   OpacityTwoTone,
   ScheduleTwoTone, Waves
 } from "@material-ui/icons";
-import {MenuContext} from "@context/MenuContext";
+import { MenuContext } from "../../context/MenuContext/index";
 const AnalyticsCard = React.lazy(() => import('@components/AnalyticsCard'));
 
 const RegularUserAnalytics: React.FunctionComponent = () => {

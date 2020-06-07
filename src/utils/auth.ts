@@ -1,7 +1,7 @@
 import * as Cookies from 'js-cookie';
 import * as jwtDecode from 'jwt-decode';
 
-export const authService = {
+export const authService: any = {
   saveToken(token: string | string[]) {
     return Cookies.set('jwt-token', token);
   },
@@ -9,14 +9,14 @@ export const authService = {
     return Cookies.get('jwt-token');
   },
   decodeToken() {
-    return jwtDecode(this.getToken());
+    return jwtDecode(<string>this.getToken());
   },
   isAuthenticated() {
     return !!this.getToken();
   },
   isExpired() {
     const currentDate = Date.now() / 1000;
-    const decodedToken = this.decodeToken();
+    const decodedToken: any = this.decodeToken();
 
     return decodedToken.exp < currentDate;
   },

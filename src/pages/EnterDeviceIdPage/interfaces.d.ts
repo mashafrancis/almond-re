@@ -12,3 +12,10 @@ export interface EnterDeviceIdPageProps {
 export interface EnterDeviceIdPageState {
   isLoading: boolean;
 }
+
+export interface StateToProps {
+  error?: any;
+  device: {
+    isLoading: boolean;
+  };
+}

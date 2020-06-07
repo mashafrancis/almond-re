@@ -6,12 +6,13 @@ import { mount, shallow } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import EnterDeviceIdPage, {
+import {
+  EnterDeviceIdPage,
   mapDispatchToProps,
   mapStateToProps
 } from './index';
 
-describe.skip('The EnterDeviceId Page', () => {
+describe('The EnterDeviceId Page', () => {
   let wrapper;
   let shallowWrapper;
   let props;
