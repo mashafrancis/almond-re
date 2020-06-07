@@ -1,5 +1,7 @@
+import * as React from 'react';
+
 export interface ActionButtonProps {
   name: string;
-  icon?: string;
+  icon?: React.ReactNode;
   handleClick?: any;
 }

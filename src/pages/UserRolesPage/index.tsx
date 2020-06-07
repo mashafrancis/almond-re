@@ -377,7 +377,6 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = (props
     }));
 
     return (
-      // props.isLoading ? (<UserRolesPageLoader/>) :
       <Table
         keys={tableHeaders}
         values={tableValues}

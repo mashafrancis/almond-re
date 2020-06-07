@@ -46,8 +46,8 @@ module.exports = {
       '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
       '@utils': path.resolve(__dirname, '..', 'src/utils'),
       '@context': path.resolve(__dirname, '..', 'src/context'),
-      '@material-ui/core': '@material-ui/core/esm',
-      '@material-ui/icons': '@material-ui/icons/esm'
+      // '@material-ui/core': '@material-ui/core/esm',
+      // '@material-ui/icons': '@material-ui/icons/esm'
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },

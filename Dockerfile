@@ -3,7 +3,7 @@
 FROM node:14-alpine AS build
 
 LABEL maintainer="Francis Masha" MAINTAINER="Francis Masha <francismasha96@gmail.com>"
-LABEL application="almond-be"
+LABEL application="almond-re"
 
 ARG NODE_ENV=$NODE_ENV
 ENV TERM=xterm-256color
@@ -19,6 +19,10 @@ RUN apk add --no-cache --virtual .build-deps1 g++ gcc libgcc libstdc++ linux-hea
     apk add --no-cache --virtual .npm-deps cairo-dev jpeg-dev libjpeg-turbo-dev pango pango-dev && \
     apk add bash
 
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories
+RUN apk update
+
 RUN npm config set unsafe-perm true
 RUN npm install yarn@1.22.x
 RUN rm -rf package-lock.json
@@ -27,13 +31,8 @@ COPY yarn.lock /home/node/app
 COPY package.json /home/node/app
 
 RUN yarn install
-
-#COPY . /app/
-
-#RUN yarn build
-
 COPY --chown=node:node . .
-
+RUN yarn build
 USER node
 
 ## update the Alpine image and install curl
@@ -92,13 +91,11 @@ USER node
 #EXPOSE 80
 
 EXPOSE 3000
-
 ENV PORT=3000
 
 #CMD ["yarn", "start"]
 
 RUN chmod 777 /home/node/app/entrypoint.sh
-
 ENTRYPOINT ["/home/node/app/entrypoint.sh"]
 
 #CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'

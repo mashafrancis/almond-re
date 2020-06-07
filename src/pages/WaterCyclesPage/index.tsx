@@ -1,4 +1,3 @@
-import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
 import * as React from 'react';
 
 // third-party libraries
@@ -7,8 +6,6 @@ import {
   Grid,
   Row
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
-import Switch from '@material/react-switch';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 
@@ -23,17 +20,22 @@ const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay')
 
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
-import { IconButton, InputAdornment } from '@material-ui/core';
+import {
+  IconButton,
+  InputAdornment,
+  Switch
+} from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import LinearProgressBar from '@components/LinearProgressBar';
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // icons
 import {
-  Opacity,
   BlurCircular,
-  Face,
   ScheduleTwoTone,
-  AddAlarmTwoTone
+  AddAlarmTwoTone,
+  ArrowDropDown,
+  FilterList
 } from '@material-ui/icons';
 
 // thunks
@@ -50,6 +52,9 @@ import {
 import { MenuContext } from "@context/MenuContext";
 import { UserContext } from '@utils/context';
 
+// utils
+import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
+
 // styles
 import './WaterCyclesPage.scss';
 
@@ -58,6 +63,20 @@ import {
   WaterCyclesPageProps,
   WaterCyclesPageState
 } from './interfaces';
+
+const PumpSwitch = withStyles({
+  switchBase: {
+    color:'#FFFFFF',
+    '&$checked': {
+      color:'#1967D2',
+    },
+    '&$checked + $track': {
+      backgroundColor: '#1967D2',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -268,9 +287,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       id: schedule,
       time: `${moment(schedule[1].schedule).format('LT')}`,
       actions: ActionButtons(schedule[1]._id),
-      status: <Switch
+      status: <PumpSwitch
                 checked={schedule[1].enabled}
-                onClick={e => handleToggleStatusChange(e, schedule[1])}
+                onChange={e => handleToggleStatusChange(e, schedule[1])}
               />,
     }));
 
@@ -308,7 +327,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                 startAdornment: (
                   <InputAdornment position="start">
                     <IconButton href={'#'}>
-                      <MaterialIcon role="button" icon="alarm" initRipple={null}/>
+                      <AddAlarmTwoTone style={{ color: '#1967D2' }} />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -333,7 +352,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null,true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
-                <MaterialIcon hasRipple icon="arrow_drop_down" initRipple={null}/>
+                <ArrowDropDown />
               </h3>
             </div>
           </div>
@@ -346,10 +365,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             subHeader="Pump water directly into the system"
             icon={<BlurCircular className="content-icon general-info-icon" />}
             actionItem={
-              <Switch
+              <PumpSwitch
                 className="manual-override"
                 onChange={handleToggleButtonOnChange}
                 checked={props.enabled}
+                inputProps={{ 'aria-label': 'primary checkbox' }}
               />
             }
           />
@@ -401,7 +421,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                   chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
                 />
               }
-              actionItem={<ActionButton name="Filter" icon="filter_list" />}
+              actionItem={<ActionButton name="Filter" icon={<FilterList/>} />}
           />
         </Cell>
       </Row>

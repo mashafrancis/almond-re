@@ -1,5 +1,6 @@
 #!/bin/sh
 
+sleep 10
 echo " "
 echo "<<<<<<<<<<<<<<<<<<<< Starting Application >>>>>>>>>>>>>>>>>>>>>>>>"
 echo " "
@@ -8,3 +9,4 @@ yarn run start:prod
 #exec nginx -c "$(pwd)/nginx.conf" -g "daemon off;"
 #exec sudo setcap CAP_NET_BIND_SERVICE=+eip "$(pwd)/nginx.conf" -g "daemon off;"
 
+exit 0

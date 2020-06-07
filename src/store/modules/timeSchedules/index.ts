@@ -194,7 +194,6 @@ export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
  * Get all schedules success
  *
  * @returns {GetAllSchedulesActionSuccess}
- * @param id
  * @param enabled
  */
 export const togglePumpStatusSuccess = (enabled: Status): TogglePumpStatusActionSuccess => ({
@@ -368,6 +367,7 @@ export const getPumpStatus = deviceId => (dispatch, getState, http) => {
 export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) => {
   return http.patch(`schedules/${id}`, enabled)
     .then((response) => {
+      dispatch(editScheduleSuccess(id, response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {

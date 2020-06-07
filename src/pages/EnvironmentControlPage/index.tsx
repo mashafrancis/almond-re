@@ -13,6 +13,7 @@ const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
 const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
 import ActionButton from "@components/ActionButton";
+import { FilterList } from "@material-ui/icons";
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -37,6 +38,23 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
     isEnabled: false,
   });
 
+  const donutData = [
+    {
+      heading: "Air Temperature",
+      backgroundColor: ['#36A2EB', '#CCCCCC'],
+      hoverBackgroundColor: ['#36A2EB', '#CCCCCC'],
+      data: [20, 50],
+      donutInfo: `${18} \u00b0C`
+    },
+    {
+      heading: "Air Humidity",
+      backgroundColor: ['#FFCE56', '#CCCCCC'],
+      hoverBackgroundColor: ['#FFCE56', '#CCCCCC'],
+      data: [40, 50],
+      donutInfo: `${80}%`
+    }
+  ];
+
   return (
     <Grid>
       <Row>
@@ -45,37 +63,25 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
         </Cell>
       </Row>
       <Row className="analytics-page">
-        <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-          <DashboardCard
-            classes="recent-activities-available"
-            heading="Air Temperature"
-            body={
-              <DonutDisplay
-                backgroundColor={['#36A2EB', '#CCCCCC']}
-                hoverBackgroundColor={['#36A2EB', '#CCCCCC']}
-                data={[20, 50]}
-                donutInfo={`${18} \u00b0C`}
-                halfDonut
+        {
+          donutData.map((data, index) => (
+            <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
+              <DashboardCard
+                classes="recent-activities-available"
+                heading={data.heading}
+                body={
+                  <DonutDisplay
+                    backgroundColor={data.backgroundColor}
+                    hoverBackgroundColor={data.hoverBackgroundColor}
+                    data={data.data}
+                    donutInfo={data.donutInfo}
+                    halfDonut
+                  />
+                }
               />
-              }
-          />
-        </Cell>
-        <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes="recent-activities-available"
-            heading="Air Humidity"
-            body={
-              <DonutDisplay
-                backgroundColor={['#FFCE56', '#CCCCCC']}
-                hoverBackgroundColor={['#FFCE56', '#CCCCCC']}
-                data={[40, 50]}
-                donutInfo={`${80}%`}
-                halfDonut
-              />
-            }
-            // actionItem={<ActionButton name="Refresh" icon="update" />}
-          />
-        </Cell>
+            </Cell>
+          ))
+        }
         <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
             classes="recent-activities-available"
@@ -102,7 +108,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
               />
             }
-            actionItem={<ActionButton name="Filter" icon="filter_list" />}
+            actionItem={<ActionButton name="Filter" icon={<FilterList/>} />}
           />
         </Cell>
         <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
@@ -116,7 +122,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 chartData={[25, 36, 50, 57, 40, 70, 55, 30, 47]}
               />
             }
-            actionItem={<ActionButton name="Filter" icon="filter_list" />}
+            actionItem={<ActionButton name="Filter" icon={<FilterList/>} />}
           />
         </Cell>
       </Row>
