@@ -65,7 +65,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
       <Row className="analytics-page">
         {
           donutData.map((data, index) => (
-            <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
+            <Cell key={index} columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
               <DashboardCard
                 classes="recent-activities-available"
                 heading={data.heading}

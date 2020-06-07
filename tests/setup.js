@@ -43,16 +43,16 @@ global.cancelAnimationFrame = function (id) {
 
 copyProps(window, global);
 
-beforeAll(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {})
-  jest.spyOn(console, 'warn').mockImplementation(() => {})
-});
-
-afterAll(() => {
-  console.error.mockRestore()
-  console.warn.mockRestore()
-});
-
-afterEach((done) => {
-  done();
-});
+// beforeAll(() => {
+//   jest.spyOn(console, 'error').mockImplementation(() => {})
+//   jest.spyOn(console, 'warn').mockImplementation(() => {})
+// });
+//
+// afterAll(() => {
+//   console.error.mockRestore()
+//   console.warn.mockRestore()
+// });
+//
+// afterEach((done) => {
+//   done();
+// });

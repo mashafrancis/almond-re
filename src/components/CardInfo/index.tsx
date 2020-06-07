@@ -49,7 +49,7 @@ const CardInfo: React.FunctionComponent<CardInfoProps> = (props) => {
           <div className="main">{mainHeader}</div>
           <div className="sub-main">{subHeader}</div>
         </div>
-        {cardButton}
+        {cardButton()}
       </div>
     </div>
   );

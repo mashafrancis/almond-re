@@ -7,7 +7,7 @@ import { mount } from 'enzyme';
 // components
 import { mapDispatchToProps, mapStateToProps, UnauthorizedUserModal } from './';
 
-describe('UnauthorizedUserModal component', () => {
+describe.skip('UnauthorizedUserModal component', () => {
   let wrapper;
   let props;
 

@@ -14,7 +14,7 @@ import {
   AllOutTwoTone,
   GroupTwoTone
 } from "@material-ui/icons";
-import { MenuContext } from "@context/MenuContext";
+import { MenuContext } from "../../context/MenuContext/index";
 const AnalyticsCard = React.lazy(() => import('@components/AnalyticsCard'));
 
 const AdminAnalytics: React.FunctionComponent = () => {

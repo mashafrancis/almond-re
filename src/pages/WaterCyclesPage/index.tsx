@@ -49,7 +49,7 @@ import {
   togglePump,
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
-import { MenuContext } from "@context/MenuContext";
+import { MenuContext } from "../../context/MenuContext/index";
 import { UserContext } from '@utils/context';
 
 // utils
