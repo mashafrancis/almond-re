@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // third-party libraries
-import Card from '@material/react-card';
+import { Card } from '@material-ui/core';
 
 // interfaces
 import { DashboardCardProps } from './interfaces';
@@ -18,7 +18,7 @@ const DashboardCard: React.FunctionComponent<DashboardCardProps> = (props) => {
   } = props;
 
   return (
-    <Card outlined>
+    <Card variant="outlined">
       <div className="dashboard-card">
         <div className="card-header">
           <h5 className="card-header__title">{heading}</h5>

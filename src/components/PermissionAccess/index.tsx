@@ -8,7 +8,7 @@ import Checkbox from '@material/react-checkbox';
 import { PermissionAccessProps, PermissionAccessState } from './interfaces';
 
 // helpers
-import capitalize from '../../utils/helpers/capitalize';
+import capitalize from '@utils/helpers/capitalize';
 import ensure from "@utils/helpers/arrayCheck";
 import { Permission, Resource } from "@modules/userRoles/interfaces";
 

@@ -1,10 +1,6 @@
 import * as React from 'react';
 
 // third-party libraries
-import {
-  TopAppBarFixedAdjust,
-  TopAppBarIcon
-} from '@material/react-top-app-bar';
 import { connect } from 'react-redux';
 import { Theme, withStyles, makeStyles, createStyles } from '@material-ui/core/styles';
 import {
@@ -14,10 +10,7 @@ import {
   TextField,
   InputAdornment,
   Menu,
-  Fade,
-  Backdrop
 } from "@material-ui/core";
-import MenuSurface, { Corner } from '@material/react-menu-surface';
 
 // icons
 import {
@@ -37,12 +30,10 @@ import {
   UserMenus
 } from '@components/MenuRoutes';
 import LinearProgressBar from "@components/LinearProgressBar";
-
 const Modal = React.lazy(() => import('@components/Modal'));
 const MenuModal = React.lazy(() => import('@components/MenuModal'));
 const MenuContent = React.lazy(() => import('@components/MenuContent'));
 const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
-const FeedbackDialogModal = React.lazy(() => import('@components/FeedbackDialogModal'));
 const TopBar = React.lazy(() => import('@components/TopBar'));
 const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
 
@@ -209,42 +200,20 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   };
 
   const photoImage = () => (
-    <TopAppBarIcon actionItem tabIndex={0}>
-      <div role="tablist"
-           ref={e => menuAnchorEl.current = e}
-           className="mdc-tab-bar"
-           onClick={() => setState({ ...state, isOpen: true })}
-      >
-        <span className="mini-account-menu__image">
-          {(width > breakpoint) &&
-          <img
-            className="mini-account-menu__image"
-            src={user.photo}
-            alt="image"
-          />}
-        </span>
-      </div>
-    </TopAppBarIcon>
-  );
-
-  const FeedbackMenu = () => (
-    <MenuSurface
-      className="feedback-surface-menu"
-      open={state.isFeedbackMenuOpen}
-      anchorCorner={Corner.BOTTOM_LEFT}
-      onClose={onFeedbackMenuOpenClose}
-      anchorElement={menuAnchorEl.current}
+    <div role="tablist"
+         ref={e => menuAnchorEl.current = e}
+         className="mdc-tab-bar"
+         onClick={() => setState({ ...state, isOpen: true })}
     >
-      <MenuModal content={
-        <div
-          className="menu-feedback"
-          onClick={() => setState({ ...state, isFeedbackModal: true, isFeedbackMenuOpen: false })}
-        >
-          <h5>Send feedback</h5>
-          <Feedback />
-        </div>
-      }/>
-    </MenuSurface>
+      <span className="mini-account-menu__image">
+        {(width > breakpoint) &&
+        <img
+          className="mini-account-menu__image"
+          src={user.photo}
+          alt="image"
+        />}
+      </span>
+    </div>
   );
 
   const selectDeviceContent = devices => (
@@ -427,17 +396,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
         </React.Suspense>
       </TopBar>
       { width < breakpoint && <PageBottomNavigation/> }
-      {FeedbackMenu()}
       {SelectDeviceModal(user.devices)}
       {ProfileDialog()}
       {MenuProfileSelect()}
       {ActivityDrawer()}
-      <FeedbackDialogModal
-        isFeedbackModal={isFeedbackModal}
-        action={action}
-        inputValue={feedback}
-        handleFeedbackInputChange={handleFeedbackInputChange}
-      />
     </div>
   );
 };

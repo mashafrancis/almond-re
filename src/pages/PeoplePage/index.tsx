@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 // third-party libraries
-import MenuItem from '@material-ui/core/MenuItem';
 import {
   Cell,
   Grid,
@@ -13,9 +12,12 @@ import { connect } from 'react-redux';
 const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
 const Modal = React.lazy(() => import('@components/Modal'));
 const Table = React.lazy(() => import('@components/Table'));
-import { TextField } from '@material-ui/core';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { Chip } from "@material-ui/core";
+import {
+  TextField,
+  MenuItem,
+  InputAdornment,
+  Chip
+} from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
 // icons

@@ -71,9 +71,9 @@ module.exports = {
     '<rootDir>/tests/setup.js',
   ],
   testEnvironment: 'node',
-  // transformIgnorePatterns: [
-  //   "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-  //   "^.+\\.module\\.(css|sass|scss)$",
-  //   "node_modules/(?!(@material-ui)/)"
-  // ]
+  transformIgnorePatterns: [
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+    "^.+\\.module\\.(css|sass|scss)$",
+    "node_modules/(?!(@material-ui)/)"
+  ]
 };

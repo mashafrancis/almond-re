@@ -55,9 +55,7 @@
           "@placeholders": "./src/placeholders/",
           "@modules": "./src/store/modules/",
           "@utils": "./src/utils/",
-          "@context": "./src/context/",
-          "@material-ui/core": "@material-ui/core/es",
-          "@material-ui/icons": "@material-ui/icons/esm"
+          "@context": "./src/context/"
         }
       }
     ]

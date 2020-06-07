@@ -6,8 +6,7 @@ import { mount, shallow } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import {
-  EnterDeviceIdPage,
+import EnterDeviceIdPage, {
   mapDispatchToProps,
   mapStateToProps
 } from './index';

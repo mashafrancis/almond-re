@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // third-party libraries
-import Card from '@material/react-card';
+import { Card } from '@material-ui/core';
 import * as moment from 'moment';
 
 // interfaces
@@ -18,7 +18,7 @@ const ActivityLogCard: React.FunctionComponent<ActivityLogCardProps> = (props) =
   } = props;
 
   return (
-    <Card className={`log-card log-card__${type}`}>
+    <Card variant="outlined" className={`log-card log-card__${type}`}>
       <div className={`${
         type === 'info' ? 'log-details-info' : 'log-details-error'
       } log-details`}>
