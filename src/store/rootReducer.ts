@@ -6,6 +6,7 @@ import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
 import loading from '@modules/loading';
 import people from '@modules/people';
+import sensorData from '@modules/sensorData';
 import snack from '@modules/snack';
 import socialAuth from '@modules/socialAuth';
 import timeSchedules from '@modules/timeSchedules';
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   people,
   activityLogs,
   loading,
+  sensorData
 });
 
 const rootReducer = (state, action) => {

@@ -6,13 +6,22 @@ import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { createFirestoreInstance } from "redux-firestore";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import * as firebase from "firebase";
 
 // components
+import {
+  firebaseConfig,
+  reactReduxFirebaseConfig
+} from "@utils/helpers/firebase";
+import store from "../store";
 import ErrorBoundary from '@components/ErrorBoundary';
 import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
 import LinearProgressBar from "@components/LinearProgressBar";
 import { Transition } from 'react-transition-group';
+import { Fade } from "@material-ui/core";
 
 // thunk action creators
 import { getUserDetails } from '@modules/user';
@@ -32,7 +41,6 @@ import { MenuProvider } from "@context/MenuContext";
 
 // styles
 import './App.scss';
-import { Fade } from "@material-ui/core";
 
 const useEffectAsync = (effect, inputs) => {
   React.useEffect(() => {
@@ -54,6 +62,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
   } = props;
 
   useEffectAsync(async () => {
+    firebase.initializeApp(firebaseConfig);
     initializeGA();
     logPageView(window.location.pathname);
     if (state.isUserAuthenticated) {
@@ -99,47 +108,54 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
   } = user;
 
   return (
-    <UserContext.Provider
-      value={{
-        _id,
-        name,
-        email,
-        photo,
-        isVerified,
-        devices,
-        activeDevice,
-        isAdmin,
-      }}
+    <ReactReduxFirebaseProvider
+      firebase={firebaseConfig}
+      config={reactReduxFirebaseConfig}
+      dispatch={store.dispatch}
+      createFirestoreInstance={createFirestoreInstance}
     >
-      <MenuProvider>
-        <ViewportProvider>
-          <ErrorBoundary>
-            <React.Fragment>
-              <SnackBar/>
-              <>
-                {
-                  location.pathname !== '/'
-                  && isUserAuthenticated
-                }
-                {
-                  <React.Suspense fallback={
-                    <Fade
-                      in={props.loading === 'requesting'}
-                      style={{ transitionDelay: props.loading === 'requesting' ? '800ms' : '0ms' }}
-                      unmountOnExit
-                    >
-                      <LinearProgressBar />
-                    </Fade>
-                  }>
-                    <Routes/>
-                  </React.Suspense>
+      <UserContext.Provider
+        value={{
+          _id,
+          name,
+          email,
+          photo,
+          isVerified,
+          devices,
+          activeDevice,
+          isAdmin,
+        }}
+      >
+        <MenuProvider>
+          <ViewportProvider>
+            <ErrorBoundary>
+              <React.Fragment>
+                <SnackBar/>
+                <>
+                  {
+                    location.pathname !== '/'
+                    && isUserAuthenticated
                   }
-              </>
-            </React.Fragment>
-          </ErrorBoundary>
-        </ViewportProvider>
-      </MenuProvider>
-    </UserContext.Provider>
+                  {
+                    <React.Suspense fallback={
+                      <Fade
+                        in={props.loading === 'requesting'}
+                        style={{ transitionDelay: props.loading === 'requesting' ? '800ms' : '0ms' }}
+                        unmountOnExit
+                      >
+                        <LinearProgressBar />
+                      </Fade>
+                    }>
+                      <Routes/>
+                    </React.Suspense>
+                    }
+                </>
+              </React.Fragment>
+            </ErrorBoundary>
+          </ViewportProvider>
+        </MenuProvider>
+      </UserContext.Provider>
+    </ReactReduxFirebaseProvider>
   );
 }
 

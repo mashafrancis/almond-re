@@ -93,10 +93,10 @@ USER node
 EXPOSE 3000
 ENV PORT=3000
 
-#CMD ["yarn", "start"]
+CMD ["yarn", "start"]
 
-RUN chmod 777 /home/node/app/entrypoint.sh
-ENTRYPOINT ["/home/node/app/entrypoint.sh"]
+#RUN chmod 777 /home/node/app/entrypoint.sh
+#ENTRYPOINT ["/home/node/app/entrypoint.sh"]
 
 #CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
 

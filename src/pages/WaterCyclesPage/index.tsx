@@ -8,6 +8,7 @@ import {
 } from '@material/react-layout-grid';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
+import { DefinedRange } from 'react-date-range';
 
 // components
 const CardInfo = React.lazy(() => import('@components/CardInfo'));
@@ -35,7 +36,8 @@ import {
   ScheduleTwoTone,
   AddAlarmTwoTone,
   ArrowDropDown,
-  FilterList
+  FilterList,
+  DateRange
 } from '@material-ui/icons';
 
 // thunks
@@ -49,7 +51,8 @@ import {
   togglePump,
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
-import { MenuContext } from "../../context/MenuContext/index";
+import { getWaterData } from "@modules/sensorData";
+import { MenuContext } from "@context/MenuContext";
 import { UserContext } from '@utils/context';
 
 // utils
@@ -57,26 +60,17 @@ import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
 
 // styles
 import './WaterCyclesPage.scss';
+import {
+  ToggleSwitch,
+  useWaterCyclesPageStyles
+} from "@pages/WaterCyclesPage/styles";
 
 // interfaces
 import {
   WaterCyclesPageProps,
   WaterCyclesPageState
 } from './interfaces';
-
-const PumpSwitch = withStyles({
-  switchBase: {
-    color:'#FFFFFF',
-    '&$checked': {
-      color:'#1967D2',
-    },
-    '&$checked + $track': {
-      backgroundColor: '#1967D2',
-    },
-  },
-  checked: {},
-  track: {},
-})(Switch);
+import round from "@utils/helpers/roundDigit";
 
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (props) => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
@@ -97,6 +91,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
+  const classes = useWaterCyclesPageStyles();
 
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -122,6 +117,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     }
   },              [state.selectedTimeSchedule]);
 
+  React.useEffect(() => {
+    props.getWaterData();
+  }, []);
+
   // React.useEffect(() => {
   //   const { scheduleToEdit } = state;
   //   const schedules = [...new Set(props.schedules.map(item => item.schedule))];
@@ -135,9 +134,36 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const areEqual = (prevProps, nextProps) => (prevProps.isChecked === nextProps.isChecked);
 
-  const waterLevel = 32;
-  const heightOfTank = 100; // units in centimeters
-  const heightOfWater = ((heightOfTank - waterLevel)/heightOfTank) * 100
+  const heightOfTank = 11; // units in centimeters
+  const waterLevel = (heightOfTank <= 11) ? (props.waterData.waterLevel || heightOfTank) : heightOfTank;
+  const heightOfWater = round(((heightOfTank - waterLevel)/heightOfTank) * 100, 0);
+
+  const PumpSwitch = withStyles({
+    switchBase: {
+      color:'#FFFFFF',
+      '&$checked': {
+        color:'#1967D2',
+      },
+      '&$checked + $track': {
+        backgroundColor: '#1967D2',
+      },
+    },
+    thumb: {
+      width: 20,
+      height: 20,
+      animation: '$blink 1s ease infinite'
+    },
+    checked: {},
+    track: {
+      borderRadius: 20,
+    },
+    '@keyframes blink': {
+      '50%': {
+        transform: 'scale (1)',
+        backgroundColor: '#1967D2',
+      },
+    },
+  })(Switch);
 
   const handleToggleButtonOnChange = (event) => {
     event.target.checked
@@ -235,9 +261,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
   };
 
   const BlankContent = message => (
-    <div className="blank-content">
-      <h2>{message}</h2>
-    </div>
+    <div className="blank-content"><h2>{message}</h2></div>
   );
 
   const AddEditScheduleModal = () => (
@@ -287,7 +311,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       id: schedule,
       time: `${moment(schedule[1].schedule).format('LT')}`,
       actions: ActionButtons(schedule[1]._id),
-      status: <PumpSwitch
+      status: <ToggleSwitch
                 checked={schedule[1].enabled}
                 onChange={e => handleToggleStatusChange(e, schedule[1])}
               />,
@@ -421,7 +445,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
                   chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
                 />
               }
-              actionItem={<ActionButton name="Filter" icon={<FilterList/>} />}
+              actionItem={<ActionButton name="Today" icon={<DateRange/>} />}
           />
         </Cell>
       </Row>
@@ -437,6 +461,7 @@ export const mapStateToProps = state => ({
   enabled: state.timeSchedules.enabled,
   devices: state.user.devices,
   user: state.user,
+  waterData: state.sensorData.waterData
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -448,6 +473,7 @@ export const mapDispatchToProps = dispatch => ({
   getPumpStatus: deviceId => dispatch(getPumpStatus(deviceId)),
   togglePump: status => dispatch(togglePump(status)),
   toggleScheduleStatus: (scheduleId, enabled) => dispatch(toggleScheduleStatus(scheduleId, enabled)),
+  getWaterData: () => dispatch(getWaterData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterCyclesPage);
