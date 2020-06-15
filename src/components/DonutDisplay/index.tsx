@@ -14,7 +14,7 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
     const width = chart.width;
     const height = chart.height;
 
-    const fontSize = (height / 114).toFixed(2);
+    const fontSize = (height / 80).toFixed(2);
     ctx.font = fontSize + "em Google Sans,Roboto,Helvetica Neue,sans-serif";
     ctx.textBaseline = "middle";
 

@@ -17,6 +17,7 @@ import { FilterList } from "@material-ui/icons";
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
+import { getEnvironmentData } from "@modules/sensorData";
 
 // styles
 import './EnvironmentControlPage.scss';
@@ -26,32 +27,47 @@ import {
   EnvironmentControlPageProps,
   EnvironmentControlPageState
 } from './interfaces';
+import round from "@utils/helpers/roundDigit";
 
 export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = (props) => {
   const [state, setState] = React.useState<EnvironmentControlPageState>({
-    isEditMode: false,
-    schedules: [],
-    isDeleteModal: false,
-    action: '',
-    id: '',
-    statusClass: '',
-    isEnabled: false,
+    environmentData: []
   });
+
+  React.useEffect(() => {
+    props.getEnvironmentData();
+      // .then(() => setState({ ...state, environmentData: props.environmentData }))
+  }, [])
+
+  const {
+    currentTemperature,
+    currentHumidity
+  } = props.environmentData;
+
+  const temperature = round(currentTemperature, 1) || 0;
+  const humidity = round(currentHumidity, 1) || 0;
 
   const donutData = [
     {
       heading: "Air Temperature",
       backgroundColor: ['#36A2EB', '#CCCCCC'],
       hoverBackgroundColor: ['#36A2EB', '#CCCCCC'],
-      data: [20, 50],
-      donutInfo: `${18} \u00b0C`
+      data: [temperature, (100 - temperature)],
+      donutInfo: `${temperature} \u00b0C`
     },
     {
-      heading: "Air Humidity",
+      heading: "Plant Humidity",
       backgroundColor: ['#FFCE56', '#CCCCCC'],
       hoverBackgroundColor: ['#FFCE56', '#CCCCCC'],
-      data: [40, 50],
-      donutInfo: `${80}%`
+      data: [humidity, (100 - humidity)],
+      donutInfo: `${humidity}%`
+    },
+    {
+      heading: "Water Temperature",
+      backgroundColor: ['#7ad283', '#CCCCCC'],
+      hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
+      data: [humidity, (200 - humidity)],
+      donutInfo: `${humidity}%`
     }
   ];
 
@@ -75,26 +91,26 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                     hoverBackgroundColor={data.hoverBackgroundColor}
                     data={data.data}
                     donutInfo={data.donutInfo}
-                    halfDonut
+                    halfDonut={true}
                   />
                 }
               />
             </Cell>
           ))
         }
-        <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>
-          <DashboardCard
-            classes="recent-activities-available"
-            heading="About"
-            body={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`}
-            // actionItem={<ActionButton name="Refresh" icon="update" />}
-          />
-          {/*<GeneralCardInfo*/}
-          {/*  mainHeader="About Environmental Control"*/}
-          {/*  subHeader={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`}*/}
-          {/*  icon={<BlurCircularIcon className="content-icon general-info-icon" />}*/}
-          {/*  />*/}
-        </Cell>
+        {/*<Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}>*/}
+        {/*  <DashboardCard*/}
+        {/*    classes="recent-activities-available"*/}
+        {/*    heading="About"*/}
+        {/*    body={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`}*/}
+        {/*    // actionItem={<ActionButton name="Refresh" icon="update" />}*/}
+        {/*  />*/}
+        {/*  /!*<GeneralCardInfo*!/*/}
+        {/*  /!*  mainHeader="About Environmental Control"*!/*/}
+        {/*  /!*  subHeader={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`}*!/*/}
+        {/*  /!*  icon={<BlurCircularIcon className="content-icon general-info-icon" />}*!/*/}
+        {/*  /!*  />*!/*/}
+        {/*</Cell>*/}
       </Row>
       <Row>
         <Cell columns={6} desktopColumns={6} tabletColumns={4} phoneColumns={4}>
@@ -132,10 +148,12 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
 
 export const mapStateToProps = state => ({
   error: state.error,
+  environmentData: state.sensorData.environmentData
 });
 
 export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+  getEnvironmentData: () => dispatch(getEnvironmentData())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentControlPage);

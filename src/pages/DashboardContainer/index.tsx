@@ -296,6 +296,12 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     />
   );
 
+  const menuItems = [
+    { name: 'Settings', icon: <Settings/> },
+    { name: 'Help', icon: <Help/> },
+    { name: 'Send Feedback', icon: <OpenInNew/> },
+  ]
+
   const MenuProfileSelect = () => (
     <Menu
       className="photo-menu"
@@ -306,18 +312,14 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       onClose={handleProfileClose}
     >
       {width < breakpoint && <div>
-        <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><Settings/></ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><Help/></ListItemIcon>
-          Help
-        </MenuItem>
-        <MenuItem onClick={toggleRoleChangeDialog}>
-          <ListItemIcon style={{ minWidth: '36px' }}><OpenInNew/></ListItemIcon>
-          Send Feedback
-        </MenuItem>
+        {
+          menuItems.map((item, index) => (
+            <MenuItem key={index} onClick={setSelectedIndex.bind(null,{ group: 1, item: index })}>
+              <ListItemIcon style={{ minWidth: '36px' }}>{item.icon}</ListItemIcon>
+              {item.name}
+            </MenuItem>
+          ))
+        }
       </div>}
 
       <MenuItem onClick={toggleRoleChangeDialog}>

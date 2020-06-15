@@ -29,7 +29,6 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
 
   const checkIsAdmin = () => user.isAdmin ? AdminBottomNavigationMenus : BottomNavigationMenus;
 
-  // @ts-ignore
   const classes = useStyles();
   const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
   const [value, setValue] = React.useState(isArrayNotNull(selectedIndex) ? 0 : selectedIndex.item);
@@ -48,7 +47,7 @@ export const PageBottomNavigation: React.FunctionComponent = () => {
         checkIsAdmin().map((menu, index) => (
           <BottomNavigationAction
             key={index}
-            onClick={() => setSelectedIndex({ group: 0, item: index })}
+            onClick={setSelectedIndex.bind(null,{ group: 0, item: index })}
             label={menu.label}
             icon={menu.icon}
           />

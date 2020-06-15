@@ -118,6 +118,7 @@ module.exports = {
         loader: 'source-map-loader',
         exclude: [
           /node_modules\/@material/,
+          /node_modules\/@firebase/,
           /src\/atomic/
         ],
       },
