@@ -78,6 +78,7 @@
     "moment-timezone": "^0.5.31",
     "moxios": "^0.4.0",
     "mqtt": "^4.1.0",
+    "mqtt-hooks": "^1.0.1",
     "node-fetch": "^2.6.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.7.2",
