@@ -9,6 +9,7 @@ import {
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { DefinedRange } from 'react-date-range';
+import { useMqttState } from 'mqtt-hooks';
 
 // components
 const CardInfo = React.lazy(() => import('@components/CardInfo'));
@@ -91,7 +92,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
-  const classes = useWaterCyclesPageStyles();
+
+  const { mqtt } = useMqttState();
 
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -172,6 +174,10 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
       : props.togglePump({ enabled: false, deviceId: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: '' }));
   };
+
+  const handleClick = message => {
+    return mqtt.publish('almond/pump', message);
+  }
 
   const handleToggleStatusChange = (event, schedule) => {
     event.target.checked
@@ -391,7 +397,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
             actionItem={
               <PumpSwitch
                 className="manual-override"
-                onChange={handleToggleButtonOnChange}
+                onClick={() => handleClick(true)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />

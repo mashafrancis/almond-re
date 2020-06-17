@@ -10182,6 +10182,21 @@ moxios@^0.4.0:
   resolved "https://registry.yarnpkg.com/moxios/-/moxios-0.4.0.tgz#fc0da2c65477d725ca6b9679d58370ed0c52f53b"
   integrity sha1-/A2ixlR31yXKa5Z51YNw7QxS9Ts=
 
+mqtt-hooks@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mqtt-hooks/-/mqtt-hooks-1.0.1.tgz#14b4e70b102acfe60ee58b731609468d8c3b6180"
+  integrity sha512-LlBGfKrLps3TM6T5gJu7pPqCECTsUxjXM5qBYtX/GWZT8FnMpQLszZbbb5JDy/ZbiP0jyDiXGOxr2VM1zRsF4A==
+  dependencies:
+    mqtt "^4.1.0"
+    mqtt-pattern "^1.2.0"
+    react "^16.13.1"
+    react-dom "^16.13.1"
+
+mqtt-match@^1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mqtt-match/-/mqtt-match-1.0.3.tgz#13e65197b0556e57c53633e5c0d757722094776f"
+  integrity sha512-nfeAp+chyjVeIvvrgMhQCfDAIVp/zXX8rtxHQwuAWuapqAdFs1F0kIekG445ps3xs/qFPK6l2xRlAyiqqwbmrQ==
+
 mqtt-packet@^6.0.0:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/mqtt-packet/-/mqtt-packet-6.3.2.tgz#a737734a9a64e8cffbad7ad9e116d35b912f2e00"
@@ -10192,6 +10207,13 @@ mqtt-packet@^6.0.0:
     inherits "^2.0.3"
     process-nextick-args "^2.0.0"
     safe-buffer "^5.1.2"
+
+mqtt-pattern@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mqtt-pattern/-/mqtt-pattern-1.2.0.tgz#f79a5bb1b567bcd9a69857ba743bc8bef52261d2"
+  integrity sha512-5tvJTrMXcvAWRc4J+YW0pnZOLi20yXFX1R7cjB0291X9aRFPyO+5vbh/kHVwUlNPfJuwijcvrd/AmwDLe1021w==
+  dependencies:
+    mqtt-match "^1.0.2"
 
 mqtt@^4.1.0:
   version "4.1.0"
