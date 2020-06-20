@@ -1,15 +1,18 @@
 // react libraries
-import { Location } from 'history';
 import * as React from 'react';
 
 // third party
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import { QualityCheckPage } from './index';
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  QualityCheckPage
+} from './index';
 
-describe.skip('The QualityCheck Page', () => {
+describe('The QualityCheck Page', () => {
   let wrapper;
   let props;
   let waterCyclesPageInstance;
@@ -17,19 +20,48 @@ describe.skip('The QualityCheck Page', () => {
   beforeEach(() => {
     props = {
     };
-    wrapper = mount(
-      <BrowserRouter>
-        <QualityCheckPage {...props}/>
-      </BrowserRouter>
-    );
-    waterCyclesPageInstance = wrapper.find(QualityCheckPage).instance();
+    wrapper = shallow(<QualityCheckPage {...props}/>);
   });
 
   afterEach(() => {
-    wrapper = props = null;
+    wrapper.unmount();
   });
 
   it('should render properly', () => {
     expect(wrapper).toMatchSnapshot();
+    // expect(wrapper.find('.main-subheader')).toHaveLength(1);
+  });
+
+  describe('mapStateToProps', () => {
+    const state = {
+      error: {
+        error: '',
+      },
+    };
+
+    const props = mapStateToProps(state);
+
+    it('should map user prop from state', () => {
+      expect(props.error).toEqual(state.error);
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    let dispatch;
+    let props;
+
+    beforeEach(() => {
+      dispatch = jest.fn();
+      props = mapDispatchToProps(dispatch) as any;
+    });
+
+    afterEach(() => {
+      dispatch = props = null;
+    })
+
+    it('ensures displaySnackMessage is mapped to props', () => {
+      props.displaySnackMessage();
+      expect(dispatch).toHaveBeenCalled();
+    })
   });
 });

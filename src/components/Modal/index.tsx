@@ -2,8 +2,8 @@ import * as React from 'react';
 
 // components
 import ActionButton from '@components/ActionButton';
-import Button from '@components/Button';
 import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -47,13 +47,26 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
           handleClick={onDismiss}
         />
         <Button
-          type="button"
+          className="mdc-button big-round-corner-button mdc-button--raised"
+          onClick={() => onSubmit}
           name={submitButtonName}
-          id="cc-roles"
           disabled={disabled}
-          onClick={onSubmit}
-          classes="mdc-button big-round-corner-button mdc-button--raised"
         />
+        {/*<button*/}
+        {/*  className="mdc-button big-round-corner-button mdc-button--raised"*/}
+        {/*  onClick={() => onSubmit}>*/}
+        {/*      <span className="mdc-button__label">*/}
+        {/*        {submitButtonName}*/}
+        {/*      </span>*/}
+        {/*</button>*/}
+        {/*<Button*/}
+        {/*  type="button"*/}
+        {/*  name={submitButtonName}*/}
+        {/*  id="cc-roles"*/}
+        {/*  disabled={disabled}*/}
+        {/*  onClick={onSubmit}*/}
+        {/*  classes="mdc-button big-round-corner-button mdc-button--raised"*/}
+        {/*/>*/}
       </DialogActions>
     </Dialog>
   );

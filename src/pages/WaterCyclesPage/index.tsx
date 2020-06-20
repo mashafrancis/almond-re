@@ -119,9 +119,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
     }
   },              [state.selectedTimeSchedule]);
 
-  React.useEffect(() => {
-    props.getWaterData();
-  }, []);
+  // React.useEffect(() => {
+  //   props.getWaterData();
+  // }, []);
 
   // React.useEffect(() => {
   //   const { scheduleToEdit } = state;
@@ -460,7 +460,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = (p
 };
 
 export const mapStateToProps = state => ({
-  error: state.error,
   schedules: state.timeSchedules.schedules,
   status: state.timeSchedules.status,
   isLoading: state.timeSchedules.isLoading,

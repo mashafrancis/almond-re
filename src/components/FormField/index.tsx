@@ -1,12 +1,18 @@
 import * as React from 'react';
 
 // interfaces
-import { FormFieldProps, FormFieldState } from '@components/FormField/interfaces';
 import {
-  InputAdornment, MenuItem,
-  TextField, withStyles
+  FormFieldProps,
+  FormFieldState
+} from '@components/FormField/interfaces';
+
+// components
+import {
+  InputAdornment,
+  MenuItem,
+  TextField
 } from "@material-ui/core";
-// nodejs library to set properties for components
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // styles
 // import './FormField.scss';

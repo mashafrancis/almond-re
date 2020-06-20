@@ -20,7 +20,7 @@ import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 
 // fixtures
 import {
-  newDevice,
+  devices,
   requestPayload,
 } from '@modules/device/fixtures';
 
@@ -31,7 +31,7 @@ const deviceInitialState = {
 describe.skip('Device actions', () => {
   it('should create and verify a new device', () => {
     const mockResponse = {
-      data: newDevice.data,
+      data: devices.data,
     };
 
     const expectedAction = [
@@ -39,7 +39,7 @@ describe.skip('Device actions', () => {
         type: ADD_DEVICE_REQUEST,
       },
       {
-        data: newDevice.data.data,
+        data: devices.data,
         type: ADD_DEVICE_SUCCESS,
         isLoading: false,
       },

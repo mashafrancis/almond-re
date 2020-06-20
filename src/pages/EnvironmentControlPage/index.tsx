@@ -34,10 +34,10 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
     environmentData: []
   });
 
-  React.useEffect(() => {
-    props.getEnvironmentData();
-      // .then(() => setState({ ...state, environmentData: props.environmentData }))
-  }, [])
+  // React.useEffect(() => {
+  //   props.getEnvironmentData();
+  //     // .then(() => setState({ ...state, environmentData: props.environmentData }))
+  // }, [])
 
   const {
     currentTemperature,
@@ -147,7 +147,6 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
 };
 
 export const mapStateToProps = state => ({
-  error: state.error,
   environmentData: state.sensorData.environmentData
 });
 

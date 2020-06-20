@@ -21,7 +21,6 @@ import {
 import { connect } from 'react-redux';
 
 // components
-import Button from '@components/Button';
 import { Cell, Row } from "@material/react-layout-grid";
 import NavigationHeader from "@components/NavigationHeader";
 
@@ -147,13 +146,20 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
         </Row>
         <Row className="device-id-page">
           <Cell columns={8} desktopColumns={8} tabletColumns={4} phoneColumns={2}>
-            <Button
-              type="button"
-              name={isLoading ? 'Adding...' : 'Add new device ID'}
-              id="cc-register"
-              onClick={onSubmit}
-              classes="mdc-button big-round-corner-button mdc-button--raised"
-            />
+            <button
+              className="mdc-button mdc-button--raised"
+              onClick={() => onSubmit}>
+              <span className="mdc-button__label">
+                {isLoading ? 'Adding...' : 'Add new device ID'}
+              </span>
+            </button>
+            {/*<Button*/}
+            {/*  type="button"*/}
+            {/*  name={isLoading ? 'Adding...' : 'Add new device ID'}*/}
+            {/*  id="cc-register"*/}
+            {/*  onClick={onSubmit}*/}
+            {/*  classes="mdc-button big-round-corner-button mdc-button--raised"*/}
+            {/*/>*/}
           </Cell>
         </Row>
       </Grid>

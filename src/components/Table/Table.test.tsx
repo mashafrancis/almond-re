@@ -28,9 +28,7 @@ describe('Table components', () => {
       },
     ],
   };
-  const wrapper = shallow(
-    <Table { ...props } />
-  );
+  const wrapper = shallow(<Table { ...props } />);
 
   it('should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
