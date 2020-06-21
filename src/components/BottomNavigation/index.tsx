@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const PageBottomNavigation: React.FunctionComponent = () => {
+const PageBottomNavigation: React.FunctionComponent = () => {
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
   const { setSelectedIndex } = menu;

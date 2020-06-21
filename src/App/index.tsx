@@ -69,7 +69,6 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
   } = props;
 
   useEffectAsync(async () => {
-    firebase.initializeApp(firebaseConfig);
     initializeGA();
     logPageView(window.location.pathname);
     if (state.isUserAuthenticated) {
@@ -131,12 +130,12 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
   } = user;
 
   return (
-    <ReactReduxFirebaseProvider
-      firebase={firebaseConfig}
-      config={reactReduxFirebaseConfig}
-      dispatch={store.dispatch}
-      createFirestoreInstance={createFirestoreInstance}
-    >
+    // <ReactReduxFirebaseProvider
+    //   firebase={firebaseConfig}
+    //   config={reactReduxFirebaseConfig}
+    //   dispatch={store.dispatch}
+    //   createFirestoreInstance={createFirestoreInstance}
+    // >
       <UserContext.Provider
         value={{
           _id,
@@ -180,7 +179,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
           </ViewportProvider>
         </MenuProvider>
       </UserContext.Provider>
-    </ReactReduxFirebaseProvider>
+    // </ReactReduxFirebaseProvider>
   );
 }
 

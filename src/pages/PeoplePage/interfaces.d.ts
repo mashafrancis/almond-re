@@ -4,9 +4,10 @@ import { UserRole } from '@modules/userRoles/interfaces';
 export interface PeoplePageProps {
   getAllPeople: () => Promise<any>;
   getUserRoles: () => Promise<any>;
+  updatePerson: (id, role) => Promise<any>;
+  displaySnackMessage: (message) => Promise<any>;
   people: UserDetails[];
   roles: UserRole[];
-  updatePerson: (id, role) => Promise<any>;
 }
 
 export interface PeoplePageState {

@@ -1,3 +1,5 @@
+import * as firebase from 'firebase/app';
+import { getFirebase } from "react-redux-firebase";
 import {
   GetEnvironmentDataFailure,
   GetEnvironmentDataRequest,
@@ -16,10 +18,12 @@ import {
   GET_WATER_DATA_SUCCESS
 } from "@modules/sensorData/types";
 
-import {loadingError, loadingRequest, loadingSuccess} from "@modules/loading";
-import {AnyAction} from "redux";
-import * as firebase from 'firebase';
-import {getFirebase} from "react-redux-firebase";
+import {
+  loadingError,
+  loadingRequest,
+  loadingSuccess
+} from "@modules/loading";
+import { AnyAction } from "redux";
 
 export const getEnvironmentDataRequest = (): GetEnvironmentDataRequest => ({
   type: GET_ENVIRONMENT_DATA_REQUEST

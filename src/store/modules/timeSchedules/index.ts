@@ -40,8 +40,8 @@ import {
   GET_PUMP_STATUS_FAILURE,
   GET_PUMP_STATUS_REQUEST,
   GET_PUMP_STATUS_SUCCESS,
-  GET_SCHEDULE_REQUEST,
-  GET_SCHEDULE_SUCCESS,
+  GET_SCHEDULES_REQUEST,
+  GET_SCHEDULES_SUCCESS,
   GET_SCHEDULES_FAILURE,
   TOGGLE_PUMP_STATUS_FAILURE,
   TOGGLE_PUMP_STATUS_REQUEST,
@@ -50,13 +50,16 @@ import {
 import { AnyAction } from "redux";
 import { logActivity } from "@modules/activityLogs";
 
+// helpers
+import errorOnSnack from "@utils/helpers/errorOnSnack";
+
 /**
  * Get all schedules request
  *
  * @returns {GetAllSchedulesActionRequest}
  */
 export const getSchedulesRequest = (): GetAllSchedulesActionRequest => ({
-  type: GET_SCHEDULE_REQUEST,
+  type: GET_SCHEDULES_REQUEST,
   isLoading: true,
 });
 
@@ -68,7 +71,7 @@ export const getSchedulesRequest = (): GetAllSchedulesActionRequest => ({
  */
 export const getSchedulesSuccess = (schedules: Schedule[]): GetAllSchedulesActionSuccess => ({
   schedules,
-  type: GET_SCHEDULE_SUCCESS,
+  type: GET_SCHEDULES_SUCCESS,
   isLoading: false,
 });
 
@@ -113,6 +116,7 @@ export const addScheduleSuccess = (schedule: NewSchedule): AddScheduleActionSucc
 export const addScheduleFailure = (errors): AddSchedulesActionFailure => ({
   errors,
   type: ADD_SCHEDULES_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -145,6 +149,7 @@ export const deleteSingleScheduleSuccess = (id): DeleteScheduleActionSuccess => 
 export const deleteSingleScheduleFailure = (errors): DeleteScheduleActionFailure => ({
   errors,
   type: DELETE_SCHEDULE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -179,6 +184,7 @@ export const editScheduleSuccess = (id, schedule: Schedule): EditScheduleActionS
 export const editScheduleFailure = (errors): EditScheduleActionFailure => ({
   errors,
   type: EDIT_SCHEDULE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -188,6 +194,7 @@ export const editScheduleFailure = (errors): EditScheduleActionFailure => ({
  */
 export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
   type: TOGGLE_PUMP_STATUS_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -199,6 +206,7 @@ export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
 export const togglePumpStatusSuccess = (enabled: Status): TogglePumpStatusActionSuccess => ({
   enabled,
   type: TOGGLE_PUMP_STATUS_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -209,6 +217,7 @@ export const togglePumpStatusSuccess = (enabled: Status): TogglePumpStatusAction
 export const togglePumpStatusFailure = (errors): TogglePumpStatusActionFailure => ({
   errors,
   type: TOGGLE_PUMP_STATUS_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -218,6 +227,7 @@ export const togglePumpStatusFailure = (errors): TogglePumpStatusActionFailure =
  */
 export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
   type: GET_PUMP_STATUS_REQUEST,
+  isLoading: true,
 });
 
 /**
@@ -229,6 +239,7 @@ export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
 export const getPumpStatusSuccess = (enabled: Status): GetPumpStatusActionSuccess => ({
   enabled,
   type: GET_PUMP_STATUS_SUCCESS,
+  isLoading: false,
 });
 
 /**
@@ -239,6 +250,7 @@ export const getPumpStatusSuccess = (enabled: Status): GetPumpStatusActionSucces
 export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
   errors,
   type: GET_PUMP_STATUS_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -249,13 +261,15 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
  */
 export const getAllSchedules = deviceId => (dispatch, getState, http) => {
   dispatch(getSchedulesRequest());
-  return http.get(`/schedules?device=${deviceId}`)
+  return http.get(`/schedules?device=${deviceId}`, { cache: true })
     .then((response) => {
-      dispatch(getSchedulesSuccess(response.data.data));
+      const { data: { data } } = response;
+      dispatch(getSchedulesSuccess(data));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(getSchedulesFailure(message));
+      const { response: { data: { message } } } = error;
+      dispatch(displaySnackMessage(message));
+      dispatch(getSchedulesFailure(error));
     });
 };
 
@@ -269,13 +283,14 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
   dispatch(addScheduleRequest());
   return http.post('schedules', schedule)
     .then((response) => {
-      dispatch(addScheduleSuccess(response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+      const { data: { data } } = response;
+      const { data: { message } } = response;
+      dispatch(addScheduleSuccess(data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(addScheduleFailure(message));
-      dispatch(displaySnackMessage(message));
+      errorOnSnack(error, dispatch, 'creating your schedule');
+      dispatch(addScheduleFailure(error));
     });
 };
 
@@ -289,13 +304,13 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
   return http.delete(`schedules/${id}`)
     .then((response) => {
+      const { data: { message } } = response;
       dispatch(deleteSingleScheduleSuccess(id));
-      dispatch(displaySnackMessage(response.data.message));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(deleteSingleScheduleFailure(message));
-      dispatch(displaySnackMessage(message));
+      errorOnSnack(error, dispatch, 'deleting your schedule');
+      dispatch(deleteSingleScheduleFailure(error));
     });
 };
 
@@ -309,13 +324,13 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
   dispatch(editScheduleRequest());
   return http.patch(`schedules/${id}`, schedule)
     .then((response) => {
-      dispatch(editScheduleSuccess(id, response.data.data));
+      const { data: { data } } = response;
+      dispatch(editScheduleSuccess(id, data));
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(editScheduleFailure(message));
-      dispatch(displaySnackMessage(message));
+      errorOnSnack(error, dispatch, 'editing your schedule');
+      dispatch(editScheduleFailure(error));
     });
 };
 
@@ -326,35 +341,39 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const togglePump = status => (dispatch, getState, http) => {
+  dispatch(togglePumpStatusRequest());
   return http.patch('pump', status)
     .then((response) => {
-      const data = response.data.data.scheduleOverride.enabled;
+      const { data: { data: { scheduleOverride: { enabled } } } } = response;
+      // const data = response.data.data.scheduleOverride.enabled;
       // dispatch(getPumpStatusSuccess(data));
-      dispatch(togglePumpStatusSuccess(data));
+      dispatch(togglePumpStatusSuccess(enabled));
       dispatch(logActivity(response.data.data.activityHistory));
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(displaySnackMessage(message));
+      errorOnSnack(error, dispatch, `turning pump ${status.enabled ? 'ON' : 'OFF'}`);
+      dispatch(togglePumpStatusFailure(error));
     });
 };
 
 /**
  * Thunk action creator
- * Toggle a pump manually
+ * Get pump status
  *
  * @returns {Function} action type and payload
  */
 export const getPumpStatus = deviceId => (dispatch, getState, http) => {
+  dispatch(getPumpStatusRequest());
   return http.get(`/pump?device=${deviceId}`)
     .then((response) => {
       const data = response.data.data[0].enabled;
       dispatch(getPumpStatusSuccess(data));
     })
-    .catch(() => {
-      // const message = 'Unable to turn the pump ON/OFF. Kindly check network connectivity.';
-      dispatch(displaySnackMessage(''));
+    .catch((error) => {
+      let errorMessage = 'An error occurred while fetching pump status. Please try again';
+      dispatch(displaySnackMessage(errorMessage));
+      dispatch(getPumpStatusFailure(error))
     });
 };
 
@@ -371,9 +390,9 @@ export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) 
       dispatch(displaySnackMessage(response.data.message));
     })
     .catch((error) => {
-      const message = error.response.data.message;
-      dispatch(togglePumpStatusFailure(message));
+      const { response: { data: { message } } } = error;
       dispatch(displaySnackMessage(message));
+      dispatch(togglePumpStatusFailure(error));
     });
 };
 
@@ -381,19 +400,19 @@ export const schedulesInitialState = {
   schedules: [],
   enabled: false,
   isLoading: true,
-  errors: {},
+  errors: null,
 };
 
-const reducer = (state: {
-  schedules: Schedule[], enabled: boolean,isLoading: boolean, errors: object,
+export const reducer = (state: {
+  schedules: Schedule[], enabled: boolean,isLoading: boolean, errors: null,
 } = schedulesInitialState, action: AnyAction) => {
   switch (action.type) {
-    case GET_SCHEDULE_REQUEST:
+    case GET_SCHEDULES_REQUEST:
       return {
         ...state,
         isLoading: action.isLoading,
       };
-    case GET_SCHEDULE_SUCCESS:
+    case GET_SCHEDULES_SUCCESS:
       return {
         ...state,
         schedules: action.schedules,
@@ -422,14 +441,17 @@ const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     case DELETE_SCHEDULE_REQUEST:
       return {
         ...state,
+        isLoading: action.isLoading,
       };
     case DELETE_SCHEDULE_SUCCESS:
       return {
         ...state,
+        isLoading: action.isLoading,
         schedules: [...state.schedules].filter(schedule => action.id !== schedule._id),
         errors: null,
       };
@@ -437,15 +459,17 @@ const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
+        isLoading: action.isLoading,
       };
     case EDIT_SCHEDULE_REQUEST:
       return {
         ...state,
+        isLoading: action.isLoading,
       };
     case EDIT_SCHEDULE_SUCCESS:
       return {
         ...state,
+        isLoading: action.isLoading,
         schedules: [...state.schedules].map(schedule => schedule._id === action.schedule._id ? ({
           ...schedule,
           ...action.schedule,
@@ -455,37 +479,43 @@ const reducer = (state: {
     case EDIT_SCHEDULE_FAILURE:
       return {
         ...state,
+        isLoading: action.isLoading,
         errors: action.errors,
       };
     case TOGGLE_PUMP_STATUS_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.isLoading,
       };
     case TOGGLE_PUMP_STATUS_SUCCESS:
       return {
         ...state,
+        isLoading: action.isLoading,
         enabled: action.enabled,
         errors: null,
       };
     case TOGGLE_PUMP_STATUS_FAILURE:
       return {
         ...state,
+        isLoading: action.isLoading,
         errors: action.errors,
       };
     case GET_PUMP_STATUS_REQUEST:
       return {
         ...state,
+        isLoading: action.isLoading,
       };
     case GET_PUMP_STATUS_SUCCESS:
       return {
         ...state,
+        isLoading: action.isLoading,
         enabled: action.enabled,
         errors: null,
       };
     case GET_PUMP_STATUS_FAILURE:
       return {
         ...state,
+        isLoading: action.isLoading,
         errors: action.errors,
       };
     default:

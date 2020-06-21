@@ -292,7 +292,6 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 };
 
 export const mapStateToProps = state => ({
-  error: state.error,
   devices: state.device.devices,
   activeDevice: state.device.activeDevice,
 });

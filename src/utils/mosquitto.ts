@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from 'fs';
 
 const KEY = fs.readFileSync('/etc/keys/client.key');
 const CERT = fs.readFileSync('/etc/keys/client.crt');

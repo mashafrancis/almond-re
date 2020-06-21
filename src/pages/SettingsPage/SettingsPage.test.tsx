@@ -1,4 +1,5 @@
 // react libraries
+import { Location } from 'history';
 import * as React from 'react';
 
 // third party
@@ -7,27 +8,26 @@ import { BrowserRouter } from 'react-router-dom';
 
 // components
 import {
-  EnvironmentControlPage,
+  SettingsPage,
   mapDispatchToProps,
   mapStateToProps
 } from './index';
 
-describe('The EnvironmentalControl Page', () => {
+describe('The Settings page', () => {
   let wrapper;
   let props;
+  let waterCyclesPageInstance;
 
   props = {
-    getEnvironmentData: jest.fn(() => Promise.resolve()),
     displaySnackMessage: jest.fn(() => Promise.resolve()),
-    environmentData: []
-  };
+  }
 
   beforeEach(() => {
     wrapper = shallow(
       <BrowserRouter>
-        <EnvironmentControlPage {...props}/>
-      </BrowserRouter>
-    );
+        <SettingsPage {...props}/>
+    </BrowserRouter>
+  );
   });
 
   afterEach(() => {
@@ -40,15 +40,13 @@ describe('The EnvironmentalControl Page', () => {
 
   describe('mapStateToProps', () => {
     const state = {
-      sensorData: {
-        environmentData: [],
-      }
+      error: '',
     };
 
     const props = mapStateToProps(state);
 
-    it('should map environment control page props from state', () => {
-      expect(props.environmentData).toEqual(state.sensorData.environmentData);
+    it('should map settings page props from state', () => {
+      expect(props.error).toEqual(state.error);
     });
   });
 
@@ -63,16 +61,11 @@ describe('The EnvironmentalControl Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    });
-
-    it('ensures getEnvironmentData is mapped to props', () => {
-      props.getEnvironmentData();
-      expect(dispatch).toHaveBeenCalled();
-    });
+    })
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();
       expect(dispatch).toHaveBeenCalled();
-    });
+    })
   });
 });

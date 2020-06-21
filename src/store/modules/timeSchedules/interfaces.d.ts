@@ -12,8 +12,8 @@ import {
   GET_PUMP_STATUS_FAILURE,
   GET_PUMP_STATUS_REQUEST,
   GET_PUMP_STATUS_SUCCESS,
-  GET_SCHEDULE_REQUEST,
-  GET_SCHEDULE_SUCCESS,
+  GET_SCHEDULES_REQUEST,
+  GET_SCHEDULES_SUCCESS,
   GET_SCHEDULES_FAILURE,
   TOGGLE_PUMP_STATUS_FAILURE,
   TOGGLE_PUMP_STATUS_REQUEST,
@@ -21,13 +21,13 @@ import {
 } from './types';
 
 export interface GetAllSchedulesActionRequest {
-  type: GET_SCHEDULE_REQUEST;
+  type: GET_SCHEDULES_REQUEST;
   isLoading: boolean;
 }
 
 export interface GetAllSchedulesActionSuccess {
   schedules: Schedule[];
-  type: GET_SCHEDULE_SUCCESS;
+  type: GET_SCHEDULES_SUCCESS;
   isLoading: boolean;
 }
 
@@ -51,6 +51,7 @@ export interface AddScheduleActionSuccess {
 export interface AddSchedulesActionFailure {
   type: ADD_SCHEDULES_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface DeleteScheduleActionRequest {
@@ -67,6 +68,7 @@ export interface DeleteScheduleActionSuccess {
 export interface DeleteScheduleActionFailure {
   type: DELETE_SCHEDULE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface EditScheduleActionRequest {
@@ -84,34 +86,41 @@ export interface EditScheduleActionSuccess {
 export interface EditScheduleActionFailure {
   type: EDIT_SCHEDULE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface TogglePumpStatusActionRequest {
   type: TOGGLE_PUMP_STATUS_REQUEST;
+  isLoading: boolean;
 }
 
 export interface TogglePumpStatusActionSuccess {
   enabled: Status;
   type: TOGGLE_PUMP_STATUS_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface TogglePumpStatusActionFailure {
   type: TOGGLE_PUMP_STATUS_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface GetPumpStatusActionRequest {
   type: GET_PUMP_STATUS_REQUEST;
+  isLoading: boolean;
 }
 
 export interface GetPumpStatusActionSuccess {
   enabled: Status;
   type: GET_PUMP_STATUS_SUCCESS;
+  isLoading: boolean;
 }
 
 export interface GetPumpStatusActionFailure {
   type: GET_PUMP_STATUS_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface Schedule {

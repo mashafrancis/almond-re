@@ -1,7 +1,10 @@
 import * as React from 'react';
 
 // components
-import Button from '../Button';
+import {
+  ArrowForwardRounded,
+  ArrowBackRounded
+} from '@material-ui/icons';
 
 // third-party
 import { NavLink } from 'react-router-dom';
@@ -24,12 +27,7 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
           <div className="register__logo">
             <span className="product-logo-text">{forwardButtonName}</span>
           </div>
-            <Button
-              type="button"
-              name="arrow_forward"
-              classes="mdc-icon-button material-icons"
-              aria_label="Notifications"
-            />
+            <ArrowForwardRounded />
         </span>
       </NavLink>
     </React.Fragment>
@@ -39,12 +37,7 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
     <React.Fragment>
       <NavLink to={backwardLink}>
         <span className="register-toolbar-actions">
-          <Button
-            type="button"
-            name="arrow_back"
-            classes="mdc-icon-button material-icons"
-            aria_label="Go back"
-          />
+          <ArrowBackRounded />
           <div className="register__logo">
             <span className="product-logo-text">{backwardButtonName}</span>
           </div>

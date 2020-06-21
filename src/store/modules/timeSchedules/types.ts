@@ -1,8 +1,8 @@
-export const GET_SCHEDULE_REQUEST = 'almond/timeSchedules/GET_SCHEDULE_REQUEST';
-export type GET_SCHEDULE_REQUEST = typeof GET_SCHEDULE_REQUEST;
+export const GET_SCHEDULES_REQUEST = 'almond/timeSchedules/GET_SCHEDULES_REQUEST';
+export type GET_SCHEDULES_REQUEST = typeof GET_SCHEDULES_REQUEST;
 
-export const GET_SCHEDULE_SUCCESS = 'almond/timeSchedules/GET_SCHEDULE_SUCCESS';
-export type GET_SCHEDULE_SUCCESS = typeof GET_SCHEDULE_SUCCESS;
+export const GET_SCHEDULES_SUCCESS = 'almond/timeSchedules/GET_SCHEDULES_SUCCESS';
+export type GET_SCHEDULES_SUCCESS = typeof GET_SCHEDULES_SUCCESS;
 
 export const GET_SCHEDULES_FAILURE = 'almond/timeSchedules/GET_SCHEDULES_FAILURE';
 export type GET_SCHEDULES_FAILURE = typeof GET_SCHEDULES_FAILURE;

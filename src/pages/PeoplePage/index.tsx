@@ -232,7 +232,6 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
 };
 
 export const mapStateToProps = state => ({
-  error: state.error,
   people: state.people.people,
   roles: state.userRoles.data,
 });
