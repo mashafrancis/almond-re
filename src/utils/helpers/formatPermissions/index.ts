@@ -14,7 +14,8 @@ import { fullAccess, noAccess, noAccessPermissions } from './fixtures';
  * @param {Permission[]} accessLevelPermissions
  * @returns {FormattedPermission} formattedPermission
  */
-const getFormattedPermission = (accessLevelPermissions: Permission[]): FormattedPermission => accessLevelPermissions.reduce(
+const getFormattedPermission = (
+  accessLevelPermissions: Permission[]): FormattedPermission => accessLevelPermissions.reduce(
     (formattedPermission, permission) => {
       const permissionType = camelCase(permission.type);
 

@@ -23,7 +23,7 @@ export interface DashboardContainerProps {
     user?: UserDetails;
   };
   roles: UserRole[];
-  updatePerson: (id, role) => Promise<any>;
+  editUserDetails: (id, role) => Promise<any>;
   activityLogs: ActivityLogs[];
   loading: string;
 }

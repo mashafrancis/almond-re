@@ -1,17 +1,22 @@
-import { Schedule, Status } from '@modules/timeSchedules/interfaces';
+import {
+  Schedule,
+  SchedulePayload,
+  Status,
+  ToggleSchedulePayload
+} from '@modules/timeSchedules/interfaces';
 import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
 import { WaterData } from '@modules/sensorData/interfaces';
 
 export interface WaterCyclesPageProps {
-  addNewSchedule: (schedule) => Promise<any>;
-  editSchedule: (id, schedule) => Promise<any>;
-  getAllSchedules: (id) => Promise<any>;
-  deleteSingleSchedule: (id) => Promise<any>;
-  displaySnackMessage?: (message) => Promise<any>;
-  togglePump: (state) => Promise<any>;
-  getPumpStatus: (id) => Promise<any>;
-  toggleScheduleStatus: (id, enabled) => Promise<any>;
+  addNewSchedule: (schedule: SchedulePayload) => Promise<any>;
+  editSchedule: (id :string, schedule: SchedulePayload) => Promise<any>;
+  getAllSchedules: (id: string) => Promise<any>;
+  deleteSingleSchedule: (id :string) => Promise<any>;
+  displaySnackMessage?: (message: string) => Promise<any>;
+  togglePump: (payload: ToggleSchedulePayload) => Promise<any>;
+  getPumpStatus: (id: string) => Promise<any>;
+  toggleScheduleStatus: (id: string, payload: ToggleSchedulePayload) => Promise<any>;
   getWaterData: () => Promise<any> | any;
   status?: Status;
   error?: object;

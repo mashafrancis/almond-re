@@ -8,7 +8,6 @@ import loading from '@modules/loading';
 import people from '@modules/people';
 import sensorData from '@modules/sensorData';
 import snack from '@modules/snack';
-import socialAuth from '@modules/socialAuth';
 import timeSchedules from '@modules/timeSchedules';
 import user from '@modules/user';
 import userRoles from '@modules/userRoles';
@@ -20,7 +19,6 @@ const appReducer = combineReducers({
   internalServerError,
   timeSchedules,
   snack,
-  socialAuth,
   user,
   device,
   userRoles,
@@ -30,7 +28,7 @@ const appReducer = combineReducers({
   sensorData
 });
 
-const rootReducer = (state, action) => {
+const rootReducer = (state: any, action: any) => {
   if (action.type === LOG_OUT_USER) {
     return {
       ...state,

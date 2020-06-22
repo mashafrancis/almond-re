@@ -25,7 +25,7 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(
   response => {
     const { method, url } = response.config;
-    const endpoint = CacheHandler.extractUrlEndpoint(url);
+    const endpoint: string = CacheHandler.extractUrlEndpoint(url);
 
     if (method !== 'get' && endpoint) {
       const requestTimestamp = (new Date).getTime();

@@ -31,7 +31,8 @@ describe('Device reducer', () => {
   };
 
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(deviceInitialState);
+    const newState = reducer(deviceInitialState, { type: 'fakeType' })
+    expect(newState).toEqual(deviceInitialState);
   });
 
   it('should handle ADD_DEVICE_REQUEST', () => {

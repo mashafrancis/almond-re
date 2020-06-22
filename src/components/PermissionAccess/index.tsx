@@ -69,10 +69,8 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
 
   /**
    * Toggle a permission on or off for each of the resources
-   *
    * @param {string} resourceId
    * @param {string} permissionType
-   *
    * @returns {void}
    */
   togglePermission = (resourceId, permissionType) => () => {
@@ -81,7 +79,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
     let getNewPermissionIds;
     // if this is the full access permission
     if (this.mappedPermissions['full access'] === permissionId) {
-      getNewPermissionIds = currentPermissionIds => 
+      getNewPermissionIds = currentPermissionIds =>
         // switch off all permissions if the user toggles off 'full access' otherwise make it the only one
          currentPermissionIds.includes(permissionId) ? [] : [permissionId]
       ;
@@ -117,10 +115,8 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
   /**
    * Checks if a particular permission for
    * a given resource has been toggled on or off
-   *
    * @param {string} resourceId
    * @param {string} permissionId
-   *
    * @returns {boolean}
    */
   isResourcePermissionActive(resourceId, permissionId) {
@@ -146,7 +142,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
               <div className="permissions__tbl-header__column access-levels">Access levels</div>
               {
                 Object.keys(this.mappedPermissions)
-                  .map(permissionString => 
+                  .map(permissionString =>
                       <div key={permissionString} className="permissions__tbl-header__column">
                         {`${capitalize(permissionString)}`}
                       </div>
@@ -155,11 +151,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
             </div>
             <div className="permissions__tbl-body">
               {
-                this.state.resources && this.state.resources.map((resource: Resource) => 
+                this.state.resources && this.state.resources.map((resource: Resource) =>
                   <div key={resource._id} className="permissions__tbl-row">
                     <div className="permissions__tbl-row__item header">{resource.name}</div>
                     {
-                      Object.keys(this.mappedPermissions).map(permission => 
+                      Object.keys(this.mappedPermissions).map(permission =>
                         <div key={`${resource.name}-${permission}}`} className="permissions__tbl-row__item">
                           <Checkbox
                             checked={

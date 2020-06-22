@@ -137,3 +137,13 @@ export interface Status {
 export interface NewSchedule {
   schedule: string;
 }
+
+export interface ToggleSchedulePayload {
+  enabled: boolean;
+  deviceId: string;
+}
+
+export interface SchedulePayload {
+  schedule: Schedule;
+  deviceId: string;
+}

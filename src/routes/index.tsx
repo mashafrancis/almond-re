@@ -16,13 +16,6 @@ const Routes = () =>
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route exact path="/my-device" component={EnterDeviceIdPage} />
-    {/* <AuthenticatedRoute */}
-    {/*  exact */}
-    {/*  path="/my-device" */}
-    {/*  authorize="my-device:view" */}
-    {/*  component={EnterDeviceIdPage} */}
-    {/*  fallbackView={<Unauthorized showModal={true} />} */}
-    {/* /> */}
     <AuthenticatedRoute
       exact={true}
       path="/dashboard"

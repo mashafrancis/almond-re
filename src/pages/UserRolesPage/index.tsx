@@ -8,6 +8,11 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
+import {
+  Chip,
+  InputAdornment,
+  TextField
+} from '@material-ui/core';
 
 // icons
 import {
@@ -24,11 +29,6 @@ import Restrict from '@components/Restrict';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import LinearProgressBar from '@components/LinearProgressBar';
-import {
-  Chip,
-  InputAdornment,
-  TextField
-} from '@material-ui/core';
 
 // styles
 import './UserRolesPage.scss';

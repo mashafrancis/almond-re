@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export const GET_USER_ROLES_REQUEST = 'almond/user-roles/GET_USER_ROLES_REQUEST';
 export type GET_USER_ROLES_REQUEST = typeof GET_USER_ROLES_REQUEST;
 

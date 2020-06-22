@@ -38,7 +38,7 @@ import {
 import LinearProgressBar from '@components/LinearProgressBar';
 
 // component
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 const Modal = React.lazy(() => import('@components/Modal'));
 const Table = React.lazy(() => import('@components/Table'));
 
@@ -112,7 +112,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     );
   };
 
-  const userNamePhoto = user => 
+  const userNamePhoto = user =>
     <span className="mini-username">
       <img
         className="mini-username__image"
@@ -123,7 +123,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     </span>
   ;
 
-  const selectRoleContent = roles => 
+  const selectRoleContent = roles =>
     <>
       {/* <h5>Change the role for the specific user.</h5> */}
       <TextField
@@ -151,7 +151,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
             <Face style={{ color: '#1967D2' }} />
           </InputAdornment>,
         }}>
-        {roles.map(role => 
+        {roles.map(role =>
           <MenuItem key={role._id} value={role.title}>
             <h4>{role.title}</h4>
           </MenuItem>
@@ -160,7 +160,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     </>
   ;
 
-  const SelectRoleModal = roles => 
+  const SelectRoleModal = roles =>
     <Modal
       isModalOpen={state.isSelectOpen}
       renderHeader={() => 'Assign new role to user'}
@@ -172,7 +172,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       />
   ;
 
-  const rolesSelectMore = (role, id) => 
+  const rolesSelectMore = (role, id) =>
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
       <h6 id={id}>{role}</h6>
       <ArrowDropDownRounded

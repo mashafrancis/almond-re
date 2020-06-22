@@ -18,7 +18,7 @@ const defaultConfig = { strict: false };
 const authorize = (accessLevels: string | string[], { strict } = defaultConfig) => {
   let allowAccess = false;
 
-  const getAccess = accessLevel => {
+  const getAccess = (accessLevel: string) => {
     const [resource, permission = 'view'] = accessLevel.split(':');
     const userPermissions = store.getState().user.permissions;
 

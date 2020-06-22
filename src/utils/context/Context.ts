@@ -10,7 +10,7 @@ export const UserContext = React.createContext({
     _id: '',
     id: '',
     verified: false,
-    isEnabled: false,
+    enabled: false,
   }],
   activeDevice: {
     id: '',

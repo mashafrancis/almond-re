@@ -2,28 +2,18 @@
 import * as React from 'react';
 
 // third party libraries
-// import * as fs from 'fs';
-import * as path from 'path';
 import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { createFirestoreInstance } from 'redux-firestore';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import * as firebase from 'firebase';
+// @ts-ignore
 import { Connector } from 'mqtt-hooks';
 
 // components
-import {
-  firebaseConfig,
-  reactReduxFirebaseConfig
-} from '@utils/helpers/firebase';
-import store from '../store';
 import ErrorBoundary from '@components/ErrorBoundary';
 import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
 import LinearProgressBar from '@components/LinearProgressBar';
-import { Transition } from 'react-transition-group';
 import { Fade } from '@material-ui/core';
 
 // thunk action creators
@@ -49,7 +39,10 @@ const KEY = process.env.KEY as string;
 const CERT = process.env.CERT as string;
 const TRUSTED_CA = process.env.TRUSTED_CA as string;
 
-const useEffectAsync = (effect, inputs) => {
+const useEffectAsync = (
+  effect: any,
+  inputs: React.DependencyList | undefined
+) => {
   React.useEffect(() => {
     effect()
   }, inputs)
@@ -179,13 +172,13 @@ export const App: React.FunctionComponent<AppProps> = props => {
   );
 }
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state: { internalServerError: any; user: any; loading: any; }) => ({
   serverError: state.internalServerError,
-  user: state.user,
+  user: state.user.userDetails,
   loading: state.loading,
 });
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch: any) => ({
   getUserDetails: () => dispatch(getUserDetails()),
 });
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { GeneralCardInfoProps } from './interfaces';
 
 // styles
-import './GeneralInfoCard.scss';
+import './GeneralCardInfo.scss';
 
 const GeneralCardInfo: React.FunctionComponent<GeneralCardInfoProps> = props => {
   const {

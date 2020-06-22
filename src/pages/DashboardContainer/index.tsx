@@ -39,18 +39,21 @@ import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 // thunks
 import { activateDevice } from '@modules/device';
-import { updatePerson } from '@modules/people';
-import { getUserDetails, logoutUser } from '@modules/user';
+import {
+  editUserDetails,
+  getUserDetails,
+  logoutUser
+} from '@modules/user';
 
 // interfaces
 import {
   DashboardContainerProps,
   DashboardContainerState
 } from './interfaces';
+import { Device } from '@modules/device/interfaces';
 
 // styles
-// import '@pages/DashboardContainer/DashboardNavBar.scss';
-// import '../../assets/scss/RegisterPage.scss';
+import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import './DashboardContainer.scss';
 
 const Modal = React.lazy(() => import('@components/Modal'));
@@ -59,30 +62,6 @@ const MenuContent = React.lazy(() => import('@components/MenuContent'));
 const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
 const TopBar = React.lazy(() => import('@components/TopBar'));
 const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
-
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  focused: {},
-  listItemPadding: {
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-  selectHeight: {
-    height: '1.25em',
-  },
-  labelColor: {
-    '&$focused': {
-      color: `rgba(${25},${103},${210},${0.87})`,
-    },
-  },
-  font: {
-    fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
-  },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    // color: '#fff',
-    backgroundColor: 'rgba(0, 0, 0, 0.1)'
-  },
-}));
 
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = props => {
   const [state, setState] = React.useState<DashboardContainerState>({
@@ -104,7 +83,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     roleId: '',
   });
 
-  const styles = useStyles(props);
+  const styles = useDashboardContainerStyles(props);
 
   const user = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
@@ -168,7 +147,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
 
   const onFeedbackMenuOpenClose = () => setState({ ...state, isFeedbackMenuOpen: false });
 
-  const handleFeedbackInputChange = e => setState({ ...state, [e.target.name as string]: e.target.value });
+  const handleFeedbackInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setState({ ...state, [e.target.name as string]: e.target.value });
 
   const handleSelectDevice = () => {
     const deviceId = user.devices.filter(device => device.id === state.device);
@@ -186,13 +165,16 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     setState({ ...state, roleId: role[0]._id, roleSelected: roleTitle });
   };
 
-  const handleChangeRole = event => {
+  const handleChangeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { roleId } = state;
 
-    props.updatePerson(props.user._id, { role: roleId }).then(toggleRoleChangeDialog);
-    window.localStorage.removeItem('selectedIndex');
-    window.location.reload();
+    props.editUserDetails(props.user._id, { role: roleId })
+      .then(closeRoleChangeDialog)
+      .then(() => {
+        window.localStorage.removeItem('selectedIndex');
+        window.location.reload();
+      });
   };
 
   const logoutUser = () => {
@@ -200,7 +182,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     props.logoutUser();
   };
 
-  const photoImage = () => 
+  const photoImage = () =>
     <div role="tablist"
          ref={e => menuAnchorEl.current = e}
          className="mdc-tab-bar"
@@ -216,7 +198,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </div>
   ;
 
-  const selectDeviceContent = devices => 
+  const selectDeviceContent = (devices: Device[]) =>
     <TextField
       id="device"
       select
@@ -242,7 +224,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
           <AllOutTwoTone style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
-      {devices.map(device => 
+      {devices.map((device: Device) =>
         <MenuItem key={device.id} value={device.id}>
           <h4 className="headline-4">{device.id}</h4>
         </MenuItem>
@@ -250,7 +232,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </TextField>
   ;
 
-  const selectChangeRoleContent = () => 
+  const selectChangeRoleContent = () =>
     <TextField
       id="role"
       select
@@ -276,7 +258,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
           <Face style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
-      {props.user.roles.map((role, index) => 
+      {props.user.roles.map((role, index) =>
         <MenuItem key={index} value={role.title}>
           <h4 className="headline-4">{role.title}</h4>
         </MenuItem>
@@ -284,7 +266,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </TextField>
   ;
 
-  const SelectDeviceModal = devices => 
+  const SelectDeviceModal = (devices: Device[]) =>
     <Modal
       isModalOpen={isSelectDeviceModalOpen}
       renderHeader={() => 'Select the device ID'}
@@ -302,7 +284,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     { name: 'Send Feedback', icon: <OpenInNew /> },
   ]
 
-  const MenuProfileSelect = () => 
+  const MenuProfileSelect = () =>
     <Menu
       className="photo-menu"
       id="profile-menu"
@@ -312,7 +294,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
       onClose={handleProfileClose}>
       {width < breakpoint && <div>
         {
-          menuItems.map((item, index) => 
+          menuItems.map((item, index) =>
             <MenuItem key={index} onClick={setSelectedIndex.bind(null,{ group: 1, item: index })}>
               <ListItemIcon style={{ minWidth: '36px' }}>{item.icon}</ListItemIcon>
               {item.name}
@@ -332,7 +314,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </Menu>
   ;
 
-  const ProfileDialog = () => 
+  const ProfileDialog = () =>
     <Modal
       isModalOpen={state.isChangeRoleDialogOpen}
       renderHeader={() => 'Confirm change of role'}
@@ -344,12 +326,12 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
       />
   ;
 
-  const ActivityLogs = () => 
+  const ActivityLogs = () =>
       <div className="activity-logs-drawer">
         <h5 className="card-header__title">Recent Activities</h5>
         {
           isArrayNotNull(activityLogs) ?
-          activityLogs.map(logs => 
+          activityLogs.map(logs =>
               <ActivityLogCard
                 key={logs._id}
                 log={logs.actionDesc}
@@ -364,7 +346,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
       </div>
     ;
 
-  const ActivityDrawer = () => 
+  const ActivityDrawer = () =>
     <SwipeableDrawer
       anchor="right"
       open={isActivityDrawerOpen}
@@ -391,27 +373,27 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
         </React.Suspense>
       </TopBar>
       { width < breakpoint && <PageBottomNavigation /> }
-      {SelectDeviceModal(user.devices)}
-      {ProfileDialog()}
-      {MenuProfileSelect()}
-      {ActivityDrawer()}
+      { SelectDeviceModal(user.devices) }
+      { ProfileDialog() }
+      { MenuProfileSelect() }
+      { ActivityDrawer() }
     </div>
   );
 };
 
-export const mapStateToProps = state => ({
-  user: state.user,
+export const mapStateToProps = (state: any) => ({
+  user: state.user.userDetails,
   activeDevice: state.device.activeDevice,
   roles: state.userRoles.data,
   activityLogs: state.activityLogs,
   loading: state.loading,
 });
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch: any) => ({
   getUserDetails: () => dispatch(getUserDetails()),
   logoutUser: () => dispatch(logoutUser()),
-  activateDevice: id => dispatch(activateDevice(id)),
-  updatePerson: (id, role) => dispatch(updatePerson(id, role)),
+  activateDevice: (id: string) => dispatch(activateDevice(id)),
+  editUserDetails: (id: string, role: any) => dispatch(editUserDetails(id, role)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

@@ -8,7 +8,7 @@ describe('The isArrayNotNull function', () => {
     expect(check).toBeTruthy();
   });
 
-  it('should return true if the array is null', () => {
+  it('should return false if the array is null', () => {
     const arr = [];
     const check = isArrayNotNull(arr);
 

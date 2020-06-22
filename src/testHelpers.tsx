@@ -92,7 +92,7 @@ export const mountWithRedux = (
  *
  * @returns {jest.Expect}
  */
-export const dispatchMethodMock = (store, thunk, expectedActions) => 
+export const dispatchMethodMock = (store, thunk, expectedActions) =>
   store.dispatch(thunk)
     .then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -179,3 +179,12 @@ export const viewOnlyPermissionsState = resource => ({
     },
   },
 });
+
+export const errorMessage = {
+  response: {
+    data: {
+      message: 'Errored schedule',
+    },
+    status: 400,
+  }
+};
