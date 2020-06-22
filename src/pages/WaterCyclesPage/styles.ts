@@ -3,8 +3,8 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core/styles';
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Switch } from "@material-ui/core";
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Switch } from '@material-ui/core';
 
 export const useWaterCyclesPageStyles = makeStyles((theme: Theme) =>
   createStyles({

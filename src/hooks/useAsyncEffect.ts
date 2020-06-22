@@ -16,7 +16,7 @@ export const useAsyncEffect = (generator, deps = []) => {
 
     const runGenerator = async () => {
       // create generator instance
-      const instance = generatorRef.current((_onCancel) => {
+      const instance = generatorRef.current(_onCancel => {
         // allow specifying a onCancel handler
         // that can be used for aborting async operations
         // e.g. with AbortController

@@ -11,7 +11,7 @@ import { shallow } from 'enzyme';
 // components
 import RestrictedRoute from '@components/RestrictedRoute';
 
-describe.skip('The RestrictedRoute component', () => {
+describe('The RestrictedRoute component', () => {
   let wrapper;
   const props = {
     fallbackView: null,
@@ -23,19 +23,23 @@ describe.skip('The RestrictedRoute component', () => {
     wrapper = shallow(<RestrictedRoute path="/dashboard" component={() => <div />} {...props} />);
   });
 
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
   it('should render Route if authorize prop is not passed', () => {
     expect(wrapper.find('Route')).toHaveLength(1);
   });
 
-  it('should render Route if user has the right access level', () => {
+  it.skip('should render Route if user has the right access level', () => {
     wrapper.setProps({
-      authorize: 'centers:view',
+      authorize: 'dashboard:view',
     });
 
     expect(wrapper.find('Route')).toHaveLength(1);
   });
 
-  describe('When user does not have the right access level', () => {
+  describe.skip('When user does not have the right access level', () => {
     beforeEach(() => {
       wrapper.setProps({
         authorize: 'people:view',
@@ -52,7 +56,7 @@ describe.skip('The RestrictedRoute component', () => {
 
     it('should pass the "redirectTo" prop as the "to" prop to the Redirect component', () => {
       wrapper.setProps({
-        redirectTo: '/analytics',
+        redirectTo: '/dashboard',
       });
 
       expect(wrapper.find('Redirect').props().to).toBe('/analytics');

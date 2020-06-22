@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app';
-import { getFirebase } from "react-redux-firebase";
+import { getFirebase } from 'react-redux-firebase';
 import {
   GetEnvironmentDataFailure,
   GetEnvironmentDataRequest,
@@ -7,7 +7,7 @@ import {
   GetWaterDataFailure,
   GetWaterDataRequest,
   GetWaterDataSuccess
-} from "@modules/sensorData/interfaces";
+} from '@modules/sensorData/interfaces';
 
 import {
   GET_ENVIRONMENT_DATA_FAILURE,
@@ -16,14 +16,14 @@ import {
   GET_WATER_DATA_FAILURE,
   GET_WATER_DATA_REQUEST,
   GET_WATER_DATA_SUCCESS
-} from "@modules/sensorData/types";
+} from '@modules/sensorData/types';
 
 import {
   loadingError,
   loadingRequest,
   loadingSuccess
-} from "@modules/loading";
-import { AnyAction } from "redux";
+} from '@modules/loading';
+import { AnyAction } from 'redux';
 
 export const getEnvironmentDataRequest = (): GetEnvironmentDataRequest => ({
   type: GET_ENVIRONMENT_DATA_REQUEST
@@ -62,7 +62,7 @@ export const getEnvironmentData = () => (dispatch, getState, getFirebase) => {
       dispatch(getEnvironmentDataSuccess(snapshot.val()));
       dispatch(loadingSuccess('success'));
     }, error => {
-      const message = error.response.data.errors.message;
+      const {message} = error.response.data.errors;
       dispatch(loadingError('error'));
       dispatch(getEnvironmentDataFailure(message));
     });
@@ -86,7 +86,7 @@ export const getWaterData = () => (dispatch, getState, getFirebase) => {
       dispatch(getWaterDataSuccess(snapshot.val()));
       dispatch(loadingSuccess('success'));
     }, error => {
-      const message = error.response.data.errors.message;
+      const {message} = error.response.data.errors;
       dispatch(loadingError('error'));
       dispatch(getWaterDataFailure(message));
     })

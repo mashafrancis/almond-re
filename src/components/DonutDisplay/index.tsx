@@ -1,37 +1,37 @@
 import * as React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import * as Chart from 'chart.js'
-import { DonutDisplayProps } from "@components/DonutDisplay/interfaces";
+import { DonutDisplayProps } from '@components/DonutDisplay/interfaces';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
 Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
-  draw: function() {
+  draw() {
     originalDoughnutDraw.apply(this, arguments);
 
-    const chart = this.chart.chart;
-    const ctx = chart.ctx;
-    const width = chart.width;
-    const height = chart.height;
+    const {chart} = this.chart;
+    const {ctx} = chart;
+    const {width} = chart;
+    const {height} = chart;
 
     const fontSize = (height / 80).toFixed(2);
-    ctx.font = fontSize + "em Google Sans,Roboto,Helvetica Neue,sans-serif";
-    ctx.textBaseline = "middle";
+    ctx.font = fontSize + 'em Google Sans,Roboto,Helvetica Neue,sans-serif';
+    ctx.textBaseline = 'middle';
 
     const centerConfig = chart.config.options.elements.center;
-    const text = centerConfig.text;
+    const {text} = centerConfig;
     const color = centerConfig.color || '#343434';
     const textYHeight = centerConfig.textYHeight || 2;
 
-    const textX = Math.round((width - ctx.measureText(text).width) / 2),
-      textY = height / textYHeight;
+    const textX = Math.round((width - ctx.measureText(text).width) / 2);
+      const textY = height / textYHeight;
 
     ctx.fillStyle = color;
     ctx.fillText(text, textX, textY);
   }
 });
 
-const DonutDisplay: (props) => any = (props) => {
+const DonutDisplay: (props) => any = props => {
   const {
     backgroundColor,
     hoverBackgroundColor,
@@ -42,9 +42,9 @@ const DonutDisplay: (props) => any = (props) => {
 
   const donutDetails = {
     datasets: [{
-      data: data,
-      backgroundColor: backgroundColor,
-      hoverBackgroundColor: hoverBackgroundColor,
+      data,
+      backgroundColor,
+      hoverBackgroundColor,
       labelFontColor: backgroundColor[0]
     }],
     options: {

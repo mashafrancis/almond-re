@@ -1,10 +1,10 @@
+import { Badge } from '@material-ui/core';
 import {
-  Badge,
   createStyles,
   makeStyles,
-  Theme,
-  withStyles
-} from '@material-ui/core';
+  Theme
+} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 export const useTopBarStyles = makeStyles((theme: Theme) =>
   createStyles({

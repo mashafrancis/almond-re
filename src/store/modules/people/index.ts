@@ -23,7 +23,7 @@ import {
   UPDATE_PERSON_DETAILS_FAILURE,
   UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
-import {loadingError, loadingRequest, loadingSuccess} from "@modules/loading";
+import {loadingError, loadingRequest, loadingSuccess} from '@modules/loading';
 
 /**
  * Get all users action creator
@@ -77,12 +77,12 @@ export const getAllPeople = () => (dispatch, getState, http) => {
   // dispatch(getAllPeopleRequest());
   dispatch(loadingRequest('requesting'))
   return http.get('people')
-    .then((response) => {
+    .then(response => {
       dispatch(getAllPeopleSuccess(response.data.data));
       dispatch(loadingSuccess('success'));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(getAllPeopleFailure(message));
       dispatch(loadingError('error'))
       dispatch(displaySnackMessage('Failed to fetch your all users. Kindly reload the page.'));
@@ -96,17 +96,15 @@ export const getAllPeople = () => (dispatch, getState, http) => {
  * @param personId
  * @param personDetails
  */
-export const updatePerson = (personId, personDetails) => (dispatch, getState, http) => {
-  return http.patch(`people/${personId}`, personDetails)
-    .then((response) => {
+export const updatePerson = (personId, personDetails) => (dispatch, getState, http) => http.patch(`people/${personId}`, personDetails)
+    .then(response => {
       dispatch(updatePersonSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
+    .catch(error => {
       dispatch(updatePersonFailure(error.message));
       dispatch(displaySnackMessage(error.message));
     });
-};
 
 const peopleInitialState = {
   people: [],
@@ -144,10 +142,10 @@ export const reducer = (state: {
     case UPDATE_PERSON_DETAILS_SUCCESS:
       return {
         ...state,
-        people: [...state.people].map(person => person._id === action.person._id ? ({
+        people: [...state.people].map(person => person._id === action.person._id ? {
           ...person,
           ...action.person,
-        }) : person),
+        } : person),
       };
     case UPDATE_PERSON_DETAILS_FAILURE:
       return {

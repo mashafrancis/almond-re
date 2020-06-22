@@ -5,11 +5,9 @@
  *
  * @returns {string} camelCased string
  */
-const camelCase = (str: string) => {
-  return str
+const camelCase = (str: string) => str
     .replace(/\s(.)/g, value => value.toUpperCase())
     .replace(/\s/g, '')
     .replace(/^(.)/, value => value.toLowerCase());
-};
 
 export default camelCase;

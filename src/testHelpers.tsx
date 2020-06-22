@@ -92,12 +92,12 @@ export const mountWithRedux = (
  *
  * @returns {jest.Expect}
  */
-export const dispatchMethodMock = (store, thunk, expectedActions) => (
+export const dispatchMethodMock = (store, thunk, expectedActions) => 
   store.dispatch(thunk)
     .then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     })
-);
+;
 
 /**
  * Use this if you want to run assertions only after all promises have resolved.
@@ -179,4 +179,3 @@ export const viewOnlyPermissionsState = resource => ({
     },
   },
 });
-

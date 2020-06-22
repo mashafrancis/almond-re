@@ -1,5 +1,5 @@
-import * as React from "react";
-import { UserDetails } from "@modules/user/interfaces";
+import * as React from 'react';
+import { UserDetails } from '@modules/user/interfaces';
 
 export interface UserContextProps {
   user: UserDetails;

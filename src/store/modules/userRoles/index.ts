@@ -104,16 +104,14 @@ export const editUserRoleSuccess = (userRole, id: string): UserEditRolesSuccess 
  *
  * @returns {Function}
  */
-export const createUserRole = userRole => (dispatch, getState, http) => {
-  return http.post(`/roles`, userRole)
-    .then((response) => {
+export const createUserRole = userRole => (dispatch, getState, http) => http.post('/roles', userRole)
+    .then(response => {
       dispatch(createUserRoleSuccess(response.data.data));
       dispatch(displaySnackMessage('User Role successfully created'));
     })
     .catch(error =>
       dispatch(displaySnackMessage(error.response.data.message))
     );
-};
 
 /**
  * Delete user roles thunk
@@ -121,16 +119,14 @@ export const createUserRole = userRole => (dispatch, getState, http) => {
  * @returns {Function}
  * @param id
  */
-export const deleteUserRole = id => (dispatch, getState, http) => {
-  return http.delete(`/roles/${id}`)
+export const deleteUserRole = id => (dispatch, getState, http) => http.delete(`/roles/${id}`)
     .then(() => {
       dispatch(deleteUserRolesSuccess(id));
       dispatch(displaySnackMessage('Role has been deleted successfully'));
     })
-    .catch((error) => {
+    .catch(error => {
       dispatch(displaySnackMessage(error.response.data.message));
     });
-};
 
 /**
  *
@@ -141,7 +137,7 @@ export const getUserRoles = () => (dispatch, getState, http) => {
   dispatch(getUserRolesRequest());
   return http.get('/roles?include=permissions&include=resources')
     .then(response => dispatch(getUserRolesSuccess(response.data)))
-    .catch((error) => {
+    .catch(error => {
       dispatch(getUserRolesFailure(error.message));
       dispatch(displaySnackMessage(error.message));
     });
@@ -157,11 +153,11 @@ export const getUserRoles = () => (dispatch, getState, http) => {
 export const editUserRole = updatedRolePayload => (dispatch, getState, http) => {
   const { id } = updatedRolePayload;
   return http.patch(`/roles/${id}`, updatedRolePayload)
-    .then((response) => {
+    .then(response => {
       dispatch(editUserRoleSuccess(response.data.data, id));
       dispatch(displaySnackMessage('Role updated successfully'));
     })
-    .catch((error) => {
+    .catch(error => {
       if (error.response.status === 400) {
         dispatch(displaySnackMessage('Please format the fields properly'));
       } else {
@@ -205,10 +201,10 @@ const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialSta
     case EDIT_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [...state.data].map(role => role._id === action.userRole._id ? ({
+        data: [...state.data].map(role => role._id === action.userRole._id ? {
           ...role,
           ...action.userRole,
-        }) : role),
+        } : role),
       };
     case CREATE_USER_ROLES_SUCCESS:
       return {

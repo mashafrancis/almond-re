@@ -18,11 +18,9 @@ import { authService } from '@utils/auth';
  *
  * @returns {JSX}
  */
-const renderComponent = Component => (props) => {
-  return <Component { ...props } />;
-};
+const renderComponent = Component => props => <Component { ...props } />;
 
-const AuthenticatedRoute = (props) => {
+const AuthenticatedRoute = props => {
   const { component: Component, ...rest } = props;
 
   if (!authService.isAuthenticated()) {
@@ -30,9 +28,9 @@ const AuthenticatedRoute = (props) => {
     displaySnackMessage('You need to login to continue');
 
     return (
-      <React.Fragment>
+      <>
         <Redirect to="/" />
-      </React.Fragment>
+      </>
     );
   }
 

@@ -50,7 +50,7 @@ describe.skip('The http axios instance helper function', () => {
     },
   };
 
-  it('should NOT log user out or redirect user to root (/) when the token is NOT expired', (done) => {
+  it('should NOT log user out or redirect user to root (/) when the token is NOT expired', done => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(response, null);
 
@@ -61,7 +61,7 @@ describe.skip('The http axios instance helper function', () => {
     });
   });
 
-  it('should log user out and redirect user to root (/) when the token is expired', (done) => {
+  it('should log user out and redirect user to root (/) when the token is expired', done => {
     Cookies.set('jwt-token', expiredToken);
     axiosMockAdapter(response, null);
 
@@ -71,7 +71,7 @@ describe.skip('The http axios instance helper function', () => {
     });
   });
 
-  it('should log user out and redirect user to root (/) when a server error (500) is returned', (done) => {
+  it('should log user out and redirect user to root (/) when a server error (500) is returned', done => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(null, error);
 
@@ -81,7 +81,7 @@ describe.skip('The http axios instance helper function', () => {
     });
   });
 
-  it('should render 500 error components', (done) => {
+  it('should render 500 error components', done => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(null, serverErrorMock);
 

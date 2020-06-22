@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 // components
 import InternalServerErrorMessage from './index';
 
-describe('Internal Server Error Message', () => {
+describe('Internal Server Error page', () => {
   const props = {
     errorButton: <div />
   };
@@ -24,5 +24,6 @@ describe('Internal Server Error Message', () => {
 
   it('should render the Internal Server Error components', () => {
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('#internal-server-error')).toHaveLength(1);
   });
 });

@@ -1,6 +1,6 @@
-import { LogActivity } from "@modules/activityLogs/interfaces";
-import { LOG_ACTIVITY } from "@modules/activityLogs/types";
-import { AnyAction } from "redux";
+import { LogActivity } from '@modules/activityLogs/interfaces';
+import { LOG_ACTIVITY } from '@modules/activityLogs/types';
+import { AnyAction } from 'redux';
 
 /**
  * Log activities

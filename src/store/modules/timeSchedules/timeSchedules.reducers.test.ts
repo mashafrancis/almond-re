@@ -20,7 +20,7 @@ import {
   getPumpStatusRequest,
   getPumpStatusSuccess,
   getPumpStatusFailure
-} from "@modules/timeSchedules/index";
+} from '@modules/timeSchedules/index';
 
 // helpers
 import {
@@ -29,7 +29,7 @@ import {
   id,
   schedulePayload,
   timeSchedules
-} from "@modules/timeSchedules/fixtures";
+} from '@modules/timeSchedules/fixtures';
 
 describe('Time Schedules reducer: ', () => {
   const { data } = timeSchedules;

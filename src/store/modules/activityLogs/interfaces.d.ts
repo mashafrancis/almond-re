@@ -1,4 +1,4 @@
-import { LOG_ACTIVITY } from "@modules/activityLogs/types";
+import { LOG_ACTIVITY } from '@modules/activityLogs/types';
 
 export interface LogActivity {
   type: LOG_ACTIVITY;

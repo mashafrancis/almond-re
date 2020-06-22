@@ -7,11 +7,10 @@ import { Link, NavLink } from 'react-router-dom';
 // styles
 import './InternalServerError.scss';
 
-const InternalServerErrorMessage: (props: any) => any = (props) => {
-  return (
+const InternalServerErrorMessage: (props: any) => any = props => 
     <div id="internal-server-error">
       <div className="server-error">
-        <div className="server-error-500"/>
+        <div className="server-error-500" />
         <h1>500</h1>
         <h2>Sorry. It is not you. It is us.</h2>
         <p>We are experiencing an internal server problem.</p>
@@ -19,7 +18,6 @@ const InternalServerErrorMessage: (props: any) => any = (props) => {
         {props.errorButton}
       </div>
     </div>
-  );
-};
+  ;
 
 export default InternalServerErrorMessage;

@@ -1,6 +1,6 @@
-import * as React from "react";
-import {getUserDetails, logoutUser} from "@modules/user";
-import {connect} from "react-redux";
+import * as React from 'react';
+import {getUserDetails, logoutUser} from '@modules/user';
+import {connect} from 'react-redux';
 
 export const UserContext = React.createContext({
   _id: '',
@@ -21,18 +21,15 @@ export const UserContext = React.createContext({
   isAdmin: false,
 });
 
-const UserProvider = ({ children }) => {
-  return (
+const UserProvider = ({ children }) => 
     <UserContext.Provider
       // @ts-ignore
       value={{
 
-      }}
-      >
+      }}>
       { children }
     </UserContext.Provider>
-  )
-}
+  
 
 export const mapStateToProps = state => ({ user: state.user })
 

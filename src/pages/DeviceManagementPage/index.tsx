@@ -7,11 +7,6 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-
-// components
-const CardInfo = React.lazy(() => import('@components/CardInfo'));
-const Modal = React.lazy(() => import('@components/Modal'));
-const Table = React.lazy(() => import('@components/Table'));
 import {
   InputAdornment,
   Chip,
@@ -19,7 +14,7 @@ import {
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
-import LinearProgressBar from "@components/LinearProgressBar";
+import LinearProgressBar from '@components/LinearProgressBar';
 import { Pagination } from '@material-ui/lab';
 
 // thunks
@@ -39,6 +34,11 @@ import {
   DeviceManagementProps,
   DeviceManagementState
 } from './interfaces';
+
+// components
+const CardInfo = React.lazy(() => import('@components/CardInfo'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const Table = React.lazy(() => import('@components/Table'));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps> = (props) => {
+export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps> = props => {
   const [state, setState] = React.useState<DeviceManagementState>({
     isEditMode: false,
     showDeviceModal: false,
@@ -90,7 +90,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     setState({ ...state, selectedDevice: e.target.value });
   };
 
-  const showDeviceModal = mode => (event) => {
+  const showDeviceModal = mode => event => {
     const { devices } = props;
 
     if (`show${mode}DeviceModal` && mode === 'Add') {
@@ -136,12 +136,12 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
 
   const toggleDeviceDeleteModal = () => setState({ ...state, isDeleteModal: !state.isDeleteModal });
 
-  const handleDeviceDelete = (event) => {
+  const handleDeviceDelete = event => {
     event.preventDefault();
     props.deleteDevice(state.deviceId).then(toggleDeviceDeleteModal);
   };
 
-  const onAddEditDeviceSubmit = (event) => {
+  const onAddEditDeviceSubmit = event => {
     event.preventDefault();
     const {
       isEditMode,
@@ -159,7 +159,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       : props.addNewDevice(device).then(closeDeviceModal);
   };
 
-  const ActionButtons = device => (
+  const ActionButtons = device => 
     <div key={device} className="action-buttons">
       <span id={device} onClick={ showDeviceModal('Edit')}>
         <h5 id={device} className="action-buttons__edit">Edit</h5>
@@ -168,11 +168,11 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
-  );
+  ;
 
-  const deviceStatus = (device) => {
-    const verified = device[1].verified;
-    const enabled = device[1].enabled;
+  const deviceStatus = device => {
+    const {verified} = device[1];
+    const {enabled} = device[1];
 
     if (!verified) { return <Chip className="MuiChip-root-unverified" label="Not Verified" />; }
     if (verified && !enabled) { return <Chip className="MuiChip-root-disabled" label="Disabled" />; }
@@ -190,7 +190,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     // }
   };
 
-  const TableContent = (devices) => {
+  const TableContent = devices => {
     const tableHeaders = {
       DeviceID: { valueKey: 'deviceId', colWidth: '25' },
       User: { valueKey: 'user', colWidth: '25' },
@@ -210,7 +210,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       <Table
         keys={tableHeaders}
         values={tableValues}
-      />
+        />
     );
   };
 
@@ -218,7 +218,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     const { isEditMode, selectedDevice, deviceToEdit } = state;
 
     return (
-      <React.Fragment>
+      <>
         <h5>Add a 7 digit device identifier for the user to configure.</h5>
         <div className="form-cell">
           <TextField
@@ -228,19 +228,19 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
             variant="outlined"
             onChange={handleValueChange}
             InputProps={{
-              startAdornment: (
+              startAdornment: 
                 <InputAdornment position="start">
                   <PhonelinkSetupSharp />
                 </InputAdornment>
-              ),
+              ,
             }}
-          />
+            />
         </div>
-      </React.Fragment>
+      </>
     );
   };
 
-  const AddEditDeviceModal = () => (
+  const AddEditDeviceModal = () => 
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderDeviceForm()}
@@ -249,10 +249,10 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       submitButtonName={state.isEditMode ? 'Update device' : 'Create new device'}
       onSubmit={onAddEditDeviceSubmit}
       onDismiss={closeDeviceModal}
-    />
-  );
+      />
+  ;
 
-  const DeleteDeviceModal = () => (
+  const DeleteDeviceModal = () => 
     <Modal
       isModalOpen={state.isDeleteModal}
       renderContent={() => <p className="delete-modal-content">Do you confirm deletion of device?</p>}
@@ -261,8 +261,8 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       submitButtonName="Delete"
       onSubmit={handleDeviceDelete}
       onDismiss={toggleDeviceDeleteModal}
-    />
-  );
+      />
+  ;
 
   return (
     <Grid>
@@ -274,13 +274,13 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
             icon={<PhonelinkSetupSharp className="content-icon" />}
             buttonName="New device"
             onClick={showDeviceModal('Add')}
-          />
+            />
           <React.Suspense fallback={<LinearProgressBar />}>
             <div className="user-roles-page__table">
               { TableContent(Object.entries(props.devices)) }
-              {/*<div className={classes.root}>*/}
-              {/*  <Pagination count={5} color="primary" />*/}
-              {/*</div>*/}
+              {/* <div className={classes.root}> */}
+              {/*  <Pagination count={5} color="primary" /> */}
+              {/* </div> */}
             </div>
           </React.Suspense>
           {AddEditDeviceModal()}

@@ -30,18 +30,18 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
       <Modal
         isModalOpen={this.props.isModalOpen}
         renderHeader={() => `Welcome, ${this.props.user && this.props.user.name || 'User'}`}
-        renderContent={() => (
+        renderContent={() => 
           <div>
             <p className="headline-4 modal-content">
               You are currently not authorised to access Almond.
               Please contact almond.froyo@gmail.com for more details.
             </p>
           </div>
-        )}
+        }
         submitButtonName="OK"
         onSubmit={this.logoutAndRedirectUser}
         onDismiss={this.logoutAndRedirectUser}
-      />
+        />
     );
   }
 }

@@ -13,7 +13,11 @@ import {
   Typography
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
-import { Theme, makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
+import {
+  Theme,
+  makeStyles,
+  createStyles
+} from '@material-ui/core/styles';
 
 // icons
 import {
@@ -26,8 +30,8 @@ import {
 // utils
 import { UserContext } from '@utils/context/Context';
 import { useViewport } from '../../hooks';
-import { MenuContext } from "@context/MenuContext";
-import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
+import { MenuContext } from '@context/MenuContext';
+import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 // interface
 import { ElevationBarProps, TopBarProps } from './interfaces';
@@ -36,8 +40,9 @@ import { ElevationBarProps, TopBarProps } from './interfaces';
 import {
   useTopBarStyles,
   StyledBadge
-} from "@components/TopBar/styles";
+} from '@components/TopBar/styles';
 import '@pages/DashboardContainer/DashboardNavBar.scss'
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const ElevationScroll = (props: ElevationBarProps) => {
   const { window, children } = props;
@@ -52,7 +57,7 @@ const ElevationScroll = (props: ElevationBarProps) => {
   });
 };
 
-const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
+const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const device = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
@@ -104,7 +109,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
     }),
   )(Badge);
 
-  const renderDeviceDisplay = () => (
+  const renderDeviceDisplay = () => 
     <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
          variant="dot"
@@ -112,15 +117,14 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
          anchorOrigin={{
            vertical: 'top',
            horizontal: 'left',
-         }}
-      >
+         }}>
         <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
         <ArrowDropDown onClick={setDeviceModalOpen.bind(null,true)} />
       </DeviceActiveBadge>
     </div>
-  );
+  ;
 
-  const timeLineIcon = () => (
+  const timeLineIcon = () => 
     <StyledBadge
       overlap="circle"
       anchorOrigin={{
@@ -128,11 +132,10 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
         horizontal: 'right',
       }}
       variant="dot"
-      invisible={isActivityLogsEmpty != activityLogsViewed}
-    >
+      invisible={isActivityLogsEmpty != activityLogsViewed}>
       <Timeline onClick={toggleActivityDrawer.bind(null,true, true)} />
     </StyledBadge>
-  );
+  ;
 
   // :TODO: Remove this after demoing the feature to be
   const notifications = ['true'];
@@ -146,9 +149,8 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
         }}
         overlap="circle"
         invisible={isArrayNotNull(notifications.length)}
-        variant="dot"
-      >
-        <Notifications style={{ color: '#1967D2' }}/>
+        variant="dot">
+        <Notifications style={{ color: '#1967D2' }} />
       </StyledBadge>
   )
 
@@ -158,29 +160,30 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
     { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} /> }
   ];
 
-  const renderTopIcons = () => (
+  const renderTopIcons = () => 
     <div className={classes.sectionEnd}>
         {
-          topIcons.map((topIcon, index) => (
+          topIcons.map((topIcon, index) => 
             <span key={index} className="top-bar-icons">{topIcon.icon}</span>
-            )
+            
           )
         }
     </div>
-  );
+  ;
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <ElevationScroll { ...props }>
         <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed">
           <Toolbar variant="dense">
             <div className="appbar-section appbar-section-start">
-              <NavLink to={'/'}>
+              <NavLink to="/">
               <img
                 className="drawer-logo__image"
                 src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
-                alt="Logo"/>
+                alt="Logo"
+                />
               </NavLink>
             {!isAdmin && renderDeviceDisplay()}
             </div>
@@ -193,7 +196,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
       <div className="mdc-top-app-bar--fixed-adjust">
         { children }
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

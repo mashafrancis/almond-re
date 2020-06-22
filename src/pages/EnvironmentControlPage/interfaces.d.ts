@@ -1,4 +1,4 @@
-import { EnvironmentData } from "@modules/sensorData/interfaces";
+import { EnvironmentData } from '@modules/sensorData/interfaces';
 
 export interface EnvironmentControlPageProps {
   getEnvironmentData: () => Promise<any> | any;

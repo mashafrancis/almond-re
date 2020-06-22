@@ -10,7 +10,7 @@ import {
   TextField,
   InputAdornment,
   Menu,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // icons
 import {
@@ -29,19 +29,13 @@ import {
   AdminMenus,
   UserMenus
 } from '@components/MenuRoutes';
-import LinearProgressBar from "@components/LinearProgressBar";
-const Modal = React.lazy(() => import('@components/Modal'));
-const MenuModal = React.lazy(() => import('@components/MenuModal'));
-const MenuContent = React.lazy(() => import('@components/MenuContent'));
-const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
-const TopBar = React.lazy(() => import('@components/TopBar'));
-const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
+import LinearProgressBar from '@components/LinearProgressBar';
 
 // utils
 import { UserContext } from '@utils/context';
 import { useViewport } from '../../hooks';
-import { MenuContext } from "@context/MenuContext";
-import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
+import { MenuContext } from '@context/MenuContext';
+import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 // thunks
 import { activateDevice } from '@modules/device';
@@ -58,6 +52,13 @@ import {
 // import '@pages/DashboardContainer/DashboardNavBar.scss';
 // import '../../assets/scss/RegisterPage.scss';
 import './DashboardContainer.scss';
+
+const Modal = React.lazy(() => import('@components/Modal'));
+const MenuModal = React.lazy(() => import('@components/MenuModal'));
+const MenuContent = React.lazy(() => import('@components/MenuContent'));
+const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
+const TopBar = React.lazy(() => import('@components/TopBar'));
+const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   focused: {},
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (props) => {
+const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = props => {
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
     isLoading: true,
@@ -185,7 +186,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     setState({ ...state, roleId: role[0]._id, roleSelected: roleTitle });
   };
 
-  const handleChangeRole = (event) => {
+  const handleChangeRole = event => {
     event.preventDefault();
     const { roleId } = state;
 
@@ -199,24 +200,23 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     props.logoutUser();
   };
 
-  const photoImage = () => (
+  const photoImage = () => 
     <div role="tablist"
          ref={e => menuAnchorEl.current = e}
          className="mdc-tab-bar"
-         onClick={() => setState({ ...state, isOpen: true })}
-    >
+         onClick={() => setState({ ...state, isOpen: true })}>
       <span className="mini-account-menu__image">
         {(width > breakpoint) &&
         <img
           className="mini-account-menu__image"
           src={user.photo}
           alt="image"
-        />}
+          />}
       </span>
     </div>
-  );
+  ;
 
-  const selectDeviceContent = devices => (
+  const selectDeviceContent = devices => 
     <TextField
       id="device"
       select
@@ -242,15 +242,15 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           <AllOutTwoTone style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
-      {devices.map(device => (
+      {devices.map(device => 
         <MenuItem key={device.id} value={device.id}>
           <h4 className="headline-4">{device.id}</h4>
         </MenuItem>
-      ))}
+      )}
     </TextField>
-  );
+  ;
 
-  const selectChangeRoleContent = () => (
+  const selectChangeRoleContent = () => 
     <TextField
       id="role"
       select
@@ -276,15 +276,15 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           <Face style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
-      {props.user.roles.map((role, index) => (
+      {props.user.roles.map((role, index) => 
         <MenuItem key={index} value={role.title}>
           <h4 className="headline-4">{role.title}</h4>
         </MenuItem>
-      ))}
+      )}
     </TextField>
-  );
+  ;
 
-  const SelectDeviceModal = devices => (
+  const SelectDeviceModal = devices => 
     <Modal
       isModalOpen={isSelectDeviceModalOpen}
       renderHeader={() => 'Select the device ID'}
@@ -293,47 +293,46 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       submitButtonName="Select Device"
       onSubmit={handleSelectDevice}
       onDismiss={handleCloseDeviceModal}
-    />
-  );
+      />
+  ;
 
   const menuItems = [
-    { name: 'Settings', icon: <Settings/> },
-    { name: 'Help', icon: <Help/> },
-    { name: 'Send Feedback', icon: <OpenInNew/> },
+    { name: 'Settings', icon: <Settings /> },
+    { name: 'Help', icon: <Help /> },
+    { name: 'Send Feedback', icon: <OpenInNew /> },
   ]
 
-  const MenuProfileSelect = () => (
+  const MenuProfileSelect = () => 
     <Menu
       className="photo-menu"
       id="profile-menu"
       anchorEl={state.anchorEl}
       keepMounted
       open={Boolean(state.anchorEl)}
-      onClose={handleProfileClose}
-    >
+      onClose={handleProfileClose}>
       {width < breakpoint && <div>
         {
-          menuItems.map((item, index) => (
+          menuItems.map((item, index) => 
             <MenuItem key={index} onClick={setSelectedIndex.bind(null,{ group: 1, item: index })}>
               <ListItemIcon style={{ minWidth: '36px' }}>{item.icon}</ListItemIcon>
               {item.name}
             </MenuItem>
-          ))
+          )
         }
       </div>}
 
       <MenuItem onClick={toggleRoleChangeDialog}>
-        <ListItemIcon style={{ minWidth: '36px' }}><Mood/></ListItemIcon>
+        <ListItemIcon style={{ minWidth: '36px' }}><Mood /></ListItemIcon>
         Change role
       </MenuItem>
       <MenuItem onClick={logoutUser}>
-        <ListItemIcon style={{ minWidth: '36px' }}><ExitToApp/></ListItemIcon>
+        <ListItemIcon style={{ minWidth: '36px' }}><ExitToApp /></ListItemIcon>
         Logout
       </MenuItem>
     </Menu>
-  );
+  ;
 
-  const ProfileDialog = () => (
+  const ProfileDialog = () => 
     <Modal
       isModalOpen={state.isChangeRoleDialogOpen}
       renderHeader={() => 'Confirm change of role'}
@@ -342,43 +341,38 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       submitButtonName="Select Role"
       onSubmit={handleChangeRole}
       onDismiss={toggleRoleChangeDialog}
-    />
-  );
+      />
+  ;
 
-  const ActivityLogs = () => {
-    return (
+  const ActivityLogs = () => 
       <div className="activity-logs-drawer">
         <h5 className="card-header__title">Recent Activities</h5>
         {
           isArrayNotNull(activityLogs) ?
-          activityLogs.map(logs => {
-            return (
+          activityLogs.map(logs => 
               <ActivityLogCard
                 key={logs._id}
                 log={logs.actionDesc}
                 date={logs.createdAt}
-                type='info'
-              />
-            );
-          }) :
+                type="info"
+                />
+            ) :
           <div className="blank-content">
             <h2>No logs found!</h2>
           </div>
         }
       </div>
-    );
-  };
+    ;
 
-  const ActivityDrawer = () => (
+  const ActivityDrawer = () => 
     <SwipeableDrawer
       anchor="right"
       open={isActivityDrawerOpen}
       onClose={toggleActivityDrawer.bind(null,false, true)}
-      onOpen={toggleActivityDrawer.bind(null,true, true)}
-    >
+      onOpen={toggleActivityDrawer.bind(null,true, true)}>
       { ActivityLogs() }
     </SwipeableDrawer>
-  );
+  ;
 
   const checkIsAdmin = () => user.isAdmin ? AdminMenus : UserMenus;
 
@@ -387,17 +381,16 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       <MenuContent
         name={user.name}
         photo={user.photo}
-      />
+        />
       <TopBar
         isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
         photoImage={photoImage()}
-        openProfileDialog={handleProfileClickOpen}
-      >
+        openProfileDialog={handleProfileClickOpen}>
         <React.Suspense fallback={<LinearProgressBar />} >
           {React.createElement(checkIsAdmin()[selectedIndex.group][selectedIndex.item].component, { history })}
         </React.Suspense>
       </TopBar>
-      { width < breakpoint && <PageBottomNavigation/> }
+      { width < breakpoint && <PageBottomNavigation /> }
       {SelectDeviceModal(user.devices)}
       {ProfileDialog()}
       {MenuProfileSelect()}

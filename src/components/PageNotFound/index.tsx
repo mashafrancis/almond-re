@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 // third-party libraries
-import { ArrowBackRounded } from "@material-ui/icons";
+import { ArrowBackRounded } from '@material-ui/icons';
 
 // styles
 import './PageNotFound.scss';
@@ -15,10 +15,10 @@ import { PageNotFoundProps } from './interfaces';
  *
  * @returns {JSX}
  */
-const PageNotFound: React.FunctionComponent<PageNotFoundProps> = props =>  (
+const PageNotFound: React.FunctionComponent<PageNotFoundProps> = props =>  
   <div id="notfound">
     <div className="notfound">
-      <div className="notfound-404"/>
+      <div className="notfound-404" />
       <h1>404</h1>
       <h2>Oops! Page Not Be Found</h2>
       <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily
@@ -29,6 +29,6 @@ const PageNotFound: React.FunctionComponent<PageNotFoundProps> = props =>  (
       </button>
     </div>
   </div>
-);
+;
 
 export default PageNotFound;

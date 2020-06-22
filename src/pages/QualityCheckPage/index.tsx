@@ -7,9 +7,6 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-
-// components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
 import {
   SecurityTwoTone
 } from '@material-ui/icons';
@@ -26,7 +23,10 @@ import {
   QualityCheckPageState
 } from './interfaces';
 
-export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = (props) => {
+// components
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+
+export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = props => {
   const [state, setState] = React.useState<QualityCheckPageState>({
     isEditMode: false,
     schedules: [],
@@ -50,7 +50,7 @@ export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = 
             mainHeader="Quality Check"
             subHeader="Tests for water quality, salts and ph level"
             icon={<SecurityTwoTone className="content-icon general-info-icon" />}
-          />
+            />
         </Cell>
       </Row>
     </Grid>

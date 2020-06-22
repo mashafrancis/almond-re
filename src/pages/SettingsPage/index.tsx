@@ -3,23 +3,22 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import {connect} from "react-redux";
-
-// components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+import {connect} from 'react-redux';
 import {
   Settings
 } from '@material-ui/icons';
 
 // thunk
-import { displaySnackMessage } from "@modules/snack";
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) => {
-  return (
-    <React.Fragment>
+// components
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+
+export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props => 
+    <>
       <Grid>
         <Row>
           <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -34,13 +33,12 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = (props) 
               mainHeader="Settings"
               subHeader="Adjust your preferences for better experience"
               icon={<Settings className="content-icon general-info-icon" />}
-            />
+              />
           </Cell>
         </Row>
       </Grid>
-    </React.Fragment>
-  )
-}
+    </>
+  
 
 export const mapStateToProps = state => ({
   error: state.error,

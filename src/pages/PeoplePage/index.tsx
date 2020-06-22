@@ -7,11 +7,6 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-
-// component
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
-const Modal = React.lazy(() => import('@components/Modal'));
-const Table = React.lazy(() => import('@components/Table'));
 import {
   TextField,
   MenuItem,
@@ -40,7 +35,12 @@ import {
   PeoplePageProps,
   PeoplePageState
 } from './interfaces';
-import LinearProgressBar from "@components/LinearProgressBar";
+import LinearProgressBar from '@components/LinearProgressBar';
+
+// component
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const Modal = React.lazy(() => import('@components/Modal'));
+const Table = React.lazy(() => import('@components/Table'));
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   focused: {},
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
+export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
   const [state, setState] = React.useState<PeoplePageState>({
     people: [],
     isFetchingRoles: false,
@@ -84,7 +84,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     props.getUserRoles().then(() => setState({ ...state, isFetchingRoles: false }));
   },              []);
 
-  const toggleRoleSelectOpen = (event) => {
+  const toggleRoleSelectOpen = event => {
     event.persist();
     setState({
       ...state,
@@ -99,7 +99,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     setState({ ...state, roleId: role[0]._id, roleSelect: roleTitle });
   };
 
-  const handleChangeRole = (event) => {
+  const handleChangeRole = event => {
     event.preventDefault();
     const { roleId, userId } = state;
 
@@ -112,20 +112,20 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
     );
   };
 
-  const userNamePhoto = user => (
+  const userNamePhoto = user => 
     <span className="mini-username">
       <img
         className="mini-username__image"
         src={user[1].photo}
         alt="avatar"
-      />
+        />
       <span>{user[1].name || 'Anonymous'}</span>
     </span>
-  );
+  ;
 
-  const selectRoleContent = roles => (
-    <React.Fragment>
-      {/*<h5>Change the role for the specific user.</h5>*/}
+  const selectRoleContent = roles => 
+    <>
+      {/* <h5>Change the role for the specific user.</h5> */}
       <TextField
         id="role"
         select
@@ -151,16 +151,16 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
             <Face style={{ color: '#1967D2' }} />
           </InputAdornment>,
         }}>
-        {roles.map(role => (
+        {roles.map(role => 
           <MenuItem key={role._id} value={role.title}>
             <h4>{role.title}</h4>
           </MenuItem>
-        ))}
+        )}
       </TextField>
-    </React.Fragment>
-  );
+    </>
+  ;
 
-  const SelectRoleModal = roles => (
+  const SelectRoleModal = roles => 
     <Modal
       isModalOpen={state.isSelectOpen}
       renderHeader={() => 'Assign new role to user'}
@@ -169,22 +169,20 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
       submitButtonName="Update role"
       onSubmit={handleChangeRole}
       onDismiss={toggleRoleSelectOpen}
-    />
-  );
+      />
+  ;
 
-  const rolesSelectMore = (role, id) => {
-    return (
+  const rolesSelectMore = (role, id) => 
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
       <h6 id={id}>{role}</h6>
       <ArrowDropDownRounded
         id={id}
         onClick={toggleRoleSelectOpen}
-      />
+        />
     </div>
-    );
-  };
+    ;
 
-  const TableContent = (users) => {
+  const TableContent = users => {
     const tableHeaders = {
       Name: { valueKey: 'name', colWidth: '40' },
       Devices: { valueKey: 'devices' },
@@ -206,7 +204,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
       <Table
         keys={tableHeaders}
         values={tableValues}
-      />
+        />
     );
   };
 
@@ -218,7 +216,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = (props) => {
             mainHeader="People"
             subHeader="List of all users under Almond"
             icon={<PeopleAltOutlined className="content-icon general-info-icon" />}
-          />
+            />
           <React.Suspense fallback={<LinearProgressBar />}>
             <div className="user-roles-page__table">
               { TableContent(Object.entries(props.people)) }

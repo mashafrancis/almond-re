@@ -2,8 +2,8 @@ import * as React from 'react';
 import {
   MenuContextProps,
   MenuContextState
-} from "@context/MenuContext/interfaces";
-import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
+} from '@context/MenuContext/interfaces';
+import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
 
@@ -48,8 +48,8 @@ const MenuProvider = ({ children }: MenuContextProps) => {
 
   const toggleActivityDrawer = (isActivityDrawerOpen: boolean, activityLogsViewed: boolean) => setState({
     ...state,
-    isActivityDrawerOpen: isActivityDrawerOpen,
-    activityLogsViewed: activityLogsViewed
+    isActivityDrawerOpen,
+    activityLogsViewed
   })
 
   const handleSelectDeviceModal = () => setState({ ...state, isSelectDeviceModalOpen: !state.isSelectDeviceModalOpen });

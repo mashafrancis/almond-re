@@ -25,7 +25,7 @@ import {
   GET_USER_DETAILS_SUCCESS,
   LOG_OUT_USER,
 } from './types';
-import {loadingError, loadingRequest, loadingSuccess} from "@modules/loading";
+import {loadingError, loadingRequest, loadingSuccess} from '@modules/loading';
 
 /**
  * Get userDetails success action creator
@@ -64,9 +64,7 @@ export const getUserDetailsFailure = (errors): GetUserDetailsActionFailure => ({
  *
  * @returns {EditUserDetailsSuccess}
  */
-export const editUserDetailsSuccess = (userDetails: UserDetails): EditUserDetailsSuccess => {
-  return { userDetails, type: EDIT_USER_DETAILS_SUCCESS };
-};
+export const editUserDetailsSuccess = (userDetails: UserDetails): EditUserDetailsSuccess => ({ userDetails, type: EDIT_USER_DETAILS_SUCCESS });
 
 /**
  * Log-out user action
@@ -85,12 +83,12 @@ export const getUserDetails = () => (dispatch, getState, http) => {
   // dispatch(getUserDetailsRequest());
   dispatch(loadingRequest('requesting'));
   return http.get('me')
-    .then((response) => {
+    .then(response => {
       dispatch(loadingSuccess('success'));
       return dispatch(getUserDetailsSuccess(response.data.data));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(loadingError('error'));
       dispatch(getUserDetailsFailure(message));
       dispatch(displaySnackMessage('Failed to fetch your details. Kindly reload page.'));
@@ -104,22 +102,16 @@ export const getUserDetails = () => (dispatch, getState, http) => {
  *
  * @returns {Function}
  */
-export const editUserDetails = userId => (dispatch, getState, http) => {
-  return http.patch(`users/${userId}`)
-    .then((response) => {
-      return dispatch(editUserDetailsSuccess(response.data.data.center));
-    })
-    .catch((error) => {
-      return dispatch(displaySnackMessage(error.message));
-    });
-};
+export const editUserDetails = userId => (dispatch, getState, http) => http.patch(`users/${userId}`)
+    .then(response => dispatch(editUserDetailsSuccess(response.data.data.center)))
+    .catch(error => dispatch(displaySnackMessage(error.message)));
 
 /**
  * Log-out user action creator
  *
  * @returns {Function}
  */
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = () => dispatch => {
   authService.logoutUser();
   dispatch(logoutUserAction());
 };

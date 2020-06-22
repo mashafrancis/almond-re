@@ -1,3 +1,6 @@
+import '@testing-library/react';
+import '@testing-library/jest-dom';
+
 const { JSDOM } = require('jsdom');
 
 const jsdom = new JSDOM('<!doctype html><html lang="en"><body/></html>', { url: 'https://localhost' });
@@ -9,6 +12,12 @@ function copyProps(src, target) {
     ...Object.getOwnPropertyDescriptors(target),
   });
 }
+
+Object.defineProperty(window, 'innerWidth', {
+  writable: true,
+  configurable: true,
+  value: 200
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -37,6 +46,7 @@ global.navigator = {
 global.requestAnimationFrame = function (callback) {
   return setTimeout(callback, 0);
 };
+
 global.cancelAnimationFrame = function (id) {
   clearTimeout(id);
 };

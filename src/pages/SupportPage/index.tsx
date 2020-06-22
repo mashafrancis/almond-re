@@ -3,17 +3,16 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import {displaySnackMessage} from "@modules/snack";
-import {connect} from "react-redux";
-import GeneralCardInfo from "@components/GeneralInfoCard";
+import {displaySnackMessage} from '@modules/snack';
+import {connect} from 'react-redux';
+import GeneralCardInfo from '@components/GeneralInfoCard';
 import SpaIcon from '@material-ui/icons/Spa';
 
 // interfaces
-import {SupportPageProps} from "@pages/SupportPage/interfaces";
+import {SupportPageProps} from '@pages/SupportPage/interfaces';
 
-export const SupportPage: React.FunctionComponent<SupportPageProps> = (props) => {
-  return (
-    <React.Fragment>
+export const SupportPage: React.FunctionComponent<SupportPageProps> = props => 
+    <>
       <Grid>
         <Row>
           <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -28,13 +27,12 @@ export const SupportPage: React.FunctionComponent<SupportPageProps> = (props) =>
               mainHeader="Support"
               subHeader="Need help? Ask for support from our maintenance team"
               icon={<SpaIcon className="content-icon general-info-icon" />}
-            />
+              />
           </Cell>
         </Row>
       </Grid>
-    </React.Fragment>
-  )
-}
+    </>
+  
 
 export const mapStateToProps = state => ({
   error: state.error,

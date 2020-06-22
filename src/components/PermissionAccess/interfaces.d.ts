@@ -1,4 +1,4 @@
-import {Permission, Resource} from "@modules/userRoles/interfaces";
+import {Permission, Resource} from '@modules/userRoles/interfaces';
 
 
 export interface PermissionAccessProps {

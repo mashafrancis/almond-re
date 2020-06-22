@@ -7,8 +7,8 @@ import { AdminBottomNavigationMenus, BottomNavigationMenus } from '@components/M
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '@utils/context';
-import { MenuContext } from "@context/MenuContext";
-import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
+import { MenuContext } from '@context/MenuContext';
+import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 // styles
 import './BottomNavigation.scss';
@@ -41,17 +41,16 @@ const PageBottomNavigation: React.FunctionComponent = () => {
         setValue(newValue);
       }}
       className={`${classes.root} page-content__navigation`}
-      showLabels
-    >
+      showLabels>
       {
-        checkIsAdmin().map((menu, index) => (
+        checkIsAdmin().map((menu, index) => 
           <BottomNavigationAction
             key={index}
             onClick={setSelectedIndex.bind(null,{ group: 0, item: index })}
             label={menu.label}
             icon={menu.icon}
-          />
-          )
+            />
+          
         )
       }
     </BottomNavigation>

@@ -263,12 +263,12 @@ export const editDeviceFailure = (errors): EditDeviceActionFailure => ({
 export const addNewDevice = device => (dispatch, getState, http) => {
   dispatch(addDeviceRequest());
   return http.post('devices', device)
-    .then((response) => {
+    .then(response => {
       dispatch(addDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(addDeviceFailure(message));
       dispatch(displaySnackMessage(message));
     });
@@ -277,13 +277,13 @@ export const addNewDevice = device => (dispatch, getState, http) => {
 export const verifyUserDevice = id => (dispatch, getState, http) => {
   dispatch(verifyDeviceRequest());
   return http.post('my-device', id)
-    .then((response) => {
+    .then(response => {
       dispatch(verifyDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
       window.location.replace('/dashboard');
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(verifyDeviceFailure(message));
     });
@@ -292,12 +292,12 @@ export const verifyUserDevice = id => (dispatch, getState, http) => {
 export const activateDevice = id => (dispatch, getState, http) => {
   dispatch(activateDeviceRequest());
   return http.patch('active-device', id)
-    .then((response) => {
+    .then(response => {
       dispatch(activateDeviceSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(verifyDeviceFailure(message));
       dispatch(displaySnackMessage(message));
     });
@@ -306,13 +306,13 @@ export const activateDevice = id => (dispatch, getState, http) => {
 export const getAllDevices = () => (dispatch, getState, http) => {
   dispatch(getDevicesRequest());
   const abortController = new AbortController();
-  const signal = abortController.signal;
-  return http.get('devices', { signal: signal })
-    .then((response) => {
+  const {signal} = abortController;
+  return http.get('devices', { signal })
+    .then(response => {
       dispatch(getDevicesSuccess(response.data.data));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(getDevicesFailure(message));
       dispatch(displaySnackMessage(message));
     });
@@ -321,12 +321,12 @@ export const getAllDevices = () => (dispatch, getState, http) => {
 export const editDevice = (id, device) => (dispatch, getState, http) => {
   dispatch(editDeviceRequest());
   return http.patch(`devices/${id}`, device)
-    .then((response) => {
+    .then(response => {
       dispatch(editDeviceSuccess(id, response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(editScheduleFailure(message));
       dispatch(displaySnackMessage(message));
     });
@@ -335,12 +335,12 @@ export const editDevice = (id, device) => (dispatch, getState, http) => {
 export const deleteDevice = id => (dispatch, getState, http) => {
   dispatch(deleteSingleDeviceRequest());
   return http.delete(`devices/${id}`)
-    .then((response) => {
+    .then(response => {
       dispatch(deleteSingleDeviceSuccess(id));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
-      const message = error.response.data.message;
+    .catch(error => {
+      const {message} = error.response.data;
       dispatch(deleteSingleDeviceFailure(message));
       dispatch(displaySnackMessage(message));
     });
@@ -450,10 +450,10 @@ export const reducer = (state: {
     case EDIT_DEVICE_SUCCESS:
       return {
         ...state,
-        devices: [...state.devices].map(device => device._id === action.device._id ? ({
+        devices: [...state.devices].map(device => device._id === action.device._id ? {
           ...device,
           ...action.device,
-        }) : device),
+        } : device),
         errors: null,
       };
     case EDIT_DEVICE_FAILURE:

@@ -9,7 +9,7 @@ import { DashboardCardProps } from './interfaces';
 // styles
 import './DashboardCard.scss';
 
-const DashboardCard: React.FunctionComponent<DashboardCardProps> = (props) => {
+const DashboardCard: React.FunctionComponent<DashboardCardProps> = props => {
   const {
     classes,
     heading,

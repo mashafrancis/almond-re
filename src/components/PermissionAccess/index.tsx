@@ -9,8 +9,8 @@ import { PermissionAccessProps, PermissionAccessState } from './interfaces';
 
 // helpers
 import capitalize from '@utils/helpers/capitalize';
-import ensure from "@utils/helpers/arrayCheck";
-import { Permission, Resource } from "@modules/userRoles/interfaces";
+import ensure from '@utils/helpers/arrayCheck';
+import { Permission, Resource } from '@modules/userRoles/interfaces';
 
 class PermissionAccess extends React.Component<PermissionAccessProps, PermissionAccessState> {
   /*
@@ -81,12 +81,12 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
     let getNewPermissionIds;
     // if this is the full access permission
     if (this.mappedPermissions['full access'] === permissionId) {
-      getNewPermissionIds = (currentPermissionIds) => {
+      getNewPermissionIds = currentPermissionIds => 
         // switch off all permissions if the user toggles off 'full access' otherwise make it the only one
-        return currentPermissionIds.includes(permissionId) ? [] : [permissionId];
-      };
+         currentPermissionIds.includes(permissionId) ? [] : [permissionId]
+      ;
     } else {
-      getNewPermissionIds = (currentPermissionIds) => {
+      getNewPermissionIds = currentPermissionIds => {
         /*
          * if current permissions contain 'full access', it should be removed and every other permission
          * asides the one that was clicked, should be added
@@ -106,11 +106,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
       };
     }
     this.setState({
-      resources: this.state.resources.map((resource: Resource) => resource._id === resourceId ? ({
+      resources: this.state.resources.map((resource: Resource) => resource._id === resourceId ? {
         ...resource,
         // @ts-ignore
         permissionIds: getNewPermissionIds(resource.permissionIds || []),
-      }) : resource),
+      } : resource),
     },            () => this.props.getResources(this.state.resources));
   }
 
@@ -138,7 +138,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="add-role-form__content__row">
           <p className="row-label">Permission access</p>
           <div className="permissions">
@@ -146,20 +146,20 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
               <div className="permissions__tbl-header__column access-levels">Access levels</div>
               {
                 Object.keys(this.mappedPermissions)
-                  .map(permissionString => ((
+                  .map(permissionString => 
                       <div key={permissionString} className="permissions__tbl-header__column">
                         {`${capitalize(permissionString)}`}
-                      </div>)
-                  ))
+                      </div>
+                  )
               }
             </div>
             <div className="permissions__tbl-body">
               {
-                this.state.resources && this.state.resources.map((resource: Resource) => (
+                this.state.resources && this.state.resources.map((resource: Resource) => 
                   <div key={resource._id} className="permissions__tbl-row">
                     <div className="permissions__tbl-row__item header">{resource.name}</div>
                     {
-                      Object.keys(this.mappedPermissions).map(permission => (
+                      Object.keys(this.mappedPermissions).map(permission => 
                         <div key={`${resource.name}-${permission}}`} className="permissions__tbl-row__item">
                           <Checkbox
                             checked={
@@ -169,17 +169,17 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
                             }
                             name={`${resource.name}-${permission}`}
                             onChange={this.togglePermission(resource._id, permission)}
-                          />
+                            />
                         </div>
-                      ))
+                      )
                     }
                   </div>
-                ))
+                )
               }
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

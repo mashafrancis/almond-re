@@ -20,8 +20,8 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
     forwardLink
   } = props;
 
-  const forwardArrow = () => (
-    <React.Fragment>
+  const forwardArrow = () => 
+    <>
       <NavLink to={forwardLink}>
         <span className="register-toolbar-actions">
           <div className="register__logo">
@@ -30,11 +30,11 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
             <ArrowForwardRounded />
         </span>
       </NavLink>
-    </React.Fragment>
-  );
+    </>
+  ;
 
-  const backArrow = () => (
-    <React.Fragment>
+  const backArrow = () => 
+    <>
       <NavLink to={backwardLink}>
         <span className="register-toolbar-actions">
           <ArrowBackRounded />
@@ -43,11 +43,11 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
           </div>
         </span>
       </NavLink>
-    </React.Fragment>
-  );
+    </>
+  ;
 
   return (
-    <React.Fragment>
+    <>
       <header>
         {backArrow()}
         <div className="mini-account-menu">
@@ -59,7 +59,7 @@ export const NavigationHeader: React.FunctionComponent<NavigationHeaderProps> = 
           </div>
         </div>
       </header>
-    </React.Fragment>
+    </>
   )
 }
 

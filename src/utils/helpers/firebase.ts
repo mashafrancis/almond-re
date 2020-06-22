@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/auth';
-import store from "../../store";
+import store from '../../store';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_APIKEY,
