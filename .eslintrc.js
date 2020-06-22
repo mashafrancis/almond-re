@@ -54,7 +54,7 @@ module.exports = {
     "quotes": [1, "single"],
     "jsx-quotes": [2, "prefer-double"],
     "no-undef": 0,
-    "no-console": 1,
+    "no-console": 2,
     "no-unused-vars": 0,
     "no-mixed-operators": [1,
       {
@@ -100,6 +100,31 @@ module.exports = {
     "import/no-named-as-default-member": 0,
     "import/namespace": 0,
     "import/named": 0,
+
+    // "max-line-length": [1, 120],
+    //
+    // "no-arg": 1,
+    // "no-bitwise": 1,
+    // "no-unused-variable": 2,
+    // "no-consecutive-blank-lines": 2,
+    // "no-construct": 2,
+    // "no-debugger": 2,
+    // "no-duplicate-variable": 2,
+    // "no-duplicate-imports": 2,
+    // "no-empty": 2,
+    // "no-eval": 2,
+    // "no-string-literal": 2,
+    // "no-submodule-imports": 2,
+    // "no-switch-case-fall-through": 2,
+    // "no-trailing-whitespace": 2,
+    // "one-line": [
+    //   1,
+    //   "check-catch",
+    //   "check-else",
+    //   "check-open-brace",
+    //   "check-whitespace"
+    // ],
+    // "radix": 1,
 
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/click-events-have-key-events": 0,
@@ -155,6 +180,28 @@ module.exports = {
     // TODO: enable the lines below when refactoring
     // "react-hooks/rules-of-hooks": 1,
     // "react-hooks/exhaustive-deps": 1
+
+    // "jsdoc-require": [
+    //   1
+    // ],
+    // "triple-equals": [
+    //   1,
+    //   "allow-null-check",
+    //   "allow-undefined-check"
+    // ],
+    // "trailing-comma": [
+    //   1,
+    //   {
+    //     "multiline": {
+    //       "objects": "always",
+    //       "arrays": "always",
+    //       "functions": "never",
+    //       "typeLiterals": "ignore"
+    //     },
+    //     "esSpecCompliant": 1,
+    //     "singleline": "never"
+    //   }
+    // ],
   },
 };
 

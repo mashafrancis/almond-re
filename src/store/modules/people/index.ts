@@ -1,7 +1,7 @@
 // third party libraries
-import { UserDetails } from '@modules/user/interfaces';
+import {UserDetails} from '@modules/user/interfaces';
 
-import { AnyAction } from 'redux';
+import {AnyAction} from 'redux';
 
 // thunk action creators
 import { displaySnackMessage } from '../snack';
@@ -23,11 +23,16 @@ import {
   UPDATE_PERSON_DETAILS_FAILURE,
   UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
-import {loadingError, loadingRequest, loadingSuccess} from '@modules/loading';
+
+import {
+  loadingError,
+  loadingRequest,
+  loadingSuccess
+} from '@modules/loading';
+import {Action, ErrorObject} from '../../../shared.interfaces';
 
 /**
  * Get all users action creator
- *
  * @returns {GetAllPeopleActionRequest}
  */
 export const getAllPeopleRequest = (): GetAllPeopleActionRequest => ({
@@ -37,7 +42,6 @@ export const getAllPeopleRequest = (): GetAllPeopleActionRequest => ({
 
 /**
  * Get userDetails success action creator
- *
  * @returns {GetAllPeopleActionSuccess}
  */
 export const getAllPeopleSuccess = (people: UserDetails[]): GetAllPeopleActionSuccess => ({
@@ -48,10 +52,9 @@ export const getAllPeopleSuccess = (people: UserDetails[]): GetAllPeopleActionSu
 
 /**
  * Get all users action creator
- *
  * @returns {GetAllPeopleActionFailure}
  */
-export const getAllPeopleFailure = (errors): GetAllPeopleActionFailure => ({
+export const getAllPeopleFailure = (errors: any): GetAllPeopleActionFailure => ({
   errors,
   type: GET_ALL_PEOPLE_FAILURE,
   isLoading: false,
@@ -59,7 +62,6 @@ export const getAllPeopleFailure = (errors): GetAllPeopleActionFailure => ({
 
 /**
  * Update user details
- *
  * @returns {UpdatePersonSuccess}
  */
 export const updatePersonSuccess = (person: UserDetails): UpdatePersonSuccess => ({
@@ -67,21 +69,25 @@ export const updatePersonSuccess = (person: UserDetails): UpdatePersonSuccess =>
   type: UPDATE_PERSON_DETAILS_SUCCESS,
 });
 
-export const updatePersonFailure = (errors): UpdatePersonFailure => ({
+export const updatePersonFailure = (errors: any): UpdatePersonFailure => ({
   errors,
   type: UPDATE_PERSON_DETAILS_FAILURE,
   isLoading: false,
 });
 
-export const getAllPeople = () => (dispatch, getState, http) => {
+export const getAllPeople = () => (
+  dispatch: any,
+  getState: any,
+  http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[]; }; }>; }
+) => {
   // dispatch(getAllPeopleRequest());
   dispatch(loadingRequest('requesting'))
   return http.get('people')
-    .then(response => {
+    .then((response: { data: { data: UserDetails[]; }; }) => {
       dispatch(getAllPeopleSuccess(response.data.data));
       dispatch(loadingSuccess('success'));
     })
-    .catch(error => {
+    .catch((error: ErrorObject) => {
       const {message} = error.response.data;
       dispatch(getAllPeopleFailure(message));
       dispatch(loadingError('error'))
@@ -91,20 +97,26 @@ export const getAllPeople = () => (dispatch, getState, http) => {
 
 /**
  * Update user details
- *
  * @returns {Function}
  * @param personId
  * @param personDetails
  */
-export const updatePerson = (personId, personDetails) => (dispatch, getState, http) => http.patch(`people/${personId}`, personDetails)
-    .then(response => {
+export const updatePerson = (personId: string, personDetails: any): Function => (
+  dispatch: any,
+  getState: any,
+  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: UserDetails; message: string; }; }>; }
+) => {
+  http.patch(`people/${personId}`, personDetails)
+    .then((response: { data: { data: UserDetails; message: string; }; }) => {
       dispatch(updatePersonSuccess(response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch(error => {
-      dispatch(updatePersonFailure(error.message));
-      dispatch(displaySnackMessage(error.message));
+    .catch((error: ErrorObject) => {
+      const {message} = error.response.data;
+      dispatch(updatePersonFailure(message));
+      dispatch(displaySnackMessage(message));
     });
+}
 
 const peopleInitialState = {
   people: [],
@@ -112,14 +124,13 @@ const peopleInitialState = {
 
 /**
  * Updates the user state in the application
- *
  * @param {Object} state
  * @param {AnyAction} action
- *
  * @returns {Object} state
  */
 export const reducer = (state: {
-  people: UserDetails[] } = peopleInitialState, action: AnyAction) => {
+  people: UserDetails[]
+} = peopleInitialState, action: Action) => {
   switch (action.type) {
     case GET_ALL_PEOPLE_REQUEST:
       return {

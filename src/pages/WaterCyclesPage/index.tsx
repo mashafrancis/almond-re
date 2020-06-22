@@ -62,11 +62,11 @@ import {
   WaterCyclesPageProps,
   WaterCyclesPageState
 } from './interfaces';
-import round from '@utils/helpers/roundDigit';
+import roundDigit from '@utils/helpers/roundDigit';
 
 // components
 const CardInfo = React.lazy(() => import('@components/CardInfo'));
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 const Modal = React.lazy(() => import('@components/Modal'));
 const Table = React.lazy(() => import('@components/Table'));
 const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
@@ -134,11 +134,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
   //   }
   // },              [state.scheduleToEdit]);
 
-  const areEqual = (prevProps, nextProps) => prevProps.isChecked === nextProps.isChecked;
-
   const heightOfTank = 11; // units in centimeters
   const waterLevel = heightOfTank <= 11 ? props.waterData.waterLevel || heightOfTank : heightOfTank;
-  const heightOfWater = round(((heightOfTank - waterLevel)/heightOfTank) * 100, 0);
+  const heightOfWater = roundDigit(((heightOfTank - waterLevel)/heightOfTank) * 100, 0);
 
   const PumpSwitch = withStyles({
     switchBase: {
@@ -169,9 +167,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
   const handleToggleButtonOnChange = event => {
     event.target.checked
-      ? props.togglePump({ enabled: true, deviceId: user.activeDevice._id })
+      ? props.togglePump({ enabled: true, device: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
-      : props.togglePump({ enabled: false, deviceId: user.activeDevice._id })
+      : props.togglePump({ enabled: false, device: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: '' }));
   };
 
@@ -179,9 +177,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
   const handleToggleStatusChange = (event, schedule) => {
     event.target.checked
-      ? props.toggleScheduleStatus(schedule._id,  { enabled: true, deviceId: user.activeDevice._id })
+      ? props.toggleScheduleStatus(schedule._id,  { enabled: true, device: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'true'))
-      :  props.toggleScheduleStatus(schedule._id,  { enabled: false, deviceId: user.activeDevice._id })
+      :  props.toggleScheduleStatus(schedule._id,  { enabled: false, device: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'false'));
   };
 
@@ -256,7 +254,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
     const schedule = {
       schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
-      deviceId: user.activeDevice._id,
+      device: user.activeDevice._id,
     };
 
     isEditMode
@@ -264,11 +262,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       : props.addNewSchedule(schedule).then(closeScheduleModal);
   };
 
-  const BlankContent = message => 
+  const BlankContent = message =>
     <div className="blank-content"><h2>{message}</h2></div>
   ;
 
-  const AddEditScheduleModal = () => 
+  const AddEditScheduleModal = () =>
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderTimeScheduleForm()}
@@ -281,7 +279,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       />
   ;
 
-  const DeleteScheduleModal = () => 
+  const DeleteScheduleModal = () =>
     <Modal
       isModalOpen={state.isDeleteModal}
       renderContent={() => <p className="delete-modal-content">Do you confirm deletion of time schedule?</p>}
@@ -293,7 +291,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       />
   ;
 
-  const ActionButtons = schedule => 
+  const ActionButtons = schedule =>
     <div key={schedule} className="action-buttons">
       <span id={schedule} onClick={ showScheduleModal('Edit')}>
         <h5 id={schedule} className="action-buttons__edit">Edit</h5>
@@ -352,7 +350,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
               {...(hasError ? { error: true } : {})}
               {...(hasError ? { helperText: 'Schedule time has to be at least one hour apart' } : {})}
               InputProps={{
-                startAdornment: 
+                startAdornment:
                   <InputAdornment position="start">
                     <IconButton href="#">
                       <AddAlarmTwoTone style={{ color: '#1967D2' }} />
@@ -396,7 +394,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
             actionItem={
               <PumpSwitch
                 className="manual-override"
-                onClick={() => handleClick(true)}
+                onChange={e => handleToggleButtonOnChange(e)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
@@ -474,8 +472,8 @@ export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
   getAllSchedules: deviceId => dispatch(getAllSchedules(deviceId)),
   getPumpStatus: deviceId => dispatch(getPumpStatus(deviceId)),
-  togglePump: status => dispatch(togglePump(status)),
-  toggleScheduleStatus: (scheduleId, enabled) => dispatch(toggleScheduleStatus(scheduleId, enabled)),
+  togglePump: payload => dispatch(togglePump(payload)),
+  toggleScheduleStatus: (scheduleId, payload) => dispatch(toggleScheduleStatus(scheduleId, payload)),
   getWaterData: () => dispatch(getWaterData()),
 });
 

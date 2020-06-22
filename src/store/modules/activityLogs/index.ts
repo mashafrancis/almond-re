@@ -7,7 +7,7 @@ import { AnyAction } from 'redux';
  *
  * @returns {LogActivity}
  */
-export const logActivity = (activityLogs): LogActivity => ({
+export const logActivity = (activityLogs: any): LogActivity => ({
   activityLogs,
   type: LOG_ACTIVITY,
 });

@@ -1,5 +1,5 @@
 // thunks
-import { displaySnackMessage } from '@modules/snack';
+import {displaySnackMessage} from '@modules/snack';
 // interfaces
 import {
   CreateUserRolesActionSuccess,
@@ -18,6 +18,7 @@ import {
   GET_USER_ROLES_REQUEST,
   GET_USER_ROLES_SUCCESS
 } from './types';
+import {Action, ErrorObject} from '../../../shared.interfaces';
 
 /**
  * Create user roles success action creator
@@ -25,7 +26,7 @@ import {
  * @param {UserRole} userRole
  * @returns {CreateUserRolesActionSuccess}
  */
-export const createUserRoleSuccess = (userRole): CreateUserRolesActionSuccess => ({
+export const createUserRoleSuccess = (userRole: any): CreateUserRolesActionSuccess => ({
   userRole,
   type: CREATE_USER_ROLES_SUCCESS,
 });
@@ -42,11 +43,12 @@ export const getUserRolesRequest = (): GetUserRolesActionRequest => ({
 
 /**
  * Get user roles success action creator
- *
  * @returns {GetUserRolesActionSuccess}
  * @param allRolesAndPermissions
  */
-export const getUserRolesSuccess = (allRolesAndPermissions): GetUserRolesActionSuccess => ({
+export const getUserRolesSuccess = (
+  allRolesAndPermissions: { data: any; permissions: any; resources: any; }
+): GetUserRolesActionSuccess => ({
   userRoles: allRolesAndPermissions.data,
   permissions: allRolesAndPermissions.permissions,
   resources: allRolesAndPermissions.resources,
@@ -56,21 +58,17 @@ export const getUserRolesSuccess = (allRolesAndPermissions): GetUserRolesActionS
 
 /**
  * Get all schedules failure
- *
  * @returns {GetAllSchedulesActionRequest}
  */
-export const getUserRolesFailure = (errors): GetUserRolesActionFailure => ({
+export const getUserRolesFailure = (errors: any): GetUserRolesActionFailure => ({
   errors,
   type: GET_USER_ROLES_FAILURE,
   isLoading: false,
 });
 
 /**
- * action creator
  *
  * Delete user roles success action creator
- *
- *
  * @returns {UserDeleteRolesSuccess}
  * @param id
  */
@@ -80,46 +78,48 @@ export const deleteUserRolesSuccess = (id: string): UserDeleteRolesSuccess => ({
 });
 
 /**
- * action creator
- *
  * Update user roles success action creator
- *
  * @param {UserRole[], string} userRole
- *
  * @param id
  * @returns {UserEditRolesSuccess}
  */
-export const editUserRoleSuccess = (userRole, id: string): UserEditRolesSuccess => ({
+export const editUserRoleSuccess = (userRole: any, id: string): UserEditRolesSuccess => ({
   id,
   userRole,
   type: EDIT_USER_ROLES_SUCCESS,
 });
 
 /**
- * Thunk
- *
  * Create user role thunk
- *
  * @param {Object} userRole
- *
  * @returns {Function}
  */
-export const createUserRole = userRole => (dispatch, getState, http) => http.post('/roles', userRole)
-    .then(response => {
+export const createUserRole = (userRole: any) => (
+  dispatch: any,
+  getState: any,
+  http: { post: (arg0: string, arg1: any) => Promise<{ data: { data: any; }; }>; }
+) => {
+  http.post('/roles', userRole)
+    .then((response: { data: { data: any; }; }) => {
       dispatch(createUserRoleSuccess(response.data.data));
       dispatch(displaySnackMessage('User Role successfully created'));
     })
-    .catch(error =>
+    .catch((error: ErrorObject) =>
       dispatch(displaySnackMessage(error.response.data.message))
     );
+}
 
 /**
  * Delete user roles thunk
- *
  * @returns {Function}
  * @param id
  */
-export const deleteUserRole = id => (dispatch, getState, http) => http.delete(`/roles/${id}`)
+export const deleteUserRole = (id: string) => (
+  dispatch: any,
+  getState: any,
+  http: { delete: (arg0: string) => Promise<any>; }
+) => {
+  http.delete(`/roles/${id}`)
     .then(() => {
       dispatch(deleteUserRolesSuccess(id));
       dispatch(displaySnackMessage('Role has been deleted successfully'));
@@ -127,13 +127,17 @@ export const deleteUserRole = id => (dispatch, getState, http) => http.delete(`/
     .catch(error => {
       dispatch(displaySnackMessage(error.response.data.message));
     });
+};
 
 /**
- *
  * Get user roles thunk
  * @returns {Function}
  */
-export const getUserRoles = () => (dispatch, getState, http) => {
+export const getUserRoles = () => (
+  dispatch: any,
+  getState: any,
+  http: { get: (arg0: string) => Promise<any>; }
+) => {
   dispatch(getUserRolesRequest());
   return http.get('/roles?include=permissions&include=resources')
     .then(response => dispatch(getUserRolesSuccess(response.data)))
@@ -144,20 +148,22 @@ export const getUserRoles = () => (dispatch, getState, http) => {
 };
 
 /**
- *
  * Edit a user role thunk
- *
  * @param {Object} updatedRolePayload
  * @returns {Function}
  */
-export const editUserRole = updatedRolePayload => (dispatch, getState, http) => {
-  const { id } = updatedRolePayload;
+export const editUserRole = (updatedRolePayload: { id: string; }) => (
+  dispatch: any,
+  getState: any,
+  http: { patch: (arg0: string, arg1: { id: string; }) => Promise<{ data: { data: any; }; }>; }
+) => {
+  const {id} = updatedRolePayload;
   return http.patch(`/roles/${id}`, updatedRolePayload)
-    .then(response => {
+    .then((response: { data: { data: any; }; }) => {
       dispatch(editUserRoleSuccess(response.data.data, id));
       dispatch(displaySnackMessage('Role updated successfully'));
     })
-    .catch(error => {
+    .catch((error: ErrorObject) => {
       if (error.response.status === 400) {
         dispatch(displaySnackMessage('Please format the fields properly'));
       } else {
@@ -172,7 +178,7 @@ const userRoleInitialState = {
   isLoading: true,
 };
 
-const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialState, action) => {
+const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialState, action: Action) => {
   switch (action.type) {
     case GET_USER_ROLES_REQUEST:
       return {

@@ -9,16 +9,21 @@
     "start": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "start:heroku": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "build": "webpack --config config/webpack.prod.js --mode production",
-    "workbox:inject": "workbox injectManifest workbox-config.js",
+    "eslint": "eslint --report-unused-disable-directives --format codeframe '**/*.{js,jsx,ts,tsx,json}'",
+    "eslint:fix": "yarn eslint --fix",
     "lint:scss": "stylelint --fix",
     "lint:ts": "eslint --ext=jsx,ts,tsx src",
+    "stylelint": "stylelint '**/*.*(css|scss)'",
+    "stylelint:fix": "yarn stylelint --fix",
     "test:unit": "jest -u --runInBand --detectOpenHandles",
-    "test:commit": "yarn test:unit --coverage",
+    "test:coverage": "yarn test:unit --coverage",
+    "test:watch": "yarn test:unit --watch --verbose",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome",
     "cy:open:dev": "server-test start:dev 3000 cy:open",
     "cy:e2e:prod": "yarn run cy:run",
-    "analyze": "webpack --profile --json > stats.json"
+    "analyze": "webpack --profile --json > stats.json",
+    "workbox:inject": "workbox injectManifest workbox-config.js"
   },
   "repository": {
     "type": "git",
@@ -122,6 +127,7 @@
     "@babel/runtime": "^7.10.2",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@schemastore/package": "0.0.5",
     "@testing-library/dom": "^7.16.2",
     "@testing-library/jest-dom": "^5.10.1",
     "@testing-library/react": "^10.3.0",
@@ -215,7 +221,10 @@
   "yarn-upgrade-all": {
     "ignore": [
       "husky",
-      "sass-loader"
+      "sass-loader",
+      "@material/react-list",
+      "@material/react-layout-grid",
+      "@material/react-drawer"
     ]
   },
   "lint-staged": {

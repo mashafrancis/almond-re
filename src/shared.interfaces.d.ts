@@ -28,3 +28,12 @@ export interface ValidationObject {
   isValid: (value: any) => boolean;
   message: string;
 }
+
+export interface ErrorObject {
+  response: {
+    data: {
+      message: any;
+    };
+    status: number;
+  };
+}

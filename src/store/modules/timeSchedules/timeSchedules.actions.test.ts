@@ -49,7 +49,7 @@ import {
 } from '@modules/timeSchedules/fixtures';
 import { activityHistory } from '@modules/activityLogs/fixtures';
 
-describe('Time schedules', () => {
+describe('Time schedules module actions', () => {
   const deviceId = '5ede17f7184ccf003a2da68f';
   const id = timeSchedules.data[0]._id;
 
@@ -81,7 +81,7 @@ describe('Time schedules', () => {
       )
     });
 
-    it('should return an error message when failed to fetch time schedules', () => {
+    it('should return an error message when it fails to fetch time schedules', () => {
       const mockErrorResponse = {
         response: {
           data: {
@@ -158,7 +158,7 @@ describe('Time schedules', () => {
       );
     });
 
-    it('should return an error message when failed to create time schedule', () => {
+    it('should return an error message when it fails to create time schedule', () => {
       const mockErrorResponse = {
         response: {
           data: {
@@ -275,7 +275,7 @@ describe('Time schedules', () => {
       );
     });
 
-    it('should return an error message when failed to delete a time schedule', () => {
+    it('should return an error message when it fails to delete a time schedule', () => {
       const mockErrorResponse = {
         response: {
           data: {
@@ -394,7 +394,7 @@ describe('Time schedules', () => {
       );
     });
 
-    it('should return an error message when failed to edit time schedule', () => {
+    it('should return an error message when it fails to edit time schedule', () => {
       const mockErrorResponse = {
         response: {
           data: {
@@ -430,7 +430,7 @@ describe('Time schedules', () => {
 
       return dispatchMethodMock(
         store,
-        editSchedule(id, schedulePayload),
+        editSchedule(id, schedulePayload.schedule),
         expectedActions
       );
     });
@@ -471,7 +471,7 @@ describe('Time schedules', () => {
 
       return dispatchMethodMock(
         store,
-        editSchedule(id, schedulePayload),
+        editSchedule(id, schedulePayload.schedule),
         expectedActions
       );
     });
@@ -519,7 +519,7 @@ describe('Time schedules', () => {
       );
     });
 
-    it('should return an error message when failed to toggle a pump', () => {
+    it('should return an error message when it fails to toggle a pump', () => {
       const mockErrorResponse = {
         response: {
           data: {

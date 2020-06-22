@@ -1,5 +1,6 @@
 // helpers
 import CacheHandler from '@utils/helpers/CacheHandler';
+import { AxiosInstance } from 'axios';
 
 /**
  * Wraps an axios instance and caches it's get requests
@@ -10,7 +11,9 @@ import CacheHandler from '@utils/helpers/CacheHandler';
  *
  * @returns {Object}
  */
-const cacheAxiosInstance = (axiosInstance, defaultTtl, cacheManager = CacheHandler) => {
+const cacheAxiosInstance = (
+  axiosInstance: AxiosInstance, defaultTtl: number, cacheManager = CacheHandler
+): any => {
   const cacheMap = new Map();
 
   return new Proxy(axiosInstance, {
@@ -18,7 +21,7 @@ const cacheAxiosInstance = (axiosInstance, defaultTtl, cacheManager = CacheHandl
       const originalMethod = httpObject[method];
 
       if (method === 'get') {
-        return (path, { cache = false, ttl = defaultTtl } = {}) => {
+        return (path: string, { cache = false, ttl = defaultTtl } = {}) => {
           const currentTime = () => (new Date).getTime();
           const endpoint = cacheManager.extractUrlEndpoint(path);
           const lastUpdateTimestamp = cacheManager.cacheInvalidationRegister[endpoint] || 0;

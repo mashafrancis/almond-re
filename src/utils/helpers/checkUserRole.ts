@@ -3,9 +3,8 @@
  *
  * @param {string} role
  * @param {string} baseRole
- *
  * @returns {boolean}
  */
-const checkUserRole = (role, baseRole) => role.toLowerCase() === baseRole.toLowerCase();
+const checkUserRole = (role: string, baseRole: string): boolean => role.toLowerCase() === baseRole.toLowerCase()
 
 export default checkUserRole;

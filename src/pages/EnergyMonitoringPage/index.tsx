@@ -7,7 +7,7 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-import GeneralCardInfo from '@components/GeneralInfoCard';
+import GeneralCardInfo from '@components/GeneralCardInfo';
 import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
 
 // thunks

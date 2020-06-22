@@ -54,8 +54,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
   const user = React.useContext(UserContext);
 
-  const onSubmit = (event: React.ChangeEvent) => {
-    event.preventDefault();
+  const onSubmit = () => {
     const device = { id: deviceId };
 
     setState({ ...state, isLoading: true });
@@ -96,7 +95,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   const { activeDevice } = user;
   const { history } = props;
 
-  const renderDeviceTextField = () => 
+  const renderDeviceTextField = () =>
       <>
         <div className="form-cell">
           <TextField
@@ -106,7 +105,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
             variant="outlined"
             onChange={handleValueChange}
             InputProps={{
-              startAdornment: 
+              startAdornment:
                 <InputAdornment position="start">
                   <PhonelinkSetupSharp style={{ color: '#1967D2' }} />
                 </InputAdornment>
@@ -146,18 +145,11 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
           <Cell columns={8} desktopColumns={8} tabletColumns={4} phoneColumns={2}>
             <button
               className="mdc-button mdc-button--raised"
-              onClick={() => onSubmit}>
+              onClick={onSubmit}>
               <span className="mdc-button__label">
                 {isLoading ? 'Adding...' : 'Add new device ID'}
               </span>
             </button>
-            {/* <Button */}
-            {/*  type="button" */}
-            {/*  name={isLoading ? 'Adding...' : 'Add new device ID'} */}
-            {/*  id="cc-register" */}
-            {/*  onClick={onSubmit} */}
-            {/*  classes="mdc-button big-round-corner-button mdc-button--raised" */}
-            {/* /> */}
           </Cell>
         </Row>
       </Grid>

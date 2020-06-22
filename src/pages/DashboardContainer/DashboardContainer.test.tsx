@@ -10,7 +10,9 @@ import {
 describe('The DashboardContainer component', () => {
   describe('mapStateToProps', () => {
     const state = {
-      user: {},
+      user: {
+        userDetails: {}
+      },
       loading: '',
       userRoles: {
         data: [],
@@ -24,7 +26,7 @@ describe('The DashboardContainer component', () => {
     const props = mapStateToProps(state);
 
     it('should map energy monitoring props from state', () => {
-      expect(props.user).toEqual(state.user);
+      expect(props.user).toEqual(state.user.userDetails);
       expect(props.loading).toEqual(state.loading);
       expect(props.roles).toEqual(state.userRoles.data);
       expect(props.activityLogs).toEqual(state.activityLogs);
@@ -61,7 +63,7 @@ describe('The DashboardContainer component', () => {
     });
 
     it('ensures updatePerson is mapped to props', () => {
-      props.updatePerson();
+      props.editUserDetails();
       expect(dispatch).toHaveBeenCalled();
     });
   });

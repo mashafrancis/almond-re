@@ -1,14 +1,20 @@
 import * as moment from 'moment';
 
-export const validateOneHourTime = (schedules: string[], newTime: string) => {
+/**
+ * This function validates the time schedules to be one hour apart
+ * @returns boolean
+ */
+export const validateOneHourTime = (schedules: string[], newTime: string): boolean => {
+  let diff: number | undefined;
   const oneHour = 60 * 60 * 1000;
 
-  for (let i = 0; i < schedules.length; i += 1) {
+  if (diff === undefined) diff = 0;
+
+  for (const item of schedules) {
     const current = moment(newTime).format('hh:mm:ss');
-    const availableSchedule = moment(schedules[i]).format('hh:mm:ss');
-    const diff = moment(current, 'H:mm:ss').diff(moment(availableSchedule, 'H:mm:ss'));
-    if (Math.abs(diff) < oneHour) {
-      return true;
-    }
+    const availableSchedule = moment(item).format('hh:mm:ss');
+    diff = moment(current, 'H:mm:ss').diff(moment(availableSchedule, 'H:mm:ss'));
   }
+
+  return Math.abs(diff) < oneHour;
 };
