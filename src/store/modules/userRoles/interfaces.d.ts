@@ -58,7 +58,7 @@ export interface ResourceAccessLevel {
 
 export interface UserRole {
   description: string;
-  users: Number;
+  users: number;
   title: string;
   _id: string;
   resourceAccessLevels: ResourceAccessLevel[];

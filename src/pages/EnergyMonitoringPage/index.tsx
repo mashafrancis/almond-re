@@ -7,7 +7,7 @@ import {
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-import GeneralCardInfo from "@components/GeneralInfoCard";
+import GeneralCardInfo from '@components/GeneralInfoCard';
 import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
 
 // thunks
@@ -22,7 +22,7 @@ import {
   EnergyMonitoringPageState
 } from './interfaces';
 
-export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageProps> = (props) => {
+export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageProps> = props => {
   const [state, setState] = React.useState<EnergyMonitoringPageState>({
     isEditMode: false,
     schedules: [],
@@ -46,7 +46,7 @@ export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageP
             mainHeader="Energy Monitoring"
             subHeader="Power readings from the system and daily usage"
             icon={<MemoryTwoToneIcon className="content-icon general-info-icon" />}
-          />
+            />
         </Cell>
       </Row>
     </Grid>

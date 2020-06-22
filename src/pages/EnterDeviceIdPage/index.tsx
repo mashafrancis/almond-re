@@ -21,14 +21,14 @@ import {
 import { connect } from 'react-redux';
 
 // components
-import { Cell, Row } from "@material/react-layout-grid";
-import NavigationHeader from "@components/NavigationHeader";
+import { Cell, Row } from '@material/react-layout-grid';
+import NavigationHeader from '@components/NavigationHeader';
 
 // thunk
 import { verifyUserDevice } from '@modules/device';
 import { displaySnackMessage } from '@modules/snack';
 import { getUserDetails } from '@modules/user';
-import { UserContext } from "@utils/context";
+import { UserContext } from '@utils/context';
 
 // styles
 import 'react-date-range/dist/styles.css';
@@ -42,7 +42,7 @@ import {
   StateToProps
 } from './interfaces';
 
-export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = (props) => {
+export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = props => {
   const [state, setState] = React.useState<EnterDeviceIdPageState>({
     isLoading: false,
   });
@@ -96,9 +96,8 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   const { activeDevice } = user;
   const { history } = props;
 
-  const renderDeviceTextField = () => {
-    return (
-      <React.Fragment>
+  const renderDeviceTextField = () => 
+      <>
         <div className="form-cell">
           <TextField
             label="Enter new device ID"
@@ -107,17 +106,16 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
             variant="outlined"
             onChange={handleValueChange}
             InputProps={{
-              startAdornment: (
+              startAdornment: 
                 <InputAdornment position="start">
                   <PhonelinkSetupSharp style={{ color: '#1967D2' }} />
                 </InputAdornment>
-              ),
+              ,
             }}
-        />
+            />
         </div>
-      </React.Fragment>
-    );
-  };
+      </>
+    ;
 
   const { isLoading } = state;
   return (
@@ -126,8 +124,8 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
         forwardButtonName={activeDevice ? 'Skip' : 'Home'}
         backwardButtonName="Back"
         forwardLink={activeDevice ? '/dashboard' : '/'}
-        backwardLink={'/'}
-      />
+        backwardLink="/"
+        />
       <Container maxWidth="sm">
       <Grid>
         <Row>
@@ -153,13 +151,13 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
                 {isLoading ? 'Adding...' : 'Add new device ID'}
               </span>
             </button>
-            {/*<Button*/}
-            {/*  type="button"*/}
-            {/*  name={isLoading ? 'Adding...' : 'Add new device ID'}*/}
-            {/*  id="cc-register"*/}
-            {/*  onClick={onSubmit}*/}
-            {/*  classes="mdc-button big-round-corner-button mdc-button--raised"*/}
-            {/*/>*/}
+            {/* <Button */}
+            {/*  type="button" */}
+            {/*  name={isLoading ? 'Adding...' : 'Add new device ID'} */}
+            {/*  id="cc-register" */}
+            {/*  onClick={onSubmit} */}
+            {/*  classes="mdc-button big-round-corner-button mdc-button--raised" */}
+            {/* /> */}
           </Cell>
         </Row>
       </Grid>

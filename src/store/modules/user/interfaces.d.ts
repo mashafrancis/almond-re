@@ -6,6 +6,8 @@ import {
   GET_USER_DETAILS_SUCCESS,
 } from './types';
 
+import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+
 export interface GetUserDetailsActionRequest {
   type: GET_USER_DETAILS_REQUEST;
   isFetchingUserDetails: string;
@@ -27,8 +29,6 @@ export interface EditUserDetailsSuccess {
   userDetails: UserDetails;
   type: EDIT_USER_DETAILS_SUCCESS;
 }
-
-import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
 
 export interface UserDetails {
   _id: string;

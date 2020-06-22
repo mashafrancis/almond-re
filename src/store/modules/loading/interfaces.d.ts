@@ -2,7 +2,7 @@ import {
   LOADING_ERROR,
   LOADING_REQUEST,
   LOADING_SUCCESS
-} from "@modules/loading/types";
+} from '@modules/loading/types';
 
 export interface LoadingRequest {
   type: LOADING_REQUEST;

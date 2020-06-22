@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ViewportContextProps} from "@context/ViewportContext/interfaces";
+import {ViewportContextProps} from '@context/ViewportContext/interfaces';
 
 const ViewportContext = React.createContext({
   width: 0,

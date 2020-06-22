@@ -13,19 +13,19 @@ import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
-import isArrayNotNull from "@utils/helpers/checkArrayEmpty";
+import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 // styles
 import './HomePage.scss';
-import Logo from "@components/Logo";
+import Logo from '@components/Logo';
 
-const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
+const HomePage: React.FunctionComponent<HomePageProps> = props => {
   const user = React.useContext(UserContext);
   const { devices } = user;
   const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
-  const renderGoToDashboard = () => (
-    <React.Fragment>
+  const renderGoToDashboard = () => 
+    <>
       {authService.isAuthenticated()
       ?
         <NavLink to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}>
@@ -38,8 +38,8 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
           <span className="mdc-button__label">Login with Google</span>
         </button>
       }
-    </React.Fragment>
-  );
+    </>
+  ;
 
   return (
     <div className="background-cover">
@@ -50,7 +50,8 @@ const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
         <section className="home-image">
           <div className="image-wrapper">
             <img src="https://res.cloudinary.com/almondgreen/image/upload/v1576510738/Almond/homepage_e7ugfb.svg"
-                 alt="Almond Image"/>
+                 alt="Almond Image"
+                 />
           </div>
         </section>
         <section id="hero">

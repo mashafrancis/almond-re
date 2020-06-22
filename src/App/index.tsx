@@ -8,27 +8,23 @@ import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { createFirestoreInstance } from "redux-firestore";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import * as firebase from "firebase";
+import { createFirestoreInstance } from 'redux-firestore';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import * as firebase from 'firebase';
 import { Connector } from 'mqtt-hooks';
-
-const KEY = process.env.KEY as string;
-const CERT = process.env.CERT as string;
-const TRUSTED_CA = process.env.TRUSTED_CA as string;
 
 // components
 import {
   firebaseConfig,
   reactReduxFirebaseConfig
-} from "@utils/helpers/firebase";
-import store from "../store";
+} from '@utils/helpers/firebase';
+import store from '../store';
 import ErrorBoundary from '@components/ErrorBoundary';
 import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
-import LinearProgressBar from "@components/LinearProgressBar";
+import LinearProgressBar from '@components/LinearProgressBar';
 import { Transition } from 'react-transition-group';
-import { Fade } from "@material-ui/core";
+import { Fade } from '@material-ui/core';
 
 // thunk action creators
 import { getUserDetails } from '@modules/user';
@@ -43,11 +39,15 @@ import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // context
 import { UserContext } from '@utils/context';
-import { ViewportProvider } from "@context/ViewportContext";
-import { MenuProvider } from "@context/MenuContext";
+import { ViewportProvider } from '@context/ViewportContext';
+import { MenuProvider } from '@context/MenuContext';
 
 // styles
 import './App.scss';
+
+const KEY = process.env.KEY as string;
+const CERT = process.env.CERT as string;
+const TRUSTED_CA = process.env.TRUSTED_CA as string;
 
 const useEffectAsync = (effect, inputs) => {
   React.useEffect(() => {
@@ -55,7 +55,7 @@ const useEffectAsync = (effect, inputs) => {
   }, inputs)
 }
 
-export const App: React.FunctionComponent<AppProps> = (props) => {
+export const App: React.FunctionComponent<AppProps> = props => {
   const [state, setState] = React.useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
     loading: 'idle',
@@ -100,7 +100,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
 
   const checkUserDetailsAndAuthentication = (
     isFetchingUserDetails: boolean,
-    isUserAuthenticated: boolean) => (isFetchingUserDetails && isUserAuthenticated);
+    isUserAuthenticated: boolean) => isFetchingUserDetails && isUserAuthenticated;
 
   const bufferKey = Buffer.from(KEY, 'utf-8');
   const bufferCert = Buffer.from(CERT, 'utf-8');
@@ -146,34 +146,30 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
           devices,
           activeDevice,
           isAdmin,
-        }}
-      >
+        }}>
         <MenuProvider>
           <ViewportProvider>
             <Connector opts={options}>
               <ErrorBoundary>
-                <React.Fragment>
-                  <SnackBar/>
+                <>
+                  <SnackBar />
                   <>
                     {
                       location.pathname !== '/'
                       && isUserAuthenticated
                     }
-                    {
-                      <React.Suspense fallback={
+                    <React.Suspense fallback={
                         <Fade
                           in={props.loading === 'requesting'}
                           style={{ transitionDelay: props.loading === 'requesting' ? '800ms' : '0ms' }}
-                          unmountOnExit
-                        >
+                          unmountOnExit>
                           <LinearProgressBar />
                         </Fade>
                       }>
-                        <Routes/>
+                        <Routes />
                       </React.Suspense>
-                      }
                   </>
-                </React.Fragment>
+                </>
               </ErrorBoundary>
             </Connector>
           </ViewportProvider>

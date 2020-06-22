@@ -1,6 +1,6 @@
 import { UserDetails } from '@modules/user/interfaces';
 import { UserRole } from '@modules/userRoles/interfaces';
-import { ActivityLogs } from "@modules/activityLogs/interfaces";
+import { ActivityLogs } from '@modules/activityLogs/interfaces';
 
 export interface DashboardContainerProps {
   drawerEl?: object;

@@ -57,15 +57,15 @@ export const socialAuthFailure = (errors): SocialAuthActionFailure => ({
 export const socialAuthentication = () => (dispatch, getState, http) => {
   dispatch(socialAuthRequest());
   return http.get(process.env.SOCIAL_AUTH_URL)
-    .then((response) => {
+    .then(response => {
       window.location.replace(process.env.SOCIAL_AUTH_URL || '');
       // authService.saveToken(response.data.response.data.token);
       dispatch(socialAuthSuccess(response));
-      const message = response.data.response.message;
+      const {message} = response.data.response;
       dispatch(displaySnackMessage(`${message}`));
       // window.location.replace('/water-cycles');
     })
-    .catch((errors) => {
+    .catch(errors => {
       const error = 'Something went wrong with the authentication. Kindly try again.';
       dispatch(socialAuthFailure(errors));
       dispatch(displaySnackMessage(`${errors.message}`));

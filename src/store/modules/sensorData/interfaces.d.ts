@@ -5,7 +5,7 @@ import {
   GET_WATER_DATA_FAILURE,
   GET_WATER_DATA_REQUEST,
   GET_WATER_DATA_SUCCESS
-} from "@modules/sensorData/types";
+} from '@modules/sensorData/types';
 
 export interface GetEnvironmentDataRequest {
   type: GET_ENVIRONMENT_DATA_REQUEST;

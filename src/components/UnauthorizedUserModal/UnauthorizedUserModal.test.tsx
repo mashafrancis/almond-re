@@ -7,7 +7,7 @@ import { mount } from 'enzyme';
 // components
 import { mapDispatchToProps, mapStateToProps, UnauthorizedUserModal } from './';
 
-describe.skip('UnauthorizedUserModal component', () => {
+describe('UnauthorizedUserModal component', () => {
   let wrapper;
   let props;
 
@@ -31,8 +31,8 @@ describe.skip('UnauthorizedUserModal component', () => {
   });
 
   afterEach(() => {
-    wrapper = props = null;
-  })
+    wrapper.unmount();
+  });
 
   it('should render Modal component', () => {
     expect(wrapper.find('Modal')).toHaveLength(1);

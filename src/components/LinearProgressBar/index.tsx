@@ -16,7 +16,7 @@ const LinearProgressBar = () => {
   const [completed, setCompleted] = React.useState(0);
   React.useEffect(() => {
     const progress = () => {
-      setCompleted((oldCompleted) => {
+      setCompleted(oldCompleted => {
         if (oldCompleted === 100) return 0;
         const diff = Math.random() * 10;
         return Math.min(oldCompleted + diff, 100);

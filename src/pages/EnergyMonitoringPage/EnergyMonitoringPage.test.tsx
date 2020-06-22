@@ -19,6 +19,18 @@ describe('The EnergyMonitoring Page', () => {
   let waterCyclesPageInstance;
 
   beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 200
+    });
+
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 200
+    });
+
     wrapper = shallow(<EnergyMonitoringPage {...props}/>);
   });
 
@@ -30,11 +42,19 @@ describe('The EnergyMonitoring Page', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  // it('should render properly on mobile view', () => {
+  //   const resizeWindow = (x: number, y: number) => {
+  //     window.innerWidth = x;
+  //     window.innerHeight = y;
+  //     window.dispatchEvent(new Event('resize'));
+  //   };
+  //   resizeWindow(500, 300);
+  //   expect(wrapper.find('.main-subheader')).toHaveLength(1);
+  // });
+
   describe('mapStateToProps', () => {
     const state = {
-      error: {
-        error: '',
-      },
+      error: ''
     };
 
     const props = mapStateToProps(state);

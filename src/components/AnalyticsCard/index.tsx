@@ -6,7 +6,7 @@ import { AnalyticsCardProps } from './interfaces';
 // styles
 import './AnalyticsCard.scss';
 
-const AnalyticsCard: React.FunctionComponent<AnalyticsCardProps> = (props) => {
+const AnalyticsCard: React.FunctionComponent<AnalyticsCardProps> = props => {
   const {
     icon,
     mainInfo,

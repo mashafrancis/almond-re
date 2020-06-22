@@ -17,13 +17,13 @@ const http = axios.create({
   withCredentials: true,
 });
 
-http.interceptors.request.use((config) => {
+http.interceptors.request.use(config => {
   if (authService.isExpired()) authService.redirectUser();
   return config;
 });
 
 http.interceptors.response.use(
-  (response) => {
+  response => {
     const { method, url } = response.config;
     const endpoint = CacheHandler.extractUrlEndpoint(url);
 
@@ -38,7 +38,7 @@ http.interceptors.response.use(
 
     return response;
   },
-  (error) => {
+  error => {
     if (error.response.status === 500 && error.response.data.message.includes('token')) {
       authService.redirectUser();
     } else if (error.response.status === 500) {

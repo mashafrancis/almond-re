@@ -8,8 +8,7 @@ import './ToggleButton.scss';
 // interfaces
 import { ToggleButtonProps } from './interfaces';
 
-const ToggleButton = (props: ToggleButtonProps) => {
-  return (
+const ToggleButton = (props: ToggleButtonProps) => 
     <div className={props.classes}>
       <label className="switch">
         <input
@@ -17,12 +16,11 @@ const ToggleButton = (props: ToggleButtonProps) => {
           onChange={props.onChange}
           type="checkbox"
           checked={props.isChecked}
-        />
-        <span className="slider round"/>
+          />
+        <span className="slider round" />
       </label>
     </div>
-  );
-};
+  ;
 
 export default ToggleButton;
 

@@ -13,7 +13,7 @@ import {
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';
 
-const Modal: React.FunctionComponent<ModalProps> = (props) => {
+const Modal: React.FunctionComponent<ModalProps> = props => {
   const {
     isModalOpen,
     renderContent,
@@ -31,8 +31,7 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
       open={isModalOpen}
       fullScreen={fullScreen}
       onClose={onClose}
-      aria-labelledby="responsive-dialog-title"
-    >
+      aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">
         <p className="headline-3 modal-header">
           {renderHeader()}
@@ -45,28 +44,22 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
         <ActionButton
           name="Dismiss"
           handleClick={onDismiss}
-        />
-        <Button
+          />
+         <button
           className="mdc-button big-round-corner-button mdc-button--raised"
-          onClick={() => onSubmit}
-          name={submitButtonName}
-          disabled={disabled}
-        />
-        {/*<button*/}
-        {/*  className="mdc-button big-round-corner-button mdc-button--raised"*/}
-        {/*  onClick={() => onSubmit}>*/}
-        {/*      <span className="mdc-button__label">*/}
-        {/*        {submitButtonName}*/}
-        {/*      </span>*/}
-        {/*</button>*/}
-        {/*<Button*/}
-        {/*  type="button"*/}
-        {/*  name={submitButtonName}*/}
-        {/*  id="cc-roles"*/}
-        {/*  disabled={disabled}*/}
-        {/*  onClick={onSubmit}*/}
-        {/*  classes="mdc-button big-round-corner-button mdc-button--raised"*/}
-        {/*/>*/}
+          onClick={onSubmit}>
+              <span className="mdc-button__label">
+                {submitButtonName}
+              </span>
+         </button>
+        {/* <Button */}
+        {/*  type="button" */}
+        {/*  name={submitButtonName} */}
+        {/*  id="cc-roles" */}
+        {/*  disabled={disabled} */}
+        {/*  onClick={onSubmit} */}
+        {/*  classes="mdc-button big-round-corner-button mdc-button--raised" */}
+        {/* /> */}
       </DialogActions>
     </Dialog>
   );

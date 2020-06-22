@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useViewport } from "../../hooks";
+import { useViewport } from '../../hooks';
 
 // interfaces
 import { CardInfoProps } from './interfaces';
@@ -10,7 +10,7 @@ import { Add } from '@material-ui/icons';
 // styles
 import './CardInfo.scss';
 
-const CardInfo: React.FunctionComponent<CardInfoProps> = (props) => {
+const CardInfo: React.FunctionComponent<CardInfoProps> = props => {
   const {
     mainHeader,
     subHeader,
@@ -19,10 +19,10 @@ const CardInfo: React.FunctionComponent<CardInfoProps> = (props) => {
     icon
   } = props;
 
-  const cardButton = () => (
+  const cardButton = () => 
     <div className="card-content__button">
       {
-        (width > breakpoint) ?
+        width > breakpoint ?
           <button className="mdc-button mdc-button--raised" onClick={onClick}>
             <span className="mdc-button__label">{buttonName}</span>
           </button> :
@@ -30,13 +30,12 @@ const CardInfo: React.FunctionComponent<CardInfoProps> = (props) => {
             size="small"
             style={{ backgroundColor: '#1967D2', color: '#eaeaea' }}
             aria-label="add"
-            onClick={onClick}
-          >
+            onClick={onClick}>
             <Add />
           </Fab>
       }
     </div>
-  );
+  ;
 
   const { width } = useViewport();
   const breakpoint = 539;

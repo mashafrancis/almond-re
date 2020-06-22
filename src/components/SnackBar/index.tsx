@@ -32,19 +32,19 @@ export class SnackBar extends React.Component<
   render() {
     const { snack } = this.state;
     return (
-      <React.Fragment>
+      <>
         {
           snack.message
-          ? (
+          ? 
               <Snackbar
                 message={snack.message}
                 timeoutMs={8000}
                 actionText="DISMISS"
-              />
-            )
-          : (<div />)
+                />
+            
+          : <div />
         }
-      </React.Fragment>
+      </>
     );
   }
 }

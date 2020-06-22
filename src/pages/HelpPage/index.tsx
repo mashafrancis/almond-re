@@ -3,8 +3,7 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import { connect } from "react-redux";
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+import { connect } from 'react-redux';
 
 // icons
 import {
@@ -13,14 +12,15 @@ import {
 } from '@material-ui/icons';
 
 // thunks
-import { displaySnackMessage } from "@modules/snack";
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
-import { HelpPageProps } from "@pages/HelpPage/interfaces";
+import { HelpPageProps } from '@pages/HelpPage/interfaces';
 
-export const HelpPage: React.FunctionComponent<HelpPageProps> = (props) => {
-  return (
-    <React.Fragment>
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+
+export const HelpPage: React.FunctionComponent<HelpPageProps> = props => 
+    <>
       <Grid>
         <Row>
           <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -35,13 +35,12 @@ export const HelpPage: React.FunctionComponent<HelpPageProps> = (props) => {
               mainHeader="Help"
               subHeader="Get more information more about the system"
               icon={<Help className="content-icon general-info-icon" />}
-            />
+              />
           </Cell>
         </Row>
       </Grid>
-    </React.Fragment>
-  )
-}
+    </>
+  
 
 export const mapStateToProps = state => ({
   error: state.error,

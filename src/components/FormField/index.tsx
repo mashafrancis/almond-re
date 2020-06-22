@@ -11,8 +11,8 @@ import {
   InputAdornment,
   MenuItem,
   TextField
-} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
+} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // styles
 // import './FormField.scss';
@@ -54,7 +54,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
     e.preventDefault();
 
     const { required, labelText, validator = f => f, onStateChanged = f => f } = this.props;
-    const value = e.target.value;
+    const {value} = e.target;
     const name = e.target.id;
     const isEmpty = value.length === 0;
     const requiredMissing = this.state.dirty && required && isEmpty;
@@ -63,7 +63,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
 
     if (requiredMissing) {
       errors = [...errors, `${labelText} is required`];
-    } else if ('function' === typeof validator) {
+    } else if (typeof validator === 'function') {
       try {
         validator(value);
       } catch (e) {
@@ -115,8 +115,8 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
           startAdornment: <InputAdornment position="start">
             { leadingIcon }
           </InputAdornment>,
-        }}>
-      </ValidationTextField>
+        }}
+        />
       // <TextField
       //   className="mdc-text-field--fullwidth"
       //   outlined

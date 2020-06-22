@@ -2,14 +2,14 @@ import {
   LoadingError,
   LoadingRequest,
   LoadingSuccess
-} from "@modules/loading/interfaces";
+} from '@modules/loading/interfaces';
 
 import {
   LOADING_ERROR,
   LOADING_REQUEST,
   LOADING_SUCCESS
-} from "@modules/loading/types";
-import {AnyAction} from "redux";
+} from '@modules/loading/types';
+import {AnyAction} from 'redux';
 
 export const loadingRequest = (loading): LoadingRequest => ({
   loading,

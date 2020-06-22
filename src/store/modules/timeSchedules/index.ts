@@ -47,11 +47,11 @@ import {
   TOGGLE_PUMP_STATUS_REQUEST,
   TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
-import { AnyAction } from "redux";
-import { logActivity } from "@modules/activityLogs";
+import { AnyAction } from 'redux';
+import { logActivity } from '@modules/activityLogs';
 
 // helpers
-import errorOnSnack from "@utils/helpers/errorOnSnack";
+import errorOnSnack from '@utils/helpers/errorOnSnack';
 
 /**
  * Get all schedules request
@@ -262,11 +262,11 @@ export const getPumpStatusFailure = (errors): GetPumpStatusActionFailure => ({
 export const getAllSchedules = deviceId => (dispatch, getState, http) => {
   dispatch(getSchedulesRequest());
   return http.get(`/schedules?device=${deviceId}`, { cache: true })
-    .then((response) => {
+    .then(response => {
       const { data: { data } } = response;
       dispatch(getSchedulesSuccess(data));
     })
-    .catch((error) => {
+    .catch(error => {
       const { response: { data: { message } } } = error;
       dispatch(displaySnackMessage(message));
       dispatch(getSchedulesFailure(error));
@@ -282,13 +282,13 @@ export const getAllSchedules = deviceId => (dispatch, getState, http) => {
 export const addNewSchedule = schedule => (dispatch, getState, http) => {
   dispatch(addScheduleRequest());
   return http.post('schedules', schedule)
-    .then((response) => {
+    .then(response => {
       const { data: { data } } = response;
       const { data: { message } } = response;
       dispatch(addScheduleSuccess(data));
       dispatch(displaySnackMessage(message));
     })
-    .catch((error) => {
+    .catch(error => {
       errorOnSnack(error, dispatch, 'creating your schedule');
       dispatch(addScheduleFailure(error));
     });
@@ -303,12 +303,12 @@ export const addNewSchedule = schedule => (dispatch, getState, http) => {
 export const deleteSingleSchedule = id => (dispatch, getState, http) => {
   dispatch(deleteSingleScheduleRequest());
   return http.delete(`schedules/${id}`)
-    .then((response) => {
+    .then(response => {
       const { data: { message } } = response;
       dispatch(deleteSingleScheduleSuccess(id));
       dispatch(displaySnackMessage(message));
     })
-    .catch((error) => {
+    .catch(error => {
       errorOnSnack(error, dispatch, 'deleting your schedule');
       dispatch(deleteSingleScheduleFailure(error));
     });
@@ -323,12 +323,12 @@ export const deleteSingleSchedule = id => (dispatch, getState, http) => {
 export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
   dispatch(editScheduleRequest());
   return http.patch(`schedules/${id}`, schedule)
-    .then((response) => {
+    .then(response => {
       const { data: { data } } = response;
       dispatch(editScheduleSuccess(id, data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
+    .catch(error => {
       errorOnSnack(error, dispatch, 'editing your schedule');
       dispatch(editScheduleFailure(error));
     });
@@ -343,7 +343,7 @@ export const editSchedule = (id, schedule) => (dispatch, getState, http) => {
 export const togglePump = status => (dispatch, getState, http) => {
   dispatch(togglePumpStatusRequest());
   return http.patch('pump', status)
-    .then((response) => {
+    .then(response => {
       const { data: { data: { scheduleOverride: { enabled } } } } = response;
       // const data = response.data.data.scheduleOverride.enabled;
       // dispatch(getPumpStatusSuccess(data));
@@ -351,7 +351,7 @@ export const togglePump = status => (dispatch, getState, http) => {
       dispatch(logActivity(response.data.data.activityHistory));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
+    .catch(error => {
       errorOnSnack(error, dispatch, `turning pump ${status.enabled ? 'ON' : 'OFF'}`);
       dispatch(togglePumpStatusFailure(error));
     });
@@ -366,12 +366,12 @@ export const togglePump = status => (dispatch, getState, http) => {
 export const getPumpStatus = deviceId => (dispatch, getState, http) => {
   dispatch(getPumpStatusRequest());
   return http.get(`/pump?device=${deviceId}`)
-    .then((response) => {
+    .then(response => {
       const data = response.data.data[0].enabled;
       dispatch(getPumpStatusSuccess(data));
     })
-    .catch((error) => {
-      let errorMessage = 'An error occurred while fetching pump status. Please try again';
+    .catch(error => {
+      const errorMessage = 'An error occurred while fetching pump status. Please try again';
       dispatch(displaySnackMessage(errorMessage));
       dispatch(getPumpStatusFailure(error))
     });
@@ -383,18 +383,16 @@ export const getPumpStatus = deviceId => (dispatch, getState, http) => {
  *
  * @returns {Function} action type and payload
  */
-export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) => {
-  return http.patch(`schedules/${id}`, enabled)
-    .then((response) => {
+export const toggleScheduleStatus = (id, enabled) => (dispatch, getState, http) => http.patch(`schedules/${id}`, enabled)
+    .then(response => {
       dispatch(editScheduleSuccess(id, response.data.data));
       dispatch(displaySnackMessage(response.data.message));
     })
-    .catch((error) => {
+    .catch(error => {
       const { response: { data: { message } } } = error;
       dispatch(displaySnackMessage(message));
       dispatch(togglePumpStatusFailure(error));
     });
-};
 
 export const schedulesInitialState = {
   schedules: [],
@@ -470,10 +468,10 @@ export const reducer = (state: {
       return {
         ...state,
         isLoading: action.isLoading,
-        schedules: [...state.schedules].map(schedule => schedule._id === action.schedule._id ? ({
+        schedules: [...state.schedules].map(schedule => schedule._id === action.schedule._id ? {
           ...schedule,
           ...action.schedule,
-        }) : schedule),
+        } : schedule),
         errors: null,
       };
     case EDIT_SCHEDULE_FAILURE:

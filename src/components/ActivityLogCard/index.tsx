@@ -10,7 +10,7 @@ import { ActivityLogCardProps } from './interfaces';
 // styles
 import './ActivityLogCard.scss';
 
-const ActivityLogCard: React.FunctionComponent<ActivityLogCardProps> = (props) => {
+const ActivityLogCard: React.FunctionComponent<ActivityLogCardProps> = props => {
   const {
     log,
     date,

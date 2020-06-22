@@ -5,13 +5,14 @@ import {
   Cell,
   Grid,
   Row
-} from "@material/react-layout-grid";
+} from '@material/react-layout-grid';
 import {
   BlurLinearTwoTone, BlurOn, MemoryTwoTone,
   OpacityTwoTone,
   ScheduleTwoTone, Waves
-} from "@material-ui/icons";
-import { MenuContext } from "../../context/MenuContext/index";
+} from '@material-ui/icons';
+import { MenuContext } from '../../context/MenuContext/index';
+
 const AnalyticsCard = React.lazy(() => import('@components/AnalyticsCard'));
 
 const RegularUserAnalytics: React.FunctionComponent = () => {
@@ -28,7 +29,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<OpacityTwoTone className="content-icon" />}
             mainInfo="Water Level"
             subInfo="70 %"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -37,7 +38,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<BlurLinearTwoTone className="content-icon" />}
             mainInfo="Water Temperature"
             subInfo="18 &deg;C"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -46,7 +47,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<ScheduleTwoTone className="content-icon" />}
             mainInfo="Next schedule"
             subInfo="14:00"
-          />
+            />
         </Cell>
       </Row>
       <Row className="analytics-page">
@@ -57,7 +58,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<BlurOn className="content-icon" />}
             mainInfo="Air Temperature"
             subInfo="18 &deg;C"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -66,7 +67,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<Waves className="content-icon" />}
             mainInfo="Air Humidity"
             subInfo="58 %"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -75,7 +76,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             icon={<MemoryTwoTone className="content-icon" />}
             mainInfo="Power usage"
             subInfo="30 KW"
-          />
+            />
         </Cell>
       </Row>
     </Grid>

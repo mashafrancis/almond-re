@@ -5,7 +5,7 @@ import {
   Cell,
   Grid,
   Row
-} from "@material/react-layout-grid";
+} from '@material/react-layout-grid';
 import {
   AccountBalanceTwoTone,
   LibraryBooksTwoTone,
@@ -13,8 +13,9 @@ import {
   DeviceHubTwoTone,
   AllOutTwoTone,
   GroupTwoTone
-} from "@material-ui/icons";
-import { MenuContext } from "../../context/MenuContext/index";
+} from '@material-ui/icons';
+import { MenuContext } from '../../context/MenuContext/index';
+
 const AnalyticsCard = React.lazy(() => import('@components/AnalyticsCard'));
 
 const AdminAnalytics: React.FunctionComponent = () => {
@@ -31,7 +32,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<AllOutTwoTone className="content-icon" />}
             mainInfo="Devices"
             subInfo="10"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -40,7 +41,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<GroupTwoTone className="content-icon" />}
             mainInfo="People"
             subInfo="8"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -49,7 +50,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<ScheduleTwoTone className="content-icon" />}
             mainInfo="Requests"
             subInfo="30"
-          />
+            />
         </Cell>
       </Row>
       <Row className="analytics-page">
@@ -60,7 +61,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<AccountBalanceTwoTone className="content-icon" />}
             mainInfo="Sales"
             subInfo="400,000"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -69,7 +70,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<DeviceHubTwoTone className="content-icon" />}
             mainInfo="Units"
             subInfo="23"
-          />
+            />
         </Cell>
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -78,7 +79,7 @@ const AdminAnalytics: React.FunctionComponent = () => {
             icon={<LibraryBooksTwoTone className="content-icon" />}
             mainInfo="Orders"
             subInfo="3"
-          />
+            />
         </Cell>
       </Row>
     </Grid>

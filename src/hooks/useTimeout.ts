@@ -27,7 +27,7 @@ import * as React from 'react';
 
 export const useTimeout = (
   callback: () => void,
-  timeout: number = 0,
+  timeout = 0,
   { persistRenders = false } = {},
 
   _setTimeout = setTimeout,

@@ -1,7 +1,7 @@
 import { Schedule, Status } from '@modules/timeSchedules/interfaces';
 import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
-import { WaterData } from "@modules/sensorData/interfaces";
+import { WaterData } from '@modules/sensorData/interfaces';
 
 export interface WaterCyclesPageProps {
   addNewSchedule: (schedule) => Promise<any>;

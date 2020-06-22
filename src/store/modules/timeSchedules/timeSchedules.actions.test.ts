@@ -7,7 +7,7 @@ import {
   getPumpStatus,
   schedulesInitialState,
   togglePump
-} from "@modules/timeSchedules/index";
+} from '@modules/timeSchedules/index';
 
 // types
 import {
@@ -29,16 +29,16 @@ import {
   GET_PUMP_STATUS_REQUEST,
   GET_PUMP_STATUS_SUCCESS,
   GET_PUMP_STATUS_FAILURE
-} from "@modules/timeSchedules/types";
-import { DISPLAY_SNACK_MESSAGE } from "@modules/snack/types";
-import { LOG_ACTIVITY } from "@modules/activityLogs/types";
+} from '@modules/timeSchedules/types';
+import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
+import { LOG_ACTIVITY } from '@modules/activityLogs/types';
 
 // helpers
 import {
   axiosMock,
   dispatchMethodMock,
   reduxMockStore
-} from "../../../testHelpers";
+} from '../../../testHelpers';
 
 // fixtures
 import {
@@ -46,8 +46,8 @@ import {
   enabledStatus,
   schedulePayload,
   timeSchedules
-} from "@modules/timeSchedules/fixtures";
-import { activityHistory } from "@modules/activityLogs/fixtures";
+} from '@modules/timeSchedules/fixtures';
+import { activityHistory } from '@modules/activityLogs/fixtures';
 
 describe('Time schedules', () => {
   const deviceId = '5ede17f7184ccf003a2da68f';
@@ -375,7 +375,7 @@ describe('Time schedules', () => {
           schedule: timeSchedules.data[0],
           type: EDIT_SCHEDULE_SUCCESS,
           isLoading: false,
-          id: "5ede17f7184ccf003a2da68f",
+          id: '5ede17f7184ccf003a2da68f',
         },
         {
           snack: {

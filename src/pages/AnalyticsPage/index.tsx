@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import { UserContext } from "@utils/context";
+import { UserContext } from '@utils/context';
 
 // styles
 import './AnalyticsPage.scss';
@@ -15,10 +15,10 @@ import {
   AnalyticsPageProps,
   AnalyticsPageState
 } from './interfaces';
-import AdminAnalytics from "@pages/AnalyticsPage/AdminAnalytics";
-import RegularUserAnalytics from "@pages/AnalyticsPage/RegularUserAnalytics";
+import AdminAnalytics from '@pages/AnalyticsPage/AdminAnalytics';
+import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';
 
-export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = (props) => {
+export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = props => {
   const [state, setState] = React.useState<AnalyticsPageState>({
     isEditMode: false,
     schedules: [],
