@@ -11,7 +11,9 @@ describe('The App component', () => {
   describe('mapStateToProps', () => {
     const state = {
       internalServerError: '',
-      user: {},
+      user: {
+        userDetails: {}
+      },
       loading: ''
     };
 
@@ -19,7 +21,7 @@ describe('The App component', () => {
 
     it('should map app props from state', () => {
       expect(props.serverError).toEqual(state.internalServerError);
-      expect(props.user).toEqual(state.user);
+      expect(props.user).toEqual(state.user.userDetails);
       expect(props.loading).toEqual(state.loading);
     });
   });

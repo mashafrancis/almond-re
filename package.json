@@ -215,7 +215,10 @@
   "yarn-upgrade-all": {
     "ignore": [
       "husky",
-      "sass-loader"
+      "sass-loader",
+      "@material/react-list",
+      "@material/react-layout-grid",
+      "@material/react-drawer"
     ]
   },
   "lint-staged": {

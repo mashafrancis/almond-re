@@ -1,7 +1,4 @@
-import {string} from 'prop-types';
-
 class CacheHandler {
-
   // Variable to store the timestamps for recent updates to different endpoints
   static cacheInvalidationRegister = {};
 
@@ -14,8 +11,9 @@ class CacheHandler {
    * @param apiBaseUrl
    * @returns {string}
    */
-  static extractUrlEndpoint = (url: string | undefined, apiBaseUrl: string | undefined | any = process.env.ALMOND_API): string => {
-    // @ts-ignore
+  static extractUrlEndpoint = (
+    url: string | any,
+    apiBaseUrl: string | any = process.env.ALMOND_API): string => {
     let baselessUrl = url.replace(apiBaseUrl, '');
 
     if (baselessUrl === '' || baselessUrl.indexOf('?') === 1) {
@@ -24,9 +22,7 @@ class CacheHandler {
 
     baselessUrl = baselessUrl.indexOf('/') === 0 ? baselessUrl : `/${baselessUrl}`;
     const endpoints = baselessUrl.match(/\/[\w\-]+/);
-
-    // @ts-ignore
-    return endpoints && endpoints[0] || null;
+    return (endpoints && endpoints[0]) || null;
   }
 }
 

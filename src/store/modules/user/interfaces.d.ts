@@ -1,5 +1,7 @@
-import { UserRole } from '@modules/userRoles/interfaces';
+import { ResourceAccessLevel } from '@modules/userRoles/interfaces';
 import {
+  EDIT_USER_DETAILS_FAILURE,
+  EDIT_USER_DETAILS_REQUEST,
   EDIT_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILURE,
   GET_USER_DETAILS_REQUEST,
@@ -8,26 +10,24 @@ import {
 
 import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
 
-export interface GetUserDetailsActionRequest {
-  type: GET_USER_DETAILS_REQUEST;
-  isFetchingUserDetails: string;
-}
-
 export interface GetUserDetailsActionSuccess {
   userDetails: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
-  isFetchingUserDetails: string;
 }
 
 export interface GetUserDetailsActionFailure {
   type: GET_USER_DETAILS_FAILURE;
   errors: any;
-  isFetchingUserDetails: string;
 }
 
 export interface EditUserDetailsSuccess {
   userDetails: UserDetails;
   type: EDIT_USER_DETAILS_SUCCESS;
+}
+
+export interface EditUserDetailsFailure {
+  errors: any;
+  type: EDIT_USER_DETAILS_FAILURE;
 }
 
 export interface UserDetails {
@@ -38,17 +38,28 @@ export interface UserDetails {
   isVerified: boolean;
   devices: Device[];
   activeDevice: Device;
-  roles: UserRole[];
+  roles: Role[];
   permissions?: FormattedPermissions;
-  currentRole: UserRole;
+  currentRole: CurrentRole;
 }
 
 export interface Device {
   _id: string;
   id: string;
   verified: boolean;
-  isEnabled: boolean;
-  user: {
-    name: string;
-  };
+  enabled: boolean;
+  user: string;
+  updatedAt: string;
+}
+
+export interface CurrentRole {
+  _id: string,
+  title: string,
+}
+
+export interface Role {
+  description: string;
+  title: string;
+  _id: string;
+  resourceAccessLevels: ResourceAccessLevel[];
 }

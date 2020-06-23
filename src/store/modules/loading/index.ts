@@ -11,17 +11,17 @@ import {
 } from '@modules/loading/types';
 import {AnyAction} from 'redux';
 
-export const loadingRequest = (loading): LoadingRequest => ({
+export const loadingRequest = (loading: string): LoadingRequest => ({
   loading,
   type: LOADING_REQUEST
 });
 
-export const loadingSuccess = (loading): LoadingSuccess => ({
+export const loadingSuccess = (loading: string): LoadingSuccess => ({
   loading,
   type: LOADING_SUCCESS
 });
 
-export const loadingError = (loading): LoadingError => ({
+export const loadingError = (loading: string): LoadingError => ({
   loading,
   type: LOADING_ERROR
 });

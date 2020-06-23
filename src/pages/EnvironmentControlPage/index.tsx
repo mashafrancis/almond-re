@@ -22,7 +22,7 @@ import {
   EnvironmentControlPageProps,
   EnvironmentControlPageState
 } from './interfaces';
-import round from '@utils/helpers/roundDigit';
+import roundDigit from '@utils/helpers/roundDigit';
 
 // components
 const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
@@ -44,8 +44,8 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
     currentHumidity
   } = props.environmentData;
 
-  const temperature = round(currentTemperature, 1) || 0;
-  const humidity = round(currentHumidity, 1) || 0;
+  const temperature = roundDigit(currentTemperature, 1) || 0;
+  const humidity = roundDigit(currentHumidity, 1) || 0;
 
   const donutData = [
     {
@@ -80,7 +80,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
       </Row>
       <Row className="analytics-page">
         {
-          donutData.map((data, index) => 
+          donutData.map((data, index) =>
             <Cell key={index} columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
               <DashboardCard
                 classes="recent-activities-available"

@@ -3,15 +3,19 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import {displaySnackMessage} from '@modules/snack';
-import {connect} from 'react-redux';
-import GeneralCardInfo from '@components/GeneralInfoCard';
+import { connect } from 'react-redux';
 import SpaIcon from '@material-ui/icons/Spa';
 
 // interfaces
 import {SupportPageProps} from '@pages/SupportPage/interfaces';
 
-export const SupportPage: React.FunctionComponent<SupportPageProps> = props => 
+// thunk
+import { displaySnackMessage } from '@modules/snack';
+
+// components
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+
+export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
     <>
       <Grid>
         <Row>
@@ -32,7 +36,7 @@ export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
         </Row>
       </Grid>
     </>
-  
+
 
 export const mapStateToProps = state => ({
   error: state.error,

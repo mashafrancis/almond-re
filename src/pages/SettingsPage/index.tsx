@@ -15,9 +15,9 @@ import { displaySnackMessage } from '@modules/snack';
 import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props => 
+export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
     <>
       <Grid>
         <Row>
@@ -38,7 +38,7 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
         </Row>
       </Grid>
     </>
-  
+
 
 export const mapStateToProps = state => ({
   error: state.error,

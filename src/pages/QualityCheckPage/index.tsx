@@ -24,7 +24,7 @@ import {
 } from './interfaces';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralInfoCard'));
+const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 
 export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = props => {
   const [state, setState] = React.useState<QualityCheckPageState>({
