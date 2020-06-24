@@ -161,7 +161,7 @@ export const editScheduleRequest = (): EditScheduleActionRequest => ({
  * @param {Schedule} schedule
  * @returns {AddScheduleActionSuccess}
  */
-export const editScheduleSuccess = (id: string, schedule: Schedule): EditScheduleActionSuccess => ({
+export const editScheduleSuccess = (id: string, schedule: NewSchedule): EditScheduleActionSuccess => ({
   id,
   schedule,
   type: EDIT_SCHEDULE_SUCCESS,
@@ -272,8 +272,7 @@ export const addNewSchedule = (schedule: { schedule: string; }) => (
   dispatch(addScheduleRequest());
   return http.post('schedules', schedule)
     .then((response: { data: any; }) => {
-      const {data: {data}} = response;
-      const {data: {message}} = response;
+      const {data: {data, message}} = response;
       dispatch(addScheduleSuccess(data));
       dispatch(displaySnackMessage(message));
     })
@@ -317,9 +316,9 @@ export const editSchedule = (id: string, schedule: string) => (
   dispatch(editScheduleRequest());
   return http.patch(`schedules/${id}`, schedule)
     .then((response: { data: any; }) => {
-      const {data: {data}} = response;
+      const {data: {data, message}} = response;
       dispatch(editScheduleSuccess(id, data));
-      dispatch(displaySnackMessage(response.data.message));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       errorOnSnack(error, dispatch, 'editing your schedule');
@@ -383,15 +382,16 @@ export const toggleScheduleStatus = (id: string, payload: ToggleSchedulePayload)
   getState: any,
   http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: Schedule; message: string; }; }>; }
 ) => {
-  http.patch(`schedules/${id}`, payload)
+  dispatch(editScheduleRequest());
+  return http.patch(`schedules/${id}`, payload)
     .then((response: { data: { data: Schedule; message: string; }; }) => {
-      dispatch(editScheduleSuccess(id, response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+      const {data: {data, message}} = response;
+      dispatch(editScheduleSuccess(id, data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {response: {data: {message}}} = error;
-      dispatch(displaySnackMessage(message));
-      dispatch(togglePumpStatusFailure(error));
+      errorOnSnack(error, dispatch, 'changing the time schedule');
+      dispatch(editScheduleFailure(error));
     });
 };
 

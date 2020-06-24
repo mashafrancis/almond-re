@@ -18,6 +18,8 @@ import {
   USER_VERIFY_DEVICE_REQUEST,
   USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
+import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+import { CurrentRole, Role } from '@modules/user/interfaces';
 
 export interface AddDeviceActionRequest {
   type: ADD_DEVICE_REQUEST;
@@ -59,7 +61,7 @@ export interface ActivateDeviceActionRequest {
 }
 
 export interface ActivateDeviceActionSuccess {
-  activeDevice: Device;
+  activeDevice: ActivateDevice;
   type: ACTIVATE_DEVICE_SUCCESS;
   isLoading: boolean;
 }
@@ -67,6 +69,7 @@ export interface ActivateDeviceActionSuccess {
 export interface ActivateDeviceActionFailure {
   type: ACTIVATE_DEVICE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface GetAllDevicesActionRequest {
@@ -100,6 +103,7 @@ export interface DeleteDeviceActionSuccess {
 export interface DeleteDeviceActionFailure {
   type: DELETE_DEVICE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface EditDeviceActionRequest {
@@ -117,6 +121,7 @@ export interface EditDeviceActionSuccess {
 export interface EditDeviceActionFailure {
   type: EDIT_DEVICE_FAILURE;
   errors: any;
+  isLoading: boolean;
 }
 
 export interface NewDevice {
@@ -128,6 +133,19 @@ export interface VerifyDevice {
 }
 
 export interface Device {
+  id: string;
+  _id: string;
+  enabled: boolean;
+  user: User;
+  updatedAt: string;
+}
+
+interface User {
+  _id: string;
+  name: string;
+}
+
+export interface ActivateDevice {
   id: string;
   _id: string;
   verified: boolean;

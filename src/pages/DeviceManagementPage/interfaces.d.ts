@@ -1,4 +1,4 @@
-import { Device } from '@modules/user/interfaces';
+import { Device } from '@modules/device/interfaces';
 
 export interface DeviceManagementProps {
   getAllDevices: () => Promise<any>;

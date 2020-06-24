@@ -125,9 +125,12 @@ export interface GetPumpStatusActionFailure {
 
 export interface Schedule {
   id?: string;
-  _id?: string;
+  _id: string;
   schedule: string;
-  enabled?: boolean;
+  enabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user: string;
 }
 
 export interface NewSchedule {
@@ -146,10 +149,10 @@ export interface SchedulePayload {
 
 export interface ToggleSchedulePayload {
   enabled: boolean;
-  deviceId: string;
+  device: string;
 }
 
 export interface SchedulePayload {
   schedule: Schedule;
-  deviceId: string;
+  device: string;
 }

@@ -1,4 +1,4 @@
-import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package'
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
 export interface FindModuleRootResult {
   moduleRoot: string

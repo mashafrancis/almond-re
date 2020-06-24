@@ -9,6 +9,7 @@ import {
 } from './types';
 
 import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+// import { Device } from '@modules/device/interfaces';
 
 export interface GetUserDetailsActionSuccess {
   userDetails: UserDetails;
@@ -51,6 +52,11 @@ export interface Device {
   user: string;
   updatedAt: string;
 }
+
+// interface UserDevice extends Device{
+//   verified: boolean;
+//   devices: Device[]
+// }
 
 export interface CurrentRole {
   _id: string,
