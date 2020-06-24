@@ -2126,14 +2126,13 @@
     focus-trap "^3.0.0"
     react "^16.4.2"
 
-"@material/react-layout-grid@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@material/react-layout-grid/-/react-layout-grid-0.11.0.tgz#8318e26df48ba3a597f7b1abd6df5f6d04942725"
-  integrity sha512-Zj6ene48TehVz83yBHFNqCLCG4wZzoTolOOQPNIGiI+7sYRHjCbzPqIepDWMc5KRnAPjTC/zQmXUjcI9zagmDQ==
+"@material/react-layout-grid@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@material/react-layout-grid/-/react-layout-grid-0.15.0.tgz#598cdebc4c8b311a7132529327b70bc347c41a5f"
+  integrity sha512-vxQSwLddotxhzoq1gFmlvqvfsc1323dcweCAKOEurNKV1cXpgR87D3BZrugROG5a0n0tTexejmI63RpHX2CzJw==
   dependencies:
     "@material/layout-grid" "^0.41.0"
     classnames "^2.2.6"
-    react "^16.4.2"
 
 "@material/react-list@^0.11.0":
   version "0.11.0"
