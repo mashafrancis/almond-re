@@ -152,10 +152,10 @@ describe('Time Schedules reducer: ', () => {
     });
 
     it('should dispatch TOGGLE_PUMP_STATUS_SUCCESS', () => {
-      const togglePumpSuccessAction = togglePumpStatusSuccess(enabledStatus);
+      const togglePumpSuccessAction = togglePumpStatusSuccess(enabledStatus.enabled);
       const scheduleState = reducer(schedulesInitialState, togglePumpSuccessAction);
 
-      expect(scheduleState.enabled).toEqual(enabledStatus);
+      expect(scheduleState.enabled).toEqual(enabledStatus.enabled);
       expect(scheduleState.errors).toBe(null);
     });
 
@@ -176,10 +176,10 @@ describe('Time Schedules reducer: ', () => {
     });
 
     it('should dispatch GET_PUMP_STATUS_SUCCESS', () => {
-      const getPumpStatusSuccessAction = getPumpStatusSuccess(enabledStatus);
+      const getPumpStatusSuccessAction = getPumpStatusSuccess(enabledStatus.enabled);
       const scheduleState = reducer(schedulesInitialState, getPumpStatusSuccessAction);
 
-      expect(scheduleState.enabled).toEqual(enabledStatus);
+      expect(scheduleState.enabled).toEqual(enabledStatus.enabled);
       expect(scheduleState.errors).toBe(null);
     });
 

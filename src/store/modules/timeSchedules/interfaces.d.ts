@@ -95,7 +95,7 @@ export interface TogglePumpStatusActionRequest {
 }
 
 export interface TogglePumpStatusActionSuccess {
-  enabled: Status;
+  enabled: boolean;
   type: TOGGLE_PUMP_STATUS_SUCCESS;
   isLoading: boolean;
 }
@@ -112,7 +112,7 @@ export interface GetPumpStatusActionRequest {
 }
 
 export interface GetPumpStatusActionSuccess {
-  enabled: Status;
+  enabled: boolean;
   type: GET_PUMP_STATUS_SUCCESS;
   isLoading: boolean;
 }
@@ -130,12 +130,18 @@ export interface Schedule {
   enabled?: boolean;
 }
 
-export interface Status {
-  enabled: boolean;
-}
-
 export interface NewSchedule {
   schedule: string;
+}
+
+export interface ToggleSchedulePayload {
+  enabled: boolean;
+  device: string;
+}
+
+export interface SchedulePayload {
+  schedule: Schedule;
+  device: string;
 }
 
 export interface ToggleSchedulePayload {

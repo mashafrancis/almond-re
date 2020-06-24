@@ -20,10 +20,10 @@ import {
   GetPumpStatusActionSuccess,
   NewSchedule,
   Schedule,
-  Status,
   TogglePumpStatusActionFailure,
   TogglePumpStatusActionRequest,
-  TogglePumpStatusActionSuccess, ToggleSchedulePayload,
+  TogglePumpStatusActionSuccess,
+  ToggleSchedulePayload,
 } from './interfaces';
 
 // types
@@ -192,7 +192,7 @@ export const togglePumpStatusRequest = (): TogglePumpStatusActionRequest => ({
  * @returns {GetAllSchedulesActionSuccess}
  * @param enabled
  */
-export const togglePumpStatusSuccess = (enabled: Status): TogglePumpStatusActionSuccess => ({
+export const togglePumpStatusSuccess = (enabled: boolean): TogglePumpStatusActionSuccess => ({
   enabled,
   type: TOGGLE_PUMP_STATUS_SUCCESS,
   isLoading: false,
@@ -222,7 +222,7 @@ export const getPumpStatusRequest = (): GetPumpStatusActionRequest => ({
  * @returns {GetAllSchedulesActionSuccess}
  * @param enabled
  */
-export const getPumpStatusSuccess = (enabled: Status): GetPumpStatusActionSuccess => ({
+export const getPumpStatusSuccess = (enabled: boolean): GetPumpStatusActionSuccess => ({
   enabled,
   type: GET_PUMP_STATUS_SUCCESS,
   isLoading: false,
@@ -359,13 +359,13 @@ export const togglePump = (payload: ToggleSchedulePayload) => (
 export const getPumpStatus = (deviceId: string) => (
   dispatch: Dispatch,
   getState: any,
-  http: { get: (arg0: string) => Promise<{ data: { data: { enabled: any; }[]; }; }>; }
+  http: { get: (arg0: string) => Promise<{ data: { data: { enabled: boolean; }; }; }>; }
 ) => {
   dispatch(getPumpStatusRequest());
   return http.get(`/pump?device=${deviceId}`)
-    .then((response: { data: { data: { enabled: any; }[]; }; }) => {
-      const data = response.data.data[0].enabled;
-      dispatch(getPumpStatusSuccess(data));
+    .then((response: { data: { data: { enabled: boolean; }; }; }) => {
+      const { data: {data: { enabled }}} = response;
+      dispatch(getPumpStatusSuccess(enabled));
     })
     .catch((error: ErrorObject) => {
       const errorMessage = 'An error occurred while fetching pump status. Please try again';

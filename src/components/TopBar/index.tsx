@@ -89,10 +89,10 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const DeviceActiveBadge = withStyles((theme: Theme) =>
     createStyles({
       badge: {
-        // backgroundColor: '#76ff03',
-        backgroundColor: '#ff1744',
-        // color: '#76ff03',
-        color: '#ff1744',
+        backgroundColor: '#76ff03',
+        // backgroundColor: '#ff1744',
+        color: '#76ff03',
+        // color: '#ff1744',
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
         top: '50%',
         left: '-8%',
@@ -109,7 +109,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
     }),
   )(Badge);
 
-  const renderDeviceDisplay = () => 
+  const renderDeviceDisplay = () =>
     <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
          variant="dot"
@@ -124,7 +124,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
     </div>
   ;
 
-  const timeLineIcon = () => 
+  const timeLineIcon = () =>
     <StyledBadge
       overlap="circle"
       anchorOrigin={{
@@ -160,12 +160,12 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
     { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} /> }
   ];
 
-  const renderTopIcons = () => 
+  const renderTopIcons = () =>
     <div className={classes.sectionEnd}>
         {
-          topIcons.map((topIcon, index) => 
+          topIcons.map((topIcon, index) =>
             <span key={index} className="top-bar-icons">{topIcon.icon}</span>
-            
+
           )
         }
     </div>

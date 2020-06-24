@@ -134,8 +134,6 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
   //   }
   // },              [state.scheduleToEdit]);
 
-  const areEqual = (prevProps, nextProps) => prevProps.isChecked === nextProps.isChecked;
-
   const heightOfTank = 11; // units in centimeters
   const waterLevel = heightOfTank <= 11 ? props.waterData.waterLevel || heightOfTank : heightOfTank;
   const heightOfWater = roundDigit(((heightOfTank - waterLevel)/heightOfTank) * 100, 0);
@@ -169,9 +167,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
   const handleToggleButtonOnChange = event => {
     event.target.checked
-      ? props.togglePump({ enabled: true, deviceId: user.activeDevice._id })
+      ? props.togglePump({ enabled: true, device: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
-      : props.togglePump({ enabled: false, deviceId: user.activeDevice._id })
+      : props.togglePump({ enabled: false, device: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: '' }));
   };
 
@@ -179,9 +177,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
   const handleToggleStatusChange = (event, schedule) => {
     event.target.checked
-      ? props.toggleScheduleStatus(schedule._id,  { enabled: true, deviceId: user.activeDevice._id })
+      ? props.toggleScheduleStatus(schedule._id,  { enabled: true, device: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'true'))
-      :  props.toggleScheduleStatus(schedule._id,  { enabled: false, deviceId: user.activeDevice._id })
+      :  props.toggleScheduleStatus(schedule._id,  { enabled: false, device: user.activeDevice._id })
         .then(() => window.localStorage.setItem('checked', 'false'));
   };
 
@@ -256,7 +254,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
     const schedule = {
       schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
-      deviceId: user.activeDevice._id,
+      device: user.activeDevice._id,
     };
 
     isEditMode
@@ -396,7 +394,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
             actionItem={
               <PumpSwitch
                 className="manual-override"
-                onClick={() => handleClick(true)}
+                onChange={e => handleToggleButtonOnChange(e)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
