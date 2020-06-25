@@ -1,6 +1,3 @@
-export const GET_ALL_PEOPLE_REQUEST = 'almond/people/GET_ALL_PEOPLE_REQUEST';
-export type GET_ALL_PEOPLE_REQUEST = typeof GET_ALL_PEOPLE_REQUEST;
-
 export const GET_ALL_PEOPLE_SUCCESS = 'almond/people/GET_ALL_PEOPLE_SUCCESS';
 export type GET_ALL_PEOPLE_SUCCESS = typeof GET_ALL_PEOPLE_SUCCESS;
 

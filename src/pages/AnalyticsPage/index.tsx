@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 
 // styles
 import './AnalyticsPage.scss';

@@ -2,19 +2,28 @@ module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
   roots: [
-    '<rootDir>/src'
+    '<rootDir>/src',
   ],
   globals: {
     'ts-jest': {
-      babelConfig: true,
+      babelConfig:
+        {
+          env:
+            {
+              test:
+                {
+                  plugins: ['dynamic-import-node'],
+                },
+            },
+        },
       tsConfig: '<rootDir>/tsconfig.json',
-    }
+    },
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     // '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js',
     // "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/@material-ui/core/esm",
-    "^.+\\.[t|j]sx?$": "babel-jest"
+    '^.+\\.[t|j]sx?$': 'babel-jest',
   },
   testRegex: '(roots/.*|(\\.|/)(test))\\.(ts|tsx)?$',
   moduleFileExtensions: [
@@ -23,14 +32,14 @@ module.exports = {
     'js',
     'jsx',
     'json',
-    'node'
+    'node',
   ],
   coverageReporters: [
     'html',
     'json',
     'lcov',
     'text',
-    'clover'
+    'clover',
   ],
   modulePathIgnorePatterns: ['<rootDir>/node_modules'],
   moduleNameMapper: {
@@ -48,11 +57,11 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/interface.d.ts', '!src/**/*interfaces.d.ts'],
   coverageThreshold: {
     global: {
-      'branches': 30,
-      'functions': 20,
-      'lines': 40,
-      'statements': 40
-    }
+      'branches': 45,
+      'functions': 50,
+      'lines': 70,
+      'statements': 65,
+    },
   },
   setupFiles: [
     'jest-canvas-mock',
@@ -63,7 +72,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules',
     '<rootDir>/src/index.tsx',
-    'src/store/index.tsx|rootReducer.ts'
+    'src/store/index.tsx|rootReducer.ts',
   ],
   snapshotSerializers: ['enzyme-to-json/serializer'],
   setupFilesAfterEnv: [
@@ -72,8 +81,8 @@ module.exports = {
   ],
   testEnvironment: 'node',
   transformIgnorePatterns: [
-    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-    "^.+\\.module\\.(css|sass|scss)$",
-    "node_modules/(?!(@material-ui)/)"
-  ]
+    '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+    '^.+\\.module\\.(css|sass|scss)$',
+    'node_modules/(?!(@material-ui)/)',
+  ],
 };

@@ -2,19 +2,15 @@ import * as firebase from 'firebase/app';
 import { getFirebase } from 'react-redux-firebase';
 import {
   GetEnvironmentDataFailure,
-  GetEnvironmentDataRequest,
   GetEnvironmentDataSuccess,
   GetWaterDataFailure,
-  GetWaterDataRequest,
   GetWaterDataSuccess
 } from '@modules/sensorData/interfaces';
 
 import {
   GET_ENVIRONMENT_DATA_FAILURE,
-  GET_ENVIRONMENT_DATA_REQUEST,
   GET_ENVIRONMENT_DATA_SUCCESS,
   GET_WATER_DATA_FAILURE,
-  GET_WATER_DATA_REQUEST,
   GET_WATER_DATA_SUCCESS
 } from '@modules/sensorData/types';
 
@@ -25,10 +21,6 @@ import {
 } from '@modules/loading';
 import { AnyAction } from 'redux';
 
-export const getEnvironmentDataRequest = (): GetEnvironmentDataRequest => ({
-  type: GET_ENVIRONMENT_DATA_REQUEST
-});
-
 export const getEnvironmentDataSuccess = (environmentData: any): GetEnvironmentDataSuccess => ({
   environmentData,
   type: GET_ENVIRONMENT_DATA_SUCCESS
@@ -37,10 +29,6 @@ export const getEnvironmentDataSuccess = (environmentData: any): GetEnvironmentD
 export const getEnvironmentDataFailure = (errors: any): GetEnvironmentDataFailure => ({
   errors,
   type: GET_ENVIRONMENT_DATA_FAILURE
-});
-
-export const getWaterDataRequest = (): GetWaterDataRequest => ({
-  type: GET_WATER_DATA_REQUEST
 });
 
 export const getWaterDataSuccess = (waterData: any): GetWaterDataSuccess => ({
@@ -92,38 +80,32 @@ export const getWaterData = () => (dispatch: any, getState: any, getFirebase: an
     })
 }
 
-const environmentDataInitialState = {
+export const sensorDataInitialState = {
   environmentData: [],
   waterData: [],
   errors: null
 }
 
-const reducer = (state: {
+export const reducer = (state: {
   environmentData: any[], waterData: any[], errors: null
-} = environmentDataInitialState, action: AnyAction) => {
+} = sensorDataInitialState, action: AnyAction) => {
   switch (action.type) {
-    case GET_ENVIRONMENT_DATA_REQUEST:
-      return {
-        ...state,
-      };
     case GET_ENVIRONMENT_DATA_SUCCESS:
       return {
         ...state,
         environmentData: action.environmentData,
+        errors: null
       };
     case GET_ENVIRONMENT_DATA_FAILURE:
       return {
         ...state,
         errors: action.errors
       };
-    case GET_WATER_DATA_REQUEST:
-      return {
-        ...state,
-      }
     case GET_WATER_DATA_SUCCESS:
       return {
         ...state,
         waterData: action.waterData,
+        errors: null
       }
     case GET_WATER_DATA_FAILURE:
       return {

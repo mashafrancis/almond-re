@@ -3,14 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import thunk from 'redux-thunk';
-import { getFirebase } from 'react-redux-firebase';
+// import { getFirebase } from 'react-redux-firebase';
 
 import cacheAxiosInstance from '@utils/cacheAxiosInstance';
 import http from '@utils/helpers/http';
 
 import rootReducer from './rootReducer';
 
-const initialState = {};
 // default cache ttl is set to 20 minutes
 const cachedHttp = cacheAxiosInstance(http, 1200000);
 
@@ -19,7 +18,7 @@ const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
 const reduxMiddleware = [
   thunk.withExtraArgument(cachedHttp),
-  thunk.withExtraArgument(getFirebase)
+  // thunk.withExtraArgument(getFirebase)
 ]
 
 const devMiddleware = composeEnhancers(
@@ -36,7 +35,7 @@ const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prod
 
 const store = createStore(
   rootReducer,
-  initialState,
+  {},
   middleware
 );
 

@@ -152,10 +152,15 @@ describe('Device reducer', () => {
     });
 
     it('should dispatch DELETE_DEVICE_SUCCESS', () => {
-      const deleteDeviceSuccessAction = deleteSingleDeviceSuccess(deviceIdPayload.id);
-      const deviceState = reducer(deviceInitialState, deleteDeviceSuccessAction);
+      const deviceInitialState = {
+        devices: devices.data,
+      };
+
+      const deleteDeviceSuccessAction = deleteSingleDeviceSuccess('5dfa0dcd53890575b993eb74');
+      const deviceState = reducer(deviceInitialState as any, deleteDeviceSuccessAction);
 
       expect(deviceState.isLoading).toBeFalsy();
+      expect(deviceState.devices.length).toBe(0);
       expect(deviceState.errors).toBe(null);
     });
 
@@ -178,10 +183,21 @@ describe('Device reducer', () => {
     });
 
     it('should dispatch EDIT_DEVICE_SUCCESS', () => {
-      const editDeviceSuccessAction = editDeviceSuccess(id, devicePayload);
-      const deviceState = reducer(deviceInitialState, editDeviceSuccessAction);
+      const deviceInitialState = {
+        devices: devices.data,
+      };
+
+      const editDevicePayload = {
+        _id: '5dfa0dcd53890575b993eb74',
+        id: 'TEST_EDITED',
+      };
+
+      const editDeviceSuccessAction = editDeviceSuccess(id, editDevicePayload);
+      const deviceState = reducer(deviceInitialState as any, editDeviceSuccessAction);
+      const updatedDevice = deviceState.devices.find(device => device._id === editDevicePayload._id);
 
       expect(deviceState.isLoading).toBeFalsy();
+      expect(updatedDevice.id).toBe('TEST_EDITED');
       expect(deviceState.errors).toBe(null);
     });
 

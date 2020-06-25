@@ -14,16 +14,15 @@ import http from '@utils/helpers/http';
 
 import reducer from './store/rootReducer';
 
-const tokenString = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VySW5mbyI6
-eyJpZCI6Ii1MTWJTR3A2UnZoUl9BOV8xQXJJIiwiZmlyc3RfbmFtZSI6Ikl2ZXJlbiIsImxhc3Rfbm
-FtZSI6IlNoYWd1eSIsImZpcnN0TmFtZSI6Ikl2ZXJlbiIsImxhc3ROYW1lIjoiU2hhZ3V5IiwiZW1ha
-WwiOiJpdmVyZW4uc2hhZ3V5QGFuZGVsYS5jb20iLCJuYW1lIjoiSXZlcmVuIFNoYWd1eSIsInBpY3R1
-cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLWpndU9lMnJrbnkwL0FBQUFBQUF
-BQUFJL0FBQUFBQUFBQUFjL2VWclJPa3Atei1VL3Bob3RvLmpwZz9zej01MCIsInJvbGVzIjp7IlRlY2
-hub2xvZ3kiOiItS1hIN2lNRTRlYk1FWEFFYzdIUCIsIkFuZGVsYW4iOiItS2lpaGZab3NlUWVxQzZiV
-1RhdSJ9fSwiaWF0IjoxNTM4NzAxNjczLCJleHAiOjMxNTM2MDAwMDAwLCJhdWQiOiJhbmRlbGEuY29t
-IiwiaXNzIjoiYWNjb3VudHMuYW5kZWxhLmNvbSIsImp0aSI6IjJjMTUwNDdkLTk4NmMtNGMwNC04OTc
-wLTY2OWY0MmEwZWVhMCJ9.snFzv7A7XYxedbnMD_cQMvBICXIXgWDMDf7KVCW2pis`;
+const tokenString = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJy
+b2xlIjp7IlVzZXIiOiI1ZTQ3MDNkNjJmYWVlNjFkOGVkZTJkNjUiLCJBZG1pbiI6IjVlNTU1ODAxND
+Y1Y2EzMDFiMTE0M2I5MCJ9LCJfaWQiOiI1ZWYzNTlhMjE3YjE5NzkyYTNmMTlkZGMiLCJuYW1lIjoi
+QWxtb25kIEZyb3lvIiwicGhvdG8iOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS
+0vQU9oMTRHaVVEcExBZ1YweHJNNUpmVU1qR1BKWEZyc0tCSmQydDFyN3VScVIiLCJlbWFpbCI6ImFs
+bW9uZC5mcm95b0BnbWFpbC5jb20iLCJpc1ZlcmlmaWVkIjp0cnVlLCJhY3RpdmVEZXZpY2UiOiI1ZT
+RhNTdmZmEwNGE2ZDg0NDViNTg4NWIifSwiaWF0IjoxNTkzMDc2MDczMDY2LCJleHAiOjE1OTgyNjAw
+NzMuMDY2LCJpc3MiOiJhbG1vbmQuY29tIiwiYXVkIjoiYWxtb25kIHVzZXJzIn0.llxSHcSC--c4rT
+vIGLDNQJjUmQnboATSeIErNP_cWFs`;
 
 const expiredTokenString = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VySW5mby
 I6eyJpZCI6Ii1MTWJTR3A2UnZoUl9BOV8xQXJJIiwiZmlyc3RfbmFtZSI6Ikl2ZXJlbiIsImxhc3Rfb
@@ -48,8 +47,8 @@ export const expiredToken = expiredTokenString.replace(/(\r\n|\n|\r)/gm, '');
 export const mockStore = (extraArgument: {}, initialState = {}) => createStore(
   reducer,
   initialState,
-  applyMiddleware(thunk.withExtraArgument(extraArgument)
-));
+  applyMiddleware(thunk.withExtraArgument(extraArgument),
+  ));
 
 /**
  * Mock for axios request.
@@ -71,16 +70,16 @@ export const axiosMock = (url, response, resolve = true) => new Proxy({}, {
 export const reduxMockStore = (mock = axiosMock('', {}), initialState = {}) =>
   configureMockStore([thunk.withExtraArgument(mock)])(initialState);
 
-export const mountWithRedux = (
+export const mountWithRedux: any = (
   ui,
   {
     initialState = {},
     extraArgument = {},
     store = mockStore(extraArgument, initialState),
-  } = {}
+  } = {},
 ) => ({
   store,
-  wrapper: mount(<Provider store={store}>{ ui }</Provider>),
+  wrapper: mount(<Provider store={store}>{ui}</Provider>),
 });
 
 /**
@@ -186,5 +185,5 @@ export const errorMessage = {
       message: 'Errored schedule',
     },
     status: 400,
-  }
+  },
 };

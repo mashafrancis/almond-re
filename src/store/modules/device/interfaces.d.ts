@@ -113,7 +113,7 @@ export interface EditDeviceActionRequest {
 
 export interface EditDeviceActionSuccess {
   id: string;
-  device: NewDevice;
+  device: { id: string };
   type: EDIT_DEVICE_SUCCESS;
   isLoading: boolean;
 }

@@ -4,18 +4,10 @@ import * as React from 'react';
 import {
   Container,
   Grid,
-  BottomNavigation,
-  BottomNavigationAction,
   InputAdornment,
   TextField
 } from '@material-ui/core';
 import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
-import {
-  ArrowForward,
   PhonelinkSetupSharp
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
@@ -28,12 +20,13 @@ import NavigationHeader from '@components/NavigationHeader';
 import { verifyUserDevice } from '@modules/device';
 import { displaySnackMessage } from '@modules/snack';
 import { getUserDetails } from '@modules/user';
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './EnterDeviceIdPage.scss';
+import useStyles from '@pages/EnterDeviceIdPage/styles';
 
 // interfaces
 import {
@@ -56,7 +49,6 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
   const onSubmit = () => {
     const device = { id: deviceId };
-
     setState({ ...state, isLoading: true });
 
     props.verifyUserDevice(device)
@@ -66,31 +58,6 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
         window.location.replace('/dashboard');
       });
   };
-
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        '& input:valid + fieldset': {
-          borderColor: '#1967d2',
-        },
-        '& input:valid:focus + fieldset': {
-          borderLeftWidth: 6,
-          borderColor: '#1967d2',
-          padding: '4px !important', // override inline-style
-        },
-      },
-      margin: {
-        margin: theme.spacing(1),
-      },
-      bottom: {
-        position: 'fixed',
-        bottom: 0,
-        right: 0,
-      },
-    })
-  );
 
   const classes = useStyles(props);
   const { activeDevice } = user;

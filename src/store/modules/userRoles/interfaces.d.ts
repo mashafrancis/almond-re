@@ -1,8 +1,14 @@
 import {
+  CREATE_USER_ROLES_FAILURE,
+  CREATE_USER_ROLES_REQUEST,
   CREATE_USER_ROLES_SUCCESS,
+  DELETE_USER_ROLES_FAILURE,
   DELETE_USER_ROLES_SUCCESS,
-  EDIT_USER_ROLES_SUCCESS, GET_USER_ROLES_FAILURE, GET_USER_ROLES_REQUEST,
-  GET_USER_ROLES_SUCCESS,
+  DELETE_USER_ROLES_REQUEST,
+  EDIT_USER_ROLES_SUCCESS,
+  GET_USER_ROLES_FAILURE,
+  GET_USER_ROLES_REQUEST,
+  GET_USER_ROLES_SUCCESS, EDIT_USER_ROLES_REQUEST, EDIT_USER_ROLES_FAILURE,
 } from './types';
 
 export interface GetUserRolesActionRequest {
@@ -11,7 +17,7 @@ export interface GetUserRolesActionRequest {
 }
 
 export interface GetUserRolesActionSuccess {
-  userRoles: UserRole[];
+  roles: UserRole[];
   permissions?: Permission;
   resources?: Resource;
   isLoading: boolean;
@@ -24,20 +30,56 @@ export interface GetUserRolesActionFailure {
   errors: any;
 }
 
+export interface CreateUserRolesActionRequest {
+  type: CREATE_USER_ROLES_REQUEST;
+  isLoading: boolean;
+}
+
 export interface CreateUserRolesActionSuccess {
   type: CREATE_USER_ROLES_SUCCESS;
-  userRole: UserRole;
+  role: UserRole;
+  isLoading: boolean;
 }
 
-export interface UserDeleteRolesSuccess {
-  id: string;
+export interface CreateUserRolesActionFailure {
+  type: CREATE_USER_ROLES_FAILURE;
+  errors: any;
+  isLoading: boolean;
+}
+
+export interface DeleteUserRolesRequest {
+  type: DELETE_USER_ROLES_REQUEST;
+  isLoading: boolean;
+}
+
+export interface DeleteUserRolesSuccess {
   type: DELETE_USER_ROLES_SUCCESS;
+  id: string;
+  isLoading: boolean;
 }
 
-export interface UserEditRolesSuccess {
+export interface DeleteUserRolesFailure {
+  type: DELETE_USER_ROLES_FAILURE;
+  errors: any;
+  isLoading: boolean;
+}
+
+export interface EditUserRolesRequest {
+  type: EDIT_USER_ROLES_REQUEST;
+  isLoading: boolean;
+}
+
+export interface EditUserRolesSuccess {
   id: string;
-  userRole: UserRole;
+  role: UserRole;
   type: EDIT_USER_ROLES_SUCCESS;
+  isLoading: boolean;
+}
+
+export interface EditUserRolesFailure {
+  type: EDIT_USER_ROLES_FAILURE;
+  isLoading: boolean;
+  errors: any;
 }
 
 export interface Resource {

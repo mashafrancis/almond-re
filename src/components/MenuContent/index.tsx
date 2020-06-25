@@ -16,7 +16,7 @@ import List, {
 
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
 import { MenuContext } from '@context/MenuContext';
 
@@ -28,7 +28,7 @@ import '@pages/DashboardContainer/DashboardNavBar.scss';
 
 const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
 
-const mobileHeader = (name, photo) => 
+const mobileHeader = (name, photo) =>
   <div className="header-image">
     <span className="mini-menu__image">
     <img
@@ -41,7 +41,7 @@ const mobileHeader = (name, photo) =>
 </div>
 ;
 
-const mobileDrawerHeader = (setOpen, name, photo, viewWidth) => 
+const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
   <>
     <DrawerHeader>
       <div className="drawer-logo">
@@ -55,7 +55,7 @@ const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
   </>
   ;
 
-const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth) => 
+const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth) =>
   <>
     <ListGroup>
       {viewWidth && <ListDivider tag="div" />}
@@ -63,9 +63,9 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
         singleSelection
         selectedIndex={selectedIndex.item}>
         {
-          checkIsAdmin().map((group, groupIndex) => 
+          checkIsAdmin().map((group, groupIndex) =>
             <React.Fragment key={groupIndex} >
-              {group.map((item, itemIndex) => 
+              {group.map((item, itemIndex) =>
                 <ListItem
                   key={`${groupIndex}.${itemIndex}`}
                   className={selectedIndex.group === groupIndex && selectedIndex.item === itemIndex ? 'mdc-list-item--selected' : ''}
@@ -80,7 +80,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
               <ListDivider tag="div" />
               {groupIndex === 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
             </React.Fragment>
-            
+
           )
         }
       </List>

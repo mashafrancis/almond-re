@@ -29,7 +29,7 @@ describe('CacheHandler class', () => {
     it('should return null if the url supplied is invalid', () => {
       const address = '//';
 
-      expect(CacheHandler.extractUrlEndpoint(address)).toBe(null);
+      expect(CacheHandler.extractUrlEndpoint(address)).toBe('');
     });
   });
 });

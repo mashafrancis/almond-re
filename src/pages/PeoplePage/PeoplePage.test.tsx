@@ -44,7 +44,7 @@ describe('The People Page', () => {
         people: []
       },
       userRoles: {
-        data: []
+        roles: []
       }
     };
 
@@ -52,7 +52,7 @@ describe('The People Page', () => {
 
     it('should map people page props from state', () => {
       expect(props.people).toEqual(state.people.people);
-      expect(props.roles).toEqual(state.userRoles.data);
+      expect(props.roles).toEqual(state.userRoles.roles);
     });
   });
 

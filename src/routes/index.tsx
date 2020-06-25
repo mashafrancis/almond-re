@@ -5,12 +5,20 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages and components
-const AuthenticatedRoute = React.lazy(() => import('@components/AuthenticatedRoute'));
-const PageNotFound = React.lazy(() => import('@components/PageNotFound'));
-const Unauthorized = React.lazy(() => import('@components/UnauthorizedUserModal'));
-const DashboardContainer = React.lazy(() => import('@pages/DashboardContainer'));
-const EnterDeviceIdPage = React.lazy(() => import('@pages/EnterDeviceIdPage'));
-const HomePage = React.lazy(() => import('@pages/HomePage'));
+import HomePage from '@pages/HomePage';
+import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
+import AuthenticatedRoute from '@components/AuthenticatedRoute';
+import DashboardContainer from '@pages/DashboardContainer';
+import PageNotFound from '@components/PageNotFound';
+import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
+
+// pages and components
+// const AuthenticatedRoute = React.lazy(() => import('@components/AuthenticatedRoute'));
+// const PageNotFound = React.lazy(() => import('@components/PageNotFound'));
+// const Unauthorized = React.lazy(() => import('@components/UnauthorizedUserModal'));
+// const DashboardContainer = React.lazy(() => import('@pages/DashboardContainer'));
+// const EnterDeviceIdPage = React.lazy(() => import('@pages/EnterDeviceIdPage'));
+// const HomePage = React.lazy(() => import('@pages/HomePage'));
 
 const Routes = () =>
   <Switch>
@@ -21,7 +29,7 @@ const Routes = () =>
       path="/dashboard"
       authorize="analytics:view"
       component={DashboardContainer}
-      fallbackView={<Unauthorized isModalOpen={true} />}
+      // fallbackView={<UnauthorizedUserModal isModalOpen={true} />}
       />
     <Route path="/404" component={PageNotFound} />
     <Redirect to="/404" />

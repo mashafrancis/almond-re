@@ -4,11 +4,11 @@ import * as Cookies from 'js-cookie';
 // helpers
 import store from '../../store';
 import { axiosMockAdapter, expiredToken, token } from '../../testHelpers';
-import { authService } from '../auth';
-import CacheHandler from './CacheHandler';
-import http from './http';
+import { authService } from '@utils/auth';
+import CacheHandler from '@utils/helpers/CacheHandler';
+import http from '@utils/helpers/http';
 
-describe.skip('The http axios instance helper function', () => {
+describe('The http axios instance helper function', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'location', {
       writable: true,
@@ -54,14 +54,14 @@ describe.skip('The http axios instance helper function', () => {
     Cookies.set('jwt-token', token);
     axiosMockAdapter(response, null);
 
-    http('/dashboard').then(() => {
+    http('/my-device').then(() => {
       expect(authService.logoutUser).not.toHaveBeenCalled();
       expect(window.location.replace).not.toHaveBeenCalled();
       done();
     });
   });
 
-  it('should log user out and redirect user to root (/) when the token is expired', done => {
+  it.skip('should log user out and redirect user to root (/) when the token is expired', done => {
     Cookies.set('jwt-token', expiredToken);
     axiosMockAdapter(response, null);
 
@@ -110,17 +110,17 @@ describe.skip('The http axios instance helper function', () => {
       expect(CacheHandler.cacheInvalidationRegister).toHaveProperty('/test-endpoint');
     });
 
-    it('should update the request timestamp for asset endpoint when a non-get request is made', () => {
+    it('should update the request timestamp for verify device endpoint when a non-get request is made', () => {
       const interceptor = <any> http.interceptors.response;
 
       interceptor.handlers[0].fulfilled({
         config: {
           method: 'post',
-          url: '/users',
+          url: '/my-device',
         },
       });
 
-      expect(CacheHandler.cacheInvalidationRegister).toHaveProperty('/users-categories');
+      expect(CacheHandler.cacheInvalidationRegister).toHaveProperty('/my-device');
     });
   });
 });

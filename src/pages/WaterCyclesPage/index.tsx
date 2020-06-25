@@ -45,7 +45,7 @@ import {
 } from '@modules/timeSchedules';
 import { getWaterData } from '@modules/sensorData';
 import { MenuContext } from '@context/MenuContext';
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 
 // utils
 import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';

@@ -1,11 +1,16 @@
 // third-party libraries
 import { displayInternalServerErrorMessage } from '@modules/internalServerError';
 import CacheHandler from '@utils/helpers/CacheHandler';
-import axios from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { setupCache } from 'axios-cache-adapter'
 
 // helpers
 import { authService } from '@utils/auth';
-import store from '../../store';
+import store from '../../store/index';
+
+const cacheAdapter = setupCache({
+  maxAge: 15 * 60 * 1000
+});
 
 const token = authService.getToken();
 
@@ -15,33 +20,36 @@ const http = axios.create({
     Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
+  // adapter: cacheAdapter.adapter,
 });
 
 http.interceptors.request.use(config => {
-  if (authService.isExpired()) authService.redirectUser();
+  if (authService.isExpired()) {
+    return authService.redirectUser();
+  }
   return config;
 });
 
 http.interceptors.response.use(
-  response => {
+  (response: AxiosResponse<any>): AxiosResponse<any> => {
     const { method, url } = response.config;
-    const endpoint: string = CacheHandler.extractUrlEndpoint(url);
+    const endpoint: string = CacheHandler.extractUrlEndpoint(url ?? '');
 
     if (method !== 'get' && endpoint) {
       const requestTimestamp = (new Date).getTime();
       CacheHandler.cacheInvalidationRegister[endpoint] = requestTimestamp;
 
-      if (endpoint === '/roles') {
+      if (endpoint === '/dashboard') {
         CacheHandler.cacheInvalidationRegister['/dashboard'] = requestTimestamp;
       }
     }
 
     return response;
   },
-  error => {
-    if (error.response.status === 500 && error.response.data.message.includes('token')) {
+  (error: AxiosError<any>) => {
+    if (error.response?.status === 500 && error.response?.data.message.includes('token')) {
       authService.redirectUser();
-    } else if (error.response.status === 500) {
+    } else if (error.response?.status === 500) {
       store.dispatch(displayInternalServerErrorMessage(true));
     }
 
