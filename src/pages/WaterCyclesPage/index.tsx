@@ -165,7 +165,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
     },
   })(Switch);
 
-  const handleToggleButtonOnChange = event => {
+  const handleTogglePumpOnChange = event => {
     event.target.checked
       ? props.togglePump({ enabled: true, device: user.activeDevice._id })
         .then(() => setState({ ...state, statusClass: 'tbl-status' }))
@@ -176,11 +176,8 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
   const handleClick = message => mqtt.publish('almond/pump', message)
 
   const handleToggleStatusChange = (event, schedule) => {
-    event.target.checked
-      ? props.toggleScheduleStatus(schedule._id,  { enabled: true, device: user.activeDevice._id })
-        .then(() => window.localStorage.setItem('checked', 'true'))
-      :  props.toggleScheduleStatus(schedule._id,  { enabled: false, device: user.activeDevice._id })
-        .then(() => window.localStorage.setItem('checked', 'false'));
+    const { checked } = event.target;
+    props.toggleScheduleStatus(schedule._id,  { enabled: checked, device: user.activeDevice._id });
   };
 
   const handleAddTimeSchedule = value => setState({ ...state, selectedTimeSchedule: value });
@@ -394,7 +391,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
             actionItem={
               <PumpSwitch
                 className="manual-override"
-                onChange={e => handleToggleButtonOnChange(e)}
+                onChange={e => handleTogglePumpOnChange(e)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
                 />

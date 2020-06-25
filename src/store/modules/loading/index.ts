@@ -28,7 +28,7 @@ export const loadingError = (loading: string): LoadingError => ({
 
 export const loadingInitialState = 'idle';
 
-const reducer = (state: string = loadingInitialState, action: AnyAction) => {
+export const reducer = (state: string = loadingInitialState, action: AnyAction) => {
   switch (action.type) {
     case LOADING_REQUEST:
       return action.loading;

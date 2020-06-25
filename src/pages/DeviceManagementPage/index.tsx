@@ -34,6 +34,7 @@ import {
   DeviceManagementProps,
   DeviceManagementState
 } from './interfaces';
+import { Device } from '@modules/device/interfaces';
 
 // components
 const CardInfo = React.lazy(() => import('@components/CardInfo'));
@@ -159,7 +160,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       : props.addNewDevice(device).then(closeDeviceModal);
   };
 
-  const ActionButtons = device => 
+  const ActionButtons = device =>
     <div key={device} className="action-buttons">
       <span id={device} onClick={ showDeviceModal('Edit')}>
         <h5 id={device} className="action-buttons__edit">Edit</h5>
@@ -228,7 +229,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
             variant="outlined"
             onChange={handleValueChange}
             InputProps={{
-              startAdornment: 
+              startAdornment:
                 <InputAdornment position="start">
                   <PhonelinkSetupSharp />
                 </InputAdornment>
@@ -240,7 +241,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     );
   };
 
-  const AddEditDeviceModal = () => 
+  const AddEditDeviceModal = () =>
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderDeviceForm()}
@@ -252,7 +253,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       />
   ;
 
-  const DeleteDeviceModal = () => 
+  const DeleteDeviceModal = () =>
     <Modal
       isModalOpen={state.isDeleteModal}
       renderContent={() => <p className="delete-modal-content">Do you confirm deletion of device?</p>}

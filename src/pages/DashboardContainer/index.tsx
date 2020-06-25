@@ -266,7 +266,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </TextField>
   ;
 
-  const SelectDeviceModal = (devices: Device[]) =>
+  const SelectDeviceModal = devices =>
     <Modal
       isModalOpen={isSelectDeviceModalOpen}
       renderHeader={() => 'Select the device ID'}

@@ -19,6 +19,11 @@ Object.defineProperty(window, 'innerWidth', {
   value: 200
 });
 
+// Object.defineProperty(window, 'replace', {
+//   configurable: true,
+// });
+// window.location.replace = jest.fn();
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({

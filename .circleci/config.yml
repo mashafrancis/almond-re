@@ -1,6 +1,6 @@
 defaults: &defaults
   docker:
-    - image: circleci/node:14.3.0
+    - image: circleci/node:14.4.0
   working_directory: ~/almond-re
 
 cmd_install_dependencies: &cmd_install_dependencies

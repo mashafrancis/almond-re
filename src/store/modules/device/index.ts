@@ -1,7 +1,9 @@
 // thunks
 import {
+  ActivateDevice,
   ActivateDeviceActionFailure,
   ActivateDeviceActionRequest,
+  ActivateDeviceActionSuccess,
   AddDeviceActionFailure,
   AddDeviceActionRequest,
   AddDeviceActionSuccess,
@@ -19,7 +21,7 @@ import {
   UserVerifyDeviceActionFailure,
   UserVerifyDeviceActionRequest,
   UserVerifyDeviceActionSuccess,
-  VerifyDevice
+  VerifyDevice,
 } from '@modules/device/interfaces';
 
 import {
@@ -88,7 +90,6 @@ export const verifyDeviceRequest = (): UserVerifyDeviceActionRequest => ({
 
 /**
  * Add new device success
- *
  * @returns {AddDeviceActionSuccess}
  * @param id
  */
@@ -122,8 +123,7 @@ export const activateDeviceRequest = (): ActivateDeviceActionRequest => ({
  * @returns {AddDeviceActionSuccess}
  * @param activeDevice
  */
-export const activateDeviceSuccess = (activeDevice: Device):
-  { isLoading: boolean; activeDevice: Device; type: string } => ({
+export const activateDeviceSuccess = (activeDevice: ActivateDevice): ActivateDeviceActionSuccess => ({
   activeDevice,
   type: ACTIVATE_DEVICE_SUCCESS,
   isLoading: false,
@@ -131,11 +131,12 @@ export const activateDeviceSuccess = (activeDevice: Device):
 
 /**
  * Activate device failure
- * @returns {UserVerifyDeviceActionFailure}
+ * @returns {ActivateDeviceActionFailure}
  */
 export const activateDeviceFailure = (errors: any): ActivateDeviceActionFailure => ({
   errors,
   type: ACTIVATE_DEVICE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -195,6 +196,7 @@ export const deleteSingleDeviceSuccess = (id: string): DeleteDeviceActionSuccess
 export const deleteSingleDeviceFailure = (errors: any): DeleteDeviceActionFailure => ({
   errors,
   type: DELETE_DEVICE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -227,6 +229,7 @@ export const editDeviceSuccess = (id: string, device: NewDevice): EditDeviceActi
 export const editDeviceFailure = (errors: any): EditDeviceActionFailure => ({
   errors,
   type: EDIT_DEVICE_FAILURE,
+  isLoading: false,
 });
 
 /**
@@ -242,13 +245,14 @@ export const addNewDevice = (device: { id: string; }) => (
   dispatch(addDeviceRequest());
   return http.post('devices', device)
     .then((response: { data: { data: NewDevice; message: string; }; }) => {
-      dispatch(addDeviceSuccess(response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+      const {data: {data, message}} = response;
+      dispatch(addDeviceSuccess(data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(addDeviceFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(addDeviceFailure(error));
     });
 };
 
@@ -260,32 +264,33 @@ export const verifyUserDevice = (id: string) => (
   dispatch(verifyDeviceRequest());
   return http.post('my-device', id)
     .then((response: { data: { data: VerifyDevice; message: string; }; }) => {
-      dispatch(verifyDeviceSuccess(response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
-      window.location.replace('/dashboard');
+      const {data: {data, message}} = response;
+      dispatch(verifyDeviceSuccess(data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
       dispatch(displaySnackMessage(message));
-      dispatch(verifyDeviceFailure(message));
+      dispatch(verifyDeviceFailure(error));
     });
 };
 
 export const activateDevice = (id: string) => (
   dispatch: Dispatch,
   getState: any,
-  http: { patch: (arg0: string, arg1: string) => Promise<{ data: { data: Device; message: string; }; }>; }
+  http: { patch: (arg0: string, arg1: string) => Promise<{ data: { data: ActivateDevice; message: string; }; }>; }
 ) => {
   dispatch(activateDeviceRequest());
   return http.patch('active-device', id)
-    .then((response: { data: { data: Device; message: string; }; }) => {
-      dispatch(activateDeviceSuccess(response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+    .then((response: { data: { data: ActivateDevice; message: string; }; }) => {
+      const {data: {data, message}} = response;
+      dispatch(activateDeviceSuccess(data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(verifyDeviceFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(activateDeviceFailure(error));
     });
 };
 
@@ -299,12 +304,13 @@ export const getAllDevices = () => (
   const {signal} = abortController;
   return http.get('devices', {signal})
     .then((response: { data: { data: Device[]; }; }) => {
-      dispatch(getDevicesSuccess(response.data.data));
+      const {data: {data}} = response;
+      dispatch(getDevicesSuccess(data));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(getDevicesFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(getDevicesFailure(error));
     });
 };
 
@@ -316,13 +322,14 @@ export const editDevice = (id: string, device: any) => (
   dispatch(editDeviceRequest());
   return http.patch(`devices/${id}`, device)
     .then((response: { data: { data: NewDevice; message: string; }; }) => {
-      dispatch(editDeviceSuccess(id, response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+      const {data: {data, message}} = response;
+      dispatch(editDeviceSuccess(id, data));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(editDeviceFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(editDeviceFailure(error));
     });
 };
 
@@ -334,26 +341,26 @@ export const deleteDevice = (id: string) => (
   dispatch(deleteSingleDeviceRequest());
   return http.delete(`devices/${id}`)
     .then((response: { data: { message: string; }; }) => {
+      const {data: {message}} = response;
       dispatch(deleteSingleDeviceSuccess(id));
-      dispatch(displaySnackMessage(response.data.message));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(deleteSingleDeviceFailure(message));
       dispatch(displaySnackMessage(message));
+      dispatch(deleteSingleDeviceFailure(error));
     });
 };
 
 export const deviceInitialState = {
   isLoading: true,
   errors: null,
-  data: [],
   activeDevice: {},
   devices: [],
 };
 
 export const reducer = (state: {
-  isLoading: boolean, errors: any, data: Device[], activeDevice: object, devices: any[]
+  isLoading: boolean, errors: null, activeDevice: object, devices: Device[]
 } = deviceInitialState, action: Action) => {
   switch (action.type) {
     case ADD_DEVICE_REQUEST:
@@ -364,7 +371,6 @@ export const reducer = (state: {
     case ADD_DEVICE_SUCCESS:
       return {
         ...state,
-        errors: null,
         isLoading: action.isLoading,
         devices: [action.device, ...state.devices],
       };
@@ -382,9 +388,8 @@ export const reducer = (state: {
     case USER_VERIFY_DEVICE_SUCCESS:
       return {
         ...state,
-        errors: null,
         isLoading: action.isLoading,
-        data: [action.device, ...state.data],
+        data: [action.device, ...state.devices],
       };
     case USER_VERIFY_DEVICE_FAILURE:
       return {
@@ -400,7 +405,6 @@ export const reducer = (state: {
     case ACTIVATE_DEVICE_SUCCESS:
       return {
         ...state,
-        errors: null,
         isLoading: action.isLoading,
         activeDevice: action.activeDevice,
       };
@@ -408,6 +412,7 @@ export const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     case GET_DEVICES_REQUEST:
       return {
@@ -424,26 +429,29 @@ export const reducer = (state: {
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     case DELETE_DEVICE_REQUEST:
       return {
         ...state,
+        isLoading: action.isLoading,
       };
     case DELETE_DEVICE_SUCCESS:
       return {
         ...state,
         devices: [...state.devices].filter(device => action.id !== device._id),
-        errors: null,
+        isLoading: action.isLoading,
       };
     case DELETE_DEVICE_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: false,
+        isLoading: action.isLoading,
       };
     case EDIT_DEVICE_REQUEST:
       return {
         ...state,
+        isLoading: action.isLoading,
       };
     case EDIT_DEVICE_SUCCESS:
       return {
@@ -452,12 +460,13 @@ export const reducer = (state: {
           ...device,
           ...action.device,
         } : device),
-        errors: null,
+        isLoading: action.isLoading,
       };
     case EDIT_DEVICE_FAILURE:
       return {
         ...state,
         errors: action.errors,
+        isLoading: action.isLoading,
       };
     default:
       return state;

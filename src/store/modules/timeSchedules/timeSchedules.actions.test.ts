@@ -6,7 +6,7 @@ import {
   getAllSchedules,
   getPumpStatus,
   schedulesInitialState,
-  togglePump
+  togglePump, toggleScheduleStatus,
 } from '@modules/timeSchedules/index';
 
 // types
@@ -137,7 +137,7 @@ describe('Time schedules module actions', () => {
           isLoading: true
         },
         {
-          schedule: timeSchedules.data[0],
+          schedule: mockResponse.data.data,
           type: ADD_SCHEDULES_SUCCESS,
           isLoading: false,
         },
@@ -603,11 +603,11 @@ describe('Time schedules module actions', () => {
   });
 
   describe('Get pump status thunk', () => {
-    it.skip('should fetch the status of the pump', () => {
+    it('should fetch the status of the pump', () => {
       const mockResponse = {
         data: {
           data: {
-            enabled: enabledStatus,
+            enabled: enabledStatus.enabled,
           },
         },
       };
@@ -617,7 +617,7 @@ describe('Time schedules module actions', () => {
           isLoading: true
         },
         {
-          enabled: timeSchedules.data[0].enabled,
+          enabled: enabledStatus.enabled,
           type: GET_PUMP_STATUS_SUCCESS,
           isLoading: false,
         },
@@ -669,6 +669,125 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         getPumpStatus(deviceId),
+        expectedActions
+      );
+    });
+  });
+
+  describe('Toggling schedule status thunk', () => {
+    it('should toggle a schedule on and off', () => {
+      const mockResponse = {
+        data: {
+          data: timeSchedules.data[0],
+          message: 'Schedule turned on successfully',
+        },
+      };
+      const expectedActions = [
+        {
+          type: EDIT_SCHEDULE_REQUEST,
+          isLoading: true
+        },
+        {
+          schedule: mockResponse.data.data,
+          type: EDIT_SCHEDULE_SUCCESS,
+          isLoading: false,
+          id: '5ede17f7184ccf003a2da68f',
+        },
+        {
+          snack: {
+            message: mockResponse.data.message
+          },
+          type: DISPLAY_SNACK_MESSAGE
+        },
+      ];
+      const http = axiosMock(`schedules/${id}`, mockResponse);
+      const store = reduxMockStore(http, schedulesInitialState);
+
+      return dispatchMethodMock(
+        store,
+        toggleScheduleStatus(id, enabledStatus),
+        expectedActions
+      );
+    });
+
+    it('should return an error message when it fails to toggle the schedule status', () => {
+      const mockErrorResponse = {
+        response: {
+          data: {
+            message: 'Error on toggling a schedule',
+          }
+        }
+      };
+      const expectedActions = [
+        {
+          type: EDIT_SCHEDULE_REQUEST,
+          isLoading: true,
+        },
+        {
+          snack: {
+            message: mockErrorResponse.response.data.message
+          },
+          type: DISPLAY_SNACK_MESSAGE
+        },
+        {
+          errors: {
+            response: {
+              data: {
+                message: mockErrorResponse.response.data.message
+              },
+            }
+          },
+          type: EDIT_SCHEDULE_FAILURE,
+          isLoading: false,
+        }
+      ];
+      const http = axiosMock(`schedules/${id}`, mockErrorResponse, false);
+      const store = reduxMockStore(http, schedulesInitialState);
+
+      return dispatchMethodMock(
+        store,
+        toggleScheduleStatus(id, enabledStatus),
+        expectedActions
+      );
+    });
+
+    it('should display snack error message on network error', () => {
+      const mockErrorResponse = {
+        response: {
+          data: {
+            message: 'An error occurred while toggling your pump. Please try again',
+          },
+        },
+      };
+      const expectedActions = [
+        {
+          type: EDIT_SCHEDULE_REQUEST,
+          isLoading: true,
+        },
+        {
+          snack: {
+            message: mockErrorResponse.response.data.message,
+          },
+          type: DISPLAY_SNACK_MESSAGE
+        },
+        {
+          errors: {
+            response: {
+              data: {
+                message: mockErrorResponse.response.data.message,
+              },
+            }
+          },
+          type: EDIT_SCHEDULE_FAILURE,
+          isLoading: false,
+        }
+      ];
+      const http = axiosMock(`schedules/${id}`, mockErrorResponse, false);
+      const store = reduxMockStore(http, schedulesInitialState);
+
+      return dispatchMethodMock(
+        store,
+        toggleScheduleStatus(id, enabledStatus),
         expectedActions
       );
     });

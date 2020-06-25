@@ -28,6 +28,7 @@ const editSchedulePayload = {
 const enabledStatus = {
   enabled: true,
   device: '5e4a5815a04a6d8445b5885d'
+}
 
 export {
   id,

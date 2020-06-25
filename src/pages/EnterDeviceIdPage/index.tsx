@@ -63,6 +63,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
       .then(() => {
         // await props.getUserDetails();
         setState({ ...state, isLoading: false });
+        window.location.replace('/dashboard');
       });
   };
 
