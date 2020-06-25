@@ -2031,6 +2031,17 @@
   resolved "https://registry.yarnpkg.com/@material/feature-targeting/-/feature-targeting-6.0.0.tgz#8dcfc470f3c5b8c7e1bc04bb86b062a640ff03a0"
   integrity sha512-REj9VJnqkGwpngffc/iHGPt8WTF27QFPWDD8VBNXaP+MmnpIu7V5q5JMoozKzG5uk+hVryzam1i2PJHztizDXg==
 
+"@material/form-field@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/form-field/-/form-field-0.41.0.tgz#4b318b504ff81fda214dfb6d34290b603517e1cb"
+  integrity sha512-vNduTfxS1KHCt/NATfX56m7iSXqcemrDq3NMX0txijUQyZ3Sr4xdUQdys+2ky/rBuQTVqBBsc9ixIyHehECaoQ==
+  dependencies:
+    "@material/base" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/selection-control" "^0.41.0"
+    "@material/theme" "^0.41.0"
+    "@material/typography" "^0.41.0"
+
 "@material/icon-button@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-1.1.0.tgz#a7c649b3549e6e9ecd9c82a8ef124757bfcc98b8"
@@ -2059,6 +2070,21 @@
     "@material/shape" "^0.41.0"
     "@material/theme" "^0.41.0"
     "@material/typography" "^0.41.0"
+
+"@material/list@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@material/list/-/list-1.1.1.tgz#296ed85ae3585af1749462e5bafd617d5675e85e"
+  integrity sha512-YqX2A5qagoBolla6WHzP2BIUid/ufot5rVP2yrTz3DFvmswJMXU3HV2XU9NbiVOiefCjkra9ljtimiTlHUrAEg==
+  dependencies:
+    "@material/base" "^1.0.0"
+    "@material/dom" "^1.1.0"
+    "@material/feature-targeting" "^0.44.1"
+    "@material/ripple" "^1.1.0"
+    "@material/rtl" "^0.42.0"
+    "@material/shape" "^1.1.1"
+    "@material/theme" "^1.1.0"
+    "@material/typography" "^1.0.0"
+    tslib "^1.9.3"
 
 "@material/list@^6.0.0":
   version "6.0.0"
@@ -2106,6 +2132,18 @@
     "@material/theme" "^6.0.0"
     tslib "^1.9.3"
 
+"@material/radio@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@material/radio/-/radio-1.1.0.tgz#15154c6c50d39b2b21b079dc2025a822a699e2b7"
+  integrity sha512-ySocik+l1fInopaA8hDfByJahv1UywUNtUcG7+hLLOhxQx4XVpUJUIjU/dlvVDYJB0QZQatm2asKi2cYVPlIsQ==
+  dependencies:
+    "@material/animation" "^1.0.0"
+    "@material/base" "^1.0.0"
+    "@material/feature-targeting" "^0.44.1"
+    "@material/ripple" "^1.1.0"
+    "@material/theme" "^1.1.0"
+    tslib "^1.9.3"
+
 "@material/react-checkbox@^0.15.0":
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/@material/react-checkbox/-/react-checkbox-0.15.0.tgz#0b90448ee95f7797f063477dcb0a79331077d13a"
@@ -2135,14 +2173,28 @@
     classnames "^2.2.6"
     react "^16.4.2"
 
-"@material/react-list@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@material/react-list/-/react-list-0.11.0.tgz#617978642776803c71472df7073f6513560d6bc0"
-  integrity sha512-QkhXy4cTaZrY0hLkBRChpTKVHsUCaVQ83+oyV/hb1QOTrHc8wuSa+2c7KgeOUUnWYSLaad+I+ohvt2qCMXYNoQ==
+"@material/react-list@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@material/react-list/-/react-list-0.15.0.tgz#edec6cc4c4233ce806ae283eda538ca679bb1b7c"
+  integrity sha512-n6OXrCPW3iXjeWF3oSNM0ZuK2R/ywhcRQLM0MmjyBlTvds6S2dl1xt9CfSOw89YqmDljcmB7h3NI7P+J7YCowA==
   dependencies:
-    "@material/list" "^0.41.0"
+    "@material/dom" "^1.1.0"
+    "@material/list" "^1.0.0"
+    "@material/react-checkbox" "^0.15.0"
+    "@material/react-radio" "^0.15.0"
+    "@material/react-ripple" "^0.15.0"
     classnames "^2.2.6"
-    react "^16.4.2"
+    memoize-one "^5.0.4"
+
+"@material/react-radio@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@material/react-radio/-/react-radio-0.15.0.tgz#5b994ac6a9329f7bb484c630bd4b800706846e84"
+  integrity sha512-9+P1yz/vh3Cyu9D1GBbVxyhraZTAVA+yX/A/HyLWxjjs5ErMUN1JJgtXW4x19trq7+pcE3bVnQTL1BNPdGpiLQ==
+  dependencies:
+    "@material/form-field" "^0.41.0"
+    "@material/radio" "^1.1.0"
+    "@material/react-ripple" "^0.15.0"
+    classnames "^2.2.6"
 
 "@material/react-ripple@^0.15.0":
   version "0.15.0"
@@ -2221,6 +2273,13 @@
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@material/rtl/-/rtl-6.0.0.tgz#e8114194af72f7496ca2fc5b4ee63981c46f5066"
   integrity sha512-/WkzlUm3qylWMqv7Lw7ColZ8DYvEvTXtevxxz7PKM1hT9FNlbO1/Qywvda4VUtXivEeynXEqeT1T/ZYHV9yDVw==
+
+"@material/selection-control@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/selection-control/-/selection-control-0.41.0.tgz#2705d77291c2e6c9db01c4f185a4966d95fd9fa4"
+  integrity sha512-rRHGiZVPoP4nxAAoeqsgTsxz9GwInGs7HIlEhPfMFygmSZVUHHsuOJXSTpOKYi8GCoKHpB0RKZsAtxM0BYAelw==
+  dependencies:
+    "@material/ripple" "^0.41.0"
 
 "@material/shape@^0.41.0":
   version "0.41.0"
@@ -10289,7 +10348,7 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-memoize-one@*, memoize-one@^5.1.1:
+memoize-one@*, memoize-one@^5.0.4, memoize-one@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
