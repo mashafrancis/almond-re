@@ -52,7 +52,6 @@ const PageBottomNavigation: React.FunctionComponent = () => {
             label={menu.label}
             icon={menu.icon}
             />
-
         )
       }
     </BottomNavigation>
