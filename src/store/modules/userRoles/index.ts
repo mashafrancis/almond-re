@@ -1,39 +1,73 @@
 // thunks
-import {displaySnackMessage} from '@modules/snack';
+import { displaySnackMessage } from '@modules/snack';
+
 // interfaces
 import {
+  CreateUserRolesActionFailure,
+  CreateUserRolesActionRequest,
   CreateUserRolesActionSuccess,
+  DeleteUserRolesFailure,
+  DeleteUserRolesRequest,
+  DeleteUserRolesSuccess,
+  EditUserRolesFailure,
+  EditUserRolesRequest,
+  EditUserRolesSuccess,
   GetUserRolesActionFailure,
   GetUserRolesActionRequest,
   GetUserRolesActionSuccess,
-  UserDeleteRolesSuccess,
-  UserEditRolesSuccess
+  UserRole,
 } from './interfaces';
+
 // types
 import {
+  CREATE_USER_ROLES_FAILURE,
+  CREATE_USER_ROLES_REQUEST,
   CREATE_USER_ROLES_SUCCESS,
+  DELETE_USER_ROLES_FAILURE,
+  DELETE_USER_ROLES_REQUEST,
   DELETE_USER_ROLES_SUCCESS,
+  EDIT_USER_ROLES_FAILURE,
+  EDIT_USER_ROLES_REQUEST,
   EDIT_USER_ROLES_SUCCESS,
   GET_USER_ROLES_FAILURE,
   GET_USER_ROLES_REQUEST,
-  GET_USER_ROLES_SUCCESS
+  GET_USER_ROLES_SUCCESS,
 } from './types';
-import {Action, ErrorObject} from '../../../shared.interfaces';
+import { Action, ErrorObject } from '../../../shared.interfaces';
+
+
+/**
+ * Create user roles request action creator
+ * @returns {CreateUserRolesActionRequest}
+ */
+export const createUserRoleRequest = (): CreateUserRolesActionRequest => ({
+  type: CREATE_USER_ROLES_REQUEST,
+  isLoading: true,
+});
 
 /**
  * Create user roles success action creator
- *
- * @param {UserRole} userRole
+ * @param {role} role
  * @returns {CreateUserRolesActionSuccess}
  */
-export const createUserRoleSuccess = (userRole: any): CreateUserRolesActionSuccess => ({
-  userRole,
+export const createUserRoleSuccess = (role: UserRole): CreateUserRolesActionSuccess => ({
+  role,
   type: CREATE_USER_ROLES_SUCCESS,
+  isLoading: false,
+});
+
+/**
+ * Create user roles failure action creator
+ * @returns {CreateUserRolesActionFailure}
+ */
+export const createUserRoleFailure = (errors: ErrorObject): CreateUserRolesActionFailure => ({
+  errors,
+  type: CREATE_USER_ROLES_FAILURE,
+  isLoading: false,
 });
 
 /**
  * Get all schedules request
- *
  * @returns {GetAllSchedulesActionRequest}
  */
 export const getUserRolesRequest = (): GetUserRolesActionRequest => ({
@@ -47,9 +81,9 @@ export const getUserRolesRequest = (): GetUserRolesActionRequest => ({
  * @param allRolesAndPermissions
  */
 export const getUserRolesSuccess = (
-  allRolesAndPermissions: { data: any; permissions: any; resources: any; }
+  allRolesAndPermissions: { data: any; permissions: any; resources: any; },
 ): GetUserRolesActionSuccess => ({
-  userRoles: allRolesAndPermissions.data,
+  roles: allRolesAndPermissions.data,
   permissions: allRolesAndPermissions.permissions,
   resources: allRolesAndPermissions.resources,
   isLoading: false,
@@ -67,27 +101,88 @@ export const getUserRolesFailure = (errors: any): GetUserRolesActionFailure => (
 });
 
 /**
- *
  * Delete user roles success action creator
- * @returns {UserDeleteRolesSuccess}
+ * @returns {DeleteUserRolesRequest}
+ */
+export const deleteUserRolesRequest = (): DeleteUserRolesRequest => ({
+  type: DELETE_USER_ROLES_REQUEST,
+  isLoading: true,
+});
+
+/**
+ * Delete user roles success action creator
+ * @returns {DeleteUserRolesSuccess}
  * @param id
  */
-export const deleteUserRolesSuccess = (id: string): UserDeleteRolesSuccess => ({
+export const deleteUserRolesSuccess = (id: string): DeleteUserRolesSuccess => ({
   id,
   type: DELETE_USER_ROLES_SUCCESS,
+  isLoading: false,
+});
+
+/**
+ * Delete user roles success action creator
+ * @returns {DeleteUserRolesSuccess}
+ */
+export const deleteUserRolesFailure = (errors: ErrorObject): DeleteUserRolesFailure => ({
+  errors,
+  type: DELETE_USER_ROLES_FAILURE,
+  isLoading: false,
+});
+
+/**
+ * Update user roles request action creator
+ * @returns {EditUserRolesRequest}
+ */
+export const editUserRoleRequest = (): EditUserRolesRequest => ({
+  type: EDIT_USER_ROLES_REQUEST,
+  isLoading: true,
 });
 
 /**
  * Update user roles success action creator
- * @param {UserRole[], string} userRole
+ * @param {UserRole[], string} role
  * @param id
- * @returns {UserEditRolesSuccess}
+ * @returns {EditUserRolesSuccess}
  */
-export const editUserRoleSuccess = (userRole: any, id: string): UserEditRolesSuccess => ({
+export const editUserRoleSuccess = (role: any, id: string): EditUserRolesSuccess => ({
   id,
-  userRole,
+  role,
   type: EDIT_USER_ROLES_SUCCESS,
+  isLoading: false,
 });
+
+/**
+ * Update user roles request action creator
+ * @returns {EditUserRolesRequest}
+ */
+export const editUserRoleFailure = (errors: ErrorObject): EditUserRolesFailure => ({
+  errors,
+  type: EDIT_USER_ROLES_FAILURE,
+  isLoading: false,
+});
+
+/**
+ * Get user roles thunk
+ * @returns {Function}
+ */
+export const getUserRoles = () => (
+  dispatch: any,
+  getState: any,
+  http: { get: (arg0: string) => Promise<any>; },
+) => {
+  dispatch(getUserRolesRequest());
+  return http.get('/roles?include=permissions&include=resources')
+    .then(response => {
+      const { data } = response;
+      dispatch(getUserRolesSuccess(data))
+    })
+    .catch(error => {
+      const {response: {data: {message}}} = error;
+      dispatch(displaySnackMessage(message));
+      dispatch(getUserRolesFailure(error));
+    });
+};
 
 /**
  * Create user role thunk
@@ -97,17 +192,22 @@ export const editUserRoleSuccess = (userRole: any, id: string): UserEditRolesSuc
 export const createUserRole = (userRole: any) => (
   dispatch: any,
   getState: any,
-  http: { post: (arg0: string, arg1: any) => Promise<{ data: { data: any; }; }>; }
+  http: { post: (arg0: string, arg1: any) => Promise<{ data: { data: any; message: string }; }>; },
 ) => {
-  http.post('/roles', userRole)
-    .then((response: { data: { data: any; }; }) => {
-      dispatch(createUserRoleSuccess(response.data.data));
-      dispatch(displaySnackMessage('User Role successfully created'));
+  dispatch(createUserRoleRequest());
+  return http.post('/roles', userRole)
+    .then((response: { data: { data: any; message: string }; }) => {
+      const {data: {data, message}} = response;
+      dispatch(createUserRoleSuccess(data));
+      dispatch(displaySnackMessage(message));
     })
-    .catch((error: ErrorObject) =>
-      dispatch(displaySnackMessage(error.response.data.message))
-    );
-}
+    .catch((error: ErrorObject) => {
+      const { response: { data: { message } } } = error;
+      dispatch(displaySnackMessage(message));
+      dispatch(createUserRoleFailure(error));
+    }
+  );
+};
 
 /**
  * Delete user roles thunk
@@ -117,33 +217,19 @@ export const createUserRole = (userRole: any) => (
 export const deleteUserRole = (id: string) => (
   dispatch: any,
   getState: any,
-  http: { delete: (arg0: string) => Promise<any>; }
+  http: { delete: (arg0: string) => Promise<any>; },
 ) => {
-  http.delete(`/roles/${id}`)
-    .then(() => {
+  dispatch(deleteUserRolesRequest());
+  return http.delete(`/roles/${id}`)
+    .then(response => {
+      const {data: {message}} = response;
       dispatch(deleteUserRolesSuccess(id));
-      dispatch(displaySnackMessage('Role has been deleted successfully'));
+      dispatch(displaySnackMessage(message));
     })
-    .catch(error => {
-      dispatch(displaySnackMessage(error.response.data.message));
-    });
-};
-
-/**
- * Get user roles thunk
- * @returns {Function}
- */
-export const getUserRoles = () => (
-  dispatch: any,
-  getState: any,
-  http: { get: (arg0: string) => Promise<any>; }
-) => {
-  dispatch(getUserRolesRequest());
-  return http.get('/roles?include=permissions&include=resources')
-    .then(response => dispatch(getUserRolesSuccess(response.data)))
-    .catch(error => {
-      dispatch(getUserRolesFailure(error.message));
-      dispatch(displaySnackMessage(error.message));
+    .catch((error: ErrorObject) => {
+      const { response: { data: { message } } } = error;
+      dispatch(displaySnackMessage(message));
+      dispatch(deleteUserRolesFailure(error));
     });
 };
 
@@ -152,33 +238,38 @@ export const getUserRoles = () => (
  * @param {Object} updatedRolePayload
  * @returns {Function}
  */
-export const editUserRole = (updatedRolePayload: { id: string; }) => (
+export const editUserRole = updatedRolePayload => (
   dispatch: any,
   getState: any,
-  http: { patch: (arg0: string, arg1: { id: string; }) => Promise<{ data: { data: any; }; }>; }
+  http: { patch: (arg0: string, arg1: { _id: string; }) => Promise<{ data: { data: any; }; }>; },
 ) => {
-  const {id} = updatedRolePayload;
-  return http.patch(`/roles/${id}`, updatedRolePayload)
-    .then((response: { data: { data: any; }; }) => {
-      dispatch(editUserRoleSuccess(response.data.data, id));
-      dispatch(displaySnackMessage('Role updated successfully'));
+  const { _id } = updatedRolePayload;
+  dispatch(editUserRoleRequest());
+  return http.patch(`/roles/${_id}`, updatedRolePayload)
+    .then((response: { data: { data: any; message: string }; }) => {
+      const {data: {data, message}} = response;
+      dispatch(editUserRoleSuccess(data, _id));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      if (error.response.status === 400) {
-        dispatch(displaySnackMessage('Please format the fields properly'));
-      } else {
-        dispatch(displaySnackMessage(error.response.data.message));
-      }
+      const { response: { data: { message } } } = error;
+      error.response.status === 400
+        ? dispatch(displaySnackMessage('Please format the fields properly'))
+        : dispatch(displaySnackMessage(message));
+      dispatch(editUserRoleFailure(error));
     });
 };
 
 // Set the initial role state
-const userRoleInitialState = {
-  data: [],
+export const userRoleInitialState = {
+  roles: [],
+  resources: [],
+  permissions: [],
   isLoading: true,
+  errors: null,
 };
 
-const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialState, action: Action) => {
+export const reducer = (state: any = userRoleInitialState, action: Action) => {
   switch (action.type) {
     case GET_USER_ROLES_REQUEST:
       return {
@@ -188,7 +279,7 @@ const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialSta
     case GET_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: action.userRoles,
+        roles: action.roles,
         resources: action.resources,
         permissions: action.permissions,
         isLoading: action.isLoading,
@@ -199,23 +290,62 @@ const reducer = (state: { data: any[], isLoading: boolean } = userRoleInitialSta
         errors: action.errors,
         isLoading: action.isLoading,
       };
-    case DELETE_USER_ROLES_SUCCESS:
+    case EDIT_USER_ROLES_REQUEST:
       return {
         ...state,
-        data: [...state.data].filter(userRole => action.id !== userRole._id),
+        isLoading: action.isLoading,
       };
     case EDIT_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [...state.data].map(role => role._id === action.userRole._id ? {
+        roles: [...state.roles].map(role => role._id === action.role._id ? {
           ...role,
-          ...action.userRole,
+          ...action.role,
         } : role),
+        isLoading: action.isLoading,
+        errors: null,
+      };
+    case EDIT_USER_ROLES_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        errors: action.errors,
+      };
+    case CREATE_USER_ROLES_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading,
       };
     case CREATE_USER_ROLES_SUCCESS:
       return {
         ...state,
-        data: [action.userRole, ...state.data],
+        roles: [action.role, ...state.roles],
+        isLoading: action.isLoading,
+        errors: null,
+      };
+    case CREATE_USER_ROLES_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        errors: action.errors,
+      };
+    case DELETE_USER_ROLES_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case DELETE_USER_ROLES_SUCCESS:
+      return {
+        ...state,
+        roles: [...state.roles].filter(role => action.id !== role._id),
+        errors: null,
+        isLoading: action.isLoading,
+      };
+    case DELETE_USER_ROLES_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        errors: action.errors,
       };
     default:
       return state;

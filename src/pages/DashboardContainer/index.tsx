@@ -2,7 +2,6 @@ import * as React from 'react';
 
 // third-party libraries
 import { connect } from 'react-redux';
-import { Theme, withStyles, makeStyles, createStyles } from '@material-ui/core/styles';
 import {
   SwipeableDrawer,
   MenuItem,
@@ -14,7 +13,6 @@ import {
 
 // icons
 import {
-  Feedback,
   Mood,
   ExitToApp,
   Settings,
@@ -32,7 +30,7 @@ import {
 import LinearProgressBar from '@components/LinearProgressBar';
 
 // utils
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
 import { MenuContext } from '@context/MenuContext';
 import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
@@ -57,7 +55,6 @@ import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import './DashboardContainer.scss';
 
 const Modal = React.lazy(() => import('@components/Modal'));
-const MenuModal = React.lazy(() => import('@components/MenuModal'));
 const MenuContent = React.lazy(() => import('@components/MenuContent'));
 const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
 const TopBar = React.lazy(() => import('@components/TopBar'));
@@ -85,14 +82,19 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
 
   const styles = useDashboardContainerStyles(props);
 
-  const user = React.useContext(UserContext);
+  const {
+    activeDevice,
+    devices,
+    photo,
+    name,
+    isAdmin
+  } = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
 
   const { width } = useViewport();
   const breakpoint = 539;
 
   const { history, activityLogs } = props;
-  const { isFeedbackModal, feedback, action } = state;
 
   const {
     selectedIndex,
@@ -100,7 +102,6 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     handleCloseDeviceModal,
     handleSelectDeviceModal,
     isSelectDeviceModalOpen,
-    isMenuOpen,
     toggleActivityDrawer,
     isActivityDrawerOpen
   } = menu;
@@ -108,8 +109,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
   React.useEffect(() => {
     setState({
       ...state,
-      activeDevice: user.activeDevice,
-      device: user.activeDevice.id,
+      activeDevice,
+      device: activeDevice.id,
       roleSelected: props.user.currentRole.title,
     });
   },              []);
@@ -145,12 +146,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     setState({ ...state, roleSelected: '' });
   };
 
-  const onFeedbackMenuOpenClose = () => setState({ ...state, isFeedbackMenuOpen: false });
-
-  const handleFeedbackInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setState({ ...state, [e.target.name as string]: e.target.value });
-
   const handleSelectDevice = () => {
-    const deviceId = user.devices.filter(device => device.id === state.device);
+    const deviceId = devices.filter(device => device.id === state.device);
     props.activateDevice({ id: deviceId[0]._id }).then(async () => await props.getUserDetails());
     handleSelectDeviceModal();
   };
@@ -191,7 +188,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
         {(width > breakpoint) &&
         <img
           className="mini-account-menu__image"
-          src={user.photo}
+          src={photo}
           alt="image"
           />}
       </span>
@@ -356,13 +353,13 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </SwipeableDrawer>
   ;
 
-  const checkIsAdmin = () => user.isAdmin ? AdminMenus : UserMenus;
+  const checkIsAdmin = () => isAdmin ? AdminMenus : UserMenus;
 
   return (
     <div className="dashboard">
       <MenuContent
-        name={user.name}
-        photo={user.photo}
+        name={name}
+        photo={photo}
         />
       <TopBar
         isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
@@ -373,7 +370,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
         </React.Suspense>
       </TopBar>
       { width < breakpoint && <PageBottomNavigation /> }
-      { SelectDeviceModal(user.devices) }
+      { SelectDeviceModal(devices) }
       { ProfileDialog() }
       { MenuProfileSelect() }
       { ActivityDrawer() }
@@ -384,7 +381,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
 export const mapStateToProps = (state: any) => ({
   user: state.user.userDetails,
   activeDevice: state.device.activeDevice,
-  roles: state.userRoles.data,
+  roles: state.userRoles.roles,
   activityLogs: state.activityLogs,
   loading: state.loading,
 });

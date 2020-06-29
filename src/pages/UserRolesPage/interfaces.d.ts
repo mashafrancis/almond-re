@@ -2,7 +2,7 @@ import {Permission, Resource, UserRole} from '@modules/userRoles/interfaces';
 
 export interface UserRolesPageProps {
   userRoles: {
-    data: UserRole[];
+    roles: UserRole[];
     permissions: Permission[] | any[];
     resources: Resource[] | any[];
   };

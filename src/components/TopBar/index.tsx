@@ -8,14 +8,10 @@ import {
   CssBaseline,
   AppBar,
   Toolbar,
-  Container,
-  IconButton,
-  Typography
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import {
   Theme,
-  makeStyles,
   createStyles
 } from '@material-ui/core/styles';
 
@@ -28,7 +24,7 @@ import {
 } from '@material-ui/icons';
 
 // utils
-import { UserContext } from '@utils/context/Context';
+import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
 import { MenuContext } from '@context/MenuContext';
 import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
@@ -60,13 +56,7 @@ const ElevationScroll = (props: ElevationBarProps) => {
 const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const device = React.useContext(UserContext);
   const menu = React.useContext(MenuContext);
-  const user = React.useContext(UserContext);
-
-  const {
-    name,
-    photo,
-    isAdmin
-  } = user;
+  const { name, photo, isAdmin } = React.useContext(UserContext);
 
   const {
     activityLogsViewed,
@@ -75,8 +65,6 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
   } = menu;
 
   const {
-    photoImage,
-    openProfileDialog,
     isActivityLogsEmpty,
     children
   } = props;

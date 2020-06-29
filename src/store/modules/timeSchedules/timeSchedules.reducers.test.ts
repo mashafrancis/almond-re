@@ -24,10 +24,11 @@ import {
 
 // helpers
 import {
+  editSchedulePayload,
   enabledStatus,
   id,
   schedulePayload,
-  timeSchedules
+  timeSchedules,
 } from '@modules/timeSchedules/fixtures';
 import { errorMessage } from '../../../testHelpers';
 
@@ -101,10 +102,16 @@ describe('Time Schedules reducer: ', () => {
     });
 
     it('should dispatch EDIT_SCHEDULE_SUCCESS', () => {
-      const editScheduleSuccessAction = editScheduleSuccess(id, schedulePayload);
-      const scheduleState = reducer(schedulesInitialState, editScheduleSuccessAction);
+      const schedulesInitialState = {
+        schedules: timeSchedules.data,
+      };
+
+      const editScheduleSuccessAction = editScheduleSuccess('5ede17f7184ccf003a2da68f', editSchedulePayload);
+      const scheduleState = reducer(schedulesInitialState as any, editScheduleSuccessAction);
+      const updatedSchedule = scheduleState.schedules.find(schedule => schedule._id === editSchedulePayload._id);
 
       expect(scheduleState.isLoading).toBeFalsy();
+      expect(updatedSchedule.schedule).toEqual('2020-06-08T18:00:46.817Z')
       expect(scheduleState.errors).toBe(null);
     });
 
@@ -127,10 +134,15 @@ describe('Time Schedules reducer: ', () => {
     });
 
     it('should dispatch DELETE_SCHEDULE_SUCCESS', () => {
-      const deleteScheduleSuccessAction = deleteSingleScheduleSuccess(id);
-      const scheduleState = reducer(schedulesInitialState, deleteScheduleSuccessAction);
+      const schedulesInitialState = {
+        schedules: timeSchedules.data,
+      };
+
+      const deleteScheduleSuccessAction = deleteSingleScheduleSuccess('5ede17f7184ccf003a2da68f');
+      const scheduleState = reducer(schedulesInitialState as any, deleteScheduleSuccessAction);
 
       expect(scheduleState.isLoading).toBeFalsy();
+      expect(scheduleState.schedules.length).toBe(0);
       expect(scheduleState.errors).toBe(null);
     });
 

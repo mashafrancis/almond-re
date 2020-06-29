@@ -15,7 +15,7 @@ describe('The DashboardContainer component', () => {
       },
       loading: '',
       userRoles: {
-        data: [],
+        roles: [],
       },
       activityLogs: {},
       device: {
@@ -28,7 +28,7 @@ describe('The DashboardContainer component', () => {
     it('should map energy monitoring props from state', () => {
       expect(props.user).toEqual(state.user.userDetails);
       expect(props.loading).toEqual(state.loading);
-      expect(props.roles).toEqual(state.userRoles.data);
+      expect(props.roles).toEqual(state.userRoles.roles);
       expect(props.activityLogs).toEqual(state.activityLogs);
       expect(props.activeDevice).toEqual(state.device.activeDevice);
     });

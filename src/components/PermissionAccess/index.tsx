@@ -41,8 +41,9 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
        */
       Object.keys(this.mappedPermissions)
         .forEach((permissionString: string) => {
-          // @ts-ignore
-          this.mappedPermissions[permissionString] = ensure(this.state.permissions.find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString))._id;
+          // @ts-expect-error
+          this.mappedPermissions[permissionString] = this.state.permissions
+            .find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString)._id;
         });
     }
   }
@@ -56,11 +57,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
 
       Object.keys(this.mappedPermissions)
         .forEach((permissionString: string) => {
-          const permissionKey = ensure(this.state.permissions
-            .find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString));
+          const permissionKey = this.state.permissions
+            .find((permissionObject: Permission) => permissionObject.type.toLowerCase() === permissionString);
 
           if (permissionKey) {
-            // @ts-ignore
+            // @ts-expect-error
             this.mappedPermissions[permissionString] = permissionKey._id;
           }
         });
@@ -106,7 +107,7 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
     this.setState({
       resources: this.state.resources.map((resource: Resource) => resource._id === resourceId ? {
         ...resource,
-        // @ts-ignore
+        // @ts-expect-error
         permissionIds: getNewPermissionIds(resource.permissionIds || []),
       } : resource),
     },            () => this.props.getResources(this.state.resources));

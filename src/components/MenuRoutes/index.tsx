@@ -20,17 +20,31 @@ import {
 import { MenuBottomProps, MenuComponentProps } from '@components/MenuRoutes/interfaces';
 
 // pages
-const AnalyticsPage = React.lazy(() => import('@pages/AnalyticsPage'));
-const DeviceManagementPage = React.lazy(() => import('@pages/DeviceManagementPage'));
-const EnergyMonitoringPage = React.lazy(() => import('@pages/EnergyMonitoringPage'));
-const EnvironmentControlPage = React.lazy(() => import('@pages/EnvironmentControlPage'));
-const HelpPage = React.lazy(() => import('@pages/HelpPage'));
-const PeoplePage = React.lazy(() => import('@pages/PeoplePage'));
-const QualityCheckPage = React.lazy(() => import('@pages/QualityCheckPage'));
-const SettingsPage = React.lazy(() => import('@pages/SettingsPage'));
-const SupportPage = React.lazy(() => import('@pages/SupportPage'));
-const UserRolesPage = React.lazy(() => import('@pages/UserRolesPage'));
-const WaterCyclesPage = React.lazy(() => import('@pages/WaterCyclesPage'));
+import AnalyticsPage from '@pages/AnalyticsPage';
+import WaterCyclesPage from '@pages/WaterCyclesPage';
+import EnvironmentControlPage from '@pages/EnvironmentControlPage';
+import QualityCheckPage from '@pages/QualityCheckPage';
+import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
+import SupportPage from '@pages/SupportPage';
+import SettingsPage from '@pages/SettingsPage';
+import HelpPage from '@pages/HelpPage';
+import DeviceManagementPage from '@pages/DeviceManagementPage';
+import PeoplePage from '@pages/PeoplePage';
+import UserRolesPage from '@pages/UserRolesPage';
+
+//:TODO: Implement React Suspense lazy loading once feature is released
+// pages
+// const AnalyticsPage = React.lazy(() => import('@pages/AnalyticsPage'));
+// const DeviceManagementPage = React.lazy(() => import('@pages/DeviceManagementPage'));
+// const EnergyMonitoringPage = React.lazy(() => import('@pages/EnergyMonitoringPage'));
+// const EnvironmentControlPage = React.lazy(() => import('@pages/EnvironmentControlPage'));
+// const HelpPage = React.lazy(() => import('@pages/HelpPage'));
+// const PeoplePage = React.lazy(() => import('@pages/PeoplePage'));
+// const QualityCheckPage = React.lazy(() => import('@pages/QualityCheckPage'));
+// const SettingsPage = React.lazy(() => import('@pages/SettingsPage'));
+// const SupportPage = React.lazy(() => import('@pages/SupportPage'));
+// const UserRolesPage = React.lazy(() => import('@pages/UserRolesPage'));
+// const WaterCyclesPage = React.lazy(() => import('@pages/WaterCyclesPage'));
 
 export const UserMenus: MenuComponentProps[][] = [
   [

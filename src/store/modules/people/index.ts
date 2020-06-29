@@ -9,7 +9,6 @@ import { displaySnackMessage } from '../snack';
 // interfaces
 import {
   GetAllPeopleActionFailure,
-  GetAllPeopleActionRequest,
   GetAllPeopleActionSuccess,
   UpdatePersonFailure,
   UpdatePersonSuccess,
@@ -18,7 +17,6 @@ import {
 // types
 import {
   GET_ALL_PEOPLE_FAILURE,
-  GET_ALL_PEOPLE_REQUEST,
   GET_ALL_PEOPLE_SUCCESS,
   UPDATE_PERSON_DETAILS_FAILURE,
   UPDATE_PERSON_DETAILS_SUCCESS,
@@ -32,22 +30,12 @@ import {
 import {Action, ErrorObject} from '../../../shared.interfaces';
 
 /**
- * Get all users action creator
- * @returns {GetAllPeopleActionRequest}
- */
-export const getAllPeopleRequest = (): GetAllPeopleActionRequest => ({
-  type: GET_ALL_PEOPLE_REQUEST,
-  isLoading: true,
-});
-
-/**
  * Get userDetails success action creator
  * @returns {GetAllPeopleActionSuccess}
  */
 export const getAllPeopleSuccess = (people: UserDetails[]): GetAllPeopleActionSuccess => ({
   people,
   type: GET_ALL_PEOPLE_SUCCESS,
-  isLoading: false,
 });
 
 /**
@@ -57,7 +45,6 @@ export const getAllPeopleSuccess = (people: UserDetails[]): GetAllPeopleActionSu
 export const getAllPeopleFailure = (errors: any): GetAllPeopleActionFailure => ({
   errors,
   type: GET_ALL_PEOPLE_FAILURE,
-  isLoading: false,
 });
 
 /**
@@ -72,7 +59,6 @@ export const updatePersonSuccess = (person: UserDetails): UpdatePersonSuccess =>
 export const updatePersonFailure = (errors: any): UpdatePersonFailure => ({
   errors,
   type: UPDATE_PERSON_DETAILS_FAILURE,
-  isLoading: false,
 });
 
 export const getAllPeople = () => (
@@ -80,17 +66,15 @@ export const getAllPeople = () => (
   getState: any,
   http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[]; }; }>; }
 ) => {
-  // dispatch(getAllPeopleRequest());
-  dispatch(loadingRequest('requesting'))
+  dispatch(loadingRequest('requesting'));
   return http.get('people')
     .then((response: { data: { data: UserDetails[]; }; }) => {
       dispatch(getAllPeopleSuccess(response.data.data));
       dispatch(loadingSuccess('success'));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
-      dispatch(getAllPeopleFailure(message));
-      dispatch(loadingError('error'))
+      dispatch(getAllPeopleFailure(error));
+      dispatch(loadingError('error'));
       dispatch(displaySnackMessage('Failed to fetch your all users. Kindly reload the page.'));
     });
 };
@@ -106,20 +90,25 @@ export const updatePerson = (personId: string, personDetails: any): Function => 
   getState: any,
   http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: UserDetails; message: string; }; }>; }
 ) => {
-  http.patch(`people/${personId}`, personDetails)
+  dispatch(loadingRequest('requesting'));
+  return http.patch(`people/${personId}`, personDetails)
     .then((response: { data: { data: UserDetails; message: string; }; }) => {
-      dispatch(updatePersonSuccess(response.data.data));
-      dispatch(displaySnackMessage(response.data.message));
+      const {data: {data, message}} = response;
+      dispatch(updatePersonSuccess(data));
+      dispatch(loadingSuccess('success'));
+      dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
       const {message} = error.response.data;
-      dispatch(updatePersonFailure(message));
+      dispatch(updatePersonFailure(error));
+      dispatch(loadingError('error'));
       dispatch(displaySnackMessage(message));
     });
 }
 
-const peopleInitialState = {
+export const peopleInitialState = {
   people: [],
+  errors: null,
 };
 
 /**
@@ -129,26 +118,19 @@ const peopleInitialState = {
  * @returns {Object} state
  */
 export const reducer = (state: {
-  people: UserDetails[]
+  people: UserDetails[], errors: null,
 } = peopleInitialState, action: Action) => {
   switch (action.type) {
-    case GET_ALL_PEOPLE_REQUEST:
-      return {
-        ...state,
-        isLoading: action.isLoading,
-      };
     case GET_ALL_PEOPLE_SUCCESS:
       return {
         ...state,
         people: action.people,
         errors: null,
-        isLoading: action.isLoading,
       };
     case GET_ALL_PEOPLE_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: action.isLoading,
       };
     case UPDATE_PERSON_DETAILS_SUCCESS:
       return {
@@ -157,12 +139,12 @@ export const reducer = (state: {
           ...person,
           ...action.person,
         } : person),
+        errors: null,
       };
     case UPDATE_PERSON_DETAILS_FAILURE:
       return {
         ...state,
         errors: action.errors,
-        isLoading: action.isLoading,
       };
     default:
       return state;

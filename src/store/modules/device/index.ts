@@ -214,7 +214,7 @@ export const editDeviceRequest = (): EditDeviceActionRequest => ({
  * @param device
  * @returns {EditDeviceActionSuccess}
  */
-export const editDeviceSuccess = (id: string, device: NewDevice): EditDeviceActionSuccess => ({
+export const editDeviceSuccess = (id: string, device: { id: string }): EditDeviceActionSuccess => ({
   id,
   device,
   isLoading: false,
@@ -317,11 +317,11 @@ export const getAllDevices = () => (
 export const editDevice = (id: string, device: any) => (
   dispatch: Dispatch,
   getState: any,
-  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: NewDevice; message: string; }; }>; }
+  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: { id: string }; message: string; }; }>; }
 ) => {
   dispatch(editDeviceRequest());
   return http.patch(`devices/${id}`, device)
-    .then((response: { data: { data: NewDevice; message: string; }; }) => {
+    .then((response: { data: { data: { id: string }; message: string; }; }) => {
       const {data: {data, message}} = response;
       dispatch(editDeviceSuccess(id, data));
       dispatch(displaySnackMessage(message));
@@ -373,6 +373,7 @@ export const reducer = (state: {
         ...state,
         isLoading: action.isLoading,
         devices: [action.device, ...state.devices],
+        errors: null,
       };
     case ADD_DEVICE_FAILURE:
       return {
@@ -390,6 +391,7 @@ export const reducer = (state: {
         ...state,
         isLoading: action.isLoading,
         data: [action.device, ...state.devices],
+        errors: null,
       };
     case USER_VERIFY_DEVICE_FAILURE:
       return {
@@ -407,6 +409,7 @@ export const reducer = (state: {
         ...state,
         isLoading: action.isLoading,
         activeDevice: action.activeDevice,
+        errors: null,
       };
     case ACTIVATE_DEVICE_FAILURE:
       return {
@@ -424,6 +427,7 @@ export const reducer = (state: {
         ...state,
         devices: action.devices,
         isLoading: action.isLoading,
+        errors: null,
       };
     case GET_DEVICES_FAILURE:
       return {
@@ -441,6 +445,7 @@ export const reducer = (state: {
         ...state,
         devices: [...state.devices].filter(device => action.id !== device._id),
         isLoading: action.isLoading,
+        errors: null,
       };
     case DELETE_DEVICE_FAILURE:
       return {
@@ -461,6 +466,7 @@ export const reducer = (state: {
           ...action.device,
         } : device),
         isLoading: action.isLoading,
+        errors: null,
       };
     case EDIT_DEVICE_FAILURE:
       return {

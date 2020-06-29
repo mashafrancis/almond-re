@@ -372,7 +372,7 @@ describe('Time schedules module actions', () => {
           isLoading: true
         },
         {
-          schedule: timeSchedules.data[0],
+          schedule: mockResponse.data.data,
           type: EDIT_SCHEDULE_SUCCESS,
           isLoading: false,
           id: '5ede17f7184ccf003a2da68f',

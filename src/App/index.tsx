@@ -28,7 +28,7 @@ import checkUserRole from '@utils/helpers/checkUserRole';
 import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 // context
-import { UserContext } from '@utils/context';
+import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { MenuProvider } from '@context/MenuContext';
 

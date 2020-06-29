@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import { UserContext } from '@utils/context/Context';
+import { UserContext } from '@context/UserContext';
 
 // third party apps
 import { connect } from 'react-redux';
@@ -24,7 +24,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
   const { devices } = user;
   const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
-  const renderGoToDashboard = () => 
+  const renderGoToDashboard = () =>
     <>
       {authService.isAuthenticated()
       ?

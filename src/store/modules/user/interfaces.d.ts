@@ -42,6 +42,8 @@ export interface UserDetails {
   roles: Role[];
   permissions?: FormattedPermissions;
   currentRole: CurrentRole;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Device {

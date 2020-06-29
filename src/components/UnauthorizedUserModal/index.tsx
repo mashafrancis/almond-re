@@ -16,7 +16,6 @@ import { UnauthorizedUserModalProps } from '@components/UnauthorizedUserModal/in
 export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserModalProps> {
   /**
    * Logs the user out and reloads the page to refresh the app
-   *
    * @returns {void}
    */
   logoutAndRedirectUser = () => {
@@ -30,7 +29,7 @@ export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserM
       <Modal
         isModalOpen={this.props.isModalOpen}
         renderHeader={() => `Welcome, ${this.props.user && this.props.user.name || 'User'}`}
-        renderContent={() => 
+        renderContent={() =>
           <div>
             <p className="headline-4 modal-content">
               You are currently not authorised to access Almond.

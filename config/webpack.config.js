@@ -119,7 +119,8 @@ module.exports = {
         exclude: [
           /node_modules\/@material/,
           /node_modules\/@firebase/,
-          /src\/atomic/
+          /src\/atomic/,
+          /node_modules\/axios-cache-adapter/
         ],
       },
     ]

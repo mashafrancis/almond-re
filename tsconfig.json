@@ -53,7 +53,7 @@
     "tests",
     "dist",
     "**/*.test.tsx",
-    "./src/**/*test.tsx",
+    "**/*.test.ts",
     "nginx",
     "public",
     "jest",

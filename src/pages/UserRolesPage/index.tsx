@@ -398,7 +398,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
             />
           <React.Suspense fallback={<LinearProgressBar />}>
             <div className="user-roles-page__table">
-              { TableContent(Object.entries(props.userRoles.data)) }
+              { TableContent(Object.entries(props.userRoles.roles)) }
             </div>
           </React.Suspense>
           { UserRolePageModal() }

@@ -231,7 +231,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
 
 export const mapStateToProps = state => ({
   people: state.people.people,
-  roles: state.userRoles.data,
+  roles: state.userRoles.roles,
 });
 
 export const mapDispatchToProps = dispatch => ({

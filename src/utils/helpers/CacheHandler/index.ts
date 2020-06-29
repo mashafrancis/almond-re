@@ -12,8 +12,8 @@ class CacheHandler {
    * @returns {string}
    */
   static extractUrlEndpoint = (
-    url: string | any,
-    apiBaseUrl: string | any = process.env.ALMOND_API): string => {
+    url: string,
+    apiBaseUrl: string = process.env.ALMOND_API as string): string => {
     let baselessUrl = url.replace(apiBaseUrl, '');
 
     if (baselessUrl === '' || baselessUrl.indexOf('?') === 1) {
@@ -22,7 +22,8 @@ class CacheHandler {
 
     baselessUrl = baselessUrl.indexOf('/') === 0 ? baselessUrl : `/${baselessUrl}`;
     const endpoints = baselessUrl.match(/\/[\w\-]+/);
-    return (endpoints && endpoints[0]) || null;
+
+    return endpoints && endpoints[0] || '';
   }
 }
 
