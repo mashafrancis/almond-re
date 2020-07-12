@@ -76,7 +76,6 @@ const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay')
 export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = props => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
     isEditMode: false,
-    schedules: [],
     isDeleteModal: false,
     scheduleId: '',
     statusClass: '',
@@ -100,7 +99,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
     const getSchedules = async () => {
       await props.getAllSchedules(user.activeDevice._id);
     };
-    getSchedules().then(() => setState({ ...state, schedules: props.schedules }));
+    getSchedules().then(() => setState({ ...state, isLoading: false }));
   },              [user.activeDevice._id]);
 
   React.useEffect(() => {

@@ -113,7 +113,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
       device: activeDevice.id,
       roleSelected: props.user.currentRole.title,
     });
-  },              []);
+  },[]);
 
   React.useEffect(() => {
     const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
@@ -123,7 +123,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
       const initialSelectedIndex =  { group: 0, item: 0 };
       window.localStorage.setItem('selectedIndex', JSON.stringify(initialSelectedIndex));
     }
-  },              []);
+  },[]);
 
   const menuAnchorEl = React.useRef<any>(null);
 

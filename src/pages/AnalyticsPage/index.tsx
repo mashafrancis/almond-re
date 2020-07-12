@@ -20,13 +20,7 @@ import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';
 
 export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = props => {
   const [state, setState] = React.useState<AnalyticsPageState>({
-    isEditMode: false,
-    schedules: [],
-    isDeleteModal: false,
-    action: '',
     id: '',
-    statusClass: '',
-    isEnabled: false,
   });
 
   const user = React.useContext(UserContext);

@@ -47,7 +47,7 @@ const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
       <div className="drawer-logo">
         <div role="tablist"
              className="mdc-tab-bar"
-             onClick={() => setOpen(false)}>
+             onClick={setOpen.bind(null, false)}>
           {viewWidth && mobileHeader(name, photo)}
         </div>
       </div>
@@ -69,7 +69,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
                 <ListItem
                   key={`${groupIndex}.${itemIndex}`}
                   className={selectedIndex.group === groupIndex && selectedIndex.item === itemIndex ? 'mdc-list-item--selected' : ''}
-                  onClick={() => setSelectedIndex({ group: groupIndex, item: itemIndex }) }>
+                  onClick={setSelectedIndex.bind(null, { group: groupIndex, item: itemIndex }) }>
                   <ListItemGraphic
                     className="drawer-icon"
                     graphic={item.icon}
