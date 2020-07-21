@@ -1,4 +1,4 @@
-require('./config/dotenv')
+require('./config/dotenv');
 
 module.exports = {
   extends: [
@@ -35,4 +35,4 @@ module.exports = {
     'prettier/prettier': true,
     'selector-max-type': null,
   },
-}
+};

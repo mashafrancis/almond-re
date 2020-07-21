@@ -9,14 +9,14 @@ const timeSchedules = {
       enabled: false,
       schedule: '2020-06-08T18:00:46.817Z',
       updatedAt: '2020-06-08T10:58:28.731Z',
-      user: '5ede1715184ccf003a2da68e'
-    }
-  ]
+      user: '5ede1715184ccf003a2da68e',
+    },
+  ],
 };
 
 const timeSchedulesWithoutData = {
   ...timeSchedules,
-  data: []
+  data: [],
 };
 
 const id = '5e4a5815a04a6d8445b5885d';
@@ -27,8 +27,8 @@ const editSchedulePayload = {
 };
 const enabledStatus = {
   enabled: true,
-  device: '5e4a5815a04a6d8445b5885d'
-}
+  device: '5e4a5815a04a6d8445b5885d',
+};
 
 export {
   id,
@@ -36,5 +36,5 @@ export {
   enabledStatus,
   timeSchedules,
   timeSchedulesWithoutData,
-  editSchedulePayload
-}
+  editSchedulePayload,
+};

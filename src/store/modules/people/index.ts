@@ -1,7 +1,7 @@
 // third party libraries
-import {UserDetails} from '@modules/user/interfaces';
+import { UserDetails } from '@modules/user/interfaces';
 
-import {AnyAction} from 'redux';
+import { AnyAction } from 'redux';
 
 // thunk action creators
 import { displaySnackMessage } from '../snack';
@@ -25,9 +25,9 @@ import {
 import {
   loadingError,
   loadingRequest,
-  loadingSuccess
+  loadingSuccess,
 } from '@modules/loading';
-import {Action, ErrorObject} from '../../../shared.interfaces';
+import { Action, ErrorObject } from '../../../shared.interfaces';
 
 /**
  * Get userDetails success action creator
@@ -64,7 +64,7 @@ export const updatePersonFailure = (errors: any): UpdatePersonFailure => ({
 export const getAllPeople = () => (
   dispatch: any,
   getState: any,
-  http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[]; }; }>; }
+  http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[]; }; }>; },
 ) => {
   dispatch(loadingRequest('requesting'));
   return http.get('people')
@@ -88,23 +88,23 @@ export const getAllPeople = () => (
 export const updatePerson = (personId: string, personDetails: any): Function => (
   dispatch: any,
   getState: any,
-  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: UserDetails; message: string; }; }>; }
+  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: UserDetails; message: string; }; }>; },
 ) => {
   dispatch(loadingRequest('requesting'));
   return http.patch(`people/${personId}`, personDetails)
     .then((response: { data: { data: UserDetails; message: string; }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(updatePersonSuccess(data));
       dispatch(loadingSuccess('success'));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(updatePersonFailure(error));
       dispatch(loadingError('error'));
       dispatch(displaySnackMessage(message));
     });
-}
+};
 
 export const peopleInitialState = {
   people: [],

@@ -3,33 +3,33 @@ import {
   editUserDetails,
   getUserDetails,
   logoutUser,
-  userInitialState
+  userInitialState,
 } from '@modules/user/index';
 
 // types
 import {
   LOADING_ERROR,
   LOADING_REQUEST,
-  LOADING_SUCCESS
+  LOADING_SUCCESS,
 } from '@modules/loading/types';
 import {
   EDIT_USER_DETAILS_FAILURE,
   EDIT_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILURE,
-  GET_USER_DETAILS_SUCCESS, LOG_OUT_USER
+  GET_USER_DETAILS_SUCCESS, LOG_OUT_USER,
 } from '@modules/user/types';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
-import {authService} from '@utils/auth';
+import { authService } from '@utils/auth';
 
 // helpers
 import {
   editedUserDetailsPayload,
-  userDetails
+  userDetails,
 } from '@modules/user/fixtures';
 import {
   axiosMock,
   dispatchMethodMock,
-  reduxMockStore
+  reduxMockStore,
 } from '../../../testHelpers';
 
 
@@ -40,8 +40,8 @@ describe('User module actions', () => {
     it('should fetch and return user details', () => {
       const mockResponse = {
         data: {
-          data: userDetails.data
-        }
+          data: userDetails.data,
+        },
       };
       const expectedActions = [
         {
@@ -55,7 +55,7 @@ describe('User module actions', () => {
         {
           type: GET_USER_DETAILS_SUCCESS,
           userDetails: userDetails.data,
-        }
+        },
       ];
       const http = axiosMock('/me', mockResponse);
       const store = reduxMockStore(http, userInitialState);
@@ -63,8 +63,8 @@ describe('User module actions', () => {
       return dispatchMethodMock(
         store,
         getUserDetails(),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to fetch user details', () => {
@@ -72,8 +72,8 @@ describe('User module actions', () => {
         response: {
           data: {
             message: 'Error on fetching user details',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -88,7 +88,7 @@ describe('User module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -96,10 +96,10 @@ describe('User module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_USER_DETAILS_FAILURE,
-        }
+        },
       ];
       const http = axiosMock('/me', mockErrorResponse, false);
       const store = reduxMockStore(http, userInitialState);
@@ -107,9 +107,9 @@ describe('User module actions', () => {
       return dispatchMethodMock(
         store,
         getUserDetails(),
-        expectedActions
+        expectedActions,
       );
-    })
+    });
   });
 
   describe('Editing a user thunk', () => {
@@ -117,8 +117,8 @@ describe('User module actions', () => {
       const mockResponse = {
         data: {
           data: userDetails.data,
-          message: 'User edited successfully'
-        }
+          message: 'User edited successfully',
+        },
       };
       const expectedActions = [
         {
@@ -135,9 +135,9 @@ describe('User module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`people/${userId}`, mockResponse);
@@ -146,8 +146,8 @@ describe('User module actions', () => {
       return dispatchMethodMock(
         store,
         editUserDetails(userId, editedUserDetailsPayload),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to edit user details', () => {
@@ -155,8 +155,8 @@ describe('User module actions', () => {
         response: {
           data: {
             message: 'Error on editing user details',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -171,7 +171,7 @@ describe('User module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -179,10 +179,10 @@ describe('User module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_USER_DETAILS_FAILURE,
-        }
+        },
       ];
       const http = axiosMock(`people/${userId}`, mockErrorResponse, false);
       const store = reduxMockStore(http, userInitialState);
@@ -190,9 +190,9 @@ describe('User module actions', () => {
       return dispatchMethodMock(
         store,
         editUserDetails(userId, editedUserDetailsPayload),
-        expectedActions
+        expectedActions,
       );
-    })
+    });
   });
 
   describe('Logout action', () => {

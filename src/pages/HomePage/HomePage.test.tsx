@@ -4,8 +4,8 @@ import * as React from 'react';
 // third-party libraries
 import { shallow } from 'enzyme';
 
-import HomePage, {mapDispatchToProps, mapStateToProps} from './index';
-import { BrowserRouter } from "react-router-dom";
+import HomePage, { mapDispatchToProps, mapStateToProps } from './index';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('Home Page', () => {
   let wrapper;
@@ -19,7 +19,7 @@ describe('Home Page', () => {
     wrapper = shallow(
       <BrowserRouter>
         <HomePage {...props}/>
-      </BrowserRouter>
+      </BrowserRouter>,
     );
   });
 
@@ -38,7 +38,7 @@ describe('Home Page', () => {
 
   describe('mapStateToProps', () => {
     const state = {
-      isLoading: true
+      isLoading: true,
     };
 
     const props = mapStateToProps(state);

@@ -3,7 +3,6 @@ import * as React from 'react';
 // components
 import {
   Cell,
-  Grid,
   Row
 } from '@material/react-layout-grid';
 import {
@@ -20,7 +19,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
   const { setSelectedIndex } = menu;
 
   return (
-    <Grid>
+    <>
       <Row className="analytics-page">
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
@@ -79,7 +78,7 @@ const RegularUserAnalytics: React.FunctionComponent = () => {
             />
         </Cell>
       </Row>
-    </Grid>
+    </>
   )
 }
 

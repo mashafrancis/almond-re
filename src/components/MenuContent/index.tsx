@@ -11,7 +11,7 @@ import List, {
   ListGroupSubheader,
   ListItem,
   ListItemGraphic,
-  ListItemText
+  ListItemText,
 } from '@material/react-list';
 
 // components
@@ -35,10 +35,10 @@ const mobileHeader = (name, photo) =>
       className="mini-menu__image"
       src={photo || avatar}
       alt="avatar"
-      />
+    />
       <h5>{name || 'Anonymous'}</h5>
     </span>
-</div>
+  </div>
 ;
 
 const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
@@ -53,34 +53,33 @@ const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
       </div>
     </DrawerHeader>
   </>
-  ;
+;
 
 const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth) =>
   <>
     <ListGroup>
-      {viewWidth && <ListDivider tag="div" />}
+      {viewWidth && <ListDivider tag="div"/>}
       <List
         singleSelection
         selectedIndex={selectedIndex.item}>
         {
           checkIsAdmin().map((group, groupIndex) =>
-            <React.Fragment key={groupIndex} >
+            <React.Fragment key={groupIndex}>
               {group.map((item, itemIndex) =>
                 <ListItem
                   key={`${groupIndex}.${itemIndex}`}
                   className={selectedIndex.group === groupIndex && selectedIndex.item === itemIndex ? 'mdc-list-item--selected' : ''}
-                  onClick={setSelectedIndex.bind(null, { group: groupIndex, item: itemIndex }) }>
+                  onClick={setSelectedIndex.bind(null, { group: groupIndex, item: itemIndex })}>
                   <ListItemGraphic
                     className="drawer-icon"
                     graphic={item.icon}
-                    />
-                  <ListItemText tabIndex={0} primaryText={item.primaryText} />
-                </ListItem>
+                  />
+                  <ListItemText tabIndex={0} primaryText={item.primaryText}/>
+                </ListItem>,
               )}
-              <ListDivider tag="div" />
+              <ListDivider tag="div"/>
               {groupIndex === 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
-            </React.Fragment>
-
+            </React.Fragment>,
           )
         }
       </List>
@@ -99,7 +98,7 @@ const MenuContent: React.FunctionComponent<MenuContentProps> = props => {
 
   const { width } = useViewport();
   const breakpoint = 539;
-  const viewWidth = width < breakpoint
+  const viewWidth = width < breakpoint;
 
   const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex } = menu;
   const { isAdmin } = user;

@@ -10,7 +10,7 @@ import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
 import PageNotFound from '@components/PageNotFound';
-import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
+// import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 
 // pages and components
 // const AuthenticatedRoute = React.lazy(() => import('@components/AuthenticatedRoute'));

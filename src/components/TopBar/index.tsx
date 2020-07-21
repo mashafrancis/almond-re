@@ -12,7 +12,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import {
   Theme,
-  createStyles
+  createStyles,
 } from '@material-ui/core/styles';
 
 // icons
@@ -20,12 +20,11 @@ import {
   Timeline,
   NotificationsNone,
   Notifications,
-  ArrowDropDown
+  ArrowDropDown,
 } from '@material-ui/icons';
 
 // utils
 import { UserContext } from '@context/UserContext';
-import { useViewport } from '../../hooks';
 import { MenuContext } from '@context/MenuContext';
 import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
@@ -35,9 +34,9 @@ import { ElevationBarProps, TopBarProps } from './interfaces';
 // styles
 import {
   useTopBarStyles,
-  StyledBadge
+  StyledBadge,
 } from '@components/TopBar/styles';
-import '@pages/DashboardContainer/DashboardNavBar.scss'
+import '@pages/DashboardContainer/DashboardNavBar.scss';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const ElevationScroll = (props: ElevationBarProps) => {
@@ -45,7 +44,7 @@ const ElevationScroll = (props: ElevationBarProps) => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
-    target: window ? window() : undefined
+    target: window ? window() : undefined,
   });
 
   return React.cloneElement(children, {
@@ -61,16 +60,13 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const {
     activityLogsViewed,
     toggleActivityDrawer,
-    setDeviceModalOpen
+    setDeviceModalOpen,
   } = menu;
 
   const {
     isActivityLogsEmpty,
-    children
+    children,
   } = props;
-
-  const { width } = useViewport();
-  const breakpoint = 539;
 
   const classes = useTopBarStyles();
 
@@ -100,14 +96,14 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const renderDeviceDisplay = () =>
     <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
-         variant="dot"
-         overlap="circle"
-         anchorOrigin={{
-           vertical: 'top',
-           horizontal: 'left',
-         }}>
+        variant="dot"
+        overlap="circle"
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}>
         <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-        <ArrowDropDown onClick={setDeviceModalOpen.bind(null,true)} />
+        <ArrowDropDown onClick={setDeviceModalOpen.bind(null, true)}/>
       </DeviceActiveBadge>
     </div>
   ;
@@ -121,7 +117,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
       }}
       variant="dot"
       invisible={isActivityLogsEmpty != activityLogsViewed}>
-      <Timeline onClick={toggleActivityDrawer.bind(null,true, true)} />
+      <Timeline onClick={toggleActivityDrawer.bind(null, true, true)}/>
     </StyledBadge>
   ;
 
@@ -129,7 +125,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
   const notifications = ['true'];
 
   const notificationsIcon = () => (
-    isArrayNotNull(notifications.length) ? <NotificationsNone /> :
+    isArrayNotNull(notifications.length) ? <NotificationsNone/> :
       <StyledBadge
         anchorOrigin={{
           vertical: 'bottom',
@@ -138,42 +134,41 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
         overlap="circle"
         invisible={isArrayNotNull(notifications.length)}
         variant="dot">
-        <Notifications style={{ color: '#1967D2' }} />
+        <Notifications style={{ color: '#1967D2' }}/>
       </StyledBadge>
-  )
+  );
 
   const topIcons = [
     { icon: timeLineIcon() },
     { icon: notificationsIcon() },
-    { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} /> }
+    { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog}/> },
   ];
 
   const renderTopIcons = () =>
     <div className={classes.sectionEnd}>
-        {
-          topIcons.map((topIcon, index) =>
-            <span key={index} className="top-bar-icons">{topIcon.icon}</span>
-
-          )
-        }
+      {
+        topIcons.map((topIcon, index) =>
+          <span key={index} className="top-bar-icons">{topIcon.icon}</span>,
+        )
+      }
     </div>
   ;
 
   return (
     <>
-      <CssBaseline />
-      <ElevationScroll { ...props }>
+      <CssBaseline/>
+      <ElevationScroll {...props}>
         <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed">
           <Toolbar variant="dense">
             <div className="appbar-section appbar-section-start">
               <NavLink to="/">
-              <img
-                className="drawer-logo__image"
-                src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
-                alt="Logo"
+                <img
+                  className="drawer-logo__image"
+                  src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
+                  alt="Logo"
                 />
               </NavLink>
-            {!isAdmin && renderDeviceDisplay()}
+              {!isAdmin && renderDeviceDisplay()}
             </div>
             <div className="appbar-section appbar-section-end">
               {renderTopIcons()}
@@ -182,7 +177,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
         </AppBar>
       </ElevationScroll>
       <div className="mdc-top-app-bar--fixed-adjust">
-        { children }
+        {children}
       </div>
     </>
   );

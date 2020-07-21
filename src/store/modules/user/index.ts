@@ -14,7 +14,7 @@ import {
 } from './interfaces';
 
 // helper functions
-import {authService} from '@utils/auth';
+import { authService } from '@utils/auth';
 import formatPermissions from '@utils/helpers/formatPermissions';
 
 // types
@@ -30,7 +30,7 @@ import {
 import {
   loadingError,
   loadingRequest,
-  loadingSuccess
+  loadingSuccess,
 } from '@modules/loading';
 
 import { ErrorObject } from '../../../shared.interfaces';
@@ -60,7 +60,7 @@ export const getUserDetailsFailure = (errors: any): GetUserDetailsActionFailure 
  */
 export const editUserDetailsSuccess = (userDetails: UserDetails): EditUserDetailsSuccess => ({
   userDetails,
-  type: EDIT_USER_DETAILS_SUCCESS
+  type: EDIT_USER_DETAILS_SUCCESS,
 });
 
 /**
@@ -69,14 +69,14 @@ export const editUserDetailsSuccess = (userDetails: UserDetails): EditUserDetail
  */
 export const editUserDetailsFailure = (errors: any): EditUserDetailsFailure => ({
   errors,
-  type: EDIT_USER_DETAILS_FAILURE
+  type: EDIT_USER_DETAILS_FAILURE,
 });
 
 /**
  * Log-out user action
  * @returns {Action}
  */
-export const logoutUserAction = (): Action => ({type: LOG_OUT_USER});
+export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
 
 /**
  * Gets user details
@@ -85,7 +85,7 @@ export const logoutUserAction = (): Action => ({type: LOG_OUT_USER});
 export const getUserDetails = () => (
   dispatch: any,
   getState: any,
-  http: { get: (arg0: string) => Promise<{ data: { data: UserDetails; }; }>; }
+  http: { get: (arg0: string) => Promise<{ data: { data: UserDetails; }; }>; },
 ) => {
   dispatch(loadingRequest('requesting'));
   return http.get('me')
@@ -110,22 +110,22 @@ export const getUserDetails = () => (
 export const editUserDetails = (userId: string, userDetails: any) => (
   dispatch: any,
   getState: any,
-  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: any; message: any; }; }>; }
-  ) => {
+  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: any; message: any; }; }>; },
+) => {
   dispatch(loadingRequest('requesting'));
-    return http.patch(`people/${userId}`, userDetails)
-      .then((response: { data: { data: any; message: any; }; }) => {
-        const { data, message } = response.data;
-        dispatch(loadingSuccess('success'));
-        dispatch(editUserDetailsSuccess(data));
-        dispatch(displaySnackMessage(message));
-      })
-      .catch((error: ErrorObject) => {
-        dispatch(loadingError('error'));
-        errorOnSnack(error, dispatch, 'updating your details');
-        dispatch(editUserDetailsFailure(error))
-      });
-  }
+  return http.patch(`people/${userId}`, userDetails)
+    .then((response: { data: { data: any; message: any; }; }) => {
+      const { data, message } = response.data;
+      dispatch(loadingSuccess('success'));
+      dispatch(editUserDetailsSuccess(data));
+      dispatch(displaySnackMessage(message));
+    })
+    .catch((error: ErrorObject) => {
+      dispatch(loadingError('error'));
+      errorOnSnack(error, dispatch, 'updating your details');
+      dispatch(editUserDetailsFailure(error));
+    });
+};
 
 /**
  * Log-out user action creator
@@ -161,7 +161,7 @@ export const reducer = (state = userInitialState, action: AnyAction) => {
       return {
         ...state,
         errors: action.errors,
-      }
+      };
     case EDIT_USER_DETAILS_SUCCESS:
       return {
         ...state,
@@ -171,7 +171,7 @@ export const reducer = (state = userInitialState, action: AnyAction) => {
       return {
         ...state,
         errors: action.errors,
-      }
+      };
     default:
       return state;
   }

@@ -3,19 +3,15 @@ import * as React from 'react';
 // interfaces
 import {
   FormFieldProps,
-  FormFieldState
+  FormFieldState,
 } from '@components/FormField/interfaces';
 
 // components
 import {
   InputAdornment,
-  MenuItem,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-// styles
-// import './FormField.scss';
 
 const ValidationTextField = withStyles({
   root: {
@@ -54,7 +50,7 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
     e.preventDefault();
 
     const { required, labelText, validator = f => f, onStateChanged = f => f } = this.props;
-    const {value} = e.target;
+    const { value } = e.target;
     const name = e.target.id;
     const isEmpty = value.length === 0;
     const requiredMissing = this.state.dirty && required && isEmpty;
@@ -75,11 +71,12 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
       value,
       errors,
       name,
-      dirty: !dirty || dirty }), () => onStateChanged(this.state));
-  }
+      dirty: !dirty || dirty,
+    }), () => onStateChanged(this.state));
+  };
 
   render() {
-    const { value, dirty, errors } = this.state;
+    const { value, errors } = this.state;
     const {
       type,
       label,
@@ -113,35 +110,10 @@ export class FormField extends React.Component<FormFieldProps, FormFieldState> {
         }}
         InputProps={{
           startAdornment: <InputAdornment position="start">
-            { leadingIcon }
+            {leadingIcon}
           </InputAdornment>,
         }}
-        />
-      // <TextField
-      //   className="mdc-text-field--fullwidth"
-      //   outlined
-      //   label={labelText}
-      //   leadingIcon={leadingIcon}
-      //   onLeadingIconSelect={onLeadingIconSelect}
-      //   trailingIcon={trailingIcon}
-      //   helperText={
-      //     <HelperText
-      //       className="mdc-text-field-invalid-helper"
-      //       isValidationMessage={hasErrors && errors[0]}
-      //       persistent={hasErrors && errors[0]}
-      //       validation={hasErrors && errors[0]}>
-      //       {errors[0]}
-      //     </HelperText>}
-      // >
-      //   <Input
-      //     value={value || props.value}
-      //     name={labelText}
-      //     id={id}
-      //     type={type}
-      //     isValid={!(hasErrors && errors[0])}
-      //     required={required}
-      //     onChange={this.hasChanged}/>
-      // </TextField>
+      />
     );
   }
 }

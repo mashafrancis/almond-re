@@ -13,5 +13,5 @@ const options = {
   key: KEY,
   cert: CERT,
   secureProtocol: 'TLSv1_method',
-  protocolVersion: 3
+  protocolVersion: 3,
 };

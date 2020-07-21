@@ -19,7 +19,7 @@ export const reducer = (state: never[] = activityLogsInitialState, action: AnyAc
     return [
       ...state,
       ...action.activityLogs,
-    ]
+    ];
   }
   return state;
 };

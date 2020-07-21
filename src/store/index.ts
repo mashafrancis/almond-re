@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
@@ -19,16 +19,16 @@ const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 const reduxMiddleware = [
   thunk.withExtraArgument(cachedHttp),
   // thunk.withExtraArgument(getFirebase)
-]
+];
 
 const devMiddleware = composeEnhancers(
   applyMiddleware(
     ...reduxMiddleware,
-    reduxImmutableStateInvariant()
-  )
+    reduxImmutableStateInvariant(),
+  ),
 );
 const prodMiddleware = applyMiddleware(
-  ...reduxMiddleware
+  ...reduxMiddleware,
 );
 
 const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prodMiddleware;
@@ -36,7 +36,7 @@ const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prod
 const store = createStore(
   rootReducer,
   {},
-  middleware
+  middleware,
 );
 
 export default store;

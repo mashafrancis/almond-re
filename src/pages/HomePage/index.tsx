@@ -27,13 +27,13 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
   const renderGoToDashboard = () =>
     <>
       {authService.isAuthenticated()
-      ?
+        ?
         <NavLink to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}>
           <button className="mdc-button mdc-button--raised">
             <span className="mdc-button__label">Go to dashboard</span>
           </button>
         </NavLink>
-      :
+        :
         <button className="mdc-button mdc-button--raised" onClick={handleLogin}>
           <span className="mdc-button__label">Login with Google</span>
         </button>
@@ -45,13 +45,13 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
     <div className="background-cover">
       <main className="home-cover">
         <section className="logo">
-          <Logo />
+          <Logo/>
         </section>
         <section className="home-image">
           <div className="image-wrapper">
             <img src="https://res.cloudinary.com/almondgreen/image/upload/v1576510738/Almond/homepage_e7ugfb.svg"
                  alt="Almond Image"
-                 />
+            />
           </div>
         </section>
         <section id="hero">

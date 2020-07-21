@@ -11,10 +11,10 @@
  */
 const capitalize = (paragraph: string) => {
   const lowerCaseParagraph = paragraph.toLowerCase();
-  const uncapitalizedNewSentencePattern = /([!?.]\s+)([a-z])/g; // eg . r
+  const unCapitalizedNewSentencePattern = /([!?.]\s+)([a-z])/g; // eg . r
   const paragraphWithCapitalizedSentence = lowerCaseParagraph.replace(
-    uncapitalizedNewSentencePattern,
-    (match, symbolWithSpace, firstLetter) => symbolWithSpace + firstLetter.toUpperCase()
+    unCapitalizedNewSentencePattern,
+    (match, symbolWithSpace, firstLetter) => symbolWithSpace + firstLetter.toUpperCase(),
   );
 
   return paragraphWithCapitalizedSentence.charAt(0).toUpperCase() + paragraphWithCapitalizedSentence.substring(1);

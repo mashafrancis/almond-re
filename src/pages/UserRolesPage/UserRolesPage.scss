@@ -10,18 +10,18 @@
       font-size: 22px;
       font-weight: 300;
       line-height: 22px;
-      color: #333333;
+      color: #333;
     }
   }
 
   &__table {
     &__action-buttons {
-      cursor: pointer;
       color: #1967d2;
+      cursor: pointer;
 
       .delete {
         margin-left: 20px;
-        color: #9E143E;
+        color: #9e143e;
 
         @media (max-width: 539px) {
           margin-left: 10px;
@@ -30,16 +30,17 @@
     }
 
     //.tbl-row {
-      //font-size: 15px;
+    //font-size: 15px;
     //}
 
     @media (max-width: 539px) {
       .tbl-row {
-        font-size: 12px;
         height: auto;
+        font-size: 12px;
       }
 
-      .tbl-header, .tbl-row {
+      .tbl-header,
+      .tbl-row {
         padding-right: 10px;
         padding-left: 10px;
       }
@@ -49,16 +50,16 @@
 
 .add-role-form {
   &__header {
-    margin-right: 2rem;
     padding-bottom: 1rem;
+    margin-right: 2rem;
   }
 
   &__close-button {
+    float: right;
     margin: -25px;
     font-weight: 300;
+    color: #333;
     cursor: pointer;
-    color: #333333;
-    float: right;
     transform: scale(1.8, 1.2);
   }
 
@@ -90,11 +91,11 @@
 }
 
 .permissions {
-  background-color: rgba(25, 103, 210, 0.03);
   width: auto;
   padding-bottom: 25px;
-  border-radius: 8px;
+  background-color: rgba(25, 103, 210, 0.03);
   border: 1px solid #dadce0;
+  border-radius: 8px;
 
   &__tbl-header {
     display: flex;
@@ -102,12 +103,12 @@
     padding-left: 24px;
 
     &__column {
-      flex: 1;
+      padding-right: 11px;
       font-size: 13px;
       font-weight: 300;
       line-height: 17px;
       color: rgba(25, 103, 210, 0.87);
-      padding-right: 11px;
+      flex: 1;
 
       @media (max-width: 539px) {
         font-size: 13px;
@@ -129,11 +130,11 @@
     margin-bottom: 28px;
 
     &__item {
-      flex: 1;
       font-size: 13px;
       font-weight: 300;
       line-height: 20px;
       color: rgba(37, 37, 37, 0.67);
+      flex: 1;
       @media (max-width: 539px) {
         font-size: 13px;
       }

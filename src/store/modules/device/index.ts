@@ -42,7 +42,7 @@ import {
   GET_DEVICES_SUCCESS,
   USER_VERIFY_DEVICE_FAILURE,
   USER_VERIFY_DEVICE_REQUEST,
-  USER_VERIFY_DEVICE_SUCCESS
+  USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
 import { displaySnackMessage } from '../snack';
 
@@ -240,17 +240,17 @@ export const editDeviceFailure = (errors: any): EditDeviceActionFailure => ({
 export const addNewDevice = (device: { id: string; }) => (
   dispatch: Dispatch,
   getState: any,
-  http: { post: (arg0: string, arg1: { id: string; }) => Promise<{ data: { data: NewDevice; message: string; }; }>; }
+  http: { post: (arg0: string, arg1: { id: string; }) => Promise<{ data: { data: NewDevice; message: string; }; }>; },
 ) => {
   dispatch(addDeviceRequest());
   return http.post('devices', device)
     .then((response: { data: { data: NewDevice; message: string; }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(addDeviceSuccess(data));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(addDeviceFailure(error));
     });
@@ -259,17 +259,17 @@ export const addNewDevice = (device: { id: string; }) => (
 export const verifyUserDevice = (id: string) => (
   dispatch: Dispatch,
   getState: any,
-  http: { post: (arg0: string, arg1: string) => Promise<{ data: { data: VerifyDevice; message: string; }; }>; }
+  http: { post: (arg0: string, arg1: string) => Promise<{ data: { data: VerifyDevice; message: string; }; }>; },
 ) => {
   dispatch(verifyDeviceRequest());
   return http.post('my-device', id)
     .then((response: { data: { data: VerifyDevice; message: string; }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(verifyDeviceSuccess(data));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(verifyDeviceFailure(error));
     });
@@ -278,17 +278,17 @@ export const verifyUserDevice = (id: string) => (
 export const activateDevice = (id: string) => (
   dispatch: Dispatch,
   getState: any,
-  http: { patch: (arg0: string, arg1: string) => Promise<{ data: { data: ActivateDevice; message: string; }; }>; }
+  http: { patch: (arg0: string, arg1: string) => Promise<{ data: { data: ActivateDevice; message: string; }; }>; },
 ) => {
   dispatch(activateDeviceRequest());
   return http.patch('active-device', id)
     .then((response: { data: { data: ActivateDevice; message: string; }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(activateDeviceSuccess(data));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(activateDeviceFailure(error));
     });
@@ -297,18 +297,18 @@ export const activateDevice = (id: string) => (
 export const getAllDevices = () => (
   dispatch: Dispatch,
   getState: any,
-  http: { get: (arg0: string, arg1: { signal: AbortSignal; }) => Promise<{ data: { data: Device[]; }; }>; }
+  http: { get: (arg0: string, arg1: { signal: AbortSignal; }) => Promise<{ data: { data: Device[]; }; }>; },
 ) => {
   dispatch(getDevicesRequest());
   const abortController = new AbortController();
-  const {signal} = abortController;
-  return http.get('devices', {signal})
+  const { signal } = abortController;
+  return http.get('devices', { signal })
     .then((response: { data: { data: Device[]; }; }) => {
-      const {data: {data}} = response;
+      const { data: { data } } = response;
       dispatch(getDevicesSuccess(data));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(getDevicesFailure(error));
     });
@@ -317,17 +317,17 @@ export const getAllDevices = () => (
 export const editDevice = (id: string, device: any) => (
   dispatch: Dispatch,
   getState: any,
-  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: { id: string }; message: string; }; }>; }
+  http: { patch: (arg0: string, arg1: any) => Promise<{ data: { data: { id: string }; message: string; }; }>; },
 ) => {
   dispatch(editDeviceRequest());
   return http.patch(`devices/${id}`, device)
     .then((response: { data: { data: { id: string }; message: string; }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(editDeviceSuccess(id, data));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(editDeviceFailure(error));
     });
@@ -336,17 +336,17 @@ export const editDevice = (id: string, device: any) => (
 export const deleteDevice = (id: string) => (
   dispatch: Dispatch,
   getState: any,
-  http: { delete: (arg0: string) => Promise<{ data: { message: string; }; }>; }
+  http: { delete: (arg0: string) => Promise<{ data: { message: string; }; }>; },
 ) => {
   dispatch(deleteSingleDeviceRequest());
   return http.delete(`devices/${id}`)
     .then((response: { data: { message: string; }; }) => {
-      const {data: {message}} = response;
+      const { data: { message } } = response;
       dispatch(deleteSingleDeviceSuccess(id));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       dispatch(displaySnackMessage(message));
       dispatch(deleteSingleDeviceFailure(error));
     });

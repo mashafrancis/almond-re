@@ -23,5 +23,6 @@ export const personToUpdate = {
   _id: '5ef359a217b19792a3f19ddc',
   currentRole: {
     _id: '5e555801465ca301b1143b90',
-    title: 'Test' },
+    title: 'Test',
+  },
 };

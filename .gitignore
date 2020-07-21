@@ -86,3 +86,6 @@ dist/
 /.env
 /.firebase/
 /.env.production
+/env-config.js
+/.env.random
+/public/env-config.js

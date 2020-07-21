@@ -4,12 +4,12 @@ import {
   getUserDetailsFailure,
   getUserDetailsSuccess,
   reducer,
-  userInitialState
+  userInitialState,
 } from '@modules/user/index';
 import { errorMessage } from '../../../testHelpers';
 
 // helpers
-import { userDetails } from '@modules/user/fixtures'
+import { userDetails } from '@modules/user/fixtures';
 
 describe('User reducer', () => {
   const { data } = userDetails;

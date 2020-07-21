@@ -5,7 +5,6 @@ docker/
 
 .circleci/
 .git/
-.env
 .env.example
 .gitignore
 README.md

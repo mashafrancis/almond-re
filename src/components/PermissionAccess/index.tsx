@@ -9,7 +9,6 @@ import { PermissionAccessProps, PermissionAccessState } from './interfaces';
 
 // helpers
 import capitalize from '@utils/helpers/capitalize';
-import ensure from '@utils/helpers/arrayCheck';
 import { Permission, Resource } from '@modules/userRoles/interfaces';
 
 class PermissionAccess extends React.Component<PermissionAccessProps, PermissionAccessState> {
@@ -30,10 +29,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
   };
 
   async componentDidMount() {
-    await this.setState({
+    await this.setState(prevState => ({
+      ...prevState,
       resources: this.props.resources,
       permissions: this.props.permissions,
-    });
+    }));
     if (this.state.resources.length && this.state.permissions.length) {
       /*
        * Force the order of the permissions to start with full access
@@ -50,10 +50,11 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
 
   componentDidUpdate(prevProps) {
     if (prevProps.resources !== this.props.resources) {
-      this.setState({
+      this.setState(prevState => ({
+        ...prevState,
         resources: this.props.resources,
         permissions: this.props.permissions,
-      });
+      }));
 
       Object.keys(this.mappedPermissions)
         .forEach((permissionString: string) => {
@@ -104,13 +105,14 @@ class PermissionAccess extends React.Component<PermissionAccessProps, Permission
           : [...currentPermissionIds, permissionId];
       };
     }
-    this.setState({
-      resources: this.state.resources.map((resource: Resource) => resource._id === resourceId ? {
+    this.setState(prevState => ({
+      ...prevState,
+      resources: prevState.resources.map((resource: Resource) => resource._id === resourceId ? {
         ...resource,
         // @ts-expect-error
         permissionIds: getNewPermissionIds(resource.permissionIds || []),
       } : resource),
-    },            () => this.props.getResources(this.state.resources));
+    }),            () => this.props.getResources(this.state.resources));
   }
 
   /**

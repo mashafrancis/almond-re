@@ -32,7 +32,7 @@ import DeviceManagementPage from '@pages/DeviceManagementPage';
 import PeoplePage from '@pages/PeoplePage';
 import UserRolesPage from '@pages/UserRolesPage';
 
-//:TODO: Implement React Suspense lazy loading once feature is released
+// :TODO: Implement React Suspense lazy loading once feature is released
 // pages
 // const AnalyticsPage = React.lazy(() => import('@pages/AnalyticsPage'));
 // const DeviceManagementPage = React.lazy(() => import('@pages/DeviceManagementPage'));

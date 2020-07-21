@@ -18,8 +18,6 @@ import {
   USER_VERIFY_DEVICE_REQUEST,
   USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
-import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
-import { CurrentRole, Role } from '@modules/user/interfaces';
 
 export interface AddDeviceActionRequest {
   type: ADD_DEVICE_REQUEST;

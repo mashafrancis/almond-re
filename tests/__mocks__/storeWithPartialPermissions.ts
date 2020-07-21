@@ -1,4 +1,5 @@
 import store from '../../src/store';
+
 jest.mock('../../src/store');
 
 const mockState = {

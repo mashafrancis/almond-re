@@ -4,22 +4,23 @@
 }
 
 .MuiTypography-h2 {
+  font-family: 'Google Sans', sans-serif !important;
   font-size: 3.85rem;
-  font-family: "Google Sans", sans-serif !important;
 }
 
 .MuiPaper-rounded {
   border-radius: 8px;
 }
 
-.headline-5, h5 {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+.headline-5,
+h5 {
+  margin-top: 0;
   font-size: 0.85rem !important;
   font-weight: 300;
   line-height: 1.25rem;
-  color: #7D7D7D;
-  margin-top: 0;
+  color: #7d7d7d;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 .MuiGrid-spacing-xs-2 {

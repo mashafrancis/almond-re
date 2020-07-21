@@ -6,6 +6,8 @@
 [![CircleCI](https://circleci.com/gh/almond-hydroponics/almond-re.svg?style=svg)](https://circleci.com/gh/almond-hydroponics/almond-re)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1787ab6745c18d366de9/maintainability)](https://codeclimate.com/github/almond-hydroponics/almond-re/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1787ab6745c18d366de9/test_coverage)](https://codeclimate.com/github/almond-hydroponics/almond-re/test_coverage)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/almond-hydroponics/almond-re.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/almond-hydroponics/almond-re/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/almond-hydroponics/almond-re.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/almond-hydroponics/almond-re/alerts/)
 
 </div>
 
@@ -25,7 +27,7 @@ This application will be used in a hydroponics farm control system to be used at
 ### Application Heroku Links
 
 -   Backend (Swagger Documentation):
-    [swagger-documentation](https://kari4me-api.herokuapp.com/)
+    [swagger-documentation](https://almond-re.herokuapp.com/)
 
 -   Frontend (Almond App Hosting):
     [almond web app](https://almond-re-staging.herokuapp.com/)
@@ -52,14 +54,14 @@ This application will be used in a hydroponics farm control system to be used at
 - Add the following line to your `hosts` file:
 
   ```bash
-    127.0.0.1 almond.com
+    127.0.0.1 froyo.almond.com
   ```
 
 - Save changes and quit the editor.
 
 ### Development server
 
-Run `yarn start:dev` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
+Run `yarn start:dev` for a dev server. Navigate to `http://froyo.almond.com:3000/`. The app will automatically reload if you change any of the source files.
 
 ### Build
 

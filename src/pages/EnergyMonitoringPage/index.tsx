@@ -3,7 +3,6 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Grid,
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
@@ -18,23 +17,12 @@ import './EnergyMonitoringPage.scss';
 
 // interfaces
 import {
-  EnergyMonitoringPageProps,
-  EnergyMonitoringPageState
+  EnergyMonitoringPageProps
 } from './interfaces';
 
 export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageProps> = props => {
-  const [state, setState] = React.useState<EnergyMonitoringPageState>({
-    isEditMode: false,
-    schedules: [],
-    isDeleteModal: false,
-    action: '',
-    id: '',
-    statusClass: '',
-    isEnabled: false,
-  });
-
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           {(window.innerWidth < 539) && <div className="main-subheader"><h3>EnergyMonitoring</h3></div>}
@@ -49,7 +37,7 @@ export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageP
             />
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 

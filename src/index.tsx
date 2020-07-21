@@ -15,8 +15,8 @@ import store from './store';
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App />
+      <App/>
     </Router>
   </Provider>,
-  document.getElementById('root') || document.createElement('div')
+  document.getElementById('root') || document.createElement('div'),
 );

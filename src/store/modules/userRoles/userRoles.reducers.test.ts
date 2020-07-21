@@ -105,7 +105,7 @@ describe('User roles reducer:', () => {
       const updatedUserRole = userRolesState.roles.find(role => role._id === userRoleToUpdate._id);
 
       expect(userRolesState.isLoading).toBeFalsy();
-      expect(updatedUserRole.title).toEqual('Random User')
+      expect(updatedUserRole.title).toEqual('Random User');
       expect(userRolesState.errors).toBe(null);
     });
 

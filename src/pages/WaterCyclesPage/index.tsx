@@ -3,20 +3,18 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Grid,
-  Row
+  Row,
 } from '@material/react-layout-grid';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import { DefinedRange } from 'react-date-range';
-import { useMqttState } from 'mqtt-hooks';
+// import { useMqttState } from 'mqtt-hooks';
 
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   IconButton,
   InputAdornment,
-  Switch
+  Switch,
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import LinearProgressBar from '@components/LinearProgressBar';
@@ -28,8 +26,7 @@ import {
   ScheduleTwoTone,
   AddAlarmTwoTone,
   ArrowDropDown,
-  FilterList,
-  DateRange
+  DateRange,
 } from '@material-ui/icons';
 
 // thunks
@@ -54,13 +51,12 @@ import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
 import './WaterCyclesPage.scss';
 import {
   ToggleSwitch,
-  useWaterCyclesPageStyles
 } from '@pages/WaterCyclesPage/styles';
 
 // interfaces
 import {
   WaterCyclesPageProps,
-  WaterCyclesPageState
+  WaterCyclesPageState,
 } from './interfaces';
 import roundDigit from '@utils/helpers/roundDigit';
 
@@ -73,7 +69,7 @@ const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
 const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
 
-export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = props => {
+export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const [state, setState] = React.useState<WaterCyclesPageState>({
     isEditMode: false,
     isDeleteModal: false,
@@ -92,31 +88,26 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
 
-  const { mqtt } = useMqttState();
+  // const { mqtt } = useMqttState();
 
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
-    const getSchedules = async () => {
-      await props.getAllSchedules(user.activeDevice._id);
-    };
+    const getSchedules = async () => await props.getAllSchedules(user.activeDevice._id);
     getSchedules().then(() => setState({ ...state, isLoading: false }));
-  },              [user.activeDevice._id]);
+  }, [user.activeDevice._id]);
 
   React.useEffect(() => {
     props.getPumpStatus(user.activeDevice._id)
       .then(() => setState({ ...state, isEnabled: props.enabled }));
-  },              [user.activeDevice._id]);
+  }, [user.activeDevice._id]);
 
   React.useEffect(() => {
     const { selectedTimeSchedule } = state;
     const schedules = [...new Set(props.schedules.map(item => item.schedule))];
     const validate = validateOneHourTime(schedules, selectedTimeSchedule);
-    if (validate) {
-      setState({ ...state, hasError: true });
-    } else if (!validate || undefined) {
-      setState({ ...state, hasError: false });
-    }
-  },              [state.selectedTimeSchedule]);
+    if (validate) setState({ ...state, hasError: true });
+    setState({ ...state, hasError: false });
+  }, [state.selectedTimeSchedule]);
 
   // React.useEffect(() => {
   //   props.getWaterData();
@@ -134,14 +125,14 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
   // },              [state.scheduleToEdit]);
 
   const heightOfTank = 11; // units in centimeters
-  const waterLevel = heightOfTank <= 11 ? props.waterData.waterLevel || heightOfTank : heightOfTank;
-  const heightOfWater = roundDigit(((heightOfTank - waterLevel)/heightOfTank) * 100, 0);
+  const waterLevel = heightOfTank ? (props.waterData.waterLevel || heightOfTank) : heightOfTank;
+  const heightOfWater = roundDigit(((heightOfTank - waterLevel) / heightOfTank) * 100, 0);
 
   const PumpSwitch = withStyles({
     switchBase: {
-      color:'#FFFFFF',
+      color: '#FFFFFF',
       '&$checked': {
-        color:'#1967D2',
+        color: '#1967D2',
       },
       '&$checked + $track': {
         backgroundColor: '#1967D2',
@@ -150,7 +141,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
     thumb: {
       width: 20,
       height: 20,
-      animation: '$blink 1s ease infinite'
+      animation: '$blink 1s ease infinite',
     },
     checked: {},
     track: {
@@ -172,11 +163,11 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
         .then(() => setState({ ...state, statusClass: '' }));
   };
 
-  const handleClick = message => mqtt.publish('almond/pump', message)
+  // const handleClick = message => mqtt.publish('almond/pump', message);
 
-  const handleToggleStatusChange = (event, schedule) => {
+  const handleToggleStatusChange = async (event, schedule) => {
     const { checked } = event.target;
-    props.toggleScheduleStatus(schedule._id,  { enabled: checked, device: user.activeDevice._id });
+    await props.toggleScheduleStatus(schedule._id, { enabled: checked, device: user.activeDevice._id });
   };
 
   const handleAddTimeSchedule = value => setState({ ...state, selectedTimeSchedule: value });
@@ -272,7 +263,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       onSubmit={onAddEditScheduleSubmit}
       onDismiss={closeScheduleModal}
       disabled={state.hasError}
-      />
+    />
   ;
 
   const DeleteScheduleModal = () =>
@@ -284,15 +275,15 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       submitButtonName="Delete schedule"
       onSubmit={handleScheduleDelete}
       onDismiss={toggleScheduleDeleteModal}
-      />
+    />
   ;
 
   const ActionButtons = schedule =>
     <div key={schedule} className="action-buttons">
-      <span id={schedule} onClick={ showScheduleModal('Edit')}>
+      <span id={schedule} onClick={showScheduleModal('Edit')}>
         <h5 id={schedule} className="action-buttons__edit">Edit</h5>
       </span>
-      <span id={schedule} onClick={ () => setState({ ...state, scheduleId: schedule, isDeleteModal: true })}>
+      <span id={schedule} onClick={() => setState({ ...state, scheduleId: schedule, isDeleteModal: true })}>
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
@@ -310,9 +301,9 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
       time: `${moment(schedule[1].schedule).format('LT')}`,
       actions: ActionButtons(schedule[1]._id),
       status: <ToggleSwitch
-                checked={schedule[1].enabled}
-                onChange={e => handleToggleStatusChange(e, schedule[1])}
-                />,
+        checked={schedule[1].enabled}
+        onChange={e => handleToggleStatusChange(e, schedule[1])}
+      />,
     }));
 
     return (
@@ -320,7 +311,7 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
         keys={tableHeaders}
         values={tableValues}
         statusClass={state.statusClass}
-        />
+      />
     );
   };
 
@@ -349,18 +340,18 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
                 startAdornment:
                   <InputAdornment position="start">
                     <IconButton href="#">
-                      <AddAlarmTwoTone style={{ color: '#1967D2' }} />
+                      <AddAlarmTwoTone style={{ color: '#1967D2' }}/>
                     </IconButton>
                   </InputAdornment>
                 ,
               }}
-              />
+            />
           </MuiPickersUtilsProvider>
           <p
             className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
             mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
             aria-hidden="false"
-            />
+          />
         </div>
       </>
     );
@@ -368,14 +359,14 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
 
   // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">
-            <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null,true)}>
+            <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null, true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
-                <ArrowDropDown />
+                <ArrowDropDown/>
               </h3>
             </div>
           </div>
@@ -386,36 +377,36 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
           <GeneralCardInfo
             mainHeader="Manual Override"
             subHeader="Pump water directly into the system"
-            icon={<BlurCircular className="content-icon general-info-icon" />}
+            icon={<BlurCircular className="content-icon general-info-icon"/>}
             actionItem={
               <PumpSwitch
                 className="manual-override"
                 onChange={e => handleTogglePumpOnChange(e)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
-                />
+              />
             }
-            />
+          />
           <CardInfo
             mainHeader="Water Schedules"
             subHeader="Create a new water schedule for your pump cycle"
-            icon={<ScheduleTwoTone className="content-icon" />}
+            icon={<ScheduleTwoTone className="content-icon"/>}
             buttonName="Add schedule"
             onClick={showScheduleModal('Add')}
-            />
+          />
           <DashboardCard
             classes="recent-activities-available"
             heading="Water Schedules"
             body={
               props.schedules.length > 0 ?
-                <React.Suspense fallback={<LinearProgressBar />}>
+                <React.Suspense fallback={<LinearProgressBar/>}>
                   {TableContent(Object.entries(props.schedules))}
                 </React.Suspense>
                 : BlankContent(
-                'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump'
+                'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump',
                 )
             }
-            />
+          />
           {AddEditScheduleModal()}
           {DeleteScheduleModal()}
         </Cell>
@@ -430,24 +421,24 @@ export const WaterCyclesPage: React.FunctionComponent<WaterCyclesPageProps> = pr
                 data={[waterLevel, heightOfTank - waterLevel]}
                 donutInfo={`${heightOfWater}%`}
                 halfDonut={false}
-                />
-            }
-            />
-          <DashboardCard
-              classes="recent-activities-available"
-              heading="Water Temperature"
-              body={
-                <AreaChardDisplay
-                  backgroundColor="rgba(25, 103, 210, 0.2)"
-                  chartColor="#1967D2"
-                  chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-                  />
-              }
-              actionItem={<ActionButton name="Today" icon={<DateRange />} />}
               />
+            }
+          />
+          <DashboardCard
+            classes="recent-activities-available"
+            heading="Water Temperature"
+            body={
+              <AreaChardDisplay
+                backgroundColor="rgba(25, 103, 210, 0.2)"
+                chartColor="#1967D2"
+                chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
+              />
+            }
+            actionItem={<ActionButton name="Today" icon={<DateRange/>}/>}
+          />
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 
@@ -458,7 +449,7 @@ export const mapStateToProps = state => ({
   enabled: state.timeSchedules.enabled,
   devices: state.user.devices,
   user: state.user,
-  waterData: state.sensorData.waterData
+  waterData: state.sensorData.waterData,
 });
 
 export const mapDispatchToProps = dispatch => ({

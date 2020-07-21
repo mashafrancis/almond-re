@@ -21,19 +21,19 @@
 .tbl-header {
   display: flex;
   padding-bottom: 0.8rem;
-  border-radius: 0.25rem;
+  font: 500 15px/20px 'Google Sans', Roboto, Arial, sans-serif;
   line-height: 21px;
-  color: #1A73E8;
+  color: #1a73e8;
+  letter-spacing: 0.25px;
   //margin-left: 12px;
   word-break: break-all;
-  font: 500 15px/20px 'Google Sans',Roboto,Arial,sans-serif;
-  letter-spacing: .25px;
+  border-radius: 0.25rem;
 }
 
 .heading-separator {
-  border-left: 1px solid #dadce0;
-  height: 26px;
   width: 0;
+  height: 26px;
+  border-left: 1px solid #dadce0;
 }
 
 .header-text {
@@ -41,67 +41,68 @@
 }
 
 .content-text {
-  margin-left: 10px;
   display: block;
+  margin-left: 10px;
 
   @media (max-width: 539px) {
-    font: 400 15px/16px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
-    letter-spacing: .3px;
+    font: 400 15px/16px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
+    letter-spacing: 0.3px;
   }
 }
 
 .tbl-row {
   position: relative;
   display: flex;
-  color: rgba(37, 37, 37, 0.93);
-  background-color: #fff;
-  margin-bottom: 8px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-radius: 8px;
-  font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif;
-  letter-spacing: 0.1px;
-  line-height: 20px;
-  align-items: center;
   width: -webkit-fill-available;
   height: 59px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
+  line-height: 20px;
+  color: rgba(37, 37, 37, 0.93);
+  letter-spacing: 0.1px;
+  background-color: #fff;
   border: 1px solid #dadce0;
+  border-radius: 8px;
+  align-items: center;
 
   &:hover {
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   }
 
-  .headline-6, h6 {
+  .headline-6,
+  h6 {
+    padding-left: 0;
+    font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
+    line-height: 1.25rem;
+    color: #4f4f4f;
+    letter-spacing: 0.1px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
-    letter-spacing: 0.1px;
-    line-height: 1.25rem;
-    color: #4F4F4F;
-    padding-left: 0;
     //margin: 0 0 0 10px !important;
 
     @media (max-width: 539px) {
-      font: 400 12px/14px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
-      letter-spacing: .3px;
+      font: 400 12px/14px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
+      letter-spacing: 0.3px;
     }
   }
 }
 
 .tbl-status {
-  background-color: rgba(58, 58, 58, 0.09) !important
+  background-color: rgba(58, 58, 58, 0.09) !important;
 }
 
 .clickable-asset-tag {
-  cursor: pointer;
   color: #1967d2;
+  cursor: pointer;
 }
 
 .edit-asset-tag,
 .delete-asset-tag {
+  color: #1967d2;
   text-decoration: none;
   cursor: pointer;
-  color: #1967d2;
 }
 
 .delete-asset-tag {
@@ -121,28 +122,28 @@
 
 .action-buttons {
   display: flex;
+  font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
   cursor: pointer;
-  font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
 
   h5 {
     margin: 0;
-    font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
+    font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
   }
 
   &__edit {
+    font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
     color: #1967d2;
-    font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
   }
 
   &__delete {
-    color: #9E143E !important;
     margin-left: 20px !important;
-    font: 400 16px/24px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
+    font: 400 16px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
+    color: #9e143e !important;
   }
 
   @media (max-width: 539px) {
     h5 {
-      font: 400 14px/16px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
+      font: 400 14px/16px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
     }
   }
 }
@@ -154,20 +155,20 @@
 .tbl-row-number {
   width: 50px;
   height: 50px;
-  border-radius: 60%;
+  margin-top: 4px;
+  margin-right: 18px;
   font-size: 50px;
   line-height: 500px;
   text-align: center;
-  background: #FFFFFF;
-  margin-right: 18px;
-  margin-top: 4px;
+  background: #fff;
   border: 0.4px solid #0a0a0b;
+  border-radius: 60%;
 
   h5 {
-    margin: 16px 0 0 0;
-    font-weight: 400;
+    margin: 16px 0 0;
     font-size: 20px;
-    color: #4F4F4F;
+    font-weight: 400;
+    color: #4f4f4f;
   }
 }
 
@@ -193,8 +194,8 @@
   }
 
   .tbl-header {
-    font: 500 12px/14px "Google Sans", Roboto, Helvetica Neue, sans-serif !important;
     margin-left: 0;
+    font: 500 12px/14px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
   }
 
   .tbl-row-number {
@@ -204,17 +205,17 @@
   .tbl-row {
     position: relative;
     display: flex;
-    background-color: #fff;
-    margin-bottom: 8px;
+    height: 50px;
     padding-top: 8px;
     padding-bottom: 8px;
-    border-radius: 6px;
-    border: 1px solid #dadce0;
-    font: 400 12px/15px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
-    letter-spacing: .25px;
+    margin-bottom: 8px;
+    font: 400 12px/15px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
     line-height: 20px;
+    letter-spacing: 0.25px;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
     align-items: center;
-    height: 50px;
 
     &:hover {
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
@@ -222,15 +223,15 @@
   }
 
   .clickable-asset-tag {
-    cursor: pointer;
     color: #1967d2;
+    cursor: pointer;
   }
 
   .edit-asset-tag,
   .delete-asset-tag {
+    color: #1967d2;
     text-decoration: none;
     cursor: pointer;
-    color: #1967d2;
   }
 
   .delete-asset-tag {
@@ -253,13 +254,13 @@
 
     h5 {
       margin: 0;
-      font-weight: 400;
       font-size: 12px;
+      font-weight: 400;
     }
 
     &__delete {
-      color: #9E143E !important;
       margin-left: 20px !important;
+      color: #9e143e !important;
     }
   }
 }

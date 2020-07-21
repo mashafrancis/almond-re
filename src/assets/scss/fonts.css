@@ -1,6 +1,6 @@
 root {
-  --mdc-theme-primary: #1967D2;
-  --mdc-theme-secondary: #1967D2;
+  --mdc-theme-primary: #1967d2;
+  --mdc-theme-secondary: #1967d2;
   --mdc-theme-background: #fff;
   --mdc-theme-surface: #fff;
   --mdc-theme-error: #b00020;
@@ -26,19 +26,19 @@ root {
 }
 
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 300;
-  src: url("../fonts/sanfranciscodisplay-ultralight-webfont.woff");
+  src: url('../fonts/sanfranciscodisplay-ultralight-webfont.woff');
 }
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 400;
-  src: url("../fonts/sanfranciscodisplay-thin-webfont.woff");
+  src: url('../fonts/sanfranciscodisplay-thin-webfont.woff');
 }
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 500;
-  src: url("../fonts/sanfranciscodisplay-regular-webfont.woff");
+  src: url('../fonts/sanfranciscodisplay-regular-webfont.woff');
 }
 
 /*# sourceMappingURL=fonts.css.map */

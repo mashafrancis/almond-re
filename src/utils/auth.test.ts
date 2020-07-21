@@ -8,7 +8,7 @@ import mock = jest.mock;
 
 describe('AuthService object', () => {
   beforeEach(() => {
-    jest.mock('js-cookie', () => jest.fn())
+    jest.mock('js-cookie', () => jest.fn());
   });
   describe('IsAuthenticated function', () => {
     it('should return true if a user token has not expired', () => {

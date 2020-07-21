@@ -2,7 +2,7 @@ import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 describe('The isArrayNotNull function', () => {
   it('should return true if the array has a value', () => {
-    const arr = [{name: 'Masha'}];
+    const arr = [{ name: 'Masha' }];
     const check = isArrayNotNull(arr);
 
     expect(check).toBeTruthy();

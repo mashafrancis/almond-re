@@ -19,7 +19,7 @@ import {
   deleteSingleScheduleFailure,
   getPumpStatusRequest,
   getPumpStatusSuccess,
-  getPumpStatusFailure
+  getPumpStatusFailure,
 } from '@modules/timeSchedules/index';
 
 // helpers
@@ -36,7 +36,7 @@ describe('Time Schedules reducer: ', () => {
   const { data } = timeSchedules;
 
   it('should return initial state if action type doesn\'t match', () => {
-    const newState = reducer(schedulesInitialState, { type: 'fakeType' })
+    const newState = reducer(schedulesInitialState, { type: 'fakeType' });
     expect(newState).toEqual(schedulesInitialState);
   });
 
@@ -111,7 +111,7 @@ describe('Time Schedules reducer: ', () => {
       const updatedSchedule = scheduleState.schedules.find(schedule => schedule._id === editSchedulePayload._id);
 
       expect(scheduleState.isLoading).toBeFalsy();
-      expect(updatedSchedule.schedule).toEqual('2020-06-08T18:00:46.817Z')
+      expect(updatedSchedule.schedule).toEqual('2020-06-08T18:00:46.817Z');
       expect(scheduleState.errors).toBe(null);
     });
 

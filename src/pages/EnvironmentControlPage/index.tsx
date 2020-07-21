@@ -3,8 +3,7 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Grid,
-  Row
+  Row,
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import ActionButton from '@components/ActionButton';
@@ -20,7 +19,6 @@ import './EnvironmentControlPage.scss';
 // interfaces
 import {
   EnvironmentControlPageProps,
-  EnvironmentControlPageState
 } from './interfaces';
 import roundDigit from '@utils/helpers/roundDigit';
 
@@ -30,9 +28,6 @@ const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
 
 export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = props => {
-  const [state, setState] = React.useState<EnvironmentControlPageState>({
-    environmentData: []
-  });
 
   // React.useEffect(() => {
   //   props.getEnvironmentData();
@@ -41,7 +36,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
 
   const {
     currentTemperature,
-    currentHumidity
+    currentHumidity,
   } = props.environmentData;
 
   const temperature = roundDigit(currentTemperature, 1) || 0;
@@ -53,26 +48,26 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
       backgroundColor: ['#36A2EB', '#CCCCCC'],
       hoverBackgroundColor: ['#36A2EB', '#CCCCCC'],
       data: [temperature, 100 - temperature],
-      donutInfo: `${temperature} \u00b0C`
+      donutInfo: `${temperature} \u00b0C`,
     },
     {
       heading: 'Plant Humidity',
       backgroundColor: ['#FFCE56', '#CCCCCC'],
       hoverBackgroundColor: ['#FFCE56', '#CCCCCC'],
       data: [humidity, 100 - humidity],
-      donutInfo: `${humidity}%`
+      donutInfo: `${humidity}%`,
     },
     {
       heading: 'Water Temperature',
       backgroundColor: ['#7ad283', '#CCCCCC'],
       hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
       data: [humidity, 200 - humidity],
-      donutInfo: `${humidity}%`
-    }
+      donutInfo: `${humidity}%`,
+    },
   ];
 
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           {(window.innerWidth < 539) && <div className="main-subheader"><h3>EnvironmentControl</h3></div>}
@@ -92,10 +87,10 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                     data={data.data}
                     donutInfo={data.donutInfo}
                     halfDonut={true}
-                    />
+                  />
                 }
-                />
-            </Cell>
+              />
+            </Cell>,
           )
         }
         {/* <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}> */}
@@ -122,10 +117,10 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 backgroundColor="rgba(25, 103, 210, 0.2)"
                 chartColor="#36A2EB"
                 chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-                />
+              />
             }
-            actionItem={<ActionButton name="Filter" icon={<FilterList />} />}
-            />
+            actionItem={<ActionButton name="Filter" icon={<FilterList/>}/>}
+          />
         </Cell>
         <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
@@ -136,23 +131,23 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
                 backgroundColor="rgba(255,206,86,0.2)"
                 chartColor="#FFCE56"
                 chartData={[25, 36, 50, 57, 40, 70, 55, 30, 47]}
-                />
+              />
             }
-            actionItem={<ActionButton name="Filter" icon={<FilterList />} />}
-            />
+            actionItem={<ActionButton name="Filter" icon={<FilterList/>}/>}
+          />
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 
 export const mapStateToProps = state => ({
-  environmentData: state.sensorData.environmentData
+  environmentData: state.sensorData.environmentData,
 });
 
 export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-  getEnvironmentData: () => dispatch(getEnvironmentData())
+  getEnvironmentData: () => dispatch(getEnvironmentData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentControlPage);
