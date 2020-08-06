@@ -14,7 +14,8 @@ import {
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
 import LinearProgressBar from '@components/LinearProgressBar';
-import { Pagination } from '@material-ui/lab';
+// import { Pagination } from '@material-ui/lab';
+import loadable from '@loadable/component'
 
 // thunks
 import {
@@ -35,9 +36,9 @@ import {
 } from './interfaces';
 
 // components
-const CardInfo = React.lazy(() => import('@components/CardInfo'));
-const Modal = React.lazy(() => import('@components/Modal'));
-const Table = React.lazy(() => import('@components/Table'));
+const CardInfo = loadable(() => import('@components/CardInfo'));
+const Modal = loadable(() => import('@components/Modal'));
+const Table = loadable(() => import('@components/Table'));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -168,15 +169,10 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
   ;
 
   const deviceStatus = device => {
-    const { verified } = device[1];
-    const { enabled } = device[1];
+    const { verified, enabled } = device[1];
 
-    if (!verified) {
-      return <Chip className="MuiChip-root-unverified" label="Not Verified"/>;
-    }
-    if (!enabled) {
-      return <Chip className="MuiChip-root-disabled" label="Disabled"/>;
-    }
+    if (!verified) return <Chip className="MuiChip-root-unverified" label="Not Verified"/>;
+    if (!enabled) return <Chip className="MuiChip-root-disabled" label="Disabled"/>;
     return <Chip className="MuiChip-root-enabled" label="Enabled"/>;
 
     // switch (device) {
@@ -199,9 +195,9 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       Actions: { valueKey: 'actions' },
     };
 
-    const tableValues = devices.map(device => ({
-      id: device[1].id,
-      deviceId: device[1].id,
+    const tableValues = devices.map((device, index) => ({
+      id: device[1].id ?? index,
+      deviceId: device[1].id ?? 'No device',
       user: device[1].user ? device[1].user.name : 'N/A',
       status: deviceStatus(device),
       actions: ActionButtons(device[1]._id),

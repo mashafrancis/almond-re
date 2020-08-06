@@ -3,14 +3,14 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Row
+  Row,
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import {
   TextField,
   MenuItem,
   InputAdornment,
-  Chip
+  Chip,
 } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
@@ -18,7 +18,7 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import {
   Face,
   ArrowDropDownRounded,
-  PeopleAltOutlined
+  PeopleAltOutlined,
 } from '@material-ui/icons';
 
 // thunks
@@ -32,7 +32,7 @@ import './PeoplePage.scss';
 // interfaces
 import {
   PeoplePageProps,
-  PeoplePageState
+  PeoplePageState,
 } from './interfaces';
 import LinearProgressBar from '@components/LinearProgressBar';
 
@@ -77,11 +77,11 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       await props.getAllPeople();
     };
     getAllPeople().then(() => setState({ ...state, people: props.people }));
-  },              []);
+  }, []);
 
   React.useEffect(() => {
     props.getUserRoles().then(() => setState({ ...state, isFetchingRoles: false }));
-  },              []);
+  }, []);
 
   const toggleRoleSelectOpen = event => {
     event.persist();
@@ -107,7 +107,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
         ...state,
         isSelectOpen: !state.isSelectOpen,
         userId: '',
-      })
+      }),
     );
   };
 
@@ -117,7 +117,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
         className="mini-username__image"
         src={user[1].photo}
         alt="avatar"
-        />
+      />
       <span>{user[1].name || 'Anonymous'}</span>
     </span>
   ;
@@ -147,13 +147,13 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
         }}
         InputProps={{
           startAdornment: <InputAdornment position="start">
-            <Face style={{ color: '#1967D2' }} />
+            <Face style={{ color: '#1967D2' }}/>
           </InputAdornment>,
         }}>
         {roles.map(role =>
           <MenuItem key={role._id} value={role.title}>
             <h4>{role.title}</h4>
-          </MenuItem>
+          </MenuItem>,
         )}
       </TextField>
     </>
@@ -168,7 +168,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       submitButtonName="Update role"
       onSubmit={handleChangeRole}
       onDismiss={toggleRoleSelectOpen}
-      />
+    />
   ;
 
   const rolesSelectMore = (role, id) =>
@@ -177,9 +177,9 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       <ArrowDropDownRounded
         id={id}
         onClick={toggleRoleSelectOpen}
-        />
+      />
     </div>
-    ;
+  ;
 
   const TableContent = users => {
     const tableHeaders = {
@@ -192,18 +192,18 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     const tableValues = users.map(user => ({
       id: user[1]._id,
       name: userNamePhoto(user),
-      devices: user[1].devices[0].id || '(Device not added)',
+      devices: user[1].devices[0]?.id ?? '(Device not added)',
       role: rolesSelectMore(user[1].currentRole.title, user[1]._id),
       status: user[1].isVerified
-        ? <Chip className="MuiChip-root-enabled" label="Active" />
-        : <Chip className="MuiChip-root-unverified" label="Inactive" />
+        ? <Chip className="MuiChip-root-enabled" label="Active"/>
+        : <Chip className="MuiChip-root-unverified" label="Inactive"/>,
     }));
 
     return (
       <Table
         keys={tableHeaders}
         values={tableValues}
-        />
+      />
     );
   };
 
@@ -214,11 +214,11 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
           <GeneralCardInfo
             mainHeader="People"
             subHeader="List of all users under Almond"
-            icon={<PeopleAltOutlined className="content-icon general-info-icon" />}
-            />
-          <React.Suspense fallback={<LinearProgressBar />}>
+            icon={<PeopleAltOutlined className="content-icon general-info-icon"/>}
+          />
+          <React.Suspense fallback={<LinearProgressBar/>}>
             <div className="user-roles-page__table">
-              { TableContent(Object.entries(props.people)) }
+              {TableContent(Object.entries(props.people))}
             </div>
           </React.Suspense>
           {SelectRoleModal(props.roles)}

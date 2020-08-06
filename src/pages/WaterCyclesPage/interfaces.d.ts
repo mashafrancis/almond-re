@@ -44,4 +44,5 @@ export interface WaterCyclesPageState {
   isLoading: boolean;
   selectedTimeSchedule: any;
   hasError: boolean;
+  schedules: Schedule[];
 }

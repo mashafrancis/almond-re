@@ -6,15 +6,12 @@ import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-// @ts-ignore
 // import { Connector } from 'mqtt-hooks';
 
 // components
 import ErrorBoundary from '@components/ErrorBoundary';
 import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
-import LinearProgressBar from '@components/LinearProgressBar';
-import { Fade } from '@material-ui/core';
 
 // thunk action creators
 import { getUserDetails } from '@modules/user';
@@ -26,6 +23,7 @@ import { AppProps, AppState } from './interfaces';
 import { authService } from '@utils/auth';
 import checkUserRole from '@utils/helpers/checkUserRole';
 import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
+import minimumDelay from '@utils/helpers/MinimumDelay';
 
 // context
 import { UserContext } from '@context/UserContext';
@@ -37,12 +35,12 @@ import './App.scss';
 
 const useEffectAsync = (
   effect: any,
-  inputs: React.DependencyList | undefined
+  inputs: React.DependencyList | undefined,
 ) => {
   React.useEffect(() => {
-    effect()
-  }, inputs)
-}
+    effect();
+  }, inputs);
+};
 
 export const App: React.FunctionComponent<AppProps> = props => {
   const [state, setState] = React.useState<AppState>({
@@ -63,10 +61,11 @@ export const App: React.FunctionComponent<AppProps> = props => {
           .then(response => {
             setState({
               ...state,
-              isAdmin: !checkUserRole(response.userDetails.currentRole.title, 'User') })
+              isAdmin: !checkUserRole(response.userDetails.currentRole.title, 'User'),
+            });
           });
       } catch {
-        setState({ ...state, loading: 'error' })
+        setState({ ...state, loading: 'error' });
       }
     }
   }, []);
@@ -89,15 +88,15 @@ export const App: React.FunctionComponent<AppProps> = props => {
   // const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
   // const options = {
-  //   port: 8083,
+  //   port: 8000,
   //   host: process.env.MQTT_HOST,
   //   user: process.env.MQTT_USER,
   //   protocol: process.env.MQTT_PROTOCOL,
   //   password: process.env.MQTT_PASSWORD,
-  //   key: bufferKey,
-  //   cert: bufferCert,
-  //   ca: bufferCA,
-  //   rejectUnauthorized: true
+  //   // key: bufferKey,
+  //   // cert: bufferCert,
+  //   // ca: bufferCA,
+  //   rejectUnauthorized: true,
   // };
 
   const { isUserAuthenticated, isAdmin } = state;
@@ -106,8 +105,8 @@ export const App: React.FunctionComponent<AppProps> = props => {
     name,
     email,
     photo,
-    isVerified,
     devices,
+    isVerified,
     activeDevice,
   } = user;
 
@@ -118,48 +117,41 @@ export const App: React.FunctionComponent<AppProps> = props => {
     //   dispatch={store.dispatch}
     //   createFirestoreInstance={createFirestoreInstance}
     // >
-      <UserContext.Provider
-        value={{
-          _id,
-          name,
-          email,
-          photo,
-          isVerified,
-          devices,
-          activeDevice,
-          isAdmin,
-        }}>
-        <MenuProvider>
-          <ViewportProvider>
-            {/* <Connector opts={options}> */}
-              <ErrorBoundary>
+    <UserContext.Provider
+      value={{
+        _id,
+        name,
+        email,
+        photo,
+        devices,
+        isVerified,
+        activeDevice,
+        isAdmin,
+      }}>
+      <MenuProvider>
+        <ViewportProvider>
+          {/*<Connector brokerUrl="mqtts://masha:froyogreen@broker.mqttdashboard.com:8000">*/}
+            <ErrorBoundary>
+              <>
+                <SnackBar/>
                 <>
-                  <SnackBar />
-                  <>
-                    {
-                      location.pathname !== '/'
-                      && isUserAuthenticated
-                    }
-                    <React.Suspense fallback={
-                        <Fade
-                          in={props.loading === 'requesting'}
-                          style={{ transitionDelay: props.loading === 'requesting' ? '800ms' : '0ms' }}
-                          unmountOnExit>
-                          <LinearProgressBar />
-                        </Fade>
-                      }>
-                        <Routes />
-                      </React.Suspense>
-                  </>
+                  {
+                    location.pathname !== '/'
+                    && isUserAuthenticated
+                  }
+                  <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
+                    <Routes/>
+                  </React.Suspense>
                 </>
-              </ErrorBoundary>
-            {/* </Connector> */}
-          </ViewportProvider>
-        </MenuProvider>
-      </UserContext.Provider>
+              </>
+            </ErrorBoundary>
+          {/*</Connector>*/}
+        </ViewportProvider>
+      </MenuProvider>
+    </UserContext.Provider>
     // </ReactReduxFirebaseProvider>
   );
-}
+};
 
 export const mapStateToProps = (state: { internalServerError: any; user: any; loading: any; }) => ({
   serverError: state.internalServerError,
