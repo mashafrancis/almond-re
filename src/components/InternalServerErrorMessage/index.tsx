@@ -1,13 +1,10 @@
 // react libraries
 import * as React from 'react';
 
-// third party
-import { Link, NavLink } from 'react-router-dom';
-
 // styles
 import './InternalServerError.scss';
 
-const InternalServerErrorMessage: (props: any) => any = props => 
+const InternalServerErrorMessage: (props: any) => any = props =>
     <div id="internal-server-error">
       <div className="server-error">
         <div className="server-error-500" />

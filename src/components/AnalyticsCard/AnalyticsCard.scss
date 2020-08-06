@@ -2,24 +2,24 @@
   margin: 0 0 26px;
 
   .card-content {
+    display: flex;
     //background-color: #fef7e0;
     padding: 24px;
     border: 1px solid #dadce0;
-    align-items: center;
     border-radius: 16px;
-    display: flex;
+    align-items: center;
 
     &__body {
-      flex: 1 1 auto;
       margin-right: 24px;
+      flex: 1 1 auto;
 
       .main {
-        font: 500 18px/22px 'Google Sans',Roboto,Helvetica Neue,sans-serif;
+        font: 500 18px/22px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
         letter-spacing: normal;
         //color: #202124;
 
         @media (max-width: 539px) {
-          font: 400 16px/18px 'Google Sans',Roboto,Helvetica Neue,sans-serif;
+          font: 400 16px/18px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
         }
       }
 
@@ -38,23 +38,23 @@
 
     &__info {
       h4 {
-        font: 600 36px/40px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
+        font: 600 36px/40px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
 
         @media (max-width: 539px) {
-          font: 600 26px/30px 'Google Sans',Roboto,Helvetica Neue,sans-serif !important;
+          font: 600 26px/30px 'Google Sans', Roboto, Helvetica Neue, sans-serif !important;
         }
       }
     }
 
     &__button {
-      flex: 0 0 auto;
       margin-right: 16px;
+      flex: 0 0 auto;
     }
   }
 
   .content-icon {
-    font-size: 36px;
     margin: 0 28px 0 4px;
+    font-size: 36px;
 
     //@media (max-width: 539px) {
     //  display: none;
@@ -72,7 +72,7 @@
   }
 
   .card-color-blue {
-    color: #1967D2 !important;
+    color: #1967d2 !important;
     background-color: #e8f0fe;
     border-color: rgba(25, 103, 210, 0.2) !important;
   }
@@ -113,4 +113,3 @@
     margin-top: 20px;
   }
 }
-

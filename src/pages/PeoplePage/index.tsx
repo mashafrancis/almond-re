@@ -3,7 +3,6 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Grid,
   Row
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
@@ -209,7 +208,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
   };
 
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
           <GeneralCardInfo
@@ -225,7 +224,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
           {SelectRoleModal(props.roles)}
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 

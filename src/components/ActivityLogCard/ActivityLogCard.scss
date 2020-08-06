@@ -1,7 +1,7 @@
 .log-card {
-  border: none !important;
-  margin-bottom: 8px !important;
   margin-top: 0 !important;
+  margin-bottom: 8px !important;
+  border: none !important;
 
   .log-details {
     position: relative;
@@ -27,11 +27,11 @@
   .log-details-info {
     &__header {
       h5 {
-        font-size: 14px;
-        font-weight: 500;
         margin-top: 10px;
         margin-bottom: 6px;
-        color: #0E5827;
+        font-size: 14px;
+        font-weight: 500;
+        color: #0e5827;
       }
     }
 
@@ -40,10 +40,10 @@
 
       p {
         margin: 0 0 10px;
-        line-height: 1.0;
-        color: #0E5827;
-        font-weight: 300;
         font-size: 12px;
+        font-weight: 300;
+        line-height: 1;
+        color: #0e5827;
       }
     }
   }
@@ -51,10 +51,10 @@
   .log-details-error {
     &__header {
       h5 {
-        font-size: 14px;
-        font-weight: 500;
         margin-top: 10px;
         margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 500;
         color: #821721;
       }
     }
@@ -64,10 +64,10 @@
 
       p {
         margin: 0 0 10px;
-        line-height: 1.0;
-        color: #821721;
-        font-weight: 300;
         font-size: 12px;
+        font-weight: 300;
+        line-height: 1;
+        color: #821721;
       }
     }
   }

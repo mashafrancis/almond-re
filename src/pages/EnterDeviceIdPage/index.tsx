@@ -61,7 +61,6 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
 
   const classes = useStyles(props);
   const { activeDevice } = user;
-  const { history } = props;
 
   const renderDeviceTextField = () =>
       <>

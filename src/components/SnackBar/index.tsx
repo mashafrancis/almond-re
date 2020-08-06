@@ -23,7 +23,7 @@ export class SnackBar extends React.Component<
   }
 
   componentDidUpdate({ snack }) {
-    if (this.props.snack !== snack) { this.setState({ snack: this.props.snack}); }
+    if (this.props.snack !== snack) { this.setState(prevState => ({ ...prevState, snack: this.props.snack})); }
     if (this.state.snack.message !== '') { setTimeout(this.hideSnackMessage, 8000); }
   }
 
@@ -35,13 +35,13 @@ export class SnackBar extends React.Component<
       <>
         {
           snack.message
-          ? 
+          ?
               <Snackbar
                 message={snack.message}
                 timeoutMs={8000}
                 actionText="DISMISS"
                 />
-            
+
           : <div />
         }
       </>

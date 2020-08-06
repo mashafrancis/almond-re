@@ -16,7 +16,7 @@ function copyProps(src, target) {
 Object.defineProperty(window, 'innerWidth', {
   writable: true,
   configurable: true,
-  value: 200
+  value: 200,
 });
 
 // Object.defineProperty(window, 'replace', {
@@ -36,7 +36,7 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
-})
+});
 
 // Object.defineProperty(Cookies, 'remove', {
 //   writable: true,
@@ -48,11 +48,11 @@ global.document = window.document;
 global.navigator = {
   userAgent: 'node.js',
 };
-global.requestAnimationFrame = function (callback) {
+global.requestAnimationFrame = function(callback) {
   return setTimeout(callback, 0);
 };
 
-global.cancelAnimationFrame = function (id) {
+global.cancelAnimationFrame = function(id) {
   clearTimeout(id);
 };
 

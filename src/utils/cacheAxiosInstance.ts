@@ -12,7 +12,7 @@ import { AxiosInstance } from 'axios';
  * @returns {Object}
  */
 const cacheAxiosInstance = (
-  axiosInstance: AxiosInstance, defaultTtl: number, cacheManager = CacheHandler
+  axiosInstance: AxiosInstance, defaultTtl: number, cacheManager = CacheHandler,
 ): any => {
   const cacheMap = new Map();
 

@@ -20,7 +20,7 @@ import {
 import {
   axiosMock,
   dispatchMethodMock,
-  reduxMockStore
+  reduxMockStore,
 } from '../../../testHelpers';
 import { peopleResponse, personToUpdate } from '@modules/people/fixtures';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
@@ -31,8 +31,8 @@ describe('People module actions', () => {
     it('should fetch and return all people', () => {
       const mockResponse = {
         data: {
-          data: peopleResponse.data
-        }
+          data: peopleResponse.data,
+        },
       };
       const expectedActions = [
         {
@@ -54,8 +54,8 @@ describe('People module actions', () => {
       return dispatchMethodMock(
         store,
         getAllPeople(),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to fetch and return people', () => {
@@ -63,8 +63,8 @@ describe('People module actions', () => {
         response: {
           data: {
             message: 'Error on fetching people',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -77,7 +77,7 @@ describe('People module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_ALL_PEOPLE_FAILURE,
         },
@@ -89,7 +89,7 @@ describe('People module actions', () => {
           snack: {
             message: 'Failed to fetch your all users. Kindly reload the page.',
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/people', mockErrorResponse, false);
@@ -98,8 +98,8 @@ describe('People module actions', () => {
       return dispatchMethodMock(
         store,
         getAllPeople(),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 
@@ -107,14 +107,14 @@ describe('People module actions', () => {
     const personId = '5ef359a217b19792a3f19ddc';
     const personUpdatePayload = {
       role: '5ef359a217b19792a3f19ddc',
-    }
+    };
 
     it('should edit and return person', () => {
       const mockResponse = {
         data: {
           data: peopleResponse.data[0],
           message: peopleResponse.message,
-        }
+        },
       };
       const expectedActions = [
         {
@@ -133,7 +133,7 @@ describe('People module actions', () => {
           snack: {
             message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`people/${personId}`, mockResponse);
@@ -142,8 +142,8 @@ describe('People module actions', () => {
       return dispatchMethodMock(
         store,
         updatePerson(personId, personUpdatePayload),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to update a person', () => {
@@ -151,8 +151,8 @@ describe('People module actions', () => {
         response: {
           data: {
             message: 'Error on updating a person',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -165,7 +165,7 @@ describe('People module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: UPDATE_PERSON_DETAILS_FAILURE,
         },
@@ -177,7 +177,7 @@ describe('People module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`people/${personId}`, mockErrorResponse, false);
@@ -186,8 +186,8 @@ describe('People module actions', () => {
       return dispatchMethodMock(
         store,
         updatePerson(personId, personUpdatePayload),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 });

@@ -28,7 +28,7 @@ import {
   TOGGLE_PUMP_STATUS_FAILURE,
   GET_PUMP_STATUS_REQUEST,
   GET_PUMP_STATUS_SUCCESS,
-  GET_PUMP_STATUS_FAILURE
+  GET_PUMP_STATUS_FAILURE,
 } from '@modules/timeSchedules/types';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 import { LOG_ACTIVITY } from '@modules/activityLogs/types';
@@ -37,7 +37,7 @@ import { LOG_ACTIVITY } from '@modules/activityLogs/types';
 import {
   axiosMock,
   dispatchMethodMock,
-  reduxMockStore
+  reduxMockStore,
 } from '../../../testHelpers';
 
 // fixtures
@@ -45,7 +45,7 @@ import {
   editSchedulePayload,
   enabledStatus,
   schedulePayload,
-  timeSchedules
+  timeSchedules,
 } from '@modules/timeSchedules/fixtures';
 import { activityHistory } from '@modules/activityLogs/fixtures';
 
@@ -57,8 +57,8 @@ describe('Time schedules module actions', () => {
     it('should fetch and return schedules', () => {
       const mockResponse = {
         data: {
-          data: timeSchedules.data
-        }
+          data: timeSchedules.data,
+        },
       };
       const expectedActions = [
         {
@@ -69,7 +69,7 @@ describe('Time schedules module actions', () => {
           schedules: timeSchedules.data,
           type: GET_SCHEDULES_SUCCESS,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules?device=${deviceId}`, mockResponse);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -77,8 +77,8 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         getAllSchedules(deviceId),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to fetch time schedules', () => {
@@ -86,8 +86,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on fetching schedules',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -98,7 +98,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -106,11 +106,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_SCHEDULES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules?device=${deviceId}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -118,9 +118,9 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         getAllSchedules(deviceId),
-        expectedActions
+        expectedActions,
       );
-    })
+    });
   });
 
   describe('Create new schedule thunk', () => {
@@ -134,7 +134,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: ADD_SCHEDULES_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           schedule: mockResponse.data.data,
@@ -143,9 +143,9 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/schedules', mockResponse);
@@ -154,7 +154,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         addNewSchedule(schedulePayload),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -163,8 +163,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on creating a schedule',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -173,21 +173,21 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: ADD_SCHEDULES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/schedules', mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -195,7 +195,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         addNewSchedule(schedulePayload),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -216,7 +216,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -224,11 +224,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: ADD_SCHEDULES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/schedules', mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -236,7 +236,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         addNewSchedule(schedulePayload),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -251,7 +251,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: DELETE_SCHEDULE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           type: DELETE_SCHEDULE_SUCCESS,
@@ -260,9 +260,9 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`/schedules/${id}`, mockResponse);
@@ -271,7 +271,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         deleteSingleSchedule(id),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -280,8 +280,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on deleting a schedule',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -290,9 +290,9 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message:  mockErrorResponse.response.data.message,
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -300,11 +300,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: DELETE_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -312,7 +312,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         deleteSingleSchedule(id),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -333,7 +333,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -341,11 +341,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: DELETE_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -353,7 +353,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         deleteSingleSchedule(id),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -369,7 +369,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: EDIT_SCHEDULE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           schedule: mockResponse.data.data,
@@ -379,9 +379,9 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`/schedules/${id}`, mockResponse);
@@ -390,7 +390,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         editSchedule(id, editSchedulePayload.schedule),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -399,8 +399,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on editing a schedule',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -409,21 +409,21 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -431,7 +431,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         editSchedule(id, schedulePayload.schedule),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -452,7 +452,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -460,11 +460,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -472,7 +472,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         editSchedule(id, schedulePayload.schedule),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -491,7 +491,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: TOGGLE_PUMP_STATUS_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           enabled: enabledStatus.enabled,
@@ -500,13 +500,13 @@ describe('Time schedules module actions', () => {
         },
         {
           type: LOG_ACTIVITY,
-          activityLogs: activityHistory
+          activityLogs: activityHistory,
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/pump', mockResponse);
@@ -515,7 +515,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         togglePump(enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -524,8 +524,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on toggling a pump',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -534,21 +534,21 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: TOGGLE_PUMP_STATUS_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/pump', mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -556,7 +556,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         togglePump(enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -577,7 +577,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -585,11 +585,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: TOGGLE_PUMP_STATUS_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/pump', mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -597,7 +597,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         togglePump(enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -614,7 +614,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: GET_PUMP_STATUS_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           enabled: enabledStatus.enabled,
@@ -628,7 +628,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         getPumpStatus(deviceId),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -649,7 +649,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -657,11 +657,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_PUMP_STATUS_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/pump?device=${deviceId}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -669,7 +669,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         getPumpStatus(deviceId),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -685,7 +685,7 @@ describe('Time schedules module actions', () => {
       const expectedActions = [
         {
           type: EDIT_SCHEDULE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           schedule: mockResponse.data.data,
@@ -695,9 +695,9 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`schedules/${id}`, mockResponse);
@@ -706,7 +706,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         toggleScheduleStatus(id, enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -715,8 +715,8 @@ describe('Time schedules module actions', () => {
         response: {
           data: {
             message: 'Error on toggling a schedule',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -725,21 +725,21 @@ describe('Time schedules module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -747,7 +747,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         toggleScheduleStatus(id, enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -768,7 +768,7 @@ describe('Time schedules module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -776,11 +776,11 @@ describe('Time schedules module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_SCHEDULE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`schedules/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, schedulesInitialState);
@@ -788,7 +788,7 @@ describe('Time schedules module actions', () => {
       return dispatchMethodMock(
         store,
         toggleScheduleStatus(id, enabledStatus),
-        expectedActions
+        expectedActions,
       );
     });
   });

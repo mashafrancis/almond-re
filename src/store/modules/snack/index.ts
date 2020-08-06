@@ -27,7 +27,7 @@ export const displaySnackMessage = (
  */
 export const reducer = (
   state = {},
-  action: DisplaySnackMessageAction
+  action: DisplaySnackMessageAction,
 ) => {
   if (action.type === DISPLAY_SNACK_MESSAGE) {
     return action.snack;

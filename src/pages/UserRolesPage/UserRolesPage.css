@@ -1,6 +1,6 @@
 root {
-  --mdc-theme-primary: #1967D2;
-  --mdc-theme-secondary: #1967D2;
+  --mdc-theme-primary: #1967d2;
+  --mdc-theme-secondary: #1967d2;
   --mdc-theme-background: #fff;
   --mdc-theme-surface: #fff;
   --mdc-theme-error: #b00020;
@@ -34,15 +34,15 @@ root {
   font-size: 22px;
   font-weight: 300;
   line-height: 22px;
-  color: #333333;
+  color: #333;
 }
 .user-roles-page__table__action-buttons {
-  cursor: pointer;
   color: #1967d2;
+  cursor: pointer;
 }
 .user-roles-page__table__action-buttons .delete {
   margin-left: 20px;
-  color: #9E143E;
+  color: #9e143e;
 }
 @media (max-width: 539px) {
   .user-roles-page__table__action-buttons .delete {
@@ -54,25 +54,26 @@ root {
 }
 @media (max-width: 539px) {
   .user-roles-page__table .tbl-row {
-    font-size: 12px;
     height: auto;
+    font-size: 12px;
   }
-  .user-roles-page__table .tbl-header, .user-roles-page__table .tbl-row {
+  .user-roles-page__table .tbl-header,
+  .user-roles-page__table .tbl-row {
     padding-right: 10px;
     padding-left: 10px;
   }
 }
 
 .add-role-form__header {
-  margin-right: 2rem;
   padding-bottom: 1rem;
+  margin-right: 2rem;
 }
 .add-role-form__close-button {
+  float: right;
   margin: -25px;
   font-weight: 300;
+  color: #333;
   cursor: pointer;
-  color: #333333;
-  float: right;
   transform: scale(1.8, 1.2);
 }
 .add-role-form__close-button:hover {
@@ -97,11 +98,11 @@ root {
 }
 
 .permissions {
-  background-color: rgba(25, 103, 210, 0.03);
   width: auto;
   padding-bottom: 25px;
-  border-radius: 8px;
+  background-color: rgba(25, 103, 210, 0.03);
   border: 1px solid #dadce0;
+  border-radius: 8px;
 }
 .permissions__tbl-header {
   display: flex;
@@ -109,12 +110,12 @@ root {
   padding-left: 24px;
 }
 .permissions__tbl-header__column {
-  flex: 1;
+  padding-right: 11px;
   font-size: 13px;
   font-weight: 300;
   line-height: 17px;
   color: rgba(25, 103, 210, 0.87);
-  padding-right: 11px;
+  flex: 1;
 }
 @media (max-width: 539px) {
   .permissions__tbl-header__column {

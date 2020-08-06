@@ -1,5 +1,5 @@
 const path = require('path');
-const {importer} = require('./webpack.util');
+const { importer } = require('./webpack.util');
 const {
   definePlugin,
   cleanWebpack,
@@ -9,33 +9,32 @@ const {
   hashedPlugin,
   manifestPlugin,
   copyPlugin,
-  contextReplacementPlugin
+  contextReplacementPlugin,
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.APP_ENV !== 'production';
-const PUBLIC_PATH = process.env.PUBLIC_URL;
 
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
     styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss'),
-    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css')
+    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css'),
   },
   output: {
     // `filename` provides a template for naming your bundles (remember to use `[name]`)
     filename: '[name].[hash:8].js',
     // `chunkFilename` provides a template for naming code-split bundles (optional)
-    chunkFilename: "[name].[hash:8].bundle.js",
+    chunkFilename: '[name].[hash:8].bundle.js',
     // `path` is the folder where Webpack will place your bundles
     path: path.join(__dirname, '..', 'dist'),
     // `publicPath` is where Webpack will load your bundles from (optional)
-    publicPath: '/'
+    publicPath: '/',
   },
   optimization: {
     noEmitOnErrors: true,
     splitChunks: {
-      chunks: "all",
-    }
+      chunks: 'all',
+    },
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -49,14 +48,14 @@ module.exports = {
       // '@material-ui/core': '@material-ui/core/esm',
       // '@material-ui/icons': '@material-ui/icons/esm'
     },
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   module: {
     rules: [
       {
         test: /\.(woff(2)?|ttf|eot|svg|png|jpg|jpeg|gif)$/,
         use: {
-          loader: 'file-loader'
+          loader: 'file-loader',
         },
       },
       {
@@ -66,16 +65,16 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               plugins: () => [require('autoprefixer')({
-                'overrideBrowserslist': ['> 1%', 'last 2 versions']
+                'overrideBrowserslist': ['> 1%', 'last 2 versions'],
               })],
-            }
+            },
           },
           {
             loader: 'sass-loader',
@@ -85,11 +84,11 @@ module.exports = {
               implementation: require('sass'),
               sassOptions: {
                 fiber: require('fibers'),
-                importer
-              }
-            }
+                importer,
+              },
+            },
           },
-        ]
+        ],
       },
       {
         test: /\.(js|jsx)$/,
@@ -103,14 +102,14 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env'],
             sourceMap: true,
-          }
-        }
+          },
+        },
       },
       {
         test: /\.tsx?$/,
         use: {
-          loader: 'awesome-typescript-loader'
-        }
+          loader: 'awesome-typescript-loader',
+        },
       },
       {
         enforce: 'pre',
@@ -120,10 +119,10 @@ module.exports = {
           /node_modules\/@material/,
           /node_modules\/@firebase/,
           /src\/atomic/,
-          /node_modules\/axios-cache-adapter/
+          /node_modules\/axios-cache-adapter/,
         ],
       },
-    ]
+    ],
   },
   plugins: [
     definePlugin,
@@ -133,6 +132,6 @@ module.exports = {
     miniCssExtract,
     manifestPlugin,
     copyPlugin,
-    contextReplacementPlugin
-  ]
+    contextReplacementPlugin,
+  ],
 };

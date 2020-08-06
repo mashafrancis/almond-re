@@ -1,58 +1,58 @@
 $palette: (
-  primary: #3359DB,
-  secondary: #FFAF30,
-  secondary-dark: #FFAF2F,
-  tertiary: #F6D280,
-  light: #2956E3,
-  lighter: #6487FF,
-  danger: #FF5359,
-  success: #72D11F,
-  success-dark: #10A36D,
+  primary: #3359db,
+  secondary: #ffaf30,
+  secondary-dark: #ffaf2f,
+  tertiary: #f6d280,
+  light: #2956e3,
+  lighter: #6487ff,
+  danger: #ff5359,
+  success: #72d11f,
+  success-dark: #10a36d,
 );
 
 $text-colors: (
-  header: #333E44,
+  header: #333e44,
   table-header: #999,
-  content: #333E44,
-  navbar: #BCBCBC,
-  navbar-active: #0459E4,
+  content: #333e44,
+  navbar: #bcbcbc,
+  navbar-active: #0459e4,
   user-name: #838383,
-  settings-menu: #6D6D6D,
-  category-page-select-box: #7D7D7D,
-  input-box: #7D7D7D,
+  settings-menu: #6d6d6d,
+  category-page-select-box: #7d7d7d,
+  input-box: #7d7d7d,
   asset-sub-header: #303030,
-  analytics-border:#EBEBEB,
-  table-hover: #FAFAFA,
+  analytics-border: #ebebeb,
+  table-hover: #fafafa,
 );
 
-$white: #FFF;
+$white: #fff;
 
 $grey: (
-  100: #FFF,
-  150: #F2F2F2,
-  200: #F4F8F9,
-  300: #D4D4D4,
-  400: #BCBCBC,
-  450: #EFF4F7,
+  100: #fff,
+  150: #f2f2f2,
+  200: #f4f8f9,
+  300: #d4d4d4,
+  400: #bcbcbc,
+  450: #eff4f7,
   500: #999,
   600: #838383,
-  700: #333E44,
-  800: #323C47,
-  900: #E0E0E0,
-  1000: #D6DEE4,
-  1100: #F2F2F2,
-  1200: #F8F8F8,
-  1300: #C6C6C6,
+  700: #333e44,
+  800: #323c47,
+  900: #e0e0e0,
+  1000: #d6dee4,
+  1100: #f2f2f2,
+  1200: #f8f8f8,
+  1300: #c6c6c6,
   1400: #777,
-  1500: #4F4F4F,
-  1600: #E4E4E4,
+  1500: #4f4f4f,
+  1600: #e4e4e4,
   1700: #000,
-  1800: #FDF7F7
+  1800: #fdf7f7,
 );
 
-$background: #F6F9FC;
+$background: #f6f9fc;
 $boxshadow: 0.0625rem 0.3125rem 1rem 0 rgba(0, 0, 0, 0.19);
 $modal-backdrop: rgba(0, 0, 0, 0.5);
-$tooltip-background-color: #333E44;
+$tooltip-background-color: #333e44;
 $light-dropdown-boxshadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-$loader: #E2E2E2;
+$loader: #e2e2e2;

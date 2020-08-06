@@ -1,7 +1,7 @@
 import {
   LOADING_ERROR,
   LOADING_REQUEST,
-  LOADING_SUCCESS
+  LOADING_SUCCESS,
 } from '@modules/loading/types';
 
 export interface LoadingRequest {

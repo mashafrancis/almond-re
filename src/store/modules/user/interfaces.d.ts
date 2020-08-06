@@ -1,14 +1,13 @@
 import { ResourceAccessLevel } from '@modules/userRoles/interfaces';
 import {
   EDIT_USER_DETAILS_FAILURE,
-  EDIT_USER_DETAILS_REQUEST,
   EDIT_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILURE,
-  GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
 } from './types';
 
 import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+
 // import { Device } from '@modules/device/interfaces';
 
 export interface GetUserDetailsActionSuccess {

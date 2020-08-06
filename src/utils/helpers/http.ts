@@ -2,14 +2,14 @@
 import { displayInternalServerErrorMessage } from '@modules/internalServerError';
 import CacheHandler from '@utils/helpers/CacheHandler';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { setupCache } from 'axios-cache-adapter'
+import { setupCache } from 'axios-cache-adapter';
 
 // helpers
 import { authService } from '@utils/auth';
 import store from '../../store/index';
 
 const cacheAdapter = setupCache({
-  maxAge: 15 * 60 * 1000
+  maxAge: 15 * 60 * 1000,
 });
 
 const token = authService.getToken();
@@ -54,7 +54,7 @@ http.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default http;

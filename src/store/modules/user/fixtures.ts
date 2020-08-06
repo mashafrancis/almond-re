@@ -8,7 +8,7 @@ export const userDetails = {
       email: 'testalmond@gmail.com',
       currentRole: {
         _id: '5e4703d62faee61d8ede2d65',
-        title: 'User'
+        title: 'User',
       },
       activeDevice: {
         verified: true,
@@ -16,7 +16,7 @@ export const userDetails = {
         _id: '5e4a57ffa04a6d8445b5885b',
         id: 'ABC123',
         updatedAt: '2020-06-07T14:48:12.258Z',
-        user: '5edcfe1fb1ccd100710d36a3'
+        user: '5edcfe1fb1ccd100710d36a3',
       },
       roles: [
         {
@@ -28,16 +28,16 @@ export const userDetails = {
               permissions: [
                 {
                   _id: '5e439ed9fd05da507ca0161c',
-                  type: 'Full Access'
-                }
+                  type: 'Full Access',
+                },
               ],
               resource: {
                 _id: '5e17d95fffb6541b6b909d3e',
-                name: 'Analytics'
+                name: 'Analytics',
               },
-            }
-          ]
-        }
+            },
+          ],
+        },
       ],
       photo: 'peek-a-boo-photo',
       isVerified: true,
@@ -48,12 +48,12 @@ export const userDetails = {
           _id: '5e4a57ffa04a6d8445b5885b',
           id: 'ABC123',
           updatedAt: '2020-06-07T14:48:12.258Z',
-          user: '5edcfe1fb1ccd100710d36a3'
-        }
+          user: '5edcfe1fb1ccd100710d36a3',
+        },
       ],
     },
 };
 
 export const editedUserDetailsPayload = {
-  role: '5e555801465ca301b1143b90'
-}
+  role: '5e555801465ca301b1143b90',
+};

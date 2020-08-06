@@ -8,8 +8,6 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const PUBLIC_PATH = process.env.PUBLIC_URL;
-
 /**
  * Parses environment variables into a format acceptable by the webpack DefinePlugin
  * @param {object} configs Object literal containing configuration variables to
@@ -57,7 +55,24 @@ const definePlugin = new webpack.DefinePlugin({
 // });
 
 // instantiating webpack dependencies
-const cleanWebpack = new CleanWebpackPlugin();
+const cleanWebpack = new CleanWebpackPlugin({
+  // default: false
+  dry: true,
+  // Write Logs to Console
+  // (Always enabled when dry is true)
+  // default: false
+  verbose: true,
+
+  // Automatically remove all unused webpack assets on rebuild
+  //
+  // default: true
+  cleanStaleWebpackAssets: true,
+
+  // Do not allow removal of current webpack assets
+  //
+  // default: true
+  protectWebpackAssets: true,
+});
 const htmlWebpack = new htmlWebpackPlugin({
   template: './public/index.html',
   filename: 'index.html',
@@ -80,7 +95,7 @@ const htmlWebpack = new htmlWebpackPlugin({
 const miniCssExtract = new miniCssExtractPlugin({
   filename: '[name].[contenthash].css',
   chunkFilename: '[id].[contenthash].css',
-  ignoreOrder: true  // Enabled to remove warnings about conflicting order
+  ignoreOrder: true,  // Enabled to remove warnings about conflicting order
 });
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const hashedPlugin = new webpack.HashedModuleIdsPlugin();
@@ -94,7 +109,7 @@ const manifestPlugin = new ManifestPlugin({
 
 const copyPlugin = new CopyWebpackPlugin({
   patterns: [
-    { from: 'public' }
+    { from: 'public' },
   ],
 });
 
@@ -103,7 +118,7 @@ const copyPlugin = new CopyWebpackPlugin({
 // })
 
 const contextReplacementPlugin = new webpack.ContextReplacementPlugin(
-  /\.\/locale$/,'empty-module', false, /js$/)
+  /\.\/locale$/, 'empty-module', false, /js$/);
 
 module.exports = {
   cleanWebpack,

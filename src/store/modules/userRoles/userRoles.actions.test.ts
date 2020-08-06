@@ -17,7 +17,7 @@ import {
   editUserRole,
   getUserRoles,
   userRoleInitialState,
-} from '@modules/userRoles/index';
+} from './index';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 
 describe('User roles module actions', () => {
@@ -55,8 +55,8 @@ describe('User roles module actions', () => {
     it('should fetch and return user roles', () => {
       const mockResponse = {
         data: {
-          data: userRolesResponse.data
-        }
+          data: userRolesResponse.data,
+        },
       };
       const expectedActions = [
         {
@@ -67,7 +67,7 @@ describe('User roles module actions', () => {
           roles: mockResponse.data.data,
           type: GET_USER_ROLES_SUCCESS,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/roles?include=permissions&include=resources', mockResponse);
       const store = reduxMockStore(http, userRoleInitialState);
@@ -75,8 +75,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         getUserRoles(),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to fetch user roles', () => {
@@ -84,8 +84,8 @@ describe('User roles module actions', () => {
         response: {
           data: {
             message: 'Error on fetching user roles',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -96,7 +96,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -104,11 +104,11 @@ describe('User roles module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_USER_ROLES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/roles?include=permissions&include=resources', mockErrorResponse, false);
       const store = reduxMockStore(http, userRoleInitialState);
@@ -116,8 +116,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         getUserRoles(),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 
@@ -137,7 +137,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/roles', mockResponse);
@@ -146,8 +146,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         createUserRole(userRoleTestData),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to create a new user role', () => {
@@ -155,8 +155,8 @@ describe('User roles module actions', () => {
         response: {
           data: {
             message: 'Error on creating user roles',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -167,7 +167,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -175,11 +175,11 @@ describe('User roles module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: CREATE_USER_ROLES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/roles', mockErrorResponse, false);
       const store = reduxMockStore(http, userRoleInitialState);
@@ -187,8 +187,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         createUserRole(userRoleTestData),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 
@@ -209,7 +209,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`/roles/${userRoleTestData._id}`, mockResponse);
@@ -218,8 +218,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         editUserRole(userRoleTestData),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to edit a user role', () => {
@@ -227,8 +227,8 @@ describe('User roles module actions', () => {
         response: {
           data: {
             message: 'Error on editing a user role',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -239,7 +239,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -247,11 +247,11 @@ describe('User roles module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_USER_ROLES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`/roles/${userRoleTestData._id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, userRoleInitialState);
@@ -259,8 +259,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         editUserRole(userRoleTestData),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 
@@ -271,7 +271,7 @@ describe('User roles module actions', () => {
         data: {
           message: 'Please format the fields properly',
         },
-      }
+      },
     };
     const expectedActions = [
       {
@@ -282,7 +282,7 @@ describe('User roles module actions', () => {
         snack: {
           message: mockErrorResponse.response.data.message,
         },
-        type: DISPLAY_SNACK_MESSAGE
+        type: DISPLAY_SNACK_MESSAGE,
       },
       {
         errors: {
@@ -291,11 +291,11 @@ describe('User roles module actions', () => {
             data: {
               message: mockErrorResponse.response.data.message,
             },
-          }
+          },
         },
         type: EDIT_USER_ROLES_FAILURE,
         isLoading: false,
-      }
+      },
     ];
     const http = axiosMock(`/roles/${userRoleTestData._id}`, mockErrorResponse, false);
     const store = reduxMockStore(http, userRoleInitialState);
@@ -303,8 +303,8 @@ describe('User roles module actions', () => {
     return dispatchMethodMock(
       store,
       editUserRole(userRoleTestData),
-      expectedActions
-    )
+      expectedActions,
+    );
   });
 
   describe('Delete user role thunk', () => {
@@ -312,7 +312,7 @@ describe('User roles module actions', () => {
       const mockResponse = {
         data: {
           message: 'User role deleted successfully',
-        }
+        },
       };
       const expectedActions = [
         {
@@ -328,7 +328,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/roles', mockResponse);
@@ -337,8 +337,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         deleteUserRole('5e4703d62faee61d8ede2d65'),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
 
     it('should return an error message when it fails to fetch user roles', () => {
@@ -346,8 +346,8 @@ describe('User roles module actions', () => {
         response: {
           data: {
             message: 'Error on fetching user roles',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -358,7 +358,7 @@ describe('User roles module actions', () => {
           snack: {
             message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
@@ -366,11 +366,11 @@ describe('User roles module actions', () => {
               data: {
                 message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: DELETE_USER_ROLES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/roles', mockErrorResponse, false);
       const store = reduxMockStore(http, userRoleInitialState);
@@ -378,8 +378,8 @@ describe('User roles module actions', () => {
       return dispatchMethodMock(
         store,
         deleteUserRole('5e4703d62faee61d8ede2d65'),
-        expectedActions
-      )
+        expectedActions,
+      );
     });
   });
 });

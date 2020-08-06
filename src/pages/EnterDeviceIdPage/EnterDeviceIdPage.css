@@ -1,24 +1,25 @@
 .MuiInputBase-input {
-  font-family: "Google Sans", Roboto, "Helvetica Neue", sans-serif !important;
+  font-family: 'Google Sans', Roboto, 'Helvetica Neue', sans-serif !important;
   font-size: 24px !important;
 }
 
 .MuiTypography-h2 {
+  font-family: 'Google Sans', sans-serif !important;
   font-size: 3.85rem;
-  font-family: "Google Sans", sans-serif !important;
 }
 
 .MuiPaper-rounded {
   border-radius: 8px;
 }
 
-.headline-5, h5 {
+.headline-5,
+h5 {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-size: 0.85rem !important;
   font-weight: 300;
   line-height: 1.25rem;
-  color: #7D7D7D;
+  color: #7d7d7d;
 }
 
 .MuiGrid-spacing-xs-2 {

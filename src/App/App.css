@@ -9,43 +9,44 @@ p {
 }
 
 .mdc-snackbar {
-  z-index: 9000 !important;
-  margin: 8px;
   position: fixed;
-  height: 150px;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 9000 !important;
+  height: 150px;
+  box-sizing: border-box;
+  margin: 8px;
+  pointer-events: none;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .mdc-snackbar__action:not(:disabled) {
-  color: #3480E3 !important;
+  color: #3480e3 !important;
 }
-.mdc-snackbar__action::after, .mdc-snackbar__action::before {
-  background-color: #3480E3 !important;
+.mdc-snackbar__action::after,
+.mdc-snackbar__action::before {
+  background-color: #3480e3 !important;
 }
 .mdc-snackbar__action:hover::before {
   opacity: 0.08;
 }
 .mdc-snackbar__action.mdc-ripple-upgraded--background-focused::before {
-  transition-duration: 75ms;
   opacity: 0.24;
+  transition-duration: 75ms;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded):focus::before {
-  transition-duration: 75ms;
   opacity: 0.24;
+  transition-duration: 75ms;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded)::after {
   transition: opacity 150ms linear;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded):active::after {
-  transition-duration: 75ms;
   opacity: 0.32;
+  transition-duration: 75ms;
 }
 .mdc-snackbar__action.mdc-ripple-upgraded {
   --mdc-ripple-fg-opacity: 0.32;
@@ -54,22 +55,22 @@ p {
 @media (min-width: 539px) {
   .mdc-snackbar {
     position: fixed;
-    z-index: 99;
     top: 1rem;
     left: 50%;
+    z-index: 99;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     height: 32px;
+    box-sizing: border-box;
+    padding: 0 15px 0 20px;
     margin-top: 0;
     margin-left: -200px;
-    padding: 0 15px 0 20px;
-    box-sizing: border-box;
     border-radius: 4px;
+    opacity: 0.95;
+    animation-name: slideInDown;
     animation-duration: 0.5s;
     animation-fill-mode: both;
-    animation-name: slideInDown;
-    opacity: 0.95;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

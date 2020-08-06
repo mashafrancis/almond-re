@@ -1,47 +1,47 @@
 .table-image {
+  max-width: fit-content;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   //width: 100%;
   //text-align: center;
   align-content: center;
-  max-width: fit-content;
   //padding-top: 14px;
 }
 
 .mini-username {
+  position: relative;
+  display: flex;
+  //margin-top: 34px;
+  width: auto;
+  max-width: fit-content;
+  text-transform: capitalize;
   background-size: 22px 22px;
   //min-width: 36px;
   align-items: center;
   justify-content: center;
   align-content: center;
-  display: flex;
-  //margin-top: 34px;
-  width: auto;
-  position: relative;
-  text-transform: capitalize;
-  max-width: fit-content;
 
   &__image {
-    vertical-align: middle;
     width: 1.75rem;
     margin-right: 1.25rem;
+    vertical-align: middle;
     border-radius: 50%;
   }
 }
 
 .table-roles {
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  max-width: fit-content;
   display: flex;
   //margin-top: 34px;
   width: auto;
+  max-width: fit-content;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 
   h5 {
-    margin: 0;
     padding-left: 10px;
+    margin: 0;
   }
 }

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 // @ts-ignore
-import { Connector } from 'mqtt-hooks';
+// import { Connector } from 'mqtt-hooks';
 
 // components
 import ErrorBoundary from '@components/ErrorBoundary';
@@ -35,10 +35,6 @@ import { MenuProvider } from '@context/MenuContext';
 // styles
 import './App.scss';
 
-const KEY = process.env.KEY as string;
-const CERT = process.env.CERT as string;
-const TRUSTED_CA = process.env.TRUSTED_CA as string;
-
 const useEffectAsync = (
   effect: any,
   inputs: React.DependencyList | undefined
@@ -56,10 +52,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
   });
   const timerRef = React.useRef<number>();
 
-  const {
-    user,
-    loading
-  } = props;
+  const { user } = props;
 
   useEffectAsync(async () => {
     initializeGA();
@@ -91,25 +84,21 @@ export const App: React.FunctionComponent<AppProps> = props => {
     clearTimeout(timerRef.current);
   }, []);
 
-  const checkUserDetailsAndAuthentication = (
-    isFetchingUserDetails: boolean,
-    isUserAuthenticated: boolean) => isFetchingUserDetails && isUserAuthenticated;
+  // const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
+  // const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
+  // const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
-  const bufferKey = Buffer.from(KEY, 'utf-8');
-  const bufferCert = Buffer.from(CERT, 'utf-8');
-  const bufferCA = Buffer.from(TRUSTED_CA, 'utf-8');
-
-  const options = {
-    port: 8083,
-    host: process.env.MQTT_HOST,
-    user: process.env.MQTT_USER,
-    protocol: process.env.MQTT_PROTOCOL,
-    password: process.env.MQTT_PASSWORD,
-    key: bufferKey,
-    cert: bufferCert,
-    ca: bufferCA,
-    rejectUnauthorized: true
-  };
+  // const options = {
+  //   port: 8083,
+  //   host: process.env.MQTT_HOST,
+  //   user: process.env.MQTT_USER,
+  //   protocol: process.env.MQTT_PROTOCOL,
+  //   password: process.env.MQTT_PASSWORD,
+  //   key: bufferKey,
+  //   cert: bufferCert,
+  //   ca: bufferCA,
+  //   rejectUnauthorized: true
+  // };
 
   const { isUserAuthenticated, isAdmin } = state;
   const {
@@ -142,7 +131,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
         }}>
         <MenuProvider>
           <ViewportProvider>
-            <Connector opts={options}>
+            {/* <Connector opts={options}> */}
               <ErrorBoundary>
                 <>
                   <SnackBar />
@@ -164,7 +153,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
                   </>
                 </>
               </ErrorBoundary>
-            </Connector>
+            {/* </Connector> */}
           </ViewportProvider>
         </MenuProvider>
       </UserContext.Provider>

@@ -25,7 +25,7 @@ const appReducer = combineReducers({
   people,
   activityLogs,
   loading,
-  sensorData
+  sensorData,
 });
 
 const rootReducer = (state: any, action: any) => {

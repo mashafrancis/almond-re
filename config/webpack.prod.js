@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const cssNano = require('cssnano');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -9,7 +8,7 @@ const config = require('./webpack.config.js');
 
 module.exports = merge(config, {
   output: {
-    filename: '[name].min.js'
+    filename: '[name].min.js',
   },
   devtool: 'source-map',
   optimization: {
@@ -29,7 +28,7 @@ module.exports = merge(config, {
     // Keep the runtime chunk separated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
     runtimeChunk: {
-      name: "runtime"
+      name: 'runtime',
     },
     splitChunks: {
       chunks: 'all',
@@ -58,24 +57,42 @@ module.exports = merge(config, {
         },
         // Split code common to all chunks to its own chunk
         commons: {
-          name: "commons",    // The name of the chunk containing all common code
-          chunks: "initial",
-          minChunks: 2        // This is the number of modules
-        }
+          name: 'commons',    // The name of the chunk containing all common code
+          chunks: 'initial',
+          minChunks: 2,        // This is the number of modules
+        },
       },
     },
-    // plugins: [
-    //   new CompressionPlugin(),
-    //   new webpack.optimize.AggressiveMergingPlugin(),
-    //   new webpack.optimize.ModuleConcatenationPlugin(),
-    //   new CleanWebpackPlugin(),
-    // ],
-    // node: {
-    //   dgram: 'empty',
-    //   fs: 'empty',
-    //   net: 'empty',
-    //   tls: 'empty',
-    //   child_process: 'empty',
-    // },
+  },
+  plugins: [
+    new CompressionPlugin(),
+    // new webpack.optimize.AggressiveMergingPlugin(),
+    // new webpack.optimize.ModuleConcatenationPlugin(),
+    // new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      // default: false
+      dry: true,
+      // Write Logs to Console
+      // (Always enabled when dry is true)
+      // default: false
+      verbose: true,
+
+      // Automatically remove all unused webpack assets on rebuild
+      //
+      // default: true
+      cleanStaleWebpackAssets: true,
+
+      // Do not allow removal of current webpack assets
+      //
+      // default: true
+      protectWebpackAssets: true,
+    }),
+  ],
+  node: {
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
   },
 });

@@ -1,35 +1,35 @@
 .container {
-  width: 200px;
-  height: 200px;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
   margin: auto;
-  filter: url("#goo");
+  filter: url('#goo');
+  transform: translate(-50%, -50%);
   animation: rotate-move 2s ease-in-out infinite;
 }
 
 .dot {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #000;
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 50px;
+  height: 50px;
   margin: auto;
+  background-color: #000;
+  border-radius: 50%;
 }
 
 .dot-3 {
-  background-color: #3480E3;
+  background-color: #3480e3;
   animation: dot-3-move 2s ease infinite, index 6s ease infinite;
 }
 
 .dot-2 {
-  background-color: #55D69C;
+  background-color: #55d69c;
   animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
 }
 
@@ -52,7 +52,7 @@
     transform: translateY(-90px) scale(0.45);
   }
   100% {
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 @keyframes dot-2-move {
@@ -69,7 +69,7 @@
     transform: translate(-80px, 60px) scale(0.45);
   }
   100% {
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 @keyframes dot-1-move {
@@ -86,7 +86,7 @@
     transform: translate(80px, 60px) scale(0.45);
   }
   100% {
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 @keyframes rotate-move {
@@ -101,7 +101,8 @@
   }
 }
 @keyframes index {
-  0%, 100% {
+  0%,
+  100% {
     z-index: 3;
   }
   33.3% {

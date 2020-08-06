@@ -1,11 +1,11 @@
 import {
   reducer,
   activityLogsInitialState,
-  logActivity
+  logActivity,
 } from '@modules/activityLogs';
 
 describe('Activity logs reducer', () => {
-  const activityLogs = ['Blah', 'Blah']
+  const activityLogs = ['Blah', 'Blah'];
   it('should return initial state if action type doesn\'t match', () => {
     const newState = reducer(activityLogsInitialState, { type: 'fakeType' });
     expect(newState).toEqual(activityLogsInitialState);

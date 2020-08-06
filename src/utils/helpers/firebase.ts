@@ -10,8 +10,8 @@ const firebaseConfig = {
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID
-}
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+};
 firebase.initializeApp(firebaseConfig);
 
 // try{
@@ -21,8 +21,8 @@ firebase.initializeApp(firebaseConfig);
 // }
 
 const reactReduxFirebaseConfig = {
-  userProfile: 'users'
-}
+  userProfile: 'users',
+};
 
 // const reactReduxFirebaseProps = {
 //   firebase: firebaseConfig,
@@ -33,5 +33,5 @@ const reactReduxFirebaseConfig = {
 export {
   firebaseConfig,
   // reactReduxFirebaseProps,
-  reactReduxFirebaseConfig
-}
+  reactReduxFirebaseConfig,
+};

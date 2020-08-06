@@ -95,6 +95,7 @@ export interface Permission {
 export interface ResourceAccessLevel {
   permissions: Permission[];
   resource: Resource;
+
   [key: string]: any;
 }
 

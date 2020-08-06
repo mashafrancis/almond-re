@@ -175,10 +175,10 @@ export const getUserRoles = () => (
   return http.get('/roles?include=permissions&include=resources')
     .then(response => {
       const { data } = response;
-      dispatch(getUserRolesSuccess(data))
+      dispatch(getUserRolesSuccess(data));
     })
     .catch(error => {
-      const {response: {data: {message}}} = error;
+      const { response: { data: { message } } } = error;
       dispatch(displaySnackMessage(message));
       dispatch(getUserRolesFailure(error));
     });
@@ -197,16 +197,16 @@ export const createUserRole = (userRole: any) => (
   dispatch(createUserRoleRequest());
   return http.post('/roles', userRole)
     .then((response: { data: { data: any; message: string }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(createUserRoleSuccess(data));
       dispatch(displaySnackMessage(message));
     })
     .catch((error: ErrorObject) => {
-      const { response: { data: { message } } } = error;
-      dispatch(displaySnackMessage(message));
-      dispatch(createUserRoleFailure(error));
-    }
-  );
+        const { response: { data: { message } } } = error;
+        dispatch(displaySnackMessage(message));
+        dispatch(createUserRoleFailure(error));
+      },
+    );
 };
 
 /**
@@ -222,7 +222,7 @@ export const deleteUserRole = (id: string) => (
   dispatch(deleteUserRolesRequest());
   return http.delete(`/roles/${id}`)
     .then(response => {
-      const {data: {message}} = response;
+      const { data: { message } } = response;
       dispatch(deleteUserRolesSuccess(id));
       dispatch(displaySnackMessage(message));
     })
@@ -247,7 +247,7 @@ export const editUserRole = updatedRolePayload => (
   dispatch(editUserRoleRequest());
   return http.patch(`/roles/${_id}`, updatedRolePayload)
     .then((response: { data: { data: any; message: string }; }) => {
-      const {data: {data, message}} = response;
+      const { data: { data, message } } = response;
       dispatch(editUserRoleSuccess(data, _id));
       dispatch(displaySnackMessage(message));
     })

@@ -1,29 +1,29 @@
 import {
   LoadingError,
   LoadingRequest,
-  LoadingSuccess
+  LoadingSuccess,
 } from '@modules/loading/interfaces';
 
 import {
   LOADING_ERROR,
   LOADING_REQUEST,
-  LOADING_SUCCESS
+  LOADING_SUCCESS,
 } from '@modules/loading/types';
-import {AnyAction} from 'redux';
+import { AnyAction } from 'redux';
 
 export const loadingRequest = (loading: string): LoadingRequest => ({
   loading,
-  type: LOADING_REQUEST
+  type: LOADING_REQUEST,
 });
 
 export const loadingSuccess = (loading: string): LoadingSuccess => ({
   loading,
-  type: LOADING_SUCCESS
+  type: LOADING_SUCCESS,
 });
 
 export const loadingError = (loading: string): LoadingError => ({
   loading,
-  type: LOADING_ERROR
+  type: LOADING_ERROR,
 });
 
 export const loadingInitialState = 'idle';

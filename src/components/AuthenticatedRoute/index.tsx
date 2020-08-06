@@ -10,14 +10,13 @@ import RestrictedRoute from '@components/RestrictedRoute';
 
 // helper functions
 import { authService } from '@utils/auth';
-import { AuthenticateRouteProps } from '@components/AuthenticatedRoute/interfaces';
 
 /**
  * Renders the component if the user is authenticated
  * @param {Component} Component
  * @returns {JSX}
  */
-const renderComponent = (Component: any): React.ReactNode => (props: any) => <Component { ...props } />;
+const renderComponent = (Component: any): React.ReactNode => (props: any) => <Component {...props} />;
 
 const AuthenticatedRoute = (props: any) => {
   const { component: Component, ...rest } = props;
@@ -28,15 +27,15 @@ const AuthenticatedRoute = (props: any) => {
 
     return (
       <>
-        <Redirect to="/" />
+        <Redirect to="/"/>
       </>
     );
   }
 
   return (
-  <div className="drawer-content">
-    <RestrictedRoute { ...rest } render={renderComponent(Component)} />
-  </div>
+    <div className="drawer-content">
+      <RestrictedRoute {...rest} render={renderComponent(Component)}/>
+    </div>
   );
 };
 

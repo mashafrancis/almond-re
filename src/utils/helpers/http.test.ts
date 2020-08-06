@@ -12,12 +12,12 @@ describe('The http axios instance helper function', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { assign: jest.fn() }
+      value: { assign: jest.fn() },
     });
 
     Object.defineProperty(window.location, 'replace', {
       writable: true,
-      value: { assign: jest.fn() }
+      value: { assign: jest.fn() },
     });
 
     authService.logoutUser = jest.fn();
@@ -98,7 +98,7 @@ describe('The http axios instance helper function', () => {
     });
 
     it('should update the request timestamp for an endpoint when a non-get request is made', () => {
-      const interceptor = <any> http.interceptors.response;
+      const interceptor = <any>http.interceptors.response;
 
       interceptor.handlers[0].fulfilled({
         config: {
@@ -111,7 +111,7 @@ describe('The http axios instance helper function', () => {
     });
 
     it('should update the request timestamp for verify device endpoint when a non-get request is made', () => {
-      const interceptor = <any> http.interceptors.response;
+      const interceptor = <any>http.interceptors.response;
 
       interceptor.handlers[0].fulfilled({
         config: {

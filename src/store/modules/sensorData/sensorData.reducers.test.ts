@@ -15,7 +15,7 @@ describe('Sensor data reducer:', () => {
   });
 
   describe('Get environment data', () => {
-    const responseData = {}
+    const responseData = {};
     it('should dispatch GET_ENVIRONMENT_DATA_SUCCESS', () => {
       const getSensorDataSuccess = getEnvironmentDataSuccess(responseData as any);
       const sensorDataState = reducer(sensorDataInitialState, getSensorDataSuccess);
@@ -32,7 +32,7 @@ describe('Sensor data reducer:', () => {
   });
 
   describe('Get water data', () => {
-    const responseData = {}
+    const responseData = {};
     it('should dispatch GET_WATER_DATA_SUCCESS', () => {
       const getWaterDataSuccessAction = getWaterDataSuccess(responseData as any);
       const sensorDataState = reducer(sensorDataInitialState, getWaterDataSuccessAction);

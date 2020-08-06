@@ -13,20 +13,15 @@ import './AnalyticsPage.scss';
 // interfaces
 import {
   AnalyticsPageProps,
-  AnalyticsPageState
 } from './interfaces';
 import AdminAnalytics from '@pages/AnalyticsPage/AdminAnalytics';
 import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';
 
-export const AnalyticsPage: React.FunctionComponent<AnalyticsPageProps> = props => {
-  const [state, setState] = React.useState<AnalyticsPageState>({
-    id: '',
-  });
-
+export const AnalyticsPage = (props: AnalyticsPageProps): JSX.Element => {
   const user = React.useContext(UserContext);
 
   return (
-    user.isAdmin ? <AdminAnalytics /> : <RegularUserAnalytics />
+    user.isAdmin ? <AdminAnalytics/> : <RegularUserAnalytics/>
   );
 };
 

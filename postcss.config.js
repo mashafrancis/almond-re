@@ -1,4 +1,4 @@
-require('./config/dotenv')
+require('./config/dotenv');
 
 module.exports = {
   plugins: {
@@ -14,4 +14,4 @@ module.exports = {
       },
     },
   },
-}
+};

@@ -43,7 +43,7 @@ describe('People reducer:', () => {
       const updatedPerson = peopleState.people.find(person => person._id === personToUpdate._id);
 
       expect(peopleState.errors).toBe(null);
-      expect(updatedPerson.currentRole.title).toEqual('Test')
+      expect(updatedPerson.currentRole.title).toEqual('Test');
       expect(peopleState.people[0].name).toEqual('Random User');
     });
 

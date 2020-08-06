@@ -3,7 +3,6 @@ import * as React from 'react';
 // components
 import ActionButton from '@components/ActionButton';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,7 +20,6 @@ const Modal: React.FunctionComponent<ModalProps> = props => {
     onClose,
     renderHeader,
     submitButtonName,
-    disabled,
     onSubmit,
     onDismiss,
   } = props;

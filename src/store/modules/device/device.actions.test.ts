@@ -3,7 +3,7 @@ import {
   activateDevice,
   addNewDevice, deleteDevice,
   deviceInitialState, editDevice, getAllDevices, verifyUserDevice,
-} from '@modules/device/index';
+} from './index';
 
 // helper functions
 import {
@@ -52,7 +52,7 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: ADD_DEVICE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           device: mockResponse.data.data,
@@ -61,9 +61,9 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/devices', mockResponse);
@@ -72,7 +72,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         addNewDevice(deviceIdPayload),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -81,8 +81,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on creating a device',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -91,21 +91,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: ADD_DEVICE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/devices', mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -113,7 +113,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         addNewDevice(deviceIdPayload),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -129,18 +129,18 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: USER_VERIFY_DEVICE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           type: USER_VERIFY_DEVICE_SUCCESS,
           isLoading: false,
-          id: '5dfa0dcd53890575b993eb74'
+          id: '5dfa0dcd53890575b993eb74',
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/my-device', mockResponse);
@@ -149,7 +149,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         verifyUserDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -158,8 +158,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on verifying a device',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -168,21 +168,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: USER_VERIFY_DEVICE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/my-device', mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -190,7 +190,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         verifyUserDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -206,7 +206,7 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: ACTIVATE_DEVICE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           activeDevice: mockResponse.data.data,
@@ -215,9 +215,9 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock('/active-device', mockResponse);
@@ -226,7 +226,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         activateDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -235,8 +235,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on activating a device',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -245,21 +245,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: ACTIVATE_DEVICE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/active-device', mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -267,7 +267,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         activateDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -283,7 +283,7 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: GET_DEVICES_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           devices: devices.data,
@@ -297,7 +297,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         getAllDevices(),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -306,8 +306,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on fetching all devices',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -316,21 +316,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: GET_DEVICES_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock('/devices', mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -338,7 +338,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         getAllDevices(),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -354,7 +354,7 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: EDIT_DEVICE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           id,
@@ -364,9 +364,9 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`devices/${id}`, mockResponse);
@@ -375,7 +375,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         editDevice(id, deviceIdPayload),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -384,8 +384,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on editing a device',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -394,21 +394,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: EDIT_DEVICE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`devices/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -416,7 +416,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         editDevice(id, deviceIdPayload),
-        expectedActions
+        expectedActions,
       );
     });
   });
@@ -431,7 +431,7 @@ describe('Device module actions', () => {
       const expectedActions = [
         {
           type: DELETE_DEVICE_REQUEST,
-          isLoading: true
+          isLoading: true,
         },
         {
           type: DELETE_DEVICE_SUCCESS,
@@ -440,9 +440,9 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockResponse.data.message
+            message: mockResponse.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
       ];
       const http = axiosMock(`devices/${id}`, mockResponse);
@@ -451,7 +451,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         deleteDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
 
@@ -460,8 +460,8 @@ describe('Device module actions', () => {
         response: {
           data: {
             message: 'Error on deleting a device',
-          }
-        }
+          },
+        },
       };
       const expectedActions = [
         {
@@ -470,21 +470,21 @@ describe('Device module actions', () => {
         },
         {
           snack: {
-            message: mockErrorResponse.response.data.message
+            message: mockErrorResponse.response.data.message,
           },
-          type: DISPLAY_SNACK_MESSAGE
+          type: DISPLAY_SNACK_MESSAGE,
         },
         {
           errors: {
             response: {
               data: {
-                message: mockErrorResponse.response.data.message
+                message: mockErrorResponse.response.data.message,
               },
-            }
+            },
           },
           type: DELETE_DEVICE_FAILURE,
           isLoading: false,
-        }
+        },
       ];
       const http = axiosMock(`devices/${id}`, mockErrorResponse, false);
       const store = reduxMockStore(http, deviceInitialState);
@@ -492,7 +492,7 @@ describe('Device module actions', () => {
       return dispatchMethodMock(
         store,
         deleteDevice(id),
-        expectedActions
+        expectedActions,
       );
     });
   });

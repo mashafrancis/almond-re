@@ -20,7 +20,7 @@ import {
   verifyDeviceFailure,
   verifyDeviceRequest,
   verifyDeviceSuccess,
-} from '@modules/device/index';
+} from './index';
 
 // fixtures
 import {

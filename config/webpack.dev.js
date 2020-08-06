@@ -2,12 +2,12 @@ const { merge } = require('webpack-merge');
 const config = require('./webpack.config.js');
 const path = require('path');
 const {
-  hotModuleReplacementPlugin
+  hotModuleReplacementPlugin,
 } = require('./webpack.plugins');
 
 module.exports = merge(config, {
   output: {
-    filename: '[name].js'
+    filename: '[name].js',
   },
   optimization: {
     namedModules: true,
@@ -15,7 +15,7 @@ module.exports = merge(config, {
   devtool: 'source-map',
   devServer: {
     proxy: {
-      '/api': 'http://localhost:8080/'
+      '/api': 'http://localhost:8080/',
     },
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../src/assets'),
@@ -28,8 +28,8 @@ module.exports = merge(config, {
     watchContentBase: true,
     watchOptions: {
       poll: true,
-      ignored: /node_modules/
-    }
+      ignored: /node_modules/,
+    },
   },
-  plugins: [hotModuleReplacementPlugin]
+  plugins: [hotModuleReplacementPlugin],
 });

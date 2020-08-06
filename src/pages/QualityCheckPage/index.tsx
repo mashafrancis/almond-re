@@ -3,12 +3,11 @@ import * as React from 'react';
 // third-party libraries
 import {
   Cell,
-  Grid,
-  Row
+  Row,
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import {
-  SecurityTwoTone
+  SecurityTwoTone,
 } from '@material-ui/icons';
 
 // thunks
@@ -20,25 +19,15 @@ import './QualityCheckPage.scss';
 // interfaces
 import {
   QualityCheckPageProps,
-  QualityCheckPageState
 } from './interfaces';
 
 // components
 const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 
 export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = props => {
-  const [state, setState] = React.useState<QualityCheckPageState>({
-    isEditMode: false,
-    schedules: [],
-    isDeleteModal: false,
-    action: '',
-    id: '',
-    statusClass: '',
-    isEnabled: false,
-  });
 
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           {(window.innerWidth < 539) && <div className="main-subheader"><h3>QualityCheck</h3></div>}
@@ -49,11 +38,11 @@ export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = 
           <GeneralCardInfo
             mainHeader="Quality Check"
             subHeader="Tests for water quality, salts and ph level"
-            icon={<SecurityTwoTone className="content-icon general-info-icon" />}
-            />
+            icon={<SecurityTwoTone className="content-icon general-info-icon"/>}
+          />
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 

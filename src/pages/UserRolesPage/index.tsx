@@ -4,14 +4,11 @@ import * as React from 'react';
 // Third party libraries
 import {
   Cell,
-  Grid,
-  Row
+  Row,
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import {
   Chip,
-  InputAdornment,
-  TextField
 } from '@material-ui/core';
 
 // icons
@@ -19,13 +16,12 @@ import {
   Mood,
   Grain,
   Face,
-  PhonelinkSetupSharp
 } from '@material-ui/icons';
 
 // components
 import FormField from '@components/FormField';
 import PermissionAccess from '@components/PermissionAccess';
-import Restrict from '@components/Restrict';
+// import Restrict from '@components/Restrict';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import LinearProgressBar from '@components/LinearProgressBar';
@@ -39,20 +35,17 @@ import {
   createUserRole,
   deleteUserRole,
   editUserRole,
-  getUserRoles
+  getUserRoles,
 } from '@modules/userRoles';
 
 // interfaces
 import {
   UserRolesPageProps,
-  UserRolesPageState
+  UserRolesPageState,
 } from './interfaces';
 import {
-  Resource,
-  ResourceAccessLevel,
-  UserRole
+  UserRole,
 } from '@modules/userRoles/interfaces';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 const CardInfo = React.lazy(() => import('@components/CardInfo'));
 const Table = React.lazy(() => import('@components/Table'));
@@ -84,11 +77,11 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
     };
 
     getRoles().then(() => setResourcesPermissions);
-  },              []);
+  }, []);
 
   React.useEffect(() => {
     onResetPermission();
-  },              [state.isModalOpen]);
+  }, [state.isModalOpen]);
 
   const setResourcesPermissions = () => {
     setState({
@@ -114,7 +107,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
    * @return {JSX}
    */
   const renderAction = (action: string, authOption: string, role, actionMethod, className: string) =>
-    // <Restrict authorize={authOption}>
+      // <Restrict authorize={authOption}>
       <span className={className} onClick={role && actionMethod(role)}>
         {action}
       </span>
@@ -150,10 +143,10 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
 
         return [...resourceAccessLevels, formattedResource];
       },
-      []
+      [],
     );
 
-    const {resources} = props.userRoles;
+    const { resources } = props.userRoles;
 
     // @ts-ignore
     const currentResources = resources.map(resource => {
@@ -277,7 +270,9 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
     };
 
     for (const char of value) {
-      if (hasSpecialCharacters(char)) { throw new Error('Field should contain only letters'); }
+      if (hasSpecialCharacters(char)) {
+        throw new Error('Field should contain only letters');
+      }
     }
   };
 
@@ -296,32 +291,38 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
           id="title"
           labelText="Role Name"
           type="text"
-          leadingIcon={<Mood />}
+          leadingIcon={<Mood/>}
           aria-describedby="title-helper-text"
           required
           validator={validateTitleDescription}
           value={state.isEditMode ? state.selectedRole.title : state.title}
-          onStateChanged={e => { fieldStateChanged('title'); handleInputChange(e); }}
-          />
+          onStateChanged={e => {
+            fieldStateChanged('title');
+            handleInputChange(e);
+          }}
+        />
       </div>
       <div className="form-cell">
         <FormField
           id="description"
           labelText="Role Description"
           type="text"
-          leadingIcon={<Grain />}
+          leadingIcon={<Grain/>}
           aria-describedby="description-helper-text"
           required
           validator={validateTitleDescription}
           value={state.isEditMode ? state.selectedRole.description : state.description}
-          onStateChanged={e => { fieldStateChanged('description'); handleInputChange(e); }}
-          />
+          onStateChanged={e => {
+            fieldStateChanged('description');
+            handleInputChange(e);
+          }}
+        />
       </div>
       <PermissionAccess
         resources={props.userRoles.resources}
         permissions={props.userRoles.permissions}
         getResources={getResourcePermissions}
-        />
+      />
     </>
   ;
 
@@ -336,7 +337,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       submitButtonName={state.isEditMode ? 'Update role' : 'Create role'}
       onSubmit={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
       onDismiss={toggleModal}
-      />
+    />
   ;
 
   const DeleteRoleModal = () =>
@@ -346,7 +347,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
         <>
           <h4 className="headline-4">{`Permanently delete ${state.selectedRole.title} role`}</h4>
           <p className="delete-modal-content">
-          {state.selectedRole && state.selectedRole.users > 0
+            {state.selectedRole && state.selectedRole.users > 0
               ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
               : 'This cannot be undone'}
           </p>
@@ -358,7 +359,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       onSubmit={onRoleDeleteSubmit}
       onDismiss={toggleDeleteModal}
       disabled={state.selectedRole && state.selectedRole.users > 0}
-      />
+    />
   ;
 
   const TableContent = userRoles => {
@@ -373,7 +374,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       id: role[1]._id,
       title: role[1].title,
       description: role[1].description,
-      userCount: <Chip className="MuiChip-root-enabled" label={role[1].userCount} />,
+      userCount: <Chip className="MuiChip-root-enabled" label={role[1].userCount}/>,
       actions: userRolesListAction(role[1]),
     }));
 
@@ -381,31 +382,31 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       <Table
         keys={tableHeaders}
         values={tableValues}
-        />
+      />
     );
   };
 
   return (
-    <Grid>
+    <>
       <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
           <CardInfo
             mainHeader="User Roles"
             subHeader="Create a new role for users with Almond"
-            icon={<Face className="content-icon" />}
+            icon={<Face className="content-icon"/>}
             buttonName="Add role"
             onClick={toggleModal}
-            />
-          <React.Suspense fallback={<LinearProgressBar />}>
+          />
+          <React.Suspense fallback={<LinearProgressBar/>}>
             <div className="user-roles-page__table">
-              { TableContent(Object.entries(props.userRoles.roles)) }
+              {TableContent(Object.entries(props.userRoles.roles))}
             </div>
           </React.Suspense>
-          { UserRolePageModal() }
-          { DeleteRoleModal() }
+          {UserRolePageModal()}
+          {DeleteRoleModal()}
         </Cell>
       </Row>
-    </Grid>
+    </>
   );
 };
 
