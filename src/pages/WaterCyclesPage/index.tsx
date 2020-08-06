@@ -7,7 +7,7 @@ import {
 } from '@material/react-layout-grid';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import { useMqttState } from 'mqtt-hooks';
+import { useMqttState, useSubscription } from 'mqtt-hooks';
 import loadable from '@loadable/component'
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
@@ -96,7 +96,11 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
 
-  const { mqtt } = useMqttState();
+  const { mqtt, status } = useMqttState();
+  const {
+    message,
+    topic
+  } = useSubscription('almond/pump');
 
   React.useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -121,9 +125,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     setState({ ...state, hasError: false });
   }, [state.selectedTimeSchedule]);
 
-  // React.useEffect(() => {
-  //   props.getWaterData();
-  // }, []);
+  React.useEffect(() => {
+    props.getWaterData();
+  }, []);
 
   // React.useEffect(() => {
   //   const { scheduleToEdit } = state;
@@ -170,17 +174,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const handleClick = message => mqtt.publish('almond/pump', message);
 
   const handleTogglePumpOnChange = event => {
-    event.target.checked
-      ? props.togglePump({ enabled: true, device: user.activeDevice._id })
-        .then(() => {
-          setState({ ...state, statusClass: 'tbl-status' });
-          handleClick(1)
-        })
-      : props.togglePump({ enabled: false, device: user.activeDevice._id })
-        .then(() => {
-          setState({ ...state, statusClass: '' });
-          handleClick(0)
-        });
+    const { checked } = event.target;
+    props.togglePump({ enabled: checked, device: user.activeDevice._id })
+      .then(() => handleClick(checked ? 1 : 0))
   };
 
   const handleToggleStatusChange = async (event, schedule) => {
@@ -340,7 +336,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       <Table
         keys={tableHeaders}
         values={tableValues}
-        statusClass={state.statusClass}
+        statusClass={props.enabled && 'tbl-status'}
       />
     );
   };
@@ -390,7 +386,6 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
     <>
-      {console.log('Class: , Function: WaterCyclesPage, Line 368 state.schedules():', state.schedules)}
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">

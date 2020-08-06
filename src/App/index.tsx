@@ -6,7 +6,7 @@ import * as queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-// import { Connector } from 'mqtt-hooks';
+import { Connector } from 'mqtt-hooks';
 
 // components
 import ErrorBoundary from '@components/ErrorBoundary';
@@ -32,6 +32,7 @@ import { MenuProvider } from '@context/MenuContext';
 
 // styles
 import './App.scss';
+import { initializeFirebase } from '@utils/helpers/firebase';
 
 const useEffectAsync = (
   effect: any,
@@ -52,9 +53,13 @@ export const App: React.FunctionComponent<AppProps> = props => {
 
   const { user } = props;
 
-  useEffectAsync(async () => {
+  React.useEffect(() => {
+    initializeFirebase();
     initializeGA();
     logPageView(window.location.pathname);
+  }, []);
+
+  useEffectAsync(async () => {
     if (state.isUserAuthenticated) {
       try {
         await props.getUserDetails()
@@ -87,18 +92,6 @@ export const App: React.FunctionComponent<AppProps> = props => {
   // const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
   // const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
-  // const options = {
-  //   port: 8000,
-  //   host: process.env.MQTT_HOST,
-  //   user: process.env.MQTT_USER,
-  //   protocol: process.env.MQTT_PROTOCOL,
-  //   password: process.env.MQTT_PASSWORD,
-  //   // key: bufferKey,
-  //   // cert: bufferCert,
-  //   // ca: bufferCA,
-  //   rejectUnauthorized: true,
-  // };
-
   const { isUserAuthenticated, isAdmin } = state;
   const {
     _id,
@@ -110,42 +103,62 @@ export const App: React.FunctionComponent<AppProps> = props => {
     activeDevice,
   } = user;
 
+  const userDetailsOnProvider = {
+    _id,
+    name,
+    email,
+    photo,
+    devices,
+    isVerified,
+    activeDevice,
+    isAdmin,
+  };
+
+  const options = {
+    port: 8083,
+    host: 'localhost',
+    // user: process.env.MQTT_USER,
+    protocol: 'ws',
+    keepalive: 30,
+    clientId: _id,
+    // protocolId: 'MQTT',
+    // protocolVersion: 4,
+    clean: true,
+    reconnectPeriod: 1000,
+    connectTimeout: 30 * 1000,
+    will: {
+      topic: 'AlmondWillMsg',
+      payload: 'Connection Closed abnormally..!',
+      qos: 0,
+      retain: false,
+    },
+    // password: process.env.MQTT_PASSWORD,
+    // key: bufferKey,
+    // cert: bufferCert,
+    // ca: bufferCA,
+    // rejectUnauthorized: true,
+  };
+
   return (
-    // <ReactReduxFirebaseProvider
-    //   firebase={firebaseConfig}
-    //   config={reactReduxFirebaseConfig}
-    //   dispatch={store.dispatch}
-    //   createFirestoreInstance={createFirestoreInstance}
-    // >
+    // <ReactReduxFirebaseProvider {...reactReduxFirebaseProps}>
     <UserContext.Provider
-      value={{
-        _id,
-        name,
-        email,
-        photo,
-        devices,
-        isVerified,
-        activeDevice,
-        isAdmin,
-      }}>
+      value={userDetailsOnProvider}>
       <MenuProvider>
         <ViewportProvider>
-          {/*<Connector brokerUrl="mqtts://masha:froyogreen@broker.mqttdashboard.com:8000">*/}
+          <Connector opts={options}>
             <ErrorBoundary>
               <>
                 <SnackBar/>
-                <>
-                  {
-                    location.pathname !== '/'
-                    && isUserAuthenticated
-                  }
-                  <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
-                    <Routes/>
-                  </React.Suspense>
-                </>
+                {
+                  location.pathname !== '/'
+                  && isUserAuthenticated
+                }
+                <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
+                  <Routes/>
+                </React.Suspense>
               </>
             </ErrorBoundary>
-          {/*</Connector>*/}
+          </Connector>
         </ViewportProvider>
       </MenuProvider>
     </UserContext.Provider>

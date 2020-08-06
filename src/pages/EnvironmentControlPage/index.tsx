@@ -29,10 +29,10 @@ const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay')
 
 export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = props => {
 
-  // React.useEffect(() => {
-  //   props.getEnvironmentData();
-  //     // .then(() => setState({ ...state, environmentData: props.environmentData }))
-  // }, [])
+  React.useEffect(() => {
+    props.getEnvironmentData();
+      // .then(() => setState({ ...state, environmentData: props.environmentData }))
+  }, [])
 
   const {
     currentTemperature,
@@ -61,7 +61,7 @@ export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlP
       heading: 'Water Temperature',
       backgroundColor: ['#7ad283', '#CCCCCC'],
       hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
-      data: [humidity, 200 - humidity],
+      data: [humidity, 100 - humidity],
       donutInfo: `${humidity}%`,
     },
   ];
