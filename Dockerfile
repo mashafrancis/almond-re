@@ -58,6 +58,8 @@ COPY nginx/*.conf /etc/nginx/conf.d/
 
 COPY --from=build /opt/web/dist /usr/share/nginx/html
 
+RUN ls -la /usr/share/nginx/html
+
 # Default port exposure
 EXPOSE 80
 

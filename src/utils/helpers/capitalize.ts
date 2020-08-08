@@ -4,7 +4,7 @@
  * A new sentence in this context is a sentence that exists in a paragraph
  * and comes after the symbols: . ? !
  *
- * An uncapitalized sentence is a sentence whose first letter is in lowercase
+ * An unCapitalized sentence is a sentence whose first letter is in lowercase
  *
  * @param {string} paragraph e.g. `success. user has been given Full access.`
  * @returns {string} e.g. `Success. User has been given full access.`

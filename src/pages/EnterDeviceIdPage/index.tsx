@@ -11,10 +11,11 @@ import {
   PhonelinkSetupSharp
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
+import loadable from '@loadable/component'
 
 // components
 import { Cell, Row } from '@material/react-layout-grid';
-import NavigationHeader from '@components/NavigationHeader';
+const NavigationHeader = loadable(() => import('@components/NavigationHeader'));
 
 // thunk
 import { verifyUserDevice } from '@modules/device';

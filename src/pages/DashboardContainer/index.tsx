@@ -11,6 +11,7 @@ import {
   Menu,
 } from '@material-ui/core';
 import { Grid } from '@material/react-layout-grid';
+import loadable from '@loadable/component';
 
 // icons
 import {
@@ -55,11 +56,11 @@ import { Device } from '@modules/device/interfaces';
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import './DashboardContainer.scss';
 
-const Modal = React.lazy(() => import('@components/Modal'));
-const MenuContent = React.lazy(() => import('@components/MenuContent'));
-const PageBottomNavigation = React.lazy(() => import('@components/BottomNavigation'));
-const TopBar = React.lazy(() => import('@components/TopBar'));
-const ActivityLogCard = React.lazy(() => import('@components/ActivityLogCard'));
+const Modal = loadable(() => import('@components/Modal'));
+const MenuContent = loadable(() => import('@components/MenuContent'));
+const PageBottomNavigation = loadable(() => import('@components/BottomNavigation'));
+const TopBar = loadable(() => import('@components/TopBar'));
+const ActivityLogCard = loadable(() => import('@components/ActivityLogCard'));
 
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = props => {
   const [state, setState] = React.useState<DashboardContainerState>({
@@ -108,43 +109,40 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
   } = menu;
 
   React.useEffect(() => {
-    setState({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       activeDevice,
       device: activeDevice.id,
       roleSelected: props.user.currentRole.title,
-    });
+    }));
   }, []);
 
   React.useEffect(() => {
     const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
-    if (selectedIndex) {
-      setSelectedIndex(selectedIndex);
-    } else {
-      const initialSelectedIndex = { group: 0, item: 0 };
-      window.localStorage.setItem('selectedIndex', JSON.stringify(initialSelectedIndex));
-    }
+    if (selectedIndex) setSelectedIndex(selectedIndex);
+    const initialSelectedIndex = { group: 0, item: 0 };
+    window.localStorage.setItem('selectedIndex', JSON.stringify(initialSelectedIndex));
   }, []);
 
   const menuAnchorEl = React.useRef<any>(null);
 
   const handleProfileClickOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setState({ ...state, anchorEl: event.currentTarget });
+    setState(prevState => ({ ...prevState, anchorEl: event.currentTarget }));
   };
 
-  const handleProfileClose = () => setState({ ...state, anchorEl: null });
+  const handleProfileClose = () => setState(prevState => ({ ...prevState, anchorEl: null }));
 
   const toggleRoleChangeDialog = () => {
-    setState({
-      ...state,
-      isChangeRoleDialogOpen: !state.isChangeRoleDialogOpen,
+    setState(prevState => ({
+      ...prevState,
+      isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
       anchorEl: null,
-    });
+    }));
   };
 
   const closeRoleChangeDialog = () => {
     toggleRoleChangeDialog();
-    setState({ ...state, roleSelected: '' });
+    setState(prevState => ({ ...prevState, roleSelected: '' }));
   };
 
   const handleSelectDevice = () => {
@@ -154,13 +152,17 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, device: event.target.value });
+    setState(prevState => ({ ...prevState, device: event.target.value }));
   };
 
   const handleRoleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const roleTitle = event.target.value;
     const role = props.user.roles.filter(obj => obj.title === roleTitle);
-    setState({ ...state, roleId: role[0]._id, roleSelected: roleTitle });
+    setState(prevState => ({
+      ...prevState,
+      roleId: role[0]._id,
+      roleSelected: roleTitle,
+    }));
   };
 
   const handleChangeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -344,12 +346,23 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     </div>
   ;
 
+  const handleActivityDrawer = state => () => {
+    switch (state) {
+      case 'open':
+        toggleActivityDrawer(true, true);
+        break;
+      case 'close':
+        toggleActivityDrawer(false, true);
+        break;
+    }
+  };
+
   const ActivityDrawer = () =>
     <SwipeableDrawer
       anchor="right"
       open={isActivityDrawerOpen}
-      onClose={toggleActivityDrawer.bind(null, false, true)}
-      onOpen={toggleActivityDrawer.bind(null, true, true)}>
+      onClose={handleActivityDrawer('close')}
+      onOpen={handleActivityDrawer('open')}>
       {ActivityLogs()}
     </SwipeableDrawer>
   ;

@@ -37,7 +37,7 @@ const MenuProvider = ({ children }: MenuContextProps) => {
     activityLogsViewed: false
   });
 
-  const setOpen = (isOpen: boolean) => setState({ ...state, isMenuOpen: isOpen });
+  const setOpen = (isOpen: boolean) => setState(prevState => ({ ...prevState, isMenuOpen: isOpen }));
 
   const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
     setState({ ...state, selectedIndex });
