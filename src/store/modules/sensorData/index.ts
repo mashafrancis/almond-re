@@ -1,5 +1,5 @@
-import * as firebase from 'firebase/app';
-import { getFirebase } from 'react-redux-firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import {
   GetEnvironmentDataFailure,
   GetEnvironmentDataSuccess,
@@ -68,6 +68,7 @@ export const getEnvironmentData = () => (dispatch: any, getState: any, getFireba
 
 export const getWaterData = () => (dispatch: any, getState: any, getFirebase: any) => {
   dispatch(loadingRequest('requesting'));
+  // const firebase = getFirebase()
   return firebase.database()
     .ref('/water')
     .on('value', snapshot => {

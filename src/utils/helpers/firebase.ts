@@ -1,5 +1,6 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 import store from '../../store';
 
 const firebaseConfig = {
@@ -12,26 +13,23 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
-firebase.initializeApp(firebaseConfig);
 
-// try{
-//   firebase.initializeApp(firebaseConfig);
-// } catch (e) {
-//   console.log('Class: , Function: , Line 19 e():', e);
-// }
+export const initializeFirebase = (): void => {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const reactReduxFirebaseConfig = {
   userProfile: 'users',
 };
 
-// const reactReduxFirebaseProps = {
-//   firebase: firebaseConfig,
-//   dispatch: store.dispatch,
-//   config: reactReduxFirebaseConfig
-// }
+const reactReduxFirebaseProps = {
+  firebase: firebaseConfig,
+  dispatch: store.dispatch,
+  config: reactReduxFirebaseConfig
+}
 
 export {
   firebaseConfig,
-  // reactReduxFirebaseProps,
+  reactReduxFirebaseProps,
   reactReduxFirebaseConfig,
 };

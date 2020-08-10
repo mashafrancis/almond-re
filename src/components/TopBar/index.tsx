@@ -14,6 +14,7 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
+import { useMqttState } from 'mqtt-hooks';
 
 // icons
 import {
@@ -70,13 +71,28 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
 
   const classes = useTopBarStyles();
 
+  const { status } = useMqttState();
+
+  const statusChange = (status: string): string => {
+    switch (status) {
+      case 'connected':
+        return '#76ff03';
+      case 'reconnecting':
+        return '#FFCE56';
+      case 'closed':
+        return '#ff1744';
+      case 'offline':
+        return '#CCCCCC';
+      default:
+        return '#CCCCCC'
+    }
+  }
+
   const DeviceActiveBadge = withStyles((theme: Theme) =>
     createStyles({
       badge: {
-        backgroundColor: '#76ff03',
-        // backgroundColor: '#ff1744',
-        color: '#76ff03',
-        // color: '#ff1744',
+        backgroundColor: statusChange(status),
+        color: statusChange(status),
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
         top: '50%',
         left: '-8%',

@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import thunk from 'redux-thunk';
-// import { getFirebase } from 'react-redux-firebase';
+import { getFirebase } from 'react-redux-firebase';
 
 import cacheAxiosInstance from '@utils/cacheAxiosInstance';
 import http from '@utils/helpers/http';
@@ -18,7 +18,7 @@ const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
 const reduxMiddleware = [
   thunk.withExtraArgument(cachedHttp),
-  // thunk.withExtraArgument(getFirebase)
+  thunk.withExtraArgument(getFirebase),
 ];
 
 const devMiddleware = composeEnhancers(
@@ -33,10 +33,6 @@ const prodMiddleware = applyMiddleware(
 
 const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prodMiddleware;
 
-const store = createStore(
-  rootReducer,
-  {},
-  middleware,
-);
+const store = createStore(rootReducer, {}, middleware);
 
 export default store;
