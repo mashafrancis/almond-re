@@ -1,5 +1,5 @@
 // third-party libraries
-import * as Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 // helpers
 import store from '../../store';

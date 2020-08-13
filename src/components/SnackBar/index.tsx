@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React, { Component } from 'react';
 
 // third-party libraries
 import { Snackbar } from '@material/react-snackbar';
@@ -10,7 +10,7 @@ import { SnackMessageProps, SnackMessageState } from './interfaces';
 
 import './SnackBar.scss';
 
-export class SnackBar extends React.Component<
+export class SnackBar extends Component<
   SnackMessageProps,
   SnackMessageState
 > {

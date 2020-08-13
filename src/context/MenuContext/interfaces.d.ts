@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 
 export interface MenuContextProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export interface MenuContextState {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 
 // interfaces
 import {
@@ -35,7 +35,7 @@ const ValidationTextField = withStyles({
 })(TextField);
 
 
-export class FormField extends React.Component<FormFieldProps, FormFieldState> {
+export class FormField extends Component<FormFieldProps, FormFieldState> {
   constructor(props) {
     super(props);
     this.state = {

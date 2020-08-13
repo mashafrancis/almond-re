@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // third-party libraries
 import {
   Cell,
   Row,
 } from '@material/react-layout-grid';
-import * as moment from 'moment';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { useMqttState, useSubscription } from 'mqtt-hooks';
 import loadable from '@loadable/component'
@@ -70,7 +70,7 @@ const DonutDisplay = loadable(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = loadable(() => import('@components/AreaChartDisplay'));
 
 export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
-  const [state, setState] = React.useState<WaterCyclesPageState>({
+  const [state, setState] = useState<WaterCyclesPageState>({
     isEditMode: false,
     isDeleteModal: false,
     scheduleId: '',
@@ -93,8 +93,8 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     }],
   });
 
-  const menu = React.useContext(MenuContext);
-  const user = React.useContext(UserContext);
+  const menu = useContext(MenuContext);
+  const user = useContext(UserContext);
 
   const { mqtt, status } = useMqttState();
   const {
@@ -102,7 +102,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     topic
   } = useSubscription('almond/pump');
 
-  React.useEffect(() => {
+  useEffect(() => {
     setState({ ...state, isLoading: true });
     const getSchedules = async () => await props.getAllSchedules(user.activeDevice._id);
     getSchedules().then(() => setState(prevState => ({
@@ -112,12 +112,12 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     })));
   }, [props.schedules, user.activeDevice._id]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getPumpStatus(user.activeDevice._id)
       .then(() => setState({ ...state, isEnabled: props.enabled }));
   }, [user.activeDevice._id]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { selectedTimeSchedule } = state;
     const schedules = [...new Set(props.schedules.map(item => item.schedule))];
     const validate = validateOneHourTime(schedules, selectedTimeSchedule);
@@ -125,7 +125,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     setState({ ...state, hasError: false });
   }, [state.selectedTimeSchedule]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getWaterData();
   }, []);
 

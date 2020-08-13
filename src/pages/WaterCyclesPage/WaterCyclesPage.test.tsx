@@ -1,6 +1,6 @@
 // react libraries
+import React from 'react';
 import { Location } from 'history';
-import * as React from 'react';
 
 // third party
 import {mount, shallow} from 'enzyme';

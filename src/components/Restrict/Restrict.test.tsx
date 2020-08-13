@@ -1,8 +1,8 @@
+// react library
+import React from 'react';
+
 // jest mocks
 import '../../../tests/__mocks__/storeWithPartialPermissions';
-
-// react library
-import * as React from 'react';
 
 // third-party libraries
 import { mount } from 'enzyme';

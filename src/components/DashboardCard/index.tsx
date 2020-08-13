@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { Card } from '@material-ui/core';
@@ -9,7 +9,7 @@ import { DashboardCardProps } from './interfaces';
 // styles
 import './DashboardCard.scss';
 
-const DashboardCard: React.FunctionComponent<DashboardCardProps> = props => {
+const DashboardCard = (props: DashboardCardProps): JSX.Element => {
   const {
     classes,
     heading,

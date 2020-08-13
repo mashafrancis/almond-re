@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // interfaces
 import { AnalyticsCardProps } from './interfaces';
@@ -6,7 +6,7 @@ import { AnalyticsCardProps } from './interfaces';
 // styles
 import './AnalyticsCard.scss';
 
-const AnalyticsCard: React.FunctionComponent<AnalyticsCardProps> = props => {
+const AnalyticsCard = (props: AnalyticsCardProps): JSX.Element => {
   const {
     icon,
     mainInfo,

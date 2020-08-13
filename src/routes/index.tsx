@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third party packages
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -22,17 +22,17 @@ import PageNotFound from '@components/PageNotFound';
 
 const Routes = () =>
   <Switch>
-    <Route exact path="/" component={HomePage} />
-    <Route exact path="/my-device" component={EnterDeviceIdPage} />
+    <Route exact path="/" component={HomePage}/>
+    <Route exact path="/my-device" component={EnterDeviceIdPage}/>
     <AuthenticatedRoute
       exact={true}
       path="/dashboard"
       authorize="analytics:view"
       component={DashboardContainer}
-      // fallbackView={<UnauthorizedUserModal isModalOpen={true} />}
-      />
-    <Route path="/404" component={PageNotFound} />
-    <Redirect to="/404" />
+      // fallbackView={<UnauthorizedUserModal isModalOpen={true}/>}
+    />
+    <Route path="/404" component={PageNotFound}/>
+    <Redirect to="/404"/>
   </Switch>
 ;
 

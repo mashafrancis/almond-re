@@ -1,4 +1,10 @@
-import * as React from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  ChangeEvent,
+  FunctionComponent,
+} from 'react';
 
 // third-party libraries
 import {
@@ -15,7 +21,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
 import LinearProgressBar from '@components/LinearProgressBar';
 // import { Pagination } from '@material-ui/lab';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 
 // thunks
 import {
@@ -65,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps> = props => {
-  const [state, setState] = React.useState<DeviceManagementState>({
+export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = props => {
+  const [state, setState] = useState<DeviceManagementState>({
     isEditMode: false,
     showDeviceModal: false,
     isFormModalOpen: false,
@@ -77,14 +83,14 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     selectedDevice: '',
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getDevices = async () => await props.getAllDevices();
     getDevices().then(() => setState({ ...state, devices: props.devices }));
   }, [props.activeDevice]);
 
   const classes = useStyles(props);
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, selectedDevice: e.target.value });
   };
 
@@ -113,7 +119,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     }
   };
 
-  const closeDeviceModal = () => {
+  const closeDeviceModal = (): void => {
     if (state.isEditMode) {
       setState({
         ...state,
@@ -132,7 +138,10 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     });
   };
 
-  const toggleDeviceDeleteModal = () => setState({ ...state, isDeleteModal: !state.isDeleteModal });
+  const toggleDeviceDeleteModal = (): void => setState(prevState => ({
+    ...prevState,
+    isDeleteModal: !prevState.isDeleteModal,
+  }));
 
   const handleDeviceDelete = event => {
     event.preventDefault();
@@ -157,7 +166,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       : props.addNewDevice(device).then(closeDeviceModal);
   };
 
-  const ActionButtons = device =>
+  const ActionButtons = (device): JSX.Element => (
     <div key={device} className="action-buttons">
       <span id={device} onClick={showDeviceModal('Edit')}>
         <h5 id={device} className="action-buttons__edit">Edit</h5>
@@ -166,28 +175,17 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
-  ;
+  );
 
-  const deviceStatus = device => {
+  const deviceStatus = (device): JSX.Element => {
     const { verified, enabled } = device[1];
 
     if (!verified) return <Chip className="MuiChip-root-unverified" label="Not Verified"/>;
     if (!enabled) return <Chip className="MuiChip-root-disabled" label="Disabled"/>;
     return <Chip className="MuiChip-root-enabled" label="Enabled"/>;
-
-    // switch (device) {
-    //   case !verified:
-    //     return chipContent('Not Verified', 'MuiChip-root-unverified');
-    //   case verified && enabled:
-    //     return <Chip className="MuiChip-root-enabled" label="Enabled"  />;
-    //   case verified:
-    //     return <Chip className="MuiChip-root-disabled" label="Disabled"  />;
-    //   default:
-    //     return null;
-    // }
   };
 
-  const TableContent = devices => {
+  const TableContent = (devices): JSX.Element => {
     const tableHeaders = {
       DeviceID: { valueKey: 'deviceId', colWidth: '25' },
       User: { valueKey: 'user', colWidth: '25' },
@@ -211,7 +209,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     );
   };
 
-  const RenderDeviceForm = () => {
+  const RenderDeviceForm = (): JSX.Element => {
     const { isEditMode, selectedDevice, deviceToEdit } = state;
 
     return (
@@ -237,7 +235,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
     );
   };
 
-  const AddEditDeviceModal = () =>
+  const AddEditDeviceModal = (): JSX.Element => (
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderDeviceForm()}
@@ -247,9 +245,9 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       onSubmit={onAddEditDeviceSubmit}
       onDismiss={closeDeviceModal}
     />
-  ;
+  );
 
-  const DeleteDeviceModal = () =>
+  const DeleteDeviceModal = (): JSX.Element => (
     <Modal
       isModalOpen={state.isDeleteModal}
       renderContent={() => <p className="delete-modal-content">Do you confirm deletion of device?</p>}
@@ -259,7 +257,7 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
       onSubmit={handleDeviceDelete}
       onDismiss={toggleDeviceDeleteModal}
     />
-  ;
+  );
 
   return (
     <Row>
@@ -274,9 +272,9 @@ export const DeviceManagementPage: React.FunctionComponent<DeviceManagementProps
         <React.Suspense fallback={<LinearProgressBar/>}>
           <div className="user-roles-page__table">
             {TableContent(Object.entries(props.devices))}
-            {/* <div className={classes.root}> */}
-            {/*  <Pagination count={5} color="primary" /> */}
-            {/* </div> */}
+            {/*<div className={classes.root}>*/}
+            {/*  <Pagination count={5} />*/}
+            {/*</div>*/}
           </div>
         </React.Suspense>
         {AddEditDeviceModal()}

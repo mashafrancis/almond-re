@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // styles
 import './Table.scss';
@@ -14,36 +14,36 @@ import { TableProps } from './interfaces';
  *
  * @returns {JSX} JSX
  */
-const Table: (props: TableProps) => any = (props: TableProps) => {
+const Table = (props: TableProps): JSX.Element => {
   const { keys, values } = props;
   const tableHeaders = Object.keys(keys);
   return (
     <>
       <div className="tbl-header">
         {
-          tableHeaders.map((header, index) => 
-              <div key={index} className={keys[header].colWidth
-                ? `tbl-header__column--${keys[header].colWidth }`
-                : 'tbl-header__column'}>
-                <span className="header-text">{ keys[header].value || header }</span>
-              </div>
-            )
+          tableHeaders.map((header, index) => (
+            <div key={index} className={keys[header].colWidth
+              ? `tbl-header__column--${keys[header].colWidth}`
+              : 'tbl-header__column'}>
+              <span className="header-text">{keys[header].value || header}</span>
+            </div>
+          ))
         }
       </div>
       {
-        values.map(value => 
-            <div key={value.id} className={`tbl-row ${props.statusClass}`}>
-              {
-                tableHeaders.map((header, index) => 
-                    <div key={index} className={keys[header].colWidth
-                      ? `tbl-row__column--${keys[header].colWidth}`
-                      : 'tbl-row__column'}>
-                      <span className="content-text">{value[keys[header].valueKey]}</span>
-                    </div>
-                  )
-              }
-            </div>
-          )
+        values.map(value => (
+          <div key={value.id} className={`tbl-row ${props.statusClass}`}>
+            {
+              tableHeaders.map((header, index) => (
+                <div key={index} className={keys[header].colWidth
+                  ? `tbl-row__column--${keys[header].colWidth}`
+                  : 'tbl-row__column'}>
+                  <span className="content-text">{value[keys[header].valueKey]}</span>
+                </div>
+              ))
+            }
+          </div>
+        ))
       }
     </>
   );

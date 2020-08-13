@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { Card } from '@material-ui/core';
@@ -10,7 +10,7 @@ import { ActivityLogCardProps } from './interfaces';
 // styles
 import './ActivityLogCard.scss';
 
-const ActivityLogCard: React.FunctionComponent<ActivityLogCardProps> = props => {
+const ActivityLogCard = (props: ActivityLogCardProps): JSX.Element => {
   const {
     log,
     date,

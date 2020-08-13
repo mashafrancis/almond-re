@@ -1,31 +1,31 @@
-import * as React from 'react';
-import {ViewportContextProps} from '@context/ViewportContext/interfaces';
+import React, { useState, useEffect, createContext } from 'react';
+import { ViewportContextProps } from '@context/ViewportContext/interfaces';
 
-const ViewportContext = React.createContext({
+const ViewportContext = createContext({
   width: 0,
   height: 0,
 });
 
 const ViewportProvider = ({ children }: ViewportContextProps) => {
-  const [width, setWidth] = React.useState<number>(window.innerWidth);
-  const [height, setHeight] = React.useState<number>(window.innerHeight);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [height, setHeight] = useState<number>(window.innerHeight);
 
   const handleWindowResize = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', handleWindowResize);
     return () => window.removeEventListener('resize', handleWindowResize);
-  },              []);
+  }, []);
 
   return (
     <ViewportContext.Provider value={{
       width,
-      height
+      height,
     }}>
-      { children }
+      {children}
     </ViewportContext.Provider>
   );
 };

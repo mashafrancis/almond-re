@@ -1,9 +1,9 @@
+// react library
+import React from 'react';
+
 // jest mocks
 import '../../../tests/__mocks__/snack';
 import '../../../tests/__mocks__/storeWithPartialPermissions';
-
-// react library
-import * as React from 'react';
 
 // third party libraries
 import { shallow } from 'enzyme';
@@ -16,11 +16,11 @@ describe('The RestrictedRoute component', () => {
   const props = {
     fallbackView: null,
     strict: true,
-    redirectTo: '/'
+    redirectTo: '/',
   };
 
   beforeEach(() => {
-    wrapper = shallow(<RestrictedRoute path="/dashboard" component={() => <div />} {...props} />);
+    wrapper = shallow(<RestrictedRoute path="/dashboard" component={() => <div/>} {...props} />);
   });
 
   afterEach(() => {

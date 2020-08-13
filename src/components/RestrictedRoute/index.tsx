@@ -1,5 +1,5 @@
 // react library
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 
 // third party libraries
 import { Redirect, Route } from 'react-router';
@@ -11,7 +11,7 @@ import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 import authorize from '@utils/helpers/authorize';
 
 // @ts-expect-error
-const RestrictedRoute: React.FunctionComponent<RestrictedRouteProps> = props => {
+const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = props => {
   if (!props.authorize || authorize(props.authorize, { strict: props.strict })) {
     return (
       <Route { ...props } />

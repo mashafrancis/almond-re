@@ -1,6 +1,6 @@
 // react libraries
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 
 // third party packages
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ import App from './App';
 // helper functions
 import store from './store';
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <Router>
       <App/>

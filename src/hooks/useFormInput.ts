@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
 export const useFormInput = initialValue => {
-  const [value, setValue] = React.useState(initialValue);
+  const [value, setValue] = useState(initialValue);
 
   const handleChange = ({ target }) => setValue(target.value);
 
@@ -9,4 +9,4 @@ export const useFormInput = initialValue => {
     value,
     onChange: handleChange,
   };
-}
+};

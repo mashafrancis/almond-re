@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React, { Component } from 'react';
 
 // components
 import Checkbox from '@material/react-checkbox';
@@ -11,7 +11,7 @@ import { PermissionAccessProps, PermissionAccessState } from './interfaces';
 import capitalize from '@utils/helpers/capitalize';
 import { Permission, Resource } from '@modules/userRoles/interfaces';
 
-class PermissionAccess extends React.Component<PermissionAccessProps, PermissionAccessState> {
+class PermissionAccess extends Component<PermissionAccessProps, PermissionAccessState> {
   /*
    * This stores a permission to permissionId mapping e.g { 'Full Access': 5e439f32fd05da507ca0161e, ... }
    */

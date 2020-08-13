@@ -1,7 +1,7 @@
 // third-party libraries
 import { displayInternalServerErrorMessage } from '@modules/internalServerError';
 import CacheHandler from '@utils/helpers/CacheHandler';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { setupCache } from 'axios-cache-adapter';
 
 // helpers
@@ -20,7 +20,7 @@ const http = axios.create({
     Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
-  // adapter: cacheAdapter.adapter,
+  adapter: cacheAdapter.adapter,
 });
 
 http.interceptors.request.use(config => {

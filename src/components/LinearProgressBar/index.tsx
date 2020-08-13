@@ -1,5 +1,5 @@
 // import react library
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -14,7 +14,7 @@ const ColorLinearProgress = withStyles({
 
 const LinearProgressBar = () => {
   const [completed, setCompleted] = React.useState(0);
-  React.useEffect(() => {
+  useEffect(() => {
     const progress = () => {
       setCompleted(oldCompleted => {
         if (oldCompleted === 100) return 0;
