@@ -116,7 +116,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
 
   const options = {
     port: 8083,
-    host: 'localhost',
+    host: process.env.MQTT_HOST,
     // user: process.env.MQTT_USER,
     protocol: 'ws',
     keepalive: 30,
