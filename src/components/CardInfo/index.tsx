@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { useViewport } from '../../hooks';
 
@@ -10,7 +10,7 @@ import { Add } from '@material-ui/icons';
 // styles
 import './CardInfo.scss';
 
-const CardInfo: React.FunctionComponent<CardInfoProps> = props => {
+const CardInfo = (props: CardInfoProps): JSX.Element => {
   const {
     mainHeader,
     subHeader,
@@ -19,7 +19,7 @@ const CardInfo: React.FunctionComponent<CardInfoProps> = props => {
     icon
   } = props;
 
-  const cardButton = () => 
+  const cardButton = () =>
     <div className="card-content__button">
       {
         width > breakpoint ?

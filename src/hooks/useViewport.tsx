@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { ViewportContext } from '@context/ViewportContext';
 
 export const useViewport = () => {
-  const { width, height } = React.useContext(ViewportContext);
+  const { width, height } = useContext(ViewportContext);
   return { width, height };
 };

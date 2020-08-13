@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // interfaces
 import { GeneralCardInfoProps } from './interfaces';
@@ -6,7 +6,7 @@ import { GeneralCardInfoProps } from './interfaces';
 // styles
 import './GeneralCardInfo.scss';
 
-const GeneralCardInfo: React.FunctionComponent<GeneralCardInfoProps> = props => {
+const GeneralCardInfo = (props: GeneralCardInfoProps): JSX.Element => {
   const {
     mainHeader,
     subHeader,

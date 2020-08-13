@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, { createContext } from 'react';
 
-export const UserContext = React.createContext({
+export const UserContext = createContext({
   _id: '',
   name: '',
   email: '',

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, useContext, FunctionComponent } from 'react';
 
 // third-party libraries
 import { connect } from 'react-redux';
@@ -62,8 +62,8 @@ const PageBottomNavigation = loadable(() => import('@components/BottomNavigation
 const TopBar = loadable(() => import('@components/TopBar'));
 const ActivityLogCard = loadable(() => import('@components/ActivityLogCard'));
 
-const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = props => {
-  const [state, setState] = React.useState<DashboardContainerState>({
+const DashboardContainer: FunctionComponent<DashboardContainerProps> = props => {
+  const [state, setState] = useState<DashboardContainerState>({
     isOpen: false,
     isLoading: true,
     isFeedbackMenuOpen: false,
@@ -90,8 +90,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     photo,
     name,
     isAdmin,
-  } = React.useContext(UserContext);
-  const menu = React.useContext(MenuContext);
+  } = useContext(UserContext);
+  const menu = useContext(MenuContext);
 
   const { width } = useViewport();
   const breakpoint = 539;
@@ -108,7 +108,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     isActivityDrawerOpen,
   } = menu;
 
-  React.useEffect(() => {
+  useEffect(() => {
     setState(prevState => ({
       ...prevState,
       activeDevice,
@@ -117,7 +117,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = pro
     }));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
     if (selectedIndex) setSelectedIndex(selectedIndex);
     const initialSelectedIndex = { group: 0, item: 0 };

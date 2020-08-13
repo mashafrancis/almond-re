@@ -1,10 +1,10 @@
 // import react library
-import * as React from 'react';
+import React from 'react';
 
 // style
 import './Loader.scss';
 
-const Loader = () => 
+const Loader = () =>
   <>
   <div className="container">
     <div className="dot dot-1" />

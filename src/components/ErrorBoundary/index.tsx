@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 
 // components
 import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
@@ -7,7 +7,7 @@ import { ArrowBackRounded } from '@material-ui/icons';
 // interfaces
 import { ErrorBoundaryState } from '@components/ErrorBoundary/interfaces';
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryState> {
+export class ErrorBoundary extends Component<ErrorBoundaryState> {
   static getDerivedStateFromError(error) {
     return { hasError: true };
   }

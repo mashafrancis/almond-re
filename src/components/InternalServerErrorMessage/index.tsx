@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // styles
 import './InternalServerError.scss';

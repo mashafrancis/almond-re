@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // components
 import ActionButton from '@components/ActionButton';
@@ -12,7 +12,7 @@ import {
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';
 
-const Modal: React.FunctionComponent<ModalProps> = props => {
+const Modal = (props: ModalProps): JSX.Element => {
   const {
     isModalOpen,
     renderContent,

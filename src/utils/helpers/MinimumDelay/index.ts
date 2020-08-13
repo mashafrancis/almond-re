@@ -1,4 +1,4 @@
-import * as delay from 'delay';
+import delay from 'delay';
 
 const minimumDelay = async (promise, minDelay, options?) => {
   options = {

@@ -1,5 +1,5 @@
 // react library
-import * as React from 'react';
+import React, { Component } from 'react';
 
 // interfaces
 import { RestrictProps } from './interface';
@@ -7,7 +7,7 @@ import { RestrictProps } from './interface';
 // helpers
 import authorize from '@utils/helpers/authorize';
 
-export class Restrict extends React.Component<RestrictProps> {
+export class Restrict extends Component<RestrictProps> {
   static defaultProps = {
     fallback: null,
     strict: false,

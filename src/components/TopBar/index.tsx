@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { cloneElement, useContext } from 'react';
 
 // third-party libraries
 import {
@@ -40,7 +40,7 @@ import {
 import '@pages/DashboardContainer/DashboardNavBar.scss';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const ElevationScroll = (props: ElevationBarProps) => {
+const ElevationScroll = (props: ElevationBarProps): JSX.Element => {
   const { window, children } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -48,14 +48,14 @@ const ElevationScroll = (props: ElevationBarProps) => {
     target: window ? window() : undefined,
   });
 
-  return React.cloneElement(children, {
+  return cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
 };
 
-const TopBar: React.FunctionComponent<TopBarProps> = props => {
-  const device = React.useContext(UserContext);
-  const menu = React.useContext(MenuContext);
+const TopBar = (props: TopBarProps): JSX.Element => {
+  const device = useContext(UserContext);
+  const menu = useContext(MenuContext);
   const { name, photo, isAdmin } = React.useContext(UserContext);
 
   const {
@@ -84,9 +84,9 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
       case 'offline':
         return '#CCCCCC';
       default:
-        return '#CCCCCC'
+        return '#CCCCCC';
     }
-  }
+  };
 
   const DeviceActiveBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -109,7 +109,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
     }),
   )(Badge);
 
-  const renderDeviceDisplay = () =>
+  const renderDeviceDisplay = (): JSX.Element => (
     <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
         variant="dot"
@@ -122,9 +122,9 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
         <ArrowDropDown onClick={setDeviceModalOpen.bind(null, true)}/>
       </DeviceActiveBadge>
     </div>
-  ;
+  );
 
-  const timeLineIcon = () =>
+  const timeLineIcon = () => (
     <StyledBadge
       overlap="circle"
       anchorOrigin={{
@@ -135,7 +135,7 @@ const TopBar: React.FunctionComponent<TopBarProps> = props => {
       invisible={isActivityLogsEmpty != activityLogsViewed}>
       <Timeline onClick={toggleActivityDrawer.bind(null, true, true)}/>
     </StyledBadge>
-  ;
+  );
 
   // :TODO: Remove this after demoing the feature to be
   const notifications = ['true'];

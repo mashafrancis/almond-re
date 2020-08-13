@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import Drawer, {
@@ -92,7 +92,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
   </>
 ;
 
-const MenuContent: React.FunctionComponent<MenuContentProps> = props => {
+const MenuContent = (props: MenuContentProps): JSX.Element => {
   const menu = React.useContext(MenuContext);
   const user = React.useContext(UserContext);
 

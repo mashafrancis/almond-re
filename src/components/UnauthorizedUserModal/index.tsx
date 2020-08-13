@@ -1,5 +1,5 @@
 // react
-import * as React from 'react';
+import React, { PureComponent } from 'react';
 
 // third-party libraries
 import { connect } from 'react-redux';
@@ -13,37 +13,36 @@ import { logoutUser } from '@modules/user';
 // interfaces
 import { UnauthorizedUserModalProps } from '@components/UnauthorizedUserModal/interfaces';
 
-export class UnauthorizedUserModal extends React.PureComponent<UnauthorizedUserModalProps> {
+export const UnauthorizedUserModal = (props: UnauthorizedUserModalProps) => {
+  const { logoutUser, isModalOpen, user } = props;
   /**
    * Logs the user out and reloads the page to refresh the app
    * @returns {void}
    */
-  logoutAndRedirectUser = () => {
-    this.props.logoutUser();
+  const logoutAndRedirectUser = (): void => {
+    logoutUser();
     localStorage.removeItem('triedToAuthenticate');
     window.location.reload();
-  }
+  };
 
-  render() {
-    return (
-      <Modal
-        isModalOpen={this.props.isModalOpen}
-        renderHeader={() => `Welcome, ${this.props.user && this.props.user.name || 'User'}`}
-        renderContent={() =>
-          <div>
-            <p className="headline-4 modal-content">
-              You are currently not authorised to access Almond.
-              Please contact almond.froyo@gmail.com for more details.
-            </p>
-          </div>
-        }
-        submitButtonName="OK"
-        onSubmit={this.logoutAndRedirectUser}
-        onDismiss={this.logoutAndRedirectUser}
-        />
-    );
-  }
-}
+  return (
+    <Modal
+      isModalOpen={isModalOpen}
+      renderHeader={() => `Welcome, ${user?.name || 'User'}`}
+      renderContent={() => (
+        <div>
+          <p className="headline-4 modal-content">
+            You are currently not authorised to access Almond.
+            Please contact almond.froyo@gmail.com for more details.
+          </p>
+        </div>
+      )}
+      submitButtonName="OK"
+      onSubmit={logoutAndRedirectUser}
+      onDismiss={logoutAndRedirectUser}
+    />
+  );
+};
 
 export const mapStateToProps = state => ({
   user: state.user,

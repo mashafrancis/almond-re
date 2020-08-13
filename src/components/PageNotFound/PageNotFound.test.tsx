@@ -1,5 +1,5 @@
 // react library
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { shallow } from 'enzyme';

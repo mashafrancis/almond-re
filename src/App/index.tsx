@@ -1,8 +1,8 @@
 // react libraries
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // third party libraries
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -44,7 +44,7 @@ const useEffectAsync = (
 };
 
 export const App: React.FunctionComponent<AppProps> = props => {
-  const [state, setState] = React.useState<AppState>({
+  const [state, setState] = useState<AppState>({
     isUserAuthenticated: authService.isAuthenticated(),
     loading: 'idle',
     isAdmin: false,
@@ -53,7 +53,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
 
   const { user } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     initializeFirebase();
     initializeGA();
     logPageView(window.location.pathname);
@@ -75,7 +75,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { location: { search } } = props;
     const { socialToken } = queryString.parse(search);
     if (socialToken) {
@@ -84,7 +84,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
     }
   }, []);
 
-  React.useEffect(() => () => {
+  useEffect(() => () => {
     clearTimeout(timerRef.current);
   }, []);
 
@@ -116,7 +116,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
 
   const options = {
     port: 8083,
-    host: 'localhost',
+    host: process.env.MQTT_HOST,
     // user: process.env.MQTT_USER,
     protocol: 'ws',
     keepalive: 30,

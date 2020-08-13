@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import * as Chart from 'chart.js';
+import Chart from 'chart.js';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;

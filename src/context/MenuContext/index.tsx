@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, createContext } from 'react';
 import {
   MenuContextProps,
   MenuContextState
@@ -7,7 +7,7 @@ import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
 
 const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
 
-const MenuContext = React.createContext({
+const MenuContext = createContext({
   isMenuOpen: false,
   selectedIndex: {
     group: isArrayNotNull(selectedIndex) ? selectedIndex.group : 0,
@@ -25,7 +25,7 @@ const MenuContext = React.createContext({
 });
 
 const MenuProvider = ({ children }: MenuContextProps) => {
-  const [state, setState] = React.useState<MenuContextState>({
+  const [state, setState] = useState<MenuContextState>({
     isOpen: false,
     isMenuOpen: false,
     selectedIndex: {

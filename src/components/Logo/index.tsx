@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import './Logo.scss';
 
 const logo = 'https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png';
 
-const Logo = () => 
+const Logo = () =>
   <div className="main-logo">
     <span className="main-logo__image">
     <img
