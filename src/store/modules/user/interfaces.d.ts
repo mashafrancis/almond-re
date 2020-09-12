@@ -6,7 +6,7 @@ import {
   GET_USER_DETAILS_SUCCESS,
 } from './types';
 
-import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
+import { FormattedPermissions } from '@utils/FormatPermissions/interfaces';
 
 // import { Device } from '@modules/device/interfaces';
 

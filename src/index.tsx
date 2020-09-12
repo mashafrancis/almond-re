@@ -12,11 +12,13 @@ import App from './App';
 // helper functions
 import store from './store';
 
+const rootNode = document.getElementById('root');
+
 render(
   <Provider store={store}>
     <Router>
       <App/>
     </Router>
   </Provider>,
-  document.getElementById('root') || document.createElement('div'),
+  rootNode,
 );

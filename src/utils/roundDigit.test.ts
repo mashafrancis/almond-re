@@ -1,4 +1,4 @@
-import roundDigit from '@utils/helpers/roundDigit';
+import roundDigit from './roundDigit';
 
 
 describe('The roundDigit function', () => {

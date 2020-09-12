@@ -10,7 +10,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 // helper functions
-import http from '@utils/helpers/http';
+import http from '@utils/http';
 
 import reducer from './store/rootReducer';
 

@@ -1,4 +1,4 @@
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from './checkArrayEmpty';
 
 describe('The isArrayNotNull function', () => {
   it('should return true if the array has a value', () => {

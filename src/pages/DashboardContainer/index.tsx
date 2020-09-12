@@ -35,7 +35,7 @@ import LinearProgressBar from '@components/LinearProgressBar';
 import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
 import { MenuContext } from '@context/MenuContext';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // thunks
 import { activateDevice } from '@modules/device';
@@ -232,9 +232,9 @@ const DashboardContainer: FunctionComponent<DashboardContainerProps> = props => 
     </TextField>
   ;
 
-  const selectChangeRoleContent = () =>
+  const selectChangeRoleContent = () => (
     <TextField
-      id="role"
+      id="user-role"
       select
       variant="outlined"
       label="role"
@@ -264,7 +264,7 @@ const DashboardContainer: FunctionComponent<DashboardContainerProps> = props => 
         </MenuItem>,
       )}
     </TextField>
-  ;
+  );
 
   const SelectDeviceModal = devices =>
     <Modal

@@ -65,10 +65,10 @@ describe('The EnvironmentalControl Page', () => {
       dispatch = props = null;
     });
 
-    it('ensures getEnvironmentData is mapped to props', () => {
-      props.getEnvironmentData();
-      expect(dispatch).toHaveBeenCalled();
-    });
+    // it('ensures getEnvironmentData is mapped to props', () => {
+    //   props.getEnvironmentData();
+    //   expect(dispatch).toHaveBeenCalled();
+    // });
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();

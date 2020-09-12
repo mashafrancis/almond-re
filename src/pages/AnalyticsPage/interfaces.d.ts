@@ -6,3 +6,14 @@ export interface AnalyticsPageProps {
 
 export interface AnalyticsPageState {
 }
+
+export interface IData {
+  temp: number;
+  humid: number;
+  water_level: number;
+}
+
+export interface RegularUserAnalytics {
+  data: IData
+  lastMessage: any;
+}

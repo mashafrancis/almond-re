@@ -3,10 +3,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import thunk from 'redux-thunk';
-import { getFirebase } from 'react-redux-firebase';
 
 import cacheAxiosInstance from '@utils/cacheAxiosInstance';
-import http from '@utils/helpers/http';
+import http from '@utils/http';
 
 import rootReducer from './rootReducer';
 
@@ -18,7 +17,6 @@ const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
 const reduxMiddleware = [
   thunk.withExtraArgument(cachedHttp),
-  thunk.withExtraArgument(getFirebase),
 ];
 
 const devMiddleware = composeEnhancers(

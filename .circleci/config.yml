@@ -1,7 +1,14 @@
 defaults: &defaults
   docker:
-    - image: circleci/node:14.4.0
+    - image: circleci/node:14.7.0
   working_directory: ~/almond-re
+
+cmd_install_yarn_berry: &cmd_install_yarn_berry
+  run:
+    name: Install yarn berry
+    command: |
+      rm -rf .yarnrc.yml/
+      yarn set version berry
 
 cmd_install_dependencies: &cmd_install_dependencies
   run:
@@ -45,6 +52,7 @@ jobs:
     steps:
       - checkout
       - *cmd_restore_cache
+      - *cmd_install_yarn_berry
       - *cmd_install_dependencies
       - *cmd_save_cache
       - *persist_to_workspace
@@ -55,6 +63,7 @@ jobs:
     steps:
       - checkout
       - *cmd_restore_cache
+      - *cmd_install_yarn_berry
       - *cmd_install_dependencies
       - *cmd_download_cc_test_reporter
       - run:

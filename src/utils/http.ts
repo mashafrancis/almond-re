@@ -1,12 +1,12 @@
 // third-party libraries
 import { displayInternalServerErrorMessage } from '@modules/internalServerError';
-import CacheHandler from '@utils/helpers/CacheHandler';
+import CacheHandler from '@utils/CacheHandler';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { setupCache } from 'axios-cache-adapter';
 
 // helpers
 import { authService } from '@utils/auth';
-import store from '../../store/index';
+import store from '../store';
 
 const cacheAdapter = setupCache({
   maxAge: 15 * 60 * 1000,

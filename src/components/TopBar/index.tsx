@@ -27,7 +27,7 @@ import {
 // utils
 import { UserContext } from '@context/UserContext';
 import { MenuContext } from '@context/MenuContext';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // interface
 import { ElevationBarProps, TopBarProps } from './interfaces';
@@ -160,7 +160,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
     { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog}/> },
   ];
 
-  const renderTopIcons = () =>
+  const renderTopIcons = () => (
     <div className={classes.sectionEnd}>
       {
         topIcons.map((topIcon, index) =>
@@ -168,7 +168,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
         )
       }
     </div>
-  ;
+  );
 
   return (
     <>

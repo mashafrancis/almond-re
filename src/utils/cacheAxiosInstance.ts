@@ -1,5 +1,5 @@
 // helpers
-import CacheHandler from '@utils/helpers/CacheHandler';
+import CacheHandler from '@utils/CacheHandler';
 import { AxiosInstance } from 'axios';
 
 /**

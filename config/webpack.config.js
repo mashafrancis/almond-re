@@ -12,13 +12,13 @@ const {
   contextReplacementPlugin,
 } = require('./webpack.plugins');
 
-const isDevMode = process.env.APP_ENV !== 'production';
+const isDevMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
     styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss'),
-    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.css'),
+    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.scss'),
   },
   output: {
     // `filename` provides a template for naming your bundles (remember to use `[name]`)
@@ -55,35 +55,37 @@ module.exports = {
       {
         test: /\.(woff(2)?|ttf|eot|svg|png|jpg|jpeg|gif)$/,
         use: {
-          loader: 'file-loader',
+          loader: require.resolve('file-loader'),
         },
       },
       {
-        test: /\.(scss|css)$/,
+        test: /\.(scss|sass|css)$/,
         use: [
           isDevMode ? 'style-loader' : miniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: require.resolve('css-loader'),
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: require.resolve('postcss-loader'),
             options: {
-              plugins: () => [require('autoprefixer')({
-                'overrideBrowserslist': ['> 1%', 'last 2 versions'],
-              })],
+              postcssOptions: {
+                plugins: () => [require('autoprefixer')({
+                  'overrideBrowserslist': ['> 1%', 'last 2 versions'],
+                })],
+              },
             },
           },
           {
-            loader: 'sass-loader',
+            loader: require.resolve('sass-loader'),
             options: {
               sourceMap: true,
               // Prefer `dart-sass`
               implementation: require('sass'),
               sassOptions: {
-                fiber: require('fibers'),
+                // fiber: require('fibers'),
                 importer,
               },
             },
@@ -98,7 +100,7 @@ module.exports = {
           /node_modules\/(?!(@material-ui\/core\/es)\/).*/,
         ],
         use: {
-          loader: 'babel-loader',
+          loader: require.resolve('babel-loader'),
           options: {
             presets: ['@babel/preset-env'],
             sourceMap: true,
@@ -108,17 +110,15 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: {
-          loader: 'awesome-typescript-loader',
+          loader: require.resolve('awesome-typescript-loader'),
         },
       },
       {
         enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader',
+        loader: require.resolve('source-map-loader'),
         exclude: [
           /node_modules\/@material/,
-          /node_modules\/@firebase/,
-          /src\/atomic/,
           /node_modules\/axios-cache-adapter/,
         ],
       },

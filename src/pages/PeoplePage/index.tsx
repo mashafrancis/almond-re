@@ -19,6 +19,7 @@ import {
   Face,
   ArrowDropDownRounded,
   PeopleAltOutlined,
+  ExpandMore
 } from '@material-ui/icons';
 
 // thunks
@@ -35,30 +36,13 @@ import {
   PeoplePageState,
 } from './interfaces';
 import LinearProgressBar from '@components/LinearProgressBar';
+import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 
 // component
 const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 const Modal = React.lazy(() => import('@components/Modal'));
 const Table = React.lazy(() => import('@components/Table'));
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  focused: {},
-  listItemPadding: {
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-  selectHeight: {
-    height: '1.25em',
-  },
-  labelColor: {
-    '&$focused': {
-      color: `rgba(${25},${103},${210},${0.87})`,
-    },
-  },
-  font: {
-    fontFamily: '"Google Sans", "Roboto", "Helvetica Neue", sans-serif !important',
-  },
-}));
 
 export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
   const [state, setState] = React.useState<PeoplePageState>({
@@ -70,7 +54,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     userId: '',
   });
 
-  const styles = useStyles(props);
+  const styles = useDashboardContainerStyles(props);
 
   React.useEffect(() => {
     const getAllPeople = async () => {
@@ -111,7 +95,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     );
   };
 
-  const userNamePhoto = user =>
+  const userNamePhoto = user => (
     <span className="mini-username">
       <img
         className="mini-username__image"
@@ -120,46 +104,43 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       />
       <span>{user[1].name || 'Anonymous'}</span>
     </span>
-  ;
+  );
 
-  const selectRoleContent = roles =>
-    <>
-      {/* <h5>Change the role for the specific user.</h5> */}
-      <TextField
-        id="role"
-        select
-        variant="outlined"
-        label="Assign user role"
-        fullWidth
-        size="small"
-        value={state.roleSelect}
-        onChange={handleRoleSelect}
-        SelectProps={{
-          classes: {
-            selectMenu: styles.selectHeight,
-          },
-        }}
-        InputLabelProps={{
-          classes: {
-            focused: styles.focused,
-            root: styles.labelColor,
-          },
-        }}
-        InputProps={{
-          startAdornment: <InputAdornment position="start">
-            <Face style={{ color: '#1967D2' }}/>
-          </InputAdornment>,
-        }}>
-        {roles.map(role =>
-          <MenuItem key={role._id} value={role.title}>
-            <h4>{role.title}</h4>
-          </MenuItem>,
-        )}
-      </TextField>
-    </>
-  ;
+  const selectRoleContent = roles => (
+    <TextField
+      id="role"
+      select
+      variant="outlined"
+      label="Assign user role"
+      fullWidth
+      size="small"
+      value={state.roleSelect}
+      onChange={handleRoleSelect}
+      SelectProps={{
+        classes: {
+          selectMenu: styles.selectHeight,
+        },
+      }}
+      InputLabelProps={{
+        classes: {
+          focused: styles.focused,
+          root: styles.labelColor,
+        },
+      }}
+      InputProps={{
+        startAdornment: <InputAdornment position="start">
+          <Face style={{ color: '#1967D2' }}/>
+        </InputAdornment>,
+      }}>
+      {roles.map(role =>
+        <MenuItem key={role._id} value={role.title}>
+          <h4 className="headline-4">{role.title}</h4>
+        </MenuItem>,
+      )}
+    </TextField>
+  );
 
-  const SelectRoleModal = roles =>
+  const SelectRoleModal = roles => (
     <Modal
       isModalOpen={state.isSelectOpen}
       renderHeader={() => 'Assign new role to user'}
@@ -169,17 +150,17 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
       onSubmit={handleChangeRole}
       onDismiss={toggleRoleSelectOpen}
     />
-  ;
+  );
 
-  const rolesSelectMore = (role, id) =>
+  const rolesSelectMore = (role, id) => (
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
       <h6 id={id}>{role}</h6>
-      <ArrowDropDownRounded
+      <ExpandMore
         id={id}
         onClick={toggleRoleSelectOpen}
       />
     </div>
-  ;
+  );
 
   const TableContent = users => {
     const tableHeaders = {
@@ -208,23 +189,21 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
   };
 
   return (
-    <>
-      <Row>
-        <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-          <GeneralCardInfo
-            mainHeader="People"
-            subHeader="List of all users under Almond"
-            icon={<PeopleAltOutlined className="content-icon general-info-icon"/>}
-          />
-          <React.Suspense fallback={<LinearProgressBar/>}>
-            <div className="user-roles-page__table">
-              {TableContent(Object.entries(props.people))}
-            </div>
-          </React.Suspense>
-          {SelectRoleModal(props.roles)}
-        </Cell>
-      </Row>
-    </>
+    <Row>
+      <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+        <GeneralCardInfo
+          mainHeader="People"
+          subHeader="List of all users under Almond"
+          icon={<PeopleAltOutlined className="content-icon general-info-icon"/>}
+        />
+        <React.Suspense fallback={<LinearProgressBar/>}>
+          <div className="user-roles-page__table">
+            {TableContent(Object.entries(props.people))}
+          </div>
+        </React.Suspense>
+        {SelectRoleModal(props.roles)}
+      </Cell>
+    </Row>
   );
 };
 

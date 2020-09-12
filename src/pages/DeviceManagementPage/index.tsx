@@ -250,7 +250,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
   const DeleteDeviceModal = (): JSX.Element => (
     <Modal
       isModalOpen={state.isDeleteModal}
-      renderContent={() => <p className="delete-modal-content">Do you confirm deletion of device?</p>}
+      renderContent={() => <h5>Do you confirm deletion of device?</h5>}
       onClose={toggleDeviceDeleteModal}
       renderHeader={() => 'Delete Device'}
       submitButtonName="Delete"
