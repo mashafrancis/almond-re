@@ -8,7 +8,7 @@ import { Redirect, Route } from 'react-router';
 import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 
 // helpers
-import authorize from '@utils/helpers/authorize';
+import authorize from '@utils/authorize';
 
 // @ts-expect-error
 const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = props => {

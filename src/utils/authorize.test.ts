@@ -1,8 +1,8 @@
 // jest mocks
-import '../../../tests/__mocks__/storeWithPartialPermissions';
+import '../../tests/__mocks__/storeWithPartialPermissions';
 
 // helper functions
-import authorize from '@utils/helpers/authorize';
+import authorize from './authorize';
 
 describe('The authorize function', () => {
   it('should return false if an invalid resource is passed', () => {

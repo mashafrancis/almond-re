@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // components
 import { UserContext } from '@context/UserContext';
 import { MenuContext } from '@context/MenuContext';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // styles
 import './BottomNavigation.scss';

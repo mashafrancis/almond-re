@@ -1,5 +1,6 @@
 // thunks
-import {
+import
+{
   ActivateDevice,
   ActivateDeviceActionFailure,
   ActivateDeviceActionRequest,

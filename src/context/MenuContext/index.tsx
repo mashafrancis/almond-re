@@ -3,7 +3,7 @@ import {
   MenuContextProps,
   MenuContextState
 } from '@context/MenuContext/interfaces';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 
 const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
 

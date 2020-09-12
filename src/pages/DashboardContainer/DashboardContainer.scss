@@ -328,6 +328,13 @@ html {
   }
 }
 
+.MuiSelect-select {
+  .headline-4 {
+    line-height: unset;
+    font-size: 18px;
+  }
+}
+
 .page-content {
   &__navigation {
     display: none;

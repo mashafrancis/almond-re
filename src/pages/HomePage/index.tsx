@@ -13,7 +13,7 @@ import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
-import isArrayNotNull from '@utils/helpers/checkArrayEmpty';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // styles
 import './HomePage.scss';

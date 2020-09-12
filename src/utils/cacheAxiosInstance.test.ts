@@ -1,6 +1,6 @@
 // helpers
 import cacheAxiosInstance from './cacheAxiosInstance';
-import CacheHandler from './helpers/CacheHandler';
+import CacheHandler from './CacheHandler';
 
 describe('The cacheAxiosInstance util', () => {
   let dummyAxios;

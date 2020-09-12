@@ -89,3 +89,11 @@ dist/
 /env-config.js
 /.env.random
 /public/env-config.js
+
+# Yarn 2
+.yarn/*
+.yarn/cache/
+.yarn/releases/
+#.yarn/plugins/
+.yarn/versions/
+.yarn/sdks/

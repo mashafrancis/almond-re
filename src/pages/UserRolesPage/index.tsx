@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Third party libraries
 import {
@@ -7,9 +7,8 @@ import {
   Row,
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
-import {
-  Chip,
-} from '@material-ui/core';
+import { Chip } from '@material-ui/core';
+import loadable from '@loadable/component';
 
 // icons
 import {
@@ -24,7 +23,6 @@ import PermissionAccess from '@components/PermissionAccess';
 // import Restrict from '@components/Restrict';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import LinearProgressBar from '@components/LinearProgressBar';
 
 // styles
 import './UserRolesPage.scss';
@@ -46,13 +44,14 @@ import {
 import {
   UserRole,
 } from '@modules/userRoles/interfaces';
+import minimumDelay from '@utils/MinimumDelay';
 
-const CardInfo = React.lazy(() => import('@components/CardInfo'));
-const Table = React.lazy(() => import('@components/Table'));
-const Modal = React.lazy(() => import('@components/Modal'));
+const CardInfo = loadable(() => import('@components/CardInfo'));
+const Table = loadable(() => import('@components/Table'));
+const Modal = loadable(() => import('@components/Modal'));
 
-export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props => {
-  const [state, setState] = React.useState<UserRolesPageState>({
+export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
+  const [state, setState] = useState<UserRolesPageState>({
     isLoading: false,
     isRequestSent: false,
     showDeleteModal: false,
@@ -70,7 +69,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
   /*
    * Fetch user roles once component is mounted.
    */
-  React.useEffect(() => {
+  useEffect(() => {
     setState({ ...state, isLoading: true });
     const getRoles = async () => {
       await props.getUserRoles();
@@ -79,17 +78,17 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
     getRoles().then(() => setResourcesPermissions);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     onResetPermission();
   }, [state.isModalOpen]);
 
   const setResourcesPermissions = () => {
-    setState({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       isLoading: false,
       permissions: props.userRoles.permissions,
       resources: props.userRoles.resources,
-    });
+    }));
   };
 
   const theme = useTheme();
@@ -106,31 +105,34 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
    *
    * @return {JSX}
    */
-  const renderAction = (action: string, authOption: string, role, actionMethod, className: string) =>
-      // <Restrict authorize={authOption}>
-      <span className={className} onClick={role && actionMethod(role)}>
+  const renderAction = (action: string, authOption: string, role, actionMethod, className: string): JSX.Element => (
+    // <Restrict authorize={authOption}>
+    <span className={className} onClick={role && actionMethod(role)}>
         {action}
       </span>
     // </Restrict>
-  ;
+  );
 
-  const userRolesListAction = role =>
+  const userRolesListAction = role => (
     <div className="user-roles-page__table__action-buttons">
       {renderAction('Edit', 'roles:edit', role, toggleEditRoleModal, 'edit')}
       {renderAction('Delete', 'roles:delete', role, handleRoleDelete, 'delete')}
     </div>
-  ;
+  );
 
-  const toggleModal = () => setState({
-    ...state,
+  const toggleModal = () => setState(prevState => ({
+    ...prevState,
     title: '',
     description: '',
-    isModalOpen: !state.isModalOpen,
+    isModalOpen: !prevState.isModalOpen,
     isRequestSent: false,
     isEditMode: false,
-  });
+  }));
 
-  const toggleDeleteModal = () => setState({ ...state, showDeleteModal: !state.showDeleteModal });
+  const toggleDeleteModal = () => setState(prevState => ({
+    ...prevState,
+    showDeleteModal: !prevState.showDeleteModal,
+  }));
 
   const toggleEditRoleModal = userRole => () => {
     const currentPermissions = userRole.resourceAccessLevels.reduce(
@@ -142,8 +144,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
         };
 
         return [...resourceAccessLevels, formattedResource];
-      },
-      [],
+      }, [],
     );
 
     const { resources } = props.userRoles;
@@ -230,8 +231,8 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
   };
 
   const onResetAccessPermissions = () => {
-    setState({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       resources: state.resources
         .map(resource => resource.permissionIds ? {
           _id: resource._id,
@@ -239,17 +240,17 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
         } : {
           ...resource,
         }),
-    });
+    }));
   };
 
   const onResetPermission = () => onResetAccessPermissions();
 
   const handleRoleDelete = selectedRole => () => {
-    setState({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       selectedRole,
-      showDeleteModal: !state.showDeleteModal,
-    });
+      showDeleteModal: !prevState.showDeleteModal,
+    }));
   };
 
   const onRoleDeleteSubmit = async () => {
@@ -260,7 +261,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
   const getResourcePermissions = resources => setState({ ...state, resources });
 
   const fieldStateChanged = (field: keyof UserRolesPageState) => state => {
-    setState({ ...state, [field]: state.errors.length === 0 });
+    setState(prevState => ({ ...prevState, [field]: state.errors.length === 0 }));
   };
 
   const validateTitleDescription = value => {
@@ -284,7 +285,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
     }));
   };
 
-  const RenderModalContent = () =>
+  const RenderModalContent = () => (
     <>
       <div className="form-cell">
         <FormField
@@ -324,9 +325,9 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
         getResources={getResourcePermissions}
       />
     </>
-  ;
+  );
 
-  const UserRolePageModal = () =>
+  const UserRolePageModal = () => (
     <Modal
       fullScreen={fullScreen}
       isModalOpen={state.isModalOpen}
@@ -338,9 +339,9 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       onSubmit={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
       onDismiss={toggleModal}
     />
-  ;
+  );
 
-  const DeleteRoleModal = () =>
+  const DeleteRoleModal = () => (
     <Modal
       isModalOpen={state.showDeleteModal}
       renderContent={() =>
@@ -360,7 +361,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
       onDismiss={toggleDeleteModal}
       disabled={state.selectedRole && state.selectedRole.users > 0}
     />
-  ;
+  );
 
   const TableContent = userRoles => {
     const tableHeaders = {
@@ -387,7 +388,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
   };
 
   return (
-    <>
+    <div className="user-roles-page">
       <Row>
         <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
           <CardInfo
@@ -397,7 +398,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
             buttonName="Add role"
             onClick={toggleModal}
           />
-          <React.Suspense fallback={<LinearProgressBar/>}>
+          <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
             <div className="user-roles-page__table">
               {TableContent(Object.entries(props.userRoles.roles))}
             </div>
@@ -406,7 +407,7 @@ export const UserRolesPage: React.FunctionComponent<UserRolesPageProps> = props 
           {DeleteRoleModal()}
         </Cell>
       </Row>
-    </>
+    </div>
   );
 };
 

@@ -5,16 +5,17 @@ import {
   Container,
   Grid,
   InputAdornment,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import {
-  PhonelinkSetupSharp
+  PhonelinkSetupSharp,
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 
 // components
 import { Cell, Row } from '@material/react-layout-grid';
+
 const NavigationHeader = loadable(() => import('@components/NavigationHeader'));
 
 // thunk
@@ -33,7 +34,7 @@ import useStyles from '@pages/EnterDeviceIdPage/styles';
 import {
   EnterDeviceIdPageProps,
   EnterDeviceIdPageState,
-  StateToProps
+  StateToProps,
 } from './interfaces';
 
 export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = props => {
@@ -63,64 +64,62 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   const classes = useStyles(props);
   const { activeDevice } = user;
 
-  const renderDeviceTextField = () =>
-      <>
-        <div className="form-cell">
-          <TextField
-            label="Enter new device ID"
-            defaultValue={deviceId}
-            className={`${classes.root} mdc-text-field--fullwidth`}
-            variant="outlined"
-            onChange={handleValueChange}
-            InputProps={{
-              startAdornment:
-                <InputAdornment position="start">
-                  <PhonelinkSetupSharp style={{ color: '#1967D2' }} />
-                </InputAdornment>
-              ,
-            }}
-            />
-        </div>
-      </>
-    ;
+  const renderDeviceTextField = () => (
+    <div className="form-cell">
+      <TextField
+        label="Enter new device ID"
+        defaultValue={deviceId}
+        className={`${classes.root} mdc-text-field--fullwidth`}
+        variant="outlined"
+        onChange={handleValueChange}
+        InputProps={{
+          startAdornment:
+            <InputAdornment position="start">
+              <PhonelinkSetupSharp style={{ color: '#1967D2' }}/>
+            </InputAdornment>
+          ,
+        }}
+      />
+    </div>
+  );
 
   const { isLoading } = state;
   return (
-    <div className="register">
+    <div className="enter-device-id">
       <NavigationHeader
         forwardButtonName={activeDevice ? 'Skip' : 'Home'}
         backwardButtonName="Back"
         forwardLink={activeDevice ? '/dashboard' : '/'}
         backwardLink="/"
-        />
+      />
       <Container maxWidth="sm">
-      <Grid>
-        <Row>
-          <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-            <h1 className="headline-2">Add device identifier</h1>
-            <h5>The device ID will help you to control your purchased device from Almond.
-              Kindly enter the 6 digit figure to start using your system. Configuration with
-              the device might take a few minutes to complete.
-            </h5>
-          </Cell>
-        </Row>
-        <Row className="device-id-page">
-          <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-          {renderDeviceTextField()}
-          </Cell>
-        </Row>
-        <Row className="device-id-page">
-          <Cell columns={8} desktopColumns={8} tabletColumns={4} phoneColumns={2}>
-            <button
-              className="mdc-button mdc-button--raised"
-              onClick={onSubmit}>
+        <Grid>
+          <Row>
+            <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+              <h1 className="headline-2">Add device identifier</h1>
+              <h5>The device ID will help you to control your purchased device from Almond.
+                Kindly enter the 6 digit figure to start using your system. Configuration with
+                the device might take a few minutes to complete.
+              </h5>
+            </Cell>
+          </Row>
+          <Row className="device-id-page">
+            <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+              {renderDeviceTextField()}
+            </Cell>
+          </Row>
+          <Row className="device-id-page">
+            <Cell columns={8} desktopColumns={8} tabletColumns={4} phoneColumns={2}>
+              <button
+                className="mdc-button mdc-button--raised"
+                onClick={onSubmit}>
               <span className="mdc-button__label">
                 {isLoading ? 'Adding...' : 'Add new device ID'}
               </span>
-            </button>
-          </Cell>
-        </Row>
-      </Grid>
+              </button>
+            </Cell>
+          </Row>
+        </Grid>
       </Container>
     </div>
   );

@@ -8,7 +8,7 @@ import {
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { useMqttState, useSubscription } from 'mqtt-hooks';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -40,12 +40,12 @@ import {
   togglePump,
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
-import { getWaterData } from '@modules/sensorData';
+// import { getWaterData } from '@modules/sensorData';
 import { MenuContext } from '@context/MenuContext';
 import { UserContext } from '@context/UserContext';
 
 // utils
-import { validateOneHourTime } from '@utils/helpers/validateTimeOneHour';
+import { validateOneHourTime } from '@utils/validateTimeOneHour';
 
 // styles
 import './WaterCyclesPage.scss';
@@ -58,7 +58,7 @@ import {
   WaterCyclesPageProps,
   WaterCyclesPageState,
 } from './interfaces';
-import roundDigit from '@utils/helpers/roundDigit';
+import roundDigit from '@utils/roundDigit';
 
 // components
 const CardInfo = loadable(() => import('@components/CardInfo'));
@@ -97,10 +97,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const user = useContext(UserContext);
 
   const { mqtt, status } = useMqttState();
-  const {
-    message,
-    topic
-  } = useSubscription('almond/pump');
+  const { topic } = useSubscription('almond/pump');
 
   useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -125,9 +122,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     setState({ ...state, hasError: false });
   }, [state.selectedTimeSchedule]);
 
-  useEffect(() => {
-    props.getWaterData();
-  }, []);
+  // useEffect(() => {
+  //   props.getWaterData();
+  // }, []);
 
   // React.useEffect(() => {
   //   const { scheduleToEdit } = state;
@@ -171,12 +168,12 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     },
   })(Switch);
 
-  const handleClick = message => mqtt.publish('almond/pump', message);
+  const handleClick = (message: string) => mqtt?.publish('almond/pump', message);
 
-  const handleTogglePumpOnChange = event => {
+  const handleTogglePumpOnChange = async (event) => {
     const { checked } = event.target;
-    props.togglePump({ enabled: checked, device: user.activeDevice._id })
-      .then(() => handleClick(checked ? 1 : 0))
+    await handleClick(checked ? "1" : "0");
+    await props.togglePump({ enabled: checked, device: user.activeDevice._id });
   };
 
   const handleToggleStatusChange = async (event, schedule) => {
@@ -247,9 +244,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const toggleScheduleDeleteModal = () => {
     setState(prevState => ({
       ...prevState,
-      isDeleteModal: !prevState.isDeleteModal
+      isDeleteModal: !prevState.isDeleteModal,
     }));
-  }
+  };
 
   const handleScheduleDelete = event => {
     event.preventDefault();
@@ -279,7 +276,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     <div className="blank-content"><h2>{message}</h2></div>
   );
 
-  const AddEditScheduleModal = () =>
+  const AddEditScheduleModal = () => (
     <Modal
       isModalOpen={state.isFormModalOpen}
       renderContent={() => RenderTimeScheduleForm()}
@@ -290,21 +287,21 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       onDismiss={closeScheduleModal}
       disabled={state.hasError}
     />
-  ;
+  );
 
-  const DeleteScheduleModal = () =>
+  const DeleteScheduleModal = () => (
     <Modal
       isModalOpen={state.isDeleteModal}
-      renderContent={() => <p className="delete-modal-content">Do you confirm deletion of time schedule?</p>}
+      renderContent={() => <h5 className="delete-modal-content">Do you confirm deletion of time schedule?</h5>}
       onClose={toggleScheduleDeleteModal}
       renderHeader={() => 'Delete Time Schedule'}
       submitButtonName="Delete schedule"
       onSubmit={handleScheduleDelete}
       onDismiss={toggleScheduleDeleteModal}
     />
-  ;
+  );
 
-  const ActionButtons = schedule =>
+  const ActionButtons = schedule => (
     <div key={schedule} className="action-buttons">
       <span id={schedule} onClick={showScheduleModal('Edit')}>
         <h5 id={schedule} className="action-buttons__edit">Edit</h5>
@@ -313,7 +310,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
-  ;
+  );
 
   const TableContent = timeSchedule => {
     const tableHeaders = {
@@ -350,42 +347,52 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     } = state;
 
     return (
-      <>
-        <div className="form-cell">
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <TimePicker
-              className="mdc-text-field--fullwidth"
-              name="time_schedule"
-              inputVariant="outlined"
-              label="time schedule"
-              value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
-              onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
-              {...(hasError ? { error: true } : {})}
-              {...(hasError ? { helperText: 'Schedule time has to be at least one hour apart' } : {})}
-              InputProps={{
-                startAdornment:
-                  <InputAdornment position="start">
-                    <IconButton href="#">
-                      <AddAlarmTwoTone style={{ color: '#1967D2' }}/>
-                    </IconButton>
-                  </InputAdornment>
-                ,
-              }}
-            />
-          </MuiPickersUtilsProvider>
-          <p
-            className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
-            mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
-            aria-hidden="false"
+      <div className="form-cell">
+        {
+          isEditMode
+            ? <>
+              <h5 className="h5-sub-line">Change the time schedule as per your preference for pumping.</h5>
+              <h5>However, make sure the time difference is at least 1 hour apart</h5>
+              </>
+            :
+            <>
+            <h5 className="h5-sub-line">Add a new time schedule as per your preference for pumping.</h5>
+            <h5>However, make sure the time difference is at least 1 hour apart</h5>
+            </>
+        }
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <TimePicker
+            className="mdc-text-field--fullwidth"
+            name="time_schedule"
+            inputVariant="outlined"
+            label="time schedule"
+            value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
+            onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
+            {...(hasError ? { error: true } : {})}
+            {...(hasError ? { helperText: 'Schedule time has to be at least one hour apart' } : {})}
+            InputProps={{
+              startAdornment:
+                <InputAdornment position="start">
+                  <IconButton href="#">
+                    <AddAlarmTwoTone style={{ color: '#1967D2' }}/>
+                  </IconButton>
+                </InputAdornment>
+              ,
+            }}
           />
-        </div>
-      </>
+        </MuiPickersUtilsProvider>
+        <p
+          className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
+            mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
+          aria-hidden="false"
+        />
+      </div>
     );
   };
 
   // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
-    <>
+    <div className="water-cycles-page">
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">
@@ -464,7 +471,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
           />
         </Cell>
       </Row>
-    </>
+    </div>
   );
 };
 
@@ -487,7 +494,7 @@ export const mapDispatchToProps = dispatch => ({
   getPumpStatus: deviceId => dispatch(getPumpStatus(deviceId)),
   togglePump: payload => dispatch(togglePump(payload)),
   toggleScheduleStatus: (scheduleId, payload) => dispatch(toggleScheduleStatus(scheduleId, payload)),
-  getWaterData: () => dispatch(getWaterData()),
+  // getWaterData: () => dispatch(getWaterData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterCyclesPage);

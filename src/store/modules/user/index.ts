@@ -15,7 +15,7 @@ import {
 
 // helper functions
 import { authService } from '@utils/auth';
-import formatPermissions from '@utils/helpers/formatPermissions';
+import formatPermissions from '@utils/FormatPermissions';
 
 // types
 import {
@@ -34,7 +34,7 @@ import {
 } from '@modules/loading';
 
 import { ErrorObject } from '../../../shared.interfaces';
-import errorOnSnack from '@utils/helpers/errorOnSnack';
+import errorOnSnack from '@utils/errorOnSnack';
 
 /**
  * Get userDetails success action creator

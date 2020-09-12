@@ -6,11 +6,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from '@material-ui/core';
 
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';
+
+// styles
+import './Modal.scss';
 
 const Modal = (props: ModalProps): JSX.Element => {
   const {
@@ -35,29 +38,21 @@ const Modal = (props: ModalProps): JSX.Element => {
           {renderHeader()}
         </p>
       </DialogTitle>
-      <DialogContent className="register">
+      <DialogContent className="modal-content">
         {renderContent()}
       </DialogContent>
       <DialogActions>
         <ActionButton
           name="Dismiss"
           handleClick={onDismiss}
-          />
-         <button
+        />
+        <button
           className="mdc-button big-round-corner-button mdc-button--raised"
           onClick={onSubmit}>
               <span className="mdc-button__label">
                 {submitButtonName}
               </span>
-         </button>
-        {/* <Button */}
-        {/*  type="button" */}
-        {/*  name={submitButtonName} */}
-        {/*  id="cc-roles" */}
-        {/*  disabled={disabled} */}
-        {/*  onClick={onSubmit} */}
-        {/*  classes="mdc-button big-round-corner-button mdc-button--raised" */}
-        {/* /> */}
+        </button>
       </DialogActions>
     </Dialog>
   );

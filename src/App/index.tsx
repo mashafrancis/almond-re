@@ -1,5 +1,5 @@
 // react libraries
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, StrictMode } from 'react';
 
 // third party libraries
 import queryString from 'query-string';
@@ -21,9 +21,9 @@ import { AppProps, AppState } from './interfaces';
 
 // helper functions
 import { authService } from '@utils/auth';
-import checkUserRole from '@utils/helpers/checkUserRole';
-import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
-import minimumDelay from '@utils/helpers/MinimumDelay';
+import checkUserRole from '@utils/checkUserRole';
+import { initializeGA, logPageView } from '@utils/googleAnalytics';
+import minimumDelay from '@utils/MinimumDelay';
 
 // context
 import { UserContext } from '@context/UserContext';
@@ -32,7 +32,6 @@ import { MenuProvider } from '@context/MenuContext';
 
 // styles
 import './App.scss';
-import { initializeFirebase } from '@utils/helpers/firebase';
 
 const useEffectAsync = (
   effect: any,
@@ -54,7 +53,6 @@ export const App: React.FunctionComponent<AppProps> = props => {
   const { user } = props;
 
   useEffect(() => {
-    initializeFirebase();
     initializeGA();
     logPageView(window.location.pathname);
   }, []);
@@ -88,9 +86,9 @@ export const App: React.FunctionComponent<AppProps> = props => {
     clearTimeout(timerRef.current);
   }, []);
 
-  // const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
-  // const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
-  // const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
+  const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
+  const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
+  const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
   const { isUserAuthenticated, isAdmin } = state;
   const {
@@ -115,39 +113,34 @@ export const App: React.FunctionComponent<AppProps> = props => {
   };
 
   const options = {
-    port: 8083,
-    host: process.env.MQTT_HOST,
-    // user: process.env.MQTT_USER,
-    protocol: 'ws',
+    username: process.env.MQTT_USER,
+    password: process.env.MQTT_PASSWORD,
     keepalive: 30,
-    clientId: _id,
-    // protocolId: 'MQTT',
-    // protocolVersion: 4,
-    clean: true,
+    clientId: 'almond',
+    protocolId: 'MQTT',
+    protocolVersion: 4,
+    clean: false,
     reconnectPeriod: 1000,
     connectTimeout: 30 * 1000,
     will: {
-      topic: 'AlmondWillMsg',
+      topic: 'almond/lastWill',
       payload: 'Connection Closed abnormally..!',
       qos: 0,
       retain: false,
     },
-    // password: process.env.MQTT_PASSWORD,
-    // key: bufferKey,
-    // cert: bufferCert,
-    // ca: bufferCA,
-    // rejectUnauthorized: true,
+    key: bufferKey,
+    cert: bufferCert,
+    ca: bufferCA,
+    rejectUnauthorized: false,
   };
 
   return (
-    // <ReactReduxFirebaseProvider {...reactReduxFirebaseProps}>
-    <UserContext.Provider
-      value={userDetailsOnProvider}>
-      <MenuProvider>
-        <ViewportProvider>
-          <Connector opts={options}>
-            <ErrorBoundary>
-              <>
+    <ErrorBoundary>
+      <Connector brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} opts={options}>
+        <UserContext.Provider value={userDetailsOnProvider}>
+          <MenuProvider>
+            <ViewportProvider>
+              <StrictMode>
                 <SnackBar/>
                 {
                   location.pathname !== '/'
@@ -156,13 +149,12 @@ export const App: React.FunctionComponent<AppProps> = props => {
                 <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
                   <Routes/>
                 </React.Suspense>
-              </>
-            </ErrorBoundary>
-          </Connector>
-        </ViewportProvider>
-      </MenuProvider>
-    </UserContext.Provider>
-    // </ReactReduxFirebaseProvider>
+              </StrictMode>
+            </ViewportProvider>
+          </MenuProvider>
+        </UserContext.Provider>
+      </Connector>
+    </ErrorBoundary>
   );
 };
 

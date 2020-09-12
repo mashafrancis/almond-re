@@ -11,7 +11,7 @@ import { FilterList } from '@material-ui/icons';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import { getEnvironmentData } from '@modules/sensorData';
+// import { getEnvironmentData } from '@modules/sensorData';
 
 // styles
 import './EnvironmentControlPage.scss';
@@ -20,7 +20,7 @@ import './EnvironmentControlPage.scss';
 import {
   EnvironmentControlPageProps,
 } from './interfaces';
-import roundDigit from '@utils/helpers/roundDigit';
+import roundDigit from '@utils/roundDigit';
 
 // components
 const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
@@ -29,10 +29,10 @@ const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay')
 
 export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = props => {
 
-  React.useEffect(() => {
-    props.getEnvironmentData();
-      // .then(() => setState({ ...state, environmentData: props.environmentData }))
-  }, [])
+  // React.useEffect(() => {
+  //   props.getEnvironmentData();
+  //     // .then(() => setState({ ...state, environmentData: props.environmentData }))
+  // }, [])
 
   const {
     currentTemperature,
@@ -147,7 +147,7 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-  getEnvironmentData: () => dispatch(getEnvironmentData()),
+  // getEnvironmentData: () => dispatch(getEnvironmentData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentControlPage);

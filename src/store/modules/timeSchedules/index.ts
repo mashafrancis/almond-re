@@ -51,7 +51,7 @@ import { AnyAction, Dispatch } from 'redux';
 import { logActivity } from '@modules/activityLogs';
 
 // helpers
-import errorOnSnack from '@utils/helpers/errorOnSnack';
+import errorOnSnack from '@utils/errorOnSnack';
 import { ErrorObject } from '../../../shared.interfaces';
 
 /**

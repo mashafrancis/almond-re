@@ -35,7 +35,8 @@
 }
 
 .MuiInputBase-input {
-  font-size: 24px !important;
+  font-size: 24px;
+  line-height: unset;
 }
 
 .MuiTypography-h2 {
@@ -177,4 +178,8 @@ h5 {
       box-shadow: rem(1px) rem(1px) rem(81px) rgba(41, 60, 74, 0.18);
     }
   }
+}
+
+.h5-sub-line {
+  margin-bottom: 0;
 }

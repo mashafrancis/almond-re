@@ -7,23 +7,19 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [
-          12.x,
-          13.x,
-          14.x
-        ]
+        platform: [ ubuntu-latest ]
+        node: [ '12', '13', '14' ]
+    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v1
-    - name: Select node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install modules
-      run: yarn install
-    - name: Run tests
-      run: yarn test:unit
-      env:
-        CI: true
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: rm -rf .yarnrc.yml
+      - run: npm install -g yarn
+      - run: yarn set version berry
+      - run: yarn install
+      - run: yarn test:unit
