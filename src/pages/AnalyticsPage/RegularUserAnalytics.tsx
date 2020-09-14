@@ -10,7 +10,7 @@ import {
   OpacityTwoTone,
   ScheduleTwoTone, Waves
 } from '@material-ui/icons';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import { useSubscription } from 'mqtt-hooks';
 import loadable from '@loadable/component'
 import { data } from '@pages/AnalyticsPage/fixtures';
@@ -46,7 +46,7 @@ const RegularUserAnalytics = (): JSX.Element => {
   //   return () => console.log('cleaning up...');
   // }, [])
 
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const { setSelectedIndex } = menu;
   const { temp, humid, water_level } = data;
 
@@ -54,7 +54,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 
   return (
     <>
-      <Row className="analytics-page">
+      <Row className="analytics-page" data-testid="regular-analytics-page">
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
             onClick={setSelectedIndex.bind(null,{ group: 0, item: 1 })}

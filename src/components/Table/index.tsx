@@ -11,7 +11,6 @@ import { TableProps } from './interfaces';
  * Returns Table components for assets
  *
  * @param {TableProps} props
- *
  * @returns {JSX} JSX
  */
 const Table = (props: TableProps): JSX.Element => {
@@ -19,13 +18,13 @@ const Table = (props: TableProps): JSX.Element => {
   const tableHeaders = Object.keys(keys);
   return (
     <>
-      <div className="tbl-header">
+      <div className="tbl-header" data-testid="tbl-header">
         {
           tableHeaders.map((header, index) => (
             <div key={index} className={keys[header].colWidth
               ? `tbl-header__column--${keys[header].colWidth}`
               : 'tbl-header__column'}>
-              <span className="header-text">{keys[header].value || header}</span>
+              <span data-testid="header-text" className="header-text">{keys[header].value || header}</span>
             </div>
           ))
         }
@@ -38,7 +37,7 @@ const Table = (props: TableProps): JSX.Element => {
                 <div key={index} className={keys[header].colWidth
                   ? `tbl-row__column--${keys[header].colWidth}`
                   : 'tbl-row__column'}>
-                  <span className="content-text">{value[keys[header].valueKey]}</span>
+                  <span data-testid="content-text" className="content-text">{value[keys[header].valueKey]}</span>
                 </div>
               ))
             }

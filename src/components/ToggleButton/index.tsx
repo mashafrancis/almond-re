@@ -9,7 +9,7 @@ import './ToggleButton.scss';
 import { ToggleButtonProps } from './interfaces';
 
 const ToggleButton = (props: ToggleButtonProps): JSX.Element => (
-  <div className={props.classes}>
+  <div className={props.classes} data-testid="toggle-button">
     <label className="switch">
       <input
         id="toggle-override"

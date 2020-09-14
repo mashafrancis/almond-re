@@ -28,7 +28,7 @@ import minimumDelay from '@utils/MinimumDelay';
 // context
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
-import { MenuProvider } from '@context/MenuContext';
+import { ComponentProvider } from '@context/ComponentContext';
 
 // styles
 import './App.scss';
@@ -138,7 +138,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
     <ErrorBoundary>
       <Connector brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} opts={options}>
         <UserContext.Provider value={userDetailsOnProvider}>
-          <MenuProvider>
+          <ComponentProvider>
             <ViewportProvider>
               <StrictMode>
                 <SnackBar/>
@@ -151,7 +151,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
                 </React.Suspense>
               </StrictMode>
             </ViewportProvider>
-          </MenuProvider>
+          </ComponentProvider>
         </UserContext.Provider>
       </Connector>
     </ErrorBoundary>

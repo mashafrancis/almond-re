@@ -1,48 +1,31 @@
 // react libraries
-import * as React from 'react';
-
-// third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
   EnvironmentControlPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
+import { renderWithRouter } from '../../testHelpers';
+import { props } from './fixtures';
 
 describe('The EnvironmentalControl Page', () => {
-  let wrapper;
-  let props;
-
-  props = {
-    getEnvironmentData: jest.fn(() => Promise.resolve()),
-    displaySnackMessage: jest.fn(() => Promise.resolve()),
-    environmentData: []
-  };
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <EnvironmentControlPage {...props}/>
-      </BrowserRouter>
-    );
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <EnvironmentControlPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {
     const state = {
       sensorData: {
         environmentData: [],
-      }
+      },
     };
 
     const props = mapStateToProps(state);

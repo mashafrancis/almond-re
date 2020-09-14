@@ -1,11 +1,11 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
-import MenuContent from "./index";
+import { render } from "@testing-library/react";
 
 // component
+import MenuContent from "./index";
 
 describe('MenuContent component', () => {
   const props = {
@@ -13,9 +13,8 @@ describe('MenuContent component', () => {
     photo: 'photo',
   };
 
-  const wrapper = shallow(<MenuContent {...props} />);
-
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { asFragment } = render(<MenuContent {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

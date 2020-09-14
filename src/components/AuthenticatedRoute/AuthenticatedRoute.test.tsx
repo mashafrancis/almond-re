@@ -1,43 +1,37 @@
 // react libraries
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 
 // third-party libraries
 import * as Cookies from 'js-cookie';
-import { mount } from 'enzyme';
+import { screen } from '@testing-library/react';
 
 // components
 import AuthenticatedRoute from './';
+import { renderWithRouter } from '../../testHelpers';
 
 describe('The AuthenticatedRoute component', () => {
-  const TestComponent = () => <div/>;
+  const TestComponent = () => <div>Test Component</div>;
 
   it('mounts the component if the user is authenticated', () => {
     const authToken = 'SOME_RANDOM_TOKEN';
     Cookies.set('jwt-token', authToken);
+    renderWithRouter(<AuthenticatedRoute component={TestComponent}/>);
+    const elem = screen.getByTestId('authenticated-route');
 
-    const wrapper = mount(
-      <MemoryRouter>
-        <AuthenticatedRoute component={TestComponent} />
-      </MemoryRouter>
-    );
-    expect(wrapper.find(TestComponent).length).toBe(1);
+    expect(elem.classList[0]).toBe('drawer-content');
+    expect(screen.getByText('Test Component')).toBeTruthy();
   });
 
   it('redirects the user to root (/) if the user is NOT authenticated', () => {
     Cookies.remove('jwt-token');
-
+    const redirectUrl = '/';
     const props = {
       location: {
         pathname: '/dashboard',
       },
     };
-    const wrapper = mount(
-      <MemoryRouter initialEntries={['/dashboard']} initialIndex={0}>
-        <AuthenticatedRoute component={TestComponent} {...props} />
-      </MemoryRouter>
-    );
+    const { history } = renderWithRouter(<AuthenticatedRoute component={TestComponent} {...props} />);
 
-    expect(wrapper.find('Redirect').props().to).toEqual('/');
+    expect(history.location.pathname).toEqual(redirectUrl);
   });
 });

@@ -21,10 +21,10 @@ const DashboardCard = (props: DashboardCardProps): JSX.Element => {
     <Card variant="outlined">
       <div className="dashboard-card">
         <div className="card-header">
-          <h5 className="card-header__title">{heading}</h5>
+          <h5 data-testid="heading" className="card-header__title">{heading}</h5>
           <div className="card-header__right-header">{actionItem}</div>
         </div>
-        <div className={`${classes} card-body`}>
+        <div data-testid="body" className={`${classes} card-body`}>
           {body}
         </div>
       </div>

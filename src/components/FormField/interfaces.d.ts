@@ -1,5 +1,4 @@
-import { InputBaseProps } from '@material-ui/core';
-import * as React from 'react';
+import { ReactNode } from 'react';
 
 export interface FormFieldProps {
   labelText?: any;
@@ -13,8 +12,8 @@ export interface FormFieldProps {
   // helperText?: string;
   label?: string;
   placeholder?: string;
-  required: boolean;
-  children?: React.ReactNode;
+  required?: boolean;
+  children?: ReactNode;
   validator?: any;
   onStateChanged?: any;
   leadingIcon?: any;

@@ -77,7 +77,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
     showDeviceModal: false,
     isFormModalOpen: false,
     devices: [],
-    isDeleteModal: false,
+    isDeleteModalOpen: false,
     deviceId: '',
     deviceToEdit: '',
     selectedDevice: '',
@@ -140,7 +140,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
 
   const toggleDeviceDeleteModal = (): void => setState(prevState => ({
     ...prevState,
-    isDeleteModal: !prevState.isDeleteModal,
+    isDeleteModalOpen: !prevState.isDeleteModalOpen,
   }));
 
   const handleDeviceDelete = event => {
@@ -171,7 +171,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
       <span id={device} onClick={showDeviceModal('Edit')}>
         <h5 id={device} className="action-buttons__edit">Edit</h5>
       </span>
-      <span id={device} onClick={() => setState({ ...state, deviceId: device, isDeleteModal: true })}>
+      <span id={device} onClick={() => setState({ ...state, deviceId: device, isDeleteModalOpen: true })}>
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
@@ -249,7 +249,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
 
   const DeleteDeviceModal = (): JSX.Element => (
     <Modal
-      isModalOpen={state.isDeleteModal}
+      isModalOpen={state.isDeleteModalOpen}
       renderContent={() => <h5>Do you confirm deletion of device?</h5>}
       onClose={toggleDeviceDeleteModal}
       renderHeader={() => 'Delete Device'}
@@ -260,7 +260,7 @@ export const DeviceManagementPage: FunctionComponent<DeviceManagementProps> = pr
   );
 
   return (
-    <Row>
+    <Row data-testid="device-management-page" className="device-management-page">
       <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
         <CardInfo
           mainHeader="Device Management"

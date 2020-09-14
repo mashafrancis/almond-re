@@ -1,8 +1,8 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third party
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // components
 import {
@@ -13,19 +13,13 @@ import {
 import { props } from "./fixtures";
 
 describe('The DeviceManagement Page', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<DeviceManagementPage {...props}/>);
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment } = render(<DeviceManagementPage {...props} />);
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.user-roles-page__table')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('device-management-page');
+    expect(elem.classList[1]).toBe('device-management-page');
   });
 
   describe('mapStateToProps', () => {
@@ -38,7 +32,7 @@ describe('The DeviceManagement Page', () => {
 
     const props = mapStateToProps(state);
 
-    it('should map  prop from state', () => {
+    it('should map props from state', () => {
       expect(props.devices).toEqual(state.device.devices);
       expect(props.activeDevice).toEqual(state.device.activeDevice);
     });

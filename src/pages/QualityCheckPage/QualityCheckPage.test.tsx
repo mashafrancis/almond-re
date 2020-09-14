@@ -1,9 +1,5 @@
 // react libraries
-import * as React from 'react';
-
-// third party
-import { mount, shallow } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
@@ -11,25 +7,18 @@ import {
   mapStateToProps,
   QualityCheckPage
 } from './index';
+import { renderWithRouter } from '../../testHelpers';
 
 describe('The QualityCheck Page', () => {
-  let wrapper;
-  let props;
-  let waterCyclesPageInstance;
-
-  beforeEach(() => {
-    props = {
-    };
-    wrapper = shallow(<QualityCheckPage {...props}/>);
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const props = {}
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <QualityCheckPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
-    // expect(wrapper.find('.main-subheader')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {

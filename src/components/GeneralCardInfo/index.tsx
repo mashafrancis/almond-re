@@ -19,8 +19,8 @@ const GeneralCardInfo = (props: GeneralCardInfoProps): JSX.Element => {
       <div className="card-content">
         {icon}
         <div className="card-content__body">
-          <div className="main">{mainHeader}</div>
-          <div className="sub-main">{subHeader}</div>
+          <div data-testid="heading" className="main">{mainHeader}</div>
+          <div data-testid="sub-heading" className="sub-main">{subHeader}</div>
         </div>
         <div className="card-content__button">
           {actionItem}

@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
-import GeneralCardInfo from "./index";
+import { render, screen } from "@testing-library/react";
 
 // component
+import GeneralCardInfo from "./index";
 
 describe('GeneralCardInfo component', () => {
   const props = {
@@ -13,10 +13,14 @@ describe('GeneralCardInfo component', () => {
     subHeader: 'subHeader',
   };
 
-  const wrapper = shallow(<GeneralCardInfo {...props} />);
-
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.general-info-card')).toHaveLength(1);
+    const { asFragment } = render(<GeneralCardInfo {...props} />);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elemHeader = screen.getByTestId('heading');
+    expect(elemHeader.innerHTML).toBe('mainHeader');
+
+    const elemDetails = screen.getByTestId('sub-heading');
+    expect(elemDetails.innerHTML).toBe('subHeader');
   });
 });

@@ -2,10 +2,11 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
-import CardInfo from "./index";
+import { render, screen } from "@testing-library/react";
 
 // component
+import CardInfo from "./index";
+import { WindowSize } from '../../testHelpers';
 
 describe('CardInfo component', () => {
   const props = {
@@ -14,10 +15,22 @@ describe('CardInfo component', () => {
     buttonName: 'buttonName',
   };
 
-  const wrapper = shallow(<CardInfo {...props} />);
-
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.info-card')).toHaveLength(1);
+    const { asFragment } = render(<CardInfo {...props} />);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('header');
+    expect(elem.innerHTML).toBe('mainHeader');
+  });
+
+  it('should render correctly with correct button on resize', () => {
+    window.resizeTo(800, 300)
+    render(<WindowSize />)
+    const { asFragment } = render(<CardInfo {...props} />);
+
+    expect(asFragment()).toMatchSnapshot();
+    // const elem = screen.getByTestId('fab');
+    //
+    // expect(elem.innerHTML).toBe('mainHeader');
   });
 });

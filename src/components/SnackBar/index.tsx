@@ -1,56 +1,60 @@
 // react libraries
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 // third-party libraries
-import { Snackbar } from '@material/react-snackbar';
+import { Snackbar } from '@material-ui/core';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
+import { ComponentContext } from '@context/ComponentContext';
+import { useViewport } from '../../hooks';
 
 // interfaces
-import { SnackMessageProps, SnackMessageState } from './interfaces';
+import { SnackMessageProps } from './interfaces';
 
-import './SnackBar.scss';
+// styles
+import { useSnackStyles } from '@components/SnackBar/styles';
 
-export class SnackBar extends Component<
-  SnackMessageProps,
-  SnackMessageState
-> {
-  constructor(props) {
-    super(props);
+export const SnackBar = (props: SnackMessageProps): JSX.Element => {
+  const classes = useSnackStyles();
+  const componentContext = useContext(ComponentContext);
+  const { isSnackOpen, handleCloseSnack, snackMessage, setSnackMessage, setOpenSnack } = componentContext;
 
-    this.state = {
-      snack: this.props.snack,
-    };
-  }
+  const { width } = useViewport();
+  const breakpoint = 539;
 
-  componentDidUpdate({ snack }) {
-    if (this.props.snack !== snack) { this.setState(prevState => ({ ...prevState, snack: this.props.snack})); }
-    if (this.state.snack.message !== '') { setTimeout(this.hideSnackMessage, 8000); }
-  }
+  useEffect(() => {
+    const { message } = props.snack;
+    setSnackMessage(message);
+    setOpenSnack(!!message);
+  }, [props.snack]);
 
-  private hideSnackMessage = () => this.setState({ snack: { message: '' }});
+  const Alert = (props: AlertProps) => (
+    <MuiAlert elevation={6} variant="filled" {...props} />
+  );
 
-  render() {
-    const { snack } = this.state;
-    return (
-      <>
-        {
-          snack.message
-          ?
-              <Snackbar
-                message={snack.message}
-                timeoutMs={8000}
-                actionText="DISMISS"
-                />
+  return (
+    <div className={classes.root}>
+      <Snackbar
+        anchorOrigin={
+          (width > breakpoint)
+            ? { vertical: 'top', horizontal: 'right' }
+            : { vertical: 'bottom', horizontal: 'center' }}
+        open={isSnackOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnack}
+      >
+        <div data-testid="snack-message">
+        <Alert onClose={handleCloseSnack} severity="success">
+          {snackMessage}
+        </Alert>
+        </div>
+      </Snackbar>
+    </div>
+  );
+};
 
-          : <div />
-        }
-      </>
-    );
-  }
-}
-
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state: any) => ({
   snack: state.snack || { message: '' },
 });
 
-export default connect(mapStateToProps)(SnackBar);
+export default connect(mapStateToProps, null)(SnackBar);

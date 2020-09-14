@@ -18,7 +18,7 @@ import List, {
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -93,7 +93,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
 ;
 
 const MenuContent = (props: MenuContentProps): JSX.Element => {
-  const menu = React.useContext(MenuContext);
+  const menu = React.useContext(ComponentContext);
   const user = React.useContext(UserContext);
 
   const { width } = useViewport();

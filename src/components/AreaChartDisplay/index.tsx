@@ -7,7 +7,7 @@ const AreaChardDisplay = (props: AreaChartDisplayProps): JSX.Element => {
   const {
     chartData,
     backgroundColor,
-    chartColor
+    chartColor,
   } = props;
 
   const data = {
@@ -31,21 +31,19 @@ const AreaChardDisplay = (props: AreaChartDisplayProps): JSX.Element => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: chartData
-      }
+        data: chartData,
+      },
     ],
     options: {
       legend: {
         display: false,
       },
-    }
+    },
   };
 
   return (
-    <div>
-      <Line data={data} options={data.options} />
-    </div>
+    <Line data={data} options={data.options}/>
   );
-}
+};
 
 export default AreaChardDisplay;

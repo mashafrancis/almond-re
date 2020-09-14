@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import {
@@ -27,7 +27,7 @@ const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
 const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
 
-export const EnvironmentControlPage: React.FunctionComponent<EnvironmentControlPageProps> = props => {
+export const EnvironmentControlPage = (props: EnvironmentControlPageProps): JSX.Element => {
 
   // React.useEffect(() => {
   //   props.getEnvironmentData();

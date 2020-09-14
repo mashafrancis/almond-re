@@ -6,11 +6,11 @@ import './InternalServerError.scss';
 
 const InternalServerErrorMessage: (props: any) => any = props =>
     <div id="internal-server-error">
-      <div className="server-error">
+      <div className="server-error" data-testid="internal-server-error">
         <div className="server-error-500" />
         <h1>500</h1>
         <h2>Sorry. It is not you. It is us.</h2>
-        <p>We are experiencing an internal server problem.</p>
+        <p data-testid="content">We are experiencing an internal server problem.</p>
         <p>Please try again later or contact support <span className="mail">almond.froyo@gmail.com</span></p>
         {props.errorButton}
       </div>

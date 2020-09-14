@@ -341,27 +341,30 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
     />
   );
 
-  const DeleteRoleModal = () => (
-    <Modal
-      isModalOpen={state.showDeleteModal}
-      renderContent={() =>
-        <>
-          <h4 className="headline-4">{`Permanently delete ${state.selectedRole.title} role`}</h4>
-          <p className="delete-modal-content">
-            {state.selectedRole && state.selectedRole.users > 0
-              ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
-              : 'This cannot be undone'}
-          </p>
-        </>
-      }
-      onClose={toggleDeleteModal}
-      renderHeader={() => 'Delete Role'}
-      submitButtonName="Delete role"
-      onSubmit={onRoleDeleteSubmit}
-      onDismiss={toggleDeleteModal}
-      disabled={state.selectedRole && state.selectedRole.users > 0}
-    />
-  );
+  const DeleteRoleModal = () => {
+    const userCount = state.selectedRole?.userCount;
+    return (
+      <Modal
+        isModalOpen={state.showDeleteModal}
+        renderContent={() =>
+          <>
+            <h4 className="headline-4">{`Permanently delete role: ${state.selectedRole.title}`}</h4>
+            <h5 className="headline-5">
+              {state.selectedRole && userCount > 0
+                ? `You cannot delete this role as it is assigned to ${userCount} user${userCount > 1 ? 's' : ''}`
+                : 'This cannot be undone'}
+            </h5>
+          </>
+        }
+        onClose={toggleDeleteModal}
+        renderHeader={() => 'Delete Role'}
+        submitButtonName="Delete role"
+        onSubmit={onRoleDeleteSubmit}
+        onDismiss={toggleDeleteModal}
+        disabled={state.selectedRole && userCount > 0}
+      />
+    );
+  }
 
   const TableContent = userRoles => {
     const tableHeaders = {

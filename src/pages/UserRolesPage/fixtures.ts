@@ -1,7 +1,7 @@
 export const userRoles = [
   {
     description: 'default description',
-    _id: '5e439f32fd05da507cdk3k49',
+    _id: '5e439f32fd05da507edn3k49',
     resourceAccessLevels: [{
       permissions: [
         {
@@ -67,6 +67,24 @@ export const userRoles = [
     }],
     title: 'Admin',
     users: 1,
+    userCount: 1,
     data: [],
-  }
+  },
 ];
+
+export const props = {
+  userRoles: {
+    roles: userRoles,
+    permissions: userRoles[0].resourceAccessLevels[0].permissions,
+    resources: userRoles[0].resourceAccessLevels[0].resource as any,
+  },
+  getUserRoles: jest.fn(() => Promise.resolve()),
+  createNewRole: jest.fn(() => Promise.resolve()),
+  deleteUserRole: jest.fn(() => Promise.resolve()),
+  editUserRole: jest.fn(() => Promise.resolve()),
+  displaySnackMessage: jest.fn(() => Promise.resolve()),
+  match: {
+    url: '/',
+  },
+  isLoading: false,
+};

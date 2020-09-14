@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-export interface MenuContextProps {
+export interface ComponentContextProps {
   children: ReactNode
 }
 
-export interface MenuContextState {
+export interface ComponentContextState {
   isOpen: boolean;
   isMenuOpen: boolean;
   selectedIndex: {
@@ -14,4 +14,6 @@ export interface MenuContextState {
   isSelectDeviceModalOpen: boolean;
   isActivityDrawerOpen: boolean;
   activityLogsViewed: boolean;
+  isSnackOpen: boolean;
+  snackMessage: string;
 }

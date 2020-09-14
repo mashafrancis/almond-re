@@ -5,7 +5,7 @@ export interface EnterDeviceIdPageProps {
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
   isLoading: boolean;
-  history: History;
+  history?: History;
   getUserDetails: () => Promise<any>;
 }
 

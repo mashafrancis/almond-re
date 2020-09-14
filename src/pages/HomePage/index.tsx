@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 
 // thunks
 import { displaySnackMessage } from '@modules/snack';
@@ -19,12 +19,12 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import './HomePage.scss';
 import Logo from '@components/Logo';
 
-const HomePage: React.FunctionComponent<HomePageProps> = props => {
-  const user = React.useContext(UserContext);
+const HomePage = (props: HomePageProps): JSX.Element => {
+  const user = useContext(UserContext);
   const { devices } = user;
   const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
-  const renderGoToDashboard = () =>
+  const renderGoToDashboard = () => (
     <>
       {authService.isAuthenticated()
         ?
@@ -34,15 +34,15 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
           </button>
         </NavLink>
         :
-        <button className="mdc-button mdc-button--raised" onClick={handleLogin}>
+        <button data-testid="button" className="mdc-button mdc-button--raised" onClick={handleLogin}>
           <span className="mdc-button__label">Login with Google</span>
         </button>
       }
     </>
-  ;
+  );
 
   return (
-    <div className="background-cover">
+    <div className="background-cover" data-testid="homepage">
       <main className="home-cover">
         <section className="logo">
           <Logo/>
@@ -57,7 +57,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
         <section id="hero">
           <div className="hero-container">
             <div className="hero-info">
-              <h1>We have an idea!</h1>
+              <h1 data-testid="homepage-content">We have an idea!</h1>
               <h1>Grow hydroponically.</h1>
               <h2>Focusing on the safe production of fresh produce.</h2>
               {renderGoToDashboard()}

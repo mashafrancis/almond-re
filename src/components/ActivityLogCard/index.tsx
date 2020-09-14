@@ -19,14 +19,14 @@ const ActivityLogCard = (props: ActivityLogCardProps): JSX.Element => {
 
   return (
     <Card variant="outlined" className={`log-card log-card__${type}`}>
-      <div className={`${
+      <div data-testid="type" className={`${
         type === 'info' ? 'log-details-info' : 'log-details-error'
       } log-details`}>
         <div className={`log-details-${type}__header`}>
-          <h5 className="card-header__log">{log}</h5>
+          <h5 data-testid="header" className="card-header__log">{log}</h5>
         </div>
         <div className={`log-details-${type}__date`}>
-          <p>{`${moment(date).format('LLLL')}`}</p>
+          <p data-testid="details" >{`${moment(date).format('LLLL')}`}</p>
         </div>
       </div>
     </Card>

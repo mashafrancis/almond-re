@@ -2,12 +2,13 @@
 import React from 'react';
 
 // third party libraries
-import { mount } from 'enzyme';
-import * as history from 'history';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { createMemoryHistory } from 'history';
+import { render } from '@testing-library/react';
+import { Router } from 'react-router-dom';
 
 // helper functions
 import http from '@utils/http';
@@ -76,11 +77,14 @@ export const mountWithRedux: any = (
     initialState = {},
     extraArgument = {},
     store = mockStore(extraArgument, initialState),
-  } = {},
-) => ({
-  store,
-  wrapper: mount(<Provider store={store}>{ui}</Provider>),
-});
+    ...renderOptions
+  },
+) => {
+  const Wrapper = ({ children }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 /**
  * This helper function helps mock the dispatch action and returns jest.expect assertion
@@ -127,7 +131,7 @@ export const axiosMockAdapter = (response, error) => {
 export const routerContext = {
   context: {
     router: {
-      history: history.createBrowserHistory(),
+      history: createMemoryHistory(),
       route: {
         location: { pathname: '/' },
         match: { isExact: true },
@@ -187,3 +191,29 @@ export const errorMessage = {
     status: 400,
   },
 };
+
+export const renderWithRouter = (
+  ui: any,
+  {
+    route = '/',
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {},
+) => {
+  return {
+    ...render(<Router history={history}>{ui}</Router>),
+    history,
+  };
+};
+
+export const WindowSize = () => (
+  <div>
+    <label htmlFor="inner-width">Inner Width</label>
+    <div id="inner-width">{window.innerWidth}</div>
+    <label htmlFor="inner-height">Inner Height</label>
+    <div id="inner-height">{window.innerHeight}</div>
+    <label htmlFor="outer-width">Outer Width</label>
+    <div id="outer-width">{window.outerWidth}</div>
+    <label htmlFor="outer-height">Outer Height</label>
+    <div id="outer-height">{window.outerHeight}</div>
+  </div>
+);

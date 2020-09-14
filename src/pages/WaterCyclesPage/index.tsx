@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createRef } from 'react';
 
 // third-party libraries
 import {
@@ -41,7 +41,7 @@ import {
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
 // import { getWaterData } from '@modules/sensorData';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
 
 // utils
@@ -72,12 +72,11 @@ const AreaChardDisplay = loadable(() => import('@components/AreaChartDisplay'));
 export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const [state, setState] = useState<WaterCyclesPageState>({
     isEditMode: false,
-    isDeleteModal: false,
+    isDeleteModalOpen: false,
     scheduleId: '',
     statusClass: '',
     isEnabled: false,
-    isFormModalOpen: false,
-    showScheduleModal: false,
+    isScheduleModalOpen: false,
     scheduleToEdit: '',
     isActionDone: false,
     isLoading: false,
@@ -93,8 +92,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     }],
   });
 
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const user = useContext(UserContext);
+  const modalRef = createRef();
 
   const { mqtt, status } = useMqttState();
   const { topic } = useSubscription('almond/pump');
@@ -118,8 +118,10 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     const { selectedTimeSchedule } = state;
     const schedules = [...new Set(props.schedules.map(item => item.schedule))];
     const validate = validateOneHourTime(schedules, selectedTimeSchedule);
-    if (validate) setState({ ...state, hasError: true });
-    setState({ ...state, hasError: false });
+    if (validate) {
+      setState(prevState => ({ ...prevState, hasError: true }));
+    }
+    setState(prevState => ({ ...prevState, hasError: false }));
   }, [state.selectedTimeSchedule]);
 
   // useEffect(() => {
@@ -172,7 +174,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
 
   const handleTogglePumpOnChange = async (event) => {
     const { checked } = event.target;
-    await handleClick(checked ? "1" : "0");
+    await handleClick(checked ? '1' : '0');
     await props.togglePump({ enabled: checked, device: user.activeDevice._id });
   };
 
@@ -203,8 +205,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       case 'Add':
         setState(prevState => ({
           ...state,
-          showScheduleModal: !prevState.showScheduleModal,
-          isFormModalOpen: !prevState.isFormModalOpen,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
           isEditMode: false,
         }));
         break;
@@ -215,36 +216,37 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
           ...state,
           scheduleId,
           scheduleToEdit: schedule[0].schedule,
-          showScheduleModal: !prevState.showScheduleModal,
-          isFormModalOpen: true,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
           isEditMode: true,
         }));
     }
   };
 
-  const closeScheduleModal = () => {
-    if (state.isEditMode) {
-      setState({
-        ...state,
-        scheduleToEdit: '',
-        showScheduleModal: false,
-        isFormModalOpen: false,
-        hasError: false,
-      });
-    }
+  const closeScheduleModal = mode => event => {
+    event.preventDefault();
 
-    setState({
-      ...state,
-      showScheduleModal: false,
-      isFormModalOpen: false,
-      hasError: false,
-    });
+    switch (mode) {
+      case 'Add':
+        setState(prevState => ({
+          ...prevState,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
+          hasError: false,
+        }));
+        break;
+      case 'Edit':
+        setState(prevState => ({
+          ...prevState,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
+          hasError: false,
+          isEditMode: false,
+        }));
+    }
   };
 
   const toggleScheduleDeleteModal = () => {
     setState(prevState => ({
       ...prevState,
-      isDeleteModal: !prevState.isDeleteModal,
+      isDeleteModalOpen: !prevState.isDeleteModalOpen,
     }));
   };
 
@@ -268,8 +270,8 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     };
 
     isEditMode
-      ? props.editSchedule(scheduleId, schedule).then(closeScheduleModal)
-      : props.addNewSchedule(schedule).then(closeScheduleModal);
+      ? props.editSchedule(scheduleId, schedule).then(closeScheduleModal('Edit'))
+      : props.addNewSchedule(schedule).then(closeScheduleModal('Add'));
   };
 
   const BlankContent = message => (
@@ -278,21 +280,23 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
 
   const AddEditScheduleModal = () => (
     <Modal
-      isModalOpen={state.isFormModalOpen}
+      innerRef={modalRef}
+      isModalOpen={state.isScheduleModalOpen}
       renderContent={() => RenderTimeScheduleForm()}
-      onClose={() => setState({ ...state, isFormModalOpen: false })}
+      onClose={() => setState({ ...state, isScheduleModalOpen: false })}
       renderHeader={() => state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'}
       submitButtonName={state.isEditMode ? 'Update schedule' : 'Create new schedule'}
       onSubmit={onAddEditScheduleSubmit}
-      onDismiss={closeScheduleModal}
+      onDismiss={closeScheduleModal(state.isEditMode ? 'Edit' : 'Add')}
       disabled={state.hasError}
     />
   );
 
   const DeleteScheduleModal = () => (
     <Modal
-      isModalOpen={state.isDeleteModal}
-      renderContent={() => <h5 className="delete-modal-content">Do you confirm deletion of time schedule?</h5>}
+      innerRef={modalRef}
+      isModalOpen={state.isDeleteModalOpen}
+      renderContent={() => <h5 className="headline-5">Do you confirm deletion of time schedule?</h5>}
       onClose={toggleScheduleDeleteModal}
       renderHeader={() => 'Delete Time Schedule'}
       submitButtonName="Delete schedule"
@@ -306,7 +310,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       <span id={schedule} onClick={showScheduleModal('Edit')}>
         <h5 id={schedule} className="action-buttons__edit">Edit</h5>
       </span>
-      <span id={schedule} onClick={() => setState({ ...state, scheduleId: schedule, isDeleteModal: true })}>
+      <span id={schedule} onClick={() => setState({ ...state, scheduleId: schedule, isDeleteModalOpen: true })}>
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
@@ -333,7 +337,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       <Table
         keys={tableHeaders}
         values={tableValues}
-        statusClass={props.enabled && 'tbl-status'}
+        statusClass={props.enabled ? 'tbl-status' : ''}
       />
     );
   };
@@ -353,11 +357,11 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
             ? <>
               <h5 className="h5-sub-line">Change the time schedule as per your preference for pumping.</h5>
               <h5>However, make sure the time difference is at least 1 hour apart</h5>
-              </>
+            </>
             :
             <>
-            <h5 className="h5-sub-line">Add a new time schedule as per your preference for pumping.</h5>
-            <h5>However, make sure the time difference is at least 1 hour apart</h5>
+              <h5 className="h5-sub-line">Add a new time schedule as per your preference for pumping.</h5>
+              <h5>However, make sure the time difference is at least 1 hour apart</h5>
             </>
         }
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -381,10 +385,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
             }}
           />
         </MuiPickersUtilsProvider>
-        <p
-          className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
+        <p className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
             mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
-          aria-hidden="false"
+           aria-hidden="false"
         />
       </div>
     );
@@ -396,7 +399,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">
-            <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null, true)}>
+            <div className="device-header-container" onClick={menu?.setDeviceModalOpen.bind(null, true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
                 <ArrowDropDown/>

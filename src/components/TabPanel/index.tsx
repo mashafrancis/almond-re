@@ -12,6 +12,8 @@ const TabPanel = (props: TabPanelProps): JSX.Element => {
 
   return (
     <div
+      data-testid="tab-panel"
+      className="tab-panel"
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}

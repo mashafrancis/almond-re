@@ -1,11 +1,9 @@
 // react libraries
 import React from 'react';
+import { createStore } from 'redux';
 
 // components
-import { mapStateToProps, SnackBar } from "./index";
-
-// thunks
-import { displaySnackMessage } from '../../store/modules/snack';
+import { mapStateToProps, SnackBar } from './index';
 
 // helpers
 import { mountWithRedux } from '../../testHelpers';
@@ -14,34 +12,35 @@ describe('The SnackBar components', () => {
   const SAMPLE_SNACK_MESSAGE = 'Time schedule created successfully.';
   const props = {
     snack: {
-      message: SAMPLE_SNACK_MESSAGE
+      message: SAMPLE_SNACK_MESSAGE,
     },
   };
 
-  const { wrapper, store } = mountWithRedux(<SnackBar { ...props } />);
+  const initialState = {
+    snack: {
+      message: SAMPLE_SNACK_MESSAGE
+    }
+  };
+
+  const store = createStore(() => ({
+    snack: {
+      message: SAMPLE_SNACK_MESSAGE
+    }
+  }))
 
   it('displays a snack message if it receives new snack props', () => {
-    store.dispatch(displaySnackMessage(SAMPLE_SNACK_MESSAGE));
+    const { asFragment } = mountWithRedux(<SnackBar {...props} />, initialState, store);
     const { snack } = store.getState();
 
+    expect(asFragment()).toMatchSnapshot();
     expect(snack.message).toBe(SAMPLE_SNACK_MESSAGE);
-    expect(wrapper.html()).toMatch(SAMPLE_SNACK_MESSAGE);
-  });
-
-  it.skip('hides the snack message after eight seconds', () => {
-    jest.useFakeTimers();
-    store.dispatch(displaySnackMessage(`${SAMPLE_SNACK_MESSAGE} 8`));
-
-    expect(wrapper.html()).toMatch(`${SAMPLE_SNACK_MESSAGE} 8`);
-    jest.runAllTimers();
-    expect(wrapper.html()).toMatch('<div></div>');
   });
 
   describe('mapStateToProps', () => {
     it('returns the expected props object', () => {
       const state = {
         snack: {
-          message: ''
+          message: '',
         },
       };
       const props = mapStateToProps(state);

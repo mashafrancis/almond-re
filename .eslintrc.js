@@ -15,6 +15,7 @@ module.exports = {
     'prettier',
     'prettier/react',
     'prettier/@typescript-eslint',
+    'plugin:jest-dom/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -34,6 +35,8 @@ module.exports = {
     'prettier',
     '@typescript-eslint',
     'react-hooks',
+    'testing-library',
+    'jest-dom',
   ],
   rules: {
     'prettier/prettier': [0,
@@ -177,6 +180,17 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-angle-bracket-type-assertion': 0,
+
+    // Testing
+    'testing-library/await-async-query': 'error',
+    'testing-library/no-await-sync-query': 'error',
+    'testing-library/no-debug': 'warn',
+
+    'jest-dom/prefer-checked': 'error',
+    'jest-dom/prefer-enabled-disabled': 'error',
+    'jest-dom/prefer-required': 'error',
+    'jest-dom/prefer-to-have-attribute': 'error',
+
     // TODO: enable the lines below when refactoring
     // "react-hooks/rules-of-hooks": 1,
     // "react-hooks/exhaustive-deps": 1

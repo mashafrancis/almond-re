@@ -16,7 +16,7 @@ import { PageNotFoundProps } from './interfaces';
  */
 const PageNotFound = (props: PageNotFoundProps): JSX.Element => (
   <div id="notfound">
-    <div className="notfound">
+    <div className="notfound" data-testid="notfound">
       <div className="notfound-404"/>
       <h1>404</h1>
       <h2>Oops! Page Not Be Found</h2>

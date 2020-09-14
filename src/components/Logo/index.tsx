@@ -4,7 +4,7 @@ import './Logo.scss';
 const logo = 'https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png';
 
 const Logo = () =>
-  <div className="main-logo">
+  <div className="main-logo" data-testid="logo">
     <span className="main-logo__image">
     <img
       className="main-logo__image"

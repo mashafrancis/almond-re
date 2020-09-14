@@ -26,7 +26,7 @@ import {
 
 // utils
 import { UserContext } from '@context/UserContext';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // interface
@@ -55,7 +55,7 @@ const ElevationScroll = (props: ElevationBarProps): JSX.Element => {
 
 const TopBar = (props: TopBarProps): JSX.Element => {
   const device = useContext(UserContext);
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const { name, photo, isAdmin } = React.useContext(UserContext);
 
   const {
@@ -174,7 +174,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
     <>
       <CssBaseline/>
       <ElevationScroll {...props}>
-        <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed">
+        <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed" data-testid="top-bar">
           <Toolbar variant="dense">
             <div className="appbar-section appbar-section-start">
               <NavLink to="/">

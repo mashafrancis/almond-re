@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, ChangeEvent, Suspense } from 'react';
 
 // third-party libraries
 import {
@@ -12,14 +12,14 @@ import {
   InputAdornment,
   Chip,
 } from '@material-ui/core';
-import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import loadable from '@loadable/component';
+import LinearProgressBar from '@components/LinearProgressBar';
 
 // icons
 import {
   Face,
-  ArrowDropDownRounded,
   PeopleAltOutlined,
-  ExpandMore
+  ExpandMore,
 } from '@material-ui/icons';
 
 // thunks
@@ -35,17 +35,16 @@ import {
   PeoplePageProps,
   PeoplePageState,
 } from './interfaces';
-import LinearProgressBar from '@components/LinearProgressBar';
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 
 // component
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
-const Modal = React.lazy(() => import('@components/Modal'));
-const Table = React.lazy(() => import('@components/Table'));
+const GeneralCardInfo = loadable(() => import('@components/GeneralCardInfo'));
+const Modal = loadable(() => import('@components/Modal'));
+const Table = loadable(() => import('@components/Table'));
 
 
-export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
-  const [state, setState] = React.useState<PeoplePageState>({
+export const PeoplePage = (props: PeoplePageProps) => {
+  const [state, setState] = useState<PeoplePageState>({
     people: [],
     isFetchingRoles: false,
     isSelectOpen: false,
@@ -56,14 +55,14 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
 
   const styles = useDashboardContainerStyles(props);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getAllPeople = async () => {
       await props.getAllPeople();
     };
     getAllPeople().then(() => setState({ ...state, people: props.people }));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getUserRoles().then(() => setState({ ...state, isFetchingRoles: false }));
   }, []);
 
@@ -76,7 +75,7 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
     });
   };
 
-  const handleRoleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRoleSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const roleTitle = event.target.value;
     const role = props.roles.filter(obj => obj.title === roleTitle);
     setState({ ...state, roleId: role[0]._id, roleSelect: roleTitle });
@@ -196,11 +195,11 @@ export const PeoplePage: React.FunctionComponent<PeoplePageProps> = props => {
           subHeader="List of all users under Almond"
           icon={<PeopleAltOutlined className="content-icon general-info-icon"/>}
         />
-        <React.Suspense fallback={<LinearProgressBar/>}>
+        <Suspense fallback={<LinearProgressBar/>}>
           <div className="user-roles-page__table">
             {TableContent(Object.entries(props.people))}
           </div>
-        </React.Suspense>
+        </Suspense>
         {SelectRoleModal(props.roles)}
       </Cell>
     </Row>

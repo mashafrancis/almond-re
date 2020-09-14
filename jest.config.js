@@ -54,7 +54,13 @@ module.exports = {
   // resolver: '<rootDir>/resolver.js',
   moduleDirectories: ['utils', 'modules', 'node_modules'],
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/interface.d.ts', '!src/**/*interfaces.d.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    'src/**/*.tsx',
+    '!src/**/interface.d.ts',
+    '!src/**/*interfaces.d.ts',
+    '!src/**/fixtures.ts'
+  ],
   coverageThreshold: {
     global: {
       'branches': 40,
@@ -74,12 +80,11 @@ module.exports = {
     '<rootDir>/src/index.tsx',
     'src/store/index.tsx|rootReducer.ts',
   ],
-  snapshotSerializers: ['enzyme-to-json/serializer'],
+  // snapshotSerializers: ['enzyme-to-json/serializer'],
   setupFilesAfterEnv: [
-    '<rootDir>/src/setupEnzyme.ts',
     '<rootDir>/tests/setupTest.js',
   ],
-  testEnvironment: 'node',
+  testEnvironment: 'jest-environment-jsdom-sixteen',
   transformIgnorePatterns: [
     '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
     '^.+\\.module\\.(css|sass|scss)$',

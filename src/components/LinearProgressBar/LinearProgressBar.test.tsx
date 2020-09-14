@@ -2,18 +2,16 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
-import LinearProgressBar from "./index";
+import { render } from '@testing-library/react';
 
 // component
+import LinearProgressBar from './index';
 
 describe('GeneralCardInfo component', () => {
-  const props = {
-  };
-
-  const wrapper = shallow(<LinearProgressBar {...props} />);
+  const props = {};
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { asFragment } = render(<LinearProgressBar {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

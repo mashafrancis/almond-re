@@ -1,10 +1,11 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import SpaIcon from '@material-ui/icons/Spa';
+import loadable from '@loadable/component';
 
 // interfaces
 import { SupportPageProps } from '@pages/SupportPage/interfaces';
@@ -13,9 +14,9 @@ import { SupportPageProps } from '@pages/SupportPage/interfaces';
 import { displaySnackMessage } from '@modules/snack';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = loadable(() => import('@components/GeneralCardInfo'));
 
-export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
+export const SupportPage = (props: SupportPageProps) => (
   <>
     <Row>
       <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -33,7 +34,8 @@ export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
         />
       </Cell>
     </Row>
-  </>;
+  </>
+);
 
 
 export const mapStateToProps = state => ({

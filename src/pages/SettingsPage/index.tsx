@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {
   Settings,
 } from '@material-ui/icons';
+import loadable from '@loadable/component';
 
 // thunk
 import { displaySnackMessage } from '@modules/snack';
@@ -15,9 +16,9 @@ import { displaySnackMessage } from '@modules/snack';
 import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = loadable(() => import('@components/GeneralCardInfo'));
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
+export const SettingsPage = (props: SettingsPageProps) => (
   <>
     <Row>
       <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -35,7 +36,8 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
         />
       </Cell>
     </Row>
-  </>;
+  </>
+);
 
 
 export const mapStateToProps = state => ({

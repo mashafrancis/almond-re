@@ -1,5 +1,5 @@
 // react libraries
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Redirect } from 'react-router-dom';
 
 // third party libraries
@@ -16,7 +16,7 @@ import { authService } from '@utils/auth';
  * @param {Component} Component
  * @returns {JSX}
  */
-const renderComponent = (Component: any): React.ReactNode => (props: any) => <Component {...props} />;
+const renderComponent = (Component: any): ReactNode => (props: any) => <Component {...props} />;
 
 const AuthenticatedRoute = (props: any) => {
   const { component: Component, ...rest } = props;
@@ -26,14 +26,12 @@ const AuthenticatedRoute = (props: any) => {
     displaySnackMessage('You need to login to continue');
 
     return (
-      <>
-        <Redirect to="/"/>
-      </>
+      <Redirect to="/"/>
     );
   }
 
   return (
-    <div className="drawer-content">
+    <div className="drawer-content" data-testid="authenticated-route">
       <RestrictedRoute {...rest} render={renderComponent(Component)}/>
     </div>
   );

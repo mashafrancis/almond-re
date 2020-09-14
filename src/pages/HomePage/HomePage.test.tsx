@@ -1,40 +1,34 @@
 // react libraries
-import * as React from 'react';
-
-// third-party libraries
-import { shallow } from 'enzyme';
+import React, { Suspense } from 'react';
 
 import HomePage, { mapDispatchToProps, mapStateToProps } from './index';
-import { BrowserRouter } from 'react-router-dom';
+import { mountWithRedux, renderWithRouter } from '../../testHelpers';
 
 describe('Home Page', () => {
-  let wrapper;
-  let props;
-
-  props = {
+  const props = {
     displaySnackMessage: jest.fn(() => Promise.resolve()),
   };
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <HomePage {...props}/>
-      </BrowserRouter>,
-    );
-  });
+  const initialState = {};
 
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment, getByTestId } = mountWithRedux(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <HomePage {...props} />
+    </Suspense>,
+    initialState,
+  );
 
   it('should be rendered properly', () => {
-    expect(wrapper.find('button').exists).toBeTruthy();
-    expect(wrapper).toMatchSnapshot();
+    // expect(wrapper.find('button').exists).toBeTruthy();
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = getByTestId('homepage');
+    expect(elem.classList[0]).toBe('background-cover');
   });
 
-  it('should render dashboard button which redirects to "/dashboard', () => {
-    expect(wrapper.find('a[href="/dashboard"]')).toBeTruthy();
-  });
+  // it('should render dashboard button which redirects to "/dashboard', () => {
+  //   expect(wrapper.find('a[href="/dashboard"]')).toBeTruthy();
+  // });
 
   describe('mapStateToProps', () => {
     const state = {
