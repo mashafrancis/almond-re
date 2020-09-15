@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import {
@@ -20,8 +20,7 @@ import {
   EnergyMonitoringPageProps
 } from './interfaces';
 
-export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageProps> = props => {
-  return (
+export const EnergyMonitoringPage = (props: EnergyMonitoringPageProps): JSX.Element =>
     <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
@@ -38,8 +37,7 @@ export const EnergyMonitoringPage: React.FunctionComponent<EnergyMonitoringPageP
         </Cell>
       </Row>
     </>
-  );
-};
+  ;
 
 export const mapStateToProps = state => ({
   error: state.error,

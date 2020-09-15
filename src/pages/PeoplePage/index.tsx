@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, Suspense } from 'react';
+import React, { useState, useEffect, ChangeEvent, Suspense, lazy } from 'react';
 
 // third-party libraries
 import {
@@ -12,7 +12,6 @@ import {
   InputAdornment,
   Chip,
 } from '@material-ui/core';
-import loadable from '@loadable/component';
 import LinearProgressBar from '@components/LinearProgressBar';
 
 // icons
@@ -38,9 +37,9 @@ import {
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 
 // component
-const GeneralCardInfo = loadable(() => import('@components/GeneralCardInfo'));
-const Modal = loadable(() => import('@components/Modal'));
-const Table = loadable(() => import('@components/Table'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
+const Modal = lazy(() => import('@components/Modal'));
+const Table = lazy(() => import('@components/Table'));
 
 
 export const PeoplePage = (props: PeoplePageProps) => {
@@ -94,18 +93,18 @@ export const PeoplePage = (props: PeoplePageProps) => {
     );
   };
 
-  const userNamePhoto = user => (
+  const userNamePhoto = user =>
     <span className="mini-username">
       <img
         className="mini-username__image"
         src={user[1].photo}
         alt="avatar"
-      />
+        />
       <span>{user[1].name || 'Anonymous'}</span>
     </span>
-  );
+  ;
 
-  const selectRoleContent = roles => (
+  const selectRoleContent = roles =>
     <TextField
       id="role"
       select
@@ -128,7 +127,7 @@ export const PeoplePage = (props: PeoplePageProps) => {
       }}
       InputProps={{
         startAdornment: <InputAdornment position="start">
-          <Face style={{ color: '#1967D2' }}/>
+          <Face style={{ color: '#1967D2' }} />
         </InputAdornment>,
       }}>
       {roles.map(role =>
@@ -137,9 +136,9 @@ export const PeoplePage = (props: PeoplePageProps) => {
         </MenuItem>,
       )}
     </TextField>
-  );
+  ;
 
-  const SelectRoleModal = roles => (
+  const SelectRoleModal = roles =>
     <Modal
       isModalOpen={state.isSelectOpen}
       renderHeader={() => 'Assign new role to user'}
@@ -148,18 +147,18 @@ export const PeoplePage = (props: PeoplePageProps) => {
       submitButtonName="Update role"
       onSubmit={handleChangeRole}
       onDismiss={toggleRoleSelectOpen}
-    />
-  );
+      />
+  ;
 
-  const rolesSelectMore = (role, id) => (
+  const rolesSelectMore = (role, id) =>
     <div className="table-roles" id={id} onClick={toggleRoleSelectOpen}>
       <h6 id={id}>{role}</h6>
       <ExpandMore
         id={id}
         onClick={toggleRoleSelectOpen}
-      />
+        />
     </div>
-  );
+  ;
 
   const TableContent = users => {
     const tableHeaders = {
@@ -175,15 +174,15 @@ export const PeoplePage = (props: PeoplePageProps) => {
       devices: user[1].devices[0]?.id ?? '(Device not added)',
       role: rolesSelectMore(user[1].currentRole.title, user[1]._id),
       status: user[1].isVerified
-        ? <Chip className="MuiChip-root-enabled" label="Active"/>
-        : <Chip className="MuiChip-root-unverified" label="Inactive"/>,
+        ? <Chip className="MuiChip-root-enabled" label="Active" />
+        : <Chip className="MuiChip-root-unverified" label="Inactive" />,
     }));
 
     return (
       <Table
         keys={tableHeaders}
         values={tableValues}
-      />
+        />
     );
   };
 
@@ -193,9 +192,9 @@ export const PeoplePage = (props: PeoplePageProps) => {
         <GeneralCardInfo
           mainHeader="People"
           subHeader="List of all users under Almond"
-          icon={<PeopleAltOutlined className="content-icon general-info-icon"/>}
-        />
-        <Suspense fallback={<LinearProgressBar/>}>
+          icon={<PeopleAltOutlined className="content-icon general-info-icon" />}
+          />
+        <Suspense fallback={<LinearProgressBar />}>
           <div className="user-roles-page__table">
             {TableContent(Object.entries(props.people))}
           </div>

@@ -1,5 +1,5 @@
 // react libraries
-import React, { useEffect, useState, StrictMode } from 'react';
+import React, { useEffect, useState, StrictMode, DependencyList, Suspense } from 'react';
 
 // third party libraries
 import queryString from 'query-string';
@@ -33,11 +33,8 @@ import { ComponentProvider } from '@context/ComponentContext';
 // styles
 import './App.scss';
 
-const useEffectAsync = (
-  effect: any,
-  inputs: React.DependencyList | undefined,
-) => {
-  React.useEffect(() => {
+const useEffectAsync = (effect: any, inputs: DependencyList | undefined) => {
+  useEffect(() => {
     effect();
   }, inputs);
 };
@@ -50,7 +47,7 @@ export const App: React.FunctionComponent<AppProps> = props => {
   });
   const timerRef = React.useRef<number>();
 
-  const { user } = props;
+  const { user, snack } = props;
 
   useEffect(() => {
     initializeGA();
@@ -128,40 +125,38 @@ export const App: React.FunctionComponent<AppProps> = props => {
       qos: 0,
       retain: false,
     },
-    key: bufferKey,
-    cert: bufferCert,
-    ca: bufferCA,
+    // key: bufferKey,
+    // cert: bufferCert,
+    // ca: bufferCA,
     rejectUnauthorized: false,
   };
 
   return (
-    <ErrorBoundary>
+    // <ErrorBoundary>
       <Connector brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} opts={options}>
         <UserContext.Provider value={userDetailsOnProvider}>
           <ComponentProvider>
             <ViewportProvider>
               <StrictMode>
-                <SnackBar/>
-                {
-                  location.pathname !== '/'
-                  && isUserAuthenticated
-                }
-                <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
-                  <Routes/>
-                </React.Suspense>
+                <SnackBar snack={snack} />
+                { window.location.pathname !== '/' && isUserAuthenticated }
+                <Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
+                  <Routes />
+                </Suspense>
               </StrictMode>
             </ViewportProvider>
           </ComponentProvider>
         </UserContext.Provider>
       </Connector>
-    </ErrorBoundary>
+    // </ErrorBoundary>
   );
 };
 
-export const mapStateToProps = (state: { internalServerError: any; user: any; loading: any; }) => ({
+export const mapStateToProps = (state: any) => ({
   serverError: state.internalServerError,
   user: state.user.userDetails,
   loading: state.loading,
+  snack: state.snack || { message: '' },
 });
 
 export const mapDispatchToProps = (dispatch: any) => ({

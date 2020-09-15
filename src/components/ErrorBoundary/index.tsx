@@ -18,18 +18,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryState> {
 
   render() {
     // render fallback UI
-    return this.state.hasError ? (
+    return this.state.hasError ?
       <InternalServerErrorMessage
         errorButton={
           <button
             onClick={() => window.location.replace('/')}
             className="mdc-button mdc-button--raised">
-            <ArrowBackRounded/>
+            <ArrowBackRounded />
             <span className="mdc-button__label">Back</span>
           </button>
         }
-      />
-    ) : this.props.children;
+        />
+      : this.props.children;
   }
 }
 

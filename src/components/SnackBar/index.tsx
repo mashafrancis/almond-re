@@ -4,7 +4,6 @@ import React, { useEffect, useContext } from 'react';
 // third-party libraries
 import { Snackbar } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { connect } from 'react-redux';
 import { ComponentContext } from '@context/ComponentContext';
 import { useViewport } from '../../hooks';
 
@@ -28,21 +27,20 @@ export const SnackBar = (props: SnackMessageProps): JSX.Element => {
     setOpenSnack(!!message);
   }, [props.snack]);
 
-  const Alert = (props: AlertProps) => (
-    <MuiAlert elevation={6} variant="filled" {...props} />
-  );
+  const Alert = (alertProps: AlertProps) =>
+    <MuiAlert elevation={6} variant="filled" {...alertProps} />
+  ;
 
   return (
     <div className={classes.root}>
       <Snackbar
         anchorOrigin={
-          (width > breakpoint)
+          width > breakpoint
             ? { vertical: 'top', horizontal: 'right' }
             : { vertical: 'bottom', horizontal: 'center' }}
         open={isSnackOpen}
         autoHideDuration={6000}
-        onClose={handleCloseSnack}
-      >
+        onClose={handleCloseSnack}>
         <div data-testid="snack-message">
         <Alert onClose={handleCloseSnack} severity="success">
           {snackMessage}
@@ -53,8 +51,4 @@ export const SnackBar = (props: SnackMessageProps): JSX.Element => {
   );
 };
 
-export const mapStateToProps = (state: any) => ({
-  snack: state.snack || { message: '' },
-});
-
-export default connect(mapStateToProps, null)(SnackBar);
+export default SnackBar;

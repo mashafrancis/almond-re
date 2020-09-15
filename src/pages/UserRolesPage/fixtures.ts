@@ -32,7 +32,7 @@ export const userRoles = [
     }],
     title: 'User',
     users: 1,
-    data: [],
+    userCount: 1,
   },
   {
     description: 'default description',
@@ -68,7 +68,6 @@ export const userRoles = [
     title: 'Admin',
     users: 1,
     userCount: 1,
-    data: [],
   },
 ];
 
@@ -76,7 +75,7 @@ export const props = {
   userRoles: {
     roles: userRoles,
     permissions: userRoles[0].resourceAccessLevels[0].permissions,
-    resources: userRoles[0].resourceAccessLevels[0].resource as any,
+    resources: [userRoles[0].resourceAccessLevels[0].resource],
   },
   getUserRoles: jest.fn(() => Promise.resolve()),
   createNewRole: jest.fn(() => Promise.resolve()),

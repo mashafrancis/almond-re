@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, lazy } from 'react';
 
 // components
 import {
@@ -12,15 +12,14 @@ import {
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useSubscription } from 'mqtt-hooks';
-import loadable from '@loadable/component'
 import { data } from '@pages/AnalyticsPage/fixtures';
 import formatWaterLevelData from '@utils/formatWaterLevel';
-import { IData, RegularUserAnalytics } from '@pages/AnalyticsPage/interfaces';
+import { IData, RegularUserAnalyticsState } from '@pages/AnalyticsPage/interfaces';
 
-const AnalyticsCard = loadable(() => import('@components/AnalyticsCard'));
+const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const RegularUserAnalytics = (): JSX.Element => {
-  const [state, setState] = useState<RegularUserAnalytics>({
+  const [state, setState] = useState<RegularUserAnalyticsState>({
     data: {
       temp: 0,
       humid: 0,
@@ -111,11 +110,6 @@ const RegularUserAnalytics = (): JSX.Element => {
             subInfo="30 KW"
             />
         </Cell>
-        {/*<div>*/}
-        {/*  <h3>{lastMessage?.topic}</h3>*/}
-        {/*  <h3>{lastMessage?.message}</h3>*/}
-        {/*</div>*/}
-        {/*<iframe src={'http://admin:froyogreen@authproxy.localhost:3001/d/-ZYO3jNGz/temperature?orgId=1&refresh=5s&from=1598639894006&to=1598640194006'} />*/}
       </Row>
     </>
   )

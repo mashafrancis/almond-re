@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import ToggleButton from "./index";
+import ToggleButton from './index';
 
 describe('ToggleButton component', () => {
   const props = {

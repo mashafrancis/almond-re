@@ -29,18 +29,18 @@ export const UnauthorizedUserModal = (props: UnauthorizedUserModalProps) => {
     <Modal
       isModalOpen={isModalOpen}
       renderHeader={() => `Welcome, ${user?.name || 'User'}`}
-      renderContent={() => (
+      renderContent={() => 
         <div>
           <p className="headline-4 modal-content">
             You are currently not authorised to access Almond.
             Please contact almond.froyo@gmail.com for more details.
           </p>
         </div>
-      )}
+      }
       submitButtonName="OK"
       onSubmit={logoutAndRedirectUser}
       onDismiss={logoutAndRedirectUser}
-    />
+      />
   );
 };
 

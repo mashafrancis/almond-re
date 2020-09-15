@@ -28,7 +28,7 @@ const LinearProgressBar = () => {
   }, []);
 
   return (
-    <ColorLinearProgress variant="determinate" value={completed}/>
+    <ColorLinearProgress variant="determinate" value={completed} />
   );
 };
 

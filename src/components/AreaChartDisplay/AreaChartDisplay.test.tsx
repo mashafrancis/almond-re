@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 
 // component
-import AreaChardDisplay from "./index";
+import AreaChardDisplay from './index';
 
 describe('AreaChartDisplay component', () => {
   const props = {

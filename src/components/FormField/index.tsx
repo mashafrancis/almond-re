@@ -114,7 +114,7 @@ const FormField = (props: FormFieldProps): JSX.Element => {
             {leadingIcon}
           </InputAdornment>,
       }}
-    />
+      />
   );
 };
 

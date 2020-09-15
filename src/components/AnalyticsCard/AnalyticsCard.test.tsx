@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import AnalyticsCard from "./index";
+import AnalyticsCard from './index';
 
 describe('AnalyticsCard component', () => {
   const props = {

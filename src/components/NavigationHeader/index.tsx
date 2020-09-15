@@ -20,27 +20,27 @@ export const NavigationHeader = (props: NavigationHeaderProps): JSX.Element => {
     forwardLink,
   } = props;
 
-  const forwardArrow = () => (
+  const forwardArrow = () => 
     <NavLink to={forwardLink}>
       <span className="register-toolbar-actions">
         <div className="register__logo">
           <span className="product-logo-text">{forwardButtonName}</span>
         </div>
-          <ArrowForwardRounded/>
+          <ArrowForwardRounded />
       </span>
     </NavLink>
-  );
+  ;
 
-  const backArrow = () => (
+  const backArrow = () => 
     <NavLink to={backwardLink}>
       <span className="register-toolbar-actions">
-        <ArrowBackRounded/>
+        <ArrowBackRounded />
         <div className="register__logo">
           <span className="product-logo-text">{backwardButtonName}</span>
         </div>
       </span>
     </NavLink>
-  );
+  ;
 
   return (
     <header>

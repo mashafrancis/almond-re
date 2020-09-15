@@ -14,7 +14,7 @@ describe('The Restrict component', () => {
   it('should render children prop if user has required access', () => {
     render(
       <Restrict authorize={['analytics:edit']}>
-        <button className="button" data-testid="button"/>
+        <button className="button" data-testid="button" />
       </Restrict>,
     );
 
@@ -25,7 +25,7 @@ describe('The Restrict component', () => {
   it.skip('should not render children prop if user does not have required access', () => {
     render(
       <Restrict authorize={['people:edit']}>
-        <button className="button" data-testid="button"/>
+        <button className="button" data-testid="button" />
       </Restrict>,
     );
 
@@ -35,8 +35,8 @@ describe('The Restrict component', () => {
 
   it('should render fallback prop if user does not have required access', () => {
     render(
-      <Restrict authorize={['people:edit']} fallback={<span className="span" data-testid="span"/>}>
-        <button/>
+      <Restrict authorize={['people:edit']} fallback={<span className="span" data-testid="span" />}>
+        <button />
       </Restrict>,
     );
 

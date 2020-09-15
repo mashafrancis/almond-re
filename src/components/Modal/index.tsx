@@ -47,12 +47,11 @@ const Modal = forwardRef((props: ModalProps, ref): JSX.Element => {
         <ActionButton
           name="Dismiss"
           handleClick={onDismiss}
-        />
+          />
         <button
           className="mdc-button big-round-corner-button mdc-button--raised"
           onClick={onSubmit}
-          disabled={disabled}
-        >
+          disabled={disabled}>
           <span className="mdc-button__label">
             {submitButtonName}
           </span>

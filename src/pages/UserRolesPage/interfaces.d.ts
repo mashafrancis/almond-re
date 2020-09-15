@@ -3,8 +3,8 @@ import {Permission, Resource, UserRole} from '@modules/userRoles/interfaces';
 export interface UserRolesPageProps {
   userRoles: {
     roles: UserRole[];
-    permissions: Permission[] | any[];
-    resources: Resource[] | any[];
+    permissions: Permission[];
+    resources: Resource[];
   };
   getUserRoles: () => Promise<any>;
   deleteUserRole: (id) => Promise<any>;

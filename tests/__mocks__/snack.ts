@@ -1,3 +1,3 @@
-jest.mock('@material/react-snackbar', () => ({
+jest.mock('@material-ui/core/Snackbar', () => ({
   snack: {},
 }));

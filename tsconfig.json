@@ -31,7 +31,7 @@
     "declarationMap": true,
     "removeComments": true,
     "skipLibCheck": true,
-    "module": "commonjs",
+    "module": "esnext",
     "pretty": true,
     "sourceMap": true,
     "outDir": "./dist",
@@ -62,6 +62,7 @@
     }
   },
   "include": [
+    "./src/**/*.tsx",
     "./src/**/*"
   ],
   "exclude": [
@@ -69,8 +70,8 @@
     ".yarn",
     "tests",
     "dist",
-    "**/*.test.tsx",
-    "**/*.test.ts",
+//    "**/*.test.tsx",
+//    "**/*.test.ts",
     "nginx",
     "public",
     "jest",

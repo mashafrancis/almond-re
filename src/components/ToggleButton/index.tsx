@@ -8,7 +8,7 @@ import './ToggleButton.scss';
 // interfaces
 import { ToggleButtonProps } from './interfaces';
 
-const ToggleButton = (props: ToggleButtonProps): JSX.Element => (
+const ToggleButton = (props: ToggleButtonProps): JSX.Element => 
   <div className={props.classes} data-testid="toggle-button">
     <label className="switch">
       <input
@@ -16,11 +16,11 @@ const ToggleButton = (props: ToggleButtonProps): JSX.Element => (
         onChange={props.onChange}
         type="checkbox"
         checked={props.isChecked}
-      />
-      <span className="slider round"/>
+        />
+      <span className="slider round" />
     </label>
   </div>
-);
+;
 
 export default ToggleButton;
 

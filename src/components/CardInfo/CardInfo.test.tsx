@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import CardInfo from "./index";
+import CardInfo from './index';
 import { WindowSize } from '../../testHelpers';
 
 describe('CardInfo component', () => {

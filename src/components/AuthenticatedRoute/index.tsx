@@ -26,13 +26,13 @@ const AuthenticatedRoute = (props: any) => {
     displaySnackMessage('You need to login to continue');
 
     return (
-      <Redirect to="/"/>
+      <Redirect to="/" />
     );
   }
 
   return (
     <div className="drawer-content" data-testid="authenticated-route">
-      <RestrictedRoute {...rest} render={renderComponent(Component)}/>
+      <RestrictedRoute {...rest} render={renderComponent(Component)} />
     </div>
   );
 };

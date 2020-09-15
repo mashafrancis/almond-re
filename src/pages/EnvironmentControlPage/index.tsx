@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 
 // third-party libraries
 import {
@@ -23,9 +23,9 @@ import {
 import roundDigit from '@utils/roundDigit';
 
 // components
-const DashboardCard = React.lazy(() => import('@components/DashboardCard'));
-const DonutDisplay = React.lazy(() => import('@components/DonutDisplay'));
-const AreaChardDisplay = React.lazy(() => import('@components/AreaChartDisplay'));
+const DashboardCard = lazy(() => import('@components/DashboardCard'));
+const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
+const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
 
 export const EnvironmentControlPage = (props: EnvironmentControlPageProps): JSX.Element => {
 
@@ -87,9 +87,9 @@ export const EnvironmentControlPage = (props: EnvironmentControlPageProps): JSX.
                     data={data.data}
                     donutInfo={data.donutInfo}
                     halfDonut={true}
-                  />
+                    />
                 }
-              />
+                />
             </Cell>,
           )
         }
@@ -117,10 +117,10 @@ export const EnvironmentControlPage = (props: EnvironmentControlPageProps): JSX.
                 backgroundColor="rgba(25, 103, 210, 0.2)"
                 chartColor="#36A2EB"
                 chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-              />
+                />
             }
-            actionItem={<ActionButton name="Filter" icon={<FilterList/>}/>}
-          />
+            actionItem={<ActionButton name="Filter" icon={<FilterList />} />}
+            />
         </Cell>
         <Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
           <DashboardCard
@@ -131,10 +131,10 @@ export const EnvironmentControlPage = (props: EnvironmentControlPageProps): JSX.
                 backgroundColor="rgba(255,206,86,0.2)"
                 chartColor="#FFCE56"
                 chartData={[25, 36, 50, 57, 40, 70, 55, 30, 47]}
-              />
+                />
             }
-            actionItem={<ActionButton name="Filter" icon={<FilterList/>}/>}
-          />
+            actionItem={<ActionButton name="Filter" icon={<FilterList />} />}
+            />
         </Cell>
       </Row>
     </>

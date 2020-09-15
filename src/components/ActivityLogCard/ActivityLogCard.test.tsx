@@ -2,7 +2,8 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
+import moment from 'moment';
 
 // component
 import ActivityLogCard from './index';
@@ -24,7 +25,7 @@ describe('ActivityLogCard component', () => {
     expect(elemHeader.innerHTML).toBe('Pump broken');
 
     const elemDetails = screen.getByTestId('details');
-    expect(elemDetails.innerHTML).toBe('Wednesday, October 30, 2019 11:00 AM');
+    expect(elemDetails.innerHTML).toBe(moment(props.date).format('LLLL'));
   });
 
   it('should render log details info when called', () => {

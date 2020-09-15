@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, ChangeEvent, useContext, lazy } from 'react';
 
 // third-party libraries
 import {
@@ -11,12 +11,9 @@ import {
   PhonelinkSetupSharp,
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import loadable from '@loadable/component';
 
 // components
 import { Cell, Row } from '@material/react-layout-grid';
-
-const NavigationHeader = loadable(() => import('@components/NavigationHeader'));
 
 // thunk
 import { verifyUserDevice } from '@modules/device';
@@ -37,17 +34,19 @@ import {
   StateToProps,
 } from './interfaces';
 
-export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> = props => {
-  const [state, setState] = React.useState<EnterDeviceIdPageState>({
+const NavigationHeader = lazy(() => import('@components/NavigationHeader'));
+
+export const EnterDeviceIdPage = (props: EnterDeviceIdPageProps): JSX.Element => {
+  const [state, setState] = useState<EnterDeviceIdPageState>({
     isLoading: false,
   });
 
-  const [deviceId, setDeviceId] = React.useState('');
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [deviceId, setDeviceId] = useState('');
+  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDeviceId(e.target.value);
   };
 
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
 
   const onSubmit = () => {
     const device = { id: deviceId };
@@ -64,7 +63,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
   const classes = useStyles(props);
   const { activeDevice } = user;
 
-  const renderDeviceTextField = () => (
+  const renderDeviceTextField = () =>
     <div className="form-cell">
       <TextField
         label="Enter new device ID"
@@ -75,13 +74,13 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
         InputProps={{
           startAdornment:
             <InputAdornment position="start">
-              <PhonelinkSetupSharp style={{ color: '#1967D2' }}/>
+              <PhonelinkSetupSharp style={{ color: '#1967D2' }} />
             </InputAdornment>
           ,
         }}
-      />
+        />
     </div>
-  );
+  ;
 
   const { isLoading } = state;
   return (
@@ -91,7 +90,7 @@ export const EnterDeviceIdPage: React.FunctionComponent<EnterDeviceIdPageProps> 
         backwardButtonName="Back"
         forwardLink={activeDevice ? '/dashboard' : '/'}
         backwardLink="/"
-      />
+        />
       <Container maxWidth="sm">
         <Grid>
           <Row>

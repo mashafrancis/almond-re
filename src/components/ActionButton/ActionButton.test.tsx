@@ -2,7 +2,7 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 import ActionButton from './index';
 
 

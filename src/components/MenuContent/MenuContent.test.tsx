@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 
 // component
-import MenuContent from "./index";
+import MenuContent from './index';
 
 describe('MenuContent component', () => {
   const props = {

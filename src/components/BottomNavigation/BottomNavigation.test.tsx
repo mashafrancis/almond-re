@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // components
-import PageBottomNavigation from "./index";
+import PageBottomNavigation from './index';
 
 describe.skip('BottomNavigation component', () => {
   const { asFragment } = render(<PageBottomNavigation />);

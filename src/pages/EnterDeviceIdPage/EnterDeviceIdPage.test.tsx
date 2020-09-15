@@ -1,17 +1,21 @@
 // react libraries
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // components
 import {
   EnterDeviceIdPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
 import { renderWithRouter } from '../../testHelpers';
 import { props } from './fixtures';
 
 describe('The EnterDeviceId Page', () => {
-  const { asFragment } = renderWithRouter(<EnterDeviceIdPage {...props} />)
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <EnterDeviceIdPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
     expect(asFragment()).toMatchSnapshot();

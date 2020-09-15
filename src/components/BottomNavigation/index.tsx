@@ -44,16 +44,15 @@ const PageBottomNavigation = (): JSX.Element => {
         setValue(newValue);
       }}
       className={`${classes.root} page-content__navigation`}
-      showLabels
-    >
+      showLabels>
       {
-        checkIsAdmin().map((menu, index) =>
+        checkIsAdmin().map((menuNav, index) =>
           <BottomNavigationAction
             key={index}
             onClick={setSelectedIndex.bind(null, { group: 0, item: index })}
-            label={menu.label}
-            icon={menu.icon}
-          />,
+            label={menuNav.label}
+            icon={menuNav.icon}
+            />,
         )
       }
     </BottomNavigation>

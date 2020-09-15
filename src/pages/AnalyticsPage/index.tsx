@@ -21,7 +21,7 @@ export const AnalyticsPage = (props: AnalyticsPageProps): JSX.Element => {
   const user = React.useContext(UserContext);
 
   return (
-    user.isAdmin ? <AdminAnalytics/> : <RegularUserAnalytics/>
+    user.isAdmin ? <AdminAnalytics /> : <RegularUserAnalytics />
   );
 };
 

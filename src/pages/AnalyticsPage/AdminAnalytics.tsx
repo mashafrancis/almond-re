@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, lazy } from 'react';
 
 // components
 import {
@@ -14,9 +14,8 @@ import {
   GroupTwoTone
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
-import loadable from '@loadable/component'
 
-const AnalyticsCard = loadable(() => import('@components/AnalyticsCard'));
+const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const AdminAnalytics = (): JSX.Element => {
   const menu = useContext(ComponentContext);

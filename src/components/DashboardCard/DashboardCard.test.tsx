@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import DashboardCard from "./index";
+import DashboardCard from './index';
 
 describe('DashboardCard component', () => {
   const props = {

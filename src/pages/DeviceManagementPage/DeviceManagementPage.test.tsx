@@ -1,5 +1,5 @@
 // react libraries
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // third party
 import { render, screen } from '@testing-library/react';
@@ -8,12 +8,16 @@ import { render, screen } from '@testing-library/react';
 import {
   DeviceManagementPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
-import { props } from "./fixtures";
+import { props } from './fixtures';
 
 describe('The DeviceManagement Page', () => {
-  const { asFragment } = render(<DeviceManagementPage {...props} />);
+  const { asFragment } = render(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <DeviceManagementPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
     expect(asFragment()).toMatchSnapshot();
@@ -26,8 +30,8 @@ describe('The DeviceManagement Page', () => {
     const state = {
       device: {
         devices: [],
-        activeDevice: ''
-      }
+        activeDevice: '',
+      },
     };
 
     const props = mapStateToProps(state);
@@ -49,7 +53,7 @@ describe('The DeviceManagement Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    })
+    });
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();

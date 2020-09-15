@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import TabPanel from "./index";
+import TabPanel from './index';
 
 describe('TabPanel component', () => {
   const props = {

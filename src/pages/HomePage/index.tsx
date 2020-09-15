@@ -1,15 +1,10 @@
 import React, { useContext } from 'react';
 
 // thunks
-import { displaySnackMessage } from '@modules/snack';
 import { UserContext } from '@context/UserContext';
 
 // third party apps
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
-// interfaces
-import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
@@ -19,12 +14,15 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import './HomePage.scss';
 import Logo from '@components/Logo';
 
-const HomePage = (props: HomePageProps): JSX.Element => {
+// images
+import homepage from '../../assets/images/homepage.svg';
+
+export const HomePage = (): JSX.Element => {
   const user = useContext(UserContext);
   const { devices } = user;
   const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
-  const renderGoToDashboard = () => (
+  const renderGoToDashboard = () =>
     <>
       {authService.isAuthenticated()
         ?
@@ -39,19 +37,17 @@ const HomePage = (props: HomePageProps): JSX.Element => {
         </button>
       }
     </>
-  );
+  ;
 
   return (
     <div className="background-cover" data-testid="homepage">
       <main className="home-cover">
         <section className="logo">
-          <Logo/>
+          <Logo />
         </section>
         <section className="home-image">
           <div className="image-wrapper">
-            <img src="https://res.cloudinary.com/almondgreen/image/upload/v1576510738/Almond/homepage_e7ugfb.svg"
-                 alt="Almond Image"
-            />
+            <img src={homepage} alt="Almond" />
           </div>
         </section>
         <section id="hero">
@@ -69,12 +65,4 @@ const HomePage = (props: HomePageProps): JSX.Element => {
   );
 };
 
-export const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-});
-
-export const mapDispatchToProps = dispatch => ({
-  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default HomePage;

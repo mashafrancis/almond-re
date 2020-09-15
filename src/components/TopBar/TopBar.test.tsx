@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { screen } from "@testing-library/react";
+import { screen } from '@testing-library/react';
 
 // component
-import TopBar from "./index";
+import TopBar from './index';
 import { renderWithRouter } from '../../testHelpers';
 
 describe('TopBar component', () => {

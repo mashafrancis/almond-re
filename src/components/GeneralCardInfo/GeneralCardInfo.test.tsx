@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
 // component
-import GeneralCardInfo from "./index";
+import GeneralCardInfo from './index';
 
 describe('GeneralCardInfo component', () => {
   const props = {

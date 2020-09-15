@@ -29,7 +29,7 @@ const ComponentContext = createContext({
   isSnackOpen: false,
 });
 
-const ComponentProvider = ({ children, ...props }: ComponentContextProps) => {
+const ComponentProvider = ({ children, ...props }: ComponentContextProps): any => {
   const [state, setState] = useState<ComponentContextState>({
     isOpen: false,
     isMenuOpen: false,

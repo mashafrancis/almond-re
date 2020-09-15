@@ -42,7 +42,7 @@ const AreaChardDisplay = (props: AreaChartDisplayProps): JSX.Element => {
   };
 
   return (
-    <Line data={data} options={data.options}/>
+    <Line data={data} options={data.options} />
   );
 };
 

@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { render, screen } from "@testing-library/react";
+import { render } from '@testing-library/react';
 
 // component
-import Modal from "./index";
+import Modal from './index';
 
 describe('AnalyticsCard component', () => {
   const props = {

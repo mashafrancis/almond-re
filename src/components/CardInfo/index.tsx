@@ -31,9 +31,8 @@ const CardInfo = (props: CardInfoProps): JSX.Element => {
             style={{ backgroundColor: '#1967D2', color: '#eaeaea' }}
             aria-label="add"
             onClick={onClick}
-            data-testid="fab"
-          >
-            <Add/>
+            data-testid="fab">
+            <Add />
           </Fab>
       }
     </div>

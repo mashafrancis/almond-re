@@ -6,7 +6,7 @@ import roundDigit from '@utils/roundDigit';
  */
 const formatWaterLevelData = (waterLevel: number): number => {
   const heightOfTank = 11; // units in centimeters
-  const level = heightOfTank ? (waterLevel || heightOfTank) : heightOfTank;
+  const level = heightOfTank ? waterLevel || heightOfTank : heightOfTank;
   return roundDigit(((heightOfTank - level) / heightOfTank) * 100, 0);
 }
 

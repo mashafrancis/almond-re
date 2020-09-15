@@ -13,7 +13,7 @@ export interface IData {
   water_level: number;
 }
 
-export interface RegularUserAnalytics {
+export interface RegularUserAnalyticsState {
   data: IData
   lastMessage: any;
 }

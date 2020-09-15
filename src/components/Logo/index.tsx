@@ -1,9 +1,9 @@
 import React from 'react';
 import './Logo.scss';
 
-const logo = 'https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png';
+import logo from '../../assets/images/logo.png';
 
-const Logo = () =>
+const Logo = (): JSX.Element =>
   <div className="main-logo" data-testid="logo">
     <span className="main-logo__image">
     <img
@@ -13,7 +13,7 @@ const Logo = () =>
       />
       <h4>Almond</h4>
     </span>
-  </div>
+  </div>;
 
 
 export default Logo;
