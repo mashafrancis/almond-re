@@ -1,10 +1,5 @@
 // react libraries
-import React from 'react';
-import { Location } from 'history';
-
-// third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
@@ -12,43 +7,18 @@ import {
   mapStateToProps,
   WaterCyclesPage
 } from './index';
-import {act} from "react-dom/test-utils";
-import { render } from "react-dom";
+import { renderWithRouter } from '../../testHelpers';
+import { props } from './fixtures';
 
 describe('The Water Cycles Page', () => {
-  let wrapper;
-  let props;
-
-  props = {
-    getAllSchedules: jest.fn(() => Promise.resolve()),
-    deleteSingleSchedule: jest.fn(() => Promise.resolve()),
-    displaySnackMessage: jest.fn(() => Promise.resolve()),
-    togglePump: jest.fn(() => Promise.resolve()),
-    getPumpStatus: jest.fn(() => Promise.resolve()),
-    toggleScheduleStatus: jest.fn(() => Promise.resolve()),
-    schedules: [],
-    match: {
-      url: '/dashboard',
-    },
-    isLoading: false,
-    location: Location,
-    enabled: true,
-  };
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <WaterCyclesPage {...props}/>
-      </BrowserRouter>
-    );
-  });
-
-  afterEach(() => {
-    wrapper = props = null;
-  });
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <WaterCyclesPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {

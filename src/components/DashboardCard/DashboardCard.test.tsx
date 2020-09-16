@@ -2,23 +2,27 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
-import DashboardCard from "./index";
+import { render, screen } from '@testing-library/react';
 
 // component
+import DashboardCard from './index';
 
 describe('DashboardCard component', () => {
   const props = {
-    heading: '',
-    body: '',
+    heading: 'Heading',
+    body: 'Body',
     redirect: () => jest.fn(),
     classes: '',
   };
 
-  const wrapper = shallow(<DashboardCard {...props} />);
-
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.dashboard-card')).toHaveLength(1);
+    const { asFragment } = render(<DashboardCard {...props} />);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elemHeader = screen.getByTestId('heading');
+    expect(elemHeader.innerHTML).toBe('Heading');
+
+    const elemDetails = screen.getByTestId('body');
+    expect(elemDetails.innerHTML).toBe('Body');
   });
 });

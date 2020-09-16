@@ -8,19 +8,19 @@ import './ToggleButton.scss';
 // interfaces
 import { ToggleButtonProps } from './interfaces';
 
-const ToggleButton = (props: ToggleButtonProps): JSX.Element => (
-  <div className={props.classes}>
+const ToggleButton = (props: ToggleButtonProps): JSX.Element => 
+  <div className={props.classes} data-testid="toggle-button">
     <label className="switch">
       <input
         id="toggle-override"
         onChange={props.onChange}
         type="checkbox"
         checked={props.isChecked}
-      />
-      <span className="slider round"/>
+        />
+      <span className="slider round" />
     </label>
   </div>
-);
+;
 
 export default ToggleButton;
 

@@ -13,7 +13,7 @@ export interface DeviceManagementProps {
 export interface DeviceManagementState {
   isEditMode: boolean;
   devices: any;
-  isDeleteModal: boolean;
+  isDeleteModalOpen: boolean;
   showDeviceModal: boolean;
   isFormModalOpen: boolean;
   deviceId: string;

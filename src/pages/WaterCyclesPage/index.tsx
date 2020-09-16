@@ -1,21 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createRef, lazy } from 'react';
 
 // third-party libraries
-import {
-  Cell,
-  Row,
-} from '@material/react-layout-grid';
+import { Cell, Row } from '@material/react-layout-grid';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { useMqttState, useSubscription } from 'mqtt-hooks';
-import loadable from '@loadable/component';
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  IconButton,
-  InputAdornment,
-  Switch,
-} from '@material-ui/core';
+import { IconButton, InputAdornment, Switch } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import LinearProgressBar from '@components/LinearProgressBar';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -41,7 +33,7 @@ import {
   toggleScheduleStatus,
 } from '@modules/timeSchedules';
 // import { getWaterData } from '@modules/sensorData';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
 
 // utils
@@ -49,77 +41,82 @@ import { validateOneHourTime } from '@utils/validateTimeOneHour';
 
 // styles
 import './WaterCyclesPage.scss';
-import {
-  ToggleSwitch,
-} from '@pages/WaterCyclesPage/styles';
+import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
 
 // interfaces
-import {
-  WaterCyclesPageProps,
-  WaterCyclesPageState,
-} from './interfaces';
+import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
 import roundDigit from '@utils/roundDigit';
 
 // components
-const CardInfo = loadable(() => import('@components/CardInfo'));
-const GeneralCardInfo = loadable(() => import('@components/GeneralCardInfo'));
-const Modal = loadable(() => import('@components/Modal'));
-const Table = loadable(() => import('@components/Table'));
-const DashboardCard = loadable(() => import('@components/DashboardCard'));
-const DonutDisplay = loadable(() => import('@components/DonutDisplay'));
-const AreaChardDisplay = loadable(() => import('@components/AreaChartDisplay'));
+const CardInfo = lazy(() => import('@components/CardInfo'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
+const Modal = lazy(() => import('@components/Modal'));
+const Table = lazy(() => import('@components/Table'));
+const DashboardCard = lazy(() => import('@components/DashboardCard'));
+const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
+const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
 
 export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   const [state, setState] = useState<WaterCyclesPageState>({
     isEditMode: false,
-    isDeleteModal: false,
+    isDeleteModalOpen: false,
     scheduleId: '',
     statusClass: '',
     isEnabled: false,
-    isFormModalOpen: false,
-    showScheduleModal: false,
+    isScheduleModalOpen: false,
     scheduleToEdit: '',
     isActionDone: false,
     isLoading: false,
     selectedTimeSchedule: new Date(),
     hasError: false,
-    schedules: [{
-      _id: '',
-      schedule: '',
-      enabled: false,
-      createdAt: '',
-      updatedAt: '',
-      user: '',
-    }],
+    schedules: [
+      {
+        _id: '',
+        schedule: '',
+        enabled: false,
+        createdAt: '',
+        updatedAt: '',
+        user: '',
+      },
+    ],
   });
 
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const user = useContext(UserContext);
+  const modalRef = createRef();
 
   const { mqtt, status } = useMqttState();
   const { topic } = useSubscription('almond/pump');
 
   useEffect(() => {
     setState({ ...state, isLoading: true });
-    const getSchedules = async () => await props.getAllSchedules(user.activeDevice._id);
-    getSchedules().then(() => setState(prevState => ({
-      ...prevState,
-      isLoading: false,
-      schedules: props.schedules,
-    })));
+    const getSchedules = async () => props.getAllSchedules(user.activeDevice._id);
+    getSchedules().then(() =>
+      setState(prevState => ({
+        ...prevState,
+        isLoading: false,
+        schedules: props.schedules,
+      })),
+    );
   }, [props.schedules, user.activeDevice._id]);
 
   useEffect(() => {
     props.getPumpStatus(user.activeDevice._id)
-      .then(() => setState({ ...state, isEnabled: props.enabled }));
+      .then(() => setState(prevState => ({
+          ...prevState,
+          isEnabled: props.enabled,
+        })),
+      );
   }, [user.activeDevice._id]);
 
   useEffect(() => {
     const { selectedTimeSchedule } = state;
     const schedules = [...new Set(props.schedules.map(item => item.schedule))];
     const validate = validateOneHourTime(schedules, selectedTimeSchedule);
-    if (validate) setState({ ...state, hasError: true });
-    setState({ ...state, hasError: false });
+    if (validate) {
+      setState(prevState => ({ ...prevState, hasError: true }));
+    }
+    setState(prevState => ({ ...prevState, hasError: false }));
   }, [state.selectedTimeSchedule]);
 
   // useEffect(() => {
@@ -138,7 +135,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
   // },              [state.scheduleToEdit]);
 
   const heightOfTank = 11; // units in centimeters
-  const waterLevel = heightOfTank ? (props.waterData.waterLevel || heightOfTank) : heightOfTank;
+  const waterLevel = heightOfTank ? props.waterData.waterLevel || heightOfTank : heightOfTank;
   const heightOfWater = roundDigit(((heightOfTank - waterLevel) / heightOfTank) * 100, 0);
 
   const PumpSwitch = withStyles({
@@ -170,15 +167,21 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
 
   const handleClick = (message: string) => mqtt?.publish('almond/pump', message);
 
-  const handleTogglePumpOnChange = async (event) => {
+  const handleTogglePumpOnChange = async event => {
     const { checked } = event.target;
-    await handleClick(checked ? "1" : "0");
-    await props.togglePump({ enabled: checked, device: user.activeDevice._id });
+    await handleClick(checked ? '1' : '0');
+    await props.togglePump({
+      enabled: checked,
+      device: user.activeDevice._id,
+    });
   };
 
   const handleToggleStatusChange = async (event, schedule) => {
     const { checked } = event.target;
-    await props.toggleScheduleStatus(schedule._id, { enabled: checked, device: user.activeDevice._id });
+    await props.toggleScheduleStatus(schedule._id, {
+      enabled: checked,
+      device: user.activeDevice._id,
+    });
   };
 
   const handleAddTimeSchedule = value => {
@@ -197,54 +200,64 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
 
   const showScheduleModal = mode => event => {
     event.preventDefault();
+    const { id } = event.target;
     const { schedules } = props;
+    const schedule = schedules.filter(obj => obj._id === id);
 
     switch (mode) {
       case 'Add':
         setState(prevState => ({
-          ...state,
-          showScheduleModal: !prevState.showScheduleModal,
-          isFormModalOpen: !prevState.isFormModalOpen,
+          ...prevState,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
           isEditMode: false,
         }));
         break;
       case 'Edit':
-        const scheduleId = event.target.id;
-        const schedule = schedules.filter(obj => obj._id === scheduleId);
         setState(prevState => ({
-          ...state,
-          scheduleId,
+          ...prevState,
+          scheduleId: id,
           scheduleToEdit: schedule[0].schedule,
-          showScheduleModal: !prevState.showScheduleModal,
-          isFormModalOpen: true,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
           isEditMode: true,
+        }));
+        break;
+      default:
+        setState(prevState => ({
+          ...prevState,
         }));
     }
   };
 
-  const closeScheduleModal = () => {
-    if (state.isEditMode) {
-      setState({
-        ...state,
-        scheduleToEdit: '',
-        showScheduleModal: false,
-        isFormModalOpen: false,
-        hasError: false,
-      });
-    }
+  const closeScheduleModal = mode => event => {
+    event.preventDefault();
 
-    setState({
-      ...state,
-      showScheduleModal: false,
-      isFormModalOpen: false,
-      hasError: false,
-    });
+    switch (mode) {
+      case 'Add':
+        setState(prevState => ({
+          ...prevState,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
+          hasError: false,
+        }));
+        break;
+      case 'Edit':
+        setState(prevState => ({
+          ...prevState,
+          isScheduleModalOpen: !prevState.isScheduleModalOpen,
+          hasError: false,
+          isEditMode: false,
+        }));
+        break;
+      default:
+        setState(prevState => ({
+          ...prevState,
+        }));
+    }
   };
 
   const toggleScheduleDeleteModal = () => {
     setState(prevState => ({
       ...prevState,
-      isDeleteModal: !prevState.isDeleteModal,
+      isDeleteModalOpen: !prevState.isDeleteModalOpen,
     }));
   };
 
@@ -255,12 +268,7 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
 
   const onAddEditScheduleSubmit = event => {
     event.preventDefault();
-    const {
-      isEditMode,
-      scheduleId,
-      scheduleToEdit,
-      selectedTimeSchedule,
-    } = state;
+    const { isEditMode, scheduleId, scheduleToEdit, selectedTimeSchedule } = state;
 
     const schedule = {
       schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
@@ -268,50 +276,60 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
     };
 
     isEditMode
-      ? props.editSchedule(scheduleId, schedule).then(closeScheduleModal)
-      : props.addNewSchedule(schedule).then(closeScheduleModal);
+      ? props.editSchedule(scheduleId, schedule).then(closeScheduleModal('Edit'))
+      : props.addNewSchedule(schedule).then(closeScheduleModal('Add'));
   };
 
-  const BlankContent = message => (
-    <div className="blank-content"><h2>{message}</h2></div>
-  );
-
-  const AddEditScheduleModal = () => (
+  const BlankContent = message =>
+    <div className="blank-content">
+      <h2>{message}</h2>
+    </div>
+  ;
+  const AddEditScheduleModal = () =>
     <Modal
-      isModalOpen={state.isFormModalOpen}
+      innerRef={modalRef}
+      isModalOpen={state.isScheduleModalOpen}
       renderContent={() => RenderTimeScheduleForm()}
-      onClose={() => setState({ ...state, isFormModalOpen: false })}
-      renderHeader={() => state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'}
+      onClose={() => setState({ ...state, isScheduleModalOpen: false })}
+      renderHeader={() => (state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule')}
       submitButtonName={state.isEditMode ? 'Update schedule' : 'Create new schedule'}
       onSubmit={onAddEditScheduleSubmit}
-      onDismiss={closeScheduleModal}
+      onDismiss={closeScheduleModal(state.isEditMode ? 'Edit' : 'Add')}
       disabled={state.hasError}
-    />
-  );
-
-  const DeleteScheduleModal = () => (
+      />
+  ;
+  const DeleteScheduleModal = () =>
     <Modal
-      isModalOpen={state.isDeleteModal}
-      renderContent={() => <h5 className="delete-modal-content">Do you confirm deletion of time schedule?</h5>}
+      innerRef={modalRef}
+      isModalOpen={state.isDeleteModalOpen}
+      renderContent={() => <h5 className="headline-5">Do you confirm deletion of time schedule?</h5>}
       onClose={toggleScheduleDeleteModal}
       renderHeader={() => 'Delete Time Schedule'}
       submitButtonName="Delete schedule"
       onSubmit={handleScheduleDelete}
       onDismiss={toggleScheduleDeleteModal}
-    />
-  );
-
-  const ActionButtons = schedule => (
+      />
+  ;
+  const ActionButtons = schedule =>
     <div key={schedule} className="action-buttons">
       <span id={schedule} onClick={showScheduleModal('Edit')}>
-        <h5 id={schedule} className="action-buttons__edit">Edit</h5>
+        <h5 id={schedule} className="action-buttons__edit">
+          Edit
+        </h5>
       </span>
-      <span id={schedule} onClick={() => setState({ ...state, scheduleId: schedule, isDeleteModal: true })}>
+      <span
+        id={schedule}
+        onClick={() =>
+          setState({
+            ...state,
+            scheduleId: schedule,
+            isDeleteModalOpen: true,
+          })
+        }>
         <h5 className="action-buttons__delete">Delete</h5>
       </span>
     </div>
-  );
-
+  ;
   const TableContent = timeSchedule => {
     const tableHeaders = {
       Time: { valueKey: 'time', colWidth: '30' },
@@ -323,42 +341,27 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       id: schedule,
       time: `${moment(schedule[1].schedule).format('LT')}`,
       actions: ActionButtons(schedule[1]._id),
-      status: <ToggleSwitch
-        checked={schedule[1].enabled}
-        onChange={e => handleToggleStatusChange(e, schedule[1])}
-      />,
+      status: <ToggleSwitch checked={schedule[1].enabled} onChange={e => handleToggleStatusChange(e, schedule[1])} />,
     }));
 
-    return (
-      <Table
-        keys={tableHeaders}
-        values={tableValues}
-        statusClass={props.enabled && 'tbl-status'}
-      />
-    );
+    return <Table keys={tableHeaders} values={tableValues} statusClass={props.enabled ? 'tbl-status' : ''} />;
   };
 
   const RenderTimeScheduleForm = () => {
-    const {
-      isEditMode,
-      selectedTimeSchedule,
-      scheduleToEdit,
-      hasError,
-    } = state;
+    const { isEditMode, selectedTimeSchedule, scheduleToEdit, hasError } = state;
 
     return (
       <div className="form-cell">
-        {
-          isEditMode
-            ? <>
-              <h5 className="h5-sub-line">Change the time schedule as per your preference for pumping.</h5>
-              <h5>However, make sure the time difference is at least 1 hour apart</h5>
-              </>
-            :
-            <>
+        {isEditMode ?
+          <>
+            <h5 className="h5-sub-line">Change the time schedule as per your preference for pumping.</h5>
+            <h5>However, make sure the time difference is at least 1 hour apart</h5>
+          </>
+          :
+          <>
             <h5 className="h5-sub-line">Add a new time schedule as per your preference for pumping.</h5>
             <h5>However, make sure the time difference is at least 1 hour apart</h5>
-            </>
+          </>
         }
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <TimePicker
@@ -374,18 +377,18 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
               startAdornment:
                 <InputAdornment position="start">
                   <IconButton href="#">
-                    <AddAlarmTwoTone style={{ color: '#1967D2' }}/>
+                    <AddAlarmTwoTone style={{ color: '#1967D2' }} />
                   </IconButton>
                 </InputAdornment>
               ,
             }}
-          />
+            />
         </MuiPickersUtilsProvider>
         <p
           className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
             mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
           aria-hidden="false"
-        />
+          />
       </div>
     );
   };
@@ -396,10 +399,10 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
           <div className="main-subheader">
-            <div className="device-header-container" onClick={menu.setDeviceModalOpen.bind(null, true)}>
+            <div className="device-header-container" onClick={menu?.setDeviceModalOpen.bind(null, true)}>
               <h3 className="main-subheader__device-id">
                 {`Device ID: ${user.activeDevice.id}`}
-                <ArrowDropDown/>
+                <ArrowDropDown />
               </h3>
             </div>
           </div>
@@ -410,36 +413,38 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
           <GeneralCardInfo
             mainHeader="Manual Override"
             subHeader="Pump water directly into the system"
-            icon={<BlurCircular className="content-icon general-info-icon"/>}
+            icon={<BlurCircular className="content-icon general-info-icon" />}
             actionItem={
               <PumpSwitch
                 className="manual-override"
                 onChange={e => handleTogglePumpOnChange(e)}
                 checked={props.enabled}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
+                />
             }
-          />
+            />
           <CardInfo
             mainHeader="Water Schedules"
             subHeader="Create a new water schedule for your pump cycle"
-            icon={<ScheduleTwoTone className="content-icon"/>}
+            icon={<ScheduleTwoTone className="content-icon" />}
             buttonName="Add schedule"
             onClick={showScheduleModal('Add')}
-          />
+            />
           <DashboardCard
             classes="recent-activities-available"
             heading="Water Schedules"
             body={
               props.schedules.length > 0 ?
-                <React.Suspense fallback={<LinearProgressBar/>}>
+                <React.Suspense fallback={<LinearProgressBar />}>
                   {TableContent(Object.entries(props.schedules))}
                 </React.Suspense>
-                : BlankContent(
-                'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump',
+                :
+                BlankContent(
+                  'Click the + to add a new pump time schedule or toggle the manual override to turn on and off the pump',
                 )
+
             }
-          />
+            />
           {AddEditScheduleModal()}
           {DeleteScheduleModal()}
         </Cell>
@@ -454,9 +459,9 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
                 data={[waterLevel, heightOfTank - waterLevel]}
                 donutInfo={`${heightOfWater}%`}
                 halfDonut={false}
-              />
+                />
             }
-          />
+            />
           <DashboardCard
             classes="recent-activities-available"
             heading="Water Temperature"
@@ -465,10 +470,10 @@ export const WaterCyclesPage = (props: WaterCyclesPageProps): JSX.Element => {
                 backgroundColor="rgba(25, 103, 210, 0.2)"
                 chartColor="#1967D2"
                 chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-              />
+                />
             }
-            actionItem={<ActionButton name="Today" icon={<DateRange/>}/>}
-          />
+            actionItem={<ActionButton name="Today" icon={<DateRange />} />}
+            />
         </Cell>
       </Row>
     </div>

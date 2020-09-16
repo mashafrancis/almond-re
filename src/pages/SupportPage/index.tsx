@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React, { lazy } from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
@@ -13,9 +13,9 @@ import { SupportPageProps } from '@pages/SupportPage/interfaces';
 import { displaySnackMessage } from '@modules/snack';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
-export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
+export const SupportPage = (props: SupportPageProps) =>
   <>
     <Row>
       <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -29,11 +29,12 @@ export const SupportPage: React.FunctionComponent<SupportPageProps> = props =>
         <GeneralCardInfo
           mainHeader="Support"
           subHeader="Need help? Ask for support from our maintenance team"
-          icon={<SpaIcon className="content-icon general-info-icon"/>}
-        />
+          icon={<SpaIcon className="content-icon general-info-icon" />}
+          />
       </Cell>
     </Row>
-  </>;
+  </>
+;
 
 
 export const mapStateToProps = state => ({

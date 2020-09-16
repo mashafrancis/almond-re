@@ -265,7 +265,7 @@ export const userRoleInitialState = {
   roles: [],
   resources: [],
   permissions: [],
-  isLoading: true,
+  isLoading: false,
   errors: null,
 };
 

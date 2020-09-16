@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 // component
-import AreaChardDisplay from "./index";
+import AreaChardDisplay from './index';
 
 describe('AreaChartDisplay component', () => {
   const props = {
@@ -14,9 +14,9 @@ describe('AreaChartDisplay component', () => {
     backgroundColor: '#1967D2',
   };
 
-  const wrapper = shallow(<AreaChardDisplay {...props} />);
+  const { asFragment } = render(<AreaChardDisplay {...props} />);
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   })
 });

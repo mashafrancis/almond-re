@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, lazy } from 'react';
 
 // components
 import {
@@ -13,18 +13,17 @@ import {
   AllOutTwoTone,
   GroupTwoTone
 } from '@material-ui/icons';
-import { MenuContext } from '@context/MenuContext';
-import loadable from '@loadable/component'
+import { ComponentContext } from '@context/ComponentContext';
 
-const AnalyticsCard = loadable(() => import('@components/AnalyticsCard'));
+const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const AdminAnalytics = (): JSX.Element => {
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const { setSelectedIndex } = menu;
 
   return (
     <>
-      <Row className="analytics-page">
+      <Row className="analytics-page" data-testid="admin-analytics-page">
         <Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
           <AnalyticsCard
             onClick={setSelectedIndex.bind(null,{ group: 0, item: 1 })}

@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React, { lazy } from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
@@ -15,9 +15,9 @@ import { displaySnackMessage } from '@modules/snack';
 import { SettingsPageProps } from '@pages/SettingsPage/interfaces';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
-export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
+export const SettingsPage = (props: SettingsPageProps) =>
   <>
     <Row>
       <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -31,11 +31,12 @@ export const SettingsPage: React.FunctionComponent<SettingsPageProps> = props =>
         <GeneralCardInfo
           mainHeader="Settings"
           subHeader="Adjust your preferences for better experience"
-          icon={<Settings className="content-icon general-info-icon"/>}
-        />
+          icon={<Settings className="content-icon general-info-icon" />}
+          />
       </Cell>
     </Row>
-  </>;
+  </>
+;
 
 
 export const mapStateToProps = state => ({

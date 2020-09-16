@@ -4,7 +4,7 @@
  */
 const removeQuotes = (str: string): string => {
   if (str.charAt(0) === '"' && str.charAt(str.length - 1) === '"') {
-    str = str.replace(/["']/g, "");
+    str = str.replace(/["']/g, '');
     return str;
   }
   return str;

@@ -17,7 +17,7 @@ const rootNode = document.getElementById('root');
 render(
   <Provider store={store}>
     <Router>
-      <App/>
+      <App />
     </Router>
   </Provider>,
   rootNode,

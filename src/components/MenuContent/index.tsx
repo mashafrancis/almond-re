@@ -18,7 +18,7 @@ import List, {
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { useViewport } from '../../hooks';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -35,7 +35,7 @@ const mobileHeader = (name, photo) =>
       className="mini-menu__image"
       src={photo || avatar}
       alt="avatar"
-    />
+      />
       <h5>{name || 'Anonymous'}</h5>
     </span>
   </div>
@@ -58,7 +58,7 @@ const mobileDrawerHeader = (setOpen, name, photo, viewWidth) =>
 const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, viewWidth) =>
   <>
     <ListGroup>
-      {viewWidth && <ListDivider tag="div"/>}
+      {viewWidth && <ListDivider tag="div" />}
       <List
         singleSelection
         selectedIndex={selectedIndex.item}>
@@ -73,11 +73,11 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
                   <ListItemGraphic
                     className="drawer-icon"
                     graphic={item.icon}
-                  />
-                  <ListItemText tabIndex={0} primaryText={item.primaryText}/>
+                    />
+                  <ListItemText tabIndex={0} primaryText={item.primaryText} />
                 </ListItem>,
               )}
-              <ListDivider tag="div"/>
+              <ListDivider tag="div" />
               {groupIndex === 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
             </React.Fragment>,
           )
@@ -93,7 +93,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, checkIsAdmin, v
 ;
 
 const MenuContent = (props: MenuContentProps): JSX.Element => {
-  const menu = React.useContext(MenuContext);
+  const menu = React.useContext(ComponentContext);
   const user = React.useContext(UserContext);
 
   const { width } = useViewport();

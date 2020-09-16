@@ -1,37 +1,33 @@
 // react libraries
-import * as React from 'react';
+import React, { Suspense } from 'react';
 
 // third party
-import { mount } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 
 // components
-import { AnalyticsPage } from './index';
+import { renderWithRouter } from '../../testHelpers';
+import RegularUserAnalytics from './RegularUserAnalytics';
+import AdminAnalytics from './AdminAnalytics';
 
-describe.skip('The Analytics Page', () => {
-  let wrapper;
-  let props;
-  let analyticsPageInstance;
+const { asFragment } = renderWithRouter(
+  <Suspense fallback={<h1>test loading</h1>}>
+    <RegularUserAnalytics />
+  </Suspense>,
+);
 
-  beforeEach(() => {
-    props = {
-      match: {
-        url: '/analytics',
-      },
-    };
-    wrapper = mount(
-      <BrowserRouter>
-        <AnalyticsPage {...props}/>
-      </BrowserRouter>
-    );
-    analyticsPageInstance = wrapper.find(AnalyticsPage).instance();
+describe('The Analytics Page', () => {
+  it('should render Regular Analytics Page properly', () => {
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('regular-analytics-page');
+    expect(elem.classList[1]).toBe('analytics-page');
   });
 
-  afterEach(() => {
-    wrapper = props = null;
-  });
-
-  it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
+  // it('should render Admin Analytics Page properly', () => {
+  //   const { asFragment } = renderWithRouter(<AdminAnalytics />);
+  //   expect(asFragment()).toMatchSnapshot();
+  //
+  //   const elem = screen.getByTestId('admin-analytics-page');
+  //   expect(elem.classList[1]).toBe('analytics-page');
+  // });
 });

@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 // component
-import DonutDisplay from "./index";
+import DonutDisplay from './index';
 
 describe('DonutDisplay component', () => {
   const props = {
@@ -16,9 +16,8 @@ describe('DonutDisplay component', () => {
     halfDonut: true,
   };
 
-  const wrapper = shallow(<DonutDisplay {...props} />);
-
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { asFragment } = render(<DonutDisplay {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

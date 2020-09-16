@@ -2,20 +2,22 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // component
-import ToggleButton from "./index";
+import ToggleButton from './index';
 
 describe('ToggleButton component', () => {
   const props = {
-    classes: ''
+    classes: 'toggle-button'
   };
 
-  const wrapper = shallow(<ToggleButton {...props} />);
+  const { asFragment } = render(<ToggleButton {...props} />);
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.switch')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('toggle-button');
+    expect(elem.classList[0]).toBe('toggle-button');
   });
 });

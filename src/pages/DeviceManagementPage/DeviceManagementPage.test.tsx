@@ -1,44 +1,42 @@
 // react libraries
-import * as React from 'react';
+import React, { Suspense } from 'react';
 
 // third party
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // components
 import {
   DeviceManagementPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
-import { props } from "./fixtures";
+import { props } from './fixtures';
 
 describe('The DeviceManagement Page', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<DeviceManagementPage {...props}/>);
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment } = render(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <DeviceManagementPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.user-roles-page__table')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('device-management-page');
+    expect(elem.classList[1]).toBe('device-management-page');
   });
 
   describe('mapStateToProps', () => {
     const state = {
       device: {
         devices: [],
-        activeDevice: ''
-      }
+        activeDevice: '',
+      },
     };
 
     const props = mapStateToProps(state);
 
-    it('should map  prop from state', () => {
+    it('should map props from state', () => {
       expect(props.devices).toEqual(state.device.devices);
       expect(props.activeDevice).toEqual(state.device.activeDevice);
     });
@@ -55,7 +53,7 @@ describe('The DeviceManagement Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    })
+    });
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();

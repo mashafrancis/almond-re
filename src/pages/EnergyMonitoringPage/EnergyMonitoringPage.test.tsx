@@ -3,43 +3,21 @@ import { Location } from 'history';
 import * as React from 'react';
 
 // third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
 
 // components
 import {
   EnergyMonitoringPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
-import { props } from "./fixtures";
+import { props } from './fixtures';
 
 describe('The EnergyMonitoring Page', () => {
-  let wrapper;
-  let waterCyclesPageInstance;
-
-  beforeEach(() => {
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 200
-    });
-
-    Object.defineProperty(window, 'innerHeight', {
-      writable: true,
-      configurable: true,
-      value: 200
-    });
-
-    wrapper = shallow(<EnergyMonitoringPage {...props}/>);
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment } = render(<EnergyMonitoringPage {...props} />);
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   // it('should render properly on mobile view', () => {
@@ -54,7 +32,7 @@ describe('The EnergyMonitoring Page', () => {
 
   describe('mapStateToProps', () => {
     const state = {
-      error: ''
+      error: '',
     };
 
     const props = mapStateToProps(state);
@@ -75,11 +53,11 @@ describe('The EnergyMonitoring Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    })
+    });
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();
       expect(dispatch).toHaveBeenCalled();
-    })
+    });
   });
 });

@@ -33,12 +33,12 @@ export interface WaterCyclesPageProps {
 
 export interface WaterCyclesPageState {
   isEditMode: boolean;
-  isDeleteModal: boolean;
+  isDeleteModalOpen: boolean;
   scheduleId: string;
   statusClass: string;
   isEnabled: boolean;
-  isFormModalOpen: boolean;
-  showScheduleModal: boolean;
+  // isFormModalOpen: boolean;
+  isScheduleModalOpen: boolean;
   scheduleToEdit: string;
   isActionDone: boolean;
   isLoading: boolean;

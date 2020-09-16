@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 
 // components
 import { AdminBottomNavigationMenus, BottomNavigationMenus } from '@components/MenuRoutes';
@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 // components
 import { UserContext } from '@context/UserContext';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // styles
@@ -24,19 +24,20 @@ const useStyles = makeStyles({
   },
 });
 
-const PageBottomNavigation: React.FunctionComponent = () => {
-  const menu = React.useContext(MenuContext);
-  const user = React.useContext(UserContext);
+const PageBottomNavigation = (): JSX.Element => {
+  const menu = useContext(ComponentContext);
+  const user = useContext(UserContext);
   const { setSelectedIndex } = menu;
 
   const checkIsAdmin = () => user.isAdmin ? AdminBottomNavigationMenus : BottomNavigationMenus;
 
   const classes = useStyles();
   const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex') as string);
-  const [value, setValue] = React.useState(isArrayNotNull(selectedIndex) ? 0 : selectedIndex.item);
+  const [value, setValue] = useState(isArrayNotNull(selectedIndex) ? 0 : selectedIndex.item);
 
   // :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
   return (
+    <div data-testid="bottom-navigation">
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
@@ -45,16 +46,17 @@ const PageBottomNavigation: React.FunctionComponent = () => {
       className={`${classes.root} page-content__navigation`}
       showLabels>
       {
-        checkIsAdmin().map((menu, index) =>
+        checkIsAdmin().map((menuNav, index) =>
           <BottomNavigationAction
             key={index}
-            onClick={setSelectedIndex.bind(null,{ group: 0, item: index })}
-            label={menu.label}
-            icon={menu.icon}
-            />
+            onClick={setSelectedIndex.bind(null, { group: 0, item: index })}
+            label={menuNav.label}
+            icon={menuNav.icon}
+            />,
         )
       }
     </BottomNavigation>
+    </div>
   );
 };
 

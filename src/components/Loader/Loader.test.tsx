@@ -2,23 +2,21 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // components
 import Loader from './index';
 
 describe('Loader components', () => {
-  const wrapper = shallow(<Loader />);
 
-  it('should match snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
+  it('should render correctly', () => {
+    const { asFragment } = render(<Loader />);
+    expect(asFragment()).toMatchSnapshot();
 
-  it('should render the Loader components', () => {
-    expect(wrapper.find('.container').length).toEqual(1);
-  });
+    const elemContainer = screen.getByTestId('container');
+    expect(elemContainer.classList[0]).toBe('container');
 
-  it('should render the loading bars', () => {
-    expect(wrapper.find('.container').find('.dot').length).toEqual(3);
+    const elem = screen.getByTestId('dot-1');
+    expect(elem.classList[1]).toBe('dot-1');
   });
 });

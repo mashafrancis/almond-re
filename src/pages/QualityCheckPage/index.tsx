@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { lazy } from 'react';
 
 // third-party libraries
 import {
@@ -22,11 +22,9 @@ import {
 } from './interfaces';
 
 // components
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
-export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = props => {
-
-  return (
+export const QualityCheckPage = (props: QualityCheckPageProps): JSX.Element =>
     <>
       <Row>
         <Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
@@ -38,13 +36,12 @@ export const QualityCheckPage: React.FunctionComponent<QualityCheckPageProps> = 
           <GeneralCardInfo
             mainHeader="Quality Check"
             subHeader="Tests for water quality, salts and ph level"
-            icon={<SecurityTwoTone className="content-icon general-info-icon"/>}
-          />
+            icon={<SecurityTwoTone className="content-icon general-info-icon" />}
+            />
         </Cell>
       </Row>
     </>
-  );
-};
+  ;
 
 export const mapStateToProps = state => ({
   error: state.error,

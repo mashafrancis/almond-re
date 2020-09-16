@@ -1,5 +1,5 @@
 // react libraries
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 
 // Third party libraries
 import {
@@ -8,7 +8,6 @@ import {
 } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import { Chip } from '@material-ui/core';
-import loadable from '@loadable/component';
 
 // icons
 import {
@@ -46,9 +45,9 @@ import {
 } from '@modules/userRoles/interfaces';
 import minimumDelay from '@utils/MinimumDelay';
 
-const CardInfo = loadable(() => import('@components/CardInfo'));
-const Table = loadable(() => import('@components/Table'));
-const Modal = loadable(() => import('@components/Modal'));
+const CardInfo = lazy(() => import('@components/CardInfo'));
+const Table = lazy(() => import('@components/Table'));
+const Modal = lazy(() => import('@components/Modal'));
 
 export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
   const [state, setState] = useState<UserRolesPageState>({
@@ -71,9 +70,7 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
    */
   useEffect(() => {
     setState({ ...state, isLoading: true });
-    const getRoles = async () => {
-      await props.getUserRoles();
-    };
+    const getRoles = async () => props.getUserRoles();
 
     getRoles().then(() => setResourcesPermissions);
   }, []);
@@ -105,20 +102,20 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
    *
    * @return {JSX}
    */
-  const renderAction = (action: string, authOption: string, role, actionMethod, className: string): JSX.Element => (
+  const renderAction = (action: string, authOption: string, role, actionMethod, className: string): JSX.Element =>
     // <Restrict authorize={authOption}>
     <span className={className} onClick={role && actionMethod(role)}>
         {action}
       </span>
     // </Restrict>
-  );
+  ;
 
-  const userRolesListAction = role => (
+  const userRolesListAction = role =>
     <div className="user-roles-page__table__action-buttons">
       {renderAction('Edit', 'roles:edit', role, toggleEditRoleModal, 'edit')}
       {renderAction('Delete', 'roles:delete', role, handleRoleDelete, 'delete')}
     </div>
-  );
+  ;
 
   const toggleModal = () => setState(prevState => ({
     ...prevState,
@@ -149,7 +146,6 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
 
     const { resources } = props.userRoles;
 
-    // @ts-ignore
     const currentResources = resources.map(resource => {
       let newResource = resource;
       currentPermissions.forEach(res => {
@@ -160,13 +156,13 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
       return newResource;
     });
 
-    setState({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       resources: currentResources,
       selectedRole: userRole,
       isEditMode: true,
-      isModalOpen: !state.isModalOpen,
-    });
+      isModalOpen: !prevState.isModalOpen,
+    }));
   };
 
   const handleCreateNewRole = () => {
@@ -285,14 +281,14 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
     }));
   };
 
-  const RenderModalContent = () => (
+  const RenderModalContent = () =>
     <>
       <div className="form-cell">
         <FormField
           id="title"
           labelText="Role Name"
           type="text"
-          leadingIcon={<Mood/>}
+          leadingIcon={<Mood />}
           aria-describedby="title-helper-text"
           required
           validator={validateTitleDescription}
@@ -301,14 +297,14 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
             fieldStateChanged('title');
             handleInputChange(e);
           }}
-        />
+          />
       </div>
       <div className="form-cell">
         <FormField
           id="description"
           labelText="Role Description"
           type="text"
-          leadingIcon={<Grain/>}
+          leadingIcon={<Grain />}
           aria-describedby="description-helper-text"
           required
           validator={validateTitleDescription}
@@ -317,17 +313,17 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
             fieldStateChanged('description');
             handleInputChange(e);
           }}
-        />
+          />
       </div>
       <PermissionAccess
         resources={props.userRoles.resources}
         permissions={props.userRoles.permissions}
         getResources={getResourcePermissions}
-      />
+        />
     </>
-  );
+  ;
 
-  const UserRolePageModal = () => (
+  const UserRolePageModal = () =>
     <Modal
       fullScreen={fullScreen}
       isModalOpen={state.isModalOpen}
@@ -338,30 +334,33 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
       submitButtonName={state.isEditMode ? 'Update role' : 'Create role'}
       onSubmit={state.isEditMode ? handleRoleUpdate : handleCreateNewRole}
       onDismiss={toggleModal}
-    />
-  );
+      />
+  ;
 
-  const DeleteRoleModal = () => (
-    <Modal
-      isModalOpen={state.showDeleteModal}
-      renderContent={() =>
-        <>
-          <h4 className="headline-4">{`Permanently delete ${state.selectedRole.title} role`}</h4>
-          <p className="delete-modal-content">
-            {state.selectedRole && state.selectedRole.users > 0
-              ? `You cannot delete this role as it is assigned to '${state.selectedRole.users} users'`
-              : 'This cannot be undone'}
-          </p>
-        </>
-      }
-      onClose={toggleDeleteModal}
-      renderHeader={() => 'Delete Role'}
-      submitButtonName="Delete role"
-      onSubmit={onRoleDeleteSubmit}
-      onDismiss={toggleDeleteModal}
-      disabled={state.selectedRole && state.selectedRole.users > 0}
-    />
-  );
+  const DeleteRoleModal = () => {
+    const userCount = state.selectedRole?.userCount;
+    return (
+      <Modal
+        isModalOpen={state.showDeleteModal}
+        renderContent={() =>
+          <>
+            <h4 className="headline-4">{`Permanently delete role: ${state.selectedRole.title}`}</h4>
+            <h5 className="headline-5">
+              {state.selectedRole && userCount > 0
+                ? `You cannot delete this role as it is assigned to ${userCount} user${userCount > 1 ? 's' : ''}`
+                : 'This cannot be undone'}
+            </h5>
+          </>
+        }
+        onClose={toggleDeleteModal}
+        renderHeader={() => 'Delete Role'}
+        submitButtonName="Delete role"
+        onSubmit={onRoleDeleteSubmit}
+        onDismiss={toggleDeleteModal}
+        disabled={state.selectedRole && userCount > 0}
+        />
+    );
+  }
 
   const TableContent = userRoles => {
     const tableHeaders = {
@@ -375,7 +374,7 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
       id: role[1]._id,
       title: role[1].title,
       description: role[1].description,
-      userCount: <Chip className="MuiChip-root-enabled" label={role[1].userCount}/>,
+      userCount: <Chip className="MuiChip-root-enabled" label={role[1].userCount} />,
       actions: userRolesListAction(role[1]),
     }));
 
@@ -383,7 +382,7 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
       <Table
         keys={tableHeaders}
         values={tableValues}
-      />
+        />
     );
   };
 
@@ -394,10 +393,10 @@ export const UserRolesPage = (props: UserRolesPageProps): JSX.Element => {
           <CardInfo
             mainHeader="User Roles"
             subHeader="Create a new role for users with Almond"
-            icon={<Face className="content-icon"/>}
+            icon={<Face className="content-icon" />}
             buttonName="Add role"
             onClick={toggleModal}
-          />
+            />
           <React.Suspense fallback={minimumDelay(import('@components/LinearProgressBar'), 500)}>
             <div className="user-roles-page__table">
               {TableContent(Object.entries(props.userRoles.roles))}

@@ -1,15 +1,10 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 
 // thunks
-import { displaySnackMessage } from '@modules/snack';
 import { UserContext } from '@context/UserContext';
 
 // third party apps
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
-// interfaces
-import { HomePageProps } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
@@ -19,8 +14,11 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import './HomePage.scss';
 import Logo from '@components/Logo';
 
-const HomePage: React.FunctionComponent<HomePageProps> = props => {
-  const user = React.useContext(UserContext);
+// images
+import homepage from '../../assets/images/homepage.svg';
+
+export const HomePage = (): JSX.Element => {
+  const user = useContext(UserContext);
   const { devices } = user;
   const handleLogin = () => window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
@@ -34,7 +32,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
           </button>
         </NavLink>
         :
-        <button className="mdc-button mdc-button--raised" onClick={handleLogin}>
+        <button data-testid="button" className="mdc-button mdc-button--raised" onClick={handleLogin}>
           <span className="mdc-button__label">Login with Google</span>
         </button>
       }
@@ -42,22 +40,20 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
   ;
 
   return (
-    <div className="background-cover">
+    <div className="background-cover" data-testid="homepage">
       <main className="home-cover">
         <section className="logo">
-          <Logo/>
+          <Logo />
         </section>
         <section className="home-image">
           <div className="image-wrapper">
-            <img src="https://res.cloudinary.com/almondgreen/image/upload/v1576510738/Almond/homepage_e7ugfb.svg"
-                 alt="Almond Image"
-            />
+            <img src={homepage} alt="Almond" />
           </div>
         </section>
         <section id="hero">
           <div className="hero-container">
             <div className="hero-info">
-              <h1>We have an idea!</h1>
+              <h1 data-testid="homepage-content">We have an idea!</h1>
               <h1>Grow hydroponically.</h1>
               <h2>Focusing on the safe production of fresh produce.</h2>
               {renderGoToDashboard()}
@@ -69,12 +65,4 @@ const HomePage: React.FunctionComponent<HomePageProps> = props => {
   );
 };
 
-export const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-});
-
-export const mapDispatchToProps = dispatch => ({
-  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default HomePage;

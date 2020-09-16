@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 // components
 import ActionButton from '@components/ActionButton';
@@ -15,7 +15,7 @@ import { ModalProps } from '@components/Modal/interfaces';
 // styles
 import './Modal.scss';
 
-const Modal = (props: ModalProps): JSX.Element => {
+const Modal = forwardRef((props: ModalProps, ref): JSX.Element => {
   const {
     isModalOpen,
     renderContent,
@@ -25,15 +25,17 @@ const Modal = (props: ModalProps): JSX.Element => {
     submitButtonName,
     onSubmit,
     onDismiss,
+    disabled,
   } = props;
 
   return (
     <Dialog
+      innerRef={ref}
       open={isModalOpen}
       fullScreen={fullScreen}
       onClose={onClose}
       aria-labelledby="responsive-dialog-title">
-      <DialogTitle id="responsive-dialog-title">
+      <DialogTitle data-testid="header" id="responsive-dialog-title">
         <p className="headline-3 modal-header">
           {renderHeader()}
         </p>
@@ -45,17 +47,18 @@ const Modal = (props: ModalProps): JSX.Element => {
         <ActionButton
           name="Dismiss"
           handleClick={onDismiss}
-        />
+          />
         <button
           className="mdc-button big-round-corner-button mdc-button--raised"
-          onClick={onSubmit}>
-              <span className="mdc-button__label">
-                {submitButtonName}
-              </span>
+          onClick={onSubmit}
+          disabled={disabled}>
+          <span className="mdc-button__label">
+            {submitButtonName}
+          </span>
         </button>
       </DialogActions>
     </Dialog>
   );
-};
+});
 
 export default Modal;

@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from 'react';
 
 // third party libraries
-import { Redirect, Route } from 'react-router';
+import { Redirect, Route } from 'react-router-dom';
 
 // interfaces
 import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
@@ -10,6 +10,7 @@ import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 // helpers
 import authorize from '@utils/authorize';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = props => {
   if (!props.authorize || authorize(props.authorize, { strict: props.strict })) {

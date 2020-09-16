@@ -1,52 +1,24 @@
 // react libraries
-import * as React from 'react';
-
-// third party
-import { mount, shallow } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
   EnterDeviceIdPage,
   mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
 } from './index';
+import { renderWithRouter } from '../../testHelpers';
+import { props } from './fixtures';
 
 describe('The EnterDeviceId Page', () => {
-  let wrapper;
-  let shallowWrapper;
-  let props;
-
-  props = {
-    addNewDevice: jest.fn(() => Promise.resolve()),
-    displaySnackMessage: jest.fn(),
-    isLoading: false,
-  };
-
-  beforeAll(() => {
-    wrapper = mount(
-      <BrowserRouter>
-        <EnterDeviceIdPage {...props} />
-      </BrowserRouter>
-      );
-  });
-
-  beforeEach(() => {
-    props = {
-      addNewDevice: jest.fn(() => Promise.resolve()),
-      displaySnackMessage: jest.fn(),
-      isLoading: false,
-    };
-  });
-
-  shallowWrapper = shallow(<EnterDeviceIdPage {...props} />);
-
-  afterEach(() => {
-    wrapper = shallowWrapper = props = null;
-  });
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <EnterDeviceIdPage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps function', () => {

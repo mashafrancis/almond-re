@@ -2,7 +2,7 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // components
 import PageNotFound from './index';
@@ -12,13 +12,15 @@ const props = {
 };
 
 describe('PageNotFound components', () => {
-  const wrapper = shallow(<PageNotFound { ...props }/>);
-
   it('should match snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { asFragment } = render(<PageNotFound {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should render the Page Not Found components', () => {
-    expect(wrapper.find('.notfound').length).toEqual(1);
+    render(<PageNotFound {...props} />);
+    const elem = screen.getByTestId('notfound');
+
+    expect(elem.classList[0]).toBe('notfound');
   });
 });

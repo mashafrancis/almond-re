@@ -105,4 +105,5 @@ export interface UserRole {
   title: string;
   _id: string;
   resourceAccessLevels: ResourceAccessLevel[];
+  userCount: number;
 }

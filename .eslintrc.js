@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es6: true,
     jest: true,
+    node: true,
   },
   extends: [
     'airbnb-typescript',
@@ -11,10 +12,11 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'prettier',
     'prettier/react',
     'prettier/@typescript-eslint',
+    'plugin:jest-dom/recommended',
+    'plugin:prettier/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -25,15 +27,30 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: './tsconfig.json',
-    ecmaVersion: 2018,
+    project: [
+      './tsconfig.eslint.json',
+    ],
+    tsconfigRootDir: __dirname,
+    ecmaVersion: 2020,
     sourceType: 'module',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      },
+    },
   },
   plugins: [
     'react',
     'prettier',
     '@typescript-eslint',
     'react-hooks',
+    'testing-library',
+    'jest-dom',
   ],
   rules: {
     'prettier/prettier': [0,
@@ -41,11 +58,11 @@ module.exports = {
         'semi': true,
         'singleQuote': true,
         'trailingComma': 'es5',
-        'printWidth': 100,
+        'printWidth': 120,
         'tabWidth': 2,
         'arrowParens': 'avoid',
         'jsxSingleQuote': false,
-        'jsxBracketSameLine': true,
+        // 'jsxBracketSameLine': true,
       },
     ],
 
@@ -87,7 +104,8 @@ module.exports = {
     'prefer-promise-reject-errors': 0,
     'no-script-url': 0,
     'no-unused-expressions': 0,
-    // "dot-notation": 0,
+    'dot-notation': 0,
+    'no-underscore-dangle': 0,
 
     'import/prefer-default-export': 0,
     'import/no-useless-path-segments': 1,
@@ -100,6 +118,17 @@ module.exports = {
     'import/no-named-as-default-member': 0,
     'import/namespace': 0,
     'import/named': 0,
+    'import/extensions': [
+      0,
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+        mjs: 'never',
+      },
+    ],
 
     // "max-line-length": [1, 120],
     //
@@ -177,6 +206,17 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-angle-bracket-type-assertion': 0,
+
+    // Testing
+    'testing-library/await-async-query': 'error',
+    'testing-library/no-await-sync-query': 'error',
+    'testing-library/no-debug': 'warn',
+
+    'jest-dom/prefer-checked': 'error',
+    'jest-dom/prefer-enabled-disabled': 'error',
+    'jest-dom/prefer-required': 'error',
+    'jest-dom/prefer-to-have-attribute': 'error',
+
     // TODO: enable the lines below when refactoring
     // "react-hooks/rules-of-hooks": 1,
     // "react-hooks/exhaustive-deps": 1

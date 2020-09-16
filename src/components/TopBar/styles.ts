@@ -2,7 +2,7 @@ import { Badge } from '@material-ui/core';
 import {
   createStyles,
   makeStyles,
-  Theme
+  Theme,
 } from '@material-ui/core/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 

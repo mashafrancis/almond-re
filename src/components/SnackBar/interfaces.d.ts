@@ -5,5 +5,5 @@ export interface SnackMessageProps {
 }
 
 export interface SnackMessageState {
-  snack: SnackMessage;
+  snack?: SnackMessage;
 }

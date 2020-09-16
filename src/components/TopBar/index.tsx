@@ -26,7 +26,7 @@ import {
 
 // utils
 import { UserContext } from '@context/UserContext';
-import { MenuContext } from '@context/MenuContext';
+import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 
 // interface
@@ -55,7 +55,7 @@ const ElevationScroll = (props: ElevationBarProps): JSX.Element => {
 
 const TopBar = (props: TopBarProps): JSX.Element => {
   const device = useContext(UserContext);
-  const menu = useContext(MenuContext);
+  const menu = useContext(ComponentContext);
   const { name, photo, isAdmin } = React.useContext(UserContext);
 
   const {
@@ -109,7 +109,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
     }),
   )(Badge);
 
-  const renderDeviceDisplay = (): JSX.Element => (
+  const renderDeviceDisplay = (): JSX.Element => 
     <div className={`${classes.device} ${classes.grow} topbar-device-id`} onClick={() => setDeviceModalOpen(true)}>
       <DeviceActiveBadge
         variant="dot"
@@ -119,12 +119,12 @@ const TopBar = (props: TopBarProps): JSX.Element => {
           horizontal: 'left',
         }}>
         <h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-        <ArrowDropDown onClick={setDeviceModalOpen.bind(null, true)}/>
+        <ArrowDropDown onClick={setDeviceModalOpen.bind(null, true)} />
       </DeviceActiveBadge>
     </div>
-  );
+  ;
 
-  const timeLineIcon = () => (
+  const timeLineIcon = () => 
     <StyledBadge
       overlap="circle"
       anchorOrigin={{
@@ -133,15 +133,15 @@ const TopBar = (props: TopBarProps): JSX.Element => {
       }}
       variant="dot"
       invisible={isActivityLogsEmpty != activityLogsViewed}>
-      <Timeline onClick={toggleActivityDrawer.bind(null, true, true)}/>
+      <Timeline onClick={toggleActivityDrawer.bind(null, true, true)} />
     </StyledBadge>
-  );
+  ;
 
   // :TODO: Remove this after demoing the feature to be
   const notifications = ['true'];
 
   const notificationsIcon = () => (
-    isArrayNotNull(notifications.length) ? <NotificationsNone/> :
+    isArrayNotNull(notifications.length) ? <NotificationsNone /> :
       <StyledBadge
         anchorOrigin={{
           vertical: 'bottom',
@@ -150,17 +150,17 @@ const TopBar = (props: TopBarProps): JSX.Element => {
         overlap="circle"
         invisible={isArrayNotNull(notifications.length)}
         variant="dot">
-        <Notifications style={{ color: '#1967D2' }}/>
+        <Notifications style={{ color: '#1967D2' }} />
       </StyledBadge>
   );
 
   const topIcons = [
     { icon: timeLineIcon() },
     { icon: notificationsIcon() },
-    { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog}/> },
+    { icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} /> },
   ];
 
-  const renderTopIcons = () => (
+  const renderTopIcons = () => 
     <div className={classes.sectionEnd}>
       {
         topIcons.map((topIcon, index) =>
@@ -168,13 +168,13 @@ const TopBar = (props: TopBarProps): JSX.Element => {
         )
       }
     </div>
-  );
+  ;
 
   return (
     <>
-      <CssBaseline/>
+      <CssBaseline />
       <ElevationScroll {...props}>
-        <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed">
+        <AppBar className={`${classes.appBar} mdc-top-app-bar`} position="fixed" data-testid="top-bar">
           <Toolbar variant="dense">
             <div className="appbar-section appbar-section-start">
               <NavLink to="/">
@@ -182,7 +182,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
                   className="drawer-logo__image"
                   src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
                   alt="Logo"
-                />
+                  />
               </NavLink>
               {!isAdmin && renderDeviceDisplay()}
             </div>

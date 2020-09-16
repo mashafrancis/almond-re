@@ -1,13 +1,14 @@
 // react libraries
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 // third party libraries
-import { mount } from 'enzyme';
-import * as history from 'history';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { createMemoryHistory, MemoryHistory } from 'history';
+import { render } from '@testing-library/react';
+import { Router } from 'react-router-dom';
 
 // helper functions
 import http from '@utils/http';
@@ -55,7 +56,7 @@ export const mockStore = (extraArgument: {}, initialState = {}) => createStore(
  */
 export const axiosMock = (url, response, resolve = true) => new Proxy({}, {
   get(target, key) {
-    return (url, payload) => resolve
+    return (URL, payload) => resolve
       ? Promise.resolve(response)
       : Promise.reject(response);
   },
@@ -70,17 +71,44 @@ export const axiosMock = (url, response, resolve = true) => new Proxy({}, {
 export const reduxMockStore = (mock = axiosMock('', {}), initialState = {}) =>
   configureMockStore([thunk.withExtraArgument(mock)])(initialState);
 
-export const mountWithRedux: any = (
-  ui,
+export const renderWithRedux: any = (
+  ui: JSX.Element,
   {
     initialState = {},
     extraArgument = {},
     store = mockStore(extraArgument, initialState),
-  } = {},
-) => ({
-  store,
-  wrapper: mount(<Provider store={store}>{ui}</Provider>),
-});
+    ...renderOptions
+  },
+) => {
+  const Wrapper = ({ children }: any) => <Provider store={store}>{children}</Provider>;
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
+interface RenderWithRouterProps {
+  route?: string;
+  history?: MemoryHistory;
+}
+
+export const renderWithRouter = (
+  ui: ReactNode,
+  { route = '/', history = createMemoryHistory({ initialEntries: [route] }) }: RenderWithRouterProps = {},
+): any => ({
+    ...render(<Router history={history}>{ui}</Router>),
+    history,
+  });
+
+// export const renderWithRouter = (
+//   ui: JSX.Element,
+//   {
+//     route = '/',
+//     history = createMemoryHistory({ initialEntries: [route] }) } = {},
+// ): any => {
+//   const Wrapper = ({ children }: any) => <Router history={history}>{children}</Router>;
+//   return {
+//     ...render(ui, { wrapper: Wrapper }),
+//     history,
+//   };
+// };
 
 /**
  * This helper function helps mock the dispatch action and returns jest.expect assertion
@@ -91,7 +119,9 @@ export const mountWithRedux: any = (
  *
  * @returns {jest.Expect}
  */
-export const dispatchMethodMock = (store, thunk, expectedActions) =>
+export const dispatchMethodMock = (
+  store: { dispatch: (arg0: any) => Promise<any>; getActions: () => any; }, thunk: any, expectedActions: any
+  ): any =>
   store.dispatch(thunk)
     .then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -111,7 +141,7 @@ export const flushPromises = () => new Promise(resolve => setImmediate(resolve))
  *
  * @returns {void}
  */
-export const axiosMockAdapter = (response, error) => {
+export const axiosMockAdapter = (response: any, error: any) => {
   http.defaults.adapter = config => new Promise((resolve, reject) => {
     if (error) {
       error.config = config;
@@ -127,7 +157,7 @@ export const axiosMockAdapter = (response, error) => {
 export const routerContext = {
   context: {
     router: {
-      history: history.createBrowserHistory(),
+      history: createMemoryHistory(),
       route: {
         location: { pathname: '/' },
         match: { isExact: true },
@@ -144,7 +174,7 @@ export const routerContext = {
  *
  * @returns {Object}
  */
-export const fullPermissionsState = resource => ({
+export const fullPermissionsState = (resource: any) => ({
   user: {
     permissions: {
       [resource]: {
@@ -165,7 +195,7 @@ export const fullPermissionsState = resource => ({
  *
  * @returns {Object}
  */
-export const viewOnlyPermissionsState = resource => ({
+export const viewOnlyPermissionsState = (resource: any) => ({
   user: {
     permissions: {
       [resource]: {
@@ -187,3 +217,16 @@ export const errorMessage = {
     status: 400,
   },
 };
+
+export const WindowSize = () =>
+  <div>
+    <label htmlFor="inner-width">Inner Width</label>
+    <div id="inner-width">{window.innerWidth}</div>
+    <label htmlFor="inner-height">Inner Height</label>
+    <div id="inner-height">{window.innerHeight}</div>
+    <label htmlFor="outer-width">Outer Width</label>
+    <div id="outer-width">{window.outerWidth}</div>
+    <label htmlFor="outer-height">Outer Height</label>
+    <div id="outer-height">{window.outerHeight}</div>
+  </div>
+;

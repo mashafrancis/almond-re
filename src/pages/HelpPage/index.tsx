@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
@@ -18,7 +18,7 @@ import { HelpPageProps } from '@pages/HelpPage/interfaces';
 
 const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
 
-export const HelpPage: React.FunctionComponent<HelpPageProps> = props =>
+export const HelpPage = (props: HelpPageProps):JSX.Element =>
   <>
     <Row>
       <Cell columns={7} desktopColumns={7} tabletColumns={8}
@@ -32,8 +32,8 @@ export const HelpPage: React.FunctionComponent<HelpPageProps> = props =>
         <GeneralCardInfo
           mainHeader="Help"
           subHeader="Get more information more about the system"
-          icon={<Help className="content-icon general-info-icon"/>}
-        />
+          icon={<Help className="content-icon general-info-icon" />}
+          />
       </Cell>
     </Row>
   </>;

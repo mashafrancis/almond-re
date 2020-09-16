@@ -20,16 +20,16 @@ const LinearProgressBar = () => {
         if (oldCompleted === 100) return 0;
         const diff = Math.random() * 10;
         return Math.min(oldCompleted + diff, 100);
-      })
-    }
+      });
+    };
 
     const timer = setInterval(progress, 500);
     return () => clearInterval(timer);
-  }, [])
+  }, []);
 
   return (
     <ColorLinearProgress variant="determinate" value={completed} />
-  )
-}
+  );
+};
 
 export default LinearProgressBar;

@@ -2,10 +2,11 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import moment from 'moment';
 
 // component
-import ActivityLogCard from "./index";
+import ActivityLogCard from './index';
 
 describe('ActivityLogCard component', () => {
   const props = {
@@ -13,29 +14,36 @@ describe('ActivityLogCard component', () => {
     date: '2019-10-30T08:00:42.767Z',
     redirect: jest.fn(),
     classes: 'class',
-    type: 'info'
-  }
-
-  const wrapper = shallow(<ActivityLogCard {...props} />);
+    type: 'info',
+  };
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.log-card')).toHaveLength(1);
+    const { asFragment } = render(<ActivityLogCard {...props} />);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elemHeader = screen.getByTestId('header');
+    expect(elemHeader.innerHTML).toBe('Pump broken');
+
+    const elemDetails = screen.getByTestId('details');
+    expect(elemDetails.innerHTML).toBe(moment(props.date).format('LLLL'));
   });
 
   it('should render log details info when called', () => {
-    expect(wrapper.find('.log-details-info')).toHaveLength(1);
-    expect(wrapper.find('.log-details-error')).toHaveLength(0);
+    render(<ActivityLogCard {...props} />);
+    const elemType = screen.getByTestId('type');
+
+    expect(elemType.classList[0]).toBe('log-details-info');
   });
 
   it('should render log details error when called', () => {
     const props = {
       log: 'Pump broken',
       date: '2019-10-30T08:00:42.767Z',
-      type: 'error'
-    }
-    const wrapper = shallow(<ActivityLogCard {...props} />);
-    expect(wrapper.find('.log-details-error')).toHaveLength(1);
-    expect(wrapper.find('.log-details-info')).toHaveLength(0);
+      type: 'error',
+    };
+    render(<ActivityLogCard {...props} />);
+    const elemType = screen.getByTestId('type');
+
+    expect(elemType.classList[0]).toBe('log-details-error');
   });
 });

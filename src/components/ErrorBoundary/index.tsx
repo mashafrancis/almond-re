@@ -6,36 +6,30 @@ import { ArrowBackRounded } from '@material-ui/icons';
 
 // interfaces
 import { ErrorBoundaryState } from '@components/ErrorBoundary/interfaces';
+import reportError from '@components/ErrorBoundary/reportError';
 
 export class ErrorBoundary extends Component<ErrorBoundaryState> {
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
+  state = { hasError: false };
+
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+    reportError(error, info);
   }
 
-  state = {
-    eventId: null,
-    hasError: false,
-  };
-
   render() {
-    if (this.state.hasError) {
-      // render fallback UI
-      return (
-        <InternalServerErrorMessage
-          errorButton={
-            <button
-              onClick={() => window.location.replace('/')}
-              className="mdc-button mdc-button--raised">
-              <ArrowBackRounded />
-              <span className="mdc-button__label">Back</span>
-            </button>
-          }
-          />
-      );
-    }
-
-    // when there's not an error, render children untouched
-    return this.props.children;
+    // render fallback UI
+    return this.state.hasError ?
+      <InternalServerErrorMessage
+        errorButton={
+          <button
+            onClick={() => window.location.replace('/')}
+            className="mdc-button mdc-button--raised">
+            <ArrowBackRounded />
+            <span className="mdc-button__label">Back</span>
+          </button>
+        }
+        />
+      : this.props.children;
   }
 }
 

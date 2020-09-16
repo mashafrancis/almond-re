@@ -2,10 +2,11 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { screen } from '@testing-library/react';
 
 // component
-import TopBar from "./index";
+import TopBar from './index';
+import { renderWithRouter } from '../../testHelpers';
 
 describe('TopBar component', () => {
   const props = {
@@ -14,10 +15,12 @@ describe('TopBar component', () => {
     isActivityLogsEmpty: true,
   };
 
-  const wrapper = shallow(<TopBar {...props} />);
+  const { asFragment } = renderWithRouter(<TopBar {...props} />);
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.mdc-top-app-bar')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('top-bar');
+    expect(elem.classList[5]).toBe('mdc-top-app-bar');
   });
 });

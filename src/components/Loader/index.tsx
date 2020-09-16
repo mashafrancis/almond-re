@@ -6,8 +6,8 @@ import './Loader.scss';
 
 const Loader = () =>
   <>
-  <div className="container">
-    <div className="dot dot-1" />
+  <div className="container" data-testid="container">
+    <div className="dot dot-1" data-testid="dot-1" />
     <div className="dot dot-2" />
     <div className="dot dot-3" />
   </div>

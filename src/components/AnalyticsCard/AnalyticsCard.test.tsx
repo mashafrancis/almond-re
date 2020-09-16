@@ -2,10 +2,10 @@
 import React from 'react';
 
 // third-party libraries
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // component
-import AnalyticsCard from "./index";
+import AnalyticsCard from './index';
 
 describe('AnalyticsCard component', () => {
   const props = {
@@ -13,10 +13,12 @@ describe('AnalyticsCard component', () => {
     subInfo: 'subInfo'
   }
 
-  const wrapper = shallow(<AnalyticsCard {...props} />);
+  const { asFragment } = render(<AnalyticsCard {...props} />);
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.analytics-card')).toHaveLength(1);
+    expect(asFragment()).toMatchSnapshot();
+
+    const elem = screen.getByTestId('analytics-card');
+    expect(elem.classList[0]).toBe('analytics-card');
   });
 });

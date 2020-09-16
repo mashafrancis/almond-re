@@ -68,7 +68,7 @@ const DonutDisplay: (props) => any = props => {
 
   return (
     <div className="charts__donut-chart-card__content">
-      <Doughnut data={donutDetails} options={donutDetails.options}/>
+      <Doughnut data={donutDetails} options={donutDetails.options} />
     </div>
   );
 };

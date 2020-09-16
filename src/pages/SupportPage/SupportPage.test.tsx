@@ -1,39 +1,25 @@
 // react libraries
-import { Location } from 'history';
-import * as React from 'react';
-
-// third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
-  SupportPage, mapDispatchToProps, mapStateToProps
+  SupportPage, mapDispatchToProps, mapStateToProps,
 } from './index';
+import { renderWithRouter } from '../../testHelpers';
 
 describe('The Support Page', () => {
-  let wrapper;
-  let props;
-  let waterCyclesPageInstance;
-
-  props = {
+  const props = {
     displaySnackMessage: jest.fn(() => Promise.resolve()),
-  }
+  };
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <SupportPage {...props}/>
-    </BrowserRouter>
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <SupportPage {...props} />
+    </Suspense>,
   );
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {
@@ -59,11 +45,11 @@ describe('The Support Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    })
+    });
 
     it('ensures displaySnackMessage is mapped to props', () => {
       props.displaySnackMessage();
       expect(dispatch).toHaveBeenCalled();
-    })
+    });
   });
 });

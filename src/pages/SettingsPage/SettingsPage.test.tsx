@@ -1,10 +1,5 @@
 // react libraries
-import { Location } from 'history';
-import * as React from 'react';
-
-// third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
 import {
@@ -12,30 +7,24 @@ import {
   mapDispatchToProps,
   mapStateToProps
 } from './index';
+import { renderWithRouter } from '../../testHelpers';
 
 describe('The Settings page', () => {
-  let wrapper;
-  let props;
-  let waterCyclesPageInstance;
-
-  props = {
+  const props = {
     displaySnackMessage: jest.fn(() => Promise.resolve()),
+    match: {
+      url: '/',
+    },
   }
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <SettingsPage {...props}/>
-    </BrowserRouter>
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <SettingsPage {...props} />
+    </Suspense>,
   );
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {

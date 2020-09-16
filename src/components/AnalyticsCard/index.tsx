@@ -16,7 +16,7 @@ const AnalyticsCard = (props: AnalyticsCardProps): JSX.Element => {
   } = props;
 
   return (
-    <div className="analytics-card" onClick={onClick}>
+    <div className="analytics-card" onClick={onClick} data-testid="analytics-card">
       <div className={`card-content ${colorClass}`}>
         {icon}
         <div className="card-content__body">

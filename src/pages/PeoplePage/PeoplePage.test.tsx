@@ -1,51 +1,30 @@
 // react libraries
-import { Location } from 'history';
-import * as React from 'react';
-
-// third party
-import {mount, shallow} from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
 
 // components
-import {mapDispatchToProps, mapStateToProps, PeoplePage} from './index';
+import { mapDispatchToProps, mapStateToProps, PeoplePage } from './index';
+import { renderWithRouter } from '../../testHelpers';
+import { props } from './fixtures';
 
 describe('The People Page', () => {
-  let wrapper;
-  let props;
-
-  props = {
-    getAllPeople: jest.fn(() => Promise.resolve()),
-    getUserRoles: jest.fn(() => Promise.resolve()),
-    displaySnackMessage: jest.fn(() => Promise.resolve()),
-    updatePerson: jest.fn(() => Promise.resolve()),
-    people: [],
-    roles: [],
-  };
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <BrowserRouter>
-        <PeoplePage {...props}/>
-      </BrowserRouter>
-    );
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
+  const { asFragment } = renderWithRouter(
+    <Suspense fallback={<h1>test loading</h1>}>
+      <PeoplePage {...props} />
+    </Suspense>,
+  );
 
   it('should render properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('mapStateToProps', () => {
     const state = {
       people: {
-        people: []
+        people: [],
       },
       userRoles: {
-        roles: []
-      }
+        roles: [],
+      },
     };
 
     const props = mapStateToProps(state);
@@ -67,7 +46,7 @@ describe('The People Page', () => {
 
     afterEach(() => {
       dispatch = props = null;
-    })
+    });
 
     it('ensures getAllPeople is mapped to props', () => {
       props.getAllPeople();

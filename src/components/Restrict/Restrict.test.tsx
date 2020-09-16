@@ -5,40 +5,45 @@ import React from 'react';
 import '../../../tests/__mocks__/storeWithPartialPermissions';
 
 // third-party libraries
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 // components
 import { Restrict } from '@components/Restrict';
 
-describe.skip('The Restrict component', () => {
+describe('The Restrict component', () => {
   it('should render children prop if user has required access', () => {
-    const wrapper = mount(
+    render(
       <Restrict authorize={['analytics:edit']}>
-        <button />
-      </Restrict>
+        <button className="button" data-testid="button" />
+      </Restrict>,
     );
 
-    expect(wrapper.find('button')).toHaveLength(1);
+    const elem = screen.getByTestId('button');
+    expect(elem.classList[0]).toBe('button');
   });
 
-  it('should not render children prop if user does not have required access', () => {
-    const wrapper = mount(
+  it.skip('should not render children prop if user does not have required access', () => {
+    render(
       <Restrict authorize={['people:edit']}>
-        <button />
-      </Restrict>
+        <button className="button" data-testid="button" />
+      </Restrict>,
     );
 
-    expect(wrapper.find('button')).toHaveLength(0);
+    const elem = screen.getByTestId('button');
+    expect(elem.classList[0]).toBeFalsy();
   });
 
   it('should render fallback prop if user does not have required access', () => {
-    const wrapper = mount(
-      <Restrict authorize={['people:edit']} fallback={<span />}>
+    render(
+      <Restrict authorize={['people:edit']} fallback={<span className="span" data-testid="span" />}>
         <button />
-      </Restrict>
+      </Restrict>,
     );
 
-    expect(wrapper.find('span')).toHaveLength(1);
-    expect(wrapper.find('button')).toHaveLength(0);
+    const elem = screen.getByTestId('span');
+    expect(elem.classList[0]).toBe('span');
+
+    // expect(wrapper.find('span')).toHaveLength(1);
+    // expect(wrapper.find('button')).toHaveLength(0);
   });
 });

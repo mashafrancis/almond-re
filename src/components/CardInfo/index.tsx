@@ -16,7 +16,7 @@ const CardInfo = (props: CardInfoProps): JSX.Element => {
     subHeader,
     buttonName,
     onClick,
-    icon
+    icon,
   } = props;
 
   const cardButton = () =>
@@ -30,7 +30,8 @@ const CardInfo = (props: CardInfoProps): JSX.Element => {
             size="small"
             style={{ backgroundColor: '#1967D2', color: '#eaeaea' }}
             aria-label="add"
-            onClick={onClick}>
+            onClick={onClick}
+            data-testid="fab">
             <Add />
           </Fab>
       }
@@ -45,7 +46,7 @@ const CardInfo = (props: CardInfoProps): JSX.Element => {
       <div className="card-content">
         {icon}
         <div className="card-content__body">
-          <div className="main">{mainHeader}</div>
+          <div className="main" data-testid="header">{mainHeader}</div>
           <div className="sub-main">{subHeader}</div>
         </div>
         {cardButton()}

@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // components
 import {
@@ -14,7 +14,10 @@ describe('The App component', () => {
       user: {
         userDetails: {}
       },
-      loading: ''
+      loading: '',
+      snack: {
+        message: '',
+      },
     };
 
     const props = mapStateToProps(state);
@@ -23,6 +26,7 @@ describe('The App component', () => {
       expect(props.serverError).toEqual(state.internalServerError);
       expect(props.user).toEqual(state.user.userDetails);
       expect(props.loading).toEqual(state.loading);
+      expect(props.snack).toEqual(state.snack);
     });
   });
 

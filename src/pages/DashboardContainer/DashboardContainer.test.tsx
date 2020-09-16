@@ -1,5 +1,5 @@
 // react libraries
-import * as React from 'react';
+import React from 'react';
 
 // components
 import {
@@ -25,7 +25,7 @@ describe('The DashboardContainer component', () => {
 
     const props = mapStateToProps(state);
 
-    it('should map energy monitoring props from state', () => {
+    it('should map dashboard props from state', () => {
       expect(props.user).toEqual(state.user.userDetails);
       expect(props.loading).toEqual(state.loading);
       expect(props.roles).toEqual(state.userRoles.roles);
