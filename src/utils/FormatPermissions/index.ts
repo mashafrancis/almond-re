@@ -1,6 +1,9 @@
 // interfaces
 import { Permission, UserRole } from '@modules/userRoles/interfaces';
-import { FormattedPermission, FormattedPermissions } from '@utils/FormatPermissions/interfaces';
+import {
+	FormattedPermission,
+	FormattedPermissions,
+} from '@utils/FormatPermissions/interfaces';
 
 // helpers
 import camelCase from '@utils/camelCase';
@@ -15,25 +18,22 @@ import { fullAccess, noAccess, noAccessPermissions } from './fixtures';
  * @returns {FormattedPermission} formattedPermission
  */
 const getFormattedPermission = (
-  accessLevelPermissions: Permission[]): FormattedPermission => accessLevelPermissions.reduce(
-    (formattedPermission, permission) => {
-      const permissionType = camelCase(permission.type);
+	accessLevelPermissions: Permission[],
+): FormattedPermission =>
+	accessLevelPermissions.reduce((formattedPermission, permission) => {
+		const permissionType = camelCase(permission.type);
 
-      const updatedPermissions = {
-        ...formattedPermission,
-        [permissionType]: true,
-      };
+		const updatedPermissions = {
+			...formattedPermission,
+			[permissionType]: true,
+		};
 
-      if (['add', 'edit', 'delete'].includes(permissionType)) {
-        updatedPermissions.view = true;
-      }
+		if (['add', 'edit', 'delete'].includes(permissionType)) {
+			updatedPermissions.view = true;
+		}
 
-      return permissionType === 'fullAccess'
-        ? fullAccess
-        : updatedPermissions;
-    },
-    noAccess
-  );
+		return permissionType === 'fullAccess' ? fullAccess : updatedPermissions;
+	}, noAccess);
 
 /**
  * Converts resourceAccessLevels to an object with the resource names
@@ -52,17 +52,14 @@ const getFormattedPermission = (
  *
  * @returns {FormattedPermissions} formattedPermissions
  */
-const formatPermissions = (role: UserRole): FormattedPermissions => role.resourceAccessLevels
-    .reduce(
-      (resources, accessLevel) => {
-        const formattedPermission = getFormattedPermission(accessLevel.permissions);
+const formatPermissions = (role: UserRole): FormattedPermissions =>
+	role.resourceAccessLevels.reduce((resources, accessLevel) => {
+		const formattedPermission = getFormattedPermission(accessLevel.permissions);
 
-        return {
-          ...resources,
-          [camelCase(accessLevel.resource.name)]: formattedPermission,
-        };
-      },
-      noAccessPermissions
-    );
+		return {
+			...resources,
+			[camelCase(accessLevel.resource.name)]: formattedPermission,
+		};
+	}, noAccessPermissions);
 
 export default formatPermissions;

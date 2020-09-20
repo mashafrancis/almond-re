@@ -15,34 +15,36 @@ import { displaySnackMessage } from '@modules/snack';
 // components
 const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
-export const SupportPage = (props: SupportPageProps) =>
-  <>
-    <Row>
-      <Cell columns={7} desktopColumns={7} tabletColumns={8}
-            phoneColumns={4}>
-        {(window.innerWidth < 539) &&
-        <div className="main-subheader"><h3>Help</h3></div>}
-      </Cell>
-    </Row>
-    <Row>
-      <Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-        <GeneralCardInfo
-          mainHeader="Support"
-          subHeader="Need help? Ask for support from our maintenance team"
-          icon={<SpaIcon className="content-icon general-info-icon" />}
-          />
-      </Cell>
-    </Row>
-  </>
-;
+export const SupportPage = (props: SupportPageProps) => (
+	<>
+		<Row>
+			<Cell
+columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
+				{window.innerWidth < 539 && (
+					<div className="main-subheader">
+						<h3>Help</h3>
+					</div>
+				)}
+			</Cell>
+		</Row>
+		<Row>
+			<Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
+				<GeneralCardInfo
+					mainHeader="Support"
+					subHeader="Need help? Ask for support from our maintenance team"
+					icon={<SpaIcon className="content-icon general-info-icon" />}
+				/>
+			</Cell>
+		</Row>
+	</>
+);
 
-
-export const mapStateToProps = state => ({
-  error: state.error,
+export const mapStateToProps = (state) => ({
+	error: state.error,
 });
 
-export const mapDispatchToProps = dispatch => ({
-  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+export const mapDispatchToProps = (dispatch) => ({
+	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupportPage);

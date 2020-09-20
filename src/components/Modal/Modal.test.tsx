@@ -8,14 +8,14 @@ import { render } from '@testing-library/react';
 import Modal from './index';
 
 describe('AnalyticsCard component', () => {
-  const props = {
-    isModalOpen: false,
-    renderHeader: () => 'Header',
-    renderContent: () => 'Context'
-  }
+	const props = {
+		isModalOpen: false,
+		renderHeader: () => 'Header',
+		renderContent: () => 'Context',
+	};
 
-  it('should render correctly', () => {
-    const { asFragment } = render(<Modal {...props} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
+	it('should render correctly', () => {
+		const { asFragment } = render(<Modal {...props} />);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

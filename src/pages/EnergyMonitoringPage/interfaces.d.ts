@@ -1,6 +1,5 @@
 export interface EnergyMonitoringPageProps {
-  displaySnackMessage: (message) => Promise<any>;
+	displaySnackMessage: (message) => Promise<any>;
 }
 
-export interface EnergyMonitoringPageState {
-}
+export interface EnergyMonitoringPageState {}

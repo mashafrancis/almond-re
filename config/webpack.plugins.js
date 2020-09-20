@@ -1,35 +1,36 @@
-const dotenv = require('dotenv');
+const dotenv = require('dotenv')
 
 // importing webpack dependencies
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const htmlWebpackPlugin = require('html-webpack-plugin');
-const miniCssExtractPlugin = require('mini-css-extract-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin')
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 /**
  * Parses environment variables into a format acceptable by the webpack DefinePlugin
  * @param {object} configs Object literal containing configuration variables to
  * parse before sending them to react
  */
-const parseConfigs = configs => Object.keys(configs || {}).reduce(
-  (acc, val) => ({ ...acc, [val]: JSON.stringify(configs[val]) }),
-  {},
-);
+const parseConfigs = (configs) =>
+  Object.keys(configs || {}).reduce(
+    (acc, val) => ({ ...acc, [val]: JSON.stringify(configs[val]) }),
+    {},
+  )
 
 // fetch system environment variables
-const systemVariables = parseConfigs(process.env);
+const systemVariables = parseConfigs(process.env)
 
 // fetch environment variables from the dotenv file
-const { parsed: dotenvConfigs } = dotenv.config();
+const { parsed: dotenvConfigs } = dotenv.config()
 
 // process the environment variables from the dotenv file
-const processedDotenvConfigs = parseConfigs(dotenvConfigs);
+const processedDotenvConfigs = parseConfigs(dotenvConfigs)
 
 const definePlugin = new webpack.DefinePlugin({
   'process.env': { ...processedDotenvConfigs, ...systemVariables },
-});
+})
 
 // const definePlugin = new webpack.DefinePlugin({
 //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -72,7 +73,7 @@ const cleanWebpack = new CleanWebpackPlugin({
   //
   // default: true
   protectWebpackAssets: true,
-});
+})
 const htmlWebpack = new htmlWebpackPlugin({
   template: './public/index.html',
   filename: 'index.html',
@@ -91,34 +92,36 @@ const htmlWebpack = new htmlWebpackPlugin({
     minifyCSS: true,
     minifyURLs: true,
   },
-});
+})
 const miniCssExtract = new miniCssExtractPlugin({
   filename: '[name].[contenthash].css',
   chunkFilename: '[id].[contenthash].css',
-  ignoreOrder: true,  // Enabled to remove warnings about conflicting order
-});
-const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
-const hashedPlugin = new webpack.HashedModuleIdsPlugin();
+  ignoreOrder: true, // Enabled to remove warnings about conflicting order
+})
+const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin()
+const hashedPlugin = new webpack.HashedModuleIdsPlugin()
 const manifestPlugin = new ManifestPlugin({
   fileName: './public/asset-manifest.json', // Not to confuse with manifest.json
-});
+})
 
 // const copyPlugin = new CopyWebpackPlugin([
 //   { from: 'public' }, // define the path of the files to be copied
 // ]);
 
 const copyPlugin = new CopyWebpackPlugin({
-  patterns: [
-    { from: 'public' },
-  ],
-});
+  patterns: [{ from: 'public' }],
+})
 
 // const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
 //   openAnalyzer: false
 // })
 
 const contextReplacementPlugin = new webpack.ContextReplacementPlugin(
-  /\.\/locale$/, 'empty-module', false, /js$/);
+  /\.\/locale$/,
+  'empty-module',
+  false,
+  /js$/,
+)
 
 module.exports = {
   cleanWebpack,
@@ -131,4 +134,4 @@ module.exports = {
   manifestPlugin,
   copyPlugin,
   contextReplacementPlugin,
-};
+}

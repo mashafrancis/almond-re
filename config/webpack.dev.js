@@ -1,9 +1,7 @@
-const { merge } = require('webpack-merge');
-const config = require('./webpack.config.js');
-const path = require('path');
-const {
-  hotModuleReplacementPlugin,
-} = require('./webpack.plugins');
+const { merge } = require('webpack-merge')
+const path = require('path')
+const config = require('./webpack.config.js')
+const { hotModuleReplacementPlugin } = require('./webpack.plugins')
 
 module.exports = merge(config, {
   output: {
@@ -32,4 +30,4 @@ module.exports = merge(config, {
     },
   },
   plugins: [hotModuleReplacementPlugin],
-});
+})

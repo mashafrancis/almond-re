@@ -1,21 +1,17 @@
-import { History } from 'history';
-
 export interface EnterDeviceIdPageProps {
-  verifyUserDevice: (id) => Promise<any>;
-  displaySnackMessage?: (message) => Promise<any>;
-  error?: object;
-  isLoading: boolean;
-  history?: History;
-  getUserDetails: () => Promise<any>;
+	verifyUserDevice: (id) => Promise<any>;
+	displaySnackMessage?: (message) => Promise<any>;
+	error?: object;
+	isLoading: boolean;
 }
 
 export interface EnterDeviceIdPageState {
-  isLoading: boolean;
+	isLoading: boolean;
 }
 
 export interface StateToProps {
-  error?: any;
-  device: {
-    isLoading: boolean;
-  };
+	error?: any;
+	device: {
+		isLoading: boolean;
+	};
 }

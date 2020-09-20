@@ -51,7 +51,6 @@ module.exports = {
     '@pages/(.*)$': '<rootDir>src/pages/$1',
     '@placeholders/(.*)$': '<rootDir>src/placeholders/$1',
   },
-  // resolver: '<rootDir>/resolver.js',
   moduleDirectories: ['utils', 'modules', 'node_modules'],
   collectCoverage: true,
   collectCoverageFrom: [

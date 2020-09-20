@@ -1,80 +1,55 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "lib": [
-      "es6",
-      "es2017",
-      "esnext.asynciterable",
-      "dom"
-    ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "@types/jest",
-      "@types/node"
-    ],
-    "downlevelIteration": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "strictBindCallApply": true,
-//    "strict": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-//    "noImplicitAny": true,
-    "declaration": true,
-    "declarationMap": true,
-    "removeComments": true,
-    "skipLibCheck": true,
-    "module": "esnext",
-    "pretty": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "allowJs": true,
-    "noEmit": false,
-    "importHelpers": true,
-    "jsx": "react",
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@placeholders/*": [
-        "src/placeholders/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@modules/*": [
-        "src/store/modules/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@context/*": [
-        "src/context/*"
-      ]
-    }
-  },
-  "include": [
-    "./src/**/*.tsx",
-    "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    ".yarn",
-    "tests",
-    "dist",
-//    "**/*.test.tsx",
-//    "**/*.test.ts",
-    "nginx",
-    "public",
-    "jest",
-    "src/setupMocks.ts"
-  ]
+	"compilerOptions": {
+		"target": "es2017",
+		"lib": ["es6", "es2017", "esnext.asynciterable", "dom"],
+		"typeRoots": ["./node_modules/@types"],
+		"types": ["@types/jest", "@types/node"],
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"forceConsistentCasingInFileNames": true,
+		"strictNullChecks": true,
+		"noImplicitThis": true,
+		"strictBindCallApply": true,
+		//    "strict": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		//    "noImplicitAny": true,
+		"declaration": true,
+		"declarationMap": true,
+		"removeComments": true,
+		"skipLibCheck": true,
+		"module": "esnext",
+		"pretty": true,
+		"sourceMap": true,
+		"outDir": "./dist",
+		"allowJs": true,
+		"noEmit": false,
+		"importHelpers": true,
+		"jsx": "react",
+		"baseUrl": "./",
+		"paths": {
+			"@components/*": ["src/components/*"],
+			"@placeholders/*": ["src/placeholders/*"],
+			"@pages/*": ["src/pages/*"],
+			"@modules/*": ["src/store/modules/*"],
+			"@utils/*": ["src/utils/*"],
+			"@context/*": ["src/context/*"]
+		}
+	},
+	"include": ["./src/**/*.tsx", "./src/**/*"],
+	"exclude": [
+		"node_modules",
+		".yarn",
+		"tests",
+		"dist",
+		//    "**/*.test.tsx",
+		//    "**/*.test.ts",
+		"nginx",
+		"public",
+		"jest",
+		"src/setupMocks.ts"
+	]
 }

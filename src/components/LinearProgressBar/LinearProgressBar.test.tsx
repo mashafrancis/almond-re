@@ -8,10 +8,10 @@ import { render } from '@testing-library/react';
 import LinearProgressBar from './index';
 
 describe('GeneralCardInfo component', () => {
-  const props = {};
+	const props = {};
 
-  it('should render correctly', () => {
-    const { asFragment } = render(<LinearProgressBar {...props} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
+	it('should render correctly', () => {
+		const { asFragment } = render(<LinearProgressBar {...props} />);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

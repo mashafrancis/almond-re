@@ -12,23 +12,24 @@ import authorize from '@utils/authorize';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = props => {
-  if (!props.authorize || authorize(props.authorize, { strict: props.strict })) {
-    return (
-      <Route { ...props } />
-    );
-  }
+const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = (props) => {
+	if (
+		!props.authorize ||
+		authorize(props.authorize, { strict: props.strict })
+	) {
+		return <Route {...props} />;
+	}
 
-  if (props.fallbackView) { return props.fallbackView; }
+	if (props.fallbackView) {
+		return props.fallbackView;
+	}
 
-  return (
-    <Redirect to={props.redirectTo} />
-  );
+	return <Redirect to={props.redirectTo} />;
 };
 
 RestrictedRoute.defaultProps = {
-  redirectTo: '/',
-  strict: false,
+	redirectTo: '/',
+	strict: false,
 };
 
 export default RestrictedRoute;

@@ -9,20 +9,21 @@ import { ClassConditions } from './interfaces';
  *
  * @returns {string}
  */
-const classNameFormatter = (classConditions: ClassConditions, otherClasses?: string) => {
-  const className = Object.keys(classConditions)
-    .reduce(
-      (formattedClasses, currentClass) => {
-        const showClass = classConditions[currentClass];
+const classNameFormatter = (
+	classConditions: ClassConditions,
+	otherClasses?: string,
+) => {
+	const className = Object.keys(classConditions)
+		.reduce((formattedClasses, currentClass) => {
+			const showClass = classConditions[currentClass];
 
-        return showClass
-          ? formattedClasses.concat(` ${currentClass}`)
-          : formattedClasses;
-      },
-      ''
-    ).trim();
+			return showClass
+				? formattedClasses.concat(` ${currentClass}`)
+				: formattedClasses;
+		}, '')
+		.trim();
 
-  return otherClasses ? className.concat(` ${otherClasses}`) : className;
+	return otherClasses ? className.concat(` ${otherClasses}`) : className;
 };
 
 export default classNameFormatter;

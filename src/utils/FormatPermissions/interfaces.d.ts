@@ -1,7 +1,7 @@
 export interface FormattedPermission {
-  [key: string]: boolean;
+	[key: string]: boolean;
 }
 
 export interface FormattedPermissions {
-  [key: string]: FormattedPermission;
+	[key: string]: FormattedPermission;
 }

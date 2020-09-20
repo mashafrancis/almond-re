@@ -45,22 +45,26 @@ export const expiredToken = expiredTokenString.replace(/(\r\n|\n|\r)/gm, '');
  * @param {object} initialState
  * @param {object} extraArgument 3rd argument to pass to thunks, after dispatch and getState
  */
-export const mockStore = (extraArgument: {}, initialState = {}) => createStore(
-  reducer,
-  initialState,
-  applyMiddleware(thunk.withExtraArgument(extraArgument),
-  ));
+export const mockStore = (extraArgument: {}, initialState = {}) =>
+	createStore(
+		reducer,
+		initialState,
+		applyMiddleware(thunk.withExtraArgument(extraArgument)),
+	);
 
 /**
  * Mock for axios request.
  */
-export const axiosMock = (url, response, resolve = true) => new Proxy({}, {
-  get(target, key) {
-    return (URL, payload) => resolve
-      ? Promise.resolve(response)
-      : Promise.reject(response);
-  },
-});
+export const axiosMock = (url, response, resolve = true) =>
+	new Proxy(
+		{},
+		{
+			get(target, key) {
+				return (URL, payload) =>
+					resolve ? Promise.resolve(response) : Promise.reject(response);
+			},
+		},
+	);
 
 /**
  * Utility mock store that can be used for all instances where one is required
@@ -69,33 +73,38 @@ export const axiosMock = (url, response, resolve = true) => new Proxy({}, {
  * @param {Object} initialState
  */
 export const reduxMockStore = (mock = axiosMock('', {}), initialState = {}) =>
-  configureMockStore([thunk.withExtraArgument(mock)])(initialState);
+	configureMockStore([thunk.withExtraArgument(mock)])(initialState);
 
 export const renderWithRedux: any = (
-  ui: JSX.Element,
-  {
-    initialState = {},
-    extraArgument = {},
-    store = mockStore(extraArgument, initialState),
-    ...renderOptions
-  },
+	ui: JSX.Element,
+	{
+		initialState = {},
+		extraArgument = {},
+		store = mockStore(extraArgument, initialState),
+		...renderOptions
+	},
 ) => {
-  const Wrapper = ({ children }: any) => <Provider store={store}>{children}</Provider>;
-  return render(ui, { wrapper: Wrapper, ...renderOptions });
+	const Wrapper = ({ children }: any) => (
+		<Provider store={store}>{children}</Provider>
+	);
+	return render(ui, { wrapper: Wrapper, ...renderOptions });
 };
 
 interface RenderWithRouterProps {
-  route?: string;
-  history?: MemoryHistory;
+	route?: string;
+	history?: MemoryHistory;
 }
 
 export const renderWithRouter = (
-  ui: ReactNode,
-  { route = '/', history = createMemoryHistory({ initialEntries: [route] }) }: RenderWithRouterProps = {},
+	ui: ReactNode,
+	{
+		route = '/',
+		history = createMemoryHistory({ initialEntries: [route] }),
+	}: RenderWithRouterProps = {},
 ): any => ({
-    ...render(<Router history={history}>{ui}</Router>),
-    history,
-  });
+	...render(<Router history={history}>{ui}</Router>),
+	history,
+});
 
 // export const renderWithRouter = (
 //   ui: JSX.Element,
@@ -120,18 +129,19 @@ export const renderWithRouter = (
  * @returns {jest.Expect}
  */
 export const dispatchMethodMock = (
-  store: { dispatch: (arg0: any) => Promise<any>; getActions: () => any; }, thunk: any, expectedActions: any
-  ): any =>
-  store.dispatch(thunk)
-    .then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    })
-;
+	store: { dispatch: (arg0: any) => Promise<any>; getActions: () => any },
+	thunk: any,
+	expectedActions: any,
+): any =>
+	store.dispatch(thunk).then(() => {
+		expect(store.getActions()).toEqual(expectedActions);
+	});
 
 /**
  * Use this if you want to run assertions only after all promises have resolved.
  */
-export const flushPromises = () => new Promise(resolve => setImmediate(resolve));
+export const flushPromises = () =>
+	new Promise((resolve) => setImmediate(resolve));
 
 /**
  * Adds a mock adapter to the http axios instance
@@ -142,29 +152,30 @@ export const flushPromises = () => new Promise(resolve => setImmediate(resolve))
  * @returns {void}
  */
 export const axiosMockAdapter = (response: any, error: any) => {
-  http.defaults.adapter = config => new Promise((resolve, reject) => {
-    if (error) {
-      error.config = config;
-      reject(error);
-    }
+	http.defaults.adapter = (config) =>
+		new Promise((resolve, reject) => {
+			if (error) {
+				error.config = config;
+				reject(error);
+			}
 
-    response.config = config;
-    resolve(response);
-  });
+			response.config = config;
+			resolve(response);
+		});
 };
 
 // mock router context instead of using Memory Router
 export const routerContext = {
-  context: {
-    router: {
-      history: createMemoryHistory(),
-      route: {
-        location: { pathname: '/' },
-        match: { isExact: true },
-      },
-    },
-  },
-  childContextTypes: { router: () => null },
+	context: {
+		router: {
+			history: createMemoryHistory(),
+			route: {
+				location: { pathname: '/' },
+				match: { isExact: true },
+			},
+		},
+	},
+	childContextTypes: { router: () => null },
 };
 
 /**
@@ -175,17 +186,17 @@ export const routerContext = {
  * @returns {Object}
  */
 export const fullPermissionsState = (resource: any) => ({
-  user: {
-    permissions: {
-      [resource]: {
-        fullAccess: true,
-        edit: true,
-        delete: true,
-        view: true,
-        add: true,
-      },
-    },
-  },
+	user: {
+		permissions: {
+			[resource]: {
+				fullAccess: true,
+				edit: true,
+				delete: true,
+				view: true,
+				add: true,
+			},
+		},
+	},
 });
 
 /**
@@ -196,37 +207,37 @@ export const fullPermissionsState = (resource: any) => ({
  * @returns {Object}
  */
 export const viewOnlyPermissionsState = (resource: any) => ({
-  user: {
-    permissions: {
-      [resource]: {
-        fullAccess: false,
-        edit: false,
-        delete: false,
-        view: true,
-        add: false,
-      },
-    },
-  },
+	user: {
+		permissions: {
+			[resource]: {
+				fullAccess: false,
+				edit: false,
+				delete: false,
+				view: true,
+				add: false,
+			},
+		},
+	},
 });
 
 export const errorMessage = {
-  response: {
-    data: {
-      message: 'Errored schedule',
-    },
-    status: 400,
-  },
+	response: {
+		data: {
+			message: 'Errored schedule',
+		},
+		status: 400,
+	},
 };
 
-export const WindowSize = () =>
-  <div>
-    <label htmlFor="inner-width">Inner Width</label>
-    <div id="inner-width">{window.innerWidth}</div>
-    <label htmlFor="inner-height">Inner Height</label>
-    <div id="inner-height">{window.innerHeight}</div>
-    <label htmlFor="outer-width">Outer Width</label>
-    <div id="outer-width">{window.outerWidth}</div>
-    <label htmlFor="outer-height">Outer Height</label>
-    <div id="outer-height">{window.outerHeight}</div>
-  </div>
-;
+export const WindowSize = () => (
+	<div>
+		<label htmlFor="inner-width">Inner Width</label>
+		<div id="inner-width">{window.innerWidth}</div>
+		<label htmlFor="inner-height">Inner Height</label>
+		<div id="inner-height">{window.innerHeight}</div>
+		<label htmlFor="outer-width">Outer Width</label>
+		<div id="outer-width">{window.outerWidth}</div>
+		<label htmlFor="outer-height">Outer Height</label>
+		<div id="outer-height">{window.outerHeight}</div>
+	</div>
+);

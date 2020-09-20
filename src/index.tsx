@@ -1,5 +1,5 @@
 // react libraries
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 
 // third party packages
@@ -15,10 +15,12 @@ import store from './store';
 const rootNode = document.getElementById('root');
 
 render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
-  rootNode,
+	<StrictMode>
+		<Provider store={store}>
+			<Router>
+				<App />
+			</Router>
+		</Provider>
+	</StrictMode>,
+	rootNode,
 );

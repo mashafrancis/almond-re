@@ -9,41 +9,41 @@ import moment from 'moment';
 import ActivityLogCard from './index';
 
 describe('ActivityLogCard component', () => {
-  const props = {
-    log: 'Pump broken',
-    date: '2019-10-30T08:00:42.767Z',
-    redirect: jest.fn(),
-    classes: 'class',
-    type: 'info',
-  };
+	const props = {
+		log: 'Pump broken',
+		date: '2019-10-30T08:00:42.767Z',
+		redirect: jest.fn(),
+		classes: 'class',
+		type: 'info',
+	};
 
-  it('should render correctly', () => {
-    const { asFragment } = render(<ActivityLogCard {...props} />);
-    expect(asFragment()).toMatchSnapshot();
+	it('should render correctly', () => {
+		const { asFragment } = render(<ActivityLogCard {...props} />);
+		expect(asFragment()).toMatchSnapshot();
 
-    const elemHeader = screen.getByTestId('header');
-    expect(elemHeader.innerHTML).toBe('Pump broken');
+		const elemHeader = screen.getByTestId('header');
+		expect(elemHeader.innerHTML).toBe('Pump broken');
 
-    const elemDetails = screen.getByTestId('details');
-    expect(elemDetails.innerHTML).toBe(moment(props.date).format('LLLL'));
-  });
+		const elemDetails = screen.getByTestId('details');
+		expect(elemDetails.innerHTML).toBe(moment(props.date).format('LLLL'));
+	});
 
-  it('should render log details info when called', () => {
-    render(<ActivityLogCard {...props} />);
-    const elemType = screen.getByTestId('type');
+	it('should render log details info when called', () => {
+		render(<ActivityLogCard {...props} />);
+		const elemType = screen.getByTestId('type');
 
-    expect(elemType.classList[0]).toBe('log-details-info');
-  });
+		expect(elemType.classList[0]).toBe('log-details-info');
+	});
 
-  it('should render log details error when called', () => {
-    const props = {
-      log: 'Pump broken',
-      date: '2019-10-30T08:00:42.767Z',
-      type: 'error',
-    };
-    render(<ActivityLogCard {...props} />);
-    const elemType = screen.getByTestId('type');
+	it('should render log details error when called', () => {
+		const props = {
+			log: 'Pump broken',
+			date: '2019-10-30T08:00:42.767Z',
+			type: 'error',
+		};
+		render(<ActivityLogCard {...props} />);
+		const elemType = screen.getByTestId('type');
 
-    expect(elemType.classList[0]).toBe('log-details-error');
-  });
+		expect(elemType.classList[0]).toBe('log-details-error');
+	});
 });

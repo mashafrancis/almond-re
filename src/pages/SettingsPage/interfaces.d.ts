@@ -1,5 +1,5 @@
 export interface SettingsPageProps {
-  match: {
-    url: string;
-  };
+	match: {
+		url: string;
+	};
 }

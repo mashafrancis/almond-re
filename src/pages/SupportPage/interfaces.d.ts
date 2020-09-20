@@ -1,2 +1,1 @@
-export interface SupportPageProps {
-}
+export interface SupportPageProps {}

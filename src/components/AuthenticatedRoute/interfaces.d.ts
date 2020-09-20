@@ -1,5 +1,5 @@
 export interface AuthenticateRouteProps {
-  [x: string]: any;
-  location?: any;
-  component?: any;
+	[x: string]: any;
+	location?: any;
+	component?: any;
 }

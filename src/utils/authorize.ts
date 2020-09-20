@@ -15,30 +15,37 @@ const defaultConfig = { strict: false };
  *
  * @returns {boolean} allowAccess
  */
-const authorize = (accessLevels: string | string[], { strict } = defaultConfig) => {
-  let allowAccess = false;
+const authorize = (
+	accessLevels: string | string[],
+	{ strict } = defaultConfig,
+) => {
+	let allowAccess = false;
 
-  const getAccess = (accessLevel: string) => {
-    const [resource, permission = 'view'] = accessLevel.split(':');
-    const userPermissions = store.getState().user.permissions;
+	const getAccess = (accessLevel: string) => {
+		const [resource, permission = 'view'] = accessLevel.split(':');
+		const userPermissions = store.getState().user.permissions;
 
-    return Boolean(userPermissions[resource]) &&
-      userPermissions[resource][permission];
-  };
+		return (
+			Boolean(userPermissions[resource]) &&
+			userPermissions[resource][permission]
+		);
+	};
 
-  if (typeof accessLevels === 'string') {
-    allowAccess = getAccess(accessLevels);
-  }
+	if (typeof accessLevels === 'string') {
+		allowAccess = getAccess(accessLevels);
+	}
 
-  if (accessLevels instanceof Array) {
-    const permissions = accessLevels.map(accessLevel => getAccess(accessLevel));
+	if (accessLevels instanceof Array) {
+		const permissions = accessLevels.map((accessLevel) =>
+			getAccess(accessLevel),
+		);
 
-    allowAccess = strict
-      ? permissions.every(permission => permission)
-      : permissions.some(permission => permission);
-  }
+		allowAccess = strict
+			? permissions.every((permission) => permission)
+			: permissions.some((permission) => permission);
+	}
 
-  return allowAccess;
+	return allowAccess;
 };
 
 export default authorize;

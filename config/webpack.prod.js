@@ -1,10 +1,10 @@
-const { merge } = require('webpack-merge');
-const cssNano = require('cssnano');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const config = require('./webpack.config.js');
+const { merge } = require('webpack-merge')
+const cssNano = require('cssnano')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const config = require('./webpack.config.js')
 
 module.exports = merge(config, {
   output: {
@@ -49,17 +49,19 @@ module.exports = merge(config, {
           name(module) {
             // get the name. E.g. node_modules/packageName/not/this/part.js
             // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+            )[1]
 
             // npm package names are URL-safe, but some servers don't like @ symbols
-            return `${packageName.replace('@', '')}`;
+            return `${packageName.replace('@', '')}`
           },
         },
         // Split code common to all chunks to its own chunk
         commons: {
-          name: 'commons',    // The name of the chunk containing all common code
+          name: 'commons', // The name of the chunk containing all common code
           chunks: 'initial',
-          minChunks: 2,        // This is the number of modules
+          minChunks: 2, // This is the number of modules
         },
       },
     },
@@ -95,4 +97,4 @@ module.exports = merge(config, {
     tls: 'empty',
     child_process: 'empty',
   },
-});
+})

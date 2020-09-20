@@ -10,26 +10,23 @@ import { DashboardCardProps } from './interfaces';
 import './DashboardCard.scss';
 
 const DashboardCard = (props: DashboardCardProps): JSX.Element => {
-  const {
-    classes,
-    heading,
-    actionItem,
-    body,
-  } = props;
+	const { classes, heading, actionItem, body } = props;
 
-  return (
-    <Card variant="outlined">
-      <div className="dashboard-card">
-        <div className="card-header">
-          <h5 data-testid="heading" className="card-header__title">{heading}</h5>
-          <div className="card-header__right-header">{actionItem}</div>
-        </div>
-        <div data-testid="body" className={`${classes} card-body`}>
-          {body}
-        </div>
-      </div>
-    </Card>
-  );
+	return (
+		<Card variant="outlined">
+			<div className="dashboard-card">
+				<div className="card-header">
+					<h5 data-testid="heading" className="card-header__title">
+						{heading}
+					</h5>
+					<div className="card-header__right-header">{actionItem}</div>
+				</div>
+				<div data-testid="body" className={`${classes} card-body`}>
+					{body}
+				</div>
+			</div>
+		</Card>
+	);
 };
 
 export default DashboardCard;

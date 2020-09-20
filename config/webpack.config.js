@@ -1,5 +1,5 @@
-const path = require('path');
-const { importer } = require('./webpack.util');
+const path = require('path')
+const { importer } = require('./webpack.util')
 const {
   definePlugin,
   cleanWebpack,
@@ -10,9 +10,9 @@ const {
   manifestPlugin,
   copyPlugin,
   contextReplacementPlugin,
-} = require('./webpack.plugins');
+} = require('./webpack.plugins')
 
-const isDevMode = process.env.NODE_ENV !== 'production';
+const isDevMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
@@ -72,9 +72,11 @@ module.exports = {
             loader: require.resolve('postcss-loader'),
             options: {
               postcssOptions: {
-                plugins: () => [require('autoprefixer')({
-                  'overrideBrowserslist': ['> 1%', 'last 2 versions'],
-                })],
+                plugins: () => [
+                  require('autoprefixer')({
+                    overrideBrowserslist: ['> 1%', 'last 2 versions'],
+                  }),
+                ],
               },
             },
           },
@@ -134,4 +136,4 @@ module.exports = {
     copyPlugin,
     contextReplacementPlugin,
   ],
-};
+}

@@ -1,3 +1,12 @@
+import { UserDetails } from '@modules/user/interfaces';
+import { FormattedPermissions } from '@utils/FormatPermissions/interfaces';
+
+export type State = {
+	userDetails: UserDetails;
+	permissions: FormattedPermissions;
+	errors: null;
+};
+
 export const GET_USER_DETAILS_REQUEST = 'almond/GET_USER_DETAILS_REQUEST';
 export type GET_USER_DETAILS_REQUEST = typeof GET_USER_DETAILS_REQUEST;
 

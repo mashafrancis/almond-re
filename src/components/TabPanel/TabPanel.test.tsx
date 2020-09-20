@@ -8,17 +8,17 @@ import { render, screen } from '@testing-library/react';
 import TabPanel from './index';
 
 describe('TabPanel component', () => {
-  const props = {
-    index: 1,
-    value: 1,
-  }
+	const props = {
+		index: 1,
+		value: 1,
+	};
 
-  const { asFragment } = render(<TabPanel {...props} />);
+	const { asFragment } = render(<TabPanel {...props} />);
 
-  it('should render correctly', () => {
-    expect(asFragment()).toMatchSnapshot();
+	it('should render correctly', () => {
+		expect(asFragment()).toMatchSnapshot();
 
-    const elem = screen.getByTestId('tab-panel');
-    expect(elem.classList[0]).toBe('tab-panel');
-  });
+		const elem = screen.getByTestId('tab-panel');
+		expect(elem.classList[0]).toBe('tab-panel');
+	});
 });
