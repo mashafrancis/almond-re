@@ -1,2 +1,1 @@
-export interface HelpPageProps {
-}
+export interface HelpPageProps {}

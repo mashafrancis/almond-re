@@ -1,3 +1,3 @@
 export type ClassConditions = {
-  [key: string]: boolean;
+	[key: string]: boolean;
 };

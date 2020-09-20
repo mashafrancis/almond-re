@@ -12,10 +12,10 @@ import { INTERNAL_SERVER_ERROR_MESSAGE } from './types';
  * @param error
  */
 export const displayInternalServerErrorMessage = (
-  error = true,
+	error = true,
 ): InternalServerErrorMessageAction => ({
-  error,
-  type: INTERNAL_SERVER_ERROR_MESSAGE,
+	error,
+	type: INTERNAL_SERVER_ERROR_MESSAGE,
 });
 
 /**
@@ -27,18 +27,18 @@ export const displayInternalServerErrorMessage = (
  * @returns {object}
  */
 export const reducer = (
-  state = {
-    error: false,
-  },
-  action: InternalServerErrorMessageAction,
+	state = {
+		error: false,
+	},
+	action: InternalServerErrorMessageAction,
 ) => {
-  switch (action.type) {
-    case INTERNAL_SERVER_ERROR_MESSAGE:
-      const { error } = action;
-      return { error };
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case INTERNAL_SERVER_ERROR_MESSAGE:
+			const { error } = action;
+			return { error };
+		default:
+			return state;
+	}
 };
 
 export default reducer;

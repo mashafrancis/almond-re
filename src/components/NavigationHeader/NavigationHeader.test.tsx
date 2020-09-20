@@ -5,17 +5,16 @@ import React from 'react';
 import NavigationHeader from './index';
 import { renderWithRouter } from '../../testHelpers';
 
-
 describe('The Auth Header Component', () => {
-  const props = {
-    forwardButtonName: '',
-    backwardButtonName: '',
-    forwardLink: '',
-    backwardLink: '',
-  };
+	const props = {
+		forwardButtonName: '',
+		backwardButtonName: '',
+		forwardLink: '',
+		backwardLink: '',
+	};
 
-  it('should render properly', () => {
-    const { asFragment } = renderWithRouter(<NavigationHeader {...props} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
+	it('should render properly', () => {
+		const { asFragment } = renderWithRouter(<NavigationHeader {...props} />);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

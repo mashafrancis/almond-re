@@ -1,40 +1,40 @@
 export interface Action {
-  readonly type: string;
+	readonly type: string;
 
-  [key: string]: any;
+	[key: string]: any;
 }
 
 export interface PageMeta {
-  firstPage?: string;
-  currentPage?: string;
-  nextPage?: string;
-  previousPage?: string;
-  page: number;
-  pagesCount: number;
-  totalCount: number;
+	firstPage?: string;
+	currentPage?: string;
+	nextPage?: string;
+	previousPage?: string;
+	page: number;
+	pagesCount: number;
+	totalCount: number;
 }
 
 export interface HistoryItem {
-  id: string;
-  action: string;
-  actor: {
-    tokenId: string,
-    name: string
-  };
-  activity: string;
-  createdAt: string;
+	id: string;
+	action: string;
+	actor: {
+		tokenId: string;
+		name: string;
+	};
+	activity: string;
+	createdAt: string;
 }
 
 export interface ValidationObject {
-  isValid: (value: any) => boolean;
-  message: string;
+	isValid: (value: any) => boolean;
+	message: string;
 }
 
 export interface ErrorObject {
-  response: {
-    data: {
-      message: any;
-    };
-    status: number;
-  };
+	response: {
+		data: {
+			message: any;
+		};
+		status: number;
+	};
 }

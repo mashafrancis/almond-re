@@ -1,17 +1,17 @@
 import isArrayNotNull from './checkArrayEmpty';
 
 describe('The isArrayNotNull function', () => {
-  it('should return true if the array has a value', () => {
-    const arr = [{ name: 'Masha' }];
-    const check = isArrayNotNull(arr);
+	it('should return true if the array has a value', () => {
+		const arr = [{ name: 'Masha' }];
+		const check = isArrayNotNull(arr);
 
-    expect(check).toBeTruthy();
-  });
+		expect(check).toBeTruthy();
+	});
 
-  it('should return false if the array is null', () => {
-    const arr = [];
-    const check = isArrayNotNull(arr);
+	it('should return false if the array is null', () => {
+		const arr = [];
+		const check = isArrayNotNull(arr);
 
-    expect(check).toBeFalsy();
-  });
+		expect(check).toBeFalsy();
+	});
 });

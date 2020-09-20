@@ -11,12 +11,12 @@ import { DISPLAY_SNACK_MESSAGE } from './types';
  * @param message
  */
 export const displaySnackMessage = (
-  message: string,
+	message: string,
 ): DisplaySnackMessageAction => ({
-  snack: {
-    message,
-  },
-  type: DISPLAY_SNACK_MESSAGE,
+	snack: {
+		message,
+	},
+	type: DISPLAY_SNACK_MESSAGE,
 });
 
 /**
@@ -25,15 +25,11 @@ export const displaySnackMessage = (
  * @param {Object} state
  * @param {DisplaySnackMessageAction} action
  */
-export const reducer = (
-  state = {},
-  action: DisplaySnackMessageAction,
-) => {
-  if (action.type === DISPLAY_SNACK_MESSAGE) {
-    return action.snack;
-  }
-  return state;
-
+export const reducer = (state = {}, action: DisplaySnackMessageAction) => {
+	if (action.type === DISPLAY_SNACK_MESSAGE) {
+		return action.snack;
+	}
+	return state;
 };
 
 export default reducer;

@@ -11,26 +11,22 @@ import { UserContext } from '@context/UserContext';
 import './AnalyticsPage.scss';
 
 // interfaces
-import {
-  AnalyticsPageProps,
-} from './interfaces';
 import AdminAnalytics from '@pages/AnalyticsPage/AdminAnalytics';
 import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';
+import { AnalyticsPageProps } from './interfaces';
 
 export const AnalyticsPage = (props: AnalyticsPageProps): JSX.Element => {
-  const user = React.useContext(UserContext);
+	const user = React.useContext(UserContext);
 
-  return (
-    user.isAdmin ? <AdminAnalytics /> : <RegularUserAnalytics />
-  );
+	return user.isAdmin ? <AdminAnalytics /> : <RegularUserAnalytics />;
 };
 
-export const mapStateToProps = state => ({
-  error: state.error,
+export const mapStateToProps = (state) => ({
+	error: state.error,
 });
 
-export const mapDispatchToProps = dispatch => ({
-  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+export const mapDispatchToProps = (dispatch) => ({
+	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsPage);

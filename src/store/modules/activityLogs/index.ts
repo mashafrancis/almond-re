@@ -8,20 +8,20 @@ import { AnyAction } from 'redux';
  * @returns {LogActivity}
  */
 export const logActivity = (activityLogs: any): LogActivity => ({
-  activityLogs,
-  type: LOG_ACTIVITY,
+	activityLogs,
+	type: LOG_ACTIVITY,
 });
 
 export const activityLogsInitialState = [];
 
-export const reducer = (state: never[] = activityLogsInitialState, action: AnyAction) => {
-  if (action.type === LOG_ACTIVITY) {
-    return [
-      ...state,
-      ...action.activityLogs,
-    ];
-  }
-  return state;
+export const reducer = (
+	state: never[] = activityLogsInitialState,
+	action: AnyAction,
+) => {
+	if (action.type === LOG_ACTIVITY) {
+		return [...state, ...action.activityLogs];
+	}
+	return state;
 };
 
 export default reducer;

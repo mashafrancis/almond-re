@@ -9,18 +9,18 @@ import TopBar from './index';
 import { renderWithRouter } from '../../testHelpers';
 
 describe('TopBar component', () => {
-  const props = {
-    photoImage: '',
-    openProfileDialog: '',
-    isActivityLogsEmpty: true,
-  };
+	const props = {
+		photoImage: '',
+		openProfileDialog: '',
+		isActivityLogsEmpty: true,
+	};
 
-  const { asFragment } = renderWithRouter(<TopBar {...props} />);
+	const { asFragment } = renderWithRouter(<TopBar {...props} />);
 
-  it('should render correctly', () => {
-    expect(asFragment()).toMatchSnapshot();
+	it('should render correctly', () => {
+		expect(asFragment()).toMatchSnapshot();
 
-    const elem = screen.getByTestId('top-bar');
-    expect(elem.classList[5]).toBe('mdc-top-app-bar');
-  });
+		const elem = screen.getByTestId('top-bar');
+		expect(elem.classList[5]).toBe('mdc-top-app-bar');
+	});
 });

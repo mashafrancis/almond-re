@@ -1,6 +1,5 @@
-export interface QualityCheckPageProps {
-}
+export interface QualityCheckPageProps {}
 
 export interface QualityCheckPageState {
-  isLoading: boolean;
+	isLoading: boolean;
 }

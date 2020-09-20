@@ -7,27 +7,24 @@ import { GeneralCardInfoProps } from './interfaces';
 import './GeneralCardInfo.scss';
 
 const GeneralCardInfo = (props: GeneralCardInfoProps): JSX.Element => {
-  const {
-    mainHeader,
-    subHeader,
-    actionItem,
-    icon
-  } = props;
+	const { mainHeader, subHeader, actionItem, icon } = props;
 
-  return (
-    <div className="general-info-card">
-      <div className="card-content">
-        {icon}
-        <div className="card-content__body">
-          <div data-testid="heading" className="main">{mainHeader}</div>
-          <div data-testid="sub-heading" className="sub-main">{subHeader}</div>
-        </div>
-        <div className="card-content__button">
-          {actionItem}
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="general-info-card">
+			<div className="card-content">
+				{icon}
+				<div className="card-content__body">
+					<div data-testid="heading" className="main">
+						{mainHeader}
+					</div>
+					<div data-testid="sub-heading" className="sub-main">
+						{subHeader}
+					</div>
+				</div>
+				<div className="card-content__button">{actionItem}</div>
+			</div>
+		</div>
+	);
 };
 
 export default GeneralCardInfo;

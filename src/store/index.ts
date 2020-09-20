@@ -15,21 +15,15 @@ const cachedHttp = cacheAxiosInstance(http, 1200000);
 // const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
-const reduxMiddleware = [
-  thunk.withExtraArgument(cachedHttp),
-];
+const reduxMiddleware = [thunk.withExtraArgument(cachedHttp)];
 
 const devMiddleware = composeEnhancers(
-  applyMiddleware(
-    ...reduxMiddleware,
-    reduxImmutableStateInvariant(),
-  ),
+	applyMiddleware(...reduxMiddleware, reduxImmutableStateInvariant()),
 );
-const prodMiddleware = applyMiddleware(
-  ...reduxMiddleware,
-);
+const prodMiddleware = applyMiddleware(...reduxMiddleware);
 
-const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prodMiddleware;
+const middleware =
+	process.env.NODE_ENV === 'development' ? devMiddleware : prodMiddleware;
 
 const store = createStore(rootReducer, {}, middleware);
 

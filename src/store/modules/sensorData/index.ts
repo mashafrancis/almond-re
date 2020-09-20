@@ -1,42 +1,42 @@
 import {
-  GetEnvironmentDataFailure,
-  GetEnvironmentDataSuccess,
-  GetWaterDataFailure,
-  GetWaterDataSuccess,
+	GetEnvironmentDataFailure,
+	GetEnvironmentDataSuccess,
+	GetWaterDataFailure,
+	GetWaterDataSuccess,
 } from '@modules/sensorData/interfaces';
 
 import {
-  GET_ENVIRONMENT_DATA_FAILURE,
-  GET_ENVIRONMENT_DATA_SUCCESS,
-  GET_WATER_DATA_FAILURE,
-  GET_WATER_DATA_SUCCESS,
+	GET_ENVIRONMENT_DATA_FAILURE,
+	GET_ENVIRONMENT_DATA_SUCCESS,
+	GET_WATER_DATA_FAILURE,
+	GET_WATER_DATA_SUCCESS,
 } from '@modules/sensorData/types';
 
-import {
-  loadingError,
-  loadingRequest,
-  loadingSuccess,
-} from '@modules/loading';
+import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
 import { AnyAction } from 'redux';
 
-export const getEnvironmentDataSuccess = (environmentData: any): GetEnvironmentDataSuccess => ({
-  environmentData,
-  type: GET_ENVIRONMENT_DATA_SUCCESS,
+export const getEnvironmentDataSuccess = (
+	environmentData: any,
+): GetEnvironmentDataSuccess => ({
+	environmentData,
+	type: GET_ENVIRONMENT_DATA_SUCCESS,
 });
 
-export const getEnvironmentDataFailure = (errors: any): GetEnvironmentDataFailure => ({
-  errors,
-  type: GET_ENVIRONMENT_DATA_FAILURE,
+export const getEnvironmentDataFailure = (
+	errors: any,
+): GetEnvironmentDataFailure => ({
+	errors,
+	type: GET_ENVIRONMENT_DATA_FAILURE,
 });
 
 export const getWaterDataSuccess = (waterData: any): GetWaterDataSuccess => ({
-  waterData,
-  type: GET_WATER_DATA_SUCCESS,
+	waterData,
+	type: GET_WATER_DATA_SUCCESS,
 });
 
 export const getWaterDataFailure = (errors: any): GetWaterDataFailure => ({
-  errors,
-  type: GET_WATER_DATA_FAILURE,
+	errors,
+	type: GET_WATER_DATA_FAILURE,
 });
 
 // export const getEnvironmentData = () => (dispatch: any, getState: any, getFirebase: any) => {
@@ -52,16 +52,16 @@ export const getWaterDataFailure = (errors: any): GetWaterDataFailure => ({
 //       dispatch(loadingError('error'));
 //       dispatch(getEnvironmentDataFailure(message));
 //     });
-  // .once('value',snapshot => snapshot)
-  // .then(snapshot => {
-  //   dispatch(loadingSuccess('success'));
-  //   dispatch(getEnvironmentDataSuccess(snapshot.val()));
-  // })
-  // .catch(error => {
-  //   const message = error.response.data.errors.message;
-  //   dispatch(loadingError('error'));
-  //   dispatch(getEnvironmentDataFailure(message));
-  // });
+// .once('value',snapshot => snapshot)
+// .then(snapshot => {
+//   dispatch(loadingSuccess('success'));
+//   dispatch(getEnvironmentDataSuccess(snapshot.val()));
+// })
+// .catch(error => {
+//   const message = error.response.data.errors.message;
+//   dispatch(loadingError('error'));
+//   dispatch(getEnvironmentDataFailure(message));
+// });
 // };
 
 // export const getWaterData = () => (dispatch: any, getState: any, getFirebase: any) => {
@@ -80,40 +80,45 @@ export const getWaterDataFailure = (errors: any): GetWaterDataFailure => ({
 // };
 
 export const sensorDataInitialState = {
-  environmentData: [],
-  waterData: [],
-  errors: null,
+	environmentData: [],
+	waterData: [],
+	errors: null,
 };
 
-export const reducer = (state: {
-  environmentData: any[], waterData: any[], errors: null
-} = sensorDataInitialState, action: AnyAction) => {
-  switch (action.type) {
-    case GET_ENVIRONMENT_DATA_SUCCESS:
-      return {
-        ...state,
-        environmentData: action.environmentData,
-        errors: null,
-      };
-    case GET_ENVIRONMENT_DATA_FAILURE:
-      return {
-        ...state,
-        errors: action.errors,
-      };
-    case GET_WATER_DATA_SUCCESS:
-      return {
-        ...state,
-        waterData: action.waterData,
-        errors: null,
-      };
-    case GET_WATER_DATA_FAILURE:
-      return {
-        ...state,
-        errors: action.errors,
-      };
-    default:
-      return state;
-  }
+export const reducer = (
+	state: {
+		environmentData: any[];
+		waterData: any[];
+		errors: null;
+	} = sensorDataInitialState,
+	action: AnyAction,
+) => {
+	switch (action.type) {
+		case GET_ENVIRONMENT_DATA_SUCCESS:
+			return {
+				...state,
+				environmentData: action.environmentData,
+				errors: null,
+			};
+		case GET_ENVIRONMENT_DATA_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+			};
+		case GET_WATER_DATA_SUCCESS:
+			return {
+				...state,
+				waterData: action.waterData,
+				errors: null,
+			};
+		case GET_WATER_DATA_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+			};
+		default:
+			return state;
+	}
 };
 
 export default reducer;

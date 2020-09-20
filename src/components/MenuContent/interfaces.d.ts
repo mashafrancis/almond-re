@@ -1,4 +1,4 @@
 export interface MenuContentProps {
-  name: string;
-  photo: string;
+	name: string;
+	photo: string;
 }

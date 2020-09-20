@@ -8,19 +8,19 @@ import { reduxMockStore } from '../../../testHelpers';
 import { DISPLAY_SNACK_MESSAGE } from './types';
 
 describe('The snack action', () => {
-  const snackMessageInitialState = {};
+	const snackMessageInitialState = {};
 
-  it('should display a snack message', () => {
-    const snackMessage = 'Welcome to Almond';
-    const expectedAction = {
-      snack: {
-        message: snackMessage,
-      },
-      type: DISPLAY_SNACK_MESSAGE,
-    };
-    const store = reduxMockStore({}, snackMessageInitialState);
+	it('should display a snack message', () => {
+		const snackMessage = 'Welcome to Almond';
+		const expectedAction = {
+			snack: {
+				message: snackMessage,
+			},
+			type: DISPLAY_SNACK_MESSAGE,
+		};
+		const store = reduxMockStore({}, snackMessageInitialState);
 
-    store.dispatch(displaySnackMessage(snackMessage));
-    expect(store.getActions()[0]).toEqual(expectedAction);
-  });
+		store.dispatch(displaySnackMessage(snackMessage));
+		expect(store.getActions()[0]).toEqual(expectedAction);
+	});
 });

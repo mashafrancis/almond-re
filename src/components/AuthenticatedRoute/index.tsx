@@ -16,25 +16,25 @@ import { authService } from '@utils/auth';
  * @param {Component} Component
  * @returns {JSX}
  */
-const renderComponent = (Component: any): ReactNode => (props: any) => <Component {...props} />;
+const renderComponent = (Component: any): ReactNode => (props: any) => (
+	<Component {...props} />
+);
 
 const AuthenticatedRoute = (props: any) => {
-  const { component: Component, ...rest } = props;
+	const { component: Component, ...rest } = props;
 
-  if (!authService.isAuthenticated()) {
-    localStorage.setItem('locationReferrer', props.location.pathname);
-    displaySnackMessage('You need to login to continue');
+	if (!authService.isAuthenticated()) {
+		localStorage.setItem('locationReferrer', props.location.pathname);
+		displaySnackMessage('You need to login to continue');
 
-    return (
-      <Redirect to="/" />
-    );
-  }
+		return <Redirect to="/" />;
+	}
 
-  return (
-    <div className="drawer-content" data-testid="authenticated-route">
-      <RestrictedRoute {...rest} render={renderComponent(Component)} />
-    </div>
-  );
+	return (
+		<div className="drawer-content" data-testid="authenticated-route">
+			<RestrictedRoute {...rest} render={renderComponent(Component)} />
+		</div>
+	);
 };
 
 export default AuthenticatedRoute;

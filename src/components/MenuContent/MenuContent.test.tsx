@@ -8,13 +8,13 @@ import { render } from '@testing-library/react';
 import MenuContent from './index';
 
 describe('MenuContent component', () => {
-  const props = {
-    name: 'name',
-    photo: 'photo',
-  };
+	const props = {
+		name: 'name',
+		photo: 'photo',
+	};
 
-  it('should render correctly', () => {
-    const { asFragment } = render(<MenuContent {...props} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
+	it('should render correctly', () => {
+		const { asFragment } = render(<MenuContent {...props} />);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });
