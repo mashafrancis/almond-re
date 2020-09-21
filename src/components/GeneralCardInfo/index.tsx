@@ -1,14 +1,15 @@
 import React from 'react';
-
 // interfaces
 import { GeneralCardInfoProps } from './interfaces';
-
 // styles
 import './GeneralCardInfo.scss';
 
-const GeneralCardInfo = (props: GeneralCardInfoProps): JSX.Element => {
-	const { mainHeader, subHeader, actionItem, icon } = props;
-
+const GeneralCardInfo = ({
+	mainHeader,
+	subHeader,
+	actionItem,
+	icon,
+}: GeneralCardInfoProps): JSX.Element => {
 	return (
 		<div className="general-info-card">
 			<div className="card-content">

@@ -116,7 +116,7 @@ export const PeoplePage = (props: PeoplePageProps) => {
 		>
 			{roles.map((role) => (
 				<MenuItem key={role._id} value={role.title}>
-					<h4 className="headline-4">{role.title}</h4>
+					<h4 className="headline-5">{role.title}</h4>
 				</MenuItem>
 			))}
 		</TextField>

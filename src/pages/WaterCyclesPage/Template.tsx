@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useContext, createRef, lazy } from 'react';
-
+import React, {
+	useState,
+	useEffect,
+	useContext,
+	createRef,
+	lazy,
+	Suspense,
+} from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
-import moment from 'moment';
-import { connect } from 'react-redux';
 import { useMqttState, useSubscription } from 'mqtt-hooks';
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment, Switch } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
-import LinearProgressBar from '@components/LinearProgressBar';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 // icons
 import {
 	BlurCircular,
@@ -20,22 +22,18 @@ import {
 	ArrowDropDown,
 	DateRange,
 } from '@material-ui/icons';
-
-// import { getWaterData } from '@modules/sensorData';
 import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
-
+import LinearProgressBar from '@components/LinearProgressBar';
 // utils
 import validateOneHourTime from '@utils/validateTimeOneHour';
-
+import roundDigit from '@utils/roundDigit';
+import dayjs from '@utils/dayjsTime';
 // styles
 import './WaterCyclesPage.scss';
 import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
-
 // interfaces
-import roundDigit from '@utils/roundDigit';
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
-
 // components
 const CardInfo = lazy(() => import('@components/CardInfo'));
 const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
@@ -45,7 +43,7 @@ const DashboardCard = lazy(() => import('@components/DashboardCard'));
 const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
 
-export const WaterCyclesPage = ({
+export const WaterCyclesTemplate = ({
 	addNewSchedule,
 	editSchedule,
 	getAllSchedules,
@@ -87,7 +85,7 @@ export const WaterCyclesPage = ({
 		],
 	});
 
-	const menu = useContext(ComponentContext);
+	const { setDeviceModalOpen } = useContext(ComponentContext);
 	const user = useContext(UserContext);
 	const modalRef = createRef();
 
@@ -237,9 +235,7 @@ export const WaterCyclesPage = ({
 		}
 	};
 
-	const closeScheduleModal = (mode) => (event) => {
-		event.preventDefault();
-
+	const closeScheduleModal = (mode) => () => {
 		switch (mode) {
 			case 'Add':
 				setState((prevState) => ({
@@ -289,9 +285,10 @@ export const WaterCyclesPage = ({
 			device: user.activeDevice._id,
 		};
 
-		isEditMode
-			? editSchedule(scheduleId, schedule).then(closeScheduleModal('Edit'))
-			: addNewSchedule(schedule).then(closeScheduleModal('Add'));
+		if (isEditMode) {
+			editSchedule(scheduleId, schedule).then(closeScheduleModal('Edit'));
+		}
+		addNewSchedule(schedule).then(closeScheduleModal('Add'));
 	};
 
 	const BlankContent = (message) => (
@@ -300,23 +297,30 @@ export const WaterCyclesPage = ({
 		</div>
 	);
 
-	const AddEditScheduleModal = () => (
-		<Modal
-			innerRef={modalRef}
-			isModalOpen={state.isScheduleModalOpen}
-			renderContent={() => RenderTimeScheduleForm()}
-			onClose={() => setState({ ...state, isScheduleModalOpen: false })}
-			renderHeader={() =>
-				state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'
-			}
-			submitButtonName={
-				state.isEditMode ? 'Update schedule' : 'Create new schedule'
-			}
-			onSubmit={onAddEditScheduleSubmit}
-			onDismiss={closeScheduleModal(state.isEditMode ? 'Edit' : 'Add')}
-			disabled={state.hasError}
-		/>
-	);
+	const AddEditScheduleModal = () => {
+		const handleClose = (): void =>
+			setState({
+				...state,
+				isScheduleModalOpen: false,
+			});
+		return (
+			<Modal
+				innerRef={modalRef}
+				isModalOpen={state.isScheduleModalOpen}
+				renderContent={() => RenderTimeScheduleForm()}
+				onClose={handleClose}
+				renderHeader={() =>
+					state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'
+				}
+				submitButtonName={
+					state.isEditMode ? 'Update schedule' : 'Create new schedule'
+				}
+				onSubmit={onAddEditScheduleSubmit}
+				onDismiss={closeScheduleModal(state.isEditMode ? 'Edit' : 'Add')}
+				disabled={state.hasError}
+			/>
+		);
+	};
 
 	const DeleteScheduleModal = () => (
 		<Modal
@@ -335,27 +339,36 @@ export const WaterCyclesPage = ({
 		/>
 	);
 
-	const ActionButtons = (schedule) => (
-		<div key={schedule} className="action-buttons">
-			<span id={schedule} onClick={showScheduleModal('Edit')}>
-				<h5 id={schedule} className="action-buttons__edit">
-					Edit
-				</h5>
-			</span>
-			<span
-				id={schedule}
-				onClick={() =>
-					setState({
-						...state,
-						scheduleId: schedule,
-						isDeleteModalOpen: true,
-					})
-				}
-			>
-				<h5 className="action-buttons__delete">Delete</h5>
-			</span>
-		</div>
-	);
+	const ActionButtons = (schedule) => {
+		const handleDelete = () =>
+			setState({
+				...state,
+				scheduleId: schedule,
+				isDeleteModalOpen: true,
+			});
+		return (
+			<div key={schedule} className="action-buttons">
+				<span
+					id={schedule}
+					onClick={showScheduleModal('Edit')}
+					onKeyDown={showScheduleModal('Edit')}
+					role="presentation"
+				>
+					<h5 id={schedule} className="action-buttons__edit">
+						Edit
+					</h5>
+				</span>
+				<span
+					id={schedule}
+					onClick={handleDelete}
+					onKeyDown={handleDelete}
+					role="presentation"
+				>
+					<h5 className="action-buttons__delete">Delete</h5>
+				</span>
+			</div>
+		);
+	};
 
 	const TableContent = (timeSchedule) => {
 		const tableHeaders = {
@@ -366,7 +379,7 @@ export const WaterCyclesPage = ({
 
 		const tableValues = timeSchedule.map((schedule) => ({
 			id: schedule,
-			time: `${moment(schedule[1].schedule).format('LT')}`,
+			time: `${dayjs.utc(schedule[1].schedule).format('HH:mm')}`,
 			actions: ActionButtons(schedule[1]._id),
 			status: (
 				<ToggleSwitch
@@ -377,11 +390,13 @@ export const WaterCyclesPage = ({
 		}));
 
 		return (
-			<Table
-				keys={tableHeaders}
-				values={tableValues}
-				statusClass={enabled ? 'tbl-status' : ''}
-			/>
+			<Suspense fallback={<LinearProgressBar delay={500} />}>
+				<Table
+					keys={tableHeaders}
+					values={tableValues}
+					statusClass={enabled ? 'tbl-status' : ''}
+				/>
+			</Suspense>
 		);
 	};
 
@@ -448,7 +463,7 @@ export const WaterCyclesPage = ({
 		);
 	};
 
-	// :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
+	const handleDeviceModalOpen = (): void => setDeviceModalOpen(true);
 	return (
 		<div className="water-cycles-page">
 			<Row>
@@ -456,7 +471,9 @@ export const WaterCyclesPage = ({
 					<div className="main-subheader">
 						<div
 							className="device-header-container"
-							onClick={menu?.setDeviceModalOpen.bind(null, true)}
+							onClick={handleDeviceModalOpen}
+							onKeyDown={handleDeviceModalOpen}
+							role="presentation"
 						>
 							<h3 className="main-subheader__device-id">
 								{`Device ID: ${user.activeDevice.id}`}
@@ -475,7 +492,7 @@ export const WaterCyclesPage = ({
 						actionItem={
 							<PumpSwitch
 								className="manual-override"
-								onChange={(e) => handleTogglePumpOnChange(e)}
+								onChange={handleTogglePumpOnChange}
 								checked={enabled}
 								inputProps={{ 'aria-label': 'primary checkbox' }}
 							/>
@@ -540,4 +557,4 @@ export const WaterCyclesPage = ({
 	);
 };
 
-export default WaterCyclesPage;
+export default WaterCyclesTemplate;

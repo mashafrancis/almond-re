@@ -3,29 +3,29 @@ import { UserRole } from '@modules/userRoles/interfaces';
 import { ActivityLogs } from '@modules/activityLogs/interfaces';
 
 export interface DashboardContainerProps {
-	drawerEl?: object;
-	match?: {
-		url: string;
-	};
+	// drawerEl?: any;
+	// match?: {
+	// 	url: string;
+	// };
 	history: {
 		push: (url: string) => void;
 	};
-	component?: any;
+	// component?: any;
 	user: UserDetails;
 	logoutUser: () => void;
-	title: string;
+	// title: string;
 	activateDevice: (id) => Promise<any>;
 	getUserDetails: () => Promise<any>;
-	activeDevice: {
-		id: string;
-		_id: string;
-		verified?: boolean;
-		user?: UserDetails;
-	};
-	roles: UserRole[];
+	// activeDevice: {
+	// 	id: string;
+	// 	_id: string;
+	// 	verified?: boolean;
+	// 	user?: UserDetails;
+	// };
+	// roles: UserRole[];
 	editUserDetails: (id, role) => Promise<any>;
 	activityLogs: ActivityLogs[];
-	loading: string;
+	// loading: string;
 }
 
 export interface DashboardContainerState {
@@ -34,10 +34,10 @@ export interface DashboardContainerState {
 	isFeedbackMenuOpen: boolean;
 	isFeedbackModal: boolean;
 	device: string;
-	activeDevice: {
-		id: string;
-		_id: string;
-	};
+	// activeDevice: {
+	// 	id: string;
+	// 	_id: string;
+	// };
 	action: string;
 	feedback: '';
 	fields: {

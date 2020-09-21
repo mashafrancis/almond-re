@@ -1,16 +1,18 @@
 // react library
-import React from 'react';
-
+import React, { ReactNode } from 'react';
 // jest mocks
 import '../../../tests/__mocks__/storeWithPartialPermissions';
-
 // third-party libraries
 import { render, screen } from '@testing-library/react';
-
 // components
 import { Restrict } from '@components/Restrict';
 
 describe('The Restrict component', () => {
+	const props = {
+		authorize: '',
+		children: null,
+		strict: false,
+	};
 	it('should render children prop if user has required access', () => {
 		render(
 			<Restrict authorize={['analytics:edit']}>

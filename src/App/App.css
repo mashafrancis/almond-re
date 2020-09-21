@@ -5,73 +5,71 @@ h4,
 h5,
 h6,
 p {
-  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
+	font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
 }
 
 .mdc-snackbar {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 9000 !important;
-  height: 150px;
-  box-sizing: border-box;
-  margin: 8px;
-  pointer-events: none;
-  align-items: center;
-  justify-content: center;
-  -webkit-tap-highlight-color: transparent;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 9000 !important;
+	height: 150px;
+	box-sizing: border-box;
+	margin: 8px;
+	pointer-events: none;
+	align-items: center;
+	justify-content: center;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .mdc-snackbar__action:not(:disabled) {
-  color: #3480e3 !important;
+	color: #3480e3 !important;
 }
 .mdc-snackbar__action::after,
 .mdc-snackbar__action::before {
-  background-color: #3480e3 !important;
+	background-color: #3480e3 !important;
 }
 .mdc-snackbar__action:hover::before {
-  opacity: 0.08;
+	opacity: 0.08;
 }
 .mdc-snackbar__action.mdc-ripple-upgraded--background-focused::before {
-  opacity: 0.24;
-  transition-duration: 75ms;
+	opacity: 0.24;
+	transition-duration: 75ms;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded):focus::before {
-  opacity: 0.24;
-  transition-duration: 75ms;
+	opacity: 0.24;
+	transition-duration: 75ms;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded)::after {
-  transition: opacity 150ms linear;
+	transition: opacity 150ms linear;
 }
 .mdc-snackbar__action:not(.mdc-ripple-upgraded):active::after {
-  opacity: 0.32;
-  transition-duration: 75ms;
+	opacity: 0.32;
+	transition-duration: 75ms;
 }
 .mdc-snackbar__action.mdc-ripple-upgraded {
-  --mdc-ripple-fg-opacity: 0.32;
+	--mdc-ripple-fg-opacity: 0.32;
 }
 
 @media (min-width: 539px) {
-  .mdc-snackbar {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    z-index: 99;
-    display: flex;
-    height: 32px;
-    box-sizing: border-box;
-    padding: 0 15px 0 20px;
-    margin-top: 0;
-    margin-left: -200px;
-    border-radius: 4px;
-    opacity: 0.95;
-    animation-name: slideInDown;
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-    justify-content: space-between;
-    align-items: center;
-  }
+	.mdc-snackbar {
+		position: fixed;
+		top: 1rem;
+		left: 50%;
+		z-index: 99;
+		display: flex;
+		height: 32px;
+		box-sizing: border-box;
+		padding: 0 15px 0 20px;
+		margin-top: 0;
+		margin-left: -200px;
+		border-radius: 4px;
+		opacity: 0.95;
+		animation-name: slideInDown;
+		animation-duration: 0.5s;
+		animation-fill-mode: both;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
-
-/*# sourceMappingURL=App.css.map */

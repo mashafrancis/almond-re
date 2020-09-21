@@ -1,18 +1,18 @@
 // react libraries
 import React, { useEffect, useState } from 'react';
-
 // components
 import Checkbox from '@material/react-checkbox';
-
-// interfaces
-
 // helpers
 import capitalize from '@utils/capitalize';
+// interfaces
 import { Permission, Resource } from '@modules/userRoles/interfaces';
 import { PermissionAccessProps, PermissionAccessState } from './interfaces';
-import { useEffectAsync } from '../../hooks';
 
-const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
+const PermissionAccess = ({
+	resources,
+	permissions,
+	getResources,
+}: PermissionAccessProps): JSX.Element => {
 	/*
 	 * This stores a permission to permissionId mapping e.g { 'Full Access': 5e439f32fd05da507ca0161e, ... }
 	 */
@@ -25,40 +25,49 @@ const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
 	};
 
 	const [state, setState] = useState<PermissionAccessState>({
-		resources: [],
 		permissions: [],
+		resources: [],
 	});
 
-	useEffectAsync(async () => {
+	// const [allPermissions, setAllPermissions] = useState<Permission[]>([]);
+	// const [allResources, setAllResources] = useState<Resource[]>([...resources]);
+
+	const updateState = async () => {
 		await setState((prevState) => ({
 			...prevState,
-			resources: props.resources,
-			permissions: props.permissions,
+			resources,
+			permissions,
 		}));
+		// await setAllPermissions(permissions);
+		// await setAllResources(resources);
+	};
+
+	useEffect(() => {
+		updateState();
 		if (state.resources.length && state.permissions.length) {
 			/*
 			 * Force the order of the permissions to start with full access
 			 * and end with delete
 			 */
 			Object.keys(mappedPermissions).forEach((permissionString: string) => {
-				// @ts-expect-error
 				mappedPermissions[permissionString] = state.permissions.find(
 					(permissionObject: Permission) =>
 						permissionObject.type.toLowerCase() === permissionString,
-				)._id;
+				)?._id;
 			});
 		}
 	}, []);
 
 	useEffect(() => {
-		setState((prevState) => ({
-			...prevState,
-			resources: props.resources,
-			permissions: props.permissions,
-		}));
+		// setState((prevState) => ({
+		// 	...prevState,
+		// 	resources,
+		// 	permissions,
+		// }));
+		updateState();
 
 		Object.keys(mappedPermissions).forEach((permissionString: string) => {
-			const permissionKey = state.permissions.find(
+			const permissionKey = permissions.find(
 				(permissionObject: Permission) =>
 					permissionObject.type.toLowerCase() === permissionString,
 			);
@@ -67,10 +76,10 @@ const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
 				mappedPermissions[permissionString] = permissionKey._id;
 			}
 		});
-	}, [props.resources]);
+	}, [resources]);
 
 	useEffect(() => {
-		props.getResources(state.resources);
+		getResources(state.resources);
 	}, []);
 
 	/**
@@ -115,8 +124,7 @@ const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
 				resource._id === resourceId
 					? {
 							...resource,
-							// @ts-expect-error
-							permissionIds: getNewPermissionIds(resource.permissionIds || []),
+							_id: getNewPermissionIds(resource?._id || []),
 					  }
 					: resource,
 			),
@@ -131,21 +139,25 @@ const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
 	 * @returns {boolean}
 	 */
 	const isResourcePermissionActive = (resourceId, permissionId) => {
-		// let isActive = false;
+		let isActive = false;
 		// get the resource in question
-		const resource: any = state.resources.filter(
-			(resource: Resource) => resource._id === resourceId,
+		const resource = state.resources.filter(
+			(res: Resource) => res._id === resourceId,
 		)[0];
 		/*
 		 * it's active if it has the 'full access' toggled on or
 		 * if the permission for this checkbox has been toggled on
 		 */
-		return (
-			resource.permissionIds &&
-			(resource.permissionIds.includes(mappedPermissions['full access']) ||
-				resource.permissionIds.includes(permissionId))
-		);
+		if (
+			resource._id &&
+			(resource?._id.includes(mappedPermissions['full access']) ||
+				resource?._id.includes(permissionId))
+		) {
+			isActive = true;
+		}
+		return isActive;
 	};
+
 	return (
 		<div className="add-role-form__content__row">
 			<p className="row-label">Permission access</p>
@@ -164,32 +176,42 @@ const PermissionAccess = (props: PermissionAccessProps): JSX.Element => {
 					))}
 				</div>
 				<div className="permissions__tbl-body">
-					{state.resources &&
-						state.resources.map((resource: Resource) => (
-							<div key={resource._id} className="permissions__tbl-row">
-								<div className="permissions__tbl-row__item header">
-									{resource.name}
-								</div>
-								{Object.keys(mappedPermissions).map((permission) => (
-									<div
-										key={`${resource.name}-${permission}}`}
-										className="permissions__tbl-row__item"
-									>
-										<Checkbox
-											checked={
-												props.resources &&
-												isResourcePermissionActive(
-													resource._id,
-													mappedPermissions[permission],
-												)
-											}
-											name={`${resource.name}-${permission}`}
-											onChange={togglePermission(resource._id, permission)}
-										/>
-									</div>
-								))}
+					{state.resources.map((resource: Resource) => (
+						<div key={resource.name} className="permissions__tbl-row">
+							<div className="permissions__tbl-row__item header">
+								{resource.name}
 							</div>
-						))}
+							{Object.keys(mappedPermissions).map((permission) => (
+								<div
+									key={`${resource.name}-${permission}}`}
+									className="permissions__tbl-row__item"
+								>
+									{console.log(
+										'Class: , Function: , Line 189 isResourcePermissionActive():',
+										isResourcePermissionActive(
+											resource?._id,
+											mappedPermissions[permission],
+										),
+									)}
+									{console.log(
+										'Class: , Function: , Line 196 mappedPermissions[permission]():',
+										mappedPermissions[permission],
+									)}
+									<Checkbox
+										checked={
+											resources.length > 0 &&
+											isResourcePermissionActive(
+												resource?._id,
+												mappedPermissions[permission],
+											)
+										}
+										name={`${resource.name}-${permission}`}
+										onChange={togglePermission(resource._id, permission)}
+									/>
+								</div>
+							))}
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

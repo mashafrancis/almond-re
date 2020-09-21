@@ -4,7 +4,7 @@ export interface ActionButtonProps {
 	name: string;
 	startIcon?: ReactNode;
 	endIcon?: ReactNode;
-	handleClick?: any;
+	handleClick?: () => void;
 	variant: 'contained' | 'outlined' | 'text';
 	disabled?: boolean;
 }

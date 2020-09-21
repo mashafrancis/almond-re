@@ -1,39 +1,39 @@
 .table-image {
-  max-width: fit-content;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+	max-width: fit-content;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
 }
 
 .mini-username {
-  position: relative;
-  display: flex;
-  width: auto;
-  max-width: fit-content;
-  text-transform: capitalize;
-  background-size: 22px 22px;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+	position: relative;
+	display: flex;
+	width: auto;
+	max-width: fit-content;
+	text-transform: capitalize;
+	background-size: 22px 22px;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
 }
 .mini-username__image {
-  width: 1.75rem;
-  margin-right: 1.25rem;
-  vertical-align: middle;
-  border-radius: 50%;
+	width: 1.75rem;
+	margin-right: 1.25rem;
+	vertical-align: middle;
+	border-radius: 50%;
 }
 
 .table-roles {
-  display: flex;
-  width: auto;
-  max-width: fit-content;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-& h5 {
-  padding-left: 10px;
-  margin: 0;
-}
+	display: flex;
+	width: auto;
+	max-width: fit-content;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	& h5 {
+		padding-left: 10px;
+		margin: 0;
+	}
 }

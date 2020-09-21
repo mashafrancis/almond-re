@@ -2,13 +2,13 @@ import { ReactNode } from 'react';
 
 export interface ModalProps {
 	isModalOpen: boolean;
-	renderHeader: () => ReactNode;
-	renderContent: () => ReactNode;
+	renderHeader: () => ReactNode | null;
+	renderContent: () => ReactNode | null;
 	fullScreen?: boolean;
-	onClose?: any;
+	onClose?: (e?) => void;
 	submitButtonName?: string;
 	disabled?: boolean;
-	onSubmit?: any;
-	onDismiss?: any;
+	onSubmit?: (e?) => void;
+	onDismiss?: (e?) => void;
 	innerRef?: any;
 }

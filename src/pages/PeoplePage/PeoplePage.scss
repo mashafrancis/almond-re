@@ -1,47 +1,48 @@
 .table-image {
-  max-width: fit-content;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  //width: 100%;
-  //text-align: center;
-  align-content: center;
-  //padding-top: 14px;
+	max-width: fit-content;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	//width: 100%;
+	//text-align: center;
+
+	align-content: center;
+	//padding-top: 14px;
 }
 
 .mini-username {
-  position: relative;
-  display: flex;
-  //margin-top: 34px;
-  width: auto;
-  max-width: fit-content;
-  text-transform: capitalize;
-  background-size: 22px 22px;
-  //min-width: 36px;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+	position: relative;
+	display: flex;
+	//margin-top: 34px;
+	width: auto;
+	max-width: fit-content;
+	text-transform: capitalize;
+	background-size: 22px 22px;
+	//min-width: 36px;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
 
-  &__image {
-    width: 1.75rem;
-    margin-right: 1.25rem;
-    vertical-align: middle;
-    border-radius: 50%;
-  }
+	&__image {
+		width: 1.75rem;
+		margin-right: 1.25rem;
+		vertical-align: middle;
+		border-radius: 50%;
+	}
 }
 
 .table-roles {
-  display: flex;
-  //margin-top: 34px;
-  width: auto;
-  max-width: fit-content;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+	display: flex;
+	//margin-top: 34px;
+	width: auto;
+	max-width: fit-content;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
 
-  h5 {
-    padding-left: 10px;
-    margin: 0;
-  }
+	h5 {
+		padding-left: 10px;
+		margin: 0;
+	}
 }

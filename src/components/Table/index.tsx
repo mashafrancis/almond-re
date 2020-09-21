@@ -13,15 +13,14 @@ import { TableProps } from './interfaces';
  * @param {TableProps} props
  * @returns {JSX} JSX
  */
-const Table = (props: TableProps): JSX.Element => {
-	const { keys, values } = props;
+const Table = ({ keys, values, statusClass }: TableProps): JSX.Element => {
 	const tableHeaders = Object.keys(keys);
 	return (
 		<>
 			<div className="tbl-header" data-testid="tbl-header">
-				{tableHeaders.map((header, index) => (
+				{tableHeaders.map((header) => (
 					<div
-						key={index}
+						key={header}
 						className={
 							keys[header].colWidth
 								? `tbl-header__column--${keys[header].colWidth}`
@@ -35,10 +34,10 @@ const Table = (props: TableProps): JSX.Element => {
 				))}
 			</div>
 			{values.map((value) => (
-				<div key={value.id} className={`tbl-row ${props.statusClass}`}>
-					{tableHeaders.map((header, index) => (
+				<div key={value.id} className={`tbl-row ${statusClass}`}>
+					{tableHeaders.map((header) => (
 						<div
-							key={index}
+							key={header}
 							className={
 								keys[header].colWidth
 									? `tbl-row__column--${keys[header].colWidth}`

@@ -2,14 +2,17 @@
 import React, { Suspense } from 'react';
 
 // components
-import { UserRolesPage, mapDispatchToProps, mapStateToProps } from './index';
+import UserRolesTemplate, {
+	mapDispatchToProps,
+	mapStateToProps,
+} from './index';
 import { renderWithRouter } from '../../testHelpers';
 import { props } from './fixtures';
 
 describe('The User Roles page', () => {
 	const { asFragment } = renderWithRouter(
 		<Suspense fallback={<h1>test loading</h1>}>
-			<UserRolesPage {...props} />
+			<UserRolesTemplate {...props} />
 		</Suspense>,
 	);
 

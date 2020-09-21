@@ -18,7 +18,7 @@ const defaultConfig = { strict: false };
 const authorize = (
 	accessLevels: string | string[],
 	{ strict } = defaultConfig,
-) => {
+): any => {
 	let allowAccess = false;
 
 	const getAccess = (accessLevel: string) => {

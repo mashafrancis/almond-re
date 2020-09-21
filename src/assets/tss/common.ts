@@ -56,12 +56,16 @@ const defaultFont = {
 const primaryColor = '#1967d2';
 const secondaryColor = '#1967d2';
 const warningColor = '#ff9800';
-const errorColor = '#b00020';
+const errorColor = '#f44336';
 const successColor = '#4caf50';
 const infoColor = '#00acc1';
 const roseColor = '#e91e63';
 const grayColor = '#999999';
 const whiteColor = '#ffffff';
+const connectedColor = '#76ff03';
+const reconnectingColor = '#FFCE56';
+const closedColor = '#ff1744';
+const offlineColor = '#CCCCCC';
 
 const primaryBoxShadow = {
 	boxShadow:
@@ -166,7 +170,6 @@ const cardSubtitle = {
 };
 
 export {
-	// variables
 	drawerWidth,
 	transition,
 	container,
@@ -183,6 +186,10 @@ export {
 	roseColor,
 	grayColor,
 	whiteColor,
+	connectedColor,
+	reconnectingColor,
+	closedColor,
+	offlineColor,
 	primaryBoxShadow,
 	infoBoxShadow,
 	successBoxShadow,

@@ -19,8 +19,8 @@ export interface UserRolesPageProps {
 
 export interface UserRolesPageState {
 	isModalOpen: boolean;
-	resources: any[];
-	permissions: any[];
+	resources: Resource[];
+	permissions: Permission[];
 	title: string;
 	description: string;
 	selectedRole: UserRole;

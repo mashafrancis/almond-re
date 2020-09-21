@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 
 export interface RestrictProps {
 	authorize: string | string[];
-	fallback?: React.ReactNode;
-	children: React.ReactNode;
+	fallback?: ReactNode;
+	children: ReactNode;
 	strict: boolean;
 }

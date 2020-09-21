@@ -1,0 +1,12 @@
+.navigation-header {
+	header {
+		display: flex;
+		justify-content: space-between;
+		margin: 20px 26px 0;
+
+		.register-toolbar-actions {
+			display: inline-flex;
+			align-items: center;
+		}
+	}
+}

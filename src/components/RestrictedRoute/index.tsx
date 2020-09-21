@@ -8,23 +8,21 @@ import { Redirect, Route } from 'react-router-dom';
 import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 
 // helpers
-import authorize from '@utils/authorize';
+import authorized from '@utils/authorize';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = (props) => {
-	if (
-		!props.authorize ||
-		authorize(props.authorize, { strict: props.strict })
-	) {
+	const { fallbackView, redirectTo, strict, authorize } = { ...props };
+	if (!authorize || authorized(authorize, { strict })) {
 		return <Route {...props} />;
 	}
 
-	if (props.fallbackView) {
-		return props.fallbackView;
+	if (fallbackView) {
+		return fallbackView;
 	}
 
-	return <Redirect to={props.redirectTo} />;
+	return <Redirect to={redirectTo} />;
 };
 
 RestrictedRoute.defaultProps = {

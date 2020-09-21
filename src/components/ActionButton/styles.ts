@@ -4,9 +4,19 @@ import { defaultFont, primaryColor, whiteColor } from '../../assets/tss/common';
 export default makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
+			...defaultFont,
+		},
+		contained: {
 			backgroundColor: primaryColor,
 			color: whiteColor,
-			...defaultFont,
+		},
+		text: {
+			backgroundColor: `${whiteColor} !important`,
+			color: `${primaryColor} !important`,
+		},
+		outlined: {
+			backgroundColor: primaryColor,
+			color: whiteColor,
 		},
 	}),
 );

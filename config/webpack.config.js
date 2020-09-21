@@ -18,7 +18,7 @@ module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
     styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss'),
-    fontGlobals: path.join(__dirname, '..', 'src/assets/scss/fonts.scss'),
+    fontGlobals: path.join(__dirname, '..', 'src/assets/fonts/fonts.scss'),
   },
   output: {
     // `filename` provides a template for naming your bundles (remember to use `[name]`)
@@ -53,9 +53,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(woff(2)?|ttf|eot|svg|png|jpg|jpeg|gif)$/,
+        test: /\.(woff|woff2|ttf|eot|svg|png|jpg|jpeg|gif)$/,
         use: {
           loader: require.resolve('file-loader'),
+          options: {
+            name: 'fonts/[name].[ext]',
+          },
         },
       },
       {
@@ -72,7 +75,8 @@ module.exports = {
             loader: require.resolve('postcss-loader'),
             options: {
               postcssOptions: {
-                plugins: () => [
+                plugins: (loader) => [
+                  require('postcss-import')({ root: loader.resourcePath }),
                   require('autoprefixer')({
                     overrideBrowserslist: ['> 1%', 'last 2 versions'],
                   }),
