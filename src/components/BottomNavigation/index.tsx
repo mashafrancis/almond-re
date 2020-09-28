@@ -42,24 +42,34 @@ const PageBottomNavigation = (): JSX.Element => {
 	const [value, setValue] = useState(
 		isArrayNotNull(selectedIndex) ? 0 : selectedIndex.item,
 	);
+	// const handleClick = (index: number): void =>
+	// 	setSelectedIndex({
+	// 		group: 0,
+	// 		item: index,
+	// 	});
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+		setSelectedIndex({
+			group: 0,
+			item: newValue,
+		});
+	};
 
 	// :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
 	return (
 		<div data-testid="bottom-navigation">
 			<BottomNavigation
 				value={value}
-				onChange={(event, newValue) => {
-					setValue(newValue);
-				}}
+				onChange={handleChange}
 				className={`${classes.root} page-content__navigation`}
 				showLabels
 			>
 				{checkIsAdmin().map((menuNav, index) => (
 					<BottomNavigationAction
 						key={index}
-						onClick={setSelectedIndex.bind(null, { group: 0, item: index })}
 						label={menuNav.label}
 						icon={menuNav.icon}
+						value={index}
 					/>
 				))}
 			</BottomNavigation>

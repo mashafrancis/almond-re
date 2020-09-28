@@ -2,7 +2,7 @@ module.exports = {
 	extends: [
 		'stylelint-config-standard',
 		'stylelint-config-css-modules',
-		'stylelint-config-primer',
+		// 'stylelint-config-primer',
 
 		// stylelint-scss goes after everything else
 		'stylelint-config-recommended-scss',
@@ -16,6 +16,7 @@ module.exports = {
 		'stylelint-high-performance-animation',
 		'stylelint-no-indistinguishable-colors',
 		'stylelint-use-nesting',
+		'stylelint-no-unsupported-browser-features',
 
 		// stylelint-scss goes after everything else
 		'stylelint-scss',
@@ -28,6 +29,13 @@ module.exports = {
 		'plugin/declaration-block-no-ignored-properties': true,
 		'plugin/no-low-performance-animation-properties': true,
 		'plugin/no-unsupported-browser-features': null, // disable feature checks: we use postcss-preset-env and autoprefixer
+		// 'plugin/no-unsupported-browser-features': [
+		// 	true,
+		// 	{
+		// 		browsers: ['> 1%', 'Last 2 versions'],
+		// 		ignore: ['rem'],
+		// 	},
+		// ],
 		'plugin/stylelint-group-selectors': true,
 		'plugin/stylelint-no-indistinguishable-colors': true,
 		'prettier/prettier': true,

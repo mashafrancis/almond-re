@@ -6,9 +6,13 @@ import { AnalyticsCardProps } from './interfaces';
 // styles
 import './AnalyticsCard.scss';
 
-const AnalyticsCard = (props: AnalyticsCardProps): JSX.Element => {
-	const { icon, mainInfo, subInfo, colorClass, onClick } = props;
-
+const AnalyticsCard = ({
+	icon,
+	mainInfo,
+	subInfo,
+	colorClass,
+	onClick,
+}: AnalyticsCardProps): JSX.Element => {
 	return (
 		<div
 			className="analytics-card"

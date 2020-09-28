@@ -10,7 +10,7 @@ import {
 } from '@modules/timeSchedules';
 import { displaySnackMessage } from '@modules/snack';
 import { connect } from 'react-redux';
-import WaterCyclesPage from '@pages/WaterCyclesPage/Template';
+import WaterCyclesTemplate from '@pages/WaterCyclesPage/Template';
 
 export const mapStateToProps = (state) => ({
 	schedules: state.timeSchedules.schedules,
@@ -37,4 +37,7 @@ export const mapDispatchToProps = (dispatch) => ({
 	// getWaterData: () => dispatch(getWaterData()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WaterCyclesPage);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(WaterCyclesTemplate);

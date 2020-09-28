@@ -1,6 +1,7 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
+import { DonutDisplayProps } from '@components/DonutDisplay/interfaces';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
@@ -30,15 +31,13 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
 	},
 });
 
-const DonutDisplay: (props) => any = (props) => {
-	const {
-		backgroundColor,
-		hoverBackgroundColor,
-		data,
-		donutInfo,
-		halfDonut,
-	} = props;
-
+const DonutDisplay = ({
+	backgroundColor,
+	hoverBackgroundColor,
+	data,
+	donutInfo,
+	halfDonut,
+}: DonutDisplayProps) => {
 	const donutDetails = {
 		datasets: [
 			{

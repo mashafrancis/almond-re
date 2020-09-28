@@ -6,9 +6,12 @@ import { Box, Typography } from '@material-ui/core';
 // interfaces
 import { TabPanelProps } from '@components/TabPanel/interfaces';
 
-const TabPanel = (props: TabPanelProps): JSX.Element => {
-	const { children, value, index, ...other } = props;
-
+const TabPanel = ({
+	children,
+	value,
+	index,
+	...other
+}: TabPanelProps): JSX.Element => {
 	return (
 		<div
 			data-testid="tab-panel"

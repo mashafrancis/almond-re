@@ -1,5 +1,4 @@
 import React, { cloneElement, useContext } from 'react';
-
 // third-party libraries
 import {
 	Avatar,
@@ -9,10 +8,10 @@ import {
 	AppBar,
 	Toolbar,
 } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { createStyles, Theme } from '@material-ui/core/styles';
 import { useMqttState } from 'mqtt-hooks';
-
 // icons
 import {
 	Timeline,
@@ -20,22 +19,28 @@ import {
 	Notifications,
 	ArrowDropDown,
 } from '@material-ui/icons';
-
 // utils
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
-
-// interface
-
 // styles
 import { useTopBarStyles, StyledBadge } from '@components/TopBar/styles';
 import '@pages/DashboardContainer/DashboardNavBar.scss';
-import withStyles from '@material-ui/core/styles/withStyles';
+// interface
 import { ElevationBarProps, TopBarProps } from './interfaces';
+import {
+	closedColor,
+	connectedColor,
+	offlineColor,
+	reconnectingColor,
+} from '../../assets/tss/common';
+// images
+import logo from '../../assets/images/logo.png';
 
-const ElevationScroll = (props: ElevationBarProps): JSX.Element => {
-	const { window, children } = props;
+const ElevationScroll = ({
+	window,
+	children,
+}: ElevationBarProps): JSX.Element => {
 	const trigger = useScrollTrigger({
 		disableHysteresis: true,
 		threshold: 0,
@@ -48,30 +53,26 @@ const ElevationScroll = (props: ElevationBarProps): JSX.Element => {
 };
 
 const TopBar = (props: TopBarProps): JSX.Element => {
+	const classes = useTopBarStyles();
 	const device = useContext(UserContext);
 	const menu = useContext(ComponentContext);
-	const { name, photo, isAdmin } = React.useContext(UserContext);
-
+	const { name, photo, isAdmin } = useContext(UserContext);
 	const { activityLogsViewed, toggleActivityDrawer, setDeviceModalOpen } = menu;
-
-	const { isActivityLogsEmpty, children } = props;
-
-	const classes = useTopBarStyles();
-
+	const { isActivityLogsEmpty, children, openProfileDialog } = props;
 	const { status } = useMqttState();
 
-	const statusChange = (status: string): string => {
-		switch (status) {
+	const statusChange = (mqttStatus: string): string => {
+		switch (mqttStatus) {
 			case 'connected':
-				return '#76ff03';
+				return connectedColor;
 			case 'reconnecting':
-				return '#FFCE56';
+				return reconnectingColor;
 			case 'closed':
-				return '#ff1744';
+				return closedColor;
 			case 'offline':
-				return '#CCCCCC';
+				return offlineColor;
 			default:
-				return '#CCCCCC';
+				return offlineColor;
 		}
 	};
 
@@ -96,37 +97,48 @@ const TopBar = (props: TopBarProps): JSX.Element => {
 		}),
 	)(Badge);
 
-	const renderDeviceDisplay = (): JSX.Element => (
-		<div
-			className={`${classes.device} ${classes.grow} topbar-device-id`}
-			onClick={() => setDeviceModalOpen(true)}
-		>
-			<DeviceActiveBadge
-				variant="dot"
+	const renderDeviceDisplay = (): JSX.Element => {
+		const handleClick = (): void => setDeviceModalOpen(true);
+		const handleDeviceModal = (): void => setDeviceModalOpen(true);
+		return (
+			<div
+				className={`${classes.device} ${classes.grow} topbar-device-id`}
+				onClick={handleDeviceModal}
+				onKeyDown={handleDeviceModal}
+				role="presentation"
+			>
+				<DeviceActiveBadge
+					variant="dot"
+					overlap="circle"
+					anchorOrigin={{
+						vertical: 'top',
+						horizontal: 'left',
+					}}
+				>
+					<h4>{`Device ID: ${device.activeDevice.id}`}</h4>
+					<ArrowDropDown onClick={handleClick} />
+				</DeviceActiveBadge>
+			</div>
+		);
+	};
+
+	const timeLineIcon = (): JSX.Element => {
+		const handleClick = () => toggleActivityDrawer(true, true);
+		return (
+			<StyledBadge
 				overlap="circle"
 				anchorOrigin={{
-					vertical: 'top',
-					horizontal: 'left',
+					vertical: 'bottom',
+					horizontal: 'right',
 				}}
+				variant="dot"
+				invisible={isActivityLogsEmpty !== activityLogsViewed}
 			>
-				<h4>{`Device ID: ${device.activeDevice.id}`}</h4>
-				<ArrowDropDown onClick={setDeviceModalOpen.bind(null, true)} />
-			</DeviceActiveBadge>
-		</div>
-	);
-	const timeLineIcon = () => (
-		<StyledBadge
-			overlap="circle"
-			anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'right',
-			}}
-			variant="dot"
-			invisible={isActivityLogsEmpty != activityLogsViewed}
-		>
-			<Timeline onClick={toggleActivityDrawer.bind(null, true, true)} />
-		</StyledBadge>
-	);
+				<Timeline onClick={handleClick} />
+			</StyledBadge>
+		);
+	};
+
 	// :TODO: Remove this after demoing the feature to be
 	const notifications = ['true'];
 
@@ -151,13 +163,14 @@ const TopBar = (props: TopBarProps): JSX.Element => {
 		{ icon: timeLineIcon() },
 		{ icon: notificationsIcon() },
 		{
-			icon: <Avatar alt={name} src={photo} onClick={props.openProfileDialog} />,
+			icon: <Avatar alt={name} src={photo} onClick={openProfileDialog} />,
 		},
 	];
 
-	const renderTopIcons = () => (
+	const renderTopIcons = (): JSX.Element => (
 		<div className={classes.sectionEnd}>
 			{topIcons.map((topIcon, index) => (
+				// eslint-disable-next-line react/no-array-index-key
 				<span key={index} className="top-bar-icons">
 					{topIcon.icon}
 				</span>
@@ -176,11 +189,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
 					<Toolbar variant="dense">
 						<div className="appbar-section appbar-section-start">
 							<NavLink to="/">
-								<img
-									className="drawer-logo__image"
-									src="https://res.cloudinary.com/almondgreen/image/upload/v1588810357/Almond/logo_vdwkvw.png"
-									alt="Logo"
-								/>
+								<img className="drawer-logo__image" src={logo} alt="Logo" />
 							</NavLink>
 							{!isAdmin && renderDeviceDisplay()}
 						</div>

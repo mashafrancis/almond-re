@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
 // interfaces
 import {
 	FormFieldProps,
 	FormFieldState,
 } from '@components/FormField/interfaces';
-
 // components
 import { InputAdornment, TextField } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
+import { primaryColor, errorColor } from '../../assets/tss/common';
 
-const ValidationTextField = withStyles({
+const ValidationTextField = withStyles(() => ({
 	root: {
 		display: 'flex',
 		flexWrap: 'wrap',
@@ -20,39 +19,31 @@ const ValidationTextField = withStyles({
 			borderWidth: 1,
 		},
 		'& input:invalid + fieldset': {
-			borderColor: '#f44336',
+			borderColor: errorColor,
 			borderWidth: 2,
 		},
 		'& input:valid:focus + fieldset': {
-			borderColor: '#1967D2',
+			borderColor: primaryColor,
 			borderLeftWidth: 6,
 			padding: '4px !important', // override inline-style
 		},
 	},
-})(TextField);
+}))(TextField);
 
-const FormField = (props: FormFieldProps): JSX.Element => {
+const FormField = ({
+	id,
+	required,
+	labelText,
+	leadingIcon,
+	validator = (f) => f,
+	onStateChanged = (f) => f,
+}: FormFieldProps): JSX.Element => {
 	const [state, setState] = useState<FormFieldState>({
 		dirty: false,
 		errors: [],
 		value: '',
 		name: '',
 	});
-
-	const {
-		id,
-		required,
-		labelText,
-		leadingIcon,
-		validator = (f) => f,
-		onStateChanged = (f) => f,
-		// type,
-		// label,
-		// onLeadingIconSelect,
-		// trailingIcon,
-		// placeholder,
-		// children,
-	} = props;
 
 	useEffect(() => {
 		onStateChanged(state);
@@ -72,8 +63,8 @@ const FormField = (props: FormFieldProps): JSX.Element => {
 		} else if (typeof validator === 'function') {
 			try {
 				validator(value);
-			} catch (e) {
-				errors = [...errors, e.message];
+			} catch (error) {
+				errors = [...errors, error.message];
 			}
 		}
 
@@ -97,7 +88,7 @@ const FormField = (props: FormFieldProps): JSX.Element => {
 			label={labelText}
 			fullWidth
 			size="small"
-			value={value || props.value}
+			value={value}
 			onChange={hasChanged}
 			error={hasErrors && !!errors[0]}
 			helperText={errors[0]}

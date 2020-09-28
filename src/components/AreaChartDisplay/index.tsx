@@ -3,9 +3,11 @@ import { Line } from 'react-chartjs-2';
 import './AreaCharts.scss';
 import { AreaChartDisplayProps } from '@components/AreaChartDisplay/interfaces';
 
-const AreaChardDisplay = (props: AreaChartDisplayProps): JSX.Element => {
-	const { chartData, backgroundColor, chartColor } = props;
-
+const AreaChardDisplay = ({
+	chartData,
+	backgroundColor,
+	chartColor,
+}: AreaChartDisplayProps): JSX.Element => {
 	const data = {
 		labels: [
 			'00:00',

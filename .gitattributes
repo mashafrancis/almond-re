@@ -6,3 +6,6 @@
 # Remove Yarn 2 from linguist
 .yarn/* linguist-vendored
 .pnp.js linguist-vendored
+
+*.ico   -text
+*.png   -text

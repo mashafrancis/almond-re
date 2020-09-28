@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 
 export interface MenuComponentProps {
 	primaryText: string;
-	component: any /* TODO: Fix type */;
-	icon: any;
+	component: any;
+	icon: ReactNode;
 }
 
 export interface MenuBottomProps {
 	label: string;
-	icon: any;
+	icon: ReactNode;
 	value: string;
 }

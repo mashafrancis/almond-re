@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export interface AnalyticsCardProps {
-	icon?: any; // :TODO: Icon should have a type interface
+	icon?: ReactNode;
 	mainInfo: string;
 	subInfo: string;
 	colorClass?: string;

@@ -1,6 +1,6 @@
 export interface ActivityLogCardProps {
 	log: string;
-	date: any;
+	date: Date | string;
 	redirect?: (cardId: string) => void;
 	classes?: string;
 	type: string;

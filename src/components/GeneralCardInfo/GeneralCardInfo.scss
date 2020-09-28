@@ -1,61 +1,62 @@
 .general-info-card {
-  margin: 0 0 26px;
+	margin: 0 0 26px;
 
-  .card-content {
-    display: flex;
-    //background-color: #fef7e0;
-    padding: 24px;
-    border: 1px solid #dadce0;
-    border-radius: 16px;
-    align-items: center;
+	.card-content {
+		display: flex;
+		//background-color: #fef7e0;
+		padding: 24px;
+		border: 1px solid #dadce0;
+		border-radius: 16px;
+		align-items: center;
 
-    &__body {
-      margin-right: 24px;
-      flex: 1 1 auto;
+		&__body {
+			margin-right: 24px;
+			flex: 1 1 auto;
 
-      .main {
-        font: 400 22px/32px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
-        color: #202124;
-        letter-spacing: normal;
+			.main {
+				font: 400 22px/32px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
+				color: #202124;
+				letter-spacing: normal;
 
-        @media (max-width: 539px) {
-          font: 400 20px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
-        }
-      }
+				@media (max-width: 539px) {
+					font: 400 20px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
+				}
+			}
 
-      .sub-main {
-        padding-top: 8px;
-        font: 400 15px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
-        color: #3c4043;
-        letter-spacing: 0.1px;
+			.sub-main {
+				padding-top: 8px;
+				font: 400 15px/24px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
+				color: #3c4043;
+				letter-spacing: 0.1px;
 
-        @media (max-width: 539px) {
-          font: 400 12px/16px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
-          letter-spacing: 0.3px;
-        }
-      }
-    }
+				@media (max-width: 539px) {
+					font: 400 12px/16px 'Google Sans', Roboto, Helvetica Neue, sans-serif;
+					letter-spacing: 0.3px;
+				}
+			}
+		}
 
-    &__button {
-      margin-right: 16px;
-      flex: 0 0 auto;
-    }
-  }
+		&__button {
+			margin-right: 16px;
+			flex: 0 0 auto;
+		}
+	}
 
-  .content-icon {
-    margin: 0 28px 0 4px;
-    //color: #1967d2 !important;
-    //background-color: rgba(66, 133, 244, 0.15);
-    font-size: 36px;
-    color: #f29900 !important;
-    background-color: #fef7e0;
+	.content-icon {
+		margin: 0 28px 0 4px;
+		//color: #1967d2 !important;
+		//background-color: rgba(66, 133, 244, 0.15);
 
-    @media (max-width: 539px) {
-      display: none;
-    }
-  }
+		font-size: 36px;
+		color: #f29900 !important;
+		background-color: #fef7e0;
 
-  @media (max-width: 539px) {
-    margin-top: 10px;
-  }
+		@media (max-width: 539px) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 539px) {
+		margin-top: 10px;
+	}
 }

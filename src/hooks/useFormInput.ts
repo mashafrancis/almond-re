@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export const useFormInput = (initialValue) => {
+const useFormInput = (initialValue: any) => {
 	const [value, setValue] = useState(initialValue);
-
 	const handleChange = ({ target }) => setValue(target.value);
 
 	return {
@@ -10,3 +9,5 @@ export const useFormInput = (initialValue) => {
 		onChange: handleChange,
 	};
 };
+
+export default useFormInput;

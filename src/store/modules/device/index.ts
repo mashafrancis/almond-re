@@ -302,6 +302,7 @@ export const verifyUserDevice = (id: string) => (
 			} = response;
 			dispatch(verifyDeviceSuccess(data));
 			dispatch(displaySnackMessage(message));
+			window.location.replace('/dashboard');
 		})
 		.catch((error: ErrorObject) => {
 			const { message } = error.response.data;

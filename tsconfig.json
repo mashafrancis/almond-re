@@ -5,7 +5,7 @@
 		"typeRoots": ["./node_modules/@types"],
 		"types": ["@types/jest", "@types/node"],
 		"downlevelIteration": true,
-		"allowSyntheticDefaultImports": true,
+		//    "allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"forceConsistentCasingInFileNames": true,

@@ -1,17 +1,17 @@
 import React from 'react';
-
 // third-party libraries
 import { Card } from '@material-ui/core';
-
 // interfaces
 import { DashboardCardProps } from './interfaces';
-
 // styles
 import './DashboardCard.scss';
 
-const DashboardCard = (props: DashboardCardProps): JSX.Element => {
-	const { classes, heading, actionItem, body } = props;
-
+const DashboardCard = ({
+	classes,
+	heading,
+	actionItem,
+	body,
+}: DashboardCardProps): JSX.Element => {
 	return (
 		<Card variant="outlined">
 			<div className="dashboard-card">

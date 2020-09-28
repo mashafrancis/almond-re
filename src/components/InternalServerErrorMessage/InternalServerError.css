@@ -1,97 +1,95 @@
 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: 'Google Sans', serif;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: 'Google Sans', serif;
 }
 
 body {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 #internal-server-error {
-  position: relative;
-  height: 100vh;
-}
-#internal-server-error .server-error {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+	position: relative;
+	height: 100vh;
+	& .server-error {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
 }
 
 .server-error {
-  width: 100%;
-  max-width: 560px;
-  padding-left: 160px;
-  line-height: 1.1;
-}
-.server-error .server-error-500 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  width: 140px;
-  height: 140px;
-  background-image: url('https://res.cloudinary.com/mashafrancis/image/upload/v1558595770/kari4me/emoji.png');
-  background-size: cover;
-}
-.server-error .server-error-500::before {
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  content: '';
-  background-color: #f2f5f8;
-  border-radius: 50%;
-  -webkit-transform: scale(2.4);
-  -ms-transform: scale(2.4);
-  transform: scale(2.4);
-}
-.server-error h1 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 65px;
-  font-weight: 700;
-  color: #151723;
-  text-transform: uppercase;
-}
-.server-error h2 {
-  margin: 0;
-  font-size: 21px;
-  font-weight: 400;
-  color: #151723;
-  text-transform: uppercase;
-}
-.server-error p {
-  margin-bottom: 16px;
-  font-weight: 400;
-  color: #999fa5;
-}
-.server-error a {
-  display: inline-block;
-  font-weight: 700;
-  color: #388dbc;
-  text-decoration: none;
-  border-radius: 40px;
+	width: 100%;
+	max-width: 560px;
+	padding-left: 160px;
+	line-height: 1.1;
+	& .server-error-500 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: inline-block;
+		width: 140px;
+		height: 140px;
+		background-image: url('https://res.cloudinary.com/mashafrancis/image/upload/v1558595770/kari4me/emoji.png');
+		background-size: cover;
+		&::before {
+			position: absolute;
+			z-index: -1;
+			width: 100%;
+			height: 100%;
+			content: '';
+			background-color: #f2f5f8;
+			border-radius: 50%;
+			-webkit-transform: scale(2.4);
+			-ms-transform: scale(2.4);
+			transform: scale(2.4);
+		}
+	}
+	& h1 {
+		margin-top: 0;
+		margin-bottom: 10px;
+		font-size: 65px;
+		font-weight: 700;
+		color: #151723;
+		text-transform: uppercase;
+	}
+	& h2 {
+		margin: 0;
+		font-size: 21px;
+		font-weight: 400;
+		color: #151723;
+		text-transform: uppercase;
+	}
+	& p {
+		margin-bottom: 16px;
+		font-weight: 400;
+		color: #999fa5;
+	}
+	& a {
+		display: inline-block;
+		font-weight: 700;
+		color: #388dbc;
+		text-decoration: none;
+		border-radius: 40px;
+	}
 }
 
 .back-button {
-  margin-right: 6px;
+	margin-right: 6px;
 }
 
 @media only screen and (max-width: 767px) {
-  .server-error {
-    padding-top: 110px;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  .server-error .server-error-500 {
-    width: 110px;
-    height: 110px;
-  }
+	.server-error {
+		padding-top: 110px;
+		padding-right: 15px;
+		padding-left: 15px;
+		& .server-error-500 {
+			width: 110px;
+			height: 110px;
+		}
+	}
 }
-
-/*# sourceMappingURL=InternalServerError.css.map */

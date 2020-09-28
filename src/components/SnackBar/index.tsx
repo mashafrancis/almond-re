@@ -6,14 +6,14 @@ import { Snackbar } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { ComponentContext } from '@context/ComponentContext';
 import { useSnackStyles } from '@components/SnackBar/styles';
-import { useViewport } from '../../hooks';
+import useViewport from '../../hooks/useViewport';
 
 // interfaces
 import { SnackMessageProps } from './interfaces';
 
 // styles
 
-export const SnackBar = (props: SnackMessageProps): JSX.Element => {
+export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 	const classes = useSnackStyles();
 	const componentContext = useContext(ComponentContext);
 	const {
@@ -28,10 +28,10 @@ export const SnackBar = (props: SnackMessageProps): JSX.Element => {
 	const breakpoint = 539;
 
 	useEffect(() => {
-		const { message } = props.snack;
+		const { message } = snack;
 		setSnackMessage(message);
 		setOpenSnack(!!message);
-	}, [props.snack]);
+	}, [snack]);
 
 	const Alert = (alertProps: AlertProps) => (
 		<MuiAlert elevation={6} variant="filled" {...alertProps} />

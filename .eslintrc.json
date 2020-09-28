@@ -58,7 +58,8 @@
 				"devDependencies": [
 					"**/*.test.ts",
 					"**/*.test.tsx",
-					"tests/setupTest.js"
+					"tests/setupTest.js",
+          "config/**/*"
 				]
 			}
 		],

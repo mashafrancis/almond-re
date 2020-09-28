@@ -1,15 +1,14 @@
 // react libraries
 import React from 'react';
-
 // third-party libraries
 import { render, screen } from '@testing-library/react';
-import moment from 'moment';
-
+import dayjs from 'dayjs';
 // component
 import ActivityLogCard from './index';
 
 describe('ActivityLogCard component', () => {
-	const props = {
+	let props;
+	props = {
 		log: 'Pump broken',
 		date: '2019-10-30T08:00:42.767Z',
 		redirect: jest.fn(),
@@ -25,7 +24,7 @@ describe('ActivityLogCard component', () => {
 		expect(elemHeader.innerHTML).toBe('Pump broken');
 
 		const elemDetails = screen.getByTestId('details');
-		expect(elemDetails.innerHTML).toBe(moment(props.date).format('LLLL'));
+		expect(elemDetails.innerHTML).toBe(dayjs(props.date).format('LLLL'));
 	});
 
 	it('should render log details info when called', () => {
@@ -36,7 +35,7 @@ describe('ActivityLogCard component', () => {
 	});
 
 	it('should render log details error when called', () => {
-		const props = {
+		props = {
 			log: 'Pump broken',
 			date: '2019-10-30T08:00:42.767Z',
 			type: 'error',

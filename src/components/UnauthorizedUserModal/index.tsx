@@ -1,20 +1,18 @@
 // react
-import React, { PureComponent } from 'react';
-
+import React from 'react';
 // third-party libraries
 import { connect } from 'react-redux';
-
 // components
 import Modal from '@components/Modal';
-
 // thunk action creators
 import { logoutUser } from '@modules/user';
-
 // interfaces
 import { UnauthorizedUserModalProps } from '@components/UnauthorizedUserModal/interfaces';
 
-export const UnauthorizedUserModal = (props: UnauthorizedUserModalProps) => {
-	const { logoutUser, isModalOpen, user } = props;
+export const UnauthorizedUserModal = ({
+	isModalOpen = false,
+	user,
+}: UnauthorizedUserModalProps): JSX.Element => {
 	/**
 	 * Logs the user out and reloads the page to refresh the app
 	 * @returns {void}

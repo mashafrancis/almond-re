@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export interface TopBarProps {
-	photoImage: React.ReactNode;
-	openProfileDialog: any;
+	photoImage: ReactNode;
+	openProfileDialog: (e?) => void;
 	isActivityLogsEmpty: boolean;
-	children?: React.ReactElement | any;
 	window?: () => Window;
+	children?: ReactElement;
 }
 
 export interface ElevationBarProps {
 	window?: () => Window;
-	children: React.ReactElement;
+	children: ReactElement;
 }

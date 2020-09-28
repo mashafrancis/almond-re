@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-export const useTimeout = (
+const useTimeout = (
 	callback: () => void,
 	timeout = 0,
 	{ persistRenders = false } = {},
@@ -23,3 +23,5 @@ export const useTimeout = (
 
 	return cancel;
 };
+
+export default useTimeout;

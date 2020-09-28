@@ -1,9 +1,9 @@
 export interface ToggleButtonProps {
-	onClick?: any;
-	onChange?: any;
+	onClick?: () => void;
+	onChange?: () => void;
 	isChecked?: boolean;
 	id?: string;
 	isActive?: boolean;
-	aria_label?: string;
+	ariaLabel?: string;
 	classes: string;
 }

@@ -1,18 +1,17 @@
 import React from 'react';
-
 // third-party libraries
 import { Card } from '@material-ui/core';
-import moment from 'moment';
-
+import dayjs from 'dayjs';
 // interfaces
 import { ActivityLogCardProps } from './interfaces';
-
 // styles
 import './ActivityLogCard.scss';
 
-const ActivityLogCard = (props: ActivityLogCardProps): JSX.Element => {
-	const { log, date, type } = props;
-
+const ActivityLogCard = ({
+	log,
+	date,
+	type,
+}: ActivityLogCardProps): JSX.Element => {
 	return (
 		<Card variant="outlined" className={`log-card log-card__${type}`}>
 			<div
@@ -27,7 +26,7 @@ const ActivityLogCard = (props: ActivityLogCardProps): JSX.Element => {
 					</h5>
 				</div>
 				<div className={`log-details-${type}__date`}>
-					<p data-testid="details">{`${moment(date).format('LLLL')}`}</p>
+					<p data-testid="details">{`${dayjs(date).format('LLLL')}`}</p>
 				</div>
 			</div>
 		</Card>

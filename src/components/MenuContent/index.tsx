@@ -15,7 +15,7 @@ import List, {
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
-import { useViewport } from '../../hooks';
+import useViewport from '../../hooks/useViewport';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -26,7 +26,7 @@ import '@pages/DashboardContainer/DashboardNavBar.scss';
 const avatar =
 	'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
 
-const mobileHeader = (name, photo) => (
+const mobileHeader = (name: string, photo: string): JSX.Element => (
 	<div className="header-image">
 		<span className="mini-menu__image">
 			<img className="mini-menu__image" src={photo || avatar} alt="avatar" />
@@ -34,21 +34,20 @@ const mobileHeader = (name, photo) => (
 		</span>
 	</div>
 );
-const mobileDrawerHeader = (setOpen, name, photo, viewWidth) => (
-	<>
+
+const mobileDrawerHeader = (setOpen, name, photo, viewWidth): JSX.Element => {
+	const handleClick = (): void => setOpen(false);
+	return (
 		<DrawerHeader>
 			<div className="drawer-logo">
-				<div
-					role="tablist"
-					className="mdc-tab-bar"
-					onClick={setOpen.bind(null, false)}
-				>
+				<div className="mdc-tab-bar" onClick={handleClick}>
 					{viewWidth && mobileHeader(name, photo)}
 				</div>
 			</div>
 		</DrawerHeader>
-	</>
-);
+	);
+};
+
 const drawerContent = (
 	selectedIndex,
 	setSelectedIndex,
@@ -59,8 +58,7 @@ const drawerContent = (
 	<>
 		<ListGroup>
 			{viewWidth && <ListDivider tag="div" />}
-			<List
-singleSelection selectedIndex={selectedIndex.item}>
+			<List singleSelection selectedIndex={selectedIndex.item}>
 				{checkIsAdmin().map((group, groupIndex) => (
 					<React.Fragment key={groupIndex}>
 						{group.map((item, itemIndex) => (
@@ -96,7 +94,7 @@ singleSelection selectedIndex={selectedIndex.item}>
 				className="footer-text"
 				href="https://www.almond.com/privacy"
 				target="_blank"
-				rel="noopener"
+				rel="noreferrer"
 			>
 				Privacy
 			</a>{' '}
@@ -105,7 +103,7 @@ singleSelection selectedIndex={selectedIndex.item}>
 				className="footer-text"
 				href="https://www.almond.com/tos"
 				target="_blank"
-				rel="noopener"
+				rel="noreferrer"
 			>
 				Terms
 			</a>{' '}
@@ -114,14 +112,14 @@ singleSelection selectedIndex={selectedIndex.item}>
 				className="footer-text"
 				href="https://www.almond.com/about"
 				target="_blank"
-				rel="noopener"
+				rel="noreferrer"
 			>
 				About
 			</a>
 		</footer>
 	</>
 );
-const MenuContent = (props: MenuContentProps): JSX.Element => {
+const MenuContent = ({ name, photo }: MenuContentProps): JSX.Element => {
 	const menu = React.useContext(ComponentContext);
 	const user = React.useContext(UserContext);
 
@@ -133,11 +131,9 @@ const MenuContent = (props: MenuContentProps): JSX.Element => {
 	const { isAdmin } = user;
 
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
-	const { name, photo } = props;
 
 	return (
-		<Drawer
-modal={viewWidth} open={isMenuOpen} onClose={() => setOpen(false)}>
+		<Drawer modal={viewWidth} open={isMenuOpen} onClose={() => setOpen(false)}>
 			{mobileDrawerHeader(setOpen, name, photo, viewWidth)}
 			<DrawerContent>
 				{drawerContent(

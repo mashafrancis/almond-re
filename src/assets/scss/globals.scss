@@ -1,18 +1,18 @@
 * {
-  font-family: Google Sans, Roboto, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
+	font-family: Google Sans, Roboto, Helvetica Neue, sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
 
 body,
 html {
-  min-height: 100vh;
-  margin: 0;
-  font-size: 16px;
-  font-weight: 400;
-  color: #202124;
+	min-height: 100vh;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 400;
+	color: #202124;
 }
 
 .mdc-layout-grid {
-  //max-width: initial;
-  max-width: 1340px;
+	//max-width: initial;
+	max-width: 1340px;
 }

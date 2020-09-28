@@ -22,14 +22,25 @@ import {
 const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const RegularUserAnalytics = (): JSX.Element => {
-	const [state, setState] = useState<RegularUserAnalyticsState>({
-		data: {
-			temp: 0,
-			humid: 0,
-			water_level: 0,
-		},
-		lastMessage: {},
-	});
+	const [temperature, setTemperature] = useState<number | null>(0);
+
+	const { lastMessage } = useSubscription('almond/data');
+	// const temps = lastMessage?.message;
+
+	useEffect(() => {
+		const tempa = lastMessage?.message;
+		console.log('Class: , Function: , Line 30 tem():', tempa);
+		// setTemperature(temps);
+		// return () => {};
+	}, [lastMessage]);
+	// const [state, setState] = useState<RegularUserAnalyticsState>({
+	// 	data: {
+	// 		temp: 0,
+	// 		humid: 0,
+	// 		water_level: 0,
+	// 	},
+	// 	lastMessage: {},
+	// });
 
 	// const { lastMessage } = useSubscription('almond/data');
 	//
@@ -50,6 +61,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 
 	const menu = useContext(ComponentContext);
 	const { setSelectedIndex } = menu;
+	// eslint-disable-next-line camelcase
 	const { temp, humid, water_level } = data;
 
 	// const { data: { temp = 0, humid = 0, water_level = 0 } } = message;
@@ -72,7 +84,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 						colorClass="card-color-yellow"
 						icon={<BlurLinearTwoTone className="content-icon" />}
 						mainInfo="Water Temperature"
-						subInfo={`${state.data.temp} \u00b0C`}
+						subInfo={`${temperature} \u00b0C`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>

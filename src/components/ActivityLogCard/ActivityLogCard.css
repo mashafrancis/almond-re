@@ -1,57 +1,55 @@
 .log-card {
-  margin-top: 0 !important;
-  margin-bottom: 8px !important;
-  border: none !important;
-}
-.log-card .log-details {
-  position: relative;
-  margin: 0.5em 10px;
-}
-.log-card .log-details:first-child {
-  margin-top: 0;
-}
-.log-card .log-details:last-child {
-  margin-bottom: 0;
+	margin-top: 0 !important;
+	margin-bottom: 8px !important;
+	border: none !important;
+	& .log-details {
+		position: relative;
+		margin: 0.5em 10px;
+		&:first-child {
+			margin-top: 0;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 .log-card__info {
-  background-color: #e6f4ea !important;
+	background-color: #e6f4ea !important;
 }
 .log-card__error {
-  background-color: rgba(210, 43, 53, 0.12) !important;
+	background-color: rgba(210, 43, 53, 0.12) !important;
 }
 .log-card .log-details-info__header h5 {
-  margin-top: 10px;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #0e5827;
+	margin-top: 10px;
+	margin-bottom: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #0e5827;
 }
 .log-card .log-details-info__date {
-  display: inline-block;
-}
-.log-card .log-details-info__date p {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 1;
-  color: #0e5827;
+	display: inline-block;
+	& p {
+		margin: 0 0 10px;
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 1;
+		color: #0e5827;
+	}
 }
 .log-card .log-details-error__header h5 {
-  margin-top: 10px;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #821721;
+	margin-top: 10px;
+	margin-bottom: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #821721;
 }
 .log-card .log-details-error__date {
-  display: inline-block;
+	display: inline-block;
+	& p {
+		margin: 0 0 10px;
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 1;
+		color: #821721;
+	}
 }
-.log-card .log-details-error__date p {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 1;
-  color: #821721;
-}
-
-/*# sourceMappingURL=ActivityLogCard.css.map */

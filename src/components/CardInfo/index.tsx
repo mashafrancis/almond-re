@@ -1,24 +1,29 @@
 import React from 'react';
-
+// components
 import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { useViewport } from '../../hooks';
-
+import ActionButton from '@components/ActionButton';
+import useViewport from '../../hooks/useViewport';
 // interfaces
 import { CardInfoProps } from './interfaces';
-
 // styles
 import './CardInfo.scss';
 
-const CardInfo = (props: CardInfoProps): JSX.Element => {
-	const { mainHeader, subHeader, buttonName, onClick, icon } = props;
-
+const CardInfo = ({
+	mainHeader,
+	subHeader,
+	buttonName,
+	onClick,
+	icon,
+}: CardInfoProps): JSX.Element => {
 	const cardButton = () => (
 		<div className="card-content__button">
 			{width > breakpoint ? (
-				<button className="mdc-button mdc-button--raised" onClick={onClick}>
-					<span className="mdc-button__label">{buttonName}</span>
-				</button>
+				<ActionButton
+					name={buttonName as string}
+					variant="contained"
+					handleClick={onClick}
+				/>
 			) : (
 				<Fab
 					size="small"

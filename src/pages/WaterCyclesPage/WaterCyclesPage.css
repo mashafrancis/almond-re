@@ -1,136 +1,134 @@
 .water-schedule-table {
-  background-color: #f9f9f9;
-  border: 1px solid #dadce0;
-  border-radius: 8px;
+	background-color: #f9f9f9;
+	border: 1px solid #dadce0;
+	border-radius: 8px;
 }
 .water-schedule-table__content {
-  margin-right: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
 }
 
 .blank-content {
-  position: relative;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  color: #5f6368;
-  text-align: center;
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
-}
-.blank-content h2 {
-  margin-top: 10px;
-  font-family: 'San Francisco', serif !important;
-  font-size: 30px;
-  font-weight: 100;
-  line-height: 40px;
-  color: rgba(87, 93, 96, 0.47);
-  letter-spacing: -2px;
-  word-spacing: 2px;
+	position: relative;
+	width: 100%;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	color: #5f6368;
+	text-align: center;
+	-webkit-align-self: flex-end;
+	-ms-flex-item-align: end;
+	align-self: flex-end;
+	& h2 {
+		margin-top: 10px;
+		font-family: 'San Francisco', serif !important;
+		font-size: 30px;
+		font-weight: 100;
+		line-height: 40px;
+		color: rgba(87, 93, 96, 0.47);
+		letter-spacing: -2px;
+		word-spacing: 2px;
+	}
 }
 
 .MuiInputBase-input {
-  font-size: 24px !important;
+	font-size: 24px !important;
 }
 
 .MuiTypography-h2 {
-  font-size: 3.85rem;
+	font-size: 3.85rem;
 }
 
 .MuiPickersToolbar-toolbar {
-  display: flex;
-  height: 100px;
-  flex-direction: row;
-  background-color: #3480e3 !important;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	height: 100px;
+	flex-direction: row;
+	background-color: #3480e3 !important;
+	align-items: center;
+	justify-content: center;
 }
 
 .MuiPickersClock-pin {
-  background-color: #3480e3 !important;
+	background-color: #3480e3 !important;
 }
 
 .MuiPickersClockPointer-pointer {
-  background-color: #3480e3 !important;
+	background-color: #3480e3 !important;
 }
 
 .MuiPickersClockPointer-thumb {
-  border: 14px solid #3480e3 !important;
+	border: 14px solid #3480e3 !important;
 }
 
 .MuiButton-textPrimary {
-  color: #3480e3 !important;
+	color: #3480e3 !important;
 }
 
 .MuiPaper-rounded {
-  border-radius: 8px;
+	border-radius: 8px;
 }
 
 .headline-5,
 h5 {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-size: 0.85rem;
-  font-weight: 300;
-  line-height: 1.25rem;
-  color: #7d7d7d;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-size: 0.85rem;
+	font-weight: 300;
+	line-height: 1.25rem;
+	color: #7d7d7d;
 }
 
 .mdc-text-field--fullwidth:not(.mdc-text-field--textarea):not(.mdc-text-field--disabled) {
-  background-color: #ffffff7a;
+	background-color: #ffffff7a;
 }
 
 .next-time-schedule {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 30px;
-  font-weight: 400;
-  color: #1967d2;
-  color: var(--mdc-theme-primary, #1967d2);
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 30px;
+	font-weight: 400;
+	color: #1967d2;
+	color: var(--mdc-theme-primary, #1967d2);
 }
 
 @media (max-width: 539px) {
-  .water-schedule-table {
-    width: 100%;
-  }
+	.water-schedule-table {
+		width: 100%;
+	}
 
-  .blank-content {
-    position: relative;
-    width: 100%;
-    padding-top: 10px;
-    padding-right: 30px;
-    padding-left: 30px;
-    color: #5f6368;
-    text-align: center;
-    -webkit-align-self: flex-end;
-    -ms-flex-item-align: end;
-    align-self: flex-end;
-  }
-  .blank-content h2 {
-    margin-top: 50px;
-    font-family: 'San Francisco', serif !important;
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 50px;
-    letter-spacing: -2px;
-    word-spacing: 2px;
-  }
+	.blank-content {
+		position: relative;
+		width: 100%;
+		padding-top: 10px;
+		padding-right: 30px;
+		padding-left: 30px;
+		color: #5f6368;
+		text-align: center;
+		-webkit-align-self: flex-end;
+		-ms-flex-item-align: end;
+		align-self: flex-end;
+		& h2 {
+			margin-top: 50px;
+			font-family: 'San Francisco', serif !important;
+			font-size: 30px;
+			font-weight: 300;
+			line-height: 50px;
+			letter-spacing: -2px;
+			word-spacing: 2px;
+		}
+	}
 }
 @media (max-width: 360px) {
-  .blank-content {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-  .blank-content h2 {
-    margin-top: 0;
-    font-size: 24px;
-    line-height: 40px;
-    letter-spacing: -1px;
-  }
+	.blank-content {
+		padding-right: 10px;
+		padding-left: 10px;
+		& h2 {
+			margin-top: 0;
+			font-size: 24px;
+			line-height: 40px;
+			letter-spacing: -1px;
+		}
+	}
 }
-
-/*# sourceMappingURL=WaterCyclesPage.css.map */

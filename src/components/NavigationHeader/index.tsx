@@ -1,13 +1,12 @@
 import React from 'react';
-
 // components
 import { ArrowForwardRounded, ArrowBackRounded } from '@material-ui/icons';
-
 // third-party
 import { NavLink } from 'react-router-dom';
-
 // interfaces
 import { NavigationHeaderProps } from './interfaces';
+// styles
+import './NavigationHeader.scss';
 
 export const NavigationHeader = ({
 	forwardButtonName,
@@ -38,13 +37,15 @@ export const NavigationHeader = ({
 	);
 
 	return (
-		<header>
-			{backArrow()}
-			<div className="mini-account-menu">
-				<div className="mini-account-menu--desktop">{forwardArrow()}</div>
-				<div className="mini-account-menu--mobile">{forwardArrow()}</div>
-			</div>
-		</header>
+		<div className="navigation-header">
+			<header>
+				{backArrow()}
+				<div className="mini-account-menu">
+					<div className="mini-account-menu--desktop">{forwardArrow()}</div>
+					<div className="mini-account-menu--mobile">{forwardArrow()}</div>
+				</div>
+			</header>
+		</div>
 	);
 };
 

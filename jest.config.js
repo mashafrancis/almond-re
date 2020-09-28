@@ -82,7 +82,7 @@ module.exports = {
     '@testing-library/jest-dom/extend-expect',
     '@testing-library/jest-dom',
     '@testing-library/react',
-    '<rootDir>/tests/setupTest.js',
+    '<rootDir>/config/setupTest.js',
   ],
   testEnvironment: 'jest-environment-jsdom-sixteen',
   transformIgnorePatterns: [

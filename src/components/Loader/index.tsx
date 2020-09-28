@@ -4,7 +4,7 @@ import React from 'react';
 // style
 import './Loader.scss';
 
-const Loader = () => (
+const Loader = (): JSX.Element => (
 	<>
 		<div className="container" data-testid="container">
 			<div className="dot dot-1" data-testid="dot-1" />

@@ -1,51 +1,41 @@
 // react libraries
-import React, { useEffect, useState, Suspense } from 'react';
-
+import React, { useEffect, useState, Suspense, useRef } from 'react';
 // third party libraries
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { Connector } from 'mqtt-hooks';
-
 // components
 import { ErrorBoundary } from 'react-error-boundary';
 import SnackBar from '@components/SnackBar';
-
+import ErrorFallback from '@components/ErrorBoundary';
+import LinearProgressBar from '@components/LinearProgressBar';
 // thunk action creators
 import { getUserDetails } from '@modules/user';
-
-// interfaces
-
 // helper functions
 import { authService } from '@utils/auth';
 import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
-
 // context
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
-
+import useEffectAsync from '../hooks/useEffectAsync';
+import Routes from '../routes';
 // styles
 import './App.scss';
-import { ArrowBackRounded } from '@material-ui/icons';
-import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
-import ErrorFallback from '@components/ErrorBoundary';
-import LinearProgressBar from '@components/LinearProgressBar';
+// interfaces
 import { AppProps, AppState } from './interfaces';
-import Routes from '../routes';
-import { useEffectAsync } from '../hooks';
 
-export const App: React.FunctionComponent<AppProps> = (props) => {
+// eslint-disable-next-line no-shadow
+export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	const [state, setState] = useState<AppState>({
 		isUserAuthenticated: authService.isAuthenticated(),
 		loading: 'idle',
 		isAdmin: false,
 	});
-	const timerRef = React.useRef<number>();
-
-	const { user, snack } = props;
+	const timerRef = useRef<number>();
 
 	useEffect(() => {
 		initializeGA();
@@ -55,7 +45,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
 	useEffectAsync(async () => {
 		if (state.isUserAuthenticated) {
 			try {
-				await props.getUserDetails().then((response) => {
+				await getUserDetails().then((response) => {
 					setState({
 						...state,
 						isAdmin: !checkUserRole(
@@ -71,9 +61,7 @@ export const App: React.FunctionComponent<AppProps> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		const {
-			location: { search },
-		} = props;
+		const { search } = location;
 		const { socialToken } = queryString.parse(search);
 		if (socialToken) {
 			authService.saveToken(socialToken);
