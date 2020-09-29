@@ -16,15 +16,12 @@ const selectedIndex = JSON.parse(
 
 const ComponentContext = createContext({
 	isMenuOpen: false,
-	selectedIndex: {
-		group: isArrayNotNull(selectedIndex) ? selectedIndex.group : 0,
-		item: isArrayNotNull(selectedIndex) ? selectedIndex.item : 0,
-	},
+	selectedIndex: isArrayNotNull(selectedIndex) ? selectedIndex : 0,
 	isSelectDeviceModalOpen: false,
 	isActivityDrawerOpen: false,
 	activityLogsViewed: false,
-	setOpen: (_open: boolean) => {},
-	setSelectedIndex: (_selectedIndex: { group: number; item: number }) => {},
+	setMenuOpen: (_open: boolean) => {},
+	setSelectedIndex: (_selectedIndex: number) => {},
 	setDeviceModalOpen: (_open: boolean) => {},
 	handleSelectDeviceModal: () => {},
 	handleCloseDeviceModal: () => {},
@@ -42,14 +39,11 @@ const ComponentContext = createContext({
 const ComponentProvider = ({
 	children,
 	...props
-}: ComponentContextProps): any => {
+}: ComponentContextProps): JSX.Element => {
 	const [state, setState] = useState<ComponentContextState>({
 		isOpen: false,
 		isMenuOpen: false,
-		selectedIndex: {
-			group: 0,
-			item: 0,
-		},
+		selectedIndex: 0,
 		isSelectDeviceModalOpen: false,
 		isActivityDrawerOpen: false,
 		activityLogsViewed: false,
@@ -57,7 +51,7 @@ const ComponentProvider = ({
 		snackMessage: '',
 	});
 
-	const setOpen = (isOpen: boolean) =>
+	const setMenuOpen = (isOpen: boolean) =>
 		setState((prevState) => ({ ...prevState, isMenuOpen: isOpen }));
 
 	const setOpenSnack = (isOpen: boolean) =>
@@ -66,7 +60,7 @@ const ComponentProvider = ({
 	const setSnackMessage = (message: string) =>
 		setState((prevState) => ({ ...prevState, snackMessage: message }));
 
-	const setSelectedIndex = (selectedIndex: { group: number; item: number }) => {
+	const setSelectedIndex = (selectedIndex: number) => {
 		setState((prevState) => ({ ...prevState, selectedIndex }));
 		window.localStorage.setItem('selectedIndex', JSON.stringify(selectedIndex));
 	};
@@ -114,6 +108,7 @@ const ComponentProvider = ({
 	};
 
 	const {
+		// eslint-disable-next-line no-shadow
 		selectedIndex,
 		isMenuOpen,
 		isSelectDeviceModalOpen,
@@ -132,7 +127,7 @@ const ComponentProvider = ({
 				isActivityDrawerOpen,
 				activityLogsViewed,
 				setSelectedIndex,
-				setOpen,
+				setMenuOpen,
 				setDeviceModalOpen,
 				handleSelectDeviceModal,
 				handleCloseDeviceModal,

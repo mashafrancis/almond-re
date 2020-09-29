@@ -4,6 +4,7 @@ export interface MenuComponentProps {
 	primaryText: string;
 	component: any;
 	icon: ReactNode;
+	id: string;
 }
 
 export interface MenuBottomProps {

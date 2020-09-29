@@ -1,7 +1,7 @@
 import React from 'react';
 
 // third party
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 // interfaces
 import { TabPanelProps } from '@components/TabPanel/interfaces';
@@ -18,15 +18,11 @@ const TabPanel = ({
 			className="tab-panel"
 			role="tabpanel"
 			hidden={value !== index}
-			id={`simple-tabpanel-${index}`}
-			aria-labelledby={`simple-tab-${index}`}
+			id={`menu-tabpanel-${index}`}
+			aria-labelledby={`menu-tab-${index}`}
 			{...other}
 		>
-			{value === index && (
-				<Box p={3}>
-					<Typography>{children}</Typography>
-				</Box>
-			)}
+			{value === index && <Box p={3}>{children}</Box>}
 		</div>
 	);
 };

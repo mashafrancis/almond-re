@@ -8,6 +8,7 @@ import React, {
 	Suspense,
 	createElement,
 	lazy,
+	createRef,
 } from 'react';
 // third-party libraries
 import {
@@ -33,6 +34,7 @@ import {
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import LinearProgressBar from '@components/LinearProgressBar';
 import TopBar from '@components/TopBar';
+import TabPanel from '@components/TabPanel';
 // utils
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
@@ -44,6 +46,7 @@ import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 import useViewport from '../../hooks/useViewport';
 import './DashboardContainer.scss';
+import { primaryColor } from '../../assets/tss/common';
 // lazy loaded components
 const Modal = lazy(() => import('@components/Modal'));
 const MenuContent = lazy(() => import('@components/MenuContent'));
@@ -92,6 +95,8 @@ const DashboardTemplate = ({
 
 	const { width } = useViewport();
 	const breakpoint = 539;
+
+	const modalRef = createRef();
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -219,7 +224,7 @@ const DashboardTemplate = ({
 			InputProps={{
 				startAdornment: (
 					<InputAdornment position="start">
-						<AllOutTwoTone style={{ color: '#1967D2' }} />
+						<AllOutTwoTone style={{ color: primaryColor }} />
 					</InputAdornment>
 				),
 			}}
@@ -255,7 +260,7 @@ const DashboardTemplate = ({
 			InputProps={{
 				startAdornment: (
 					<InputAdornment position="start">
-						<Face style={{ color: '#1967D2' }} />
+						<Face style={{ color: primaryColor }} />
 					</InputAdornment>
 				),
 			}}
@@ -269,6 +274,7 @@ const DashboardTemplate = ({
 	);
 	const SelectDeviceModal = (device) => (
 		<Modal
+			ref={modalRef}
 			isModalOpen={isSelectDeviceModalOpen}
 			renderHeader={() => 'Select the device ID'}
 			renderContent={() => selectDeviceContent(device)}
@@ -284,7 +290,7 @@ const DashboardTemplate = ({
 		{ name: 'Send Feedback', icon: <OpenInNew /> },
 	];
 
-	const MenuProfileSelect = () => {
+	const MenuProfileSelect = (): JSX.Element => {
 		return (
 			<Menu
 				className="photo-menu"
@@ -294,25 +300,17 @@ const DashboardTemplate = ({
 				open={Boolean(state.anchorEl)}
 				onClose={handleProfileClose}
 			>
-				{width < breakpoint && (
-					<div>
-						{menuItems.map((item, index) => {
-							const handleClick = () =>
-								setSelectedIndex({
-									group: 1,
-									item: index,
-								});
-							return (
-								<MenuItem key={item.name} onClick={handleClick}>
-									<ListItemIcon style={{ minWidth: '36px' }}>
-										{item.icon}
-									</ListItemIcon>
-									{item.name}
-								</MenuItem>
-							);
-						})}
-					</div>
-				)}
+				{menuItems.map((item, index) => {
+					const handleClick = () => setSelectedIndex(index);
+					return (
+						<MenuItem key={item.name} onClick={handleClick}>
+							<ListItemIcon style={{ minWidth: '36px' }}>
+								{item.icon}
+							</ListItemIcon>
+							{item.name}
+						</MenuItem>
+					);
+				})}
 
 				<MenuItem onClick={toggleRoleChangeDialog}>
 					<ListItemIcon style={{ minWidth: '36px' }}>
@@ -332,6 +330,7 @@ const DashboardTemplate = ({
 
 	const ProfileDialog = (): JSX.Element => (
 		<Modal
+			ref={modalRef}
 			isModalOpen={state.isChangeRoleDialogOpen}
 			renderHeader={() => 'Confirm change of role'}
 			renderContent={() => selectChangeRoleContent()}
@@ -375,12 +374,21 @@ const DashboardTemplate = ({
 		}
 	};
 
+	/*
+	 * Check if it is running on web browser in iOS
+	 */
+	const iOS =
+		typeof window === 'undefined' &&
+		/iPad|iPhone|iPod/.test(navigator.userAgent);
+
 	const ActivityDrawer = () => (
 		<SwipeableDrawer
 			anchor="right"
 			open={isActivityDrawerOpen}
 			onClose={handleActivityDrawer('close')}
 			onOpen={handleActivityDrawer('open')}
+			disableBackdropTransition={!iOS}
+			disableDiscovery={iOS}
 		>
 			{ActivityLogsList()}
 		</SwipeableDrawer>
@@ -389,7 +397,7 @@ const DashboardTemplate = ({
 
 	return (
 		<div className="dashboard" data-testid="dashboard">
-			<MenuContent name={name} photo={photo} />
+			{width > breakpoint && <MenuContent />}
 			<TopBar
 				isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
 				photoImage={photoImage()}
@@ -397,10 +405,11 @@ const DashboardTemplate = ({
 			>
 				<Suspense fallback={<LinearProgressBar />}>
 					<Grid>
-						{createElement(
-							checkIsAdmin()[selectedIndex.group][selectedIndex.item].component,
-							{ history },
-						)}
+						<TabPanel index={selectedIndex} value={selectedIndex}>
+							{createElement(checkIsAdmin()[selectedIndex].component, {
+								history,
+							})}
+						</TabPanel>
 					</Grid>
 				</Suspense>
 			</TopBar>

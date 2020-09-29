@@ -59,7 +59,7 @@
 					"**/*.test.ts",
 					"**/*.test.tsx",
 					"tests/setupTest.js",
-          "config/**/*"
+					"config/**/*"
 				]
 			}
 		],

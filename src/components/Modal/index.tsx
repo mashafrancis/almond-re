@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-
 // components
 import ActionButton from '@components/ActionButton';
 import {
@@ -8,10 +7,8 @@ import {
 	DialogContent,
 	DialogTitle,
 } from '@material-ui/core';
-
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';
-
 // styles
 import './Modal.scss';
 
@@ -32,7 +29,7 @@ const Modal = forwardRef(
 	): JSX.Element => {
 		return (
 			<Dialog
-				innerRef={ref}
+				ref={ref}
 				open={isModalOpen}
 				fullScreen={fullScreen}
 				onClose={onClose}

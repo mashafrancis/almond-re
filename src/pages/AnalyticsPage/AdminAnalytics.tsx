@@ -15,15 +15,16 @@ import { ComponentContext } from '@context/ComponentContext';
 const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const AdminAnalytics = (): JSX.Element => {
-	const menu = useContext(ComponentContext);
-	const { setSelectedIndex } = menu;
+	const { setSelectedIndex } = useContext(ComponentContext);
+
+	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
 	return (
 		<>
 			<Row className="analytics-page" data-testid="admin-analytics-page">
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-blue"
 						icon={<AllOutTwoTone className="content-icon" />}
 						mainInfo="Devices"
@@ -32,7 +33,7 @@ const AdminAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-yellow"
 						icon={<GroupTwoTone className="content-icon" />}
 						mainInfo="People"
@@ -41,7 +42,7 @@ const AdminAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-purple"
 						icon={<ScheduleTwoTone className="content-icon" />}
 						mainInfo="Requests"
@@ -52,7 +53,7 @@ const AdminAnalytics = (): JSX.Element => {
 			<Row className="analytics-page">
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 2 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-red"
 						icon={<AccountBalanceTwoTone className="content-icon" />}
 						mainInfo="Sales"
@@ -61,7 +62,7 @@ const AdminAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 2 })}
+						onClick={handleCardClick(2)}
 						colorClass="card-color-green"
 						icon={<DeviceHubTwoTone className="content-icon" />}
 						mainInfo="Units"
@@ -70,7 +71,7 @@ const AdminAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 3 })}
+						onClick={handleCardClick(3)}
 						colorClass="card-color-brown"
 						icon={<LibraryBooksTwoTone className="content-icon" />}
 						mainInfo="Orders"

@@ -9,3 +9,4 @@
 
 *.ico   -text
 *.png   -text
+*.ttf   -text

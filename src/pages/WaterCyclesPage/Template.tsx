@@ -305,7 +305,7 @@ export const WaterCyclesTemplate = ({
 			});
 		return (
 			<Modal
-				innerRef={modalRef}
+				ref={modalRef}
 				isModalOpen={state.isScheduleModalOpen}
 				renderContent={() => RenderTimeScheduleForm()}
 				onClose={handleClose}
@@ -324,7 +324,7 @@ export const WaterCyclesTemplate = ({
 
 	const DeleteScheduleModal = () => (
 		<Modal
-			innerRef={modalRef}
+			ref={modalRef}
 			isModalOpen={state.isDeleteModalOpen}
 			renderContent={() => (
 				<h5 className="headline-5">
