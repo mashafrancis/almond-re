@@ -1,5 +1,4 @@
 import React, { cloneElement, useContext } from 'react';
-// third-party libraries
 import {
 	Avatar,
 	Badge,
@@ -27,6 +26,7 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import { useTopBarStyles, StyledBadge } from '@components/TopBar/styles';
 import '@pages/DashboardContainer/DashboardNavBar.scss';
 // interface
+import useStyles from '@components/MenuContent/styles';
 import { ElevationBarProps, TopBarProps } from './interfaces';
 import {
 	closedColor,
@@ -52,13 +52,20 @@ const ElevationScroll = ({
 	});
 };
 
-const TopBar = (props: TopBarProps): JSX.Element => {
+const TopBar = ({
+	isActivityLogsEmpty,
+	children,
+	openProfileDialog,
+}: TopBarProps): JSX.Element => {
 	const classes = useTopBarStyles();
+	const classesMenu = useStyles();
 	const device = useContext(UserContext);
-	const menu = useContext(ComponentContext);
+	const {
+		activityLogsViewed,
+		toggleActivityDrawer,
+		setDeviceModalOpen,
+	} = useContext(ComponentContext);
 	const { name, photo, isAdmin } = useContext(UserContext);
-	const { activityLogsViewed, toggleActivityDrawer, setDeviceModalOpen } = menu;
-	const { isActivityLogsEmpty, children, openProfileDialog } = props;
 	const { status } = useMqttState();
 
 	const statusChange = (mqttStatus: string): string => {
@@ -180,9 +187,9 @@ const TopBar = (props: TopBarProps): JSX.Element => {
 	return (
 		<>
 			<CssBaseline />
-			<ElevationScroll {...props}>
+			<ElevationScroll>
 				<AppBar
-					className={`${classes.appBar} mdc-top-app-bar`}
+					className={`${classesMenu.appBar} mdc-top-app-bar`}
 					position="fixed"
 					data-testid="top-bar"
 				>

@@ -62,6 +62,9 @@ export const useTopBarStyles = makeStyles((theme: Theme) =>
 			//   display: 'block',
 			// },
 		},
+		hide: {
+			display: 'none',
+		},
 	}),
 );
 

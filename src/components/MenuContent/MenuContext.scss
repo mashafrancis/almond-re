@@ -1,0 +1,31 @@
+.menu-content {
+	.MuiTabs-fixed {
+		width: 100%;
+		top: 50px;
+	}
+
+	.MuiTab-textColorPrimary.Mui-selected {
+		color: #1967d2 !important;
+	}
+
+	.MuiTabs-root {
+		display: flex;
+		overflow: hidden;
+		min-height: 48px;
+		height: -webkit-fill-available;
+	}
+
+	.MuiTab-labelIcon {
+		min-height: 72px;
+		padding-top: 24px;
+	}
+
+	.MuiSvgIcon-root {
+		display: inline-block;
+		font-size: 1.8rem;
+	}
+
+	.PrivateTabIndicator-vertical-49 {
+		display: none !important;
+	}
+}

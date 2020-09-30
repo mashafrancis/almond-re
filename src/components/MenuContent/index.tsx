@@ -1,150 +1,52 @@
-import React from 'react';
-
-// third-party libraries
-import Drawer, { DrawerContent, DrawerHeader } from '@material/react-drawer';
-import List, {
-	ListDivider,
-	ListGroup,
-	ListGroupSubheader,
-	ListItem,
-	ListItemGraphic,
-	ListItemText,
-} from '@material/react-list';
-
+import React, { useContext } from 'react';
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
-import useViewport from '../../hooks/useViewport';
-
-// interfaces
-import { MenuContentProps } from './interfaces';
-
+import { MenuTab, MenuTabs } from '@components/MenuTabs';
 // styles
 import '@pages/DashboardContainer/DashboardNavBar.scss';
+import './MenuContext.scss';
 
-const avatar =
-	'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
-
-const mobileHeader = (name: string, photo: string): JSX.Element => (
-	<div className="header-image">
-		<span className="mini-menu__image">
-			<img className="mini-menu__image" src={photo || avatar} alt="avatar" />
-			<h5>{name || 'Anonymous'}</h5>
-		</span>
-	</div>
-);
-
-const mobileDrawerHeader = (setOpen, name, photo, viewWidth): JSX.Element => {
-	const handleClick = (): void => setOpen(false);
-	return (
-		<DrawerHeader>
-			<div className="drawer-logo">
-				<div className="mdc-tab-bar" onClick={handleClick}>
-					{viewWidth && mobileHeader(name, photo)}
-				</div>
-			</div>
-		</DrawerHeader>
-	);
-};
-
-const drawerContent = (
-	selectedIndex,
-	setSelectedIndex,
-	setOpen,
-	checkIsAdmin,
-	viewWidth,
-) => (
-	<>
-		<ListGroup>
-			{viewWidth && <ListDivider tag="div" />}
-			<List singleSelection selectedIndex={selectedIndex.item}>
-				{checkIsAdmin().map((group, groupIndex) => (
-					<React.Fragment key={groupIndex}>
-						{group.map((item, itemIndex) => (
-							<ListItem
-								key={`${groupIndex}.${itemIndex}`}
-								className={
-									selectedIndex.group === groupIndex &&
-									selectedIndex.item === itemIndex
-										? 'mdc-list-item--selected'
-										: ''
-								}
-								onClick={setSelectedIndex.bind(null, {
-									group: groupIndex,
-									item: itemIndex,
-								})}
-							>
-								<ListItemGraphic className="drawer-icon" graphic={item.icon} />
-								<ListItemText tabIndex={0} primaryText={item.primaryText} />
-							</ListItem>
-						))}
-						<ListDivider tag="div" />
-						{groupIndex === 0 ? (
-							<ListGroupSubheader tag="h3">
-								Do more with your account
-							</ListGroupSubheader>
-						) : null}
-					</React.Fragment>
-				))}
-			</List>
-		</ListGroup>
-		<footer className="drawer-footer">
-			<a
-				className="footer-text"
-				href="https://www.almond.com/privacy"
-				target="_blank"
-				rel="noreferrer"
-			>
-				Privacy
-			</a>{' '}
-			·{' '}
-			<a
-				className="footer-text"
-				href="https://www.almond.com/tos"
-				target="_blank"
-				rel="noreferrer"
-			>
-				Terms
-			</a>{' '}
-			·{' '}
-			<a
-				className="footer-text"
-				href="https://www.almond.com/about"
-				target="_blank"
-				rel="noreferrer"
-			>
-				About
-			</a>
-		</footer>
-	</>
-);
-const MenuContent = ({ name, photo }: MenuContentProps): JSX.Element => {
-	const menu = React.useContext(ComponentContext);
-	const user = React.useContext(UserContext);
-
-	const { width } = useViewport();
-	const breakpoint = 539;
-	const viewWidth = width < breakpoint;
-
-	const { isMenuOpen, setOpen, selectedIndex, setSelectedIndex } = menu;
-	const { isAdmin } = user;
+const MenuContent = (): JSX.Element => {
+	const { selectedIndex, setSelectedIndex } = useContext(ComponentContext);
+	const { isAdmin } = useContext(UserContext);
 
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
 
+	const handleOnChange = (event: React.ChangeEvent<{}>, value: number) => {
+		setSelectedIndex(value);
+	};
+
+	const a11yProps = (index: number | string) => {
+		return {
+			id: `menu-tab-${index}`,
+			'aria-controls': `menu-tabpanel-${index}`,
+		};
+	};
+
 	return (
-		<Drawer modal={viewWidth} open={isMenuOpen} onClose={() => setOpen(false)}>
-			{mobileDrawerHeader(setOpen, name, photo, viewWidth)}
-			<DrawerContent>
-				{drawerContent(
-					selectedIndex,
-					setSelectedIndex,
-					setOpen,
-					checkIsAdmin,
-					viewWidth,
-				)}
-			</DrawerContent>
-		</Drawer>
+		<div className="menu-content">
+			<MenuTabs
+				value={selectedIndex}
+				onChange={handleOnChange}
+				orientation="vertical"
+				scrollButtons="off"
+				textColor="primary"
+				aria-label="menu tabs"
+			>
+				{checkIsAdmin()
+					.slice(0, 6)
+					.map((item) => (
+						<MenuTab
+							key={item.primaryText}
+							label={item.primaryText}
+							icon={item.icon}
+							{...a11yProps(selectedIndex)}
+						/>
+					))}
+			</MenuTabs>
+		</div>
 	);
 };
 

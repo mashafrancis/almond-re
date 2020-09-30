@@ -7,10 +7,7 @@ export interface ComponentContextProps {
 export interface ComponentContextState {
 	isOpen: boolean;
 	isMenuOpen: boolean;
-	selectedIndex: {
-		group: number;
-		item: number;
-	};
+	selectedIndex: number;
 	isSelectDeviceModalOpen: boolean;
 	isActivityDrawerOpen: boolean;
 	activityLogsViewed: boolean;

@@ -24,15 +24,15 @@ const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 const RegularUserAnalytics = (): JSX.Element => {
 	const [temperature, setTemperature] = useState<number | null>(0);
 
-	const { lastMessage } = useSubscription('almond/data');
+	// const { lastMessage } = useSubscription('almond/data');
 	// const temps = lastMessage?.message;
 
-	useEffect(() => {
-		const tempa = lastMessage?.message;
-		console.log('Class: , Function: , Line 30 tem():', tempa);
-		// setTemperature(temps);
-		// return () => {};
-	}, [lastMessage]);
+	// useEffect(() => {
+	// 	const tempa = lastMessage?.message;
+	// 	console.log('Class: , Function: , Line 30 tem():', tempa);
+	// 	// setTemperature(temps);
+	// 	// return () => {};
+	// }, [lastMessage]);
 	// const [state, setState] = useState<RegularUserAnalyticsState>({
 	// 	data: {
 	// 		temp: 0,
@@ -66,12 +66,14 @@ const RegularUserAnalytics = (): JSX.Element => {
 
 	// const { data: { temp = 0, humid = 0, water_level = 0 } } = message;
 
+	const handleCardClick = (index: number) => () => setSelectedIndex(index);
+
 	return (
 		<>
 			<Row className="analytics-page" data-testid="regular-analytics-page">
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-blue"
 						icon={<OpacityTwoTone className="content-icon" />}
 						mainInfo="Water Level"
@@ -80,16 +82,16 @@ const RegularUserAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-yellow"
 						icon={<BlurLinearTwoTone className="content-icon" />}
 						mainInfo="Water Temperature"
-						subInfo={`${temperature} \u00b0C`}
+						subInfo={`${temp} \u00b0C`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 1 })}
+						onClick={handleCardClick(1)}
 						colorClass="card-color-brown"
 						icon={<ScheduleTwoTone className="content-icon" />}
 						mainInfo="Next schedule"
@@ -100,7 +102,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 			<Row className="analytics-page">
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 2 })}
+						onClick={handleCardClick(2)}
 						colorClass="card-color-red"
 						icon={<BlurOn className="content-icon" />}
 						mainInfo="Air Temperature"
@@ -109,7 +111,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 2 })}
+						onClick={handleCardClick(2)}
 						colorClass="card-color-green"
 						icon={<Waves className="content-icon" />}
 						mainInfo="Air Humidity"
@@ -118,7 +120,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
-						onClick={setSelectedIndex.bind(null, { group: 0, item: 3 })}
+						onClick={handleCardClick(3)}
 						colorClass="card-color-purple"
 						icon={<MemoryTwoTone className="content-icon" />}
 						mainInfo="Power usage"

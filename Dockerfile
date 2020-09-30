@@ -1,13 +1,10 @@
-# STAGE 1: build
-# base image
+# STAGE 1: build process
 FROM node:14-alpine AS build
 
 LABEL maintainer="Francis Masha" MAINTAINER="Francis Masha <francismasha96@gmail.com>"
 LABEL application="almond-re"
 
-WORKDIR /opt/web
-
-# update the alpine image and install curl
+#WORKDIR /opt/web
 RUN apk update && apk add curl
 
 # installing Alpine Dependencies, but the context for the command from `yarn install` is explained above
@@ -20,60 +17,50 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repos
 RUN apk update
 
 RUN npm config set unsafe-perm true
-RUN npm install yarn@1.22.x
+RUN npm install -g yarn@1.22.5 --force
 RUN rm -rf package-lock.json
-
-COPY yarn.lock ./
 COPY package.json ./
 
+RUN yarn set version berry
+RUN echo 'nodeLinker: node-modules' >> .yarnrc.yml
 RUN yarn install
-
 ENV PATH="./node_modules/.bin:$PATH"
-
 COPY . ./
-
-#COPY --chown=node:node . .
 RUN yarn run build
-#USER node
 
+# Stage 2 - the production environment
 FROM nginx:1.17-alpine
-
 RUN apk --no-cache add curl
 RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst && \
     chmod +x envsubst && \
     mv envsubst /usr/local/bin
 
 # setup nginx configurations
-# Remove (some of the) default nginx config
 RUN \
-#  rm -rf /etc/nginx/conf.d/default.conf && \
-#  rm -rf /etc/nginx/nginx.conf && \
   rm -rf /etc/nginx/mime.types && \
   rm -rf /etc/nginx/sites-*
 
 COPY nginx/mime.types /etc/nginx/
-#COPY ./nginx.conf /etc/nginx/
 COPY ./nginx.config /etc/nginx/nginx.template
 COPY nginx/*.conf /etc/nginx/conf.d/
-
-COPY --from=build /opt/web/dist /usr/share/nginx/html
-
+CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+COPY --from=build /dist /usr/share/nginx/html
 RUN ls -la /usr/share/nginx/html
-
-# Default port exposure
-EXPOSE 80
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
 COPY ./env.sh .
-#COPY .env .
 
 # Make our shell script executable
 RUN chmod +x env.sh
+EXPOSE 80
 
 # Start Nginx server
-CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+#CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
 #CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+#EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
 
 #FROM node:14-alpine
 #

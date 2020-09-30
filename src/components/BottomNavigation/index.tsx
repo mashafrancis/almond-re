@@ -49,10 +49,7 @@ const PageBottomNavigation = (): JSX.Element => {
 	// 	});
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
-		setSelectedIndex({
-			group: 0,
-			item: newValue,
-		});
+		setSelectedIndex(newValue);
 	};
 
 	// :TODO Avoid wasteful re-rendering while using inline functions (use .bind on the function as below)
@@ -66,7 +63,7 @@ const PageBottomNavigation = (): JSX.Element => {
 			>
 				{checkIsAdmin().map((menuNav, index) => (
 					<BottomNavigationAction
-						key={index}
+						key={menuNav.label}
 						label={menuNav.label}
 						icon={menuNav.icon}
 						value={index}

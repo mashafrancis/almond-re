@@ -16,7 +16,7 @@ const ColorLinearProgress = styled(LinearProgress)({
 	},
 });
 
-const LinearProgressBar = ({ delay = 300 }: Props): JSX.Element | null => {
+const LinearProgressBar = ({ delay = 1000 }: Props): JSX.Element | null => {
 	const [completed, setCompleted] = useState<number>(0);
 	const [visibility, setVisibility] = useState<boolean>(false);
 
