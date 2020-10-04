@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 
-export const authService: any = {
+const authService: any = {
 	saveToken(token: string | string[]) {
 		return Cookies.set('jwt-token', token);
 	},
@@ -37,3 +37,5 @@ export const authService: any = {
 		window.location.replace('/');
 	},
 };
+
+export default authService;

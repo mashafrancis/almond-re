@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { Connector } from 'mqtt-hooks';
+// import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
 import SnackBar from '@components/SnackBar';
@@ -14,7 +15,7 @@ import LinearProgressBar from '@components/LinearProgressBar';
 // thunk action creators
 import { getUserDetails } from '@modules/user';
 // helper functions
-import { authService } from '@utils/auth';
+import authService from '@utils/auth';
 import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
@@ -28,6 +29,14 @@ import './App.scss';
 // interfaces
 import { AppProps, AppState } from './interfaces';
 
+// const configurations = {
+// 	token: `token ${process.env.GITHUB_TOKEN}`,
+// 	owner: 'almond-hydroponics',
+// 	repository: 'almond-tr',
+// 	appName: 'almond-web',
+// 	baseUrl: 'https://api.github.com',
+// };
+
 // eslint-disable-next-line no-shadow
 export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	const [state, setState] = useState<AppState>({
@@ -37,9 +46,20 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	});
 	const timerRef = useRef<number>();
 
+	// const bugIssue = {
+	// 	header: issueHeading('GetUsers', configurations.appName),
+	// 	body: issueBody('Sample Exception', 'Its own StackTrace'),
+	// 	configurations,
+	// };
+
+	// const almondIssue = async () => GitHubCreateIssue(bugIssue);
+
 	useEffect(() => {
 		initializeGA();
 		logPageView(window.location.pathname);
+		// almondIssue()
+		// 	.then(() => console.log('Bug sent'))
+		// 	.catch((e) => console.error(e));
 	}, []);
 
 	useEffectAsync(async () => {

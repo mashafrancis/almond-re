@@ -6,16 +6,16 @@ import { displaySnackMessage } from '@modules/snack';
 // components
 import RestrictedRoute from '@components/RestrictedRoute';
 // helper functions
-import { authService } from '@utils/auth';
+import authService from '@utils/auth';
 
 /**
  * Renders the component if the user is authenticated
  * @param {Component} Component
  * @returns {JSX}
  */
-const renderComponent = (Component: any): ReactNode => (props: any) => (
-	<Component {...props} />
-);
+const renderComponent = (Component: any): ReactNode => (props: any) => {
+	return <Component {...props} />;
+};
 
 const AuthenticatedRoute = (props: any) => {
 	const { component: Component, ...rest } = props;

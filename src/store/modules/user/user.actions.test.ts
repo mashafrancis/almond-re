@@ -20,7 +20,7 @@ import {
 	LOG_OUT_USER,
 } from '@modules/user/types';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
-import { authService } from '@utils/auth';
+import authService from '@utils/auth';
 
 // helpers
 import { editedUserDetailsPayload, userDetails } from '@modules/user/fixtures';

@@ -4,7 +4,6 @@ const {
   definePlugin,
   cleanWebpack,
   htmlWebpack,
-  miniCssExtract,
   miniCssExtractPlugin,
   hashedPlugin,
   manifestPlugin,
@@ -115,14 +114,13 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: {
-          loader: require.resolve('awesome-typescript-loader'),
-        },
+        loader: require.resolve('ts-loader'),
+        exclude: /node_modules/,
       },
       {
-        enforce: 'pre',
         test: /\.js$/,
-        loader: require.resolve('source-map-loader'),
+        enforce: 'pre',
+        use: ['source-map-loader'],
         exclude: [
           /node_modules\/@material/,
           /node_modules\/axios-cache-adapter/,
@@ -135,7 +133,7 @@ module.exports = {
     htmlWebpack,
     hashedPlugin,
     cleanWebpack,
-    miniCssExtract,
+    miniCssExtractPlugin,
     manifestPlugin,
     copyPlugin,
     contextReplacementPlugin,

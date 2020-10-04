@@ -270,7 +270,7 @@ export const UserRolesTemplate = ({
 			);
 		};
 
-		const checkCharacters = (char) => {
+		const checkCharacters = (char: string) => {
 			if (hasSpecialCharacters(char)) {
 				throw new Error('Field should contain only letters');
 			}

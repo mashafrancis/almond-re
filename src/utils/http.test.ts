@@ -1,10 +1,9 @@
 // third-party libraries
 import Cookies from 'js-cookie';
-
 // helpers
+import authService from '@utils/auth';
 import store from '../store';
 import { axiosMockAdapter, expiredToken, token } from '../testHelpers';
-import { authService } from './auth';
 import CacheHandler from './CacheHandler';
 import http from './http';
 
