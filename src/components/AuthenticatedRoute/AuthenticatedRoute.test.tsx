@@ -1,10 +1,8 @@
 // react libraries
 import React from 'react';
-
 // third-party libraries
 import * as Cookies from 'js-cookie';
 import { screen } from '@testing-library/react';
-
 // components
 import AuthenticatedRoute from '.';
 import { renderWithRouter } from '../../testHelpers';

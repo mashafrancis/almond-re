@@ -29,7 +29,7 @@ export const UnauthorizedUserModal = ({
 			renderHeader={() => `Welcome, ${user?.name || 'User'}`}
 			renderContent={() => (
 				<div>
-					<p className="headline-4 modal-content">
+					<p className="headline-5 modal-content">
 						You are currently not authorised to access Almond. Please contact
 						almond.froyo@gmail.com for more details.
 					</p>

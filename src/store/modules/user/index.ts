@@ -2,7 +2,7 @@
 import { Action, AnyAction } from 'redux';
 
 // thunk action creators
-import { authService } from '@utils/auth';
+import authService from '@utils/auth';
 import formatPermissions from '@utils/FormatPermissions';
 import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
 import errorOnSnack from '@utils/errorOnSnack';

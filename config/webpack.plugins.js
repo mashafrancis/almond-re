@@ -1,10 +1,9 @@
 const dotenv = require('dotenv')
-
 // importing webpack dependencies
 const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const miniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -74,7 +73,7 @@ const cleanWebpack = new CleanWebpackPlugin({
   // default: true
   protectWebpackAssets: true,
 })
-const htmlWebpack = new htmlWebpackPlugin({
+const htmlWebpack = new HtmlWebpackPlugin({
   template: './public/index.html',
   filename: 'index.html',
   inject: 'body',
@@ -93,7 +92,7 @@ const htmlWebpack = new htmlWebpackPlugin({
     minifyURLs: true,
   },
 })
-const miniCssExtract = new miniCssExtractPlugin({
+const miniCssExtractPlugin = new MiniCssExtractPlugin({
   filename: '[name].[contenthash].css',
   chunkFilename: '[id].[contenthash].css',
   ignoreOrder: true, // Enabled to remove warnings about conflicting order
@@ -127,7 +126,6 @@ module.exports = {
   cleanWebpack,
   definePlugin,
   htmlWebpack,
-  miniCssExtract,
   miniCssExtractPlugin,
   hotModuleReplacementPlugin,
   hashedPlugin,

@@ -1,6 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Switch } from '@material-ui/core';
+import { primaryColor } from '../../assets/tss/common';
 
 export const useWaterCyclesPageStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -20,6 +21,12 @@ export const useWaterCyclesPageStyles = makeStyles((theme: Theme) =>
 );
 
 export const ToggleSwitch = withStyles({
+	root: {
+		color: primaryColor,
+		'&$checked': {
+			color: primaryColor,
+		},
+	},
 	switchBase: {
 		color: '#FFFFFF',
 		'&$checked': {

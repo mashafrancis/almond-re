@@ -1,7 +1,7 @@
 // react libraries
 import React, { useEffect, useState } from 'react';
 // components
-import Checkbox from '@material/react-checkbox';
+import CheckBox from '@components/CheckBox';
 // helpers
 import capitalize from '@utils/capitalize';
 // interfaces
@@ -186,18 +186,7 @@ const PermissionAccess = ({
 									key={`${resource.name}-${permission}}`}
 									className="permissions__tbl-row__item"
 								>
-									{console.log(
-										'Class: , Function: , Line 189 isResourcePermissionActive():',
-										isResourcePermissionActive(
-											resource?._id,
-											mappedPermissions[permission],
-										),
-									)}
-									{console.log(
-										'Class: , Function: , Line 196 mappedPermissions[permission]():',
-										mappedPermissions[permission],
-									)}
-									<Checkbox
+									<CheckBox
 										checked={
 											resources.length > 0 &&
 											isResourcePermissionActive(

@@ -21,10 +21,10 @@ RUN npm install -g yarn@1.22.5 --force
 RUN rm -rf package-lock.json
 COPY package.json ./
 
-RUN yarn set version berry
-RUN echo 'nodeLinker: node-modules' >> .yarnrc.yml
+#RUN yarn set version berry
+#RUN echo 'nodeLinker: node-modules' >> .yarnrc.yml
 RUN yarn install
-ENV PATH="./node_modules/.bin:$PATH"
+#ENV PATH="./node_modules/.bin:$PATH"
 COPY . ./
 RUN yarn run build
 

@@ -27,7 +27,7 @@ const Routes = (): any => (
 			path="/dashboard"
 			authorize="analytics:view"
 			component={DashboardContainer}
-			// fallbackView={<UnauthorizedUserModal isModalOpen />}
+			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
 		<Route path="/404" component={PageNotFound} />
 		<Redirect to="/404" />

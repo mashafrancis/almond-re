@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 // components
 import ActionButton from '@components/ActionButton';
 // helpers
-import { authService } from '@utils/auth';
+import authService from '@utils/auth';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 // styles
 import './HomePage.scss';

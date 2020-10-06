@@ -32,6 +32,7 @@ import dayjs from '@utils/dayjsTime';
 // styles
 import './WaterCyclesPage.scss';
 import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
+import { primaryColor } from '../../assets/tss/common';
 // interfaces
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
 // components
@@ -148,10 +149,10 @@ export const WaterCyclesTemplate = ({
 		switchBase: {
 			color: '#FFFFFF',
 			'&$checked': {
-				color: '#1967D2',
+				color: primaryColor,
 			},
 			'&$checked + $track': {
-				backgroundColor: '#1967D2',
+				backgroundColor: primaryColor,
 			},
 		},
 		thumb: {
@@ -166,7 +167,7 @@ export const WaterCyclesTemplate = ({
 		'@keyframes blink': {
 			'50%': {
 				transform: 'scale (1)',
-				backgroundColor: '#1967D2',
+				backgroundColor: primaryColor,
 			},
 		},
 	})(Switch);
@@ -447,7 +448,7 @@ export const WaterCyclesTemplate = ({
 							startAdornment: (
 								<InputAdornment position="start">
 									<IconButton href="#">
-										<AddAlarmTwoTone style={{ color: '#1967D2' }} />
+										<AddAlarmTwoTone style={{ color: primaryColor }} />
 									</IconButton>
 								</InputAdornment>
 							),
