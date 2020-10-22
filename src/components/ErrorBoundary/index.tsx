@@ -1,5 +1,3 @@
-import React from 'react';
-
 import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
 import { ArrowBackRounded } from '@material-ui/icons';
 

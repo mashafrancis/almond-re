@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useContext } from 'react';
+import { useState, ChangeEvent, useContext } from 'react';
 // third-party libraries
 import { Container, Grid, InputAdornment, TextField } from '@material-ui/core';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
@@ -27,7 +27,7 @@ export const EnterDeviceIdTemplate = ({
 		setDeviceId(e.target.value);
 	};
 
-	const user = useContext(UserContext);
+	const { activeDevice } = useContext(UserContext);
 
 	const onSubmit = () => {
 		const device = { id: deviceId };
@@ -40,7 +40,6 @@ export const EnterDeviceIdTemplate = ({
 	};
 
 	const classes = useStyles();
-	const { activeDevice } = user;
 
 	const renderDeviceTextField = () => (
 		<div className="form-cell">

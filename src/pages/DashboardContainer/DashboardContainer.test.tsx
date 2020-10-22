@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// components
 import { mapDispatchToProps, mapStateToProps } from './index';
 
 describe('The DashboardContainer component', () => {

@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// third-party libraries
 import { render } from '@testing-library/react';
 import CheckBox from './index';
 

@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// third-party libraries
 import { screen } from '@testing-library/react';
 
 // component

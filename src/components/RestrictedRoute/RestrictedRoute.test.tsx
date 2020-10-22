@@ -1,7 +1,4 @@
 // react library
-import React from 'react';
-
-// jest mocks
 import '../../../tests/__mocks__/snack';
 import '../../../tests/__mocks__/storeWithPartialPermissions';
 

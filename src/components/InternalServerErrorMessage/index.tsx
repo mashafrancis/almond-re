@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// styles
 import './InternalServerError.scss';
 
 const InternalServerErrorMessage: (props: any) => any = (props) => (

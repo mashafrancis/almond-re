@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 // thunks
 import { UserContext } from '@context/UserContext';
 // third party apps

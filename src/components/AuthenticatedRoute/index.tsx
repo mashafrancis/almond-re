@@ -1,5 +1,5 @@
 // react libraries
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Redirect } from 'react-router-dom';
 // third party libraries
 import { displaySnackMessage } from '@modules/snack';

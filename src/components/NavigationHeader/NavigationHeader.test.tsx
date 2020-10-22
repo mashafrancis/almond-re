@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// components
 import NavigationHeader from './index';
 import { renderWithRouter } from '../../testHelpers';
 

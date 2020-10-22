@@ -1,5 +1,5 @@
 // react libraries
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { render, screen } from '@testing-library/react';
 import HomePage from './index';

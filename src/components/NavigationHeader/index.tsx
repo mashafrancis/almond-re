@@ -1,5 +1,3 @@
-import React from 'react';
-// components
 import { ArrowForwardRounded, ArrowBackRounded } from '@material-ui/icons';
 // third-party
 import { NavLink } from 'react-router-dom';

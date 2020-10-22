@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect } from 'react-redux';

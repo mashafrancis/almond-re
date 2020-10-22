@@ -1,4 +1,4 @@
-import React, { useContext, lazy } from 'react';
+import { useContext, lazy } from 'react';
 
 // components
 import { Cell, Row } from '@material/react-layout-grid';

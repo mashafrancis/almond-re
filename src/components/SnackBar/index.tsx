@@ -1,5 +1,5 @@
 // react libraries
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 
 // third-party libraries
 import { Snackbar } from '@material-ui/core';

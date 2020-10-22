@@ -33,6 +33,7 @@ import {
 import { errorMessage } from '../../../testHelpers';
 
 describe('Time Schedules reducer: ', () => {
+	let scheduleState;
 	const { data } = timeSchedules;
 
 	it("should return initial state if action type doesn't match", () => {
@@ -43,10 +44,7 @@ describe('Time Schedules reducer: ', () => {
 	describe('Get schedules', () => {
 		it('should dispatch GET_SCHEDULE_REQUEST', () => {
 			const getSchedulesRequestAction = getSchedulesRequest();
-			const scheduleState = reducer(
-				schedulesInitialState,
-				getSchedulesRequestAction,
-			);
+			scheduleState = reducer(schedulesInitialState, getSchedulesRequestAction);
 
 			expect(scheduleState.isLoading).toBeTruthy();
 			expect(scheduleState.errors).toBe(null);
@@ -54,10 +52,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch GET_SCHEDULE_SUCCESS', () => {
 			const getSchedulesSuccessAction = getSchedulesSuccess(data);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				getSchedulesSuccessAction,
-			);
+			scheduleState = reducer(schedulesInitialState, getSchedulesSuccessAction);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toBe(null);
@@ -65,10 +60,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch GET_SCHEDULES_FAILURE', () => {
 			const getSchedulesFailureAction = getSchedulesFailure(errorMessage);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				getSchedulesFailureAction,
-			);
+			scheduleState = reducer(schedulesInitialState, getSchedulesFailureAction);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toEqual(errorMessage);
@@ -78,10 +70,7 @@ describe('Time Schedules reducer: ', () => {
 	describe('Add schedules', () => {
 		it('should dispatch ADD_SCHEDULES_REQUEST', () => {
 			const addScheduleRequestAction = addScheduleRequest();
-			const scheduleState = reducer(
-				schedulesInitialState,
-				addScheduleRequestAction,
-			);
+			scheduleState = reducer(schedulesInitialState, addScheduleRequestAction);
 
 			expect(scheduleState.isLoading).toBeTruthy();
 			expect(scheduleState.errors).toBe(null);
@@ -89,10 +78,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch ADD_SCHEDULES_SUCCESS', () => {
 			const addScheduleSuccessAction = addScheduleSuccess(schedulePayload);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				addScheduleSuccessAction,
-			);
+			scheduleState = reducer(schedulesInitialState, addScheduleSuccessAction);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toBe(null);
@@ -100,10 +86,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch ADD_SCHEDULES_FAILURE', () => {
 			const addSchedulesFailureAction = addScheduleFailure(errorMessage);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				addSchedulesFailureAction,
-			);
+			scheduleState = reducer(schedulesInitialState, addSchedulesFailureAction);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toEqual(errorMessage);
@@ -113,17 +96,14 @@ describe('Time Schedules reducer: ', () => {
 	describe('Edit schedule', () => {
 		it('should dispatch EDIT_SCHEDULE_REQUEST', () => {
 			const editScheduleRequestAction = editScheduleRequest();
-			const scheduleState = reducer(
-				schedulesInitialState,
-				editScheduleRequestAction,
-			);
+			scheduleState = reducer(schedulesInitialState, editScheduleRequestAction);
 
 			expect(scheduleState.isLoading).toBeTruthy();
 			expect(scheduleState.errors).toBe(null);
 		});
 
 		it('should dispatch EDIT_SCHEDULE_SUCCESS', () => {
-			const schedulesInitialState = {
+			const scheduleInitialState = {
 				schedules: timeSchedules.data,
 			};
 
@@ -131,8 +111,8 @@ describe('Time Schedules reducer: ', () => {
 				'5ede17f7184ccf003a2da68f',
 				editSchedulePayload,
 			);
-			const scheduleState = reducer(
-				schedulesInitialState as any,
+			scheduleState = reducer(
+				scheduleInitialState as any,
 				editScheduleSuccessAction,
 			);
 			const updatedSchedule = scheduleState.schedules.find(
@@ -146,7 +126,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch EDIT_SCHEDULE_FAILURE', () => {
 			const editSchedulesFailureAction = editScheduleFailure(errorMessage);
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				editSchedulesFailureAction,
 			);
@@ -159,7 +139,7 @@ describe('Time Schedules reducer: ', () => {
 	describe('Delete schedule', () => {
 		it('should dispatch DELETE_SCHEDULE_REQUEST', () => {
 			const deleteScheduleRequestAction = deleteSingleScheduleRequest();
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				deleteScheduleRequestAction,
 			);
@@ -169,15 +149,15 @@ describe('Time Schedules reducer: ', () => {
 		});
 
 		it('should dispatch DELETE_SCHEDULE_SUCCESS', () => {
-			const schedulesInitialState = {
+			const scheduleInitialState = {
 				schedules: timeSchedules.data,
 			};
 
 			const deleteScheduleSuccessAction = deleteSingleScheduleSuccess(
 				'5ede17f7184ccf003a2da68f',
 			);
-			const scheduleState = reducer(
-				schedulesInitialState as any,
+			scheduleState = reducer(
+				scheduleInitialState as any,
 				deleteScheduleSuccessAction,
 			);
 
@@ -190,7 +170,7 @@ describe('Time Schedules reducer: ', () => {
 			const deleteScheduleFailureAction = deleteSingleScheduleFailure(
 				errorMessage,
 			);
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				deleteScheduleFailureAction,
 			);
@@ -203,10 +183,7 @@ describe('Time Schedules reducer: ', () => {
 	describe('Toggle pump status', () => {
 		it('should dispatch TOGGLE_PUMP_STATUS_REQUEST', () => {
 			const togglePumpRequestAction = togglePumpStatusRequest();
-			const scheduleState = reducer(
-				schedulesInitialState,
-				togglePumpRequestAction,
-			);
+			scheduleState = reducer(schedulesInitialState, togglePumpRequestAction);
 
 			expect(scheduleState.errors).toBe(null);
 		});
@@ -215,10 +192,7 @@ describe('Time Schedules reducer: ', () => {
 			const togglePumpSuccessAction = togglePumpStatusSuccess(
 				enabledStatus.enabled,
 			);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				togglePumpSuccessAction,
-			);
+			scheduleState = reducer(schedulesInitialState, togglePumpSuccessAction);
 
 			expect(scheduleState.enabled).toEqual(enabledStatus.enabled);
 			expect(scheduleState.errors).toBe(null);
@@ -226,10 +200,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch TOGGLE_PUMP_STATUS_FAILURE', () => {
 			const togglePumpFailureAction = togglePumpStatusFailure(errorMessage);
-			const scheduleState = reducer(
-				schedulesInitialState,
-				togglePumpFailureAction,
-			);
+			scheduleState = reducer(schedulesInitialState, togglePumpFailureAction);
 
 			expect(scheduleState.errors).toEqual(errorMessage);
 		});
@@ -238,7 +209,7 @@ describe('Time Schedules reducer: ', () => {
 	describe('Get pump status', () => {
 		it('should dispatch GET_PUMP_STATUS_REQUEST', () => {
 			const getPumpStatusRequestAction = getPumpStatusRequest();
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				getPumpStatusRequestAction,
 			);
@@ -250,7 +221,7 @@ describe('Time Schedules reducer: ', () => {
 			const getPumpStatusSuccessAction = getPumpStatusSuccess(
 				enabledStatus.enabled,
 			);
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				getPumpStatusSuccessAction,
 			);
@@ -261,7 +232,7 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch GET_PUMP_STATUS_FAILURE', () => {
 			const getPumpStatusFailureAction = getPumpStatusFailure(errorMessage);
-			const scheduleState = reducer(
+			scheduleState = reducer(
 				schedulesInitialState,
 				getPumpStatusFailureAction,
 			);

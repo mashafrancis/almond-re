@@ -1,5 +1,5 @@
 // react libraries
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 
 // third party packages

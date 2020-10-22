@@ -1,6 +1,3 @@
-import React from 'react';
-
-// third party
 import { Box } from '@material-ui/core';
 
 // interfaces

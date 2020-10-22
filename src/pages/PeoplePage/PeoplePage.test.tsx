@@ -1,5 +1,5 @@
 // react libraries
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 // components
 import { mapDispatchToProps, mapStateToProps, PeoplePage } from './index';

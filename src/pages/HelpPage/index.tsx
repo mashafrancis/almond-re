@@ -1,5 +1,5 @@
 // react libraries
-import React from 'react';
+import { lazy } from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
@@ -14,7 +14,7 @@ import { displaySnackMessage } from '@modules/snack';
 // interfaces
 import { HelpPageProps } from '@pages/HelpPage/interfaces';
 
-const GeneralCardInfo = React.lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
 export const HelpPage = (props: HelpPageProps): JSX.Element => (
 	<>

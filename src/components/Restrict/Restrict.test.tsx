@@ -1,5 +1,5 @@
 // react library
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 // jest mocks
 import '../../../tests/__mocks__/storeWithPartialPermissions';
 // third-party libraries

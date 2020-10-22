@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, lazy } from 'react';
+import { useContext, useEffect, useState, lazy } from 'react';
 
 // components
 import { Cell, Row } from '@material/react-layout-grid';
@@ -11,7 +11,7 @@ import {
 	Waves,
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
-import { useSubscription } from 'mqtt-hooks';
+// import { useSubscription } from 'mqtt-hooks';
 import { data } from '@pages/AnalyticsPage/fixtures';
 import formatWaterLevelData from '@utils/formatWaterLevel';
 import {
@@ -23,8 +23,18 @@ const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
 const RegularUserAnalytics = (): JSX.Element => {
 	const [temperature, setTemperature] = useState<number | null>(0);
+	const [message, setMessage] = useState<any>('');
+	// const { lastMessage, mqtt } = useSubscription('almond/data');
+
+	// useEffect(() => {
+	// 	setMessage(lastMessage);
+	// 	return () => {
+	// 		mqtt?.end();
+	// 	};
+	// }, []);
 
 	// const { lastMessage } = useSubscription('almond/data');
+	// console.log(lastMessage);
 	// const temps = lastMessage?.message;
 
 	// useEffect(() => {

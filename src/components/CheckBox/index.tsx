@@ -1,5 +1,3 @@
-import React from 'react';
-// Material
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';

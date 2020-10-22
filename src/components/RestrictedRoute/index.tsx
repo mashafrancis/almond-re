@@ -1,5 +1,5 @@
 // react library
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 // third party libraries
 import { Redirect, Route } from 'react-router-dom';

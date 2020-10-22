@@ -1,5 +1,5 @@
 // react libraries
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 // third party packages
 import { Redirect, Route, Switch } from 'react-router-dom';
 // pages and components

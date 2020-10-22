@@ -1,6 +1,4 @@
 // react libraries
-import React from 'react';
-// styles
 import './ToggleButton.scss';
 // interfaces
 import { ToggleButtonProps } from './interfaces';
