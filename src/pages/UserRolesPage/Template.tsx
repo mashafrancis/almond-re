@@ -1,5 +1,5 @@
 // react libraries
-import React, { useState, useEffect, lazy } from 'react';
+import { useState, useEffect, lazy } from 'react';
 // Third party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { Chip } from '@material-ui/core';

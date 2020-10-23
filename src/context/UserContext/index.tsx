@@ -1,6 +1,6 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
-export const UserContext = createContext({
+const UserContext = createContext({
 	_id: '',
 	name: '',
 	email: '',
@@ -20,3 +20,5 @@ export const UserContext = createContext({
 	},
 	isAdmin: false,
 });
+
+export { UserContext };

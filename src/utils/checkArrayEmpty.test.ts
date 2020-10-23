@@ -9,7 +9,7 @@ describe('The isArrayNotNull function', () => {
 	});
 
 	it('should return false if the array is null', () => {
-		const arr = [];
+		const arr: string[] = [];
 		const check = isArrayNotNull(arr);
 
 		expect(check).toBeFalsy();

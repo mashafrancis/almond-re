@@ -1,5 +1,3 @@
-import React from 'react';
-// third-party libraries
 import { Card } from '@material-ui/core';
 // interfaces
 import { DashboardCardProps } from './interfaces';

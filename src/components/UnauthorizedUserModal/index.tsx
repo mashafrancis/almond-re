@@ -1,6 +1,4 @@
 // react
-import React from 'react';
-// third-party libraries
 import { connect } from 'react-redux';
 // components
 import Modal from '@components/Modal';

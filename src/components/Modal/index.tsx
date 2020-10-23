@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 // components
 import ActionButton from '@components/ActionButton';
 import {

@@ -1,5 +1,5 @@
 // react libraries
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 // components
 import CheckBox from '@components/CheckBox';
 // helpers

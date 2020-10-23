@@ -1,5 +1,5 @@
 // react libraries
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 // third party libraries
 import { Provider } from 'react-redux';

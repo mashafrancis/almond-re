@@ -1,6 +1,3 @@
-import React from 'react';
-
-// third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import GeneralCardInfo from '@components/GeneralCardInfo';

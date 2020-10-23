@@ -1,5 +1,3 @@
-import React from 'react';
-// third-party libraries
 import { Card } from '@material-ui/core';
 import dayjs from 'dayjs';
 // interfaces

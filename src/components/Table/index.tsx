@@ -1,7 +1,4 @@
 // react libraries
-import React from 'react';
-
-// styles
 import './Table.scss';
 
 // interfaces

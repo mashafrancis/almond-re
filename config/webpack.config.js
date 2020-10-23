@@ -1,86 +1,86 @@
-const path = require('path')
+const paths = require('./paths')
 const { importer } = require('./webpack.util')
 const {
   definePlugin,
   cleanWebpack,
   htmlWebpack,
-  miniCssExtractPlugin,
-  hashedPlugin,
-  manifestPlugin,
   copyPlugin,
   contextReplacementPlugin,
+  providerPlugin,
 } = require('./webpack.plugins')
 
-const isDevMode = process.env.NODE_ENV !== 'production'
+// const isDevMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
-    main: path.join(__dirname, '..', 'src', 'index.tsx'),
-    styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss'),
-    fontGlobals: path.join(__dirname, '..', 'src/assets/fonts/fonts.scss'),
+    main: `${paths.src}/index.tsx`,
+    styleGlobals: `${paths.src}/assets/scss/globals.scss`,
+    fontGlobals: `${paths.src}/assets/fonts/fonts.scss`,
   },
   output: {
-    // `filename` provides a template for naming your bundles (remember to use `[name]`)
-    filename: '[name].[hash:8].js',
-    // `chunkFilename` provides a template for naming code-split bundles (optional)
-    chunkFilename: '[name].[hash:8].bundle.js',
-    // `path` is the folder where Webpack will place your bundles
-    path: path.join(__dirname, '..', 'dist'),
-    // `publicPath` is where Webpack will load your bundles from (optional)
+    filename: '[name].[contenthash].bundle.js',
+    // chunkFilename: (pathData) => {
+    //   return pathData.chunk.name === 'main' ? '[name].js' : '[name]/[name].js'
+    // },
+    path: paths.build,
     publicPath: '/',
+    hashDigestLength: 8,
   },
-  optimization: {
-    noEmitOnErrors: true,
-    splitChunks: {
-      chunks: 'all',
-    },
-  },
+  // optimization: {
+  //   emitOnErrors: true,
+  //   splitChunks: {
+  //     chunks: 'all',
+  //   },
+  // },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      '@pages': path.resolve(__dirname, '..', 'src/pages/'),
-      '@components': path.resolve(__dirname, '..', 'src/components/'),
-      '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
-      '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
-      '@utils': path.resolve(__dirname, '..', 'src/utils'),
-      '@context': path.resolve(__dirname, '..', 'src/context'),
+      '@pages': `${paths.src}/pages/`,
+      '@components': `${paths.src}/components/`,
+      '@placeholders': `${paths.src}/placeholders/`,
+      '@modules': `${paths.src}/store/modules`,
+      '@utils': `${paths.src}/utils`,
+      '@context': `${paths.src}/context`,
+      'fs': false,
+      'buffer': 'buffer',
       // '@material-ui/core': '@material-ui/core/esm',
       // '@material-ui/icons': '@material-ui/icons/esm'
     },
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    fallback: {
+      process: require.resolve('process/browser'),
+    },
+    modules: [`${paths.src}`, 'node_modules'],
   },
   module: {
     rules: [
+      // Images
       {
-        test: /\.(woff|woff2|ttf|eot|svg|png|jpg|jpeg|gif)$/,
-        use: {
-          loader: require.resolve('file-loader'),
-          options: {
-            name: 'fonts/[name].[ext]',
-          },
-        },
+        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+        type: 'asset/resource',
       },
+
+      // Fonts and SVGs
+      {
+        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        type: 'asset/inline',
+      },
+
+      // Styles: Inject CSS into the head with source maps
       {
         test: /\.(scss|sass|css)$/,
         use: [
-          isDevMode ? 'style-loader' : miniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: require.resolve('css-loader'),
             options: {
               sourceMap: true,
+              importLoaders: 1,
             },
           },
           {
             loader: require.resolve('postcss-loader'),
             options: {
-              postcssOptions: {
-                plugins: (loader) => [
-                  require('postcss-import')({ root: loader.resourcePath }),
-                  require('autoprefixer')({
-                    overrideBrowserslist: ['> 1%', 'last 2 versions'],
-                  }),
-                ],
-              },
+              sourceMap: true,
             },
           },
           {
@@ -131,11 +131,9 @@ module.exports = {
   plugins: [
     definePlugin,
     htmlWebpack,
-    hashedPlugin,
     cleanWebpack,
-    miniCssExtractPlugin,
-    manifestPlugin,
     copyPlugin,
     contextReplacementPlugin,
+    providerPlugin,
   ],
 }

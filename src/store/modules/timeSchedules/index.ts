@@ -1,5 +1,5 @@
 // thunks
-import { AnyAction, Dispatch } from 'redux';
+import { Action, AnyAction, Dispatch, Reducer } from 'redux';
 import { logActivity } from '@modules/activityLogs';
 import errorOnSnack from '@utils/errorOnSnack';
 import { displaySnackMessage } from '../snack';
@@ -483,7 +483,7 @@ export const schedulesInitialState = {
 	errors: null,
 };
 
-export const reducer = (
+export const reducer: Reducer<State, Action> = (
 	state: State = schedulesInitialState,
 	action: AnyAction,
 ) => {

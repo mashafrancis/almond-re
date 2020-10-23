@@ -1,9 +1,4 @@
-import React, {
-	useState,
-	createContext,
-	SyntheticEvent,
-	MouseEvent,
-} from 'react';
+import { useState, createContext, SyntheticEvent, MouseEvent } from 'react';
 import {
 	ComponentContextProps,
 	ComponentContextState,

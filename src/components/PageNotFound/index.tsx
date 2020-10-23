@@ -1,6 +1,4 @@
 // react library
-import React from 'react';
-// third-party libraries
 import { ArrowBackRounded } from '@material-ui/icons';
 // components
 import ActionButton from '@components/ActionButton';

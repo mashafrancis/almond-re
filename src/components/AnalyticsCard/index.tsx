@@ -1,6 +1,3 @@
-import React from 'react';
-
-// interfaces
 import { AnalyticsCardProps } from './interfaces';
 
 // styles

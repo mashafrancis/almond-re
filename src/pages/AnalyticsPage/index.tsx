@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 
 // third-party libraries
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';
 import { AnalyticsPageProps } from './interfaces';
 
 export const AnalyticsPage = (props: AnalyticsPageProps): JSX.Element => {
-	const user = React.useContext(UserContext);
+	const user = useContext(UserContext);
 
 	return user.isAdmin ? <AdminAnalytics /> : <RegularUserAnalytics />;
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Line } from 'react-chartjs-2';
 import './AreaCharts.scss';
 import { AreaChartDisplayProps } from '@components/AreaChartDisplay/interfaces';

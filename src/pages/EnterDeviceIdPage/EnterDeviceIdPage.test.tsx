@@ -1,5 +1,5 @@
 // react libraries
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 // components
 import EnterDeviceIdTemplate from '@pages/EnterDeviceIdPage/Template';

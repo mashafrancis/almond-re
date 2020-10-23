@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, Suspense, lazy } from 'react';
+import { useState, useEffect, ChangeEvent, Suspense, lazy } from 'react';
 
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';

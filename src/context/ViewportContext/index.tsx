@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { ViewportContextProps } from '@context/ViewportContext/interfaces';
 
 const ViewportContext = createContext({

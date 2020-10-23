@@ -1,5 +1,5 @@
 // react libraries
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 // third party libraries
 import { screen } from '@testing-library/react';

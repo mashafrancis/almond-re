@@ -1,11 +1,11 @@
 // react libraries
-import React, { useEffect, useState, Suspense, useRef } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 // third party libraries
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { Connector } from 'mqtt-hooks';
+// import { Connector } from 'mqtt-hooks';
 // import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
@@ -96,9 +96,9 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 		[],
 	);
 
-	const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
-	const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
-	const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
+	// const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
+	// const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
+	// const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
 	const { isUserAuthenticated, isAdmin } = state;
 	const { _id, name, email, photo, devices, isVerified, activeDevice } = user;
@@ -138,22 +138,22 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<Connector
-				brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
-				opts={options}
-			>
-				<UserContext.Provider value={userDetailsOnProvider}>
-					<ComponentProvider>
-						<ViewportProvider>
-							<SnackBar snack={snack} />
-							{window.location.pathname !== '/' && isUserAuthenticated}
-							<Suspense fallback={<LinearProgressBar />}>
-								<Routes />
-							</Suspense>
-						</ViewportProvider>
-					</ComponentProvider>
-				</UserContext.Provider>
-			</Connector>
+			{/* <Connector */}
+			{/*	brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
+			{/*	opts={options} */}
+			{/* > */}
+			<UserContext.Provider value={userDetailsOnProvider}>
+				<ComponentProvider>
+					<ViewportProvider>
+						<SnackBar snack={snack} />
+						{window.location.pathname !== '/' && isUserAuthenticated}
+						<Suspense fallback={<LinearProgressBar />}>
+							<Routes />
+						</Suspense>
+					</ViewportProvider>
+				</ComponentProvider>
+			</UserContext.Provider>
+			{/* </Connector> */}
 		</ErrorBoundary>
 	);
 };

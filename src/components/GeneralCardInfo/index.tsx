@@ -1,5 +1,3 @@
-import React from 'react';
-// interfaces
 import { GeneralCardInfoProps } from './interfaces';
 // styles
 import './GeneralCardInfo.scss';

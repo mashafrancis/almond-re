@@ -1,5 +1,5 @@
 // import react library
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 

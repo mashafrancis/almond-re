@@ -1,6 +1,5 @@
 // react libraries
 import { Location } from 'history';
-import * as React from 'react';
 
 // third party
 import { render, screen } from '@testing-library/react';

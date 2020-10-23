@@ -1,7 +1,6 @@
 {
   "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
+    "@babel/preset-env"
   ],
   "env": {
     "test": {
@@ -14,7 +13,14 @@
     "add-module-exports",
     "syntax-dynamic-import",
     "dynamic-import-node",
+    "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-dynamic-import",
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "runtime": "automatic"
+      }
+    ],
     [
       "babel-plugin-import",
       {

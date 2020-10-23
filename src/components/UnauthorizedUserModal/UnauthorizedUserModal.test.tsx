@@ -1,7 +1,4 @@
 // react
-import React from 'react';
-
-// third-party libraries
 import { render } from '@testing-library/react';
 
 // components

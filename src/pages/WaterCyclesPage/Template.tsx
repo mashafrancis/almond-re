@@ -1,4 +1,4 @@
-import React, {
+import {
 	useState,
 	useEffect,
 	useContext,
@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
-import { useMqttState, useSubscription } from 'mqtt-hooks';
+// import { useMqttState, useSubscription } from 'mqtt-hooks';
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment, Switch } from '@material-ui/core';
@@ -87,12 +87,12 @@ export const WaterCyclesTemplate = ({
 	});
 
 	const { setDeviceModalOpen } = useContext(ComponentContext);
-	const user = useContext(UserContext);
+	const { activeDevice } = useContext(UserContext);
 	const modalRef = createRef();
 
 	useEffect(() => {
 		setState({ ...state, isLoading: true });
-		const getSchedules = async () => getAllSchedules(user.activeDevice._id);
+		const getSchedules = async () => getAllSchedules(activeDevice._id);
 		getSchedules().then(() =>
 			setState((prevState) => ({
 				...prevState,
@@ -100,17 +100,18 @@ export const WaterCyclesTemplate = ({
 				isLoading: false,
 			})),
 		);
-	}, [schedules, user.activeDevice._id]);
+	}, [schedules, activeDevice._id]);
 
 	useEffect(() => {
-		getPumpStatus(user.activeDevice._id).then(() =>
+		getPumpStatus(activeDevice._id).then(() =>
 			setState((prevState) => ({
 				...prevState,
 				isEnabled: enabled,
 			})),
 		);
-	}, [user.activeDevice._id]);
+	}, [activeDevice._id]);
 
+	// :TODO: Check validation
 	useEffect(() => {
 		const { selectedTimeSchedule } = state;
 		const timeSchedules = [...new Set(schedules.map((item) => item.schedule))];
@@ -181,7 +182,7 @@ export const WaterCyclesTemplate = ({
 		await handleClick(checked ? '1' : '0');
 		await togglePump({
 			enabled: checked,
-			device: user.activeDevice._id,
+			device: activeDevice._id,
 		});
 	};
 
@@ -189,7 +190,7 @@ export const WaterCyclesTemplate = ({
 		const { checked } = event.target;
 		await toggleScheduleStatus(schedule._id, {
 			enabled: checked,
-			device: user.activeDevice._id,
+			device: activeDevice._id,
 		});
 	};
 
@@ -283,7 +284,7 @@ export const WaterCyclesTemplate = ({
 
 		const schedule = {
 			schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
-			device: user.activeDevice._id,
+			device: activeDevice._id,
 		};
 
 		if (isEditMode) {
@@ -412,23 +413,9 @@ export const WaterCyclesTemplate = ({
 		return (
 			<div className="form-cell">
 				{isEditMode ? (
-					<>
-						<h5 className="h5-sub-line">
-							Change the time schedule as per your preference for pumping.
-						</h5>
-						<h5>
-							However, make sure the time difference is at least 1 hour apart
-						</h5>
-					</>
+					<h5>Change the time schedule as per your preference for pumping.</h5>
 				) : (
-					<>
-						<h5 className="h5-sub-line">
-							Add a new time schedule as per your preference for pumping.
-						</h5>
-						<h5>
-							However, make sure the time difference is at least 1 hour apart
-						</h5>
-					</>
+					<h5>Add a new time schedule as per your preference for pumping.</h5>
 				)}
 				<MuiPickersUtilsProvider utils={DateFnsUtils}>
 					<TimePicker
@@ -477,7 +464,7 @@ export const WaterCyclesTemplate = ({
 							role="presentation"
 						>
 							<h3 className="main-subheader__device-id">
-								{`Device ID: ${user.activeDevice.id}`}
+								{`Device ID: ${activeDevice.id}`}
 								<ArrowDropDown />
 							</h3>
 						</div>

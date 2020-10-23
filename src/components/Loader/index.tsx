@@ -1,7 +1,4 @@
 // import react library
-import React from 'react';
-
-// style
 import './Loader.scss';
 
 const Loader = (): JSX.Element => (

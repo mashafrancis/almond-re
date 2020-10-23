@@ -1,4 +1,4 @@
-import React, { cloneElement, useContext } from 'react';
+import { cloneElement, useContext } from 'react';
 import {
 	Avatar,
 	Badge,
@@ -10,7 +10,7 @@ import {
 import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import { useMqttState } from 'mqtt-hooks';
+// import { useMqttState } from 'mqtt-hooks';
 // icons
 import {
 	Timeline,
@@ -66,7 +66,8 @@ const TopBar = ({
 		setDeviceModalOpen,
 	} = useContext(ComponentContext);
 	const { name, photo, isAdmin } = useContext(UserContext);
-	const { status } = useMqttState();
+	// const { status } = useMqttState();
+	const status = 'connected';
 
 	const statusChange = (mqttStatus: string): string => {
 		switch (mqttStatus) {
