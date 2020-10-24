@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState, lazy } from 'react';
-
+import { useContext, lazy, useEffect } from 'react';
 // components
 import { Cell, Row } from '@material/react-layout-grid';
 import {
@@ -8,74 +7,23 @@ import {
 	MemoryTwoTone,
 	OpacityTwoTone,
 	ScheduleTwoTone,
-	Waves,
+	BubbleChart,
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
-// import { useSubscription } from 'mqtt-hooks';
-import { data } from '@pages/AnalyticsPage/fixtures';
 import formatWaterLevelData from '@utils/formatWaterLevel';
-import {
-	IData,
-	RegularUserAnalyticsState,
-} from '@pages/AnalyticsPage/interfaces';
-import mqttService from '@utils/mqttService';
+import { RegularUserAnalyticsProps } from '@pages/AnalyticsPage/interfaces';
+import { useSubscription } from '@hooks/mqtt';
+import { getSensorData } from '@modules/sensorData';
+import { useDispatch } from 'react-redux';
 
 const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
-const RegularUserAnalytics = (): JSX.Element => {
-	const [temperature, setTemperature] = useState<number | null>(0);
-	const [message, setMessage] = useState<any>('');
-	// const { lastMessage, mqtt } = useSubscription('almond/data');
-
-	// useEffect(() => {
-	// 	setMessage(lastMessage);
-	// 	return () => {
-	// 		mqtt?.end();
-	// 	};
-	// }, []);
-
-	// const { lastMessage } = useSubscription('almond/data');
-	// console.log(lastMessage);
-	// const temps = lastMessage?.message;
-
-	// useEffect(() => {
-	// 	const tempa = lastMessage?.message;
-	// 	console.log('Class: , Function: , Line 30 tem():', tempa);
-	// 	// setTemperature(temps);
-	// 	// return () => {};
-	// }, [lastMessage]);
-	// const [state, setState] = useState<RegularUserAnalyticsState>({
-	// 	data: {
-	// 		temp: 0,
-	// 		humid: 0,
-	// 		water_level: 0,
-	// 	},
-	// 	lastMessage: {},
-	// });
-
-	// const { lastMessage } = useSubscription('almond/data');
-	//
-	// useEffect(() => {
-	//   // const { temp, humid, water_level } = message;
-	//   setState(prevState => ({
-	//     ...prevState,
-	//     // data: {
-	//     //   temp: temp || 0,
-	//     //   humid: humid,
-	//     //   water_level: water_level
-	//     // }
-	//     lastMessage: lastMessage
-	//   }));
-	//
-	//   return () => console.log('cleaning up...');
-	// }, [])
-
+const RegularUserAnalytics = ({
+	sensorData,
+}: RegularUserAnalyticsProps): JSX.Element => {
 	const menu = useContext(ComponentContext);
 	const { setSelectedIndex } = menu;
-	// eslint-disable-next-line camelcase
-	const { temp, humid, water_level } = data;
-
-	// const { data: { temp = 0, humid = 0, water_level = 0 } } = message;
+	const { temperature, humidity, waterLevel } = sensorData;
 
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
@@ -88,7 +36,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 						colorClass="card-color-blue"
 						icon={<OpacityTwoTone className="content-icon" />}
 						mainInfo="Water Level"
-						subInfo={`${formatWaterLevelData(water_level)} %`}
+						subInfo={`${formatWaterLevelData(waterLevel)} %`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
@@ -97,7 +45,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 						colorClass="card-color-yellow"
 						icon={<BlurLinearTwoTone className="content-icon" />}
 						mainInfo="Water Temperature"
-						subInfo={`${temp} \u00b0C`}
+						subInfo={`${temperature ?? 0} \u00b0C`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
@@ -117,16 +65,16 @@ const RegularUserAnalytics = (): JSX.Element => {
 						colorClass="card-color-red"
 						icon={<BlurOn className="content-icon" />}
 						mainInfo="Air Temperature"
-						subInfo={`${temp} \u00b0C`}
+						subInfo={`${temperature ?? 0} \u00b0C`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
 					<AnalyticsCard
 						onClick={handleCardClick(2)}
 						colorClass="card-color-green"
-						icon={<Waves className="content-icon" />}
+						icon={<BubbleChart className="content-icon" />}
 						mainInfo="Air Humidity"
-						subInfo={`${humid} %`}
+						subInfo={`${humidity ?? 0} %`}
 					/>
 				</Cell>
 				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
@@ -139,7 +87,6 @@ const RegularUserAnalytics = (): JSX.Element => {
 					/>
 				</Cell>
 			</Row>
-			{mqttService()}
 		</>
 	);
 };

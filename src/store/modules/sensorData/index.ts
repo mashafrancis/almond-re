@@ -1,117 +1,53 @@
 import {
-	GetEnvironmentDataFailure,
-	GetEnvironmentDataSuccess,
-	GetWaterDataFailure,
-	GetWaterDataSuccess,
+	GetSensorDataFailure,
+	GetSensorDataSuccess,
+	SensorData,
 } from '@modules/sensorData/interfaces';
 
 import {
-	GET_ENVIRONMENT_DATA_FAILURE,
-	GET_ENVIRONMENT_DATA_SUCCESS,
-	GET_WATER_DATA_FAILURE,
-	GET_WATER_DATA_SUCCESS,
+	GET_SENSOR_DATA_FAILURE,
+	GET_SENSOR_DATA_SUCCESS,
+	State,
 } from '@modules/sensorData/types';
 
-import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
-import { AnyAction } from 'redux';
+import { Action, AnyAction, Reducer } from 'redux';
 
-export const getEnvironmentDataSuccess = (
-	environmentData: any,
-): GetEnvironmentDataSuccess => ({
-	environmentData,
-	type: GET_ENVIRONMENT_DATA_SUCCESS,
+export const getSensorDataSuccess = (
+	sensorData: SensorData,
+): GetSensorDataSuccess => ({
+	sensorData,
+	type: GET_SENSOR_DATA_SUCCESS,
 });
 
-export const getEnvironmentDataFailure = (
-	errors: any,
-): GetEnvironmentDataFailure => ({
+export const getSensorDataFailure = (errors: any): GetSensorDataFailure => ({
 	errors,
-	type: GET_ENVIRONMENT_DATA_FAILURE,
+	type: GET_SENSOR_DATA_FAILURE,
 });
 
-export const getWaterDataSuccess = (waterData: any): GetWaterDataSuccess => ({
-	waterData,
-	type: GET_WATER_DATA_SUCCESS,
-});
-
-export const getWaterDataFailure = (errors: any): GetWaterDataFailure => ({
-	errors,
-	type: GET_WATER_DATA_FAILURE,
-});
-
-// export const getEnvironmentData = () => (dispatch: any, getState: any, getFirebase: any) => {
-//   dispatch(loadingRequest('requesting'));
-//   // const firebase = getFirebase()
-//   return firebase.database()
-//     .ref('/environment')
-//     .on('value', snapshot => {
-//       dispatch(getEnvironmentDataSuccess(snapshot.val()));
-//       dispatch(loadingSuccess('success'));
-//     }, (error: { response: { data: { errors: { message: any; }; }; }; }) => {
-//       const { message } = error.response.data.errors;
-//       dispatch(loadingError('error'));
-//       dispatch(getEnvironmentDataFailure(message));
-//     });
-// .once('value',snapshot => snapshot)
-// .then(snapshot => {
-//   dispatch(loadingSuccess('success'));
-//   dispatch(getEnvironmentDataSuccess(snapshot.val()));
-// })
-// .catch(error => {
-//   const message = error.response.data.errors.message;
-//   dispatch(loadingError('error'));
-//   dispatch(getEnvironmentDataFailure(message));
-// });
-// };
-
-// export const getWaterData = () => (dispatch: any, getState: any, getFirebase: any) => {
-//   dispatch(loadingRequest('requesting'));
-//   // const firebase = getFirebase()
-//   return firebase.database()
-//     .ref('/water')
-//     .on('value', snapshot => {
-//       dispatch(getWaterDataSuccess(snapshot.val()));
-//       dispatch(loadingSuccess('success'));
-//     }, (error: { response: { data: { errors: { message: any; }; }; }; }) => {
-//       const { message } = error.response.data.errors;
-//       dispatch(loadingError('error'));
-//       dispatch(getWaterDataFailure(message));
-//     });
-// };
+export const getSensorData = (data: SensorData): GetSensorDataSuccess =>
+	getSensorDataSuccess(data);
 
 export const sensorDataInitialState = {
-	environmentData: [],
-	waterData: [],
+	sensorData: {
+		humidity: 0,
+		temperature: 0,
+		waterLevel: 0,
+	},
 	errors: null,
 };
 
-export const reducer = (
-	state: {
-		environmentData: any[];
-		waterData: any[];
-		errors: null;
-	} = sensorDataInitialState,
+export const reducer: Reducer<State, Action> = (
+	state: State = sensorDataInitialState,
 	action: AnyAction,
 ) => {
 	switch (action.type) {
-		case GET_ENVIRONMENT_DATA_SUCCESS:
+		case GET_SENSOR_DATA_SUCCESS:
 			return {
 				...state,
-				environmentData: action.environmentData,
+				sensorData: { ...state.sensorData, ...action.sensorData },
 				errors: null,
 			};
-		case GET_ENVIRONMENT_DATA_FAILURE:
-			return {
-				...state,
-				errors: action.errors,
-			};
-		case GET_WATER_DATA_SUCCESS:
-			return {
-				...state,
-				waterData: action.waterData,
-				errors: null,
-			};
-		case GET_WATER_DATA_FAILURE:
+		case GET_SENSOR_DATA_FAILURE:
 			return {
 				...state,
 				errors: action.errors,

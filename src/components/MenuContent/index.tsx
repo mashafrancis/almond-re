@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import * as React from 'react';
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';

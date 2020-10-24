@@ -5,7 +5,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const paths = require('./paths')
 const config = require('./webpack.config.js')
 const { miniCssExtractPlugin } = require('./webpack.plugins')
@@ -89,27 +88,8 @@ module.exports = merge(config, {
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      useTypescriptIncrementalApi: true,
-      memoryLimit: 4096,
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Almond',
-      template: `${paths.public}/template.html`,
-      favicon: `${paths.public}/favicon.ico`,
-      filename: 'index.html',
-      inject: 'body',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
+      // useTypescriptIncrementalApi: true,
+      // memoryLimit: 4096,
     }),
     miniCssExtractPlugin,
   ],

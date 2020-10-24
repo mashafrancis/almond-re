@@ -11,6 +11,7 @@ const Connector = ({ brokerUrl, children, opts = {} }: ConnectorProps) => {
 	useEffect(() => {
 		const client = connect(brokerUrl, opts);
 		setMqtt(client);
+		client.setMaxListeners(0);
 		client.on('connect', () => setStatus('connected'));
 		client.on('reconnect', () => setStatus('reconnecting'));
 		client.on('close', () => setStatus('closed'));

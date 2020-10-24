@@ -2,7 +2,7 @@
 import { useEffect, useState, Suspense, useRef } from 'react';
 // third party libraries
 import queryString from 'query-string';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 // import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
@@ -13,21 +13,23 @@ import ErrorFallback from '@components/ErrorBoundary';
 import LinearProgressBar from '@components/LinearProgressBar';
 // thunk action creators
 import { getUserDetails } from '@modules/user';
+import { getSensorData } from '@modules/sensorData';
 // helper functions
 import authService from '@utils/auth';
 import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
-import { Connector } from '@hooks/mqtt';
+import { Connector, useSubscription } from '@hooks/mqtt';
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
 import useEffectAsync from '@hooks/useEffectAsync';
-import Routes from '../routes';
 // styles
 import './App.scss';
 // interfaces
+import { IClientOptions } from 'mqtt';
 import { AppProps, AppState } from './interfaces';
+import Routes from '../routes';
 
 // const configurations = {
 // 	token: `token ${process.env.GITHUB_TOKEN}`,
@@ -45,6 +47,19 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 		isAdmin: false,
 	});
 	const timerRef = useRef<number>();
+
+	const { _id, name, email, photo, devices, isVerified, activeDevice } = user;
+	const { isUserAuthenticated, isAdmin } = state;
+	const userDetailsOnProvider = {
+		_id,
+		name,
+		email,
+		photo,
+		devices,
+		isVerified,
+		activeDevice,
+		isAdmin,
+	};
 
 	// const bugIssue = {
 	// 	header: issueHeading('GetUsers', configurations.appName),
@@ -100,36 +115,22 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	// const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
 	// const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
-	const { isUserAuthenticated, isAdmin } = state;
-	const { _id, name, email, photo, devices, isVerified, activeDevice } = user;
-
-	const userDetailsOnProvider = {
-		_id,
-		name,
-		email,
-		photo,
-		devices,
-		isVerified,
-		activeDevice,
-		isAdmin,
-	};
-
-	const options = {
+	const options: IClientOptions = {
 		username: process.env.MQTT_USER,
 		password: process.env.MQTT_PASSWORD,
 		keepalive: 30,
 		clientId: 'almond',
 		protocolId: 'MQTT',
 		protocolVersion: 4,
-		clean: false,
+		clean: true,
 		reconnectPeriod: 1000,
 		connectTimeout: 30 * 1000,
-		// will: {
-		// 	topic: 'almond/lastWill',
-		// 	payload: 'Connection Closed abnormally..!',
-		// 	qos: 0,
-		// 	retain: false,
-		// },
+		will: {
+			topic: 'almond/lastWill',
+			payload: 'Connection Closed abnormally..!',
+			qos: 2,
+			retain: false,
+		},
 		// key: bufferKey,
 		// cert: bufferCert,
 		// ca: bufferCA,
@@ -138,22 +139,22 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			{/* <Connector */}
-			{/*	brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
-			{/*	opts={options} */}
-			{/* > */}
-			<UserContext.Provider value={userDetailsOnProvider}>
-				<ComponentProvider>
-					<ViewportProvider>
-						<SnackBar snack={snack} />
-						{window.location.pathname !== '/' && isUserAuthenticated}
-						<Suspense fallback={<LinearProgressBar />}>
-							<Routes />
-						</Suspense>
-					</ViewportProvider>
-				</ComponentProvider>
-			</UserContext.Provider>
-			{/* </Connector> */}
+			<Connector
+				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
+				opts={options}
+			>
+				<UserContext.Provider value={userDetailsOnProvider}>
+					<ComponentProvider>
+						<ViewportProvider>
+							<SnackBar snack={snack} />
+							{window.location.pathname !== '/' && isUserAuthenticated}
+							<Suspense fallback={<LinearProgressBar />}>
+								<Routes />
+							</Suspense>
+						</ViewportProvider>
+					</ComponentProvider>
+				</UserContext.Provider>
+			</Connector>
 		</ErrorBoundary>
 	);
 };

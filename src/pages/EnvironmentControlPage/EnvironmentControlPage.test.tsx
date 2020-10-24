@@ -27,12 +27,6 @@ describe('The EnvironmentalControl Page', () => {
 				environmentData: [],
 			},
 		};
-
-		const props = mapStateToProps(state);
-
-		it('should map environment control page props from state', () => {
-			expect(props.environmentData).toEqual(state.sensorData.environmentData);
-		});
 	});
 
 	describe('mapDispatchToProps', () => {
@@ -47,11 +41,6 @@ describe('The EnvironmentalControl Page', () => {
 		afterEach(() => {
 			dispatch = props = null;
 		});
-
-		// it('ensures getEnvironmentData is mapped to props', () => {
-		//   props.getEnvironmentData();
-		//   expect(dispatch).toHaveBeenCalled();
-		// });
 
 		it('ensures displaySnackMessage is mapped to props', () => {
 			props.displaySnackMessage();

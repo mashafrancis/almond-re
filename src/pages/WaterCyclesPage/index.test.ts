@@ -28,7 +28,6 @@ describe('mapStateToProps', () => {
 		expect(props.status).toEqual(state.timeSchedules.status);
 		expect(props.isLoading).toEqual(state.timeSchedules.isLoading);
 		expect(props.user).toEqual(state.user);
-		expect(props.waterData).toEqual(state.sensorData.waterData);
 	});
 });
 
@@ -84,9 +83,4 @@ describe('mapDispatchToProps', () => {
 		props.toggleScheduleStatus();
 		expect(dispatch).toHaveBeenCalled();
 	});
-
-	// it('ensures getWaterData is mapped to props', () => {
-	//   props.getWaterData();
-	//   expect(dispatch).toHaveBeenCalled();
-	// });
 });

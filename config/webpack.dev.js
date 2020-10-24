@@ -5,6 +5,7 @@ const {
   hotModuleReplacementPlugin,
   forkTsCheckerWebpackPlugin,
   forkTsCheckerNotifierWebpackPlugin,
+  reactRefreshWebpackPlugin,
 } = require('./webpack.plugins')
 
 module.exports = merge(config, {
@@ -24,6 +25,7 @@ module.exports = merge(config, {
     publicPath: 'http://froyo.almond.com:3000/',
     compress: true,
     hot: true,
+    // hmr: true,
     overlay: true,
     port: 3000,
     host: 'localhost',
@@ -36,7 +38,8 @@ module.exports = merge(config, {
   },
   plugins: [
     hotModuleReplacementPlugin,
-    forkTsCheckerWebpackPlugin,
-    forkTsCheckerNotifierWebpackPlugin,
+    reactRefreshWebpackPlugin,
+    // forkTsCheckerWebpackPlugin,
+    // forkTsCheckerNotifierWebpackPlugin,
   ],
 })

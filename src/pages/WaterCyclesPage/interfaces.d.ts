@@ -6,7 +6,7 @@ import {
 } from '@modules/timeSchedules/interfaces';
 import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
-import { WaterData } from '@modules/sensorData/interfaces';
+import { SensorData, WaterData } from '@modules/sensorData/interfaces';
 
 export interface WaterCyclesPageProps {
 	addNewSchedule: (schedule: SchedulePayload) => Promise<any>;
@@ -20,7 +20,6 @@ export interface WaterCyclesPageProps {
 		id: string,
 		payload: ToggleSchedulePayload,
 	) => Promise<any>;
-	getWaterData: () => Promise<any> | any;
 	status?: Status;
 	error?: object;
 	schedules: Schedule[];
@@ -31,7 +30,7 @@ export interface WaterCyclesPageProps {
 	location: Location;
 	enabled: boolean;
 	devices: Device[];
-	waterData: WaterData;
+	sensorData: SensorData;
 }
 
 export interface WaterCyclesPageState {

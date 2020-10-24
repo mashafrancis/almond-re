@@ -41,11 +41,6 @@ describe('The DashboardContainer component', () => {
 			dispatch = props = null;
 		});
 
-		it('ensures logoutUser is mapped to props', () => {
-			props.logoutUser();
-			expect(dispatch).toHaveBeenCalled();
-		});
-
 		it('ensures getUserDetails is mapped to props', () => {
 			props.getUserDetails();
 			expect(dispatch).toHaveBeenCalled();

@@ -9,6 +9,8 @@ const {
   providerPlugin,
 } = require('./webpack.plugins')
 
+const isDevMode = process.env.NODE_ENV !== 'production'
+
 module.exports = {
   entry: {
     main: `${paths.src}/index.tsx`,
@@ -41,12 +43,10 @@ module.exports = {
       '@utils': `${paths.src}/utils`,
       '@context': `${paths.src}/context`,
       '@hooks': `${paths.src}/hooks`,
+      'process': 'process/browser',
       // '@material-ui/core': '@material-ui/core/esm',
       // '@material-ui/icons': '@material-ui/icons/esm'
     },
-    // fallback: {
-    //   process: require.resolve('process/browser'),
-    // },
     modules: [`${paths.src}`, 'node_modules'],
   },
   target: ['web', 'es5'],
@@ -57,7 +57,7 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|svg|)$/,
         type: 'asset/inline',
       },
       {
@@ -103,6 +103,9 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env'],
             sourceMap: true,
+            plugins: [
+              isDevMode && require.resolve('react-refresh/babel'),
+            ].filter(Boolean),
           },
         },
       },

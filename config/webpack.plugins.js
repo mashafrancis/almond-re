@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const paths = require('./paths')
 
 /**
@@ -49,19 +50,19 @@ const htmlWebpack = new HtmlWebpackPlugin({
   template: `${paths.public}/template.html`,
   favicon: `${paths.public}/favicon.ico`,
   filename: 'index.html',
-  // inject: 'body',
-  // minify: {
-  //   removeComments: true,
-  //   collapseWhitespace: true,
-  //   removeRedundantAttributes: true,
-  //   useShortDoctype: true,
-  //   removeEmptyAttributes: true,
-  //   removeStyleLinkTypeAttributes: true,
-  //   keepClosingSlash: true,
-  //   minifyJS: true,
-  //   minifyCSS: true,
-  //   minifyURLs: true,
-  // },
+  inject: 'body',
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    useShortDoctype: true,
+    removeEmptyAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    keepClosingSlash: true,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyURLs: true,
+  },
 })
 const miniCssExtractPlugin = new MiniCssExtractPlugin({
   filename: 'styles/[name].[contenthash].css',
@@ -85,8 +86,8 @@ const copyPlugin = new CopyWebpackPlugin({
 
 const providerPlugin = new webpack.ProvidePlugin({
   Buffer: ['buffer', 'Buffer'],
-  process: ['process', 'process/browser'],
-  // browser: ['browser', 'process/browser'],
+  process: 'process/browser',
+  // _stream_duplex: 'readable-stream/duplex',
 })
 
 // const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
@@ -115,6 +116,8 @@ const forkTsCheckerNotifierWebpackPlugin = new ForkTsCheckerNotifierWebpackPlugi
   },
 )
 
+const reactRefreshWebpackPlugin = new ReactRefreshWebpackPlugin()
+
 module.exports = {
   cleanWebpack,
   definePlugin,
@@ -126,4 +129,5 @@ module.exports = {
   providerPlugin,
   forkTsCheckerWebpackPlugin,
   forkTsCheckerNotifierWebpackPlugin,
+  reactRefreshWebpackPlugin,
 }
