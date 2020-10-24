@@ -69,7 +69,8 @@
           "@placeholders": "./src/placeholders/",
           "@modules": "./src/store/modules/",
           "@utils": "./src/utils/",
-          "@context": "./src/context/"
+          "@context": "./src/context/",
+          "@hooks": "./src/hooks/"
         }
       }
     ]

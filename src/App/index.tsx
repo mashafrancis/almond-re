@@ -5,7 +5,6 @@ import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-// import { Connector } from 'mqtt-hooks';
 // import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
@@ -19,10 +18,11 @@ import authService from '@utils/auth';
 import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
+import { Connector } from '@hooks/mqtt';
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
-import useEffectAsync from '../hooks/useEffectAsync';
+import useEffectAsync from '@hooks/useEffectAsync';
 import Routes from '../routes';
 // styles
 import './App.scss';
@@ -124,12 +124,12 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 		clean: false,
 		reconnectPeriod: 1000,
 		connectTimeout: 30 * 1000,
-		will: {
-			topic: 'almond/lastWill',
-			payload: 'Connection Closed abnormally..!',
-			qos: 0,
-			retain: false,
-		},
+		// will: {
+		// 	topic: 'almond/lastWill',
+		// 	payload: 'Connection Closed abnormally..!',
+		// 	qos: 0,
+		// 	retain: false,
+		// },
 		// key: bufferKey,
 		// cert: bufferCert,
 		// ca: bufferCA,

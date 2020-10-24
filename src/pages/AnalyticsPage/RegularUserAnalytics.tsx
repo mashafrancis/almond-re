@@ -18,6 +18,7 @@ import {
 	IData,
 	RegularUserAnalyticsState,
 } from '@pages/AnalyticsPage/interfaces';
+import mqttService from '@utils/mqttService';
 
 const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
 
@@ -138,6 +139,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 					/>
 				</Cell>
 			</Row>
+			{mqttService()}
 		</>
 	);
 };
