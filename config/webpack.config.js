@@ -41,12 +41,10 @@ module.exports = {
       '@utils': `${paths.src}/utils`,
       '@context': `${paths.src}/context`,
       '@hooks': `${paths.src}/hooks`,
+      'process': 'process/browser',
       // '@material-ui/core': '@material-ui/core/esm',
       // '@material-ui/icons': '@material-ui/icons/esm'
     },
-    // fallback: {
-    //   process: require.resolve('process/browser'),
-    // },
     modules: [`${paths.src}`, 'node_modules'],
   },
   target: ['web', 'es5'],

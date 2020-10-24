@@ -85,8 +85,7 @@ const copyPlugin = new CopyWebpackPlugin({
 
 const providerPlugin = new webpack.ProvidePlugin({
   Buffer: ['buffer', 'Buffer'],
-  process: ['process', 'process/browser'],
-  // browser: ['browser', 'process/browser'],
+  process: 'process/browser',
 })
 
 // const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {

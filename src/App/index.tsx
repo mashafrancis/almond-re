@@ -28,6 +28,7 @@ import Routes from '../routes';
 import './App.scss';
 // interfaces
 import { AppProps, AppState } from './interfaces';
+import { IClientOptions } from 'mqtt';
 
 // const configurations = {
 // 	token: `token ${process.env.GITHUB_TOKEN}`,
@@ -114,7 +115,7 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 		isAdmin,
 	};
 
-	const options = {
+	const options: IClientOptions | undefined = {
 		username: process.env.MQTT_USER,
 		password: process.env.MQTT_PASSWORD,
 		keepalive: 30,
@@ -124,12 +125,12 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 		clean: false,
 		reconnectPeriod: 1000,
 		connectTimeout: 30 * 1000,
-		// will: {
-		// 	topic: 'almond/lastWill',
-		// 	payload: 'Connection Closed abnormally..!',
-		// 	qos: 0,
-		// 	retain: false,
-		// },
+		will: {
+			topic: 'almond/lastWill',
+			payload: 'Connection Closed abnormally..!',
+			qos: 0,
+			retain: false,
+		},
 		// key: bufferKey,
 		// cert: bufferCert,
 		// ca: bufferCA,
@@ -138,22 +139,22 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			{/* <Connector */}
-			{/*	brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
-			{/*	opts={options} */}
-			{/* > */}
-			<UserContext.Provider value={userDetailsOnProvider}>
-				<ComponentProvider>
-					<ViewportProvider>
-						<SnackBar snack={snack} />
-						{window.location.pathname !== '/' && isUserAuthenticated}
-						<Suspense fallback={<LinearProgressBar />}>
-							<Routes />
-						</Suspense>
-					</ViewportProvider>
-				</ComponentProvider>
-			</UserContext.Provider>
-			{/* </Connector> */}
+			<Connector
+				brokerUrl={`mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
+				opts={options}
+			>
+				<UserContext.Provider value={userDetailsOnProvider}>
+					<ComponentProvider>
+						<ViewportProvider>
+							<SnackBar snack={snack} />
+							{window.location.pathname !== '/' && isUserAuthenticated}
+							<Suspense fallback={<LinearProgressBar />}>
+								<Routes />
+							</Suspense>
+						</ViewportProvider>
+					</ComponentProvider>
+				</UserContext.Provider>
+			</Connector>
 		</ErrorBoundary>
 	);
 };
