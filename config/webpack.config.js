@@ -9,7 +9,7 @@ const {
   providerPlugin,
 } = require('./webpack.plugins')
 
-// const isDevMode = process.env.NODE_ENV !== 'production'
+const isDevMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
@@ -19,19 +19,20 @@ module.exports = {
   },
   output: {
     filename: '[name].[contenthash].bundle.js',
-    // chunkFilename: (pathData) => {
-    //   return pathData.chunk.name === 'main' ? '[name].js' : '[name]/[name].js'
-    // },
-    path: paths.build,
+    chunkFilename: (pathData) => {
+      return pathData.chunk.name === 'main' ? '[name].js' : '[name]/[name].js'
+    },
     publicPath: '/',
     hashDigestLength: 8,
   },
-  // optimization: {
-  //   emitOnErrors: true,
-  //   splitChunks: {
-  //     chunks: 'all',
-  //   },
-  // },
+  optimization: {
+    removeAvailableModules: false,
+    removeEmptyChunks: false,
+    emitOnErrors: true,
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
@@ -41,31 +42,24 @@ module.exports = {
       '@modules': `${paths.src}/store/modules`,
       '@utils': `${paths.src}/utils`,
       '@context': `${paths.src}/context`,
-      'fs': false,
-      'buffer': 'buffer',
+      '@hooks': `${paths.src}/hooks`,
+      'process': 'process/browser',
       // '@material-ui/core': '@material-ui/core/esm',
       // '@material-ui/icons': '@material-ui/icons/esm'
     },
-    fallback: {
-      process: require.resolve('process/browser'),
-    },
     modules: [`${paths.src}`, 'node_modules'],
   },
+  target: ['web', 'es5'],
   module: {
     rules: [
-      // Images
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
       },
-
-      // Fonts and SVGs
       {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|svg|)$/,
         type: 'asset/inline',
       },
-
-      // Styles: Inject CSS into the head with source maps
       {
         test: /\.(scss|sass|css)$/,
         use: [
@@ -109,6 +103,9 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env'],
             sourceMap: true,
+            plugins: [
+              isDevMode && require.resolve('react-refresh/babel'),
+            ].filter(Boolean),
           },
         },
       },
@@ -116,6 +113,7 @@ module.exports = {
         test: /\.tsx?$/,
         loader: require.resolve('ts-loader'),
         exclude: /node_modules/,
+        options: { transpileOnly: true },
       },
       {
         test: /\.js$/,

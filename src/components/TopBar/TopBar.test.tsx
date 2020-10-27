@@ -7,9 +7,9 @@ import { renderWithRouter } from '../../testHelpers';
 
 describe.skip('TopBar component', () => {
 	const props = {
-		photoImage: '',
 		openProfileDialog: jest.fn,
 		isActivityLogsEmpty: true,
+		toggleRoleChangeDialog: jest.fn,
 	};
 
 	const { asFragment } = renderWithRouter(<TopBar {...props} />);

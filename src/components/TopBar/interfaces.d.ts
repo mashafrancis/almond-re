@@ -1,11 +1,11 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface TopBarProps {
-	photoImage: ReactNode;
-	openProfileDialog: (e?) => void;
+	openProfileDialog?: (e?) => void;
 	isActivityLogsEmpty: boolean;
 	window?: () => Window;
 	children?: ReactElement;
+	toggleRoleChangeDialog: any;
 }
 
 export interface ElevationBarProps {

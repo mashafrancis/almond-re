@@ -1,8 +1,6 @@
 import {
-	getEnvironmentDataFailure,
-	getEnvironmentDataSuccess,
-	getWaterDataFailure,
-	getWaterDataSuccess,
+	getSensorDataSuccess,
+	getSensorDataFailure,
 	reducer,
 	sensorDataInitialState,
 } from '@modules/sensorData';
@@ -17,47 +15,20 @@ describe('Sensor data reducer:', () => {
 	describe('Get environment data', () => {
 		const responseData = {};
 		it('should dispatch GET_ENVIRONMENT_DATA_SUCCESS', () => {
-			const getSensorDataSuccess = getEnvironmentDataSuccess(
-				responseData as any,
-			);
+			const getSensorSuccessData = getSensorDataSuccess(responseData as any);
 			const sensorDataState = reducer(
 				sensorDataInitialState,
-				getSensorDataSuccess,
+				getSensorSuccessData,
 			);
 
 			expect(sensorDataState.errors).toBe(null);
 		});
 
 		it('should dispatch GET_ENVIRONMENT_DATA_FAILURE', () => {
-			const getSensorDataFailure = getEnvironmentDataFailure(errorMessage);
+			const getSensorFailureData = getSensorDataFailure(errorMessage);
 			const sensorDataState = reducer(
 				sensorDataInitialState,
-				getSensorDataFailure,
-			);
-
-			expect(sensorDataState.errors).toBe(errorMessage);
-		});
-	});
-
-	describe('Get water data', () => {
-		const responseData = {};
-		it('should dispatch GET_WATER_DATA_SUCCESS', () => {
-			const getWaterDataSuccessAction = getWaterDataSuccess(
-				responseData as any,
-			);
-			const sensorDataState = reducer(
-				sensorDataInitialState,
-				getWaterDataSuccessAction,
-			);
-
-			expect(sensorDataState.errors).toBe(null);
-		});
-
-		it('should dispatch GET_WATER_DATA_FAILURE', () => {
-			const getWaterDataFailureAction = getWaterDataFailure(errorMessage);
-			const sensorDataState = reducer(
-				sensorDataInitialState,
-				getWaterDataFailureAction,
+				getSensorFailureData,
 			);
 
 			expect(sensorDataState.errors).toBe(errorMessage);

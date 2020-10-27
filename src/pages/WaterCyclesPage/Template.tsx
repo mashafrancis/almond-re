@@ -8,7 +8,6 @@ import {
 } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
-// import { useMqttState, useSubscription } from 'mqtt-hooks';
 import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment, Switch } from '@material-ui/core';
@@ -35,6 +34,7 @@ import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
 import { primaryColor } from '../../assets/tss/common';
 // interfaces
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
+import { useSelector } from 'react-redux';
 // components
 const CardInfo = lazy(() => import('@components/CardInfo'));
 const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
@@ -52,15 +52,9 @@ export const WaterCyclesTemplate = ({
 	togglePump,
 	getPumpStatus,
 	toggleScheduleStatus,
-	getWaterData,
-	status,
 	schedules,
-	match,
-	isLoading,
-	location,
 	enabled,
-	devices,
-	waterData,
+  sensorData,
 }: WaterCyclesPageProps): JSX.Element => {
 	const [state, setState] = useState<WaterCyclesPageState>({
 		isEditMode: false,
@@ -137,12 +131,13 @@ export const WaterCyclesTemplate = ({
 	//   }
 	// },              [state.scheduleToEdit]);
 
-	const heightOfTank = 11; // units in centimeters
-	const waterLevel = heightOfTank
-		? waterData.waterLevel || heightOfTank
+	const { waterLevel } = sensorData;
+	const heightOfTank = 600; // units in centimeters
+	const waterLevelData = heightOfTank
+		? waterLevel || heightOfTank
 		: heightOfTank;
 	const heightOfWater = roundDigit(
-		((heightOfTank - waterLevel) / heightOfTank) * 100,
+		((heightOfTank - waterLevelData) / heightOfTank) * 100,
 		0,
 	);
 
@@ -515,7 +510,7 @@ export const WaterCyclesTemplate = ({
 							<DonutDisplay
 								backgroundColor={['#CCCCCC', '#36A2EB']}
 								hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
-								data={[waterLevel, heightOfTank - waterLevel]}
+								data={[waterLevelData, heightOfTank - waterLevelData]}
 								donutInfo={`${heightOfWater}%`}
 								halfDonut={false}
 							/>

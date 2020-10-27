@@ -1,26 +1,31 @@
 const { merge } = require('webpack-merge')
 const paths = require('./paths')
 const config = require('./webpack.config.js')
-const { hotModuleReplacementPlugin } = require('./webpack.plugins')
+const {
+  hotModuleReplacementPlugin,
+  forkTsCheckerWebpackPlugin,
+  forkTsCheckerNotifierWebpackPlugin,
+  reactRefreshWebpackPlugin,
+} = require('./webpack.plugins')
 
 module.exports = merge(config, {
   output: {
     filename: '[name].js',
   },
   mode: 'development',
-  optimization: {
-    moduleIds: 'named',
-  },
   devtool: 'inline-source-map',
   devServer: {
     proxy: {
       '/api': 'http://localhost:8080/',
     },
+    clientLogLevel: 'warning',
+    stats: 'errors-only',
     historyApiFallback: true,
     contentBase: paths.build,
     publicPath: 'http://froyo.almond.com:3000/',
     compress: true,
     hot: true,
+    // hmr: true,
     overlay: true,
     port: 3000,
     host: 'localhost',
@@ -31,5 +36,10 @@ module.exports = merge(config, {
       ignored: /node_modules/,
     },
   },
-  plugins: [hotModuleReplacementPlugin],
+  plugins: [
+    hotModuleReplacementPlugin,
+    reactRefreshWebpackPlugin,
+    // forkTsCheckerWebpackPlugin,
+    // forkTsCheckerNotifierWebpackPlugin,
+  ],
 })

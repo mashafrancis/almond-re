@@ -63,7 +63,7 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      'branches': 40,
+      'branches': 30,
       'functions': 45,
       'lines': 65,
       'statements': 60,
@@ -76,7 +76,8 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules',
     '<rootDir>/src/index.tsx',
-    'src/store/index.tsx|rootReducer.ts',
+    '<tootDir>/src/store/index.tsx|rootReducer.ts',
+    '<rootDir>/src/test-utils/redux.ts'
   ],
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',

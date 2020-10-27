@@ -5,6 +5,7 @@ import {
 	useRef,
 	ChangeEvent,
 	MouseEvent,
+	KeyboardEvent,
 	Suspense,
 	createElement,
 	lazy,
@@ -14,22 +15,15 @@ import {
 import {
 	SwipeableDrawer,
 	MenuItem,
-	ListItemIcon,
 	TextField,
 	InputAdornment,
-	Menu,
 } from '@material-ui/core';
 import { Grid } from '@material/react-layout-grid';
+import { useSubscription } from '@hooks/mqtt';
+import { getSensorData } from '@modules/sensorData';
+import { useDispatch } from 'react-redux';
 // icons
-import {
-	Mood,
-	ExitToApp,
-	Settings,
-	Help,
-	OpenInNew,
-	AllOutTwoTone,
-	Face,
-} from '@material-ui/icons';
+import { AllOutTwoTone, Face } from '@material-ui/icons';
 // components;
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import LinearProgressBar from '@components/LinearProgressBar';
@@ -41,12 +35,13 @@ import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 // interfaces
 import { Device } from '@modules/device/interfaces';
+import { IClientSubscribeOptions } from 'mqtt';
 // styles
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
+import { primaryColor } from '../../assets/tss/common';
 import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 import useViewport from '../../hooks/useViewport';
 import './DashboardContainer.scss';
-import { primaryColor } from '../../assets/tss/common';
 // lazy loaded components
 const Modal = lazy(() => import('@components/Modal'));
 const MenuContent = lazy(() => import('@components/MenuContent'));
@@ -57,7 +52,6 @@ const DashboardTemplate = ({
 	history,
 	activityLogs,
 	user,
-	logoutUser,
 	getUserDetails,
 	editUserDetails,
 	activateDevice,
@@ -67,6 +61,7 @@ const DashboardTemplate = ({
 		isLoading: true,
 		isFeedbackMenuOpen: false,
 		isFeedbackModal: false,
+		isProfileMenuOpen: false,
 		device: '',
 		action: '',
 		fields: {},
@@ -79,9 +74,7 @@ const DashboardTemplate = ({
 
 	const styles = useDashboardContainerStyles();
 
-	const { activeDevice, devices, photo, name, isAdmin } = useContext(
-		UserContext,
-	);
+	const { activeDevice, devices, isAdmin } = useContext(UserContext);
 
 	const {
 		selectedIndex,
@@ -97,6 +90,28 @@ const DashboardTemplate = ({
 	const breakpoint = 539;
 
 	const modalRef = createRef();
+
+	const options: IClientSubscribeOptions = {
+		qos: 2,
+		rap: true,
+	};
+
+	const dispatch = useDispatch();
+	// :TODO: Reformat to get user specific device subscription
+	const userSensorSubscription = 'almond/data';
+	const { lastMessage, mqtt } = useSubscription(
+		userSensorSubscription,
+		options,
+	);
+
+	useEffect(() => {
+		const data = {
+			temperature: lastMessage?.message?.temp,
+			humidity: lastMessage?.message?.humid,
+			waterLevel: lastMessage?.message?.water_level,
+		};
+		dispatch(getSensorData(data));
+	}, [lastMessage]);
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -118,18 +133,6 @@ const DashboardTemplate = ({
 			JSON.stringify(initialSelectedIndex),
 		);
 	}, []);
-
-	const menuAnchorEl = useRef<any>(null);
-
-	const handleProfileClickOpen = (event: MouseEvent<HTMLButtonElement>) => {
-		setState((prevState) => ({ ...prevState, anchorEl: event.currentTarget }));
-	};
-
-	const handleProfileClose = () =>
-		setState((prevState) => ({
-			...prevState,
-			anchorEl: null,
-		}));
 
 	const toggleRoleChangeDialog = () => {
 		setState((prevState) => ({
@@ -175,31 +178,6 @@ const DashboardTemplate = ({
 			});
 	};
 
-	const handleAccountMenu = () => {
-		setState((prevState) => ({ ...prevState, isOpen: true }));
-	};
-
-	const logoutActiveUser = (): void => {
-		window.location.replace('/');
-		logoutUser();
-	};
-
-	const photoImage = () => (
-		<div
-			role="tablist"
-			ref={(e) => (menuAnchorEl.current = e)}
-			className="mdc-tab-bar"
-			onClick={handleAccountMenu}
-			onKeyDown={handleAccountMenu}
-			aria-label="Photo Image"
-		>
-			<span className="mini-account-menu__image" role="tab" tabIndex={0}>
-				{width > breakpoint && (
-					<img className="mini-account-menu__image" src={photo} alt="almond" />
-				)}
-			</span>
-		</div>
-	);
 	const selectDeviceContent = (UserDevices: Device[]) => (
 		<TextField
 			id="device"
@@ -236,6 +214,7 @@ const DashboardTemplate = ({
 			))}
 		</TextField>
 	);
+
 	const selectChangeRoleContent = () => (
 		<TextField
 			id="user-role"
@@ -272,6 +251,7 @@ const DashboardTemplate = ({
 			))}
 		</TextField>
 	);
+
 	const SelectDeviceModal = (device) => (
 		<Modal
 			ref={modalRef}
@@ -284,51 +264,8 @@ const DashboardTemplate = ({
 			onDismiss={handleCloseDeviceModal}
 		/>
 	);
-	const menuItems = [
-		{ name: 'Settings', icon: <Settings /> },
-		{ name: 'Help', icon: <Help /> },
-		{ name: 'Send Feedback', icon: <OpenInNew /> },
-	];
 
-	const MenuProfileSelect = (): JSX.Element => {
-		return (
-			<Menu
-				className="photo-menu"
-				id="profile-menu"
-				anchorEl={state.anchorEl}
-				keepMounted
-				open={Boolean(state.anchorEl)}
-				onClose={handleProfileClose}
-			>
-				{menuItems.map((item, index) => {
-					const handleClick = () => setSelectedIndex(index);
-					return (
-						<MenuItem key={item.name} onClick={handleClick}>
-							<ListItemIcon style={{ minWidth: '36px' }}>
-								{item.icon}
-							</ListItemIcon>
-							{item.name}
-						</MenuItem>
-					);
-				})}
-
-				<MenuItem onClick={toggleRoleChangeDialog}>
-					<ListItemIcon style={{ minWidth: '36px' }}>
-						<Mood />
-					</ListItemIcon>
-					Change role
-				</MenuItem>
-				<MenuItem onClick={logoutActiveUser}>
-					<ListItemIcon style={{ minWidth: '36px' }}>
-						<ExitToApp />
-					</ListItemIcon>
-					Logout
-				</MenuItem>
-			</Menu>
-		);
-	};
-
-	const ProfileDialog = (): JSX.Element => (
+	const ChangeUserRoleDialog = (): JSX.Element => (
 		<Modal
 			ref={modalRef}
 			isModalOpen={state.isChangeRoleDialogOpen}
@@ -400,8 +337,7 @@ const DashboardTemplate = ({
 			{width > breakpoint && <MenuContent />}
 			<TopBar
 				isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
-				photoImage={photoImage()}
-				openProfileDialog={handleProfileClickOpen}
+				toggleRoleChangeDialog={toggleRoleChangeDialog}
 			>
 				<Suspense fallback={<LinearProgressBar />}>
 					<Grid>
@@ -415,8 +351,7 @@ const DashboardTemplate = ({
 			</TopBar>
 			{width < breakpoint && <PageBottomNavigation />}
 			{SelectDeviceModal(devices)}
-			{ProfileDialog()}
-			{MenuProfileSelect()}
+			{ChangeUserRoleDialog()}
 			{ActivityDrawer()}
 		</div>
 	);

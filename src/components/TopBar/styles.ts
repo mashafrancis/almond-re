@@ -65,6 +65,14 @@ export const useTopBarStyles = makeStyles((theme: Theme) =>
 		hide: {
 			display: 'none',
 		},
+		avatar: {
+			// borderRadius: '50%',
+			// padding: 0;
+			width: '40px',
+			height: '40px',
+			cursor: 'pointer',
+			margin: '4px',
+		},
 	}),
 );
 

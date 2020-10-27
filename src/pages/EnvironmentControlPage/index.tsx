@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import ActionButton from '@components/ActionButton';
 import { FilterList } from '@material-ui/icons';
 // thunks
@@ -11,8 +11,7 @@ import { displaySnackMessage } from '@modules/snack';
 import roundDigit from '@utils/roundDigit';
 // styles
 import './EnvironmentControlPage.scss';
-// interfaces
-import { EnvironmentControlPageProps } from './interfaces';
+import { EnvironmentControlPageProps } from '@pages/EnvironmentControlPage/interfaces';
 
 // components
 const DashboardCard = lazy(() => import('@components/DashboardCard'));
@@ -20,39 +19,35 @@ const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
 const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
 
 export const EnvironmentControlPage = ({
-	environmentData,
+	sensorData,
 }: EnvironmentControlPageProps): JSX.Element => {
-	// React.useEffect(() => {
-	//   props.getEnvironmentData();
-	//     // .then(() => setState({ ...state, environmentData: props.environmentData }))
-	// }, [])
+	// :TODO: Implement useSelector method
+	const { temperature, humidity } = sensorData;
 
-	const { currentTemperature, currentHumidity } = environmentData;
-
-	const temperature = roundDigit(currentTemperature, 1) || 0;
-	const humidity = roundDigit(currentHumidity, 1) || 0;
+	const currentTemperature = roundDigit(temperature, 1) || 0;
+	const currentHumidity = roundDigit(humidity, 1) || 0;
 
 	const donutData = [
 		{
 			heading: 'Air Temperature',
 			backgroundColor: ['#36A2EB', '#CCCCCC'],
 			hoverBackgroundColor: ['#36A2EB', '#CCCCCC'],
-			data: [temperature, 100 - temperature],
-			donutInfo: `${temperature} \u00b0C`,
+			data: [currentTemperature, 100 - currentTemperature],
+			donutInfo: `${currentTemperature} \u00b0C`,
 		},
 		{
 			heading: 'Plant Humidity',
 			backgroundColor: ['#FFCE56', '#CCCCCC'],
 			hoverBackgroundColor: ['#FFCE56', '#CCCCCC'],
-			data: [humidity, 100 - humidity],
-			donutInfo: `${humidity}%`,
+			data: [currentHumidity, 100 - currentHumidity],
+			donutInfo: `${currentHumidity}%`,
 		},
 		{
 			heading: 'Water Temperature',
 			backgroundColor: ['#7ad283', '#CCCCCC'],
 			hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
-			data: [humidity, 100 - humidity],
-			donutInfo: `${humidity}%`,
+			data: [currentHumidity, 100 - currentHumidity],
+			donutInfo: `${currentHumidity}%`,
 		},
 	];
 
@@ -152,12 +147,11 @@ export const EnvironmentControlPage = ({
 };
 
 export const mapStateToProps = (state) => ({
-	environmentData: state.sensorData.environmentData,
+	sensorData: state.sensorData.sensorData,
 });
 
 export const mapDispatchToProps = (dispatch) => ({
 	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
-	// getEnvironmentData: () => dispatch(getEnvironmentData()),
 });
 
 export default connect(

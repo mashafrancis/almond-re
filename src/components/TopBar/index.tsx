@@ -1,4 +1,4 @@
-import { cloneElement, useContext } from 'react';
+import { cloneElement, MouseEvent, useContext, useState } from 'react';
 import {
 	Avatar,
 	Badge,
@@ -6,22 +6,35 @@ import {
 	CssBaseline,
 	AppBar,
 	Toolbar,
+	Menu,
+	MenuItem,
+	ListItemIcon,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
 import { createStyles, Theme } from '@material-ui/core/styles';
+import { useMqttState } from '@hooks/mqtt';
 // import { useMqttState } from 'mqtt-hooks';
+// thunks
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '@modules/user';
 // icons
 import {
 	Timeline,
 	NotificationsNone,
 	Notifications,
 	ArrowDropDown,
+	Mood,
+	ExitToApp,
+	Settings,
+	Help,
+	OpenInNew,
 } from '@material-ui/icons';
 // utils
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
+import fancyId from '@utils/fancyId';
 // styles
 import { useTopBarStyles, StyledBadge } from '@components/TopBar/styles';
 import '@pages/DashboardContainer/DashboardNavBar.scss';
@@ -32,6 +45,7 @@ import {
 	closedColor,
 	connectedColor,
 	offlineColor,
+	primaryColor,
 	reconnectingColor,
 } from '../../assets/tss/common';
 // images
@@ -55,19 +69,24 @@ const ElevationScroll = ({
 const TopBar = ({
 	isActivityLogsEmpty,
 	children,
-	openProfileDialog,
+	toggleRoleChangeDialog,
 }: TopBarProps): JSX.Element => {
 	const classes = useTopBarStyles();
 	const classesMenu = useStyles();
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+	const dispatch = useDispatch();
+
 	const device = useContext(UserContext);
 	const {
 		activityLogsViewed,
 		toggleActivityDrawer,
 		setDeviceModalOpen,
+		setSelectedIndex,
 	} = useContext(ComponentContext);
 	const { name, photo, isAdmin } = useContext(UserContext);
-	// const { status } = useMqttState();
-	const status = 'connected';
+	const { status } = useMqttState();
+	// const status = 'connected';
 
 	const statusChange = (mqttStatus: string): string => {
 		switch (mqttStatus) {
@@ -82,6 +101,17 @@ const TopBar = ({
 			default:
 				return offlineColor;
 		}
+	};
+
+	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleProfileClose = () => setAnchorEl(null);
+
+	const logoutActiveUser = (): void => {
+		window.location.replace('/');
+		dispatch(logoutUser());
 	};
 
 	const DeviceActiveBadge = withStyles((theme: Theme) =>
@@ -163,28 +193,76 @@ const TopBar = ({
 				invisible={isArrayNotNull(notifications.length)}
 				variant="dot"
 			>
-				<Notifications style={{ color: '#1967D2' }} />
+				<Notifications style={{ color: primaryColor }} />
 			</StyledBadge>
 		);
 
-	const topIcons = [
-		{ icon: timeLineIcon() },
-		{ icon: notificationsIcon() },
-		{
-			icon: <Avatar alt={name} src={photo} onClick={openProfileDialog} />,
-		},
+	const menuItems = [
+		{ name: 'Settings', icon: <Settings /> },
+		{ name: 'Help', icon: <Help /> },
+		{ name: 'Send Feedback', icon: <OpenInNew /> },
 	];
+
+	const avatarImage = (): JSX.Element => (
+		<>
+			<Avatar
+				className={classes.avatar}
+				alt={name}
+				src={photo}
+				onClick={handleToggleProfileMenu}
+			/>
+			<Menu
+				id="profile-menu"
+				style={{ top: '44px' }}
+				anchorEl={anchorEl}
+				keepMounted
+				open={Boolean(anchorEl)}
+				onClose={handleProfileClose}
+			>
+				{menuItems.map((item, index) => {
+					const handleClick = () => {
+						handleProfileClose();
+						setSelectedIndex(index);
+					};
+					return (
+						<MenuItem key={fancyId()} onClick={handleClick}>
+							<ListItemIcon style={{ minWidth: '36px' }}>
+								{item.icon}
+							</ListItemIcon>
+							{item.name}
+						</MenuItem>
+					);
+				})}
+
+				<MenuItem onClick={toggleRoleChangeDialog}>
+					<ListItemIcon style={{ minWidth: '36px' }}>
+						<Mood />
+					</ListItemIcon>
+					Change role
+				</MenuItem>
+				<MenuItem onClick={logoutActiveUser}>
+					<ListItemIcon style={{ minWidth: '36px' }}>
+						<ExitToApp />
+					</ListItemIcon>
+					Logout
+				</MenuItem>
+			</Menu>
+		</>
+	);
+
+	const topIcons = [{ icon: timeLineIcon() }, { icon: notificationsIcon() }];
 
 	const renderTopIcons = (): JSX.Element => (
 		<div className={classes.sectionEnd}>
-			{topIcons.map((topIcon, index) => (
-				// eslint-disable-next-line react/no-array-index-key
-				<span key={index} className="top-bar-icons">
+			{topIcons.map((topIcon) => (
+				<span key={fancyId()} className="top-bar-icons">
 					{topIcon.icon}
 				</span>
 			))}
+			{avatarImage()}
 		</div>
 	);
+
 	return (
 		<>
 			<CssBaseline />
