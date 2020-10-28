@@ -1,21 +1,59 @@
 import dayjs from '@utils/dayjsTime';
 
 /**
- * This function validates the time schedules to be one hour apart
+ * This function validates the new time schedules to be one hour apart
  * @returns boolean
  */
-const validateOneHourTime = (schedules: string[], newTime: string): boolean => {
-	let diff: number | undefined = 0;
-	const oneHour = 60 * 60 * 1000;
-
-	schedules.map((schedule) => {
-		const current = dayjs.utc(newTime).format('hh:mm:ss');
-		const availableSchedule = dayjs.utc(schedule).format('hh:mm:ss');
-		diff = dayjs(current, 'H:mm:ss').diff(dayjs(availableSchedule, 'H:mm:ss'));
-		return diff;
-	});
-
-	return Math.abs(diff) < oneHour;
+export const validateNewOneHourTime = (
+	schedules: string[],
+	newTime: string,
+): boolean => {
+	if (schedules.length === 0) return true;
+	const diff = getDiff(newTime, schedules[schedules.length - 1]);
+	return diff <= -3600000;
 };
 
-export default validateOneHourTime;
+/**
+ * This function validates the edited time schedules to be one hour apart
+ * @returns boolean
+ */
+export const validateEditOneHourTime = (
+	schedules: any,
+	scheduleId: string,
+	editTime: string,
+): boolean => {
+	const editScheduleIndex = schedules.findIndex(
+		(item) => item._id === scheduleId,
+	);
+	const timeBefore =
+		editScheduleIndex === 0 ? null : schedules[editScheduleIndex - 1].schedule;
+	const timeAfter =
+		editScheduleIndex === schedules.length - 1
+			? null
+			: schedules[editScheduleIndex + 1].schedule;
+
+	if (timeBefore) {
+		const diffBefore = getDiff(editTime, timeBefore);
+		if (diffBefore > -3600000) return false;
+	}
+	if (timeAfter) {
+		const diffAfter = getDiff(editTime, timeAfter);
+		if (diffAfter < 3600000) return false;
+	}
+	return true;
+};
+
+/**
+ * This function gets the time difference between the times passed in milliseconds
+ * @returns number
+ */
+const getDiff = (newTime: any, scheduleTime: string) => {
+	const newTimeToSet = dayjs(newTime).second(0).millisecond(0);
+	const [h, m] = scheduleTime.split(':');
+	const scheduleTimeToCompare = dayjs()
+		.hour(h)
+		.minute(m)
+		.second(0)
+		.millisecond(0);
+	return scheduleTimeToCompare.diff(newTimeToSet);
+};
