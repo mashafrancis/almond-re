@@ -16,6 +16,7 @@ import './UserRolesPage.scss';
 // interfaces
 import { UserRole } from '@modules/userRoles/interfaces';
 import { UserRolesPageProps, UserRolesPageState } from './interfaces';
+import { primaryColor } from '../../assets/tss/common';
 // components
 const CardInfo = lazy(() => import('@components/CardInfo'));
 const Table = lazy(() => import('@components/Table'));

@@ -33,6 +33,7 @@ export interface DashboardContainerState {
 	isLoading: boolean;
 	isFeedbackMenuOpen: boolean;
 	isFeedbackModal: boolean;
+	isProfileMenuOpen: boolean;
 	device: string;
 	// activeDevice: {
 	// 	id: string;

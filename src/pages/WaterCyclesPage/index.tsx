@@ -19,7 +19,7 @@ export const mapStateToProps = (state) => ({
 	enabled: state.timeSchedules.enabled,
 	devices: state.user.devices,
 	user: state.user,
-	waterData: state.sensorData.waterData,
+	sensorData: state.sensorData.sensorData,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

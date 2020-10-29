@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es2015",
+		"target": "es5",
 		"lib": ["es6", "es2017", "esnext.asynciterable", "dom"],
 		"typeRoots": ["./node_modules/@types"],
 		"types": ["@types/jest", "@types/node", "react"],
@@ -37,7 +37,8 @@
 			"@pages/*": ["src/pages/*"],
 			"@modules/*": ["src/store/modules/*"],
 			"@utils/*": ["src/utils/*"],
-			"@context/*": ["src/context/*"]
+			"@context/*": ["src/context/*"],
+      "@hooks/*": ["src/hooks/*"]
 		}
 	},
 	"include": ["./src/**/*.tsx", "./src/**/*"],

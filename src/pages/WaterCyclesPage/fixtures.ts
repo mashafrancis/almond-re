@@ -53,7 +53,6 @@ export const props = {
 	toggleScheduleStatus: jest.fn(() => Promise.resolve()),
 	addNewSchedule: jest.fn(() => Promise.resolve()),
 	editSchedule: jest.fn(() => Promise.resolve()),
-	getWaterData: jest.fn(() => Promise.resolve()),
 	schedules: [],
 	isLoading: false,
 	location: Location as any,

@@ -1,9 +1,7 @@
 // react libraries
 import { Suspense } from 'react';
-
 // third party
 import { screen } from '@testing-library/react';
-
 // components
 import { renderWithRouter } from '../../testHelpers';
 import RegularUserAnalytics from './RegularUserAnalytics';
@@ -11,9 +9,14 @@ import AdminAnalytics from './AdminAnalytics';
 
 describe('The Analytics Page', () => {
 	it('should render Regular Analytics Page properly', () => {
+		const sensorData = {
+			temperature: 0,
+			humidity: 0,
+			waterLevel: 0,
+		};
 		const { asFragment } = renderWithRouter(
 			<Suspense fallback={<h1>test loading</h1>}>
-				<RegularUserAnalytics />
+				<RegularUserAnalytics sensorData={sensorData} />
 			</Suspense>,
 		);
 		expect(asFragment()).toMatchSnapshot();

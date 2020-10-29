@@ -11,7 +11,7 @@ const DashboardCard = ({
 	body,
 }: DashboardCardProps): JSX.Element => {
 	return (
-		<Card variant="outlined">
+		<Card variant="outlined" style={{ borderRadius: 16 }}>
 			<div className="dashboard-card">
 				<div className="card-header">
 					<h5 data-testid="heading" className="card-header__title">
