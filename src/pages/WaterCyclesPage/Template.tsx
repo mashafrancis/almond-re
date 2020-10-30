@@ -25,7 +25,10 @@ import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
 import LinearProgressBar from '@components/LinearProgressBar';
 // utils
-import validateOneHourTime from '@utils/validateTimeOneHour';
+import {
+	validateNewOneHourTime,
+	validateEditOneHourTime,
+} from '@utils/validateTimeOneHour';
 import roundDigit from '@utils/roundDigit';
 import dayjs from '@utils/dayjsTime';
 // styles
@@ -54,7 +57,7 @@ export const WaterCyclesTemplate = ({
 	toggleScheduleStatus,
 	schedules,
 	enabled,
-  sensorData,
+	sensorData,
 }: WaterCyclesPageProps): JSX.Element => {
 	const [state, setState] = useState<WaterCyclesPageState>({
 		isEditMode: false,
@@ -66,7 +69,7 @@ export const WaterCyclesTemplate = ({
 		scheduleToEdit: '',
 		isActionDone: false,
 		isLoading: false,
-		selectedTimeSchedule: new Date(),
+		selectedTimeSchedule: dayjs(),
 		hasError: false,
 		schedules: [
 			{
@@ -104,17 +107,6 @@ export const WaterCyclesTemplate = ({
 			})),
 		);
 	}, [activeDevice._id]);
-
-	// :TODO: Check validation
-	useEffect(() => {
-		const { selectedTimeSchedule } = state;
-		const timeSchedules = [...new Set(schedules.map((item) => item.schedule))];
-		const validate = validateOneHourTime(timeSchedules, selectedTimeSchedule);
-		if (validate) {
-			setState((prevState) => ({ ...prevState, hasError: true }));
-		}
-		setState((prevState) => ({ ...prevState, hasError: false }));
-	}, [state.selectedTimeSchedule]);
 
 	// useEffect(() => {
 	//   props.getWaterData();
@@ -194,6 +186,26 @@ export const WaterCyclesTemplate = ({
 			...prevState,
 			selectedTimeSchedule: value,
 		}));
+		validateNewTime(value);
+	};
+
+	const validateNewTime = (value) => {
+		const timeSchedules = schedules.map((item) => item.schedule);
+		const validate = validateNewOneHourTime(timeSchedules, value);
+		if (!validate) {
+			setState((prevState) => ({ ...prevState, hasError: true }));
+		} else {
+			setState((prevState) => ({ ...prevState, hasError: false }));
+		}
+	};
+
+	const validateScheduleOnOpen = (mode) => {
+		const { selectedTimeSchedule, scheduleToEdit } = state;
+		switch (mode) {
+			case 'Add': {
+				validateNewTime(selectedTimeSchedule);
+			}
+		}
 	};
 
 	const handleEditTimeChange = (value) => {
@@ -201,13 +213,27 @@ export const WaterCyclesTemplate = ({
 			...prevState,
 			scheduleToEdit: value,
 		}));
+		validateEditTime(value);
+	};
+
+	const validateEditTime = (value) => {
+		const { scheduleId } = state;
+		const validate = validateEditOneHourTime(schedules, scheduleId, value);
+		if (!validate) {
+			setState((prevState) => ({ ...prevState, hasError: true }));
+		} else {
+			setState((prevState) => ({ ...prevState, hasError: false }));
+		}
 	};
 
 	const showScheduleModal = (mode) => (event) => {
 		event.preventDefault();
 		const { id } = event.target;
 		const schedule = schedules.filter((obj) => obj._id === id);
-
+		const setEditTimeValue = (time) => {
+			const [hour, minute] = time.split(':');
+			return dayjs().hour(hour).minute(minute).format();
+		};
 		switch (mode) {
 			case 'Add':
 				setState((prevState) => ({
@@ -220,7 +246,7 @@ export const WaterCyclesTemplate = ({
 				setState((prevState) => ({
 					...prevState,
 					scheduleId: id,
-					scheduleToEdit: schedule[0].schedule,
+					scheduleToEdit: setEditTimeValue(schedule[0].schedule),
 					isScheduleModalOpen: !prevState.isScheduleModalOpen,
 					isEditMode: true,
 				}));
@@ -230,6 +256,7 @@ export const WaterCyclesTemplate = ({
 					...prevState,
 				}));
 		}
+		validateScheduleOnOpen(mode);
 	};
 
 	const closeScheduleModal = (mode) => () => {
@@ -276,16 +303,20 @@ export const WaterCyclesTemplate = ({
 			scheduleToEdit,
 			selectedTimeSchedule,
 		} = state;
+		const timeValueString = (value) => dayjs(value).format('HH:mm');
 
 		const schedule = {
-			schedule: isEditMode ? scheduleToEdit : selectedTimeSchedule,
+			schedule: isEditMode
+				? timeValueString(scheduleToEdit)
+				: timeValueString(selectedTimeSchedule),
 			device: activeDevice._id,
 		};
 
 		if (isEditMode) {
 			editSchedule(scheduleId, schedule).then(closeScheduleModal('Edit'));
+		} else {
+			addNewSchedule(schedule).then(closeScheduleModal('Add'));
 		}
-		addNewSchedule(schedule).then(closeScheduleModal('Add'));
 	};
 
 	const BlankContent = (message) => (
@@ -376,7 +407,7 @@ export const WaterCyclesTemplate = ({
 
 		const tableValues = timeSchedule.map((schedule) => ({
 			id: schedule,
-			time: `${dayjs.utc(schedule[1].schedule).format('HH:mm')}`,
+			time: schedule[1].schedule,
 			actions: ActionButtons(schedule[1]._id),
 			status: (
 				<ToggleSwitch
