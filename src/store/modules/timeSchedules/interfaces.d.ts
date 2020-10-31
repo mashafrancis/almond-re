@@ -143,16 +143,6 @@ export interface ToggleSchedulePayload {
 }
 
 export interface SchedulePayload {
-	schedule: Schedule;
-	device: string;
-}
-
-export interface ToggleSchedulePayload {
-	enabled: boolean;
-	device: string;
-}
-
-export interface SchedulePayload {
-	schedule: Schedule;
+	schedule: string;
 	device: string;
 }

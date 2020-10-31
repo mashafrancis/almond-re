@@ -37,7 +37,6 @@ import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
 import { primaryColor } from '../../assets/tss/common';
 // interfaces
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
-import { useSelector } from 'react-redux';
 // components
 const CardInfo = lazy(() => import('@components/CardInfo'));
 const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));

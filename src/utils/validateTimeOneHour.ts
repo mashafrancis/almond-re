@@ -1,4 +1,5 @@
 import dayjs from '@utils/dayjsTime';
+import { Schedule } from '@modules/timeSchedules/interfaces';
 
 /**
  * This function validates the new time schedules to be one hour apart
@@ -18,7 +19,7 @@ export const validateNewOneHourTime = (
  * @returns boolean
  */
 export const validateEditOneHourTime = (
-	schedules: any,
+	schedules: Schedule[],
 	scheduleId: string,
 	editTime: string,
 ): boolean => {
@@ -51,8 +52,8 @@ const getDiff = (newTime: any, scheduleTime: string) => {
 	const newTimeToSet = dayjs(newTime).second(0).millisecond(0);
 	const [h, m] = scheduleTime.split(':');
 	const scheduleTimeToCompare = dayjs()
-		.hour(h)
-		.minute(m)
+		.hour(Number(h))
+		.minute(Number(m))
 		.second(0)
 		.millisecond(0);
 	return scheduleTimeToCompare.diff(newTimeToSet);

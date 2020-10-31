@@ -53,6 +53,17 @@ COPY ./env.sh .
 # Make our shell script executable
 RUN chmod +x env.sh
 
+# ssl letsencrypt
+COPY run.sh /run.sh
+COPY certbot.sh /certbot.sh
+COPY restart.sh /restart.sh
+COPY croncert.sh /etc/periodic/weekly/croncert.sh
+RUN \
+	chmod +x /run.sh && \
+	chmod +x /certbot.sh && \
+	chmod +x /restart.sh && \
+	chmod +x /etc/periodic/weekly/croncert.sh
+
 # Start Nginx server
 CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
-EXPOSE 80
+EXPOSE 80 443
