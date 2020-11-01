@@ -1,77 +1,58 @@
-version: '3'
+version: '3.7'
 services:
   web:
-    container_name: web
-    image: web
+    container_name: almond_web
     restart: always
     build:
       context: ./
       dockerfile: Dockerfile
     env_file: .env
-    environment:
-      - DOMAIN=almondhydroponics.com
-      - EMAIL=francismasha96@gmail.com
-    ports:
-      - 80:80
-      - 443:443
     volumes:
-      - ./letsencrypt:/etc/letsencrypt
-      - ./scripts:/scripts
-#    networks:
-#      - web-network
-#    stdin_open: true
-#    tty: true
-#    command:
-#      - yarn
-#      - start
-#    command:
-#      - nginx
-#      - -g
-#      - daemon off;
+      - node_modules:/home/app/node_modules
+    expose:
+      - 3000
+    networks:
+      - web-network
 
+  nginx:
+    container_name: almond_nginx
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ssl_data_conf:/etc/letsencrypt
+      - ssl_data_www:/var/www/html
+      - /var/run/docker.sock:/tmp/docker.sock
+    depends_on:
+      - web
+      - certbot
+    networks:
+      - web-network
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-#  webserver:
-#    image: nginx:1.17.6-alpine
-#    container_name: webserver
-#    restart: always
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    volumes:
-#      - web-root:/var/www/html
-#      - ./nginx-conf:/etc/nginx/conf.d
-#      - certbot-etc:/etc/letsencrypt
-#      - certbot-var:/var/lib/letsencrypt
-#      - dhparam:/etc/ssl/certs
-#    depends_on:
-#      - web
-#    networks:
-#      - app-network
-#
-#  certbot:
-#    image: certbot/certbot
-#    container_name: certbot
-#    volumes:
-#      - certbot-etc:/etc/letsencrypt
-#      - certbot-var:/var/lib/letsencrypt
-#      - web-root:/var/www/html
-#    depends_on:
-#      - webserver
-#    command: certonly --webroot --webroot-path=/var/www/html --email almond.froyo@gmail.com --agree-tos --no-eff-email --staging -d almondhydroponics.com  -d www.almondhydroponics.com
+  certbot:
+    container_name: almond_certbot
+    build: ./certbot
+    entrypoint: [ "/bin/bash", "/home/app/setup.sh" ]
+    restart: always
+    environment:
+      DEV: "false"
+      SSL_EMAIL: "almond.froyo@gmail.com"
+      NGINX_CONTAINER: "almond_nginx"
+    volumes:
+      - ssl_data_conf:/etc/letsencrypt
+      - ssl_data_www:/var/www/html
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - web-network
 
-#volumes:
-#  node_modules:
-#  certbot-etc:
-#  certbot-var:
-#  web-root:
-#    driver: local
-#  dhparam:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /home/masha/almond-re/dhparam/
-#      o: bind
+volumes:
+  node_modules:
+  ssl_data_conf:
+  ssl_data_www:
 
-#networks:
-#  web-network:
-#    driver: bridge
+networks:
+  web-network:
+    driver: bridge
