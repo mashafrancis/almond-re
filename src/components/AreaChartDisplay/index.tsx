@@ -6,19 +6,10 @@ const AreaChardDisplay = ({
 	chartData,
 	backgroundColor,
 	chartColor,
+	labels,
 }: AreaChartDisplayProps): JSX.Element => {
 	const data = {
-		labels: [
-			'00:00',
-			'03:00',
-			'06:00',
-			'09:00',
-			'12:00',
-			'15:00',
-			'18:00',
-			'21:00',
-			'00:00',
-		],
+		labels,
 		datasets: [
 			{
 				// label: 'Temperature',

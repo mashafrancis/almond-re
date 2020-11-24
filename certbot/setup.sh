@@ -5,7 +5,8 @@ if [ -z "${DEV}" ]; then
   exit 1
 fi
 
-domains=(almondhydroponics.com www.almondhydroponics.com)
+#domains=(almondhydroponics.com www.almondhydroponics.com)
+domains=("$SITE_URL" "www.$SITE_URL")
 rsa_key_size=4096
 conf_path="/etc/letsencrypt"
 www_path="/var/www/html"
@@ -77,9 +78,9 @@ certbot certonly -n \
   --standalone \
   --staging \
   --non-interactive \
-  --email almond.froyo@gmail.com \
-  -d almondhydroponics.com \
-  -d www.almondhydroponics.com \
+  --email "$SSL_EMAIL" \
+  -d "$SITE_URL" \
+  -d "www.$SITE_URL" \
   --rsa-key-size $rsa_key_size \
   --agree-tos \
   --expand

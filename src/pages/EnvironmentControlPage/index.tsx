@@ -110,6 +110,17 @@ export const EnvironmentControlPage = ({
 								backgroundColor="rgba(25, 103, 210, 0.2)"
 								chartColor="#36A2EB"
 								chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
+								labels={[
+									'00:00',
+									'03:00',
+									'06:00',
+									'09:00',
+									'12:00',
+									'15:00',
+									'18:00',
+									'21:00',
+									'00:00',
+								]}
 							/>
 						}
 						actionItem={
@@ -130,6 +141,17 @@ export const EnvironmentControlPage = ({
 								backgroundColor="rgba(255,206,86,0.2)"
 								chartColor="#FFCE56"
 								chartData={[25, 36, 50, 57, 40, 70, 55, 30, 47]}
+								labels={[
+									'00:00',
+									'03:00',
+									'06:00',
+									'09:00',
+									'12:00',
+									'15:00',
+									'18:00',
+									'21:00',
+									'00:00',
+								]}
 							/>
 						}
 						actionItem={

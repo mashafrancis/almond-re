@@ -11,6 +11,7 @@ import {
 import { displaySnackMessage } from '@modules/snack';
 import { connect } from 'react-redux';
 import WaterCyclesTemplate from '@pages/WaterCyclesPage/Template';
+import { getAirTemperatureTrend } from '@modules/sensorData';
 
 export const mapStateToProps = (state) => ({
 	schedules: state.timeSchedules.schedules,
@@ -20,6 +21,7 @@ export const mapStateToProps = (state) => ({
 	devices: state.user.devices,
 	user: state.user,
 	sensorData: state.sensorData.sensorData,
+	waterTemperatureTrend: state.sensorData.airTemperatureTrend,
 });
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -34,7 +36,8 @@ export const mapDispatchToProps = (dispatch) => ({
 	togglePump: (payload) => dispatch(togglePump(payload)),
 	toggleScheduleStatus: (scheduleId, payload) =>
 		dispatch(toggleScheduleStatus(scheduleId, payload)),
-	// getWaterData: () => dispatch(getWaterData()),
+	getAirTemperatureTrend: (queryParams) =>
+		dispatch(getAirTemperatureTrend(queryParams)),
 });
 
 export default connect(

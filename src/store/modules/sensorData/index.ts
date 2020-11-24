@@ -1,17 +1,45 @@
 import {
+	ChartDataTrend,
+	GetAirTemperatureDataFailure,
+	GetAirTemperatureDataRequest,
+	GetAirTemperatureDataSuccess,
+	GetPlantHumidityDataFailure,
+	GetPlantHumidityDataRequest,
+	GetPlantHumidityDataSuccess,
 	GetSensorDataFailure,
 	GetSensorDataSuccess,
+	GetWaterTemperatureDataFailure,
+	GetWaterTemperatureDataRequest,
+	GetWaterTemperatureDataSuccess,
 	SensorData,
 } from '@modules/sensorData/interfaces';
 
 import {
+	GET_AIR_TEMPERATURE_TREND_FAILURE,
+	GET_AIR_TEMPERATURE_TREND_REQUEST,
+	GET_AIR_TEMPERATURE_TREND_SUCCESS,
+	GET_PLANT_HUMIDITY_TREND_FAILURE,
+	GET_PLANT_HUMIDITY_TREND_REQUEST,
+	GET_PLANT_HUMIDITY_TREND_SUCCESS,
 	GET_SENSOR_DATA_FAILURE,
 	GET_SENSOR_DATA_SUCCESS,
+	GET_WATER_TEMPERATURE_TREND_FAILURE,
+	GET_WATER_TEMPERATURE_TREND_REQUEST,
+	GET_WATER_TEMPERATURE_TREND_SUCCESS,
 	State,
 } from '@modules/sensorData/types';
 
-import { Action, AnyAction, Reducer } from 'redux';
+import { Action, AnyAction, Dispatch, Reducer } from 'redux';
+import generateUrlWithQuery from '@utils/generateUrlWithQuery';
+import influxHttp from '@utils/influxHttp';
+import { ErrorObject, QueryParams } from '../../../shared.interfaces';
+import { displaySnackMessage } from '@modules/snack';
 
+/**
+ * Get sensor data success
+ * @param {SensorData} sensorData
+ * @returns {GetAirTemperatureDataRequest}
+ */
 export const getSensorDataSuccess = (
 	sensorData: SensorData,
 ): GetSensorDataSuccess => ({
@@ -19,13 +47,193 @@ export const getSensorDataSuccess = (
 	type: GET_SENSOR_DATA_SUCCESS,
 });
 
-export const getSensorDataFailure = (errors: any): GetSensorDataFailure => ({
+/**
+ * Get sensor data failure
+ * @param {ErrorObject} errors
+ * @returns {GetSensorDataFailure}
+ */
+export const getSensorDataFailure = (
+	errors: ErrorObject,
+): GetSensorDataFailure => ({
 	errors,
 	type: GET_SENSOR_DATA_FAILURE,
 });
 
+/**
+ * Get air temperature trend request
+ * @returns {GetAirTemperatureDataRequest}
+ */
+export const getAirTemperatureTrendRequest = (): GetAirTemperatureDataRequest => ({
+	type: GET_AIR_TEMPERATURE_TREND_REQUEST,
+	isLoading: true,
+});
+
+/**
+ * Get air temperature trend success
+ * @param {ChartDataTrend} airTemperatureTrend
+ * @returns {GetAirTemperatureDataSuccess}
+ */
+export const getAirTemperatureTrendSuccess = (
+	airTemperatureTrend: ChartDataTrend[],
+): GetAirTemperatureDataSuccess => ({
+	airTemperatureTrend,
+	type: GET_AIR_TEMPERATURE_TREND_SUCCESS,
+	isLoading: false,
+});
+
+/**
+ * Get air temperature trend failure
+ * @param {ErrorObject} errors
+ * @returns {GetAirTemperatureDataFailure}
+ */
+export const getAirTemperatureTrendFailure = (
+	errors: ErrorObject,
+): GetAirTemperatureDataFailure => ({
+	errors,
+	type: GET_AIR_TEMPERATURE_TREND_FAILURE,
+	isLoading: false,
+});
+
+/**
+ * Get water temperature trend request
+ * @returns {GetWaterTemperatureDataRequest}
+ */
+export const getWaterTemperatureTrendRequest = (): GetWaterTemperatureDataRequest => ({
+	type: GET_WATER_TEMPERATURE_TREND_REQUEST,
+	isLoading: true,
+});
+
+/**
+ * Get water temperature trend success
+ * @param {ChartDataTrend} waterTemperatureTrend
+ * @returns {GetWaterTemperatureDataSuccess}
+ */
+export const getWaterTemperatureTrendSuccess = (
+	waterTemperatureTrend: ChartDataTrend[],
+): GetWaterTemperatureDataSuccess => ({
+	waterTemperatureTrend,
+	type: GET_WATER_TEMPERATURE_TREND_SUCCESS,
+	isLoading: false,
+});
+
+/**
+ * Get water temperature trend failure
+ * @param {ErrorObject} errors
+ * @returns {GetAirTemperatureDataFailure}
+ */
+export const getWaterTemperatureTrendFailure = (
+	errors: ErrorObject,
+): GetWaterTemperatureDataFailure => ({
+	errors,
+	type: GET_WATER_TEMPERATURE_TREND_FAILURE,
+	isLoading: false,
+});
+
+/**
+ * Get plant humidity trend request
+ * @returns {GetPlantHumidityDataRequest}
+ */
+export const getPlantHumidityTrendRequest = (): GetPlantHumidityDataRequest => ({
+	type: GET_PLANT_HUMIDITY_TREND_REQUEST,
+	isLoading: true,
+});
+
+/**
+ * Get plant humidity trend success
+ * @param {ChartDataTrend} plantHumidityTrend
+ * @returns {GetPlantHumidityDataFailure}
+ */
+export const getPlantHumidityTrendSuccess = (
+	plantHumidityTrend: ChartDataTrend[],
+): GetPlantHumidityDataSuccess => ({
+	plantHumidityTrend,
+	type: GET_PLANT_HUMIDITY_TREND_SUCCESS,
+	isLoading: false,
+});
+
+/**
+ * Get plant humidity trend failure
+ * @param {ErrorObject} errors
+ * @returns {GetPlantHumidityDataFailure}
+ */
+export const getPlantHumidityTrendFailure = (
+	errors: ErrorObject,
+): GetPlantHumidityDataFailure => ({
+	errors,
+	type: GET_PLANT_HUMIDITY_TREND_FAILURE,
+	isLoading: false,
+});
+
+/**
+ * Add new schedule success
+ * @param {SensorData} data
+ * @returns {GetSensorDataSuccess}
+ */
 export const getSensorData = (data: SensorData): GetSensorDataSuccess =>
 	getSensorDataSuccess(data);
+
+export const getAirTemperatureTrend = (queryParams: QueryParams) => (
+	dispatch: Dispatch,
+) => {
+	dispatch(getAirTemperatureTrendRequest());
+	const endpoint = generateUrlWithQuery('/air-temperature', {
+		...queryParams,
+	});
+	return influxHttp
+		.get(endpoint)
+		.then((response) => {
+			const {
+				data: { data },
+			} = response;
+			dispatch(getAirTemperatureTrendSuccess(data));
+		})
+		.catch((error) => {
+			dispatch(displaySnackMessage('Error fetching air temperature data'));
+			dispatch(getAirTemperatureTrendFailure(error));
+		});
+};
+
+export const getWaterTemperatureTrend = (queryParams: QueryParams) => (
+	dispatch: Dispatch,
+) => {
+	dispatch(getWaterTemperatureTrendRequest());
+	const endpoint = generateUrlWithQuery('/water-temperature', {
+		...queryParams,
+	});
+	return influxHttp
+		.get(endpoint)
+		.then((response) => {
+			const {
+				data: { data },
+			} = response;
+			dispatch(getWaterTemperatureTrendSuccess(data));
+		})
+		.catch((error) => {
+			dispatch(displaySnackMessage('Error fetching water temperature data'));
+			dispatch(getWaterTemperatureTrendFailure(error));
+		});
+};
+
+export const getPlantHumidityTrend = (queryParams: QueryParams) => (
+	dispatch: Dispatch,
+) => {
+	dispatch(getPlantHumidityTrendRequest());
+	const endpoint = generateUrlWithQuery('/plant-humidity', {
+		...queryParams,
+	});
+	return influxHttp
+		.get(endpoint)
+		.then((response) => {
+			const {
+				data: { data },
+			} = response;
+			dispatch(getPlantHumidityTrendSuccess(data));
+		})
+		.catch((error) => {
+			dispatch(displaySnackMessage('Error fetching plant humidity data'));
+			dispatch(getPlantHumidityTrendFailure(error));
+		});
+};
 
 export const sensorDataInitialState = {
 	sensorData: {
@@ -33,6 +241,10 @@ export const sensorDataInitialState = {
 		temperature: 0,
 		waterLevel: 0,
 	},
+	airTemperatureTrend: [],
+	waterTemperatureTrend: [],
+	plantHumidityTrend: [],
+	isLoading: false,
 	errors: null,
 };
 
@@ -51,6 +263,60 @@ export const reducer: Reducer<State, Action> = (
 			return {
 				...state,
 				errors: action.errors,
+			};
+		case GET_AIR_TEMPERATURE_TREND_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
+		case GET_AIR_TEMPERATURE_TREND_SUCCESS:
+			return {
+				...state,
+				airTemperatureTrend: action.airTemperatureTrend,
+				isLoading: action.isLoading,
+				errors: null,
+			};
+		case GET_AIR_TEMPERATURE_TREND_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+				isLoading: action.isLoading,
+			};
+		case GET_WATER_TEMPERATURE_TREND_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
+		case GET_WATER_TEMPERATURE_TREND_SUCCESS:
+			return {
+				...state,
+				waterTemperatureTrend: action.waterTemperatureTrend,
+				isLoading: action.isLoading,
+				errors: null,
+			};
+		case GET_WATER_TEMPERATURE_TREND_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+				isLoading: action.isLoading,
+			};
+		case GET_PLANT_HUMIDITY_TREND_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
+		case GET_PLANT_HUMIDITY_TREND_SUCCESS:
+			return {
+				...state,
+				plantHumidityTrend: action.plantHumidityTrend,
+				isLoading: action.isLoading,
+				errors: null,
+			};
+		case GET_PLANT_HUMIDITY_TREND_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+				isLoading: action.isLoading,
 			};
 		default:
 			return state;

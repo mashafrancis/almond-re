@@ -100,7 +100,6 @@ export const addScheduleRequest = (): AddScheduleActionRequest => ({
 
 /**
  * Add new schedule success
- *
  * @param {NewSchedule} schedule
  * @returns {AddScheduleActionSuccess}
  */
@@ -288,12 +287,7 @@ export const getAllSchedules = (deviceId: string) => (
 			dispatch(getSchedulesSuccess(data));
 		})
 		.catch((error: ErrorObject) => {
-			const {
-				response: {
-					data: { message },
-				},
-			} = error;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'editing your schedule');
 			dispatch(getSchedulesFailure(error));
 		});
 };
@@ -436,9 +430,9 @@ export const getPumpStatus = (deviceId: string) => (
 			dispatch(getPumpStatusSuccess(enabled));
 		})
 		.catch((error: ErrorObject) => {
-			const errorMessage =
-				'An error occurred while fetching pump status. Please try again';
-			dispatch(displaySnackMessage(errorMessage));
+			// const errorMessage =
+			// 	'An error occurred while fetching pump status. Please try again';
+			// dispatch(displaySnackMessage(errorMessage));
 			dispatch(getPumpStatusFailure(error));
 		});
 };

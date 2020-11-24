@@ -9,49 +9,52 @@ services:
     env_file: .env
     volumes:
       - node_modules:/home/app/node_modules
+      - ./dist:/home/app/dist
     expose:
-      - 3000
-    networks:
-      - web-network
-
-  nginx:
-    container_name: almond_nginx
-    build: ./nginx
-    restart: always
+      - 80
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ssl_data_conf:/etc/letsencrypt
-      - ssl_data_www:/var/www/html
-      - /var/run/docker.sock:/tmp/docker.sock
-    depends_on:
-      - web
-      - certbot
+      - '80:80'
     networks:
       - web-network
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  certbot:
-    container_name: almond_certbot
-    build: ./certbot
-    entrypoint: [ "/bin/bash", "/home/app/setup.sh" ]
-    restart: always
-    environment:
-      DEV: "false"
-      SSL_EMAIL: "almond.froyo@gmail.com"
-      NGINX_CONTAINER: "almond_nginx"
-    volumes:
-      - ssl_data_conf:/etc/letsencrypt
-      - ssl_data_www:/var/www/html
-      - /var/run/docker.sock:/tmp/docker.sock
-    networks:
-      - web-network
+#  nginx:
+#    container_name: almond_nginx
+#    build: ./nginx
+#    restart: always
+#    ports:
+#      - '80:80'
+#      - '443:443'
+##      - '3005:80'
+##      - '3006:443'
+#    volumes:
+#      - ssl_data_conf:/etc/letsencrypt
+#      - ssl_data_www:/var/www/html
+#      - /var/run/docker.sock:/tmp/docker.sock
+#      - /home/app/dist:/usr/share/nginx/html
+#    depends_on:
+#      - almond_web
+#      - certbot
+#    networks:
+#      - web-network
+#    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+#
+#  certbot:
+#    container_name: almond_certbot
+#    build: ./certbot
+#    entrypoint: ['/bin/bash', '/home/app/setup.sh']
+#    restart: always
+#    env_file: .env
+#    volumes:
+#      - ssl_data_conf:/etc/letsencrypt
+#      - ssl_data_www:/var/www/html
+#      - /var/run/docker.sock:/tmp/docker.sock
+#    networks:
+#      - web-network
 
 volumes:
   node_modules:
-  ssl_data_conf:
-  ssl_data_www:
+#  ssl_data_conf:
+#  ssl_data_www:
 
 networks:
   web-network:

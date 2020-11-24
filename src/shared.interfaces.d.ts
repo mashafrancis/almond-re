@@ -36,5 +36,9 @@ export interface ErrorObject {
 			message: any;
 		};
 		status: number;
-	};
+	} | null;
+}
+
+export interface QueryParams {
+	[key: string]: string;
 }
