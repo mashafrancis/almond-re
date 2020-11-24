@@ -1,18 +1,19 @@
 {
+	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["es6", "es2017", "esnext.asynciterable", "dom"],
 		"typeRoots": ["./node_modules/@types"],
 		"types": ["@types/jest", "@types/node", "react"],
 		"downlevelIteration": true,
-    "allowSyntheticDefaultImports": true,
+		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"forceConsistentCasingInFileNames": true,
 		"strictNullChecks": true,
 		"noImplicitThis": true,
 		"strictBindCallApply": true,
-//		"strict": true,
+		//		"strict": true,
 		"suppressImplicitAnyIndexErrors": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
@@ -28,18 +29,8 @@
 		"allowJs": true,
 		"noEmit": false,
 		"importHelpers": true,
-    "jsxImportSource": "react",
-		"jsx": "react-jsx",
-		"baseUrl": "./",
-		"paths": {
-			"@components/*": ["src/components/*"],
-			"@placeholders/*": ["src/placeholders/*"],
-			"@pages/*": ["src/pages/*"],
-			"@modules/*": ["src/store/modules/*"],
-			"@utils/*": ["src/utils/*"],
-			"@context/*": ["src/context/*"],
-      "@hooks/*": ["src/hooks/*"]
-		}
+		"jsxImportSource": "react",
+		"jsx": "react-jsx"
 	},
 	"include": ["./src/**/*.tsx", "./src/**/*"],
 	"exclude": [

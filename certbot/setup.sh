@@ -5,10 +5,11 @@ if [ -z "${DEV}" ]; then
   exit 1
 fi
 
-domains=(almondhydroponics.com www.almondhydroponics.com)
+#domains=(almondhydroponics.com www.almondhydroponics.com)
+domains=("$SITE_URL" "www.$SITE_URL")
 rsa_key_size=4096
 conf_path="/etc/letsencrypt"
-www_path="/var/www/html"
+data_path="./data/certbot"
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 mkdir -p "$conf_path/live"
@@ -70,16 +71,16 @@ esac
 
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
-
+#0722005500
 # certbot certonly --webroot --webroot-path=/var/www/certbot --email almond.froyo@gmail.com --agree-tos --force-renewal --no-eff-email --staging -d almondhydroponics.com  -d www.almondhydroponics.com --rsa-key-size $rsa_key_size
 
 certbot certonly -n \
   --standalone \
   --staging \
   --non-interactive \
-  --email almond.froyo@gmail.com \
-  -d almondhydroponics.com \
-  -d www.almondhydroponics.com \
+  --email "$SSL_EMAIL" \
+  -d "$SITE_URL" \
+  -d "www.$SITE_URL" \
   --rsa-key-size $rsa_key_size \
   --agree-tos \
   --expand
@@ -87,13 +88,13 @@ certbot certonly -n \
 #certbot certonly \
 #  --webroot \
 #  --webroot-path=/var/www/html \
-#  --non-interactive \
-#  --staging \
-#  --email almond.froyo@gmail.com \
-#  -d almondhydroponics.com \
-#  -d www.almondhydroponics.com \
-#  --rsa-key-size $rsa_key_size \
+#  --email "$SSL_EMAIL" \
 #  --agree-tos \
+#  --no-eff-email \
+#  --force-renewal \
+#  -d "$SITE_URL" \
+#  -d "www.$SITE_URL"
+#  --rsa-key-size $rsa_key_size \
 #  --force-renewal
 
 #certbot certonly \

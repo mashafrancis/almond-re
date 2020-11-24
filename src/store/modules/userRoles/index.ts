@@ -34,6 +34,8 @@ import {
 	GET_USER_ROLES_SUCCESS,
 } from './types';
 import { Action, ErrorObject } from '../../../shared.interfaces';
+import errorOnSnack from '@utils/errorOnSnack';
+import { Dispatch } from 'redux';
 
 /**
  * Create user roles request action creator
@@ -181,7 +183,7 @@ export const editUserRoleFailure = (
  * @returns {Function}
  */
 export const getUserRoles = () => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: { get: (arg0: string) => Promise<any> },
 ) => {
@@ -193,12 +195,7 @@ export const getUserRoles = () => (
 			dispatch(getUserRolesSuccess(data));
 		})
 		.catch((error) => {
-			const {
-				response: {
-					data: { message },
-				},
-			} = error;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'fetching user roles');
 			dispatch(getUserRolesFailure(error));
 		});
 };
@@ -209,7 +206,7 @@ export const getUserRoles = () => (
  * @returns {Function}
  */
 export const createUserRole = (userRole: any) => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: {
 		post: (
@@ -229,12 +226,7 @@ export const createUserRole = (userRole: any) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const {
-				response: {
-					data: { message },
-				},
-			} = error;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'creating new user role');
 			dispatch(createUserRoleFailure(error));
 		});
 };
@@ -245,7 +237,7 @@ export const createUserRole = (userRole: any) => (
  * @param id
  */
 export const deleteUserRole = (id: string) => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: { delete: (arg0: string) => Promise<any> },
 ) => {
@@ -260,12 +252,7 @@ export const deleteUserRole = (id: string) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const {
-				response: {
-					data: { message },
-				},
-			} = error;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'deleting user role');
 			dispatch(deleteUserRolesFailure(error));
 		});
 };
@@ -276,7 +263,7 @@ export const deleteUserRole = (id: string) => (
  * @returns {Function}
  */
 export const editUserRole = (updatedRolePayload) => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: {
 		patch: (
@@ -297,14 +284,9 @@ export const editUserRole = (updatedRolePayload) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const {
-				response: {
-					data: { message },
-				},
-			} = error;
-			error.response.status === 400
+			error?.response?.status === 400
 				? dispatch(displaySnackMessage('Please format the fields properly'))
-				: dispatch(displaySnackMessage(message));
+				: errorOnSnack(error, dispatch, 'editing user role');
 			dispatch(editUserRoleFailure(error));
 		});
 };

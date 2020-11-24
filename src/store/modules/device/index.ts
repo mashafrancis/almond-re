@@ -48,6 +48,7 @@ import { Dispatch } from 'redux';
 import { displaySnackMessage } from '../snack';
 
 import { Action, ErrorObject } from '../../../shared.interfaces';
+import errorOnSnack from '@utils/errorOnSnack';
 
 /**
  * Add a new device request
@@ -277,8 +278,7 @@ export const addNewDevice = (device: { id: string }) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'adding new device');
 			dispatch(addDeviceFailure(error));
 		});
 };
@@ -305,8 +305,7 @@ export const verifyUserDevice = (id: string) => (
 			window.location.replace('/dashboard');
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'verifying device');
 			dispatch(verifyDeviceFailure(error));
 		});
 };
@@ -332,8 +331,7 @@ export const activateDevice = (id: string) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'activating your device');
 			dispatch(activateDeviceFailure(error));
 		});
 };
@@ -360,8 +358,7 @@ export const getAllDevices = () => (
 			dispatch(getDevicesSuccess(data));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'getting devices');
 			dispatch(getDevicesFailure(error));
 		});
 };
@@ -387,8 +384,7 @@ export const editDevice = (id: string, device: any) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'editing device');
 			dispatch(editDeviceFailure(error));
 		});
 };
@@ -409,8 +405,7 @@ export const deleteDevice = (id: string) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
-			dispatch(displaySnackMessage(message));
+			errorOnSnack(error, dispatch, 'deleting device');
 			dispatch(deleteSingleDeviceFailure(error));
 		});
 };

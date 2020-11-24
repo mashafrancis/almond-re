@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   web:
-    container_name: almond_web
-    restart: always
+    container_name: web
+    restart: unless-stopped
     build:
       context: ./
       dockerfile: Dockerfile
@@ -10,43 +10,45 @@ services:
     volumes:
       - node_modules:/home/app/node_modules
     expose:
-      - 3000
-    networks:
-      - web-network
-
-  nginx:
-    container_name: almond_nginx
-    build: ./nginx
-    restart: always
+      - 80
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ssl_data_conf:/etc/letsencrypt
-      - ssl_data_www:/var/www/html
-      - /var/run/docker.sock:/tmp/docker.sock
-    depends_on:
-      - web
-      - certbot
+      - '80:3000'
     networks:
       - web-network
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  certbot:
-    container_name: almond_certbot
-    build: ./certbot
-    entrypoint: [ "/bin/bash", "/home/app/setup.sh" ]
-    restart: always
-    environment:
-      DEV: "false"
-      SSL_EMAIL: "almond.froyo@gmail.com"
-      NGINX_CONTAINER: "almond_nginx"
-    volumes:
-      - ssl_data_conf:/etc/letsencrypt
-      - ssl_data_www:/var/www/html
-      - /var/run/docker.sock:/tmp/docker.sock
-    networks:
-      - web-network
+#  nginx:
+#    container_name: nginx
+#    build: ./nginx
+#    restart: unless-stopped
+#    ports:
+#      - '80:80'
+#      - '443:443'
+#    volumes:
+#      - ssl_data_conf:/etc/letsencrypt
+#      - ssl_data_www:/var/www/html
+#      - /var/run/docker.sock:/tmp/docker.sock
+##      - /home/app/dist:/usr/share/nginx/html
+##      - ./nginx:/etc/nginx
+#    depends_on:
+#      - web
+#    networks:
+#      - web-network
+#    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+#
+#  certbot:
+#    container_name: certbot
+#    build: ./certbot
+#    entrypoint: ['/bin/bash', '/home/app/setup.sh']
+#    restart: always
+#    env_file: .env
+#    depends_on:
+#      - nginx
+#    volumes:
+#      - ssl_data_conf:/etc/letsencrypt
+#      - ssl_data_www:/var/www/html
+#      - /var/run/docker.sock:/tmp/docker.sock
+#    networks:
+#      - web-network
 
 volumes:
   node_modules:

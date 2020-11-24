@@ -38,7 +38,7 @@ start:
 	@ ${SUCCESS} "Build Completed successfully"
 	@ echo " "
 	@ ${INFO} "Starting local development server"
-	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) up
+	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) up -d
 
 #@-- command to stop the application container --@#
 stop:

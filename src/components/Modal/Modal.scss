@@ -1,29 +1,31 @@
-.MuiDialogTitle-root {
-	background-color: rgba(66, 133, 244, 0.15);
-	margin-bottom: 10px !important;
-	padding: 10px 24px !important;
-}
-
-.modal-header {
-	color: #1967d2 !important;
-	font-weight: 500;
-	font-size: 20px;
-}
-
-.modal-content {
-	h5 {
-		margin-top: 0;
+.modal-dialog {
+	.MuiDialogTitle-root {
+		background-color: rgba(66, 133, 244, 0.15);
+		margin-bottom: 10px !important;
+		padding: 10px 24px !important;
 	}
-}
 
-.MuiDialog-paper {
-	width: 350px !important;
-}
+	.modal-header {
+		color: #1967d2 !important;
+		font-weight: 500;
+		font-size: 20px;
+	}
 
-.MuiPaper-rounded {
-  border-radius: 12px !important;
-}
+	.modal-content {
+		h5 {
+			margin-top: 0;
+		}
+	}
 
-.MuiDialogActions-root {
-  padding: 8px 24px !important;
+	.MuiDialog-paper {
+		width: 360px;
+	}
+
+	.MuiPaper-rounded {
+		border-radius: 12px !important;
+	}
+
+	.MuiDialogActions-root {
+		padding: 8px 24px !important;
+	}
 }

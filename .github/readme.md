@@ -15,29 +15,31 @@
 
     Almond frontend application for the hydroponics farm
 
-  [![Almond](../public/images/readme.svg)](https://almond-re-staging.herokuapp.com/)
+[![Almond](../public/images/readme.svg)](https://almond-re-staging.herokuapp.com/)
 
-  #### Simple but complicated almond
+#### Simple but complicated almond
 
 </div>
 
 ## Description
+
 This application will be used in a hydroponics farm control system to be used at home with limited space, in greenhouses and indoors as well.
 
 ### Application Heroku Links
 
--   Backend (Swagger Documentation):
-    [swagger-documentation](https://almond-re.herokuapp.com/)
+- Backend (Swagger Documentation):
+  [swagger-documentation](https://almond-re.herokuapp.com/)
 
--   Frontend (Almond App Hosting):
-    [almond web app](https://almond-re-staging.herokuapp.com/)
+- Frontend (Almond App Hosting):
+  [almond web app](https://almond-re-staging.herokuapp.com/)
 
--   Postman collection
-    <br />
-    <br />
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f9f0f4ab064818fbf641)
+- Postman collection
+  <br />
+  <br />
+  [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/144b6f12e9e9def531e1#?env%5Balmond%5D=W3sia2V5IjoiYmFzZS11cmwiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoidG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiZ3JhZmFuYS11cmwiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiZ3JhZmFuYS10b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJpbmZsdXgtc2VydmVyLXVybCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJ2ZXJpZmljYXRpb25Ub2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJlbWFpbCIsInZhbHVlIjoidGVzdEB0ZXN0LmNvbSIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoidXNlcl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX1d)
 
 ### Development set up
+
 1. Install [`Node JS`](https://nodejs.org/en/).
 2. To clone, run `git clone https://github.com/mashafrancis/almond-re`.
 3. `cd` into the root of the **project directory**.
@@ -76,4 +78,5 @@ Run `yarn test` to execute the unit tests. This is achieved through the use of j
 Run `yarn cypress:open` to execute the end-to-end tests via Cypress.
 
 ## FAQ
+
 See the almond [wiki](https://github.com/mashafrancis/almond-hw/wiki)

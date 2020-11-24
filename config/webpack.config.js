@@ -24,6 +24,7 @@ module.exports = {
     },
     publicPath: '/',
     hashDigestLength: 8,
+    path: paths.build,
   },
   optimization: {
     removeAvailableModules: false,

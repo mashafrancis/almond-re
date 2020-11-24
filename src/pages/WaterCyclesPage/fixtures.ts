@@ -53,6 +53,13 @@ export const props = {
 	toggleScheduleStatus: jest.fn(() => Promise.resolve()),
 	addNewSchedule: jest.fn(() => Promise.resolve()),
 	editSchedule: jest.fn(() => Promise.resolve()),
+	getAirTemperatureTrend: jest.fn(() => Promise.resolve()),
+	sensorData: {
+		humidity: 0,
+		temperature: 0,
+		waterLevel: 0,
+	},
+	waterTemperatureTrend: [],
 	schedules: [],
 	isLoading: false,
 	location: Location as any,

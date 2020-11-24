@@ -39,7 +39,7 @@ module.exports = merge(config, {
   plugins: [
     hotModuleReplacementPlugin,
     reactRefreshWebpackPlugin,
-    // forkTsCheckerWebpackPlugin,
-    // forkTsCheckerNotifierWebpackPlugin,
+    forkTsCheckerWebpackPlugin,
+    forkTsCheckerNotifierWebpackPlugin,
   ],
 })

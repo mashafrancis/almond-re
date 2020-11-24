@@ -48,7 +48,7 @@ http.interceptors.response.use(
 	(error: AxiosError<any>) => {
 		if (
 			error.response?.status === 500 &&
-			error.response?.data.message.includes('token')
+			error.response?.data?.message.includes('token')
 		) {
 			authService.redirectUser();
 		} else if (error.response?.status === 500) {
