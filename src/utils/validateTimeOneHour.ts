@@ -48,7 +48,7 @@ export const validateEditOneHourTime = (
  * This function gets the time difference between the times passed in milliseconds
  * @returns number
  */
-const getDiff = (newTime: any, scheduleTime: string) => {
+export const getDiff = (newTime: any, scheduleTime: string) => {
 	const newTimeToSet = dayjs(newTime).second(0).millisecond(0);
 	const [h, m] = scheduleTime.split(':');
 	const scheduleTimeToCompare = dayjs()
