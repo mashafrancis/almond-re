@@ -74,7 +74,7 @@
     "https-proxy-agent": "^5.0.0",
     "isemail": "^3.2.0",
     "js-cookie": "^2.2.1",
-    "jwt-decode": "^3.0.0",
+    "jwt-decode": "^3.1.1",
     "loose-envify": "^1.4.0",
     "memoize-one": "^5.1.1",
     "moxios": "^0.4.0",
