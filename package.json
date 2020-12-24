@@ -45,7 +45,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "@material/react-layout-grid": "^0.15.0",
-    "autoprefixer": "^10.0.1",
+    "autoprefixer": "^10.0.4",
     "axios": "0.21.0",
     "axios-cache-adapter": "2.5.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
