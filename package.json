@@ -111,7 +111,7 @@
     "safe-buffer": "^5.2.1",
     "sass-rem": "^2.0.1",
     "server-destroy": "^1.0.1",
-    "start-server-and-test": "^1.11.5",
+    "start-server-and-test": "^1.11.7",
     "workbox-core": "^5.1.4"
   },
   "devDependencies": {
