@@ -30,6 +30,7 @@ const Modal = forwardRef(
 		return (
 			<Dialog
 				ref={ref}
+				className="modal-dialog"
 				open={isModalOpen}
 				fullScreen={fullScreen}
 				onClose={onClose}

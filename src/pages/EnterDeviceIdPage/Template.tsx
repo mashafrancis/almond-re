@@ -44,7 +44,7 @@ export const EnterDeviceIdTemplate = ({
 	const renderDeviceTextField = () => (
 		<div className="form-cell">
 			<TextField
-				label="Enter new device ID"
+				label="Enter device ID"
 				defaultValue={deviceId}
 				className={`${classes.root} mdc-text-field--fullwidth`}
 				variant="outlined"
@@ -104,7 +104,7 @@ export const EnterDeviceIdTemplate = ({
 							phoneColumns={2}
 						>
 							<ActionButton
-								name={isLoading ? 'Adding...' : 'Add new device ID'}
+								name={isLoading ? 'Adding...' : 'Verify your device'}
 								variant="contained"
 								handleClick={onSubmit}
 							/>

@@ -5,21 +5,22 @@ import {
 	createRef,
 	lazy,
 	Suspense,
+	ChangeEvent,
 } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
-import ActionButton from '@components/ActionButton';
 import DateFnsUtils from '@date-io/date-fns';
 import { IconButton, InputAdornment, Switch } from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { LineChartCard } from '@components/organisms';
+import { getBackendSrv } from '@grafana/runtime';
 // icons
 import {
 	BlurCircular,
 	ScheduleTwoTone,
 	AddAlarmTwoTone,
 	ArrowDropDown,
-	DateRange,
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
@@ -31,9 +32,12 @@ import {
 } from '@utils/validateTimeOneHour';
 import roundDigit from '@utils/roundDigit';
 import dayjs from '@utils/dayjsTime';
+// import { dateSelectOptions } from '@pages/WaterCyclesPage/fixtures';
 // styles
 import './WaterCyclesPage.scss';
 import { ToggleSwitch } from '@pages/WaterCyclesPage/styles';
+import { DateRanges } from '@components/DateRangePicker/interfaces';
+import getDateRange from '@utils/DateRangeSelect';
 import { primaryColor } from '../../assets/tss/common';
 // interfaces
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
@@ -44,7 +48,6 @@ const Modal = lazy(() => import('@components/Modal'));
 const Table = lazy(() => import('@components/Table'));
 const DashboardCard = lazy(() => import('@components/DashboardCard'));
 const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
-const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
 
 export const WaterCyclesTemplate = ({
 	addNewSchedule,
@@ -54,9 +57,11 @@ export const WaterCyclesTemplate = ({
 	togglePump,
 	getPumpStatus,
 	toggleScheduleStatus,
+	getAirTemperatureTrend,
 	schedules,
 	enabled,
 	sensorData,
+	waterTemperatureTrend,
 }: WaterCyclesPageProps): JSX.Element => {
 	const [state, setState] = useState<WaterCyclesPageState>({
 		isEditMode: false,
@@ -68,6 +73,9 @@ export const WaterCyclesTemplate = ({
 		scheduleToEdit: '',
 		isActionDone: false,
 		isLoading: false,
+		isDateRangeHidden: true,
+		currentDateInView: '',
+		waterCardDateRange: 'This Week',
 		selectedTimeSchedule: dayjs(),
 		hasError: false,
 		schedules: [
@@ -106,6 +114,24 @@ export const WaterCyclesTemplate = ({
 			})),
 		);
 	}, [activeDevice._id]);
+
+	useEffect(() => {
+		// const queryParams = {
+		// 	db: 'almond_db',
+		// 	q:
+		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
+		// 	epoch: 'ms',
+		// };
+		const queryParams = {
+			q: 'time >= now() - 7d',
+		};
+		getAirTemperatureTrend(queryParams).then(() => {
+			setState((prevState) => ({
+				...prevState,
+				isLoading: false,
+			}));
+		});
+	}, []);
 
 	// useEffect(() => {
 	//   props.getWaterData();
@@ -318,6 +344,58 @@ export const WaterCyclesTemplate = ({
 		}
 	};
 
+	const handleDateRangeModal = () => {
+		setState((prevState) => ({
+			...prevState,
+			isDateRangeHidden: !prevState.isDateRangeHidden,
+		}));
+	};
+
+	const onDateRangeChange = (range: DateRanges) => {
+		handleDateRangeModal();
+		console.log(
+			'Class: , Function: onDateRangeChange, Line 324 range():',
+			range,
+		);
+	};
+
+	const currentDateView = (frequency: string) => {
+		setState((prevState) => ({
+			...prevState,
+			currentDateInView: frequency,
+		}));
+	};
+
+	const handleDateSelect = (event: ChangeEvent<{ value: unknown }>) => {
+		const { value: param } = event.target;
+		if (param === 'Pick a date') {
+			setState((prevState) => ({
+				...prevState,
+				isDateRangeHidden: false,
+			}));
+		}
+
+		setState((prevState) => ({
+			...prevState,
+			waterCardDateRange: param as string,
+		}));
+
+		const range = {
+			startDate: new Date(),
+			endDate: new Date(),
+		};
+		const date = getDateRange(param, range, currentDateView);
+		const queryParams = {
+			q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
+		};
+		getAirTemperatureTrend(queryParams).then(() => {
+			setState((prevState) => ({
+				...prevState,
+				isLoading: false,
+			}));
+		});
+	};
+
 	const BlankContent = (message) => (
 		<div className="blank-content">
 			<h2>{message}</h2>
@@ -477,6 +555,7 @@ export const WaterCyclesTemplate = ({
 	};
 
 	const handleDeviceModalOpen = (): void => setDeviceModalOpen(true);
+
 	return (
 		<div className="water-cycles-page">
 			<Row>
@@ -546,23 +625,14 @@ export const WaterCyclesTemplate = ({
 							/>
 						}
 					/>
-					<DashboardCard
-						classes="recent-activities-available"
+					<LineChartCard
 						heading="Water Temperature"
-						body={
-							<AreaChardDisplay
-								backgroundColor="rgba(25, 103, 210, 0.2)"
-								chartColor="#1967D2"
-								chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-							/>
-						}
-						actionItem={
-							<ActionButton
-								name="Today"
-								startIcon={<DateRange />}
-								variant="text"
-							/>
-						}
+						selectedValue={state.waterCardDateRange}
+						handleDateSelect={handleDateSelect}
+						isDateRangeHidden={state.isDateRangeHidden}
+						onDateRangeChange={onDateRangeChange}
+						handleDateRangeModal={handleDateRangeModal}
+						data={waterTemperatureTrend}
 					/>
 				</Cell>
 			</Row>

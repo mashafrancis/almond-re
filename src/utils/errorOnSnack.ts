@@ -17,7 +17,7 @@ const errorOnSnack = (
 			data: { message },
 		},
 	} = error;
-	return error && error.response
+	return error?.response
 		? dispatch(displaySnackMessage(message))
 		: dispatch(displaySnackMessage(errorMessage));
 };

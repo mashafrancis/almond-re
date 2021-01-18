@@ -6,7 +6,12 @@ import {
 } from '@modules/timeSchedules/interfaces';
 import { Device } from '@modules/user/interfaces';
 import { Location } from 'history';
-import { SensorData, WaterData } from '@modules/sensorData/interfaces';
+import {
+	ChartDataTrend,
+	SensorData,
+	WaterData,
+} from '@modules/sensorData/interfaces';
+import { ErrorObject, QueryParams } from '../../shared.interfaces';
 
 export interface WaterCyclesPageProps {
 	addNewSchedule: (schedule: SchedulePayload) => Promise<any>;
@@ -20,8 +25,9 @@ export interface WaterCyclesPageProps {
 		id: string,
 		payload: ToggleSchedulePayload,
 	) => Promise<any>;
+	getAirTemperatureTrend: (queryParams: QueryParams) => Promise<any>;
 	status?: Status;
-	error?: object;
+	error?: ErrorObject;
 	schedules: Schedule[];
 	match: {
 		url: string;
@@ -31,6 +37,7 @@ export interface WaterCyclesPageProps {
 	enabled: boolean;
 	devices: Device[];
 	sensorData: SensorData;
+	waterTemperatureTrend: ChartDataTrend[];
 }
 
 export interface WaterCyclesPageState {
@@ -44,6 +51,9 @@ export interface WaterCyclesPageState {
 	scheduleToEdit: string;
 	isActionDone: boolean;
 	isLoading: boolean;
+	isDateRangeHidden: boolean;
+	currentDateInView: string;
+	waterCardDateRange: string;
 	selectedTimeSchedule: any;
 	hasError: boolean;
 	schedules: Schedule[];

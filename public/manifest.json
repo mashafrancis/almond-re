@@ -2,7 +2,7 @@
 	"author": "Francis Masha",
 	"name": "Almond",
 	"short_name": "Almond",
-	"background_color": "#E3F2FD",
+	"background_color": "#FFFFFF",
 	"theme_color": "#ffffff",
 	"display": "standalone",
 	"scope": ".",

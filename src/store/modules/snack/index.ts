@@ -1,12 +1,8 @@
 import { DisplaySnackMessageAction } from './interfaces';
 import { DISPLAY_SNACK_MESSAGE } from './types';
 
-// action creators
-
 /**
  * Display snack message action creator.
- *
- *
  * @returns {DisplaySnackMessageAction}
  * @param message
  */
@@ -21,7 +17,6 @@ export const displaySnackMessage = (
 
 /**
  * The snack reducer
- *
  * @param {Object} state
  * @param {DisplaySnackMessageAction} action
  */

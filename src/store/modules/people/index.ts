@@ -1,7 +1,7 @@
 // third party libraries
 import { UserDetails } from '@modules/user/interfaces';
 
-import { AnyAction } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
 
 // thunk action creators
 import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
@@ -24,6 +24,7 @@ import {
 } from './types';
 
 import { Action, ErrorObject } from '../../../shared.interfaces';
+import errorOnSnack from '@utils/errorOnSnack';
 
 /**
  * Get userDetails success action creator
@@ -64,7 +65,7 @@ export const updatePersonFailure = (errors: any): UpdatePersonFailure => ({
 });
 
 export const getAllPeople = () => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[] } }> },
 ) => {
@@ -96,7 +97,7 @@ export const updatePerson = (
 	personId: string,
 	personDetails: any,
 ): Function => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: {
 		patch: (
@@ -117,10 +118,9 @@ export const updatePerson = (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			const { message } = error.response.data;
+			errorOnSnack(error, dispatch, 'fetching users');
 			dispatch(updatePersonFailure(error));
 			dispatch(loadingError('error'));
-			dispatch(displaySnackMessage(message));
 		});
 };
 

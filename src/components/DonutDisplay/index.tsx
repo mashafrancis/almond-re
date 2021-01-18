@@ -36,7 +36,7 @@ const DonutDisplay = ({
 	data,
 	donutInfo,
 	halfDonut,
-}: DonutDisplayProps) => {
+}: DonutDisplayProps): JSX.Element => {
 	const donutDetails = {
 		datasets: [
 			{
