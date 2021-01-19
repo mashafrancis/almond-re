@@ -22,7 +22,7 @@ describe('The Analytics Page', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('regular-analytics-page');
-		expect(elem.classList[1]).toBe('analytics-page');
+		expect(elem).toHaveClass('analytics-page');
 	});
 
 	it('should render Admin Analytics Page properly', () => {
@@ -34,6 +34,6 @@ describe('The Analytics Page', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('admin-analytics-page');
-		expect(elem.classList[1]).toBe('analytics-page');
+		expect(elem).toHaveClass('analytics-page');
 	});
 });

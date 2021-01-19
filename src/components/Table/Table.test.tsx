@@ -30,7 +30,7 @@ describe('Table components', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('tbl-header');
-		expect(elem.classList[0]).toBe('tbl-header');
+		expect(elem).toHaveClass('tbl-header');
 
 		// expect(wrapper.find('.tbl-header__column--35').text()).toEqual('Client');
 	});

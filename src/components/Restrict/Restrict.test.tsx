@@ -21,7 +21,7 @@ describe('The Restrict component', () => {
 		);
 
 		const elem = screen.getByTestId('button');
-		expect(elem.classList[0]).toBe('button');
+		expect(elem).toHaveClass('button');
 	});
 
 	it.skip('should not render children prop if user does not have required access', () => {
@@ -46,7 +46,7 @@ describe('The Restrict component', () => {
 		);
 
 		const elem = screen.getByTestId('span');
-		expect(elem.classList[0]).toBe('span');
+		expect(elem).toHaveClass('span');
 
 		// expect(wrapper.find('span')).toHaveLength(1);
 		// expect(wrapper.find('button')).toHaveLength(0);

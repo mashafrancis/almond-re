@@ -5,6 +5,7 @@ import { AnyAction, Dispatch } from 'redux';
 
 // thunk action creators
 import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
+import errorOnSnack from '@utils/errorOnSnack';
 import { displaySnackMessage } from '../snack';
 
 // interfaces
@@ -24,7 +25,6 @@ import {
 } from './types';
 
 import { Action, ErrorObject } from '../../../shared.interfaces';
-import errorOnSnack from '@utils/errorOnSnack';
 
 /**
  * Get userDetails success action creator

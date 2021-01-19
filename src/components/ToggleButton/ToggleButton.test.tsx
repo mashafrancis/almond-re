@@ -15,6 +15,6 @@ describe('ToggleButton component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('toggle-button');
-		expect(elem.classList[0]).toBe('toggle-button');
+		expect(elem).toHaveClass('toggle-button');
 	});
 });
