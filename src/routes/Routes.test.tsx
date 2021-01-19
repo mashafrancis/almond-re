@@ -36,7 +36,7 @@ describe('The Route components', () => {
 			initialState,
 		);
 		const elem = screen.getByTestId('dashboard');
-		expect(elem.classList[0]).toBe('dashboard');
+		expect(elem).toHaveClass('dashboard');
 		// expect(screen.getByTestId('dashboard').textContent).toBe('Cinema Booking')
 		// expect(wrapper.find({ path: '/dashboard' }).length).toBe(1);
 	});

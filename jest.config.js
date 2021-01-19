@@ -16,7 +16,7 @@ module.exports = {
                 },
             },
         },
-      tsConfig: '<rootDir>/tsconfig.json',
+      tsconfig: '<rootDir>/tsconfig.json',
     },
   },
   transform: {

@@ -18,6 +18,6 @@ describe.skip('TopBar component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('top-bar');
-		expect(elem.classList[5]).toBe('mdc-top-app-bar');
+		expect(elem).toHaveClass('mdc-top-app-bar');
 	});
 });

@@ -18,6 +18,6 @@ describe('PageNotFound components', () => {
 		render(<PageNotFound {...props} />);
 		const elem = screen.getByTestId('notfound');
 
-		expect(elem.classList[0]).toBe('notfound');
+		expect(elem).toHaveClass('notfound');
 	});
 });

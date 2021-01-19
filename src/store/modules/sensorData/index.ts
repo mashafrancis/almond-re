@@ -32,8 +32,8 @@ import {
 import { Action, AnyAction, Dispatch, Reducer } from 'redux';
 import generateUrlWithQuery from '@utils/generateUrlWithQuery';
 import influxHttp from '@utils/influxHttp';
-import { ErrorObject, QueryParams } from '../../../shared.interfaces';
 import { displaySnackMessage } from '@modules/snack';
+import { ErrorObject, QueryParams } from '../../../shared.interfaces';
 
 /**
  * Get sensor data success

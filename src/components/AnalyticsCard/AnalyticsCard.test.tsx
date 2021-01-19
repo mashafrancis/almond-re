@@ -16,6 +16,6 @@ describe('AnalyticsCard component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('analytics-card');
-		expect(elem.classList[0]).toBe('analytics-card');
+		expect(elem).toHaveClass('analytics-card');
 	});
 });

@@ -10,6 +10,6 @@ describe.skip('Logo component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('logo');
-		expect(elem.classList[0]).toBe('main-logo');
+		expect(elem).toHaveClass('main-logo');
 	});
 });

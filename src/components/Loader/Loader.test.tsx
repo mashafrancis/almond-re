@@ -10,9 +10,9 @@ describe('Loader components', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elemContainer = screen.getByTestId('container');
-		expect(elemContainer.classList[0]).toBe('container');
+		expect(elemContainer).toHaveClass('container');
 
 		const elem = screen.getByTestId('dot-1');
-		expect(elem.classList[1]).toBe('dot-1');
+		expect(elem).toHaveClass('dot-1');
 	});
 });

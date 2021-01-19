@@ -29,7 +29,7 @@ describe('ActivityLogCard component', () => {
 		render(<ActivityLogCard {...props} />);
 		const elemType = screen.getByTestId('type');
 
-		expect(elemType.classList[0]).toBe('log-details-info');
+		expect(elemType).toHaveClass('log-details-info');
 	});
 
 	it('should render log details error when called', () => {
@@ -41,6 +41,6 @@ describe('ActivityLogCard component', () => {
 		render(<ActivityLogCard {...props} />);
 		const elemType = screen.getByTestId('type');
 
-		expect(elemType.classList[0]).toBe('log-details-error');
+		expect(elemType).toHaveClass('log-details-error');
 	});
 });

@@ -2,6 +2,8 @@
 import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
+import errorOnSnack from '@utils/errorOnSnack';
+import { Dispatch } from 'redux';
 import {
 	CreateUserRolesActionFailure,
 	CreateUserRolesActionRequest,
@@ -34,8 +36,6 @@ import {
 	GET_USER_ROLES_SUCCESS,
 } from './types';
 import { Action, ErrorObject } from '../../../shared.interfaces';
-import errorOnSnack from '@utils/errorOnSnack';
-import { Dispatch } from 'redux';
 
 /**
  * Create user roles request action creator

@@ -14,7 +14,7 @@ describe('Internal Server Error page', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('internal-server-error');
-		expect(elem.classList[0]).toBe('server-error');
+		expect(elem).toHaveClass('server-error');
 
 		const elemContent = screen.getByTestId('content');
 		expect(elemContent.innerHTML).toBe(

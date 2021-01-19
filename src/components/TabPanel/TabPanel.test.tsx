@@ -16,6 +16,6 @@ describe('TabPanel component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('tab-panel');
-		expect(elem.classList[0]).toBe('tab-panel');
+		expect(elem).toHaveClass('tab-panel');
 	});
 });

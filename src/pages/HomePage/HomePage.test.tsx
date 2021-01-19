@@ -15,7 +15,7 @@ describe.skip('Home Page', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('homepage');
-		expect(elem.classList[0]).toBe('background-cover');
+		expect(elem).toHaveClass('background-cover');
 	});
 
 	// it('should render dashboard button which redirects to "/dashboard', () => {

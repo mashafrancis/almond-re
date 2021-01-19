@@ -45,10 +45,10 @@ import {
 	USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
 import { Dispatch } from 'redux';
+import errorOnSnack from '@utils/errorOnSnack';
 import { displaySnackMessage } from '../snack';
 
 import { Action, ErrorObject } from '../../../shared.interfaces';
-import errorOnSnack from '@utils/errorOnSnack';
 
 /**
  * Add a new device request

@@ -23,7 +23,7 @@ describe('The DeviceManagement Page', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('device-management-page');
-		expect(elem.classList[1]).toBe('device-management-page');
+		expect(elem).toHaveClass('device-management-page');
 	});
 
 	describe('mapStateToProps', () => {

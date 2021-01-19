@@ -14,7 +14,7 @@ describe('The AuthenticatedRoute component', () => {
 		renderWithRouter(<AuthenticatedRoute component={TestComponent} />);
 		const elem = screen.getByTestId('authenticated-route');
 
-		expect(elem.classList[0]).toBe('drawer-content');
+		expect(elem).toHaveClass('drawer-content');
 		expect(screen.getByText('Test Component')).toBeTruthy();
 	});
 

@@ -32,7 +32,7 @@ describe('The RestrictedRoute component', () => {
 		);
 
 		const elem = screen.getByTestId('test');
-		expect(elem.classList[0]).toBe('test');
+		expect(elem).toHaveClass('test');
 	});
 
 	it.skip('should render Route if user has the right access level', () => {
@@ -55,7 +55,7 @@ describe('The RestrictedRoute component', () => {
 		);
 
 		const elem = screen.getByTestId('test1');
-		expect(elem.classList[0]).toBe('test');
+		expect(elem).toHaveClass('test');
 	});
 
 	describe.skip('When user does not have the right access level', () => {
@@ -80,7 +80,7 @@ describe('The RestrictedRoute component', () => {
 
 		it('should not render Route component', () => {
 			const elem = screen.getByTestId('test');
-			expect(elem.classList[0]).toBe('test');
+			expect(elem).toHaveClass('test');
 			// expect(wrapper.find('Route')).toHaveLength(0);
 		});
 
