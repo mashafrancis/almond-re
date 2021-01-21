@@ -2,8 +2,8 @@ import { lazy } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect, useSelector } from 'react-redux';
-import ActionButton from '@components/ActionButton';
 import { FilterList } from '@material-ui/icons';
+import {Button} from "@material-ui/core";
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 // import { getEnvironmentData } from '@modules/sensorData';
@@ -124,7 +124,7 @@ export const EnvironmentControlPage = ({
 							/>
 						}
 						actionItem={
-							<ActionButton
+							<Button
 								name="Filter"
 								startIcon={<FilterList />}
 								variant="text"
@@ -155,7 +155,7 @@ export const EnvironmentControlPage = ({
 							/>
 						}
 						actionItem={
-							<ActionButton
+							<Button
 								name="Filter"
 								startIcon={<FilterList />}
 								variant="text"

@@ -1,12 +1,17 @@
 import { useState, ChangeEvent, useContext } from 'react';
 // third-party libraries
-import { Container, Grid, InputAdornment, TextField } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  Grid,
+  InputAdornment,
+  TextField
+} from '@material-ui/core';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
 // components
 import { Cell, Row } from '@material/react-layout-grid';
 import NavigationHeader from '@components/NavigationHeader';
 import { UserContext } from '@context/UserContext';
-import ActionButton from '@components/ActionButton';
 // styles
 import './EnterDeviceIdPage.scss';
 import useStyles from '@pages/EnterDeviceIdPage/styles';
@@ -103,10 +108,10 @@ export const EnterDeviceIdTemplate = ({
 							tabletColumns={4}
 							phoneColumns={2}
 						>
-							<ActionButton
+							<Button
 								name={isLoading ? 'Adding...' : 'Verify your device'}
 								variant="contained"
-								handleClick={onSubmit}
+								onClick={onSubmit}
 							/>
 						</Cell>
 					</Row>

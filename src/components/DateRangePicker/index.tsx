@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	useMediaQuery,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  useMediaQuery,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
-import ActionButton from '@components/ActionButton';
 // styles
 import './default.scss';
 import './styles.scss';
@@ -91,7 +91,7 @@ const DateRangePicker = ({
 				/>
 			</DialogContent>
 			<DialogActions>
-				<ActionButton name="Dismiss" handleClick={onDismiss} variant="text" />
+				<Button name="Dismiss" onClick={onDismiss} variant="text" />
 			</DialogActions>
 		</Dialog>
 	);

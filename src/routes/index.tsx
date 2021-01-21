@@ -9,6 +9,8 @@ import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
 import PageNotFound from '@components/PageNotFound';
 import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
+import WithLayout from "../WithLayout";
+import { Main as MainLayout, Minimal as MinimalLayout, DocsLayout } from '../layouts';
 
 // pages and components
 // const AuthenticatedRoute = lazy(() => import('@components/AuthenticatedRoute'));
@@ -20,7 +22,17 @@ import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 
 const Routes = (): any => (
 	<Switch>
-		<Route exact path="/" component={HomePage} />
+		<Route
+      exact
+      path="/"
+      render={matchProps => (
+        <WithLayout
+          {...matchProps}
+          component={HomePage}
+          layout={MainLayout}
+        />
+      )}
+    />
 		<Route exact path="/my-device" component={EnterDeviceIdPage} />
 		<AuthenticatedRoute
 			exact
