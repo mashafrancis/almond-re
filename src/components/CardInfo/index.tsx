@@ -1,4 +1,4 @@
-import {Button, Fab} from '@material-ui/core';
+import { Button, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import useViewport from '../../hooks/useViewport';
 // interfaces

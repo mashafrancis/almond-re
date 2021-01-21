@@ -1,4 +1,8 @@
-export interface DarkModeTogglerProps {
+import React from "react";
+import {defaultProperties} from "@components/atoms/DarkModeToggler/DarkModeToggler";
+
+type SVGProps = Omit<React.HTMLAttributes<HTMLOrSVGElement>, 'onChange'>;
+export interface DarkModeTogglerProps extends SVGProps{
 	/**
 	 * External classes
 	 */
@@ -10,11 +14,18 @@ export interface DarkModeTogglerProps {
 	/**
 	 * Theme toggler function
 	 */
-	onClick: (event: React.MouseEvent) => void;
+  onChange: (event: any) => void;
 	/**
 	 * Color of the icon
 	 */
 	fontIconColor?: string;
-	// All other props
-	[x: string]: any;
+
+  style?: React.CSSProperties;
+  size?: number;
+  animationProperties?: typeof defaultProperties;
+  moonColor?: string;
+  sunColor?: string;
+
+  // All other props
+  [x: string]: any;
 }

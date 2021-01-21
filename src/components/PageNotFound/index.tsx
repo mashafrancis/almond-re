@@ -1,6 +1,6 @@
 // react library
 import { ArrowBackRounded } from '@material-ui/icons';
-import {Button} from "@material-ui/core";
+import { Button } from '@material-ui/core';
 // styles
 import './PageNotFound.scss';
 // Interfaces
@@ -25,7 +25,7 @@ const PageNotFound = ({ history }: PageNotFoundProps): JSX.Element => (
 				variant="contained"
 				startIcon={<ArrowBackRounded />}
 				onClick={history.goBack}
-        color="primary"
+				color="primary"
 			/>
 		</div>
 	</div>

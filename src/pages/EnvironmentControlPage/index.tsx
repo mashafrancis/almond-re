@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect, useSelector } from 'react-redux';
 import { FilterList } from '@material-ui/icons';
-import {Button} from "@material-ui/core";
+import { Button } from '@material-ui/core';
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 // import { getEnvironmentData } from '@modules/sensorData';
@@ -124,11 +124,7 @@ export const EnvironmentControlPage = ({
 							/>
 						}
 						actionItem={
-							<Button
-								name="Filter"
-								startIcon={<FilterList />}
-								variant="text"
-							/>
+							<Button name="Filter" startIcon={<FilterList />} variant="text" />
 						}
 					/>
 				</Cell>
@@ -155,11 +151,7 @@ export const EnvironmentControlPage = ({
 							/>
 						}
 						actionItem={
-							<Button
-								name="Filter"
-								startIcon={<FilterList />}
-								variant="text"
-							/>
+							<Button name="Filter" startIcon={<FilterList />} variant="text" />
 						}
 					/>
 				</Cell>

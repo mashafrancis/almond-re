@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 // components
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
 } from '@material-ui/core';
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';

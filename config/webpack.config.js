@@ -13,7 +13,7 @@ const isDevMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
-    main: `${paths.src}/index.ts`,
+    main: `${paths.src}/index.tsx`,
     styleGlobals: `${paths.src}/assets/scss/globals.scss`,
     fontGlobals: `${paths.src}/assets/fonts/fonts.scss`,
   },

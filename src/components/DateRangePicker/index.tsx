@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  useMediaQuery,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	useMediaQuery,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 // styles
