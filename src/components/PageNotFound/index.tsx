@@ -1,7 +1,6 @@
 // react library
 import { ArrowBackRounded } from '@material-ui/icons';
-// components
-import ActionButton from '@components/ActionButton';
+import { Button } from '@material-ui/core';
 // styles
 import './PageNotFound.scss';
 // Interfaces
@@ -21,11 +20,12 @@ const PageNotFound = ({ history }: PageNotFoundProps): JSX.Element => (
 				Sorry but the page you are looking for does not exist, have been
 				removed. name changed or is temporarily unavailable
 			</p>
-			<ActionButton
+			<Button
 				name="Back"
 				variant="contained"
 				startIcon={<ArrowBackRounded />}
-				handleClick={history.goBack}
+				onClick={history.goBack}
+				color="primary"
 			/>
 		</div>
 	</div>

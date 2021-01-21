@@ -1,6 +1,5 @@
-import { Fab } from '@material-ui/core';
+import { Button, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import ActionButton from '@components/ActionButton';
 import useViewport from '../../hooks/useViewport';
 // interfaces
 import { CardInfoProps } from './interfaces';
@@ -17,10 +16,10 @@ const CardInfo = ({
 	const cardButton = () => (
 		<div className="card-content__button">
 			{width > breakpoint ? (
-				<ActionButton
+				<Button
 					name={buttonName as string}
 					variant="contained"
-					handleClick={onClick}
+					onClick={onClick}
 				/>
 			) : (
 				<Fab

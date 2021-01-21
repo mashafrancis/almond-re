@@ -25,6 +25,9 @@ import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
 import useEffectAsync from '@hooks/useEffectAsync';
 // styles
+import 'react-lazy-load-image-component/src/effects/opacity.css';
+// import 'swiper/css/swiper.min.css';
+// import 'aos/dist/aos.css';
 import './App.scss';
 // interfaces
 import { IClientOptions } from 'mqtt';

@@ -10,6 +10,9 @@ const getTheme = (mode) =>
 			},
 			typography: {
 				fontFamily: 'Google Sans, Roboto, Helvetica Neue, sans-serif',
+				button: {
+					textTransform: 'none',
+				},
 			},
 			zIndex: {
 				appBar: 1200,

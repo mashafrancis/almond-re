@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import { Icon } from '@components/atoms';
-import {IconAlternateProps} from "@components/molecules/IconAlternate/interfaces";
+import { IconAlternateProps } from '@components/molecules/IconAlternate/interfaces';
 
 const useStyles = makeStyles((theme) => ({
 	extraSmall: {

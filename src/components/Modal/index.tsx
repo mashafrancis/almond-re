@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 // components
-import ActionButton from '@components/ActionButton';
 import {
+	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
@@ -43,10 +43,10 @@ const Modal = forwardRef(
 					{renderContent()}
 				</DialogContent>
 				<DialogActions>
-					<ActionButton name="Dismiss" handleClick={onDismiss} variant="text" />
-					<ActionButton
+					<Button name="Dismiss" onClick={onDismiss} variant="text" />
+					<Button
 						name={submitButtonName as string}
-						handleClick={onSubmit}
+						onClick={onSubmit}
 						variant="contained"
 						disabled={disabled}
 					/>
