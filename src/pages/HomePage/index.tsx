@@ -1,34 +1,33 @@
-import { useContext } from 'react';
-// thunks
-import { UserContext } from '@context/UserContext';
-// third party apps
-import { NavLink } from 'react-router-dom';
-import { Button, colors } from '@material-ui/core';
+import { colors } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // components
-import { Hero } from '@pages/HomePage/components';
-import { Section } from '@components/organisms';
-// helpers
-import authService from '@utils/auth';
-import isArrayNotNull from '@utils/checkArrayEmpty';
-import logo from '../../assets/images/logo.png';
-// images
-import homepage from '../../assets/images/homepage.svg';
+import { Section, SectionAlternate } from '@components/organisms';
+import { Farming, Hero, Overview, Story } from '@pages/HomePage/components';
+// data
+import { farming } from '@pages/HomePage/data';
 
 const useStyles = makeStyles((theme) => ({
-	pagePaddingTop: {
-		paddingTop: theme.spacing(3),
-		[theme.breakpoints.up('md')]: {
-			paddingTop: theme.spacing(5),
-		},
+	sectionFarming: {
+		maxWidth: '100%',
+		paddingRight: 0,
+		paddingLeft: 0,
+	},
+	featuresSection: {
+		background:
+			'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat center',
+		backgroundSize: 'contain',
+	},
+	integrationsSection: {
+		background: '#0c133e',
 	},
 	sectionNoPaddingTop: {
 		paddingTop: 0,
 	},
-	shape: {
-		background: theme.palette.alternate.main,
-		borderBottomRightRadius: '100%',
-		borderBottom: `1px solid ${colors.grey[200]}`,
+	reviewSection: {
+		background: theme.palette.primary.dark,
+	},
+	aboutSection: {
+		background: '#0c133e',
 	},
 }));
 
@@ -38,6 +37,15 @@ export const HomePage = (): JSX.Element => {
 	return (
 		<div data-testid="homepage">
 			<Hero />
+			<Section className={classes.sectionNoPaddingTop}>
+				<Overview />
+			</Section>
+			<Section className={classes.sectionFarming}>
+				<Farming data={farming} />
+			</Section>
+			{/* <SectionAlternate> */}
+			{/*  <Story /> */}
+			{/* </SectionAlternate> */}
 		</div>
 	);
 };

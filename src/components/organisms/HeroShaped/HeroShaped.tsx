@@ -101,7 +101,7 @@ const HeroShaped = ({
 					</div>
 				</div>
 			</div>
-			<Divider />
+			{/* <Divider /> */}
 		</div>
 	);
 };

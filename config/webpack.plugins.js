@@ -46,7 +46,7 @@ const cleanWebpack = new CleanWebpackPlugin({
 
 // Generates an HTML file from a template
 const htmlWebpack = new HtmlWebpackPlugin({
-  title: 'Almond',
+  title: 'almond',
   template: `${paths.public}/template.html`,
   favicon: `${paths.public}/favicon.ico`,
   filename: 'index.html',

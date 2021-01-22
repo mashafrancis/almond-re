@@ -45,6 +45,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.2.10",
+    "@material-ui/styles": "^4.11.2",
     "@material/react-layout-grid": "^0.15.0",
     "aos": "^2.3.4",
     "autoprefixer": "^10.2.3",
