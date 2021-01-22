@@ -6,6 +6,7 @@ import { useMediaQuery, Grid, Button, Typography } from '@material-ui/core';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import authService from '@utils/auth';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 import homeImage from '../../../../assets/images/homehero.svg';
 
@@ -42,6 +43,7 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 	const isMd = useMediaQuery(theme.breakpoints.up('md'), {
 		defaultMatches: true,
 	});
+	const isAuthed = authService.isAuthenticated();
 
 	return (
 		<div className={clsx(classes.root, className)} {...rest}>
@@ -65,9 +67,9 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 							}
 							subtitle="Focus on the safe production of fresh food from your own home all year round."
 							ctaGroup={[
-								<NavLink to="/shop">
+								<NavLink to={isAuthed ? '/dashboard' : '/store'}>
 									<Button variant="contained" color="primary">
-										SHOP
+										{isAuthed ? 'Go to dashboard' : 'Visit our store'}
 									</Button>
 								</NavLink>,
 							]}

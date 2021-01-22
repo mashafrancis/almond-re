@@ -30,7 +30,7 @@ export const light = {
 		default: '#fff',
 		level2: '#f5f5f5',
 		level1: '#fff',
-		footer: '#1b1642',
+		footer: '#142542',
 	},
 };
 

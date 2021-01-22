@@ -38,12 +38,20 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: 0,
 	},
 	logoContainer: {
-		width: '35%',
-		height: '35%',
+		width: '10%',
+		height: '10%',
+		[theme.breakpoints.up('md')]: {
+			width: '35%',
+			height: '35%',
+		},
 	},
 	logoImage: {
 		width: '100%',
 		height: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '60%',
+			height: '60%',
+		},
 	},
 	groupTitle: {
 		textTransform: 'uppercase',
@@ -62,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	icon: {
-		fontSize: 28,
+		fontSize: 34,
 	},
 	menuListContainer: {
 		padding: '0 !important',

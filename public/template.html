@@ -14,13 +14,17 @@
 			name="google-site-verification"
 			content="dd2y9SSTVVhP9HCWjxTYYKSO3IGw8l9cIZhiF6xXRWw"
 		/>
+    <meta
+      name="robots"
+      content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 
 		<link rel="manifest" href="./manifest.json" />
 
-		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-		<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="${ htmlWebpackPlugin.options.favicon }" type="image/x-icon" />
+		<link rel="icon" href="${ htmlWebpackPlugin.options.favicon }" type="image/x-icon" />
 
 		<link
 			rel="apple-touch-icon"
@@ -103,6 +107,9 @@
 			href="https://res.cloudinary.com/almondgreen/raw/upload/v1569408169/Almond/styles/globals_h6bbjb.css"
 			rel="stylesheet"
 		/>
+
+<!--    <script src="https://use.fontawesome.com/f6e7ce500a.js" crossorigin="anonymous"></script>-->
+
 	</head>
 	<body>
 		<div id="root"></div>

@@ -215,7 +215,7 @@ const Topbar = ({
 	return (
 		<Toolbar disableGutters className={classes.toolbar} {...rest}>
 			<div className={classes.logoContainer}>
-				<NavLink to="/home">
+				<NavLink to="/">
 					<Grid container className={classes.container}>
 						<Image
 							className={classes.logoImage}
@@ -223,7 +223,6 @@ const Topbar = ({
 							alt="almond"
 							lazy={false}
 						/>
-						{/* <h4>Almond</h4> */}
 						<Typography
 							variant="h5"
 							color="textPrimary"

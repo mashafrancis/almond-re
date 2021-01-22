@@ -181,7 +181,7 @@ const Form = (): JSX.Element => {
 							color="primary"
 							fullWidth
 						>
-							Send
+							Login
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
@@ -192,7 +192,11 @@ const Form = (): JSX.Element => {
 						>
 							Forgot your password?{' '}
 							<NavLink to="/password-reset">
-								<LearnMoreLink title="Reset password" href="/password-reset" />
+								<LearnMoreLink
+									title="Reset password"
+									color="textPrimary"
+									href="/password-reset"
+								/>
 							</NavLink>
 						</Typography>
 					</Grid>
