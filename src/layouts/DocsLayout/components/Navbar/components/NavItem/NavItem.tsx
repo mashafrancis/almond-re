@@ -1,4 +1,3 @@
-import React from 'react';
 import clsx from 'clsx';
 import { parse } from 'query-string';
 import { Typography, ListItem, makeStyles } from '@material-ui/core';

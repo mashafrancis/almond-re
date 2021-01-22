@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -12,6 +12,8 @@ import validate from 'validate.js';
 import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { useDispatch } from 'react-redux';
+import { loginAccount } from '@modules/authentication';
 import { FormStateProps } from '../../../../types/FormStateProps';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
@@ -50,6 +52,8 @@ const Form = (): JSX.Element => {
 	const [isPasswordHidden, showPassword] = React.useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
+	const dispatch = useDispatch();
+
 	React.useEffect(() => {
 		const errors = validate(formState.values, schema);
 
@@ -83,7 +87,8 @@ const Form = (): JSX.Element => {
 		event.preventDefault();
 
 		if (formState.isValid) {
-			window.location.replace('/');
+			const { email, password } = formState.values;
+			dispatch(loginAccount({ email, password }));
 		}
 
 		setFormState((formState) => ({
@@ -181,7 +186,7 @@ const Form = (): JSX.Element => {
 							color="primary"
 							fullWidth
 						>
-							Send
+							Login
 						</Button>
 					</Grid>
 					<Grid item xs={12}>

@@ -11,7 +11,6 @@ export const mapStateToProps = (state: StateToProps) => ({
 });
 
 export const mapDispatchToProps = (dispatch: any) => ({
-	verifyUserDevice: (id: string) => dispatch(verifyUserDevice(id)),
 	displaySnackMessage: (message: string) =>
 		dispatch(displaySnackMessage(message)),
 	getUserDetails: () => dispatch(getUserDetails()),

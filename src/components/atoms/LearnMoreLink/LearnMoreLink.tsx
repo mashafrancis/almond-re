@@ -1,4 +1,3 @@
-import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, IconButton } from '@material-ui/core';
@@ -32,6 +31,7 @@ const LearnMoreLink = ({
 	color,
 	variant = 'subtitle1',
 	title,
+	href = '#',
 	className,
 	iconProps = {},
 	typographyProps = {},
@@ -61,10 +61,13 @@ const LearnMoreLink = ({
 	);
 
 	return (
-		<p className={clsx('learn-more-link', classes.root, className)} {...rest}
+		<a
+			href={href}
+			className={clsx('learn-more-link', classes.root, className)}
+			{...rest}
 		>
 			{children}
-		</p>
+		</a>
 	);
 };
 

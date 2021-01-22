@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import * as React from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Typography,
@@ -14,6 +14,8 @@ import validate from 'validate.js';
 import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { useDispatch } from 'react-redux';
+import { createAccount } from '@modules/authentication';
 import { FormStateProps } from '../../../../types/FormStateProps';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
@@ -71,6 +73,8 @@ const Form = (): JSX.Element => {
 	const [isPasswordHidden, showPassword] = React.useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
+	const dispatch = useDispatch();
+
 	React.useEffect(() => {
 		const errors = validate(formState.values, schema);
 
@@ -104,7 +108,8 @@ const Form = (): JSX.Element => {
 		event.preventDefault();
 
 		if (formState.isValid) {
-			window.location.replace('/');
+			const { firstName, lastName, email, password } = formState.values;
+			dispatch(createAccount({ firstName, lastName, email, password }));
 		}
 
 		setFormState((formState) => ({
@@ -144,7 +149,6 @@ const Form = (): JSX.Element => {
 
 					<Grid item xs={6}>
 						<TextField
-							placeholder="First name"
 							label="First name *"
 							variant="outlined"
 							size="medium"
@@ -155,13 +159,12 @@ const Form = (): JSX.Element => {
 							}
 							error={hasError('firstName')}
 							onChange={handleChange}
-							type="firstName"
+							type="text"
 							value={formState.values.firstName || ''}
 						/>
 					</Grid>
 					<Grid item xs={6}>
 						<TextField
-							placeholder="Last name"
 							label="Last name *"
 							variant="outlined"
 							size="medium"
@@ -172,13 +175,12 @@ const Form = (): JSX.Element => {
 							}
 							error={hasError('lastName')}
 							onChange={handleChange}
-							type="lastName"
+							type="text"
 							value={formState.values.lastName || ''}
 						/>
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
-							placeholder="Email"
 							label="Email *"
 							variant="outlined"
 							size="medium"
@@ -193,7 +195,6 @@ const Form = (): JSX.Element => {
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
-							placeholder="Password"
 							label="Password *"
 							variant="outlined"
 							size="medium"
@@ -222,11 +223,6 @@ const Form = (): JSX.Element => {
 								),
 							}}
 						/>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle2">
-							Fields that are marked with * sign are required.
-						</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<Button

@@ -11,7 +11,7 @@ describe('The EnterDeviceId Page', () => {
 	let props;
 	const { asFragment } = renderWithRouter(
 		<Suspense fallback={<h1>test loading</h1>}>
-			<EnterDeviceIdTemplate {...appProps} />
+			<EnterDeviceIdTemplate />
 		</Suspense>,
 	);
 

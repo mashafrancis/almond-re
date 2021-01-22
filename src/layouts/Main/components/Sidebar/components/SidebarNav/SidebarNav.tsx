@@ -1,6 +1,5 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable react/display-name */
-import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -12,6 +11,9 @@ import {
 	Button,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
+import { NavLink } from 'react-router-dom';
+import authService from '@utils/auth';
 import { MenuGroupProps, PagesProps } from '../../../../../interfaces';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	listItemIcon: {
 		minWidth: 'auto',
+	},
+	listItemText: {
+		flex: '0 0 auto',
+		// marginLeft: theme.spacing(0),
+		whiteSpace: 'nowrap',
 	},
 	closeIcon: {
 		justifyContent: 'flex-end',
@@ -66,10 +73,6 @@ const SidebarNav = ({
 }: Props): JSX.Element => {
 	const classes = useStyles();
 
-	// const { landings } = pages;
-	// const supportedPages = pages.pages;
-	// const { account } = pages;
-
 	const MenuGroup = ({ item }: MenuGroupProps): JSX.Element => (
 		<List disablePadding>
 			<ListItem disableGutters>
@@ -99,62 +102,125 @@ const SidebarNav = ({
 	);
 
 	const LandingPages = (): JSX.Element => {
-		// const { services, apps, web } = landings.children;
 		return (
-			<h4>Test</h4>
-			// <div className={classes.menu}>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={services} />
-			// 		<MenuGroup item={apps} />
-			// 	</div>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={web} />
-			// 	</div>
-			// </div>
-		);
-	};
-
-	const SupportedPages = (): JSX.Element => {
-		// const {
-		// 	career,
-		// 	helpCenter,
-		// 	company,
-		// 	contact,
-		// 	blog,
-		// 	portfolio,
-		// } = supportedPages.children;
-		return (
-			<h4>Test</h4>
-			// <div className={classes.menu}>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={career} />
-			// 		<MenuGroup item={helpCenter} />
-			// 		<MenuGroup item={company} />
-			// 	</div>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={contact} />
-			// 		<MenuGroup item={blog} />
-			// 		<MenuGroup item={portfolio} />
-			// 	</div>
-			// </div>
+			<div className={classes.menu}>
+				<div className={classes.menuItem}>
+					<NavLink to="/resources">
+						<ListItem
+							aria-describedby="resources"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Resources
+							</Typography>
+						</ListItem>
+					</NavLink>
+					<NavLink to="/portfolio">
+						<ListItem
+							aria-describedby="resources"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Portfolio
+							</Typography>
+						</ListItem>
+					</NavLink>
+				</div>
+			</div>
 		);
 	};
 
 	const AccountPages = (): JSX.Element => {
-		// const { settings, signup, signin, password, error } = account.children;
 		return (
-			<h4>Test</h4>
-			// <div className={classes.menu}>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={settings} />
-			// 		<MenuGroup item={signup} />
-			// 	</div>
-			// 	<div className={classes.menuItem}>
-			// 		<MenuGroup item={signin} />
-			// 		<MenuGroup item={password} />
-			// 		<MenuGroup item={error} />
-			// 	</div>
-			// </div>
+			<div className={classes.menu}>
+				<div className={classes.menuItem}>
+					<NavLink to="/register">
+						<ListItem
+							aria-describedby="register"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Register
+							</Typography>
+						</ListItem>
+					</NavLink>
+					<NavLink to="/login">
+						<ListItem
+							aria-describedby="login"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Login
+							</Typography>
+						</ListItem>
+					</NavLink>
+				</div>
+			</div>
+		);
+	};
+
+	const ProfilePages = (): JSX.Element => {
+		return (
+			<div className={classes.menu}>
+				<div className={classes.menuItem}>
+					<NavLink to="/profile">
+						<ListItem
+							aria-describedby="profile"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Profile
+							</Typography>
+						</ListItem>
+					</NavLink>
+					<NavLink to="/settings">
+						<ListItem
+							aria-describedby="settings"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
+							>
+								Settings
+							</Typography>
+						</ListItem>
+					</NavLink>
+					<ListItem
+						aria-describedby="logout"
+						className={clsx(classes.listItem)}
+					>
+						<Typography
+							variant="body1"
+							color="textPrimary"
+							className={clsx(classes.listItemText, 'menu-item')}
+						>
+							Logout
+						</Typography>
+					</ListItem>
+				</div>
+			</div>
 		);
 	};
 
@@ -176,40 +242,24 @@ const SidebarNav = ({
 			</ListItem>
 			<ListItem className={classes.listItem}>
 				<Typography variant="h6" color="textPrimary" gutterBottom>
-					Pages
+					Account
 				</Typography>
-				<SupportedPages />
+				{authService.isAuthenticated() ? <ProfilePages /> : <AccountPages />}
 			</ListItem>
 			<ListItem className={classes.listItem}>
 				<Divider className={classes.divider} />
 			</ListItem>
 			<ListItem className={classes.listItem}>
-				<Typography variant="h6" color="textPrimary" gutterBottom>
-					Account
-				</Typography>
-				<AccountPages />
-			</ListItem>
-			<ListItem className={classes.listItem}>
-				<Button
-					variant="outlined"
-					fullWidth
-					component="a"
-					href="/documentation"
-				>
-					Documentation
-				</Button>
-			</ListItem>
-			<ListItem className={classes.listItem}>
-				<Button
-					variant="contained"
-					color="primary"
-					fullWidth
-					component="a"
-					target="blank"
-					href="https://material-ui.com/store/items/the-front-landing-page/"
-				>
-					Buy Now
-				</Button>
+				<NavLink to="/store">
+					<Button
+						variant="contained"
+						color="primary"
+						fullWidth
+						endIcon={<LocalGroceryStoreIcon />}
+					>
+						Go to store
+					</Button>
+				</NavLink>
 			</ListItem>
 		</List>
 	);

@@ -1,9 +1,9 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import { LearnMoreLink } from '@components/atoms';
+import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import homeImage from '../../assets/images/illustration_404.svg';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -24,7 +24,11 @@ const useStyles = makeStyles((theme) => {
 		},
 		label: {
 			fontWeight: 'bold',
-			textTransform: 'uppercase',
+		},
+		image: {
+			[theme.breakpoints.down('sm')]: {
+				maxWidth: 500,
+			},
 		},
 	};
 });
@@ -40,30 +44,29 @@ const NotFoundPage = (): JSX.Element => {
 		<div>
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
+					<Image
+						src={homeImage}
+						alt="Almond Hydroponics"
+						className={classes.image}
+					/>
 					<SectionHeader
-						label="404"
-						title="Uh oh."
+						title="Sorry, page not found!"
 						subtitle={
 							<span>
 								There’s nothing here, but if you feel this is an error please{' '}
 								<LearnMoreLink
 									title="let us know"
-									href="#"
+									href="mailto:almond.froyo@gmail.com"
 									typographyProps={{ variant: 'h6' }}
 								/>
 							</span>
 						}
 						titleProps={{
-							variant: 'h3',
-						}}
-						labelProps={{
-							color: 'secondary',
-							className: classes.label,
-							variant: 'h5',
+							variant: 'h4',
 						}}
 						ctaGroup={[
 							<Button
-								size="large"
+								size="medium"
 								variant="contained"
 								color="primary"
 								onClick={handleClick}

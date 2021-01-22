@@ -155,7 +155,11 @@ describe('Device module actions', () => {
 			const http = axiosMock('/my-device', mockResponse);
 			const store = reduxMockStore(http, deviceInitialState);
 
-			return dispatchMethodMock(store, verifyUserDevice(id), expectedActions);
+			return dispatchMethodMock(
+				store,
+				verifyUserDevice({ id }),
+				expectedActions,
+			);
 		});
 
 		it('should return an error message when it fails to verify a device', () => {
@@ -192,7 +196,11 @@ describe('Device module actions', () => {
 			const http = axiosMock('/my-device', mockErrorResponse, false);
 			const store = reduxMockStore(http, deviceInitialState);
 
-			return dispatchMethodMock(store, verifyUserDevice(id), expectedActions);
+			return dispatchMethodMock(
+				store,
+				verifyUserDevice({ id }),
+				expectedActions,
+			);
 		});
 	});
 

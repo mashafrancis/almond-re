@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Typography } from '@material-ui/core';
@@ -36,7 +36,7 @@ const SwiperNumber = ({
 		defaultMatches: true,
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		new Swiper('.swiper-container', {
 			slidesPerView: isMd ? 4 : 3,
 			spaceBetween: 30,
