@@ -1,42 +1,46 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Toolbar,
-  Hidden,
-  List,
-  ListItem,
-  ListItemIcon,
-  Popover,
-  Typography,
-  IconButton,
-  Button, Avatar,
+	Toolbar,
+	Hidden,
+	List,
+	ListItem,
+	ListItemIcon,
+	Popover,
+	Typography,
+	IconButton,
+	Button,
+	Avatar,
+	Grid,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Image, DarkModeToggler } from '@components/atoms';
 import authService from '@utils/auth';
-import { MenuGroupProps, PagesProps } from '../../../interfaces';
-import logo from '../../../../assets/images/logo.png';
-import {UserContext} from "@context/UserContext";
+import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
+import { SectionHeader } from '@components/molecules';
+import logo from '../../../../assets/images/logo.png';
+import { MenuGroupProps, PagesProps } from '../../../interfaces';
 
 const useStyles = makeStyles((theme) => ({
 	flexGrow: {
 		flexGrow: 1,
 	},
-  flexGrowLeft: {
-    flexGrow: 0,
-  },
+	flexGrowLeft: {
+		flexGrow: 0,
+	},
 	navigationContainer: {
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+		marginLeft: 100,
 	},
 	toolbar: {
 		zIndex: 999,
-		maxWidth: theme.layout.contentWidth,
+		maxWidth: '100%',
 		width: '100%',
 		margin: '0 auto',
 		padding: theme.spacing(0, 2),
@@ -65,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	listItemText: {
 		flex: '0 0 auto',
-		marginLeft: theme.spacing(2),
+		// marginLeft: theme.spacing(0),
 		whiteSpace: 'nowrap',
 	},
 	listItemButton: {
@@ -93,16 +97,25 @@ const useStyles = makeStyles((theme) => ({
 		color: theme.palette.primary.dark,
 	},
 	logoContainer: {
-    width: '10%',
-    height: '10%',
+		width: '10%',
+		height: '10%',
 		[theme.breakpoints.up('md')]: {
-      width: '4%',
-      height: '4%',
+			width: '3%',
+			height: '3%',
 		},
+	},
+	container: {
+		display: 'inline-flex',
+		alignItems: 'center',
+		flexFlow: 'row',
 	},
 	logoImage: {
 		width: '100%',
 		height: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '60%',
+			height: '60%',
+		},
 	},
 	menu: {
 		display: 'flex',
@@ -120,14 +133,14 @@ const useStyles = makeStyles((theme) => ({
 	menuGroupTitle: {
 		textTransform: 'uppercase',
 	},
-  avatar: {
-    // borderRadius: '50%',
-    // padding: 0;
-    width: '40px',
-    height: '40px',
-    cursor: 'pointer',
-    margin: '4px',
-  },
+	avatar: {
+		// borderRadius: '50%',
+		// padding: 0;
+		width: '40px',
+		height: '40px',
+		cursor: 'pointer',
+		margin: '4px',
+	},
 }));
 
 interface Props {
@@ -150,7 +163,7 @@ const Topbar = ({
 
 	const [anchorEl, setAnchorEl] = useState<any>(null);
 	const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
-  const { name, photo, devices } = useContext(UserContext);
+	const { name, photo, devices } = useContext(UserContext);
 
 	const handleClick = (
 		event: React.MouseEvent<HTMLElement>,
@@ -165,69 +178,35 @@ const Topbar = ({
 		setOpenedPopoverId(null);
 	};
 
-	const MenuGroup = ({ item }: MenuGroupProps): JSX.Element => (
-		<List disablePadding>
-			<ListItem disableGutters>
-				<Typography
-					variant="body2"
-					color="primary"
-					className={classes.menuGroupTitle}
-				>
-					{item.groupTitle}
-				</Typography>
-			</ListItem>
-			{item.pages.map((page, i) => (
-				<ListItem disableGutters key={i} className={classes.menuGroupItem}>
-					<Typography
-						variant="body1"
-						component="a"
-						href={page.href}
-						className={clsx(classes.navLink, 'submenu-item')}
-						color="textSecondary"
-						onClick={handleClose}
-					>
-						{page.title}
-					</Typography>
-				</ListItem>
-			))}
-		</List>
-	);
-
 	const renderAuthButtons = () => (
 		<>
 			{authService.isAuthenticated() ? (
 				<ListItem className={clsx(classes.listItem, 'menu-item--no-dropdown')}>
-          <Avatar
-            className={classes.avatar}
-            alt={name}
-            src={photo}
-          />
+					<Avatar className={classes.avatar} alt={name} src={photo} />
 				</ListItem>
 			) : (
 				<>
-          <NavLink to='/login'>
-					<ListItem
-						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-					>
-						<Button variant="outlined">
-							Login
-						</Button>
-					</ListItem>
-          </NavLink>
-
-            <NavLink to='/register'>
-					<ListItem
-						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-					>
-						<Button
-							variant="contained"
-							color="primary"
-							className={classes.listItemButton}
+					<NavLink to="/login">
+						<ListItem
+							className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 						>
-							Register
-						</Button>
-					</ListItem>
-            </NavLink>
+							<Button variant="outlined">Login</Button>
+						</ListItem>
+					</NavLink>
+
+					<NavLink to="/register">
+						<ListItem
+							className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+						>
+							<Button
+								variant="contained"
+								color="primary"
+								className={classes.listItemButton}
+							>
+								Register
+							</Button>
+						</ListItem>
+					</NavLink>
 				</>
 			)}
 		</>
@@ -237,79 +216,79 @@ const Topbar = ({
 		<Toolbar disableGutters className={classes.toolbar} {...rest}>
 			<div className={classes.logoContainer}>
 				<NavLink to="/home">
-					<Image
-						className={classes.logoImage}
-						src={
-							themeMode === 'light'
-								? logo
-								: logo
-						}
-						alt="almond"
-						lazy={false}
-					/>
+					<Grid container className={classes.container}>
+						<Image
+							className={classes.logoImage}
+							src={themeMode === 'light' ? logo : logo}
+							alt="almond"
+							lazy={false}
+						/>
+						{/* <h4>Almond</h4> */}
+						<Typography
+							variant="h5"
+							color="textPrimary"
+							style={{ fontWeight: 600, fontSize: '16px', padding: '8px' }}
+						>
+							Almond
+						</Typography>
+					</Grid>
 				</NavLink>
 			</div>
-      <div className={classes.flexGrowLeft}>
-        <Hidden smDown>
-          <List disablePadding className={classes.navigationContainer}>
-            <NavLink to='/resources'>
-          <ListItem
-            aria-describedby="resources"
-            className={clsx(
-              classes.listItem,
-            )}
-          >
-            <Typography
-              variant="body1"
-              color="textPrimary"
-              className={clsx(classes.listItemText, 'menu-item')}
-            >
-              Resources
-            </Typography>
-          </ListItem>
-            </NavLink>
+			<div className={classes.flexGrowLeft}>
+				<Hidden smDown>
+					<List disablePadding className={classes.navigationContainer}>
+						<NavLink to="/resources">
+							<ListItem
+								aria-describedby="resources"
+								className={clsx(classes.listItem)}
+							>
+								<Typography
+									variant="body1"
+									color="textPrimary"
+									className={clsx(classes.listItemText, 'menu-item')}
+								>
+									Resources
+								</Typography>
+							</ListItem>
+						</NavLink>
 
-            <NavLink to='/shop'>
-          <ListItem
-            aria-describedby="shop"
-            className={clsx(
-              classes.listItem,
-            )}
-          >
-            <Typography
-              variant="body1"
-              color="textPrimary"
-              className={clsx(classes.listItemText, 'menu-item')}
-            >
-              Shop
-            </Typography>
-          </ListItem>
-            </NavLink>
-          </List>
-        </Hidden>
-      </div>
+						<NavLink to="/shop">
+							<ListItem
+								aria-describedby="shop"
+								className={clsx(classes.listItem)}
+							>
+								<Typography
+									variant="body1"
+									color="textPrimary"
+									className={clsx(classes.listItemText, 'menu-item')}
+								>
+									Shop
+								</Typography>
+							</ListItem>
+						</NavLink>
+					</List>
+				</Hidden>
+			</div>
 			<div className={classes.flexGrow} />
 			<Hidden smDown>
 				<List disablePadding className={classes.navigationContainer}>
-          <ListItem
-            aria-describedby='dashboard'
-            onClick={(e) => handleClick(e, 'store')}
-            className={clsx(
-              classes.listItem
-            )}
-          >
-            { authService.isAuthenticated() &&
-              <NavLink
-                to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}>
-                <Button color="primary">Dashboard</Button>
-              </NavLink>
-            }
-          </ListItem>
-					<ListItem className='menu-item--no-dropdown'
+					<ListItem
+						aria-describedby="dashboard"
+						onClick={(e) => handleClick(e, 'store')}
+						className={clsx(classes.listItem)}
 					>
+						{authService.isAuthenticated() && (
+							<NavLink
+								to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}
+							>
+								<Button color="primary">Dashboard</Button>
+							</NavLink>
+						)}
+					</ListItem>
+					<ListItem className="menu-item--no-dropdown">
 						<DarkModeToggler
 							themeMode={themeMode}
-              onChange={() => themeToggler()}
+							onChange={() => themeToggler()}
 							size={24}
 						/>
 					</ListItem>
@@ -319,7 +298,7 @@ const Topbar = ({
 			<Hidden mdUp>
 				<DarkModeToggler
 					themeMode={themeMode}
-          onChange={() => themeToggler()}
+					onChange={() => themeToggler()}
 					size={24}
 				/>
 				<IconButton

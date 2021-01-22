@@ -1,14 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
-import {NavLink} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar } from '@material-ui/core';
+import { Grid, Toolbar, Typography } from '@material-ui/core';
 import { Image } from '@components/atoms';
-import logo from "../../../../assets/images/logo.png";
+import { SectionHeader } from '@components/molecules';
+import { ArrowBackRounded } from '@material-ui/icons';
+import logo from '../../../../assets/images/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	toolbar: {
-		maxWidth: theme.layout.contentWidth,
+		maxWidth: '100%',
 		width: '100%',
 		margin: '0 auto',
 		padding: theme.spacing(0, 2),
@@ -16,17 +18,30 @@ const useStyles = makeStyles((theme) => ({
 			padding: theme.spacing(0, 8),
 		},
 	},
-  logoContainer: {
-    width: '10%',
-    height: '10%',
-    [theme.breakpoints.up('md')]: {
-      width: '4%',
-      height: '4%',
-    },
-  },
+	logoContainer: {
+		width: '100%',
+		height: '10%',
+		[theme.breakpoints.up('md')]: {
+			width: '4%',
+			height: '4%',
+		},
+	},
+	container: {
+		display: 'inline-flex',
+		alignItems: 'center',
+		flexFlow: 'row',
+	},
 	logoImage: {
 		width: '100%',
 		height: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '60%',
+			height: '60%',
+		},
+	},
+	homeNavigation: {
+		fontWeight: 500,
+		fontSize: 16,
 	},
 }));
 
@@ -41,18 +56,15 @@ const Topbar = ({ themeMode, className, ...rest }: Props): JSX.Element => {
 	return (
 		<Toolbar className={clsx(classes.toolbar, className)} {...rest}>
 			<div className={classes.logoContainer}>
-        <NavLink to="/home">
-          <Image
-            className={classes.logoImage}
-            src={
-              themeMode === 'light'
-                ? logo
-                : logo
-            }
-            alt="almond"
-            lazy={false}
-          />
-        </NavLink>
+				<NavLink to="/">
+					<Grid container className={classes.container}>
+						<ArrowBackRounded />
+						{/* <span className="product-logo-text">Home</span> */}
+						<Typography className={classes.homeNavigation} variant="h5">
+							Home
+						</Typography>
+					</Grid>
+				</NavLink>
 			</div>
 		</Toolbar>
 	);

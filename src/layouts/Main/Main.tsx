@@ -29,7 +29,7 @@ const Main = ({ children, themeToggler, themeMode }: Props): JSX.Element => {
 			title: 'Discover',
 			id: 'discover-pages',
 			children: {
-        about: {
+				about: {
 					groupTitle: 'Discover',
 					pages: [
 						{
@@ -48,52 +48,52 @@ const Main = ({ children, themeToggler, themeMode }: Props): JSX.Element => {
 				},
 			},
 		},
-    learn: {
-      title: 'Learn',
-      id: 'learn-pages',
-      children: {
-        resources: {
-          groupTitle: 'Learn',
-          pages: [
-            {
-              title: 'Our Mission',
-              href: '/our-mission',
-            },
-            {
-              title: 'FAQ',
-              href: '/faq',
-            },
-            {
-              title: 'Resources',
-              href: '/resources',
-            },
-          ],
-        },
-      },
-    },
-    support: {
-      title: 'Support',
-      id: 'support-pages',
-      children: {
-        services: {
-          groupTitle: 'Support',
-          pages: [
-            {
-              title: 'Terms of Services',
-              href: '/terms-of-services',
-            },
-            {
-              title: 'Private Policy',
-              href: '/private-policy',
-            },
-            {
-              title: 'Return Policy',
-              href: '/return-policy',
-            },
-          ],
-        },
-      },
-    },
+		learn: {
+			title: 'Learn',
+			id: 'learn-pages',
+			children: {
+				resources: {
+					groupTitle: 'Learn',
+					pages: [
+						{
+							title: 'Our Mission',
+							href: '/our-mission',
+						},
+						{
+							title: 'FAQ',
+							href: '/faq',
+						},
+						{
+							title: 'Resources',
+							href: '/resources',
+						},
+					],
+				},
+			},
+		},
+		support: {
+			title: 'Support',
+			id: 'support-pages',
+			children: {
+				services: {
+					groupTitle: 'Support',
+					pages: [
+						{
+							title: 'Terms of Services',
+							href: '/terms-of-services',
+						},
+						{
+							title: 'Private Policy',
+							href: '/private-policy',
+						},
+						{
+							title: 'Return Policy',
+							href: '/return-policy',
+						},
+					],
+				},
+			},
+		},
 	};
 
 	const [openSidebar, setOpenSidebar] = useState<boolean>(false);

@@ -1,12 +1,14 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 import { LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import { Form } from './components';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
+
 	return {
 		formContainer: {
 			height: '100%',
@@ -22,61 +24,38 @@ const useStyles = makeStyles((theme) => {
 			paddingTop: 0,
 			paddingBottom: 0,
 		},
-		label: {
-			fontWeight: 'bold',
-			textTransform: 'uppercase',
-		},
 	};
 });
 
-const NotFoundPage = (): JSX.Element => {
+const SigninPage = (): JSX.Element => {
 	const classes = useStyles();
-
-	const handleClick = (): void => {
-		window.history.back();
-	};
 
 	return (
 		<div>
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
 					<SectionHeader
-						label="404"
-						title="Uh oh."
+						title="Sign in"
 						subtitle={
 							<span>
-								There’s nothing here, but if you feel this is an error please{' '}
-								<LearnMoreLink
-									title="let us know"
-									href="#"
-									typographyProps={{ variant: 'h6' }}
-								/>
+								Don’t have an account?{' '}
+								<NavLink to="/register">
+									<LearnMoreLink
+										title="Sign up."
+										typographyProps={{ variant: 'h6' }}
+									/>
+								</NavLink>
 							</span>
 						}
 						titleProps={{
 							variant: 'h3',
 						}}
-						labelProps={{
-							color: 'secondary',
-							className: classes.label,
-							variant: 'h5',
-						}}
-						ctaGroup={[
-							<Button
-								size="large"
-								variant="contained"
-								color="primary"
-								onClick={handleClick}
-							>
-								Go Back
-							</Button>,
-						]}
-						disableGutter
 					/>
+					<Form />
 				</div>
 			</Section>
 		</div>
 	);
 };
 
-export default NotFoundPage;
+export default SigninPage;

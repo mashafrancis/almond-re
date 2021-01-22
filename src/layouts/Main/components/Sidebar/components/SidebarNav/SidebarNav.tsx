@@ -101,7 +101,7 @@ const SidebarNav = ({
 	const LandingPages = (): JSX.Element => {
 		// const { services, apps, web } = landings.children;
 		return (
-      <h4>Test</h4>
+			<h4>Test</h4>
 			// <div className={classes.menu}>
 			// 	<div className={classes.menuItem}>
 			// 		<MenuGroup item={services} />
@@ -124,7 +124,7 @@ const SidebarNav = ({
 		// 	portfolio,
 		// } = supportedPages.children;
 		return (
-      <h4>Test</h4>
+			<h4>Test</h4>
 			// <div className={classes.menu}>
 			// 	<div className={classes.menuItem}>
 			// 		<MenuGroup item={career} />
@@ -143,7 +143,7 @@ const SidebarNav = ({
 	const AccountPages = (): JSX.Element => {
 		// const { settings, signup, signin, password, error } = account.children;
 		return (
-		  <h4>Test</h4>
+			<h4>Test</h4>
 			// <div className={classes.menu}>
 			// 	<div className={classes.menuItem}>
 			// 		<MenuGroup item={settings} />

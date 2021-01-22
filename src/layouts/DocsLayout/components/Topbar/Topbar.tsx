@@ -93,7 +93,7 @@ const TopBar = ({
 				<Box flexGrow={1} />
 				<DarkModeToggler
 					themeMode={themeMode}
-          onChange={() => themeToggler()}
+					onChange={() => themeToggler()}
 					size={24}
 				/>
 				<Hidden smDown>

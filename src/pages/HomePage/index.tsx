@@ -37,32 +37,8 @@ export const HomePage = (): JSX.Element => {
 
 	return (
 		<div data-testid="homepage">
-			{/*<Section className={classes.pagePaddingTop}>*/}
-				<Hero />
-			{/*</Section>*/}
+			<Hero />
 		</div>
-		// <div className="background-cover" data-testid="homepage">
-		// 	<main className="home-cover">
-		// 		<section className="logo">
-		// 			<Logo />
-		// 		</section>
-		// 		<section className="home-image">
-		// 			<div className="image-wrapper">
-		// 				<img src={homepage} alt="Almond" />
-		// 			</div>
-		// 		</section>
-		// 		<section id="hero">
-		// 			<div className="hero-container">
-		// 				<div className="hero-info">
-		// 					<h1 data-testid="homepage-content">We have an idea!</h1>
-		// 					<h1>Grow hydroponically.</h1>
-		// 					<h2>Focusing on the safe production of fresh produce.</h2>
-		// 					{renderGoToDashboard()}
-		// 				</div>
-		// 			</div>
-		// 		</section>
-		// 	</main>
-		// </div>
 	);
 };
 
