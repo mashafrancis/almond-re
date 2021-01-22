@@ -121,6 +121,7 @@
     "server-destroy": "^1.0.1",
     "start-server-and-test": "^1.11.7",
     "swiper": "^6.4.6",
+    "validate.js": "^0.13.1",
     "workbox-core": "^6.0.2"
   },
   "devDependencies": {

@@ -7,8 +7,11 @@ import HomePage from '@pages/HomePage';
 import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
-import NotFoundPage from "@pages/NotFoundPage";
+import NotFoundPage from '@pages/NotFoundPage';
 import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
+import SignupPage from '@pages/SignupPage';
+import SigninPage from '@pages/SigninPage';
+import PasswordResetPage from '@pages/PasswordResetPage';
 import WithLayout from '../WithLayout';
 import {
 	Main as MainLayout,
@@ -41,17 +44,50 @@ const Routes = (): any => (
 			component={DashboardContainer}
 			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
-    <Route
-      exact
-      path="/404"
-      render={matchProps => (
-        <WithLayout
-          {...matchProps}
-          component={NotFoundPage}
-          layout={MinimalLayout}
-        />
-      )}
-    />
+		<Route
+			exact
+			path="/register"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={SignupPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/login"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={SigninPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/password-reset"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={PasswordResetPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/404"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={NotFoundPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
 		<Redirect to="/404" />
 	</Switch>
 );

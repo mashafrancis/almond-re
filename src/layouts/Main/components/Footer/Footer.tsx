@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: 0,
 	},
 	logoContainer: {
-    width: '35%',
-    height: '35%',
+		width: '35%',
+		height: '35%',
 	},
 	logoImage: {
 		width: '100%',
@@ -138,27 +138,27 @@ const Footer = ({ pages, className, ...rest }: Props): JSX.Element => {
 		);
 	};
 
-  const LearnPages = (): JSX.Element => {
-    const { resources } = learn.children;
-    return (
-      <div className={classes.menu}>
-        <div>
-          <MenuGroup item={resources} />
-        </div>
-      </div>
-    );
-  };
+	const LearnPages = (): JSX.Element => {
+		const { resources } = learn.children;
+		return (
+			<div className={classes.menu}>
+				<div>
+					<MenuGroup item={resources} />
+				</div>
+			</div>
+		);
+	};
 
-  const SupportPages = (): JSX.Element => {
-    const { services } = support.children;
-    return (
-      <div className={classes.menu}>
-        <div>
-          <MenuGroup item={services} />
-        </div>
-      </div>
-    );
-  };
+	const SupportPages = (): JSX.Element => {
+		const { services } = support.children;
+		return (
+			<div className={classes.menu}>
+				<div>
+					<MenuGroup item={services} />
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<div {...rest} className={clsx(classes.root, className)}>

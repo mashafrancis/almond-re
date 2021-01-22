@@ -30,10 +30,8 @@ const useStyles = makeStyles((theme) => ({
  */
 const LearnMoreLink = ({
 	color,
-	component = 'a',
 	variant = 'subtitle1',
 	title,
-	href = '#',
 	className,
 	iconProps = {},
 	typographyProps = {},
@@ -63,13 +61,10 @@ const LearnMoreLink = ({
 	);
 
 	return (
-		<a
-			href={href}
-			className={clsx('learn-more-link', classes.root, className)}
-			{...rest}
+		<p className={clsx('learn-more-link', classes.root, className)} {...rest}
 		>
 			{children}
-		</a>
+		</p>
 	);
 };
 

@@ -112,7 +112,7 @@ const DarkModeToggler = ({
 	moonColor = 'white',
 	sunColor = 'black',
 	style,
-  className,
+	className,
 	...rest
 }: DarkModeTogglerProps): JSX.Element => {
 	const properties = React.useMemo(() => {
@@ -162,7 +162,7 @@ const DarkModeToggler = ({
 			stroke="currentColor"
 			onClick={toggle}
 			style={{
-        // @ts-ignore
+				// @ts-ignore
 				cursor: 'pointer',
 				...svgContainerProps,
 				...style,
@@ -188,10 +188,10 @@ const DarkModeToggler = ({
 				mask="url(#myMask2)"
 			/>
 			<animated.g
-        stroke="currentColor"
-        // @ts-ignore
-        style={linesProps}
-      >
+				stroke="currentColor"
+				// @ts-ignore
+				style={linesProps}
+			>
 				<line x1="12" y1="1" x2="12" y2="3" />
 				<line x1="12" y1="21" x2="12" y2="23" />
 				<line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />

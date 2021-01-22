@@ -12,7 +12,7 @@ export interface PagesProps {
 		title: string;
 		id: string;
 		children: {
-      about: MenuItemProps;
+			about: MenuItemProps;
 		};
 	};
 	learn: {
