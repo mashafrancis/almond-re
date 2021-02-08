@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -7,13 +7,15 @@ import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
 import authService from '@utils/auth';
+import { UserContext } from '@context/UserContext';
+import isArrayNotNull from '@utils/checkArrayEmpty';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
-import homeImage from '../../../../assets/images/homehero.svg';
+const homeImage = 'https://static.almondhydroponics.com/static/images/homehero.svg';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		background:
-			'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat left bottom',
+		// background:
+		// 	'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat left bottom',
 		backgroundSize: 'contain',
 		// backgroundColor: theme.palette.alternate.main,
 	},
@@ -44,6 +46,7 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 		defaultMatches: true,
 	});
 	const isAuthed = authService.isAuthenticated();
+	const { devices } = useContext(UserContext);
 
 	return (
 		<div className={clsx(classes.root, className)} {...rest}>
@@ -52,22 +55,31 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 					<Grid item xs={12} md={6} data-aos="fade-up">
 						<SectionHeader
 							title={
-								<span>
-									Welcome to{' '}
-									<Typography
-										component="span"
-										variant="inherit"
-										color="primary"
-									>
-										Almond.
-									</Typography>
-									<br />
-									<span>Grow your food and live happily healthy.</span>
-								</span>
+								// <span>
+								// 	Welcome to{' '}
+								// 	<Typography
+								// 		component="span"
+								// 		variant="inherit"
+								// 		color="primary"
+								// 	>
+								// 		Almond.
+								// 	</Typography>
+								// 	<br />
+								// 	<span>Grow your food and live happily healthy.</span>
+								// </span>
+								<span>Grow your food and live happily healthy.</span>
 							}
 							subtitle="Focus on the safe production of fresh food from your own home all year round."
 							ctaGroup={[
-								<NavLink to={isAuthed ? '/dashboard' : '/store'}>
+								<NavLink
+									to={
+										isAuthed
+											? `${
+													isArrayNotNull(devices) ? '/dashboard' : '/my-device'
+											  }`
+											: '/store'
+									}
+								>
 									<Button variant="contained" color="primary">
 										{isAuthed ? 'Go to dashboard' : 'Visit our store'}
 									</Button>

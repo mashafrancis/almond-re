@@ -12,6 +12,7 @@ import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 import SignupPage from '@pages/SignupPage';
 import SigninPage from '@pages/SigninPage';
 import PasswordResetPage from '@pages/PasswordResetPage';
+import RegisterSuccessPage from '@pages/RegisterSuccessPage';
 import WithLayout from '../WithLayout';
 import {
 	Main as MainLayout,
@@ -36,7 +37,17 @@ const Routes = (): any => (
 				<WithLayout {...matchProps} component={HomePage} layout={MainLayout} />
 			)}
 		/>
-		<Route exact path="/my-device" component={EnterDeviceIdPage} />
+		<Route
+			exact
+			path="/my-device"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={EnterDeviceIdPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
 		<AuthenticatedRoute
 			exact
 			path="/dashboard"
@@ -73,6 +84,17 @@ const Routes = (): any => (
 				<WithLayout
 					{...matchProps}
 					component={PasswordResetPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/register-success"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={RegisterSuccessPage}
 					layout={MinimalLayout}
 				/>
 			)}

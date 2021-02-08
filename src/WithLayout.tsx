@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import * as React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';

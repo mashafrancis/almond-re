@@ -9,7 +9,6 @@ import HomePage from '@pages/HomePage';
 import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
-import PageNotFound from '@components/PageNotFound';
 import Routes from './index';
 import { renderWithRedux, renderWithRouter } from '../testHelpers';
 

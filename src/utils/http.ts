@@ -12,13 +12,14 @@ const cacheAdapter = setupCache({
 });
 
 const token = authService.getToken();
+const headers = {
+  Authorization: `Bearer ${token}`,
+};
 
 const http = axios.create({
 	baseURL: process.env.ALMOND_API,
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	withCredentials: true,
+	headers: authService.isAuthenticated() ? headers : '',
+	// withCredentials: true,
 	adapter: cacheAdapter.adapter,
 });
 

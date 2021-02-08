@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';

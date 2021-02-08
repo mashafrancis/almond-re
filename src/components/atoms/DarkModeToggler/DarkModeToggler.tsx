@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 import { useSpring, animated } from 'react-spring';
 import { makeStyles, colors } from '@material-ui/core';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 import CountUp from 'react-countup';
 import clsx from 'clsx';
@@ -26,7 +26,7 @@ const CountUpNumber = ({
 	labelProps = {},
 	...rest
 }: CountUpNumberProps): JSX.Element => {
-	const [viewPortEntered, setViewPortEntered] = React.useState<boolean>(false);
+	const [viewPortEntered, setViewPortEntered] = useState<boolean>(false);
 	const setViewPortVisibility = (isVisible: boolean) => {
 		if (viewPortEntered) {
 			return;

@@ -1,8 +1,7 @@
-import React from 'react';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Toolbar, Typography } from '@material-ui/core';
+import { Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { ArrowBackRounded } from '@material-ui/icons';
@@ -43,6 +42,18 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 500,
 		fontSize: 16,
 	},
+	title: {
+		fontWeight: 'bold',
+		fontSize: 14,
+		paddingLeft: 8,
+	},
+	icon: {
+		padding: 0,
+		marginRight: theme.spacing(1),
+		'&:hover': {
+			background: 'transparent',
+		},
+	},
 }));
 
 interface Props {
@@ -58,9 +69,18 @@ const Topbar = ({ themeMode, className, ...rest }: Props): JSX.Element => {
 			<div className={classes.logoContainer}>
 				<NavLink to="/">
 					<Grid container className={classes.container}>
-						<ArrowBackRounded />
-						{/* <span className="product-logo-text">Home</span> */}
-						<Typography className={classes.homeNavigation} variant="h5">
+						<IconButton
+							className={clsx('learn-more-link__icon-button', classes.icon)}
+							color="primary"
+						>
+							<ArrowBackRounded className="learn-more-link__arrow" />
+						</IconButton>
+						<Typography
+							component="span"
+							className={clsx('learn-more-link__typography', classes.title)}
+							variant="h6"
+							color="textPrimary"
+						>
 							Home
 						</Typography>
 					</Grid>

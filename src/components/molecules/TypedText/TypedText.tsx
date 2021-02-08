@@ -1,4 +1,3 @@
-import React from 'react';
 import clsx from 'clsx';
 import Typed from 'react-typed';
 import { Typography } from '@material-ui/core';

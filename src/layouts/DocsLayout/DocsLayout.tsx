@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import * as React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Topbar, Navbar } from './components';
 

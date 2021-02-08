@@ -1,4 +1,3 @@
-import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -13,7 +12,7 @@ import { SectionHeader, IconAlternate } from '@components/molecules';
 import { HeroShaped } from '@components/organisms';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
-import hydroponicsLettuce from '../../../../assets/images/hydroponics.jpeg';
+import hydroponicsLettuce from '../../../../assets/images/hydroponic-strawberries.jpg';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

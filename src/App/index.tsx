@@ -11,6 +11,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import SnackBar from '@components/SnackBar';
 import ErrorFallback from '@components/ErrorBoundary';
 import LinearProgressBar from '@components/LinearProgressBar';
+import ServerErrorPage from '@pages/ServerErrorPage';
 // thunk action creators
 import { getUserDetails } from '@modules/user';
 import { getSensorData } from '@modules/sensorData';
@@ -141,23 +142,23 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	};
 
 	return (
-		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<Connector
-				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
-				opts={options}
-			>
-				<UserContext.Provider value={userDetailsOnProvider}>
-					<ComponentProvider>
-						<ViewportProvider>
-							<SnackBar snack={snack} />
-							{window.location.pathname !== '/' && isUserAuthenticated}
-							<Suspense fallback={<LinearProgressBar />}>
-								<Routes />
-							</Suspense>
-						</ViewportProvider>
-					</ComponentProvider>
-				</UserContext.Provider>
-			</Connector>
+		<ErrorBoundary FallbackComponent={ServerErrorPage}>
+			{/* <Connector */}
+			{/*	brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
+			{/*	opts={options} */}
+			{/* > */}
+			<UserContext.Provider value={userDetailsOnProvider}>
+				<ComponentProvider>
+					<ViewportProvider>
+						<SnackBar snack={snack} />
+						{window.location.pathname !== '/' && isUserAuthenticated}
+						<Suspense fallback={<LinearProgressBar />}>
+							<Routes />
+						</Suspense>
+					</ViewportProvider>
+				</ComponentProvider>
+			</UserContext.Provider>
+			{/* </Connector> */}
 		</ErrorBoundary>
 	);
 };

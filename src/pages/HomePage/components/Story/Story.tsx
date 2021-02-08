@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { Grid, Button, useMediaQuery, colors } from '@material-ui/core';
 import { Icon } from '@components/atoms';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { defaultProperties } from '@components/atoms/DarkModeToggler/DarkModeToggler';
 
 type SVGProps = Omit<React.HTMLAttributes<HTMLOrSVGElement>, 'onChange'>;

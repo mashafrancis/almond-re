@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -22,8 +23,9 @@ import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import { SectionHeader } from '@components/molecules';
-import logo from '../../../../assets/images/logo.png';
 import { MenuGroupProps, PagesProps } from '../../../interfaces';
+
+const logo = 'https://static.almondhydroponics.com/static/logo.png'
 
 const useStyles = makeStyles((theme) => ({
 	flexGrow: {

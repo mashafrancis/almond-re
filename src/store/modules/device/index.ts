@@ -283,19 +283,19 @@ export const addNewDevice = (device: { id: string }) => (
 		});
 };
 
-export const verifyUserDevice = (id: string) => (
+export const verifyUserDevice = (device: { id: string }) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
 		post: (
 			arg0: string,
-			arg1: string,
+			arg1: { id: string },
 		) => Promise<{ data: { data: VerifyDevice; message: string } }>;
 	},
 ) => {
 	dispatch(verifyDeviceRequest());
 	return http
-		.post('my-device', id)
+		.post('my-device', device)
 		.then((response: { data: { data: VerifyDevice; message: string } }) => {
 			const {
 				data: { data, message },
