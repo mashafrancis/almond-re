@@ -1,5 +1,5 @@
 // react libraries
-import { mapDispatchToProps, mapStateToProps } from './index';
+import { mapStateToProps } from './index';
 
 describe('The App component', () => {
 	describe('mapStateToProps', () => {
@@ -24,22 +24,22 @@ describe('The App component', () => {
 		});
 	});
 
-	describe('mapDispatchToProps', () => {
-		let dispatch;
-		let props;
-
-		beforeEach(() => {
-			dispatch = jest.fn();
-			props = mapDispatchToProps(dispatch) as any;
-		});
-
-		afterEach(() => {
-			dispatch = props = null;
-		});
-
-		it('ensures getUserDetails is mapped to props', () => {
-			props.getUserDetails();
-			expect(dispatch).toHaveBeenCalled();
-		});
-	});
+	// describe('mapDispatchToProps', () => {
+	// 	let dispatch;
+	// 	let props;
+	//
+	// 	beforeEach(() => {
+	// 		dispatch = jest.fn();
+	// 		props = mapDispatchToProps(dispatch) as any;
+	// 	});
+	//
+	// 	afterEach(() => {
+	// 		dispatch = props = null;
+	// 	});
+	//
+	// 	it('ensures getUserDetails is mapped to props', () => {
+	// 		props.getUserDetails();
+	// 		expect(dispatch).toHaveBeenCalled();
+	// 	});
+	// });
 });

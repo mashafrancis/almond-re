@@ -3,11 +3,11 @@ import SelectBox from '@components/SelectBox';
 import DateRangePicker from '@components/DateRangePicker';
 // utils
 import dayjs from '@utils/dayjsTime';
+import { BlankContent } from '@pages/WaterCyclesPage/Template';
+import DashboardCard from '@components/DashboardCard';
+import AreaChardDisplay from '@components/AreaChartDisplay';
 // interfaces
 import { LineChartCardProps } from '@components/organisms/LineChartCard/intefaces';
-
-const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
-const DashboardCard = lazy(() => import('@components/DashboardCard'));
 
 const dateSelectOptions = [
 	{
@@ -65,23 +65,26 @@ const LineChartCard = ({
 	//   }
 	// }
 
-	const BlankContent = (message) => (
-		<div className="blank-content">
-			<h2>{message}</h2>
-		</div>
-	);
-
 	return (
 		<DashboardCard
-			classes="recent-activities-available"
 			heading={heading}
 			body={
-				data.length > 0 ? (
+				data.length === 0 ? (
 					<AreaChardDisplay
 						backgroundColor="rgba(25, 103, 210, 0.2)"
 						chartColor="#1967D2"
-						chartData={chartData}
-						labels={labels}
+						chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
+						labels={[
+							'00:00',
+							'03:00',
+							'06:00',
+							'09:00',
+							'12:00',
+							'15:00',
+							'18:00',
+							'21:00',
+							'00:00',
+						]}
 					/>
 				) : (
 					BlankContent('No data to display')

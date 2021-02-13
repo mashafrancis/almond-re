@@ -13,7 +13,7 @@ const cacheAdapter = setupCache({
 
 const token = authService.getToken();
 const headers = {
-  Authorization: `Bearer ${token}`,
+	Authorization: `Bearer ${token}`,
 };
 
 const http = axios.create({

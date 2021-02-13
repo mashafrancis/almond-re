@@ -166,7 +166,7 @@ export const BottomNavigationMenus: MenuBottomProps[] = [
 	},
 	{
 		icon: <ControlCamera />,
-		label: 'Environmental',
+		label: 'Environment',
 		value: 'environment',
 	},
 	{

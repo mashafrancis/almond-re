@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => {
 			[theme.breakpoints.down('sm')]: {
 				maxWidth: 500,
 			},
-      marginBottom: 26
+			marginBottom: 26,
 		},
 	};
 });
@@ -85,8 +85,11 @@ export const EnterDeviceIdTemplate = (): JSX.Element => {
 	const { activeDevice } = useContext(UserContext);
 	const dispatch = useDispatch();
 	// @ts-ignore
-  const { isLoading } = useSelector(state => state?.device);
-	console.log('Class: , Function: EnterDeviceIdTemplate, Line 92 user():', isLoading);
+	const { isLoading } = useSelector((state) => state?.device);
+	console.log(
+		'Class: , Function: EnterDeviceIdTemplate, Line 92 user():',
+		isLoading,
+	);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
@@ -192,7 +195,7 @@ export const EnterDeviceIdTemplate = (): JSX.Element => {
 							variant: 'h4',
 						}}
 						subtitleProps={{
-							variant: 'body2'
+							variant: 'body2',
 						}}
 						ctaGroup={[DeviceForm()]}
 						disableGutter

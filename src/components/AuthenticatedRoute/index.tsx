@@ -21,15 +21,15 @@ const AuthenticatedRoute = (props: any) => {
 	const { component: Component, ...rest } = props;
 
 	if (!authService.isAuthenticated()) {
-		localStorage.setItem('locationReferrer', props.location.pathname);
+		localStorage.setItem('locationReferrer', location.pathname);
 		displaySnackMessage('You need to login to continue');
 
 		return <Redirect to="/" />;
 	}
 
 	return (
-		<div className="drawer-content" data-testid="authenticated-route">
-			<RestrictedRoute {...rest} render={renderComponent(Component)} />
+		<div data-testid="authenticated-route">
+			 <RestrictedRoute {...rest} render={renderComponent(Component)} />
 		</div>
 	);
 };

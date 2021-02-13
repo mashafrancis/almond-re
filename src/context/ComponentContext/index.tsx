@@ -11,7 +11,7 @@ const selectedIndex = JSON.parse(
 
 const ComponentContext = createContext({
 	isMenuOpen: false,
-	selectedIndex: isArrayNotNull(selectedIndex) ? selectedIndex : 0,
+	selectedIndex: selectedIndex || 0,
 	isSelectDeviceModalOpen: false,
 	isActivityDrawerOpen: false,
 	activityLogsViewed: false,
@@ -38,7 +38,8 @@ const ComponentProvider = ({
 	const [state, setState] = useState<ComponentContextState>({
 		isOpen: false,
 		isMenuOpen: false,
-		selectedIndex: 0,
+		selectedIndex:
+			JSON.parse(window.localStorage.getItem('selectedIndex') as string) || 0,
 		isSelectDeviceModalOpen: false,
 		isActivityDrawerOpen: false,
 		activityLogsViewed: false,

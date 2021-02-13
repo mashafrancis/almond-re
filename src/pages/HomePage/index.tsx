@@ -3,14 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 // components
 import { Section, SectionAlternate } from '@components/organisms';
 import {
-  Farming,
-  Hero,
-  Overview,
-  Solutions,
-  Story
+	Farming,
+	Hero,
+	Overview,
+	Solutions,
+	Story,
 } from '@pages/HomePage/components';
 // data
-import {farming, features} from '@pages/HomePage/data';
+import { farming, features } from '@pages/HomePage/data';
 
 const useStyles = makeStyles((theme) => ({
 	sectionFarming: {
@@ -46,12 +46,12 @@ export const HomePage = (): JSX.Element => {
 			{/* <Section className={classes.sectionNoPaddingTop}> */}
 			{/*	<Overview /> */}
 			{/* </Section> */}
-			{/*<Section className={classes.sectionFarming}>*/}
-			{/*	<Farming data={farming} />*/}
-			{/*</Section>*/}
-      <SectionAlternate>
-        <Solutions data={features} />
-      </SectionAlternate>
+			{/* <Section className={classes.sectionFarming}> */}
+			{/*	<Farming data={farming} /> */}
+			{/* </Section> */}
+			<SectionAlternate>
+				<Solutions data={features} />
+			</SectionAlternate>
 			{/* <SectionAlternate> */}
 			{/*  <Story /> */}
 			{/* </SectionAlternate> */}

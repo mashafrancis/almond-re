@@ -109,7 +109,7 @@ describe('Time Schedules reducer: ', () => {
 
 			const editScheduleSuccessAction = editScheduleSuccess(
 				'5ede17f7184ccf003a2da68f',
-				editSchedulePayload,
+				editSchedulePayload.schedule,
 			);
 			scheduleState = reducer(
 				scheduleInitialState as any,

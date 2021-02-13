@@ -89,8 +89,6 @@ const DashboardTemplate = ({
 	const { width } = useViewport();
 	const breakpoint = 539;
 
-	const modalRef = createRef();
-
 	const options: IClientSubscribeOptions = {
 		qos: 2,
 		rap: true,
@@ -127,7 +125,7 @@ const DashboardTemplate = ({
 			window.localStorage.getItem('selectedIndex') as string,
 		);
 		if (selectedMenuIndex) setSelectedIndex(selectedIndex);
-		const initialSelectedIndex = { group: 0, item: 0 };
+		const initialSelectedIndex = 0;
 		window.localStorage.setItem(
 			'selectedIndex',
 			JSON.stringify(initialSelectedIndex),
@@ -254,7 +252,6 @@ const DashboardTemplate = ({
 
 	const SelectDeviceModal = (device) => (
 		<Modal
-			ref={modalRef}
 			isModalOpen={isSelectDeviceModalOpen}
 			renderHeader={() => 'Select the device ID'}
 			renderContent={() => selectDeviceContent(device)}
@@ -267,7 +264,6 @@ const DashboardTemplate = ({
 
 	const ChangeUserRoleDialog = (): JSX.Element => (
 		<Modal
-			ref={modalRef}
 			isModalOpen={state.isChangeRoleDialogOpen}
 			renderHeader={() => 'Confirm change of role'}
 			renderContent={() => selectChangeRoleContent()}

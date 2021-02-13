@@ -1,6 +1,10 @@
 import { Line } from 'react-chartjs-2';
-import './AreaCharts.scss';
 import { AreaChartDisplayProps } from '@components/AreaChartDisplay/interfaces';
+import { Grid } from '@material-ui/core';
+import { Chart } from 'chart.js';
+
+Chart.defaults.global.defaultFontFamily =
+	'Google Sans,Roboto,Helvetica Neue,sans-serif';
 
 const AreaChardDisplay = ({
 	chartData,
@@ -20,6 +24,7 @@ const AreaChardDisplay = ({
 				borderCapStyle: 'round',
 				borderJoinStyle: 'round',
 				borderWidth: '0.8',
+				maintainAspectRatio: false,
 				pointBorderColor: chartColor,
 				pointBackgroundColor: '#fff',
 				pointBorderWidth: 0.6,
@@ -36,6 +41,26 @@ const AreaChardDisplay = ({
 			legend: {
 				display: false,
 			},
+			layout: {
+				padding: {
+					left: 0,
+					right: 0,
+					top: 0,
+					bottom: 0,
+				},
+			},
+			// scales: {
+			//   xAxes: [{
+			//     gridLines: {
+			//       drawOnChartArea:false
+			//     }
+			//   }],
+			//   yAxes: [{
+			//     gridLines: {
+			//       drawOnChartArea:false
+			//     }
+			//   }]
+			// }
 		},
 	};
 

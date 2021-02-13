@@ -1,7 +1,5 @@
 import { useContext, lazy } from 'react';
-
 // components
-import { Cell, Row } from '@material/react-layout-grid';
 import {
 	AccountBalanceTwoTone,
 	LibraryBooksTwoTone,
@@ -11,75 +9,76 @@ import {
 	GroupTwoTone,
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
+import Grid from '@material-ui/core/Grid';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AnalyticsCard from '@components/AnalyticsCard';
 
-const AnalyticsCard = lazy(() => import('@components/AnalyticsCard'));
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			flexGrow: 1,
+		},
+	}),
+);
 
 const AdminAnalytics = (): JSX.Element => {
 	const { setSelectedIndex } = useContext(ComponentContext);
-
+	const classes = useStyles();
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
 	return (
-		<>
-			<Row className="analytics-page" data-testid="admin-analytics-page">
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(1)}
-						colorClass="card-color-blue"
-						icon={<AllOutTwoTone className="content-icon" />}
-						mainInfo="Devices"
-						subInfo="10"
-					/>
-				</Cell>
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(1)}
-						colorClass="card-color-yellow"
-						icon={<GroupTwoTone className="content-icon" />}
-						mainInfo="People"
-						subInfo="8"
-					/>
-				</Cell>
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(1)}
-						colorClass="card-color-purple"
-						icon={<ScheduleTwoTone className="content-icon" />}
-						mainInfo="Requests"
-						subInfo="30"
-					/>
-				</Cell>
-			</Row>
-			<Row className="analytics-page">
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(1)}
-						colorClass="card-color-red"
-						icon={<AccountBalanceTwoTone className="content-icon" />}
-						mainInfo="Sales"
-						subInfo="400,000"
-					/>
-				</Cell>
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(2)}
-						colorClass="card-color-green"
-						icon={<DeviceHubTwoTone className="content-icon" />}
-						mainInfo="Units"
-						subInfo="23"
-					/>
-				</Cell>
-				<Cell columns={4} desktopColumns={4} tabletColumns={4} phoneColumns={4}>
-					<AnalyticsCard
-						onClick={handleCardClick(3)}
-						colorClass="card-color-brown"
-						icon={<LibraryBooksTwoTone className="content-icon" />}
-						mainInfo="Orders"
-						subInfo="3"
-					/>
-				</Cell>
-			</Row>
-		</>
+		<div className={classes.root} data-testid="admin-analytics-page">
+			<Grid
+				container
+				item
+				xs={12}
+				spacing={2}
+				style={{ margin: 0, padding: 0 }}
+			>
+				<AnalyticsCard
+					onClick={handleCardClick(1)}
+					colorClass="card-color-blue"
+					icon={<AllOutTwoTone fontSize="large" />}
+					mainInfo="Devices"
+					subInfo="10"
+				/>
+				<AnalyticsCard
+					onClick={handleCardClick(1)}
+					colorClass="card-color-yellow"
+					icon={<GroupTwoTone fontSize="large" />}
+					mainInfo="People"
+					subInfo="8"
+				/>
+				<AnalyticsCard
+					onClick={handleCardClick(1)}
+					colorClass="card-color-purple"
+					icon={<ScheduleTwoTone fontSize="large" />}
+					mainInfo="Requests"
+					subInfo="30"
+				/>
+				<AnalyticsCard
+					onClick={handleCardClick(1)}
+					colorClass="card-color-red"
+					icon={<AccountBalanceTwoTone fontSize="large" />}
+					mainInfo="Sales"
+					subInfo="400,000"
+				/>
+				<AnalyticsCard
+					onClick={handleCardClick(2)}
+					colorClass="card-color-green"
+					icon={<DeviceHubTwoTone fontSize="large" />}
+					mainInfo="Units"
+					subInfo="23"
+				/>
+				<AnalyticsCard
+					onClick={handleCardClick(3)}
+					colorClass="card-color-brown"
+					icon={<LibraryBooksTwoTone fontSize="large" />}
+					mainInfo="Orders"
+					subInfo="3"
+				/>
+			</Grid>
+		</div>
 	);
 };
 

@@ -19,7 +19,7 @@ import { State as TimeSchedules } from '@modules/timeSchedules/types';
 import { State as User } from '@modules/user/types';
 import { State as Authentication } from '@modules/authentication/types';
 
-export type State = {
+export type IRootState = {
 	internalServerError: any;
 	timeSchedules: TimeSchedules;
 	snack: any;

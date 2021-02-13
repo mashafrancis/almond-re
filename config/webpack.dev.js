@@ -26,7 +26,7 @@ module.exports = merge(config, {
     compress: true,
     hot: true,
     // hmr: true,
-    overlay: true,
+    overlay: false,
     port: 3000,
     host: 'localhost',
     open: true,

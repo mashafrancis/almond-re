@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import Typography from '@material-ui/core/Typography';
 import serverErrorImage from '../../assets/images/illustration_500.svg';
 
 const useStyles = makeStyles((theme) => {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => {
 
 const ServerErrorPage = ({ error, resetErrorBoundary }: any): JSX.Element => {
 	const classes = useStyles();
+	console.log('Class: , Function: ServerErrorPage, Line 39 error():', error);
 
 	return (
 		<div>
@@ -56,6 +58,9 @@ const ServerErrorPage = ({ error, resetErrorBoundary }: any): JSX.Element => {
 									href="mailto:almond.froyo@gmail.com"
 									typographyProps={{ variant: 'h6' }}
 								/>
+								<Typography variant="body2" color="primary">
+									{error}
+								</Typography>
 							</span>
 						}
 						titleProps={{

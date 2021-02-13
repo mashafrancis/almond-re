@@ -1,6 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 import { DonutDisplayProps } from '@components/DonutDisplay/interfaces';
+import { Grid } from '@material-ui/core';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
@@ -63,13 +64,29 @@ const DonutDisplay = ({
 			},
 			rotation: halfDonut ? Math.PI : -0.5 * Math.PI,
 			circumference: halfDonut ? Math.PI : 2 * Math.PI,
+			segmentShowStroke: true,
+			segmentStrokeColor: '#fff',
+			segmentStrokeWidth: 2,
+			percentageInnerCutout: 50,
+			animationSteps: 100,
+			animationEasing: 'easeOutBounce',
+			animateRotate: true,
+			animateScale: false,
+			responsive: true,
+			showScale: true,
+			maintainAspectRatio: false,
 		},
 	};
 
 	return (
-		<div className="charts__donut-chart-card__content">
-			<Doughnut data={donutDetails} options={donutDetails.options} />
-		</div>
+		<Grid item xs={12}>
+			<Doughnut
+				data={donutDetails}
+				options={donutDetails.options}
+				width={250}
+				height={250}
+			/>
+		</Grid>
 	);
 };
 

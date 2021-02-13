@@ -7,6 +7,7 @@ import HomePage from '@pages/HomePage';
 import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
+import DashboardPage from '@pages/DashboardPage';
 import NotFoundPage from '@pages/NotFoundPage';
 import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 import SignupPage from '@pages/SignupPage';
@@ -17,6 +18,7 @@ import WithLayout from '../WithLayout';
 import {
 	Main as MainLayout,
 	Minimal as MinimalLayout,
+	Dashboard as DashboardLayout,
 	DocsLayout,
 } from '../layouts';
 
@@ -52,7 +54,13 @@ const Routes = (): any => (
 			exact
 			path="/dashboard"
 			authorize="analytics:view"
-			component={DashboardContainer}
+			component={(matchProps) => (
+        <WithLayout
+          {...matchProps}
+          component={DashboardPage}
+          layout={DashboardLayout}
+        />
+      )}
 			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
 		<Route
