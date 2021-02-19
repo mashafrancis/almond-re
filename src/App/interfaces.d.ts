@@ -7,6 +7,7 @@ export interface AppProps {
 	user: UserDetails;
 	getUserDetails: () => Promise<any>;
 	snack: SnackMessage;
+	loading: string;
 }
 
 export interface AppState {

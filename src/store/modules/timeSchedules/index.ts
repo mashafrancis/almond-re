@@ -23,6 +23,7 @@ import {
 	GetPumpStatusActionSuccess,
 	NewSchedule,
 	Schedule,
+	SchedulePayload,
 	TogglePumpStatusActionFailure,
 	TogglePumpStatusActionRequest,
 	TogglePumpStatusActionSuccess,
@@ -287,7 +288,8 @@ export const getAllSchedules = (deviceId: string) => (
 			dispatch(getSchedulesSuccess(data));
 		})
 		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'editing your schedule');
+			console.log('Class: , Function: , Line 292 error():', error);
+			errorOnSnack(error, dispatch, 'fetching your schedule');
 			dispatch(getSchedulesFailure(error));
 		});
 };
@@ -296,11 +298,11 @@ export const getAllSchedules = (deviceId: string) => (
  * Add a new schedule
  * @returns {Function} action type and payload
  */
-export const addNewSchedule = (schedule: { schedule: string }) => (
+export const addNewSchedule = (schedule: SchedulePayload) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		post: (arg0: string, arg1: { schedule: string }) => Promise<{ data: any }>;
+		post: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
 	},
 ) => {
 	dispatch(addScheduleRequest());
@@ -314,7 +316,7 @@ export const addNewSchedule = (schedule: { schedule: string }) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'creating your schedule');
+			// errorOnSnack(error, dispatch, 'creating your schedule');
 			dispatch(addScheduleFailure(error));
 		});
 };
@@ -348,10 +350,12 @@ export const deleteSingleSchedule = (id: string) => (
  * Edit a schedule
  * @returns {Function} action type and payload
  */
-export const editSchedule = (id: string, schedule: string) => (
+export const editSchedule = (id: string, schedule: SchedulePayload) => (
 	dispatch: Dispatch,
 	getState: any,
-	http: { patch: (arg0: string, arg1: string) => Promise<{ data: any }> },
+	http: {
+		patch: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
+	},
 ) => {
 	dispatch(editScheduleRequest());
 	return http
@@ -473,7 +477,7 @@ export const toggleScheduleStatus = (
 export const schedulesInitialState = {
 	schedules: [],
 	enabled: false,
-	isLoading: true,
+	isLoading: false,
 	errors: null,
 };
 
@@ -566,37 +570,37 @@ export const reducer: Reducer<State, Action> = (
 		case TOGGLE_PUMP_STATUS_REQUEST:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 			};
 		case TOGGLE_PUMP_STATUS_SUCCESS:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 				enabled: action.enabled,
 				errors: null,
 			};
 		case TOGGLE_PUMP_STATUS_FAILURE:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 				errors: action.errors,
 			};
 		case GET_PUMP_STATUS_REQUEST:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 			};
 		case GET_PUMP_STATUS_SUCCESS:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 				enabled: action.enabled,
 				errors: null,
 			};
 		case GET_PUMP_STATUS_FAILURE:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				// isLoading: action.isLoading,
 				errors: action.errors,
 			};
 		default:

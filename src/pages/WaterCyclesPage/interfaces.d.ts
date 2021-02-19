@@ -38,6 +38,7 @@ export interface WaterCyclesPageProps {
 	devices: Device[];
 	sensorData: SensorData;
 	waterTemperatureTrend: ChartDataTrend[];
+	waterLevel: any;
 }
 
 export interface WaterCyclesPageState {

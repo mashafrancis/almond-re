@@ -44,7 +44,13 @@ import Routes from '../routes';
 // };
 
 // eslint-disable-next-line no-shadow
-export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
+export const App = ({
+	user,
+	snack,
+	getUserDetails,
+	location,
+	loading,
+}: AppProps) => {
 	const [state, setState] = useState<AppState>({
 		isUserAuthenticated: authService.isAuthenticated(),
 		loading: 'idle',
@@ -84,14 +90,13 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 	useEffectAsync(async () => {
 		if (state.isUserAuthenticated) {
 			try {
-				await getUserDetails().then((response) => {
-					setState({
-						...state,
-						isAdmin: !checkUserRole(
-							response.userDetails.currentRole.title,
-							'User',
-						),
-					});
+				const response = await getUserDetails();
+				setState({
+					...state,
+					isAdmin: !checkUserRole(
+						response.userDetails.currentRole.title,
+						'User',
+					),
 				});
 			} catch {
 				setState({ ...state, loading: 'error' });
@@ -153,7 +158,7 @@ export const App = ({ user, snack, getUserDetails, location }: AppProps) => {
 						<SnackBar snack={snack} />
 						{window.location.pathname !== '/' && isUserAuthenticated}
 						<Suspense fallback={<LinearProgressBar />}>
-							<Routes />
+							{loading === 'requesting' ? <h3>Loading...</h3> : <Routes />}
 						</Suspense>
 					</ViewportProvider>
 				</ComponentProvider>

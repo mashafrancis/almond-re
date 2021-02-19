@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { ChangeEvent, lazy, useEffect, useState } from 'react';
 // third-party libraries
 import { Cell, Row } from '@material/react-layout-grid';
 import { connect, useSelector } from 'react-redux';
@@ -11,16 +11,71 @@ import { displaySnackMessage } from '@modules/snack';
 import roundDigit from '@utils/roundDigit';
 // styles
 import './EnvironmentControlPage.scss';
-import { EnvironmentControlPageProps } from '@pages/EnvironmentControlPage/interfaces';
+import {
+	EnvironmentControlPageProps,
+	EnvironmentControlPageState,
+} from '@pages/EnvironmentControlPage/interfaces';
+import Grid from '@material-ui/core/Grid';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AreaChardDisplay from '@components/AreaChartDisplay';
+import DashboardCard from '@components/DashboardCard';
+import DonutDisplay from '@components/DonutDisplay';
+import { LineChartCard } from '@components/organisms';
+import { DateRanges } from '@components/DateRangePicker/interfaces';
+import getDateRange from '@utils/DateRangeSelect';
+import { getAirTemperatureTrend } from '@modules/sensorData';
 
-// components
-const DashboardCard = lazy(() => import('@components/DashboardCard'));
-const DonutDisplay = lazy(() => import('@components/DonutDisplay'));
-const AreaChardDisplay = lazy(() => import('@components/AreaChartDisplay'));
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			flexGrow: 1,
+		},
+		blankContent: {
+			marginTop: 40,
+			marginBottom: 40,
+			fontFamily: 'San Francisco, serif !important',
+			fontSize: 30,
+			fontWeight: 300,
+			letterSpacing: -2,
+			wordSpacing: 2,
+		},
+		'& .super-app-theme--header': {
+			color: theme.palette.text.primary,
+			// fontWeight: 500,
+		},
+	}),
+);
 
 export const EnvironmentControlPage = ({
 	sensorData,
+	getAirTemperatureTrend,
+	airTemperatureTrend,
 }: EnvironmentControlPageProps): JSX.Element => {
+	const classes = useStyles();
+	const [state, setState] = useState<EnvironmentControlPageState>({
+		isDateRangeHidden: true,
+		currentDateInView: '',
+		airTemperatureCardDateRange: '',
+	});
+
+	useEffect(() => {
+		// const queryParams = {
+		// 	db: 'almond_db',
+		// 	q:
+		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
+		// 	epoch: 'ms',
+		// };
+		const queryParams = {
+			q: 'time >= now() - 7d',
+		};
+		getAirTemperatureTrend(queryParams).then(() => {
+			setState((prevState) => ({
+				...prevState,
+				isLoading: false,
+			}));
+		});
+	}, []);
+
 	// :TODO: Implement useSelector method
 	const { temperature, humidity } = sensorData;
 
@@ -51,28 +106,75 @@ export const EnvironmentControlPage = ({
 		},
 	];
 
+	const handleDateRangeModal = () => {
+		setState((prevState) => ({
+			...prevState,
+			isDateRangeHidden: !prevState.isDateRangeHidden,
+		}));
+	};
+
+	const onDateRangeChange = (range: DateRanges) => {
+		handleDateRangeModal();
+		console.log(
+			'Class: , Function: onDateRangeChange, Line 324 range():',
+			range,
+		);
+	};
+
+	const currentDateView = (frequency: string) => {
+		setState((prevState) => ({
+			...prevState,
+			currentDateInView: frequency,
+		}));
+	};
+
+	const handleDateSelect = (event: ChangeEvent<{ value: unknown }>) => {
+		const { value: param } = event.target;
+		if (param === 'Pick a date') {
+			setState((prevState) => ({
+				...prevState,
+				isDateRangeHidden: false,
+			}));
+		}
+
+		setState((prevState) => ({
+			...prevState,
+			waterCardDateRange: param as string,
+		}));
+
+		const range = {
+			startDate: new Date(),
+			endDate: new Date(),
+		};
+		const date = getDateRange(param, range, currentDateView);
+		const queryParams = {
+			q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
+		};
+		getAirTemperatureTrend(queryParams).then(() => {
+			setState((prevState) => ({
+				...prevState,
+				isLoading: false,
+			}));
+		});
+	};
+
 	return (
-		<>
-			<Row>
-				<Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-					{window.innerWidth < 539 && (
-						<div className="main-subheader">
-							<h3>EnvironmentControl</h3>
-						</div>
-					)}
-				</Cell>
-			</Row>
-			<Row className="analytics-page">
+		<div className={classes.root} data-testid="environment-page">
+			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
 				{donutData.map((data, index) => (
-					<Cell
-						key={index}
-						columns={4}
-						desktopColumns={4}
-						tabletColumns={4}
-						phoneColumns={4}
+					<Grid
+						item
+						container
+						direction="row"
+						justify="center"
+						alignItems="center"
+						spacing={2}
+						xs={6}
+						sm={6}
+						md={4}
+						style={{ margin: 0, padding: 0 }}
 					>
 						<DashboardCard
-							classes="recent-activities-available"
 							heading={data.heading}
 							body={
 								<DonutDisplay
@@ -80,92 +182,70 @@ export const EnvironmentControlPage = ({
 									hoverBackgroundColor={data.hoverBackgroundColor}
 									data={data.data}
 									donutInfo={data.donutInfo}
-									halfDonut
+									halfDonut={false}
 								/>
 							}
 						/>
-					</Cell>
+					</Grid>
 				))}
-				{/* <Cell columns={4} desktopColumns={4} tabletColumns={8} phoneColumns={4}> */}
-				{/*  <DashboardCard */}
-				{/*    classes="recent-activities-available" */}
-				{/*    heading="About" */}
-				{/*    body={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`} */}
-				{/*    // actionItem={<ActionButton name="Refresh" icon="update" />} */}
-				{/*  /> */}
-				{/*  /!*<GeneralCardInfo*!/ */}
-				{/*  /!*  mainHeader="About Environmental Control"*!/ */}
-				{/*  /!*  subHeader={`You can monitor the plant environment, the air temperature and humidity. The given set points for optimal plant growth are: 27 degrees celcius for temperature and 55 % for humidity`}*!/ */}
-				{/*  /!*  icon={<BlurCircularIcon className="content-icon general-info-icon" />}*!/ */}
-				{/*  /!*  />*!/ */}
-				{/* </Cell> */}
-			</Row>
-			<Row>
-				<Cell columns={6} desktopColumns={6} tabletColumns={4} phoneColumns={4}>
-					<DashboardCard
-						classes="recent-activities-available"
+				<Grid
+					item
+					container
+					direction="row"
+					justify="center"
+					alignItems="center"
+					spacing={2}
+					xs={12}
+					sm={12}
+					md={6}
+					style={{ margin: 0, padding: 0 }}
+				>
+					<LineChartCard
 						heading="Daily Temperature Chart"
-						body={
-							<AreaChardDisplay
-								backgroundColor="rgba(25, 103, 210, 0.2)"
-								chartColor="#36A2EB"
-								chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-								labels={[
-									'00:00',
-									'03:00',
-									'06:00',
-									'09:00',
-									'12:00',
-									'15:00',
-									'18:00',
-									'21:00',
-									'00:00',
-								]}
-							/>
-						}
-						actionItem={
-							<Button name="Filter" startIcon={<FilterList />} variant="text" />
-						}
+						selectedValue={state.airTemperatureCardDateRange}
+						handleDateSelect={handleDateSelect}
+						isDateRangeHidden={state.isDateRangeHidden}
+						onDateRangeChange={onDateRangeChange}
+						handleDateRangeModal={handleDateRangeModal}
+						data={airTemperatureTrend}
 					/>
-				</Cell>
-				<Cell columns={6} desktopColumns={6} tabletColumns={8} phoneColumns={4}>
-					<DashboardCard
-						classes="recent-activities-available"
+				</Grid>
+				<Grid
+					item
+					container
+					direction="row"
+					justify="center"
+					alignItems="center"
+					spacing={2}
+					xs={12}
+					sm={12}
+					md={6}
+					style={{ margin: 0, padding: 0 }}
+				>
+					<LineChartCard
 						heading="Daily Humidity Chart"
-						body={
-							<AreaChardDisplay
-								backgroundColor="rgba(255,206,86,0.2)"
-								chartColor="#FFCE56"
-								chartData={[25, 36, 50, 57, 40, 70, 55, 30, 47]}
-								labels={[
-									'00:00',
-									'03:00',
-									'06:00',
-									'09:00',
-									'12:00',
-									'15:00',
-									'18:00',
-									'21:00',
-									'00:00',
-								]}
-							/>
-						}
-						actionItem={
-							<Button name="Filter" startIcon={<FilterList />} variant="text" />
-						}
+						selectedValue={state.airTemperatureCardDateRange}
+						handleDateSelect={handleDateSelect}
+						isDateRangeHidden={state.isDateRangeHidden}
+						onDateRangeChange={onDateRangeChange}
+						handleDateRangeModal={handleDateRangeModal}
+						data={airTemperatureTrend}
 					/>
-				</Cell>
-			</Row>
-		</>
+				</Grid>
+			</Grid>
+		</div>
 	);
 };
 
 export const mapStateToProps = (state) => ({
 	sensorData: state.sensorData.sensorData,
+	airTemperatureTrend: state.sensorData.airTemperatureTrend,
 });
 
 export const mapDispatchToProps = (dispatch) => ({
 	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
+	getAirTemperatureTrend: (queryParams) =>
+		dispatch(getAirTemperatureTrend(queryParams)),
 });
 
 export default connect(

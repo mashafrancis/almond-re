@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import * as React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -25,7 +24,7 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import { SectionHeader } from '@components/molecules';
 import { MenuGroupProps, PagesProps } from '../../../interfaces';
 
-const logo = 'https://static.almondhydroponics.com/static/logo.png'
+const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	flexGrow: {
@@ -215,7 +214,12 @@ const Topbar = ({
 	);
 
 	return (
-		<Toolbar disableGutters className={classes.toolbar} {...rest}>
+		<Toolbar
+			disableGutters
+			className={classes.toolbar}
+			{...rest}
+			variant="dense"
+		>
 			<div className={classes.logoContainer}>
 				<NavLink to="/">
 					<Grid container className={classes.container}>

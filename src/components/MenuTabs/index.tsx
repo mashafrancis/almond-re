@@ -8,19 +8,23 @@ interface MenuTabProps {
 	icon: any;
 }
 
-const MenuTabs = withStyles({
-	root: {
-		borderBottom: '1px solid #e8e8e8',
-	},
-	indicator: {
-		backgroundColor: primaryColor,
-		display: 'none',
-	},
-})(Tabs);
+const MenuTabs = withStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			// borderBottom: '1px solid #e8e8e8',
+		},
+		indicator: {
+			backgroundColor: theme.palette.primary.main,
+			display: 'none',
+		},
+	}),
+)(Tabs);
 
 const MenuTab = withStyles((theme: Theme) =>
 	createStyles({
 		root: {
+			marginBottom: 10,
+			marginTop: 10,
 			textTransform: 'none',
 			minWidth: 72,
 			fontWeight: theme.typography.fontWeightMedium,
@@ -33,15 +37,16 @@ const MenuTab = withStyles((theme: Theme) =>
 				'sans-serif',
 			].join(','),
 			'&:hover': {
-				color: primaryColor,
+				color: theme.palette.primary.main,
+				backgroundColor: theme.palette.background.level2,
 				opacity: 1,
 			},
 			'&$selected': {
-				color: primaryColor,
+				color: theme.palette.primary.main,
 				fontWeight: theme.typography.fontWeightMedium,
 			},
 			'&:focus': {
-				color: primaryColor,
+				color: theme.palette.primary.main,
 			},
 		},
 		selected: {},

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 // thunks
 import { displaySnackMessage } from '@modules/snack';
 import { UserContext } from '@context/UserContext';
-// styles
-import './AnalyticsPage.scss';
 // interfaces
 import AdminAnalytics from '@pages/AnalyticsPage/AdminAnalytics';
 import RegularUserAnalytics from '@pages/AnalyticsPage/RegularUserAnalytics';

@@ -1,12 +1,9 @@
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
 // components
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
 import { MenuTab, MenuTabs } from '@components/MenuTabs';
-// styles
-import '@pages/DashboardContainer/DashboardNavBar.scss';
-import './MenuContext.scss';
 
 const MenuContent = (): JSX.Element => {
 	const { selectedIndex, setSelectedIndex } = useContext(ComponentContext);
@@ -14,7 +11,7 @@ const MenuContent = (): JSX.Element => {
 
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
 
-	const handleOnChange = (event: React.ChangeEvent<{}>, value: number) => {
+	const handleOnChange = (event: ChangeEvent<{}>, value: number) => {
 		setSelectedIndex(value);
 	};
 

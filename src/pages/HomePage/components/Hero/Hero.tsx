@@ -10,7 +10,9 @@ import authService from '@utils/auth';
 import { UserContext } from '@context/UserContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
-const homeImage = 'https://static.almondhydroponics.com/static/images/homehero.svg';
+
+const homeImage =
+	'https://static.almondhydroponics.com/static/images/homehero.svg';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

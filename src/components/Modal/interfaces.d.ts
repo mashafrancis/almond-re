@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 export interface ModalProps {
 	isModalOpen: boolean;
 	renderHeader: () => ReactNode | null;
-	renderContent: () => ReactNode | null;
+	renderContent: ReactNode;
 	fullScreen?: boolean;
 	onClose?: (e?) => void;
 	submitButtonName?: string;

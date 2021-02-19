@@ -437,7 +437,7 @@ describe('Time schedules module actions', () => {
 
 			return dispatchMethodMock(
 				store,
-				editSchedule(id, schedulePayload.schedule),
+				editSchedule(id, schedulePayload),
 				expectedActions,
 			);
 		});
@@ -479,7 +479,7 @@ describe('Time schedules module actions', () => {
 
 			return dispatchMethodMock(
 				store,
-				editSchedule(id, schedulePayload.schedule),
+				editSchedule(id, schedulePayload),
 				expectedActions,
 			);
 		});

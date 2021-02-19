@@ -79,8 +79,8 @@ export const useTopBarStyles = makeStyles((theme: Theme) =>
 export const StyledBadge = withStyles((theme: Theme) =>
 	createStyles({
 		badge: {
-			backgroundColor: '#1967D2',
-			color: '#1967D2',
+			backgroundColor: theme.palette.background.default,
+			color: theme.palette.background.default,
 			boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
 			'&::after': {
 				position: 'absolute',

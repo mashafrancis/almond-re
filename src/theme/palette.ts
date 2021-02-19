@@ -39,6 +39,7 @@ export const light = {
 		level2: '#f5f5f5',
 		level1: '#fff',
 		footer: '#142542',
+		activeDevice: 'rgba(17, 17, 17, 0.8)',
 	},
 };
 
@@ -76,5 +77,6 @@ export const dark = {
 		level2: '#333',
 		level1: '#2D3748',
 		footer: '#18181f',
+		activeDevice: 'rgba(17, 17, 17, 0.8)',
 	},
 };

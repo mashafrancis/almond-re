@@ -9,6 +9,7 @@
 		border: 1px solid #dadce0;
 		border-radius: 16px;
 		align-items: center;
+    height: 120px;
 
 		&__body {
 			margin-right: 24px;
@@ -114,4 +115,40 @@
 	.analytics-page {
 		margin-top: 20px;
 	}
+}
+
+.card-color-yellow {
+  color: #f29900 !important;
+  background-color: #fef7e0 !important;
+  border-color: rgba(242, 153, 0, 0.2) !important;
+}
+
+.card-color-blue {
+  color: #1967d2 !important;
+  background-color: #e8f0fe !important;
+  border-color: rgba(25, 103, 210, 0.2) !important;
+}
+
+.card-color-purple {
+  color: #512da8 !important;
+  background-color: #f3e8fd !important;
+  border-color: rgba(81, 45, 168, 0.2) !important;
+}
+
+.card-color-brown {
+  color: #3e2723 !important;
+  background-color: #efebe9 !important;
+  border-color: rgba(62, 39, 35, 0.2) !important;
+}
+
+.card-color-red {
+  color: #821721 !important;
+  background-color: #fff4f4 !important;
+  border-color: rgba(210, 43, 53, 0.2) !important;
+}
+
+.card-color-green {
+  color: #1b5e20 !important;
+  background-color: #e8f5e9 !important;
+  border-color: rgba(27, 94, 32, 0.2) !important;
 }

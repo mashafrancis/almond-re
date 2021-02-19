@@ -135,6 +135,7 @@ export interface Schedule {
 
 export interface NewSchedule {
 	schedule: string;
+	device?: string;
 }
 
 export interface ToggleSchedulePayload {
