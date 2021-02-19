@@ -3,58 +3,20 @@ services:
   web:
     container_name: web
     restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    build: ./
     env_file: .env
-    volumes:
-      - node_modules:/home/app/node_modules
-    expose:
-      - 80
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    restart: unless-stopped
+    env_file: .env
     ports:
-      - '80:3000'
-    networks:
-      - web-network
-
-#  nginx:
-#    container_name: nginx
-#    build: ./nginx
-#    restart: unless-stopped
-#    ports:
-#      - '80:80'
-#      - '443:443'
-#    volumes:
-#      - ssl_data_conf:/etc/letsencrypt
-#      - ssl_data_www:/var/www/html
-#      - /var/run/docker.sock:/tmp/docker.sock
-##      - /home/app/dist:/usr/share/nginx/html
-##      - ./nginx:/etc/nginx
-#    depends_on:
-#      - web
-#    networks:
-#      - web-network
-#    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
-#
-#  certbot:
-#    container_name: certbot
-#    build: ./certbot
-#    entrypoint: ['/bin/bash', '/home/app/setup.sh']
-#    restart: always
-#    env_file: .env
-#    depends_on:
-#      - nginx
-#    volumes:
-#      - ssl_data_conf:/etc/letsencrypt
-#      - ssl_data_www:/var/www/html
-#      - /var/run/docker.sock:/tmp/docker.sock
-#    networks:
-#      - web-network
-
-volumes:
-  node_modules:
-  ssl_data_conf:
-  ssl_data_www:
-
-networks:
-  web-network:
-    driver: bridge
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /etc/ssl:/etc/ssl
+      - /var/run/docker.sock:/tmp/docker.sock
+    depends_on:
+      - web
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''

@@ -24,6 +24,7 @@ import { LineChartCard } from '@components/organisms';
 import { DateRanges } from '@components/DateRangePicker/interfaces';
 import getDateRange from '@utils/DateRangeSelect';
 import { getAirTemperatureTrend } from '@modules/sensorData';
+import fancyId from '@utils/fancyId';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -163,6 +164,7 @@ export const EnvironmentControlPage = ({
 			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
 				{donutData.map((data, index) => (
 					<Grid
+						key={fancyId()}
 						item
 						container
 						direction="row"
@@ -175,6 +177,7 @@ export const EnvironmentControlPage = ({
 						style={{ margin: 0, padding: 0 }}
 					>
 						<DashboardCard
+							key={fancyId()}
 							heading={data.heading}
 							body={
 								<DonutDisplay

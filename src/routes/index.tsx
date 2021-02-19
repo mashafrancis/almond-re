@@ -55,12 +55,12 @@ const Routes = (): any => (
 			path="/dashboard"
 			authorize="analytics:view"
 			component={(matchProps) => (
-        <WithLayout
-          {...matchProps}
-          component={DashboardPage}
-          layout={DashboardLayout}
-        />
-      )}
+				<WithLayout
+					{...matchProps}
+					component={DashboardContainer}
+					layout={DashboardLayout}
+				/>
+			)}
 			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
 		<Route

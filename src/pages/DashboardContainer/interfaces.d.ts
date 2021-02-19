@@ -44,7 +44,6 @@ export interface DashboardContainerState {
 	fields: {
 		[key: string]: string | number;
 	};
-	isChangeRoleDialogOpen: boolean;
 	anchorEl: null | HTMLElement;
 	roleSelected: string;
 	roleId: string;

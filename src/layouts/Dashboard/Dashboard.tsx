@@ -10,7 +10,6 @@ import {
 	Container,
 } from '@material-ui/core';
 import isArrayNotNull from '@utils/checkArrayEmpty';
-import { DashboardState } from '@pages/DashboardPage/interfaces';
 import MenuContent from '@components/MenuContent';
 import PageBottomNavigation from '@components/BottomNavigation';
 import { Topbar } from './components';
@@ -60,34 +59,6 @@ const Dashboard = ({
 	themeMode,
 }: Props): JSX.Element => {
 	const classes = useStyles();
-	const theme = useTheme();
-	const isMd = useMediaQuery(theme.breakpoints.up('md'), {
-		defaultMatches: true,
-	});
-
-	const [state, setState] = useState<DashboardState>({
-		isOpen: false,
-		isLoading: true,
-		isFeedbackMenuOpen: false,
-		isFeedbackModal: false,
-		isProfileMenuOpen: false,
-		device: '',
-		action: '',
-		fields: {},
-		feedback: '',
-		isChangeRoleDialogOpen: false,
-		anchorEl: null,
-		roleSelected: '',
-		roleId: '',
-	});
-
-	const toggleRoleChangeDialog = () => {
-		setState((prevState) => ({
-			...prevState,
-			isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
-			anchorEl: null,
-		}));
-	};
 
 	return (
 		<div
@@ -99,7 +70,6 @@ const Dashboard = ({
 				themeMode={themeMode}
 				themeToggler={themeToggler}
 				isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
-				toggleRoleChangeDialog={toggleRoleChangeDialog}
 			/>
 			<Hidden smDown>
 				<Drawer

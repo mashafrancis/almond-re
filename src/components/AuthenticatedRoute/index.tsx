@@ -29,7 +29,7 @@ const AuthenticatedRoute = (props: any) => {
 
 	return (
 		<div data-testid="authenticated-route">
-			 <RestrictedRoute {...rest} render={renderComponent(Component)} />
+			<RestrictedRoute {...rest} render={renderComponent(Component)} />
 		</div>
 	);
 };

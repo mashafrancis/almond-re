@@ -32,8 +32,6 @@ build:
 #@-- command to start the application container --@#
 start:
 	@ ${INFO} "Building required docker images"
-#	@ docker volume create --name=certbot-etc > /dev/null
-#	@ docker volume create --name=certbot-var > /dev/null
 	@ docker-compose -f $(DOCKER_DEV_COMPOSE_FILE) build web
 	@ ${SUCCESS} "Build Completed successfully"
 	@ echo " "

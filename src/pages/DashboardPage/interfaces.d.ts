@@ -1,4 +1,4 @@
-export interface DashboardState {
+export interface DashboardPageState {
 	isOpen: boolean;
 	isLoading: boolean;
 	isFeedbackMenuOpen: boolean;

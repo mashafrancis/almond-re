@@ -5,6 +5,9 @@ import queryString from 'query-string';
 import { connect, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
@@ -35,6 +38,16 @@ import { IClientOptions } from 'mqtt';
 import { AppProps, AppState } from './interfaces';
 import Routes from '../routes';
 
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		backdrop: {
+			zIndex: theme.zIndex.drawer + 1,
+			color: '#fff',
+			backgroundColor: '#dedede',
+		},
+	}),
+);
+
 // const configurations = {
 // 	token: `token ${process.env.GITHUB_TOKEN}`,
 // 	owner: 'almond-hydroponics',
@@ -51,6 +64,7 @@ export const App = ({
 	location,
 	loading,
 }: AppProps) => {
+	const classes = useStyles();
 	const [state, setState] = useState<AppState>({
 		isUserAuthenticated: authService.isAuthenticated(),
 		loading: 'idle',
@@ -120,9 +134,9 @@ export const App = ({
 		[],
 	);
 
-	// const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
-	// const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
-	// const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
+	const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
+	const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
+	const bufferCA = Buffer.from(`${process.env.TRUSTED_CA}`).toString('utf-8');
 
 	const options: IClientOptions = {
 		username: process.env.MQTT_USER,
@@ -148,22 +162,34 @@ export const App = ({
 
 	return (
 		<ErrorBoundary FallbackComponent={ServerErrorPage}>
-			{/* <Connector */}
-			{/*	brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
-			{/*	opts={options} */}
-			{/* > */}
-			<UserContext.Provider value={userDetailsOnProvider}>
-				<ComponentProvider>
-					<ViewportProvider>
-						<SnackBar snack={snack} />
-						{window.location.pathname !== '/' && isUserAuthenticated}
-						<Suspense fallback={<LinearProgressBar />}>
-							{loading === 'requesting' ? <h3>Loading...</h3> : <Routes />}
-						</Suspense>
-					</ViewportProvider>
-				</ComponentProvider>
-			</UserContext.Provider>
-			{/* </Connector> */}
+			<Connector
+				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
+				opts={options}
+			>
+				<UserContext.Provider value={userDetailsOnProvider}>
+					<ComponentProvider>
+						<ViewportProvider>
+							<SnackBar snack={snack} />
+							{window.location.pathname !== '/' && isUserAuthenticated}
+							<Suspense fallback={<LinearProgressBar />}>
+								{loading === 'requesting' ? (
+									<Backdrop
+										className={classes.backdrop}
+										open={loading === 'requesting'}
+									>
+										<CircularProgress
+											color="secondary"
+											style={{ zIndex: 100000 }}
+										/>
+									</Backdrop>
+								) : (
+									<Routes />
+								)}
+							</Suspense>
+						</ViewportProvider>
+					</ComponentProvider>
+				</UserContext.Provider>
+			</Connector>
 		</ErrorBoundary>
 	);
 };

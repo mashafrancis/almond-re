@@ -69,25 +69,15 @@ const LineChartCard = ({
 		<DashboardCard
 			heading={heading}
 			body={
-				data.length === 0 ? (
+				data.length !== 0 ? (
 					<AreaChardDisplay
 						backgroundColor="rgba(25, 103, 210, 0.2)"
 						chartColor="#1967D2"
-						chartData={[15, 16, 20, 27, 21, 24, 21, 19, 16]}
-						labels={[
-							'00:00',
-							'03:00',
-							'06:00',
-							'09:00',
-							'12:00',
-							'15:00',
-							'18:00',
-							'21:00',
-							'00:00',
-						]}
+						chartData={chartData}
+						labels={labels}
 					/>
 				) : (
-					BlankContent('No data to display')
+					<BlankContent message="No data to display" />
 				)
 			}
 			actionItem={

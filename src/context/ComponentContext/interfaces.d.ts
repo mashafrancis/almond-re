@@ -10,6 +10,7 @@ export interface ComponentContextState {
 	selectedIndex: number;
 	isSelectDeviceModalOpen: boolean;
 	isActivityDrawerOpen: boolean;
+	isChangeRoleDialogOpen: boolean;
 	activityLogsViewed: boolean;
 	isSnackOpen: boolean;
 	snackMessage: string;
