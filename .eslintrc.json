@@ -19,7 +19,7 @@
 		"plugin:react/recommended",
 		"plugin:import/recommended",
 		"plugin:@typescript-eslint/recommended",
-		"prettier/@typescript-eslint",
+		"prettier",
 		"plugin:prettier/recommended",
 		"plugin:jest-dom/recommended"
 	],

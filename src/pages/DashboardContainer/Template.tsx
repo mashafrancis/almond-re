@@ -13,12 +13,14 @@ import {
 } from 'react';
 // third-party libraries
 import {
-	SwipeableDrawer,
-	MenuItem,
-	TextField,
+	AppBar,
+	Grid,
+	Hidden,
 	InputAdornment,
+	MenuItem,
+	SwipeableDrawer,
+	TextField,
 } from '@material-ui/core';
-import { Grid } from '@material/react-layout-grid';
 import { useSubscription } from '@hooks/mqtt';
 import { getSensorData } from '@modules/sensorData';
 import { useDispatch } from 'react-redux';
@@ -26,8 +28,6 @@ import { useDispatch } from 'react-redux';
 import { AllOutTwoTone, Face } from '@material-ui/icons';
 // components;
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
-import LinearProgressBar from '@components/LinearProgressBar';
-import TopBar from '@components/TopBar';
 import TabPanel from '@components/TabPanel';
 // utils
 import { UserContext } from '@context/UserContext';
@@ -38,15 +38,31 @@ import { Device } from '@modules/device/interfaces';
 import { IClientSubscribeOptions } from 'mqtt';
 // styles
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
-import { primaryColor } from '../../assets/tss/common';
-import { DashboardContainerProps, DashboardContainerState } from './interfaces';
+import Modal from '@components/Modal';
+import ActivityLogCard from '@components/ActivityLogCard';
+import Typography from '@material-ui/core/Typography';
+import { BlankContent } from '@pages/WaterCyclesPage/Template';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import useViewport from '../../hooks/useViewport';
-import './DashboardContainer.scss';
-// lazy loaded components
-const Modal = lazy(() => import('@components/Modal'));
-const MenuContent = lazy(() => import('@components/MenuContent'));
-const PageBottomNavigation = lazy(() => import('@components/BottomNavigation'));
-const ActivityLogCard = lazy(() => import('@components/ActivityLogCard'));
+import { DashboardContainerProps, DashboardContainerState } from './interfaces';
+import { primaryColor } from '../../assets/tss/common';
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			width: '100%',
+			// paddingLeft: 10,
+			// paddingRight: 10,
+			// height: '46px',
+		},
+		appBar: {
+			// top: 'auto',
+			top: 0,
+			backgroundColor: theme.palette.background.level1,
+			zIndex: theme.zIndex.drawer + 1,
+		},
+	}),
+);
 
 const DashboardTemplate = ({
 	history,
@@ -66,28 +82,25 @@ const DashboardTemplate = ({
 		action: '',
 		fields: {},
 		feedback: '',
-		isChangeRoleDialogOpen: false,
 		anchorEl: null,
 		roleSelected: '',
 		roleId: '',
 	});
 
 	const styles = useDashboardContainerStyles();
+	const classes = useStyles();
 
 	const { activeDevice, devices, isAdmin } = useContext(UserContext);
-
 	const {
 		selectedIndex,
-		setSelectedIndex,
+		toggleRoleChangeDialog,
 		handleCloseDeviceModal,
 		handleSelectDeviceModal,
 		isSelectDeviceModalOpen,
+		isChangeRoleDialogOpen,
 		toggleActivityDrawer,
 		isActivityDrawerOpen,
 	} = useContext(ComponentContext);
-
-	const { width } = useViewport();
-	const breakpoint = 539;
 
 	const options: IClientSubscribeOptions = {
 		qos: 2,
@@ -120,25 +133,25 @@ const DashboardTemplate = ({
 		}));
 	}, []);
 
-	useEffect(() => {
-		const selectedMenuIndex = JSON.parse(
-			window.localStorage.getItem('selectedIndex') as string,
-		);
-		if (selectedMenuIndex) setSelectedIndex(selectedIndex);
-		const initialSelectedIndex = 0;
-		window.localStorage.setItem(
-			'selectedIndex',
-			JSON.stringify(initialSelectedIndex),
-		);
-	}, []);
+	// useEffect(() => {
+	// 	const selectedMenuIndex = JSON.parse(
+	// 		window.localStorage.getItem('selectedIndex') as string,
+	// 	);
+	// 	if (selectedMenuIndex) setSelectedIndex(selectedIndex);
+	// 	const initialSelectedIndex = 0;
+	// 	window.localStorage.setItem(
+	// 		'selectedIndex',
+	// 		JSON.stringify(initialSelectedIndex),
+	// 	);
+	// }, []);
 
-	const toggleRoleChangeDialog = () => {
-		setState((prevState) => ({
-			...prevState,
-			isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
-			anchorEl: null,
-		}));
-	};
+	// const toggleRoleChangeDialog = () => {
+	// 	setState((prevState) => ({
+	// 		...prevState,
+	// 		isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
+	// 		anchorEl: null,
+	// 	}));
+	// };
 
 	const closeRoleChangeDialog = () => {
 		toggleRoleChangeDialog();
@@ -176,7 +189,7 @@ const DashboardTemplate = ({
 			});
 	};
 
-	const selectDeviceContent = (UserDevices: Device[]) => (
+	const SelectDeviceContent = ({ devices }) => (
 		<TextField
 			id="device"
 			select
@@ -205,15 +218,15 @@ const DashboardTemplate = ({
 				),
 			}}
 		>
-			{UserDevices.map((device: Device) => (
+			{devices.map((device: Device) => (
 				<MenuItem key={device.id} value={device.id}>
-					<h4 className="headline-5">{device.id}</h4>
+					<Typography variant="body1">{device.id}</Typography>
 				</MenuItem>
 			))}
 		</TextField>
 	);
 
-	const selectChangeRoleContent = () => (
+	const SelectChangeRoleContent = () => (
 		<TextField
 			id="user-role"
 			select
@@ -244,17 +257,17 @@ const DashboardTemplate = ({
 		>
 			{user.roles.map((role) => (
 				<MenuItem key={role._id} value={role.title}>
-					<h4 className="headline-5">{role.title}</h4>
+					<Typography variant="body1">{role.title}</Typography>
 				</MenuItem>
 			))}
 		</TextField>
 	);
 
-	const SelectDeviceModal = (device) => (
+	const SelectDeviceModal = ({ devices }): JSX.Element => (
 		<Modal
 			isModalOpen={isSelectDeviceModalOpen}
 			renderHeader={() => 'Select the device ID'}
-			renderContent={() => selectDeviceContent(device)}
+			renderContent={<SelectDeviceContent devices={devices} />}
 			onClose={handleSelectDeviceModal}
 			submitButtonName="Select Device"
 			onSubmit={handleSelectDevice}
@@ -264,9 +277,9 @@ const DashboardTemplate = ({
 
 	const ChangeUserRoleDialog = (): JSX.Element => (
 		<Modal
-			isModalOpen={state.isChangeRoleDialogOpen}
+			isModalOpen={isChangeRoleDialogOpen}
 			renderHeader={() => 'Confirm change of role'}
-			renderContent={() => selectChangeRoleContent()}
+			renderContent={<SelectChangeRoleContent />}
 			onClose={toggleRoleChangeDialog}
 			submitButtonName="Select Role"
 			onSubmit={handleChangeRole}
@@ -275,8 +288,14 @@ const DashboardTemplate = ({
 	);
 
 	const ActivityLogsList = (): JSX.Element => (
-		<div className="activity-logs-drawer">
-			<h5 className="card-header__title">Recent Activities</h5>
+		<>
+			<Typography
+				variant="h5"
+				gutterBottom
+				style={{ marginTop: 20, marginLeft: 10 }}
+			>
+				Recent Activities
+			</Typography>
 			{isArrayNotNull(activityLogs) ? (
 				activityLogs.map((logs) => (
 					<ActivityLogCard
@@ -287,11 +306,9 @@ const DashboardTemplate = ({
 					/>
 				))
 			) : (
-				<div className="blank-content">
-					<h2>No logs found!</h2>
-				</div>
+				<BlankContent message="No Logs Found!" />
 			)}
-		</div>
+		</>
 	);
 
 	const handleActivityDrawer = (status: 'open' | 'close') => () => {
@@ -323,32 +340,25 @@ const DashboardTemplate = ({
 			disableBackdropTransition={!iOS}
 			disableDiscovery={iOS}
 		>
-			{ActivityLogsList()}
+			<ActivityLogsList />
 		</SwipeableDrawer>
 	);
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
 
 	return (
-		<div className="dashboard" data-testid="dashboard">
-			{width > breakpoint && <MenuContent />}
-			<TopBar
-				isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
-				toggleRoleChangeDialog={toggleRoleChangeDialog}
-			>
-				<Suspense fallback={<LinearProgressBar />}>
-					<Grid>
-						<TabPanel index={selectedIndex} value={selectedIndex}>
-							{createElement(checkIsAdmin()[selectedIndex].component, {
-								history,
-							})}
-						</TabPanel>
-					</Grid>
-				</Suspense>
-			</TopBar>
-			{width < breakpoint && <PageBottomNavigation />}
-			{SelectDeviceModal(devices)}
-			{ChangeUserRoleDialog()}
-			{ActivityDrawer()}
+		<div data-testid="dashboard">
+			<Grid container>
+				<Grid item xs={12} md={12}>
+					<TabPanel index={selectedIndex} value={selectedIndex}>
+						{createElement(checkIsAdmin()[selectedIndex].component, {
+							history,
+						})}
+					</TabPanel>
+					<SelectDeviceModal devices={devices} />
+					<ChangeUserRoleDialog />
+					<ActivityDrawer />
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

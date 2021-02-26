@@ -46,19 +46,17 @@ import {
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { ElevationBarProps } from '@components/TopBar/interfaces';
-import { StyledBadge } from '@components/TopBar/styles';
 import fancyId from '@utils/fancyId';
 import { logoutUser } from '@modules/user';
 import { useDispatch } from 'react-redux';
-import { MenuGroupProps, PagesProps } from '../../../interfaces';
+import { StyledBadge } from './styles';
 import {
 	closedColor,
 	connectedColor,
 	offlineColor,
-	primaryColor,
 	reconnectingColor,
 } from '../../../../assets/tss/common';
+import { ElevationBarProps } from './interfaces';
 
 const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
@@ -243,6 +241,10 @@ const useStyles = makeStyles((theme) => ({
 		order: 1,
 		// color: 'black'
 	},
+	menuPopup: {
+		right: 16,
+		left: 'unset !important',
+	},
 }));
 
 const ElevationScroll = ({
@@ -266,7 +268,6 @@ interface Props {
 	themeMode: string;
 	themeToggler: Function;
 	isActivityLogsEmpty: any;
-	toggleRoleChangeDialog: any;
 }
 
 const Topbar = ({
@@ -275,19 +276,19 @@ const Topbar = ({
 	onSidebarOpen,
 	className,
 	isActivityLogsEmpty,
-	toggleRoleChangeDialog,
 	...rest
 }: Props): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	const [anchorEl, setAnchorEl] = useState<any>(null);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
 	const {
 		activityLogsViewed,
 		toggleActivityDrawer,
 		setDeviceModalOpen,
 		setSelectedIndex,
+		toggleRoleChangeDialog,
 	} = useContext(ComponentContext);
 	const { name, photo, isAdmin, activeDevice } = useContext(UserContext);
 	const { status } = useMqttState();
@@ -344,7 +345,6 @@ const Topbar = ({
 		const handleDeviceModal = (): void => setDeviceModalOpen(true);
 		return (
 			<Button
-				// color="primary"
 				variant="contained"
 				size="small"
 				onClick={handleClick}
@@ -437,133 +437,136 @@ const Topbar = ({
 		{ name: 'Send Feedback', icon: <OpenInNew /> },
 	];
 
-	const AvatarImage = (): JSX.Element => (
-		<>
-			<Avatar
-				className={classes.avatar}
-				alt={name}
-				src={photo}
-				onClick={handleToggleProfileMenu}
-			/>
-			<Menu
-				id="profile-menu"
-				style={{ top: '44px' }}
-				anchorEl={anchorEl}
-				keepMounted
-				open={Boolean(anchorEl)}
-				onClose={handleProfileClose}
-			>
-				{menuItems.map((item, index) => {
-					const handleClick = () => {
-						handleProfileClose();
-						setSelectedIndex(index);
-					};
-					return (
-						<MenuItem key={fancyId()} onClick={handleClick}>
-							<ListItemIcon style={{ minWidth: '36px' }}>
-								{item.icon}
-							</ListItemIcon>
-							{item.name}
-						</MenuItem>
-					);
-				})}
-				<MenuItem onClick={toggleRoleChangeDialog}>
-					<ListItemIcon style={{ minWidth: '36px' }}>
-						<Mood />
-					</ListItemIcon>
-					Change role
-				</MenuItem>
-				<MenuItem onClick={logoutActiveUser}>
-					<ListItemIcon style={{ minWidth: '36px' }}>
-						<ExitToApp />
-					</ListItemIcon>
-					Logout
-				</MenuItem>
-			</Menu>
-		</>
-	);
+	const handleRoleModal = () => {
+		handleProfileClose();
+		toggleRoleChangeDialog();
+	};
 
-	// const topIcons = [{ icon: timeLineIcon() }, { icon: notificationsIcon() }];
-	//
-	// const renderTopIcons = (): JSX.Element => (
-	// 	<div className={classes.sectionEnd}>
-	// 		{topIcons.map((topIcon) => (
-	// 			<span key={fancyId()} className="top-bar-icons">
-	// 				{topIcon.icon}
-	// 			</span>
-	// 		))}
-	// 		{avatarImage()}
-	// 	</div>
-	// );
+	const AvatarImage = (): JSX.Element => {
+		const open = Boolean(anchorEl);
+		const id = open ? 'menu-popover' : undefined;
+		return (
+			<>
+				<Avatar
+					className={classes.avatar}
+					alt={name}
+					src={photo}
+					onClick={handleToggleProfileMenu}
+					aria-describedby="menu-popover"
+					aria-controls="menu-popover"
+					aria-haspopup="true"
+					typeof="button"
+				/>
+				<Menu
+					id="menu-popover"
+					classes={{
+						paper: classes.menuPopup,
+					}}
+					style={{ top: '44px', right: '16px' }}
+					anchorEl={anchorEl}
+					open={open}
+					keepMounted
+					onClose={handleProfileClose}
+				>
+					{menuItems.map((item, index) => {
+						const handleClick = () => {
+							handleProfileClose();
+							setSelectedIndex(index);
+						};
+						return (
+							<MenuItem key={fancyId()} onClick={handleClick}>
+								<ListItemIcon style={{ minWidth: 40 }}>
+									{item.icon}
+								</ListItemIcon>
+								{item.name}
+							</MenuItem>
+						);
+					})}
+					<MenuItem onClick={handleRoleModal}>
+						<ListItemIcon style={{ minWidth: 40 }}>
+							<Mood />
+						</ListItemIcon>
+						Change role
+					</MenuItem>
+					<MenuItem onClick={logoutActiveUser}>
+						<ListItemIcon style={{ minWidth: 40 }}>
+							<ExitToApp />
+						</ListItemIcon>
+						Logout
+					</MenuItem>
+				</Menu>
+			</>
+		);
+	};
 
 	return (
 		<>
 			<CssBaseline />
-			<AppBar
-				className={classes.appBar}
-				position="fixed"
-				elevation={0}
-				data-testid="top-bar"
-			>
-				<Toolbar
-					disableGutters
-					className={classes.toolbar}
-					{...rest}
-					variant="dense"
+			<ElevationScroll {...rest}>
+				<AppBar
+					className={classes.appBar}
+					position="fixed"
+					elevation={0}
+					data-testid="top-bar"
 				>
-					<div className={classes.leftContainer}>
-						<div className={classes.logoContainer}>
-							<NavLink to="/">
-								<Grid container className={classes.container}>
-									<Image
-										className={classes.logoImage}
-										src={themeMode === 'light' ? logo : logo}
-										alt="almond"
-										lazy={false}
-									/>
-								</Grid>
-							</NavLink>
+					<Toolbar
+						disableGutters
+						className={classes.toolbar}
+						{...rest}
+						variant="dense"
+					>
+						<div className={classes.leftContainer}>
+							<div className={classes.logoContainer}>
+								<NavLink to="/">
+									<Grid container className={classes.container}>
+										<Image
+											className={classes.logoImage}
+											src={themeMode === 'light' ? logo : logo}
+											alt="almond"
+											lazy={false}
+										/>
+									</Grid>
+								</NavLink>
+							</div>
+							<DeviceDisplay />
+							{/* <Hidden smDown>{!isAdmin && <DeviceDisplay />}</Hidden> */}
 						</div>
-						<DeviceDisplay />
-						{/* <Hidden smDown>{!isAdmin && <DeviceDisplay />}</Hidden> */}
-					</div>
-					<div className={classes.flexGrow} />
-					<Hidden smDown>
-						<List disablePadding className={classes.navigationContainer}>
-							<ListItem className="menu-item--no-dropdown">
-								<DarkModeToggler
-									themeMode={themeMode}
-									onChange={() => themeToggler()}
-									size={24}
-								/>
-							</ListItem>
-							<ListItem
-								className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-							>
-								<TimeLineIcon />
-							</ListItem>
-							<ListItem
-								className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-							>
-								<NotificationsIcon />
-							</ListItem>
-							<ListItem
-								className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-							>
-								<AvatarImage />
-							</ListItem>
-						</List>
-					</Hidden>
-					<Hidden mdUp>
-						<DarkModeToggler
-							themeMode={themeMode}
-							onChange={() => themeToggler()}
-							size={24}
-						/>
-					</Hidden>
-				</Toolbar>
-				<Divider />
-			</AppBar>
+						<div className={classes.flexGrow} />
+						<Hidden smDown>
+							<List disablePadding className={classes.navigationContainer}>
+								<ListItem className="menu-item--no-dropdown">
+									<DarkModeToggler
+										themeMode={themeMode}
+										onChange={() => themeToggler()}
+										size={24}
+									/>
+								</ListItem>
+								<ListItem
+									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+								>
+									<TimeLineIcon />
+								</ListItem>
+								<ListItem
+									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+								>
+									<NotificationsIcon />
+								</ListItem>
+								<ListItem className={clsx(classes.listItem)}>
+									<AvatarImage />
+								</ListItem>
+							</List>
+						</Hidden>
+						<Hidden mdUp>
+							<DarkModeToggler
+								themeMode={themeMode}
+								onChange={() => themeToggler()}
+								size={24}
+							/>
+						</Hidden>
+					</Toolbar>
+					<Divider />
+				</AppBar>
+			</ElevationScroll>
 		</>
 	);
 };

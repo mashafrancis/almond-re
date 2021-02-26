@@ -18,8 +18,7 @@ const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 export const SettingsPage = (props: SettingsPageProps) => (
 	<>
 		<Row>
-			<Cell
-columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
+			<Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
 				{window.innerWidth < 539 && (
 					<div className="main-subheader">
 						<h3>Settings</h3>

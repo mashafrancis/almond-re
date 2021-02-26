@@ -14,6 +14,7 @@ const ComponentContext = createContext({
 	selectedIndex: selectedIndex || 0,
 	isSelectDeviceModalOpen: false,
 	isActivityDrawerOpen: false,
+	isChangeRoleDialogOpen: false,
 	activityLogsViewed: false,
 	setMenuOpen: (_open: boolean) => {},
 	setSelectedIndex: (_selectedIndex: number) => {},
@@ -24,6 +25,7 @@ const ComponentContext = createContext({
 		_isActivityDrawerOpen: boolean,
 		_activityLogsViewed: boolean,
 	) => {},
+	toggleRoleChangeDialog: () => {},
 	setSnackMessage: (_message: string) => {},
 	setOpenSnack: (_open: boolean) => {},
 	handleCloseSnack: (e: any) => {},
@@ -42,6 +44,7 @@ const ComponentProvider = ({
 			JSON.parse(window.localStorage.getItem('selectedIndex') as string) || 0,
 		isSelectDeviceModalOpen: false,
 		isActivityDrawerOpen: false,
+		isChangeRoleDialogOpen: false,
 		activityLogsViewed: false,
 		isSnackOpen: false,
 		snackMessage: '',
@@ -79,6 +82,14 @@ const ComponentProvider = ({
 		}));
 	};
 
+	const toggleRoleChangeDialog = () => {
+		setState((prevState) => ({
+			...prevState,
+			isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
+			anchorEl: null,
+		}));
+	};
+
 	const handleSelectDeviceModal = () => {
 		setState((prevState) => ({
 			...prevState,
@@ -109,6 +120,7 @@ const ComponentProvider = ({
 		isMenuOpen,
 		isSelectDeviceModalOpen,
 		isActivityDrawerOpen,
+		isChangeRoleDialogOpen,
 		activityLogsViewed,
 		isSnackOpen,
 		snackMessage,
@@ -121,6 +133,7 @@ const ComponentProvider = ({
 				selectedIndex,
 				isSelectDeviceModalOpen,
 				isActivityDrawerOpen,
+				isChangeRoleDialogOpen,
 				activityLogsViewed,
 				setSelectedIndex,
 				setMenuOpen,
@@ -128,6 +141,7 @@ const ComponentProvider = ({
 				handleSelectDeviceModal,
 				handleCloseDeviceModal,
 				toggleActivityDrawer,
+				toggleRoleChangeDialog,
 				setSnackMessage,
 				handleCloseSnack,
 				setOpenSnack,
