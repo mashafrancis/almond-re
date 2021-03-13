@@ -1,9 +1,11 @@
 import { ReactNode } from 'react';
+import { WithStyles } from '@material-ui/core/styles';
 
-export interface ModalProps {
+export interface ModalProps extends WithStyles<typeof styles> {
 	isModalOpen: boolean;
-	renderHeader: () => ReactNode | null;
-	renderContent: ReactNode;
+	renderHeader: ReactNode | string | null;
+	renderContent?: ReactNode;
+	renderDialogText?: ReactNode;
 	fullScreen?: boolean;
 	onClose?: (e?) => void;
 	submitButtonName?: string;

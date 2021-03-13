@@ -1,8 +1,7 @@
+import { UserDetails } from '@modules/user/interfaces';
+
 export interface UnauthorizedUserModalProps {
-	user: {
-		name: string;
-		[key: string]: any;
-	};
+	user: UserDetails;
 	isModalOpen: boolean;
 	logoutUser: () => void;
 }
