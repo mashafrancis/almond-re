@@ -18,6 +18,7 @@ import {
 	USER_VERIFY_DEVICE_REQUEST,
 	USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
+import { UserDetails } from '@modules/user/interfaces';
 
 export interface AddDeviceActionRequest {
 	type: ADD_DEVICE_REQUEST;
@@ -134,13 +135,9 @@ export interface Device {
 	id: string;
 	_id: string;
 	enabled: boolean;
-	user: User;
+	verified: boolean;
+	user: Partial<UserDetails>;
 	updatedAt: string;
-}
-
-interface User {
-	_id: string;
-	name: string;
 }
 
 export interface ActivateDevice {

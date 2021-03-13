@@ -59,23 +59,23 @@ export const EnvironmentControlPage = ({
 		airTemperatureCardDateRange: '',
 	});
 
-	useEffect(() => {
-		// const queryParams = {
-		// 	db: 'almond_db',
-		// 	q:
-		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
-		// 	epoch: 'ms',
-		// };
-		const queryParams = {
-			q: 'time >= now() - 7d',
-		};
-		getAirTemperatureTrend(queryParams).then(() => {
-			setState((prevState) => ({
-				...prevState,
-				isLoading: false,
-			}));
-		});
-	}, []);
+	// useEffect(() => {
+	// 	// const queryParams = {
+	// 	// 	db: 'almond_db',
+	// 	// 	q:
+	// 	// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
+	// 	// 	epoch: 'ms',
+	// 	// };
+	// 	const queryParams = {
+	// 		q: 'time >= now() - 7d',
+	// 	};
+	// 	getAirTemperatureTrend(queryParams).then(() => {
+	// 		setState((prevState) => ({
+	// 			...prevState,
+	// 			isLoading: false,
+	// 		}));
+	// 	});
+	// }, []);
 
 	// :TODO: Implement useSelector method
 	const { temperature, humidity } = sensorData;
@@ -89,7 +89,7 @@ export const EnvironmentControlPage = ({
 			backgroundColor: ['#36A2EB', '#CCCCCC'],
 			hoverBackgroundColor: ['#36A2EB', '#CCCCCC'],
 			data: [currentTemperature, 100 - currentTemperature],
-			donutInfo: `${currentTemperature} \u00b0C`,
+			donutInfo: `${currentTemperature}\u00b0C`,
 		},
 		{
 			heading: 'Plant Humidity',
@@ -171,9 +171,7 @@ export const EnvironmentControlPage = ({
 						justify="center"
 						alignItems="center"
 						spacing={2}
-						xs={6}
-						sm={6}
-						md={4}
+						xs
 						style={{ margin: 0, padding: 0 }}
 					>
 						<DashboardCard

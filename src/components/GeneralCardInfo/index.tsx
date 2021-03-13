@@ -48,6 +48,12 @@ const useStyles = makeStyles((theme: Theme) =>
 				paddingTop: '0 !important',
 			},
 		},
+    iconBase: {
+      padding: 6,
+      borderRadius: 8,
+      backgroundColor: 'rgba(25, 103, 210, 0.11)',
+      color: '#2573b5',
+    },
 	}),
 );
 
@@ -90,7 +96,7 @@ const GeneralCardInfo = ({
 							alignItems="center"
 							justify="center"
 						>
-							<ButtonBase>{icon}</ButtonBase>
+							<ButtonBase className={classes.iconBase}>{icon}</ButtonBase>
 						</Grid>
 						<Grid
 							item

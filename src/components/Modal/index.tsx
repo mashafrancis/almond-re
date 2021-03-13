@@ -1,87 +1,150 @@
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 // components
 import {
 	Button,
 	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
+	// DialogActions,
+	// DialogContent,
+	// DialogTitle,
+	DialogContentText,
+	IconButton,
 } from '@material-ui/core';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import {
+	createStyles,
+	makeStyles,
+	Theme,
+	withStyles,
+	WithStyles,
+} from '@material-ui/core/styles';
 // interfaces
 import { ModalProps } from '@components/Modal/interfaces';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import clsx from 'clsx';
 
-const useStyles = makeStyles((theme) => ({
-	modalPaper: {
-		borderRadius: 12,
-		width: 360,
-	},
-	title: {
-		backgroundColor: 'rgba(66, 133, 244, 0.15)',
-		marginBottom: 6,
-		padding: '10px 24px',
-	},
-	header: {
-		fontWeight: 500,
-	},
-	content: {
-		marginTop: 0,
-		marginBottom: 10,
-	},
-}));
+const styles = (theme: Theme) =>
+	createStyles({
+		root: {
+			margin: 0,
+			padding: theme.spacing(2),
+		},
+		modalPaper: {
+			borderRadius: 12,
+			width: 360,
+		},
+		title: {
+			backgroundColor: 'rgba(66, 133, 244, 0.15)',
+		},
+		closeButton: {
+			position: 'absolute',
+			right: theme.spacing(1),
+			top: theme.spacing(1),
+			color: theme.palette.grey[500],
+		},
+	});
 
-const Modal = ({
-	isModalOpen,
-	renderContent,
-	fullScreen,
-	onClose,
-	renderHeader,
-	submitButtonName,
-	onSubmit,
-	onDismiss,
-	disabled,
-}: ModalProps): JSX.Element => {
-	const classes = useStyles();
+export interface DialogTitleProps extends WithStyles<typeof styles> {
+	id: string;
+	children: ReactNode;
+	onClose?: () => void;
+}
+
+const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
+	const { children, classes, onClose, ...other } = props;
 	return (
-		<Dialog
-			open={isModalOpen}
-			fullScreen={fullScreen}
-			onClose={onClose}
-			aria-labelledby="responsive-dialog-title"
-			classes={{
-				paper: classes.modalPaper,
-			}}
+		<MuiDialogTitle
+			disableTypography
+			className={clsx(classes.root, classes.title)}
+			{...other}
 		>
-			<DialogTitle
-				className={classes.title}
-				data-testid="header"
-				id="responsive-dialog-title"
-			>
-				<Typography variant="body1" color="primary" className={classes.header}>
-					{renderHeader()}
-				</Typography>
-			</DialogTitle>
-			<DialogContent>
-				<Typography variant="subtitle1" className={classes.content}>
-					{renderContent}
-				</Typography>
-			</DialogContent>
-			<DialogActions>
-				<Button variant="text" color="primary" onClick={onDismiss}>
-					Dismiss
-				</Button>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={onSubmit}
-					disabled={disabled}
+			<Typography variant="h6" color="primary">
+				{children}
+			</Typography>
+			{onClose ? (
+				<IconButton
+					aria-label="close"
+					className={classes.closeButton}
+					onClick={onClose}
 				>
-					{submitButtonName}
-				</Button>
-			</DialogActions>
-		</Dialog>
+					<CloseIcon />
+				</IconButton>
+			) : null}
+		</MuiDialogTitle>
 	);
-};
+});
+
+const DialogContent = withStyles((theme: Theme) => ({
+	root: {
+		padding: theme.spacing(2),
+	},
+}))(MuiDialogContent);
+
+const DialogActions = withStyles((theme: Theme) => ({
+	root: {
+		margin: 0,
+		padding: theme.spacing(1),
+	},
+}))(MuiDialogActions);
+
+const Modal = withStyles(styles)(
+	({
+		isModalOpen,
+		renderContent,
+		fullScreen,
+		onClose,
+		renderHeader,
+		submitButtonName,
+		onSubmit,
+		onDismiss,
+		disabled = false,
+		renderDialogText,
+		classes,
+		...rest
+	}: ModalProps): JSX.Element => {
+		return (
+			<Dialog
+				open={isModalOpen}
+				fullScreen={fullScreen}
+				onClose={onClose}
+				aria-labelledby="responsive-dialog-title"
+				classes={{
+					paper: classes.modalPaper,
+				}}
+				{...rest}
+			>
+				<DialogTitle
+					data-testid="header"
+					id="responsive-dialog-title"
+					onClose={onClose}
+				>
+					{renderHeader}
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText gutterBottom style={{ marginBottom: 0 }}>
+						{renderDialogText}
+					</DialogContentText>
+					{renderContent}
+				</DialogContent>
+				<DialogActions>
+					<Button variant="text" color="primary" onClick={onDismiss}>
+						Dismiss
+					</Button>
+					<Button
+						autoFocus
+						variant="contained"
+						color="primary"
+						onClick={onSubmit}
+						disabled={disabled}
+					>
+						{submitButtonName}
+					</Button>
+				</DialogActions>
+			</Dialog>
+		);
+	},
+);
 
 export default Modal;

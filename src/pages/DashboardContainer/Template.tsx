@@ -266,7 +266,7 @@ const DashboardTemplate = ({
 	const SelectDeviceModal = ({ devices }): JSX.Element => (
 		<Modal
 			isModalOpen={isSelectDeviceModalOpen}
-			renderHeader={() => 'Select the device ID'}
+			renderHeader="Select the device ID"
 			renderContent={<SelectDeviceContent devices={devices} />}
 			onClose={handleSelectDeviceModal}
 			submitButtonName="Select Device"
@@ -278,7 +278,7 @@ const DashboardTemplate = ({
 	const ChangeUserRoleDialog = (): JSX.Element => (
 		<Modal
 			isModalOpen={isChangeRoleDialogOpen}
-			renderHeader={() => 'Confirm change of role'}
+			renderHeader="Confirm change of role"
 			renderContent={<SelectChangeRoleContent />}
 			onClose={toggleRoleChangeDialog}
 			submitButtonName="Select Role"

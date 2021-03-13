@@ -288,7 +288,6 @@ export const getAllSchedules = (deviceId: string) => (
 			dispatch(getSchedulesSuccess(data));
 		})
 		.catch((error: ErrorObject) => {
-			console.log('Class: , Function: , Line 292 error():', error);
 			errorOnSnack(error, dispatch, 'fetching your schedule');
 			dispatch(getSchedulesFailure(error));
 		});

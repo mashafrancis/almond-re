@@ -57,7 +57,7 @@ const RegularUserAnalytics = ({
 					colorClass="card-color-yellow"
 					icon={<HorizontalSplitTwoTone fontSize="large" />}
 					mainInfo="Water Temperature"
-					subInfo={`${temperature ?? 0} \u00b0C`}
+					subInfo={`${temperature ?? 0}\u00b0C`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
@@ -71,7 +71,7 @@ const RegularUserAnalytics = ({
 					colorClass="card-color-red"
 					icon={<BlurOn fontSize="large" />}
 					mainInfo="Air Temperature"
-					subInfo={`${temperature ?? 0} \u00b0C`}
+					subInfo={`${temperature ?? 0}\u00b0C`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(2)}

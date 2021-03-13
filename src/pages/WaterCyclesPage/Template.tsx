@@ -29,12 +29,10 @@ import {
 } from '@material-ui/core/styles';
 import { LineChartCard } from '@components/organisms';
 import {
+	GridCellParams,
+	GridColDef,
 	DataGrid,
-	ColDef,
-	ValueGetterParams,
-	CellParams,
-	GridToolbar,
-	SortDirection,
+	GridSortDirection,
 	GridOverlay,
 } from '@material-ui/data-grid';
 // components
@@ -72,6 +70,8 @@ import useViewport from '@hooks/useViewport';
 import { Schedule } from '@modules/timeSchedules/interfaces';
 import { red } from '@material-ui/core/colors';
 import { NoDataOverlay } from '@components/atoms';
+import { useDispatch } from 'react-redux';
+import { getAllSchedules } from '@modules/timeSchedules';
 import { WaterCyclesPageProps, WaterCyclesPageState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
 import { IRootState } from '../../store/rootReducer';
@@ -124,7 +124,6 @@ export const WaterCyclesTemplate = ({
 	isLoading,
 	addNewSchedule,
 	editSchedule,
-	getAllSchedules,
 	deleteSingleSchedule,
 	togglePump,
 	getPumpStatus,
@@ -135,7 +134,7 @@ export const WaterCyclesTemplate = ({
 	sensorData,
 	waterTemperatureTrend,
 }: WaterCyclesPageProps): JSX.Element => {
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const [state, setState] = useState<WaterCyclesPageState>({
 		isEditMode: false,
 		isDeleteModalOpen: false,
@@ -187,7 +186,8 @@ export const WaterCyclesTemplate = ({
 
 	useEffect(() => {
 		setState({ ...state, isLoading: true });
-		const getSchedules = async () => getAllSchedules(activeDevice?._id);
+		const getSchedules = async () =>
+			dispatch(getAllSchedules(activeDevice?._id));
 		getSchedules().then(() =>
 			setState((prevState) => ({
 				...prevState,
@@ -206,23 +206,23 @@ export const WaterCyclesTemplate = ({
 		);
 	}, [activeDevice?._id]);
 
-	useEffect(() => {
-		// const queryParams = {
-		// 	db: 'almond_db',
-		// 	q:
-		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
-		// 	epoch: 'ms',
-		// };
-		const queryParams = {
-			q: 'time >= now() - 7d',
-		};
-		getAirTemperatureTrend(queryParams).then(() => {
-			setState((prevState) => ({
-				...prevState,
-				isLoading: false,
-			}));
-		});
-	}, []);
+	// useEffect(() => {
+	// 	// const queryParams = {
+	// 	// 	db: 'almond_db',
+	// 	// 	q:
+	// 	// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
+	// 	// 	epoch: 'ms',
+	// 	// };
+	// 	const queryParams = {
+	// 		q: 'time >= now() - 7d',
+	// 	};
+	// 	getAirTemperatureTrend(queryParams).then(() => {
+	// 		setState((prevState) => ({
+	// 			...prevState,
+	// 			isLoading: false,
+	// 		}));
+	// 	});
+	// }, []);
 
 	// useEffect(() => {
 	//   props.getWaterData();
@@ -298,11 +298,11 @@ export const WaterCyclesTemplate = ({
 	};
 
 	const handleAddTimeSchedule = (value) => {
+		validateNewTime(value);
 		setState((prevState) => ({
 			...prevState,
 			selectedTimeSchedule: value,
 		}));
-		validateNewTime(value);
 	};
 
 	const validateNewTime = (value) => {
@@ -342,7 +342,7 @@ export const WaterCyclesTemplate = ({
 		}
 	};
 
-	const showScheduleModal = (mode) => (event) => {
+	const showScheduleModal = (mode: string) => (event) => {
 		event.preventDefault();
 		const { id } = event.target;
 		const schedule = schedules.filter((obj) => obj._id === id);
@@ -375,7 +375,7 @@ export const WaterCyclesTemplate = ({
 		validateScheduleOnOpen(mode);
 	};
 
-	const closeScheduleModal = (mode) => () => {
+	const closeScheduleModal = (mode: string) => () => {
 		switch (mode) {
 			case 'Add':
 				setState((prevState) => ({
@@ -517,7 +517,7 @@ export const WaterCyclesTemplate = ({
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
-									<IconButton href="#">
+									<IconButton>
 										<AddAlarmTwoTone color="primary" />
 									</IconButton>
 								</InputAdornment>
@@ -525,11 +525,6 @@ export const WaterCyclesTemplate = ({
 						}}
 					/>
 				</MuiPickersUtilsProvider>
-				<p
-					className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
-            mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
-					aria-hidden="false"
-				/>
 			</>
 		);
 	};
@@ -545,7 +540,7 @@ export const WaterCyclesTemplate = ({
 				isModalOpen={state.isScheduleModalOpen}
 				renderContent={<TimeScheduleForm />}
 				onClose={handleClose}
-				renderHeader={() =>
+				renderHeader={
 					state.isEditMode ? 'Edit time schedule' : 'Create a new time schedule'
 				}
 				submitButtonName={
@@ -563,7 +558,7 @@ export const WaterCyclesTemplate = ({
 			isModalOpen={state.isDeleteModalOpen}
 			renderContent="Do you confirm deletion of time schedule?"
 			onClose={toggleScheduleDeleteModal}
-			renderHeader={() => 'Delete Time Schedule'}
+			renderHeader="Delete Time Schedule"
 			submitButtonName="Delete schedule"
 			onSubmit={handleScheduleDelete}
 			onDismiss={toggleScheduleDeleteModal}
@@ -616,7 +611,7 @@ export const WaterCyclesTemplate = ({
 	};
 
 	const TableContent = (timeSchedules: Schedule[]): JSX.Element => {
-		const columns: ColDef[] = [
+		const columns: GridColDef[] = [
 			{
 				field: 'time',
 				headerName: 'Time',
@@ -629,7 +624,7 @@ export const WaterCyclesTemplate = ({
 				headerName: 'Actions',
 				flex: 0.4,
 				headerClassName: 'table-header',
-				renderCell: (params: CellParams) =>
+				renderCell: (params: GridCellParams) =>
 					ActionButtons(params.value as string),
 			},
 			{
@@ -637,7 +632,7 @@ export const WaterCyclesTemplate = ({
 				headerName: 'Status',
 				flex: 0.3,
 				headerClassName: 'table-header',
-				renderCell: (params: CellParams) => (
+				renderCell: (params: GridCellParams) => (
 					<ToggleSwitch
 						checked={params.value as boolean}
 						onChange={(e) =>
@@ -675,7 +670,7 @@ export const WaterCyclesTemplate = ({
 							sortModel={[
 								{
 									field: 'time',
-									sort: 'asc' as SortDirection,
+									sort: 'asc' as GridSortDirection,
 								},
 							]}
 						/>
@@ -728,8 +723,6 @@ export const WaterCyclesTemplate = ({
 							</Button>
 						}
 					/>
-					<AddEditScheduleModal />
-					<DeleteScheduleModal />
 				</Grid>
 				<Grid
 					item
@@ -772,6 +765,8 @@ export const WaterCyclesTemplate = ({
 						}
 					/>
 				</Grid>
+				<AddEditScheduleModal />
+				<DeleteScheduleModal />
 			</Grid>
 		</div>
 	);

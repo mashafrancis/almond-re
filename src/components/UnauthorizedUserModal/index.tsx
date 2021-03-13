@@ -24,15 +24,8 @@ export const UnauthorizedUserModal = ({
 	return (
 		<Modal
 			isModalOpen={isModalOpen}
-			renderHeader={() => `Welcome, ${user?.name || 'User'}`}
-			renderContent={() => (
-				<div>
-					<p className="headline-5 modal-content">
-						You are currently not authorised to access Almond. Please contact
-						almond.froyo@gmail.com for more details.
-					</p>
-				</div>
-			)}
+			renderHeader={`Welcome, ${user?.firstName ?? 'User'}`}
+			renderDialogText="You are currently not authorised to access Almond. Please contact almond.froyo@gmail.com for more details."
 			submitButtonName="OK"
 			onSubmit={logoutAndRedirectUser}
 			onDismiss={logoutAndRedirectUser}
