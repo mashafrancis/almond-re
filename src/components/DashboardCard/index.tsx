@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			flexGrow: 1,
+			height: '-webkit-fit-content',
 		},
 		details: {
 			display: 'flex',
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			// },
 		},
 		mainCard: {
+			height: '-webkit-fit-content',
 			[theme.breakpoints.down('sm')]: {
 				paddingTop: '0 !important',
 			},
