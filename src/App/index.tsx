@@ -178,7 +178,7 @@ export const App = ({
 										open={loading === 'requesting'}
 									>
 										<CircularProgress
-											color="secondary"
+											color="primary"
 											style={{ zIndex: 100000 }}
 										/>
 									</Backdrop>

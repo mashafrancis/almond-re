@@ -502,6 +502,7 @@ export const WaterCyclesTemplate = ({
 					: 'Add a new time schedule as per your preference for pumping.'}
 				<MuiPickersUtilsProvider utils={DateFnsUtils}>
 					<TimePicker
+						fullWidth
 						style={{ marginTop: 12 }}
 						name="time_schedule"
 						inputVariant="outlined"
@@ -689,11 +690,11 @@ export const WaterCyclesTemplate = ({
 					item
 					container
 					direction="column"
-					justify="flex-start"
+					justify="center"
 					alignItems="stretch"
-					spacing={1}
+					spacing={2}
 					xs
-					style={{ margin: 0, padding: 0 }}
+					style={{ margin: 0, padding: 0, height: '-webkit-fit-content' }}
 				>
 					<GeneralCardInfo
 						mainHeader="Manual Override"
