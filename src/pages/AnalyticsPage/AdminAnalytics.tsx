@@ -1,4 +1,5 @@
-import { useContext, lazy } from 'react';
+import { useContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 // components
 import {
 	AccountBalanceTwoTone,
@@ -12,6 +13,8 @@ import { ComponentContext } from '@context/ComponentContext';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AnalyticsCard from '@components/AnalyticsCard';
+import { AdminUserAnalyticsProps } from '@pages/AnalyticsPage/interfaces';
+import { getAdminStatistics } from '@modules/analytics';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -21,10 +24,22 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-const AdminAnalytics = (): JSX.Element => {
-	const { setSelectedIndex } = useContext(ComponentContext);
+const AdminAnalytics = ({
+	analyticsData,
+}: AdminUserAnalyticsProps): JSX.Element => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAdminStatistics());
+	}, []);
+
+	const { setSelectedIndex } = useContext(ComponentContext);
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
+	console.log(
+		'Class: , Function: AdminAnalytics, Line 31 analyticsData():',
+		analyticsData,
+	);
 
 	return (
 		<div className={classes.root} data-testid="admin-analytics-page">
@@ -40,14 +55,14 @@ const AdminAnalytics = (): JSX.Element => {
 					colorClass="card-color-blue"
 					icon={<AllOutTwoTone fontSize="large" />}
 					mainInfo="Devices"
-					subInfo="10"
+					subInfo={analyticsData.devices}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
 					colorClass="card-color-yellow"
 					icon={<GroupTwoTone fontSize="large" />}
 					mainInfo="People"
-					subInfo="8"
+					subInfo={analyticsData.users}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}

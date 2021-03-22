@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 // reducers
 import activityLogs from '@modules/activityLogs';
+import analytics from '@modules/analytics';
 import authentication from '@modules/authentication';
 import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
@@ -14,10 +15,10 @@ import user from '@modules/user';
 import userRoles from '@modules/userRoles';
 
 // types
-import { LOG_OUT_USER } from '@modules/user/types';
 import { State as TimeSchedules } from '@modules/timeSchedules/types';
-import { State as User } from '@modules/user/types';
+import { State as User, LOG_OUT_USER } from '@modules/user/types';
 import { State as Authentication } from '@modules/authentication/types';
+import { State as Analytics } from '@modules/analytics/types';
 
 export type IRootState = {
 	internalServerError: any;
@@ -31,6 +32,7 @@ export type IRootState = {
 	loading: any;
 	sensorData: any;
 	authentication: Authentication;
+	analytics: Analytics;
 };
 
 const appReducer = combineReducers({
@@ -45,6 +47,7 @@ const appReducer = combineReducers({
 	loading,
 	sensorData,
 	authentication,
+	analytics,
 });
 
 const rootReducer = (state: any, action: any) => {

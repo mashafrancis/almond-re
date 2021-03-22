@@ -1,5 +1,4 @@
 import { Box } from '@material-ui/core';
-
 // interfaces
 import { TabPanelProps } from '@components/TabPanel/interfaces';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

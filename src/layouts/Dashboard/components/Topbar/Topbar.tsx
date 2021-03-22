@@ -426,6 +426,7 @@ const Topbar = ({
 				overlap="circle"
 				invisible={isArrayNotNull(notifications.length)}
 				variant="dot"
+				color="primary"
 			>
 				<Notifications color="primary" />
 			</StyledBadge>
@@ -528,8 +529,7 @@ const Topbar = ({
 									</Grid>
 								</NavLink>
 							</div>
-							<DeviceDisplay />
-							{/* <Hidden smDown>{!isAdmin && <DeviceDisplay />}</Hidden> */}
+							<Hidden smDown>{!isAdmin && <DeviceDisplay />}</Hidden>
 						</div>
 						<div className={classes.flexGrow} />
 						<Hidden smDown>
@@ -544,7 +544,7 @@ const Topbar = ({
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 								>
-									<TimeLineIcon />
+									<Hidden smDown>{!isAdmin && <TimeLineIcon />}</Hidden>
 								</ListItem>
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}

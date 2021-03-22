@@ -11,11 +11,12 @@ import { AnalyticsPageProps } from '@pages/AnalyticsPage/interfaces';
 
 export const AnalyticsPage = ({
 	sensorData,
+	analyticsData,
 }: AnalyticsPageProps): JSX.Element => {
 	const { isAdmin } = useContext(UserContext);
 
 	return isAdmin ? (
-		<AdminAnalytics />
+		<AdminAnalytics analyticsData={analyticsData} />
 	) : (
 		<RegularUserAnalytics sensorData={sensorData} />
 	);
@@ -24,6 +25,7 @@ export const AnalyticsPage = ({
 export const mapStateToProps = (state) => ({
 	error: state.error,
 	sensorData: state.sensorData.sensorData,
+	analyticsData: state.analytics.data,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

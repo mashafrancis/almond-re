@@ -123,7 +123,7 @@ const Modal = withStyles(styles)(
 					{renderHeader}
 				</DialogTitle>
 				<DialogContent>
-					<DialogContentText gutterBottom style={{ marginBottom: 0 }}>
+					<DialogContentText gutterBottom style={{ marginBottom: 0, paddingBottom: 10 }}>
 						{renderDialogText}
 					</DialogContentText>
 					{renderContent}

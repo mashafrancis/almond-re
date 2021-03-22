@@ -121,6 +121,7 @@ export const DeviceManagementPage = ({
 
 	const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
+
 		setFormState((formState) => ({
 			...formState,
 			values: {
@@ -187,6 +188,10 @@ export const DeviceManagementPage = ({
 
 	const handleDeviceDelete = async (event) => {
 		event.preventDefault();
+		console.log(
+			'Class: , Function: handleDeviceDelete, Line 190 state.deviceId():',
+			state.deviceId,
+		);
 		await dispatch(deleteDevice(state.deviceId));
 		toggleDeviceDeleteModal();
 	};
@@ -219,15 +224,16 @@ export const DeviceManagementPage = ({
 	const hasError = (field: string): boolean =>
 		!!(formState.touched[field] && formState.errors[field]);
 
-	const ActionButtons = (device: string): JSX.Element => {
+	const ActionButtons = (device: Device): JSX.Element => {
+		const { _id } = device;
 		const handleDelete = () =>
 			setState({
 				...state,
-				deviceId: device,
+				deviceId: _id,
 				isDeleteModalOpen: true,
 			});
 		return (
-			<div className={classes.root} key={device}>
+			<div className={classes.root} key={_id}>
 				<Grid container spacing={3}>
 					<Grid
 						container
@@ -241,7 +247,7 @@ export const DeviceManagementPage = ({
 					>
 						<Typography
 							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={device}
+							id={_id}
 							variant="body2"
 							color="primary"
 							onClick={showDeviceModal('Edit')}
@@ -251,7 +257,7 @@ export const DeviceManagementPage = ({
 						</Typography>
 						<Typography
 							style={{ cursor: 'pointer', color: red[900] }}
-							id={device}
+							id={_id}
 							variant="body2"
 							onClick={handleDelete}
 							onKeyDown={handleDelete}
@@ -273,7 +279,7 @@ export const DeviceManagementPage = ({
 		return <Chip className="MuiChip-root-enabled" label="Enabled" />;
 	};
 
-	const TableContent = (devices: Device[]): JSX.Element => {
+	const TableContent = (): JSX.Element => {
 		const columns: GridColDef[] = [
 			{
 				field: 'deviceId',
@@ -308,7 +314,7 @@ export const DeviceManagementPage = ({
 				flex: 0.2,
 				headerClassName: 'table-header',
 				renderCell: (params: GridCellParams) =>
-					ActionButtons(params.value as string),
+					ActionButtons(params.value as Device),
 			},
 		];
 
@@ -319,7 +325,7 @@ export const DeviceManagementPage = ({
 				? `${device?.user?.firstName} ${device?.user?.lastName}`
 				: 'NOT ASSIGNED',
 			status: device,
-			actions: ActionButtons(device._id),
+			actions: device,
 		}));
 
 		return (
@@ -359,36 +365,38 @@ export const DeviceManagementPage = ({
 	};
 
 	const RenderDeviceForm = (): JSX.Element => (
-		<TextField
-			autoFocus
-			fullWidth
-			id="selectedDevice"
-			variant="outlined"
-			type="text"
-			name="selectedDevice"
-			// margin="dense"
-			// size="small"
-			label={`${isEditMode ? 'Update' : 'Add new'} device ID`}
-			// value={formState.values.selectedDevice || ''}
-			// defaultValue={isEditMode ? deviceToEdit : selectedDevice}
-			onChange={handleValueChange}
-			error={hasError('selectedDevice')}
-			InputLabelProps={{
-				classes: {
-					focused: styles.focused,
-					root: styles.labelColor,
-				},
-			}}
-			InputProps={{
-				startAdornment: (
-					<InputAdornment position="start">
-						<IconButton>
-							<PhonelinkSetupSharp />
-						</IconButton>
-					</InputAdornment>
-				),
-			}}
-		/>
+		<form name="add-device-form">
+			<TextField
+				autoFocus
+				fullWidth
+				id="selectedDevice"
+				variant="outlined"
+				type="text"
+				name="selectedDevice"
+				// margin="dense"
+				// size="small"
+				label={`${isEditMode ? 'Update' : 'Add new'} device ID`}
+				value={formState.values.selectedDevice}
+				// defaultValue={isEditMode ? deviceToEdit : selectedDevice}
+				onChange={handleValueChange}
+				error={hasError('selectedDevice')}
+				InputLabelProps={{
+					classes: {
+						focused: styles.focused,
+						root: styles.labelColor,
+					},
+				}}
+				InputProps={{
+					startAdornment: (
+						<InputAdornment position="start">
+							<IconButton>
+								<PhonelinkSetupSharp />
+							</IconButton>
+						</InputAdornment>
+					),
+				}}
+			/>
+		</form>
 	);
 
 	const AddEditDeviceModal = (): JSX.Element => (
@@ -442,7 +450,7 @@ export const DeviceManagementPage = ({
 					{/* /> */}
 					<DashboardCard
 						heading="Device Management"
-						body={TableContent(devices)}
+						body={TableContent()}
 						actionItem={
 							<Button
 								color="primary"

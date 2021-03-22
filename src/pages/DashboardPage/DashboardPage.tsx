@@ -1,11 +1,9 @@
-import LinearProgressBar from '@components/LinearProgressBar';
 import TabPanel from '@components/TabPanel';
 import { Grid, Hidden } from '@material-ui/core';
-import { createElement, lazy, Suspense, useContext } from 'react';
+import { createElement, useContext } from 'react';
 import { ComponentContext } from '@context/ComponentContext';
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import { UserContext } from '@context/UserContext';
-import PageBottomNavigation from '@components/BottomNavigation';
 
 const DashboardPage = (): JSX.Element => {
 	const { selectedIndex } = useContext(ComponentContext);

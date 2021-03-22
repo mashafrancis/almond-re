@@ -26,9 +26,13 @@ describe('The Analytics Page', () => {
 	});
 
 	it('should render Admin Analytics Page properly', () => {
+		const analyticsData = {
+			devices: 0,
+			users: 0,
+		};
 		const { asFragment } = renderWithRouter(
 			<Suspense fallback={<h1>test loading</h1>}>
-				<AdminAnalytics />
+				<AdminAnalytics analyticsData={analyticsData} />
 			</Suspense>,
 		);
 		expect(asFragment()).toMatchSnapshot();
