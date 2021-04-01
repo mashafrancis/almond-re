@@ -47,42 +47,42 @@ const RegularUserAnalytics = ({
 			>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-blue"
+					colorClass="blueCard"
 					icon={<OpacityTwoTone fontSize="large" />}
 					mainInfo="Water Level"
 					subInfo={`${formatWaterLevelData(waterLevel)} %`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-yellow"
+					colorClass="yellowCard"
 					icon={<HorizontalSplitTwoTone fontSize="large" />}
 					mainInfo="Water Temperature"
 					subInfo={`${temperature ?? 0}\u00b0C`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-brown"
+					colorClass="brownCard"
 					icon={<ScheduleTwoTone fontSize="large" />}
 					mainInfo="Next schedule"
 					subInfo="14:00"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(2)}
-					colorClass="card-color-red"
+					colorClass="redCard"
 					icon={<BlurOn fontSize="large" />}
 					mainInfo="Air Temperature"
 					subInfo={`${temperature ?? 0}\u00b0C`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(2)}
-					colorClass="card-color-green"
+					colorClass="greenCard"
 					icon={<BubbleChart fontSize="large" />}
 					mainInfo="Air Humidity"
 					subInfo={`${humidity ?? 0} %`}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(3)}
-					colorClass="card-color-purple"
+					colorClass="purpleCard"
 					icon={<MemoryTwoTone fontSize="large" />}
 					mainInfo="Power usage"
 					subInfo="30 KW"
