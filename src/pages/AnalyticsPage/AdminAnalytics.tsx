@@ -37,42 +37,42 @@ const AdminAnalytics = (): JSX.Element => {
 			>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-blue"
+					colorClass="blueCard"
 					icon={<AllOutTwoTone fontSize="large" />}
 					mainInfo="Devices"
 					subInfo="10"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-yellow"
+					colorClass="yellowCard"
 					icon={<GroupTwoTone fontSize="large" />}
 					mainInfo="People"
 					subInfo="8"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-purple"
+					colorClass="purpleCard"
 					icon={<ScheduleTwoTone fontSize="large" />}
 					mainInfo="Requests"
 					subInfo="30"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
-					colorClass="card-color-red"
+					colorClass="redCard"
 					icon={<AccountBalanceTwoTone fontSize="large" />}
 					mainInfo="Sales"
 					subInfo="400,000"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(2)}
-					colorClass="card-color-green"
+					colorClass="greenCard"
 					icon={<DeviceHubTwoTone fontSize="large" />}
 					mainInfo="Units"
 					subInfo="23"
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(3)}
-					colorClass="card-color-brown"
+					colorClass="brownCard"
 					icon={<LibraryBooksTwoTone fontSize="large" />}
 					mainInfo="Orders"
 					subInfo="3"
