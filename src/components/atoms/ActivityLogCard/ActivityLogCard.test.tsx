@@ -2,7 +2,7 @@
 import { render, screen } from '@testing-library/react';
 import dayjs from 'dayjs';
 // component
-import ActivityLogCard from './index';
+import ActivityLogCard from './ActivityLogCard';
 
 describe('ActivityLogCard component', () => {
 	let props;

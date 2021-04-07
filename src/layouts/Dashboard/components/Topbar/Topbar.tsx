@@ -247,7 +247,7 @@ const Topbar = ({
 
 	const { status } = useMqttState();
 
-	const { activeDevice } = useContext(UserContext);
+	const { activeDevice, isAdmin } = useContext(UserContext);
 
 	const statusChange = (mqttStatus: string): string => {
 		switch (mqttStatus) {
@@ -285,7 +285,7 @@ const Topbar = ({
 		}),
 	)(Badge);
 
-	const DeviceDisplay = (): JSX.Element => {
+	const renderDeviceDisplay = (): JSX.Element => {
 		const handleClick = (): void => setDeviceModalOpen(true);
 		const handleDeviceModal = (): void => setDeviceModalOpen(true);
 		return (
@@ -339,7 +339,7 @@ const Topbar = ({
 		);
 	};
 
-	const TimeLineIcon = (): JSX.Element => {
+	const renderTimeLineIcon = (): JSX.Element => {
 		const handleClick = () => toggleActivityDrawer(true, true);
 		return (
 			<StyledBadge
@@ -359,7 +359,7 @@ const Topbar = ({
 	// :TODO: Remove this after demoing the feature to be
 	const notifications = ['true'];
 
-	const NotificationsIcon = (): JSX.Element =>
+	const renderNotificationsIcon = (): JSX.Element =>
 		isArrayNotNull(notifications.length) ? (
 			<NotificationsNone />
 		) : (
@@ -371,6 +371,7 @@ const Topbar = ({
 				overlap="circle"
 				invisible={isArrayNotNull(notifications.length)}
 				variant="dot"
+				color="primary"
 			>
 				<Notifications color="primary" />
 			</StyledBadge>
@@ -405,7 +406,7 @@ const Topbar = ({
 									</Grid>
 								</NavLink>
 							</div>
-							<DeviceDisplay />
+							<Hidden smDown>{!isAdmin && renderDeviceDisplay()}</Hidden>
 						</div>
 						<div className={classes.flexGrow} />
 						<Hidden smDown>
@@ -420,12 +421,12 @@ const Topbar = ({
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 								>
-									<TimeLineIcon />
+									<Hidden smDown>{!isAdmin && renderTimeLineIcon()}</Hidden>
 								</ListItem>
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 								>
-									<NotificationsIcon />
+									{renderNotificationsIcon()}
 								</ListItem>
 								<ListItem className={clsx(classes.listItem)}>
 									<CustomAvatar />

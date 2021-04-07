@@ -1,7 +1,6 @@
 // react libraries
 import { useState, useEffect, lazy } from 'react';
 // Third party libraries
-import { Cell, Row } from '@material/react-layout-grid';
 import { Chip } from '@material-ui/core';
 // icons
 import { Mood, Grain, Face } from '@material-ui/icons';
@@ -15,11 +14,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import './UserRolesPage.scss';
 // interfaces
 import { UserRole } from '@modules/userRoles/interfaces';
+import Grid from '@material-ui/core/Grid';
 import { UserRolesPageProps, UserRolesPageState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
 // components
 const CardInfo = lazy(() => import('@components/CardInfo'));
-const Table = lazy(() => import('@components/Table'));
 const Modal = lazy(() => import('@components/Modal'));
 
 export const UserRolesTemplate = ({
@@ -381,35 +380,39 @@ export const UserRolesTemplate = ({
 		);
 	};
 
-	const TableContent = (allUserRoles) => {
-		const tableHeaders = {
-			Role: { valueKey: 'title', colWidth: '15' },
-			Description: { valueKey: 'description', colWidth: '50' },
-			Users: { valueKey: 'userCount', colWidth: '15' },
-			Actions: { valueKey: 'actions' },
-		};
-
-		const tableValues = allUserRoles.map((role) => ({
-			id: role[1]._id,
-			title: role[1].title,
-			description: role[1].description,
-			userCount: (
-				<Chip className="MuiChip-root-enabled" label={role[1].userCount} />
-			),
-			actions: userRolesListAction(role[1]),
-		}));
-
-		return <Table keys={tableHeaders} values={tableValues} />;
-	};
+	// const TableContent = (allUserRoles) => {
+	// 	const tableHeaders = {
+	// 		Role: { valueKey: 'title', colWidth: '15' },
+	// 		Description: { valueKey: 'description', colWidth: '50' },
+	// 		Users: { valueKey: 'userCount', colWidth: '15' },
+	// 		Actions: { valueKey: 'actions' },
+	// 	};
+	//
+	// 	const tableValues = allUserRoles.map((role) => ({
+	// 		id: role[1]._id,
+	// 		title: role[1].title,
+	// 		description: role[1].description,
+	// 		userCount: (
+	// 			<Chip className="MuiChip-root-enabled" label={role[1].userCount} />
+	// 		),
+	// 		actions: userRolesListAction(role[1]),
+	// 	}));
+	//
+	// 	return <Table keys={tableHeaders} values={tableValues} />;
+	// };
 
 	return (
 		<div className="user-roles-page">
-			<Row>
-				<Cell
-					columns={12}
-					desktopColumns={12}
-					tabletColumns={8}
-					phoneColumns={4}
+			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+				<Grid
+					item
+					container
+					direction="column"
+					justify="flex-start"
+					alignItems="stretch"
+					spacing={1}
+					xs
+					style={{ margin: 0, padding: 0 }}
 				>
 					<CardInfo
 						mainHeader="User Roles"
@@ -419,12 +422,12 @@ export const UserRolesTemplate = ({
 						onClick={toggleModal}
 					/>
 					<div className="user-roles-page__table">
-						{TableContent(Object.entries(userRoles.roles))}
+						{/* {TableContent(Object.entries(userRoles.roles))} */}
 					</div>
 					{UserRolePageModal()}
 					{DeleteRoleModal()}
-				</Cell>
-			</Row>
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

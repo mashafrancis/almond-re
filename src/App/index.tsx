@@ -2,9 +2,8 @@
 import { useEffect, useState, Suspense, useRef } from 'react';
 // third party libraries
 import queryString from 'query-string';
-import { connect, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -35,8 +34,9 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './App.scss';
 // interfaces
 import { IClientOptions } from 'mqtt';
-import { AppProps, AppState } from './interfaces';
+import { AppState } from './interfaces';
 import Routes from '../routes';
+import { IRootState } from '../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -56,33 +56,42 @@ const useStyles = makeStyles((theme: Theme) =>
 // 	baseUrl: 'https://api.github.com',
 // };
 
-// eslint-disable-next-line no-shadow
-export const App = ({
-	user,
-	snack,
-	getUserDetails,
-	location,
-	loading,
-}: AppProps) => {
-	const classes = useStyles();
+export const App = (): JSX.Element => {
+	const { loading } = useSelector((globalState: IRootState) => globalState);
+	const { snack } = useSelector((globalState: IRootState) => globalState);
+	const {
+		userDetails: {
+			_id,
+			firstName,
+			lastName,
+			email,
+			photo,
+			devices,
+			isVerified,
+			activeDevice,
+			currentRole,
+		},
+	} = useSelector((globalState: IRootState) => globalState.user);
 	const [state, setState] = useState<AppState>({
 		isUserAuthenticated: authService.isAuthenticated(),
 		loading: 'idle',
 		isAdmin: false,
 	});
 	const timerRef = useRef<number>();
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const { search } = useLocation();
 
-	const { _id, name, email, photo, devices, isVerified, activeDevice } = user;
-	const { isUserAuthenticated, isAdmin } = state;
+	const { isUserAuthenticated } = state;
 	const userDetailsOnProvider = {
 		_id,
-		name,
 		email,
 		photo,
 		devices,
 		isVerified,
 		activeDevice,
-		isAdmin,
+		name: `${firstName} ${lastName}`,
+		isAdmin: !checkUserRole(currentRole?.title ?? 'User', 'User'),
 	};
 
 	// const bugIssue = {
@@ -103,24 +112,13 @@ export const App = ({
 
 	useEffectAsync(async () => {
 		if (state.isUserAuthenticated) {
-			try {
-				const response = await getUserDetails();
-				setState({
-					...state,
-					isAdmin: !checkUserRole(
-						response.userDetails.currentRole.title,
-						'User',
-					),
-				});
-			} catch {
-				setState({ ...state, loading: 'error' });
-			}
+			await dispatch(getUserDetails());
 		}
 	}, []);
 
 	useEffect(() => {
-		const { search } = location;
 		const { socialToken } = queryString.parse(search);
+
 		if (socialToken) {
 			authService.saveToken(socialToken);
 			window.location.replace(process.env.PUBLIC_URL as string);
@@ -162,50 +160,36 @@ export const App = ({
 
 	return (
 		<ErrorBoundary FallbackComponent={ServerErrorPage}>
-			<Connector
-				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
-				opts={options}
-			>
-				<UserContext.Provider value={userDetailsOnProvider}>
-					<ComponentProvider>
-						<ViewportProvider>
-							<SnackBar snack={snack} />
-							{window.location.pathname !== '/' && isUserAuthenticated}
-							<Suspense fallback={<LinearProgressBar />}>
-								{loading === 'requesting' ? (
-									<Backdrop
-										className={classes.backdrop}
-										open={loading === 'requesting'}
-									>
-										<CircularProgress
-											color="primary"
-											style={{ zIndex: 100000 }}
-										/>
-									</Backdrop>
-								) : (
-									<Routes />
-								)}
-							</Suspense>
-						</ViewportProvider>
-					</ComponentProvider>
-				</UserContext.Provider>
-			</Connector>
+			{/* <Connector */}
+			{/*	brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
+			{/*	opts={options} */}
+			{/* > */}
+			<UserContext.Provider value={userDetailsOnProvider}>
+				<ComponentProvider>
+					<ViewportProvider>
+						<SnackBar snack={snack} />
+						{window.location.pathname !== '/' && isUserAuthenticated}
+						<Suspense fallback={<LinearProgressBar />}>
+							{loading === 'requesting' ? (
+								<Backdrop
+									className={classes.backdrop}
+									open={loading === 'requesting'}
+								>
+									<CircularProgress
+										color="primary"
+										style={{ zIndex: 100000 }}
+									/>
+								</Backdrop>
+							) : (
+								<Routes />
+							)}
+						</Suspense>
+					</ViewportProvider>
+				</ComponentProvider>
+			</UserContext.Provider>
+			{/* </Connector> */}
 		</ErrorBoundary>
 	);
 };
 
-export const mapStateToProps = (state: any) => ({
-	serverError: state.internalServerError,
-	user: state.user.userDetails,
-	loading: state.loading,
-	snack: state.snack || { message: '' },
-});
-
-export const mapDispatchToProps = (dispatch: any) => ({
-	getUserDetails: () => dispatch(getUserDetails()),
-});
-
-export default compose(
-	withRouter,
-	connect(mapStateToProps, mapDispatchToProps),
-)(App);
+export default App;

@@ -94,11 +94,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: [
-          /node_modules/,
-          /node_modules\/@material/,
-          /node_modules\/(?!(@material-ui\/core\/es)\/).*/,
-        ],
+        exclude: /node_modules/,
         use: {
           loader: require.resolve('babel-loader'),
           options: {

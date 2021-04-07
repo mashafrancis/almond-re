@@ -9,14 +9,9 @@ import AdminAnalytics from './AdminAnalytics';
 
 describe('The Analytics Page', () => {
 	it('should render Regular Analytics Page properly', () => {
-		const sensorData = {
-			temperature: 0,
-			humidity: 0,
-			waterLevel: 0,
-		};
 		const { asFragment } = renderWithRouter(
 			<Suspense fallback={<h1>test loading</h1>}>
-				<RegularUserAnalytics sensorData={sensorData} />
+				<RegularUserAnalytics />
 			</Suspense>,
 		);
 		expect(asFragment()).toMatchSnapshot();

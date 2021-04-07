@@ -380,25 +380,27 @@ export const togglePump = (payload: ToggleSchedulePayload) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		patch: (arg0: string, arg1: { enabled: any }) => Promise<{ data: any }>;
+		put: (arg0: string, arg1: { enabled: any }) => Promise<{ data: any }>;
 	},
 ) => {
 	dispatch(togglePumpStatusRequest());
 	return http
-		.patch('pump', payload)
+		.put('pump', payload)
 		.then((response: { data: any }) => {
 			const {
 				data: {
 					data: {
 						scheduleOverride: { enabled },
+						activityHistory,
 					},
+					message,
 				},
 			} = response;
 			// const data = response.data.data.scheduleOverride.enabled;
-			// dispatch(getPumpStatusSuccess(data));
+			dispatch(getPumpStatusSuccess(enabled));
 			dispatch(togglePumpStatusSuccess(enabled));
-			dispatch(logActivity(response.data.data.activityHistory));
-			dispatch(displaySnackMessage(response.data.message));
+			dispatch(logActivity(activityHistory));
+			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
 			errorOnSnack(

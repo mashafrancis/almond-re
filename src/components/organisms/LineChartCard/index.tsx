@@ -3,7 +3,7 @@ import SelectBox from '@components/SelectBox';
 import DateRangePicker from '@components/DateRangePicker';
 // utils
 import dayjs from '@utils/dayjsTime';
-import { BlankContent } from '@pages/WaterCyclesPage/Template';
+import { BlankContent } from '@pages/WaterCyclesPage';
 import DashboardCard from '@components/DashboardCard';
 import AreaChardDisplay from '@components/AreaChartDisplay';
 // interfaces

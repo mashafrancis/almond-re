@@ -5,7 +5,6 @@ import { SnackMessage } from '@modules/snack/interfaces';
 export interface AppProps {
 	location: Location;
 	user: UserDetails;
-	getUserDetails: () => Promise<any>;
 	snack: SnackMessage;
 	loading: string;
 }

@@ -1,5 +1,3 @@
-// react libraries
-import { lazy } from 'react';
 // third party packages
 import { Redirect, Route, Switch } from 'react-router-dom';
 // pages and components
@@ -7,7 +5,6 @@ import HomePage from '@pages/HomePage';
 import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
-import DashboardPage from '@pages/DashboardPage';
 import NotFoundPage from '@pages/NotFoundPage';
 import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 import SignupPage from '@pages/SignupPage';
@@ -19,16 +16,7 @@ import {
 	Main as MainLayout,
 	Minimal as MinimalLayout,
 	Dashboard as DashboardLayout,
-	DocsLayout,
 } from '../layouts';
-
-// pages and components
-// const AuthenticatedRoute = lazy(() => import('@components/AuthenticatedRoute'));
-// const PageNotFound = lazy(() => import('@components/PageNotFound'));
-// const Unauthorized = lazy(() => import('@components/UnauthorizedUserModal'));
-// const DashboardContainer = lazy(() => import('@pages/DashboardContainer'));
-// const EnterDeviceIdPage = lazy(() => import('@pages/EnterDeviceIdPage'));
-// const HomePage = lazy(() => import('@pages/HomePage'));
 
 const Routes = (): any => (
 	<Switch>
@@ -50,18 +38,18 @@ const Routes = (): any => (
 				/>
 			)}
 		/>
-		<AuthenticatedRoute
+		<Route
 			exact
 			path="/dashboard"
-			authorize="analytics:view"
-			component={(matchProps) => (
+			// authorize="analytics:view"
+			render={(matchProps) => (
 				<WithLayout
 					{...matchProps}
 					component={DashboardContainer}
 					layout={DashboardLayout}
 				/>
 			)}
-			fallbackView={<UnauthorizedUserModal isModalOpen />}
+			// fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
 		<Route
 			exact

@@ -1,4 +1,4 @@
-import { LogActivity } from '@modules/activityLogs/interfaces';
+import { ActivityLogs, LogActivity } from '@modules/activityLogs/interfaces';
 import { LOG_ACTIVITY } from '@modules/activityLogs/types';
 import { AnyAction } from 'redux';
 
@@ -7,7 +7,7 @@ import { AnyAction } from 'redux';
  *
  * @returns {LogActivity}
  */
-export const logActivity = (activityLogs: any): LogActivity => ({
+export const logActivity = (activityLogs: ActivityLogs[]): LogActivity => ({
 	activityLogs,
 	type: LOG_ACTIVITY,
 });
@@ -19,7 +19,7 @@ export const reducer = (
 	action: AnyAction,
 ) => {
 	if (action.type === LOG_ACTIVITY) {
-		return [...state, ...action.activityLogs];
+		return action.activityLogs;
 	}
 	return state;
 };

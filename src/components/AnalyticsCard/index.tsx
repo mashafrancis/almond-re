@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			width: 128,
 			height: 128,
 		},
+		mainInfoText: {
+			fontWeight: 500,
+		},
 		subInfoText: {
 			fontWeight: 600,
 			// [theme.breakpoints.up('xl')]: {
@@ -108,7 +111,7 @@ const AnalyticsCard = ({
 						style={{ display: 'flex' }}
 						xs={12}
 					>
-						<Grid item xs={1}>
+						<Grid item xs={1} md={2}>
 							<ButtonBase>{icon}</ButtonBase>
 						</Grid>
 						<Grid item xs={10} sm container>
@@ -120,7 +123,10 @@ const AnalyticsCard = ({
 								direction="row"
 								style={{ display: 'flex', width: '100%' }}
 							>
-								<Typography className={colorClass} variant="body1">
+								<Typography
+									className={clsx(classes.mainInfoText, colorClass)}
+									variant="body1"
+								>
 									{mainInfo}
 								</Typography>
 								<Typography

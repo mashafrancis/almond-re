@@ -7,15 +7,12 @@ export interface DashboardContainerProps {
 	// match?: {
 	// 	url: string;
 	// };
-	history: {
-		push: (url: string) => void;
-	};
 	// component?: any;
 	user: UserDetails;
 	logoutUser: () => void;
 	// title: string;
-	activateDevice: (id) => Promise<any>;
-	getUserDetails: () => Promise<any>;
+	// activateDevice: (id) => Promise<any>;
+	// getUserDetails: () => Promise<any>;
 	// activeDevice: {
 	// 	id: string;
 	// 	_id: string;
@@ -23,8 +20,8 @@ export interface DashboardContainerProps {
 	// 	user?: UserDetails;
 	// };
 	// roles: UserRole[];
-	editUserDetails: (id, role) => Promise<any>;
-	activityLogs: ActivityLogs[];
+	// editUserDetails: (id, role) => Promise<any>;
+	// activityLogs: ActivityLogs[];
 	// loading: string;
 }
 

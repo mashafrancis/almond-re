@@ -1,4 +1,3 @@
-import { Cell, Row } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import GeneralCardInfo from '@components/GeneralCardInfo';
 import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
@@ -10,33 +9,30 @@ import { displaySnackMessage } from '@modules/snack';
 import './EnergyMonitoringPage.scss';
 
 // interfaces
+import Grid from '@material-ui/core/Grid';
 import { EnergyMonitoringPageProps } from './interfaces';
 
 export const EnergyMonitoringPage = (
 	props: EnergyMonitoringPageProps,
 ): JSX.Element => (
-	<>
-		<Row>
-			<Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-				{window.innerWidth < 539 && (
-					<div className="main-subheader">
-						<h3>EnergyMonitoring</h3>
-					</div>
-				)}
-			</Cell>
-		</Row>
-		<Row>
-			<Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-				<GeneralCardInfo
-					mainHeader="Energy Monitoring"
-					subHeader="Power readings from the system and daily usage"
-					icon={
-						<MemoryTwoToneIcon className="content-icon general-info-icon" />
-					}
-				/>
-			</Cell>
-		</Row>
-	</>
+	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+		<Grid
+			item
+			container
+			direction="column"
+			justify="flex-start"
+			alignItems="stretch"
+			spacing={1}
+			xs
+			style={{ margin: 0, padding: 0 }}
+		>
+			<GeneralCardInfo
+				mainHeader="Energy Monitoring"
+				subHeader="Power readings from the system and daily usage"
+				icon={<MemoryTwoToneIcon className="content-icon general-info-icon" />}
+			/>
+		</Grid>
+	</Grid>
 );
 
 export const mapStateToProps = (state) => ({

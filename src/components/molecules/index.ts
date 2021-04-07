@@ -7,3 +7,4 @@ export { default as OverlapedImages } from './OverlapedImages';
 export { default as SwiperNumber } from './SwiperNumber';
 export { default as TypedText } from './TypedText';
 export { default as CustomAvatar } from './CustomAvatar';
+export { default as BottomNavigation } from './BottomNavigation';

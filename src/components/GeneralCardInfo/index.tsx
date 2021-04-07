@@ -1,6 +1,3 @@
-import { GeneralCardInfoProps } from './interfaces';
-// styles
-import './GeneralCardInfo.scss';
 import { ButtonBase, Card, Grid, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,6 +8,9 @@ import {
 	Theme,
 	useTheme,
 } from '@material-ui/core/styles';
+// styles
+import './GeneralCardInfo.scss';
+import { GeneralCardInfoProps } from './interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme: Theme) =>
 				paddingTop: '0 !important',
 			},
 		},
-    iconBase: {
-      padding: 6,
-      borderRadius: 8,
-      backgroundColor: 'rgba(25, 103, 210, 0.11)',
-      color: '#2573b5',
-    },
+		iconBase: {
+			padding: 6,
+			borderRadius: 8,
+			backgroundColor: 'rgba(25, 103, 210, 0.11)',
+			color: '#2573b5',
+		},
 	}),
 );
 

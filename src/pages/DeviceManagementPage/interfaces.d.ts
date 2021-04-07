@@ -1,14 +1,8 @@
 import { Device } from '@modules/device/interfaces';
 
 export interface DeviceManagementProps {
-	// getAllDevices: () => Promise<any>;
-	// editDevice: (id, device) => Promise<any>;
-	// addNewDevice: (device) => Promise<any>;
-	// deleteDevice: (id) => Promise<any>;
-	// displaySnackMessage: (message) => Promise<any>;
-	devices: Device[];
+	// devices: Device[];
 	isLoading: boolean;
-	activeDevice: string;
 }
 
 export interface DeviceManagementState {

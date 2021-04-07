@@ -1,5 +1,5 @@
 // third party libraries
-import { Action, AnyAction } from 'redux';
+import { Action, AnyAction, Dispatch } from 'redux';
 
 // thunk action creators
 import authService from '@utils/auth';
@@ -87,7 +87,7 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * @returns {Function}
  */
 export const getUserDetails = () => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: { get: (arg0: string) => Promise<{ data: { data: UserDetails } }> },
 ) => {

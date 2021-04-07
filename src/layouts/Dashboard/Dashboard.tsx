@@ -1,17 +1,10 @@
-import { useState, ReactNode, lazy } from 'react';
+import { ReactNode } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-	useMediaQuery,
-	Divider,
-	Hidden,
-	Drawer,
-	Toolbar,
-	Container,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Hidden, Drawer, Toolbar, Container } from '@material-ui/core';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import MenuContent from '@components/MenuContent';
-import PageBottomNavigation from '@components/BottomNavigation';
+import { BottomNavigation } from '@components/molecules';
 import { Topbar } from './components';
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +83,7 @@ const Dashboard = ({
 				</Container>
 			</main>
 			<Hidden mdUp>
-				<PageBottomNavigation />
+				<BottomNavigation />
 			</Hidden>
 		</div>
 	);

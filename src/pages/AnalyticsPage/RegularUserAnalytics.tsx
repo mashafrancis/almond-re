@@ -1,4 +1,4 @@
-import { useContext, lazy, useEffect } from 'react';
+import { useContext } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // components
 import Grid from '@material-ui/core/Grid';
@@ -15,9 +15,8 @@ import AnalyticsCard from '@components/AnalyticsCard';
 import { ComponentContext } from '@context/ComponentContext';
 import formatWaterLevelData from '@utils/formatWaterLevel';
 import { RegularUserAnalyticsProps } from '@pages/AnalyticsPage/interfaces';
-import { useSubscription } from '@hooks/mqtt';
-import { getSensorData } from '@modules/sensorData';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -27,12 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-const RegularUserAnalytics = ({
-	sensorData,
-}: RegularUserAnalyticsProps): JSX.Element => {
+const RegularUserAnalytics = (): JSX.Element => {
 	const classes = useStyles();
 	const { setSelectedIndex } = useContext(ComponentContext);
-	const { temperature, humidity, waterLevel } = sensorData;
+	const { temperature, humidity, waterLevel } = useSelector(
+		(globalState: IRootState) => globalState.sensorData.sensorData,
+	);
 
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
