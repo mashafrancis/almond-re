@@ -1,4 +1,4 @@
-import { useContext, useState, MouseEvent, cloneElement } from 'react';
+import { useContext, cloneElement } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -6,49 +6,29 @@ import {
 	Hidden,
 	List,
 	ListItem,
-	ListItemIcon,
-	Popover,
 	Typography,
-	IconButton,
 	Button,
-	Avatar,
 	Grid,
 	Badge,
 	CssBaseline,
 	AppBar,
 	useScrollTrigger,
-	Menu,
-	MenuItem,
-	Drawer,
 	Divider,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MenuIcon from '@material-ui/icons/Menu';
 import { Image, DarkModeToggler } from '@components/atoms';
-import authService from '@utils/auth';
 import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
-import { SectionHeader } from '@components/molecules';
-import MenuContent from '@components/MenuContent';
 import {
-	Add,
 	ArrowDropDown,
-	ExitToApp,
-	Help,
-	Mood,
 	Notifications,
 	NotificationsNone,
-	OpenInNew,
-	Settings,
 	Timeline,
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
 import withStyles from '@material-ui/core/styles/withStyles';
-import fancyId from '@utils/fancyId';
-import { logoutUser } from '@modules/user';
-import { useDispatch } from 'react-redux';
+import { CustomAvatar } from '@components/molecules';
 import { StyledBadge } from './styles';
 import {
 	closedColor,
@@ -171,14 +151,6 @@ const useStyles = makeStyles((theme) => ({
 	menuGroupTitle: {
 		textTransform: 'uppercase',
 	},
-	avatar: {
-		// borderRadius: '50%',
-		// padding: 0;
-		width: '40px',
-		height: '40px',
-		cursor: 'pointer',
-		margin: '4px',
-	},
 	grow: {
 		flexGrow: 1,
 	},
@@ -206,10 +178,8 @@ const useStyles = makeStyles((theme) => ({
 		padding: '4px 40px',
 		marginLeft: theme.spacing(12),
 		marginRight: theme.spacing(4),
-		// marginLeft: 0,
 		width: '100%',
 		[theme.breakpoints.up('sm')]: {
-			// marginLeft: theme.spacing(5),
 			width: 'auto',
 		},
 		color: '#fff',
@@ -228,22 +198,11 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		order: -1,
-		// [theme.breakpoints.up('sm')]: {
-		//   padding: '4px'
-		// },
 	},
 	sectionEnd: {
 		display: 'inline-flex',
-		// [theme.breakpoints.up('md')]: {
-		//   display: 'inline-flex',
-		// },
 		justifyContent: 'flex-end',
 		order: 1,
-		// color: 'black'
-	},
-	menuPopup: {
-		right: 16,
-		left: 'unset !important',
 	},
 }));
 
@@ -279,19 +238,16 @@ const Topbar = ({
 	...rest
 }: Props): JSX.Element => {
 	const classes = useStyles();
-	const dispatch = useDispatch();
 
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
 	const {
 		activityLogsViewed,
 		toggleActivityDrawer,
 		setDeviceModalOpen,
-		setSelectedIndex,
-		toggleRoleChangeDialog,
 	} = useContext(ComponentContext);
-	const { name, photo, isAdmin, activeDevice } = useContext(UserContext);
+
 	const { status } = useMqttState();
+
+	const { activeDevice } = useContext(UserContext);
 
 	const statusChange = (mqttStatus: string): string => {
 		switch (mqttStatus) {
@@ -306,17 +262,6 @@ const Topbar = ({
 			default:
 				return offlineColor;
 		}
-	};
-
-	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleProfileClose = () => setAnchorEl(null);
-
-	const logoutActiveUser = (): void => {
-		window.location.replace('/');
-		dispatch(logoutUser());
 	};
 
 	const DeviceActiveBadge = withStyles((theme: Theme) =>
@@ -431,74 +376,6 @@ const Topbar = ({
 			</StyledBadge>
 		);
 
-	const menuItems = [
-		{ name: 'Settings', icon: <Settings /> },
-		{ name: 'Help', icon: <Help /> },
-		{ name: 'Send Feedback', icon: <OpenInNew /> },
-	];
-
-	const handleRoleModal = () => {
-		handleProfileClose();
-		toggleRoleChangeDialog();
-	};
-
-	const AvatarImage = (): JSX.Element => {
-		const open = Boolean(anchorEl);
-		const id = open ? 'menu-popover' : undefined;
-		return (
-			<>
-				<Avatar
-					className={classes.avatar}
-					alt={name}
-					src={photo}
-					onClick={handleToggleProfileMenu}
-					aria-describedby="menu-popover"
-					aria-controls="menu-popover"
-					aria-haspopup="true"
-					typeof="button"
-				/>
-				<Menu
-					id="menu-popover"
-					classes={{
-						paper: classes.menuPopup,
-					}}
-					style={{ top: '44px', right: '16px' }}
-					anchorEl={anchorEl}
-					open={open}
-					keepMounted
-					onClose={handleProfileClose}
-				>
-					{menuItems.map((item, index) => {
-						const handleClick = () => {
-							handleProfileClose();
-							setSelectedIndex(index);
-						};
-						return (
-							<MenuItem key={fancyId()} onClick={handleClick}>
-								<ListItemIcon style={{ minWidth: 40 }}>
-									{item.icon}
-								</ListItemIcon>
-								{item.name}
-							</MenuItem>
-						);
-					})}
-					<MenuItem onClick={handleRoleModal}>
-						<ListItemIcon style={{ minWidth: 40 }}>
-							<Mood />
-						</ListItemIcon>
-						Change role
-					</MenuItem>
-					<MenuItem onClick={logoutActiveUser}>
-						<ListItemIcon style={{ minWidth: 40 }}>
-							<ExitToApp />
-						</ListItemIcon>
-						Logout
-					</MenuItem>
-				</Menu>
-			</>
-		);
-	};
-
 	return (
 		<>
 			<CssBaseline />
@@ -529,7 +406,6 @@ const Topbar = ({
 								</NavLink>
 							</div>
 							<DeviceDisplay />
-							{/* <Hidden smDown>{!isAdmin && <DeviceDisplay />}</Hidden> */}
 						</div>
 						<div className={classes.flexGrow} />
 						<Hidden smDown>
@@ -552,7 +428,7 @@ const Topbar = ({
 									<NotificationsIcon />
 								</ListItem>
 								<ListItem className={clsx(classes.listItem)}>
-									<AvatarImage />
+									<CustomAvatar />
 								</ListItem>
 							</List>
 						</Hidden>
