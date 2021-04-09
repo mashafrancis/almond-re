@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -6,23 +6,20 @@ import {
 	Hidden,
 	List,
 	ListItem,
-	ListItemIcon,
-	Popover,
 	Typography,
 	IconButton,
 	Button,
-	Avatar,
 	Grid,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Image, DarkModeToggler } from '@components/atoms';
 import authService from '@utils/auth';
 import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
-import { SectionHeader } from '@components/molecules';
-import { MenuGroupProps, PagesProps } from '../../../interfaces';
+import { CustomAvatar } from '@components/molecules';
+
+import { PagesProps } from '../../../interfaces';
 
 const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
@@ -70,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	listItemText: {
 		flex: '0 0 auto',
-		// marginLeft: theme.spacing(0),
 		whiteSpace: 'nowrap',
 	},
 	listItemButton: {
@@ -134,14 +130,6 @@ const useStyles = makeStyles((theme) => ({
 	menuGroupTitle: {
 		textTransform: 'uppercase',
 	},
-	avatar: {
-		// borderRadius: '50%',
-		// padding: 0;
-		width: '40px',
-		height: '40px',
-		cursor: 'pointer',
-		margin: '4px',
-	},
 }));
 
 interface Props {
@@ -164,7 +152,7 @@ const Topbar = ({
 
 	const [anchorEl, setAnchorEl] = useState<any>(null);
 	const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
-	const { name, photo, devices } = useContext(UserContext);
+	const { devices } = useContext(UserContext);
 
 	const handleClick = (
 		event: React.MouseEvent<HTMLElement>,
@@ -174,16 +162,11 @@ const Topbar = ({
 		setOpenedPopoverId(popoverId);
 	};
 
-	const handleClose = (): void => {
-		setAnchorEl(null);
-		setOpenedPopoverId(null);
-	};
-
 	const renderAuthButtons = () => (
 		<>
 			{authService.isAuthenticated() ? (
 				<ListItem className={clsx(classes.listItem, 'menu-item--no-dropdown')}>
-					<Avatar className={classes.avatar} alt={name} src={photo} />
+					<CustomAvatar />
 				</ListItem>
 			) : (
 				<>
