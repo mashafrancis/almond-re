@@ -244,7 +244,7 @@ describe('Device reducer', () => {
 			);
 
 			expect(deviceState.isLoading).toBeFalsy();
-			expect(updatedDevice.id).toBe('TEST_EDITED');
+			expect(updatedDevice?.id).toBe('TEST_EDITED');
 			expect(deviceState.errors).toBe(null);
 		});
 

@@ -1,13 +1,19 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import {
+	useState,
+	useEffect,
+	ChangeEvent,
+	FormEvent,
+	useCallback,
+	MouseEvent,
+} from 'react';
 // third-party libraries
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
 	InputAdornment,
 	Chip,
 	TextField,
 	Button,
 	IconButton,
-	Divider,
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Add, PhonelinkSetupSharp } from '@material-ui/icons';
@@ -18,10 +24,8 @@ import {
 	editDevice,
 	getAllDevices,
 } from '@modules/device';
-// interfaces
-import CardInfo from '@components/CardInfo';
+// components
 import Modal from '@components/Modal';
-import { Schedule } from '@modules/timeSchedules/interfaces';
 import {
 	GridCellParams,
 	GridColDef,
@@ -29,11 +33,9 @@ import {
 	GridSortDirection,
 } from '@material-ui/data-grid';
 import { NoDataOverlay } from '@components/atoms';
-import { CustomLoadingOverlay } from '@pages/WaterCyclesPage/Template';
-import { ToggleSwitch, useTableStyles } from '@pages/WaterCyclesPage/styles';
-import fancyId from '@utils/fancyId';
+import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
+import { useTableStyles } from '@pages/WaterCyclesPage/styles';
 import { Device } from '@modules/device/interfaces';
-import { UserContext } from '@context/UserContext';
 import Grid from '@material-ui/core/Grid';
 import DashboardCard from '@components/DashboardCard';
 import Typography from '@material-ui/core/Typography';
@@ -42,8 +44,10 @@ import { red } from '@material-ui/core/colors';
 import './DeviceManagementPage.scss';
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import validate from 'validate.js';
-import { DeviceManagementProps, DeviceManagementState } from './interfaces';
+// interfaces
+import { DeviceManagementState } from './interfaces';
 import { FormStateProps } from '../../types/FormStateProps';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -62,77 +66,66 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const schema = {
-	selectedDevice: {
+	device: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
-			maximum: 7,
+			is: 7,
+			message: 'id should be 7 characters',
 		},
 	},
 };
 
-export const DeviceManagementPage = ({
-	devices,
-	activeDevice,
-	isLoading,
-}: DeviceManagementProps): JSX.Element => {
-	const dispatch = useDispatch();
-	const [state, setState] = useState<DeviceManagementState>({
+export const DeviceManagementPage = (): JSX.Element => {
+	const { devices, isLoading } = useSelector(
+		(globalState: IRootState) => globalState.device,
+		shallowEqual,
+	);
+	const [state, setState] = useState<DeviceManagementState & FormStateProps>({
+		devices: [],
 		isEditMode: false,
 		showDeviceModal: false,
 		isFormModalOpen: false,
-		devices: [],
 		isDeleteModalOpen: false,
 		deviceId: '',
 		deviceToEdit: '',
 		selectedDevice: '',
-	});
-
-	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
 		values: {},
 		touched: {},
 		errors: {},
 	});
 
+	const dispatch = useDispatch();
 	const tableClasses = useTableStyles();
 	const classes = useStyles();
 	const styles = useDashboardContainerStyles();
-	const {
-		isFormModalOpen,
-		isEditMode,
-		selectedDevice,
-		deviceToEdit,
-		isDeleteModalOpen,
-	} = state;
 
 	useEffect(() => {
 		dispatch(getAllDevices());
-	}, [activeDevice]);
+	}, []);
 
 	useEffect(() => {
-		const errors = validate(formState.values, schema);
+		const errors = validate(state.values, schema);
 
-		setFormState((formState) => ({
-			...formState,
+		setState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
-	}, [formState.values]);
+	}, [state.values]);
 
 	const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
-		setFormState((formState) => ({
-			...formState,
+		const { name, value } = event.target;
+		setState((prevState) => ({
+			...prevState,
 			values: {
-				...formState.values,
-				[event.target.name]:
-					event.target.type === 'checkbox'
-						? event.target.checked
-						: event.target.value,
+				...prevState.values,
+				[name]: value,
 			},
 			touched: {
-				...formState.touched,
-				[event.target.name]: true,
+				...prevState.touched,
+				[name]: true,
 			},
 		}));
 	};
@@ -142,41 +135,33 @@ export const DeviceManagementPage = ({
 			setState((prevState) => ({
 				...state,
 				showDeviceModal: !prevState.showDeviceModal,
-				isFormModalOpen: true,
+				isFormModalOpen: !prevState.isFormModalOpen,
 				isEditMode: false,
 			}));
 		} else if (`show${mode}ScheduleModal` && mode === 'Edit') {
-			const deviceId = event.target.id;
-			const device = devices.filter((obj) => obj._id === deviceId);
+			const { id } = event.target;
+			const device = devices.filter((obj) => obj._id === id);
 
 			setState((prevState) => ({
 				...state,
-				deviceId,
+				deviceId: id,
 				deviceToEdit: device[0].id,
 				showDeviceModal: !prevState.showDeviceModal,
-				isFormModalOpen: true,
+				isFormModalOpen: !prevState.isFormModalOpen,
 				isEditMode: true,
 			}));
 		}
 	};
 
 	const closeDeviceModal = (): void => {
-		if (state.isEditMode) {
-			setState({
-				...state,
-				deviceToEdit: '',
-				showDeviceModal: false,
-				isFormModalOpen: false,
-				deviceId: '',
-			});
-		}
-
-		setState({
+		setState((prevState) => ({
 			...state,
-			showDeviceModal: false,
-			isFormModalOpen: false,
+			deviceToEdit: '',
+			showDeviceModal: !prevState.showDeviceModal,
+			isFormModalOpen: !prevState.isFormModalOpen,
 			deviceId: '',
-		});
+			device: '',
+		}));
 	};
 
 	const toggleDeviceDeleteModal = (): void =>
@@ -185,31 +170,35 @@ export const DeviceManagementPage = ({
 			isDeleteModalOpen: !prevState.isDeleteModalOpen,
 		}));
 
-	const handleDeviceDelete = async (event) => {
-		event.preventDefault();
-		await dispatch(deleteDevice(state.deviceId));
-		toggleDeviceDeleteModal();
-	};
+	const handleDeviceDelete = useCallback(
+		(event: MouseEvent<HTMLElement>) => {
+			event.preventDefault();
+			dispatch(deleteDevice(state.deviceId));
+			toggleDeviceDeleteModal();
+		},
+		[state.deviceId],
+	);
 
 	const onAddEditDeviceSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const { isEditMode, deviceId, deviceToEdit } = state;
+		const { isEditMode, deviceId, isValid, values } = state;
 
-		if (formState.isValid) {
-			const { selectedDevice } = formState.values;
-			const device = {
-				id: isEditMode ? deviceToEdit : selectedDevice,
+		if (isValid) {
+			const deviceToSubmit = {
+				id: values.device,
 			};
 			dispatch(
-				isEditMode ? editDevice(deviceId, device) : addNewDevice(device),
+				isEditMode
+					? editDevice(deviceId, deviceToSubmit)
+					: addNewDevice(deviceToSubmit),
 			);
 		}
 
-		setFormState((formState) => ({
-			...formState,
+		setState((prevState) => ({
+			...prevState,
 			touched: {
-				...formState.touched,
-				...formState.errors,
+				...prevState.touched,
+				...prevState.errors,
 			},
 		}));
 
@@ -217,17 +206,21 @@ export const DeviceManagementPage = ({
 	};
 
 	const hasError = (field: string): boolean =>
-		!!(formState.touched[field] && formState.errors[field]);
+		!!(state.touched[field] && state.errors[field]);
 
-	const ActionButtons = (device: string): JSX.Element => {
-		const handleDelete = () =>
-			setState({
-				...state,
-				deviceId: device,
-				isDeleteModalOpen: true,
-			});
+	const renderActionButtons = (device: Device): JSX.Element => {
+		const { _id } = device;
+
+		const handleDelete = () => {
+			setState((prevState) => ({
+				...prevState,
+				deviceId: _id,
+				isDeleteModalOpen: !prevState.isDeleteModalOpen,
+			}));
+		};
+
 		return (
-			<div className={classes.root} key={device}>
+			<div className={classes.root} key={_id}>
 				<Grid container spacing={3}>
 					<Grid
 						container
@@ -241,7 +234,7 @@ export const DeviceManagementPage = ({
 					>
 						<Typography
 							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={device}
+							id={_id}
 							variant="body2"
 							color="primary"
 							onClick={showDeviceModal('Edit')}
@@ -251,7 +244,7 @@ export const DeviceManagementPage = ({
 						</Typography>
 						<Typography
 							style={{ cursor: 'pointer', color: red[900] }}
-							id={device}
+							id={_id}
 							variant="body2"
 							onClick={handleDelete}
 							onKeyDown={handleDelete}
@@ -264,7 +257,7 @@ export const DeviceManagementPage = ({
 		);
 	};
 
-	const deviceStatus = (device): JSX.Element => {
+	const renderDeviceStatus = (device): JSX.Element => {
 		const { verified, enabled } = device;
 		if (!verified)
 			return <Chip className="MuiChip-root-unverified" label="Not Verified" />;
@@ -273,7 +266,7 @@ export const DeviceManagementPage = ({
 		return <Chip className="MuiChip-root-enabled" label="Enabled" />;
 	};
 
-	const TableContent = (devices: Device[]): JSX.Element => {
+	const renderTableContent = (): JSX.Element => {
 		const columns: GridColDef[] = [
 			{
 				field: 'deviceId',
@@ -300,7 +293,8 @@ export const DeviceManagementPage = ({
 				headerName: 'Status',
 				flex: 0.2,
 				headerClassName: 'table-header',
-				renderCell: (params: GridCellParams) => deviceStatus(params.value),
+				renderCell: (params: GridCellParams) =>
+					renderDeviceStatus(params.value),
 			},
 			{
 				field: 'actions',
@@ -308,7 +302,7 @@ export const DeviceManagementPage = ({
 				flex: 0.2,
 				headerClassName: 'table-header',
 				renderCell: (params: GridCellParams) =>
-					ActionButtons(params.value as string),
+					renderActionButtons(params.value as Device),
 			},
 		];
 
@@ -319,7 +313,7 @@ export const DeviceManagementPage = ({
 				? `${device?.user?.firstName} ${device?.user?.lastName}`
 				: 'NOT ASSIGNED',
 			status: device,
-			actions: ActionButtons(device._id),
+			actions: device,
 		}));
 
 		return (
@@ -327,8 +321,9 @@ export const DeviceManagementPage = ({
 				<div style={{ display: 'flex', height: '100%' }}>
 					<div style={{ flexGrow: 1 }}>
 						<DataGrid
-							autoHeight
-							autoPageSize
+							// autoHeight
+							// autoPageSize
+							// pagination
 							className={tableClasses.root}
 							loading={isLoading}
 							rows={rows}
@@ -358,59 +353,65 @@ export const DeviceManagementPage = ({
 		);
 	};
 
-	const RenderDeviceForm = (): JSX.Element => (
-		<TextField
-			autoFocus
-			fullWidth
-			id="selectedDevice"
-			variant="outlined"
-			type="text"
-			name="selectedDevice"
-			// margin="dense"
-			// size="small"
-			label={`${isEditMode ? 'Update' : 'Add new'} device ID`}
-			// value={formState.values.selectedDevice || ''}
-			// defaultValue={isEditMode ? deviceToEdit : selectedDevice}
-			onChange={handleValueChange}
-			error={hasError('selectedDevice')}
-			InputLabelProps={{
-				classes: {
-					focused: styles.focused,
-					root: styles.labelColor,
-				},
-			}}
-			InputProps={{
-				startAdornment: (
-					<InputAdornment position="start">
-						<IconButton>
-							<PhonelinkSetupSharp />
-						</IconButton>
-					</InputAdornment>
-				),
-			}}
-		/>
-	);
+	const renderDeviceForm = (): JSX.Element => {
+		const { isEditMode, values } = state;
+		return (
+			<TextField
+				autoFocus
+				fullWidth
+				id="device"
+				variant="outlined"
+				type="text"
+				name="device"
+				// margin="dense"
+				// size="small"
+				label={`${isEditMode ? 'Update' : 'Add new'} device ID`}
+				value={values.device ?? ''}
+				onChange={handleValueChange}
+				error={hasError('device')}
+				helperText={hasError('device') ? state.errors.device[0] : null}
+				InputLabelProps={{
+					classes: {
+						focused: styles.focused,
+					},
+				}}
+				InputProps={{
+					startAdornment: (
+						<InputAdornment position="start">
+							<IconButton>
+								<PhonelinkSetupSharp />
+							</IconButton>
+						</InputAdornment>
+					),
+				}}
+			/>
+		);
+	};
 
-	const AddEditDeviceModal = (): JSX.Element => (
-		<Modal
-			isModalOpen={isFormModalOpen}
-			renderContent={<RenderDeviceForm />}
-			onClose={() => setState({ ...state, isFormModalOpen: false })}
-			renderDialogText={
-				isEditMode
-					? 'Change the device identifier for the user to configure.'
-					: 'Add a 7 digit device identifier for the user to configure.'
-			}
-			renderHeader={state.isEditMode ? 'Update device' : 'Add new device'}
-			submitButtonName={isEditMode ? 'Update device' : 'Create new device'}
-			onSubmit={onAddEditDeviceSubmit}
-			onDismiss={closeDeviceModal}
-		/>
-	);
+	const renderAddEditDeviceModal = () => {
+		const { isFormModalOpen, isEditMode, isValid } = state;
+		return (
+			<Modal
+				isModalOpen={isFormModalOpen}
+				renderContent={renderDeviceForm()}
+				onClose={closeDeviceModal}
+				renderDialogText={
+					isEditMode
+						? 'Change the device identifier for the user to configure.'
+						: 'Add a 7 digit device identifier for the user to configure.'
+				}
+				renderHeader={isEditMode ? 'Update device' : 'Add new device'}
+				submitButtonName={isEditMode ? 'Update device' : 'Create new device'}
+				onSubmit={onAddEditDeviceSubmit}
+				onDismiss={closeDeviceModal}
+				disabled={!isValid}
+			/>
+		);
+	};
 
-	const DeleteDeviceModal = (): JSX.Element => (
+	const renderDeleteDeviceModal = (): JSX.Element => (
 		<Modal
-			isModalOpen={isDeleteModalOpen}
+			isModalOpen={state.isDeleteModalOpen}
 			renderDialogText="Do you confirm deletion of device?"
 			onClose={toggleDeviceDeleteModal}
 			renderHeader="Delete Device"
@@ -433,16 +434,9 @@ export const DeviceManagementPage = ({
 					xs
 					style={{ margin: 0, padding: 0 }}
 				>
-					{/* <CardInfo */}
-					{/*	mainHeader="Device Management" */}
-					{/*	subHeader="Add a new device to the database for the user" */}
-					{/*	icon={<PhonelinkSetupSharp className="content-icon" />} */}
-					{/*	buttonName="New device" */}
-					{/*	onClick={showDeviceModal('Add')} */}
-					{/* /> */}
 					<DashboardCard
 						heading="Device Management"
-						body={TableContent(devices)}
+						body={renderTableContent()}
 						actionItem={
 							<Button
 								color="primary"
@@ -456,17 +450,11 @@ export const DeviceManagementPage = ({
 						}
 					/>
 				</Grid>
-				<AddEditDeviceModal />
-				<DeleteDeviceModal />
 			</Grid>
+			{renderAddEditDeviceModal()}
+			{renderDeleteDeviceModal()}
 		</div>
 	);
 };
 
-export const mapStateToProps = (state) => ({
-	devices: state.device.devices,
-	activeDevice: state.device.activeDevice,
-	isLoading: state.device.isLoading,
-});
-
-export default connect(mapStateToProps, null)(DeviceManagementPage);
+export default DeviceManagementPage;

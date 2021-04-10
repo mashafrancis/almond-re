@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 
 // third-party libraries
-import { Cell, Row } from '@material/react-layout-grid';
 import { connect } from 'react-redux';
 import { SecurityTwoTone } from '@material-ui/icons';
 
@@ -12,32 +11,31 @@ import { displaySnackMessage } from '@modules/snack';
 import './QualityCheckPage.scss';
 
 // interfaces
+import Grid from '@material-ui/core/Grid';
 import { QualityCheckPageProps } from './interfaces';
 
 // components
 const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
 
 export const QualityCheckPage = (props: QualityCheckPageProps): JSX.Element => (
-	<>
-		<Row>
-			<Cell columns={7} desktopColumns={7} tabletColumns={8} phoneColumns={4}>
-				{window.innerWidth < 539 && (
-					<div className="main-subheader">
-						<h3>QualityCheck</h3>
-					</div>
-				)}
-			</Cell>
-		</Row>
-		<Row>
-			<Cell columns={12} desktopColumns={12} tabletColumns={8} phoneColumns={4}>
-				<GeneralCardInfo
-					mainHeader="Quality Check"
-					subHeader="Tests for water quality, salts and ph level"
-					icon={<SecurityTwoTone className="content-icon general-info-icon" />}
-				/>
-			</Cell>
-		</Row>
-	</>
+	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+		<Grid
+			item
+			container
+			direction="column"
+			justify="flex-start"
+			alignItems="stretch"
+			spacing={1}
+			xs
+			style={{ margin: 0, padding: 0 }}
+		>
+			<GeneralCardInfo
+				mainHeader="Quality Check"
+				subHeader="Tests for water quality, salts and ph level"
+				icon={<SecurityTwoTone className="content-icon general-info-icon" />}
+			/>
+		</Grid>
+	</Grid>
 );
 
 export const mapStateToProps = (state) => ({

@@ -1,11 +1,8 @@
-import { forwardRef, ReactNode } from 'react';
+import { ReactNode } from 'react';
 // components
 import {
 	Button,
 	Dialog,
-	// DialogActions,
-	// DialogContent,
-	// DialogTitle,
 	DialogContentText,
 	IconButton,
 } from '@material-ui/core';
@@ -14,7 +11,6 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import {
 	createStyles,
-	makeStyles,
 	Theme,
 	withStyles,
 	WithStyles,
@@ -123,7 +119,10 @@ const Modal = withStyles(styles)(
 					{renderHeader}
 				</DialogTitle>
 				<DialogContent>
-					<DialogContentText gutterBottom style={{ marginBottom: 0 }}>
+					<DialogContentText
+						gutterBottom
+						style={{ marginBottom: 0, paddingBottom: 10 }}
+					>
 						{renderDialogText}
 					</DialogContentText>
 					{renderContent}

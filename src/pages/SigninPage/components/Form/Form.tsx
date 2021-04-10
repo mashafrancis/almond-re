@@ -57,8 +57,8 @@ const Form = (): JSX.Element => {
 	React.useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((state) => ({
+			...state,
 			isValid: !errors,
 			errors: errors || {},
 		}));
@@ -67,17 +67,17 @@ const Form = (): JSX.Element => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((state) => ({
+			...state,
 			values: {
-				...formState.values,
+				...state.values,
 				[event.target.name]:
 					event.target.type === 'checkbox'
 						? event.target.checked
 						: event.target.value,
 			},
 			touched: {
-				...formState.touched,
+				...state.touched,
 				[event.target.name]: true,
 			},
 		}));
@@ -91,11 +91,11 @@ const Form = (): JSX.Element => {
 			dispatch(loginAccount({ email, password }));
 		}
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((state) => ({
+			...state,
 			touched: {
-				...formState.touched,
-				...formState.errors,
+				...state.touched,
+				...state.errors,
 			},
 		}));
 	};

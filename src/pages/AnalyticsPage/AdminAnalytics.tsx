@@ -1,4 +1,5 @@
-import { useContext, lazy } from 'react';
+import { useContext, useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 // components
 import {
 	AccountBalanceTwoTone,
@@ -12,6 +13,8 @@ import { ComponentContext } from '@context/ComponentContext';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AnalyticsCard from '@components/AnalyticsCard';
+import { getAdminStatistics } from '@modules/analytics';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -22,8 +25,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const AdminAnalytics = (): JSX.Element => {
-	const { setSelectedIndex } = useContext(ComponentContext);
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const { data } = useSelector(
+		(globalState: IRootState) => globalState.analytics,
+		shallowEqual,
+	);
+
+	useEffect(() => {
+		dispatch(getAdminStatistics());
+	}, []);
+
+	const { setSelectedIndex } = useContext(ComponentContext);
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
 	return (
@@ -40,14 +53,14 @@ const AdminAnalytics = (): JSX.Element => {
 					colorClass="blueCard"
 					icon={<AllOutTwoTone fontSize="large" />}
 					mainInfo="Devices"
-					subInfo="10"
+					subInfo={data.devices}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
 					colorClass="yellowCard"
 					icon={<GroupTwoTone fontSize="large" />}
 					mainInfo="People"
-					subInfo="8"
+					subInfo={data.users}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}

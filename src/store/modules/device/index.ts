@@ -40,12 +40,14 @@ import {
 	GET_DEVICES_FAILURE,
 	GET_DEVICES_REQUEST,
 	GET_DEVICES_SUCCESS,
+	State,
 	USER_VERIFY_DEVICE_FAILURE,
 	USER_VERIFY_DEVICE_REQUEST,
 	USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
-import { Dispatch } from 'redux';
+import { Dispatch, Reducer } from 'redux';
 import errorOnSnack from '@utils/errorOnSnack';
+import { useDispatch } from 'react-redux';
 import { displaySnackMessage } from '../snack';
 
 import { Action, ErrorObject } from '../../../shared.interfaces';
@@ -66,7 +68,7 @@ export const addDeviceRequest = (): AddDeviceActionRequest => ({
  */
 export const addDeviceSuccess = (
 	device: NewDevice,
-): { isLoading: boolean; type: string; device: NewDevice } => ({
+): AddDeviceActionSuccess => ({
 	device,
 	type: ADD_DEVICE_SUCCESS,
 	isLoading: false,
@@ -143,7 +145,7 @@ export const activateDeviceSuccess = (
  * @returns {ActivateDeviceActionFailure}
  */
 export const activateDeviceFailure = (
-	errors: any,
+	errors: ErrorObject,
 ): ActivateDeviceActionFailure => ({
 	errors,
 	type: ACTIVATE_DEVICE_FAILURE,
@@ -316,13 +318,13 @@ export const activateDevice = (id: string) => (
 	http: {
 		patch: (
 			arg0: string,
-			arg1: string,
+			arg1: { id: string },
 		) => Promise<{ data: { data: ActivateDevice; message: string } }>;
 	},
 ) => {
 	dispatch(activateDeviceRequest());
 	return http
-		.patch('active-device', id)
+		.patch('active-device', { id })
 		.then((response: { data: { data: ActivateDevice; message: string } }) => {
 			const {
 				data: { data, message },
@@ -417,16 +419,29 @@ export const deviceInitialState = {
 	devices: [],
 };
 
-export const reducer = (
-	state: {
-		isLoading: boolean;
-		errors: null;
-		activeDevice: object;
-		devices: Device[];
-	} = deviceInitialState,
+export const reducer: Reducer<State, Action> = (
+	state: State = deviceInitialState,
 	action: Action,
 ) => {
 	switch (action.type) {
+		case GET_DEVICES_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
+		case GET_DEVICES_SUCCESS:
+			return {
+				...state,
+				devices: action.devices,
+				isLoading: action.isLoading,
+				errors: null,
+			};
+		case GET_DEVICES_FAILURE:
+			return {
+				...state,
+				errors: action.errors,
+				isLoading: action.isLoading,
+			};
 		case ADD_DEVICE_REQUEST:
 			return {
 				...state,
@@ -436,7 +451,7 @@ export const reducer = (
 			return {
 				...state,
 				isLoading: action.isLoading,
-				devices: [action.device, ...state.devices],
+				devices: [...state.devices, action.device],
 				errors: null,
 			};
 		case ADD_DEVICE_FAILURE:
@@ -476,24 +491,6 @@ export const reducer = (
 				errors: null,
 			};
 		case ACTIVATE_DEVICE_FAILURE:
-			return {
-				...state,
-				errors: action.errors,
-				isLoading: action.isLoading,
-			};
-		case GET_DEVICES_REQUEST:
-			return {
-				...state,
-				isLoading: action.isLoading,
-			};
-		case GET_DEVICES_SUCCESS:
-			return {
-				...state,
-				devices: action.devices,
-				isLoading: action.isLoading,
-				errors: null,
-			};
-		case GET_DEVICES_FAILURE:
 			return {
 				...state,
 				errors: action.errors,

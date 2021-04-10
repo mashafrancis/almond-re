@@ -26,7 +26,7 @@ export interface AddDeviceActionRequest {
 }
 
 export interface AddDeviceActionSuccess {
-	schedule: NewDevice;
+	device: NewDevice;
 	type: ADD_DEVICE_SUCCESS;
 	isLoading: boolean;
 }

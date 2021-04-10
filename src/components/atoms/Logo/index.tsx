@@ -1,6 +1,6 @@
 import './Logo.scss';
 
-import logo from '../../assets/images/logo.png';
+import logo from '../../../assets/images/logo.png';
 
 const Logo = (): JSX.Element => (
 	<div className="main-logo" data-testid="logo">

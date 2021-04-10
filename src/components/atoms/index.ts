@@ -5,3 +5,4 @@ export { default as IconText } from './IconText';
 export { default as DarkModeToggler } from './DarkModeToggler';
 export { default as DividerWithText } from './DividerWithText';
 export { default as NoDataOverlay } from './NoDataOverlay';
+export { default as ActivityLogCard } from './ActivityLogCard';

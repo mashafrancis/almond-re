@@ -13,12 +13,12 @@ import store from './store';
 const rootNode = document.getElementById('root');
 
 render(
-	<StrictMode>
-		<Provider store={store}>
-			<Router>
-				<App />
-			</Router>
-		</Provider>
-	</StrictMode>,
+	// <StrictMode>
+	<Provider store={store}>
+		<Router>
+			<App />
+		</Router>
+	</Provider>,
+	// </StrictMode>,
 	rootNode,
 );

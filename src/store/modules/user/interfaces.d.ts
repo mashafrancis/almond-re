@@ -31,9 +31,8 @@ export interface EditUserDetailsFailure {
 
 export interface UserDetails {
 	_id: string;
-	name: string;
-	firstName?: string;
-	lastName?: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	photo: string;
 	isVerified: boolean;

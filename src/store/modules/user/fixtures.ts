@@ -3,7 +3,8 @@ export const userDetails = {
 	message: 'User fetched successfully',
 	data: {
 		_id: '5edcfe1fb1ccd100710d36a3',
-		name: 'Almond Froyo',
+		firstName: 'Almond',
+		lastName: 'Froyo',
 		email: 'testalmond@gmail.com',
 		currentRole: {
 			_id: '5e4703d62faee61d8ede2d65',

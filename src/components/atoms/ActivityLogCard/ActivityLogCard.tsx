@@ -1,4 +1,4 @@
-import { Card, Grid } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import dayjs from 'dayjs';
 // interfaces
 import CardContent from '@material-ui/core/CardContent';
@@ -58,7 +58,7 @@ const ActivityLogCard = ({
 			<CardContent className={classes.content}>
 				<Typography variant="body2">{log}</Typography>
 				<Typography variant="caption" style={{ fontWeight: 600 }}>
-					{`${dayjs(date).format('LLLL')}`}
+					{`${dayjs(date).format('HH:mm:ss')}`}
 				</Typography>
 			</CardContent>
 		</Card>

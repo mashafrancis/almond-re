@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, MouseEvent } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -155,7 +155,7 @@ const Topbar = ({
 	const { devices } = useContext(UserContext);
 
 	const handleClick = (
-		event: React.MouseEvent<HTMLElement>,
+		event: MouseEvent<HTMLElement>,
 		popoverId: string | null,
 	): void => {
 		setAnchorEl(event.target);
@@ -280,7 +280,7 @@ const Topbar = ({
 							size={24}
 						/>
 					</ListItem>
-					<>{renderAuthButtons()}</>
+					{renderAuthButtons()}
 				</List>
 			</Hidden>
 			<Hidden mdUp>

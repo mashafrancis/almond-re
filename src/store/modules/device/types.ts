@@ -1,3 +1,12 @@
+import { Device } from '@modules/device/interfaces';
+
+export type State = {
+	isLoading: boolean;
+	errors: null;
+	activeDevice: object;
+	devices: Device[];
+};
+
 export const ADD_DEVICE_REQUEST = 'almond/device/ADD_DEVICE_REQUEST';
 export type ADD_DEVICE_REQUEST = typeof ADD_DEVICE_REQUEST;
 

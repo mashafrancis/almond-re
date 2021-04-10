@@ -11,7 +11,7 @@ type color =
 export interface AnalyticsCardProps {
 	icon?: ReactNode;
 	mainInfo: string;
-	subInfo: string;
+	subInfo: string | number;
 	colorClass?: color;
 	onClick?: () => void;
 }

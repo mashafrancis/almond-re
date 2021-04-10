@@ -1,6 +1,5 @@
 import { ChangeEvent, lazy, useEffect, useState } from 'react';
 // third-party libraries
-import { Cell, Row } from '@material/react-layout-grid';
 import { connect, useSelector } from 'react-redux';
 import { FilterList } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
