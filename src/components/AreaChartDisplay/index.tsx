@@ -64,6 +64,8 @@ const AreaChardDisplay = ({
 		},
 	};
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	return <Line data={data} options={data.options} />;
 };
 
