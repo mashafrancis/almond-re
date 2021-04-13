@@ -1,7 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { AreaChartDisplayProps } from '@components/AreaChartDisplay/interfaces';
 import { Grid } from '@material-ui/core';
-import { Chart } from 'chart.js';
+import * as Chart from 'chart.js';
 
 Chart.defaults.global.defaultFontFamily =
 	'Google Sans,Roboto,Helvetica Neue,sans-serif';

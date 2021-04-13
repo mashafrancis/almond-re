@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -63,23 +63,24 @@ const schema = {
 const Form = (): JSX.Element => {
 	const classes = useStyles();
 
-	const [formState, setFormState] = React.useState<FormStateProps>({
+	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
 		values: {},
 		touched: {},
 		errors: {},
 	});
 
-	const [isPasswordHidden, showPassword] = React.useState<boolean>(false);
+	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
@@ -88,17 +89,17 @@ const Form = (): JSX.Element => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			values: {
-				...formState.values,
+				...prevState.values,
 				[event.target.name]:
 					event.target.type === 'checkbox'
 						? event.target.checked
 						: event.target.value,
 			},
 			touched: {
-				...formState.touched,
+				...prevState.touched,
 				[event.target.name]: true,
 			},
 		}));
@@ -110,13 +111,14 @@ const Form = (): JSX.Element => {
 		if (formState.isValid) {
 			const { firstName, lastName, email, password } = formState.values;
 			dispatch(createAccount({ firstName, lastName, email, password }));
+			// history.push('register-success');
 		}
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			touched: {
-				...formState.touched,
-				...formState.errors,
+				...prevState.touched,
+				...prevState.errors,
 			},
 		}));
 	};

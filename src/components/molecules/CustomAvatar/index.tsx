@@ -48,10 +48,11 @@ const CustomAvatar = (): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-	const logoutActiveUser = (): void => {
-		window.location.replace('/');
+	const logoutActiveUser = async (): Promise<void> => {
+		await window.location.replace('/');
 		dispatch(logoutUser());
 	};
+
 	const open = Boolean(anchorEl);
 	const location = useLocation();
 

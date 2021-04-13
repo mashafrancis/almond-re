@@ -9,7 +9,10 @@ import NotFoundPage from '@pages/NotFoundPage';
 import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
 import SignupPage from '@pages/SignupPage';
 import SigninPage from '@pages/SigninPage';
-import PasswordResetPage from '@pages/PasswordResetPage';
+import {
+	PasswordResetPage,
+	CreateNewPasswordPage,
+} from '@pages/PasswordResetPage';
 import RegisterSuccessPage from '@pages/RegisterSuccessPage';
 import WithLayout from '../WithLayout';
 import {
@@ -80,6 +83,17 @@ const Routes = (): any => (
 				<WithLayout
 					{...matchProps}
 					component={PasswordResetPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/password-change"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={CreateNewPasswordPage}
 					layout={MinimalLayout}
 				/>
 			)}

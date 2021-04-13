@@ -144,6 +144,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.1",
+    "@types/chart.js": "^2.9.32",
     "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.22",
     "@types/js-cookie": "^2.2.6",

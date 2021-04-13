@@ -142,9 +142,9 @@ export const editUserDetails = (userId: string, userDetails: any) => (
  * Log-out user action creator
  * @returns {Function}
  */
-export const logoutUser = () => (dispatch: any) => {
-	authService.logoutUser();
+export const logoutUser = () => (dispatch: Dispatch): void => {
 	dispatch(logoutUserAction());
+	authService.logoutUser();
 };
 
 export const userInitialState = {
