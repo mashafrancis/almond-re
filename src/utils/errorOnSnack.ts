@@ -12,14 +12,10 @@ const errorOnSnack = (
 		errorMessage = `An error occurred while ${customMessage}. Please try again`;
 	}
 
-	const {
-		response: {
-			data: { message },
-		},
-	} = error;
-	return error?.response
-		? dispatch(displaySnackMessage(message))
-		: dispatch(displaySnackMessage(errorMessage));
+	const { message } = error?.response?.data.errors;
+	return dispatch(
+		displaySnackMessage(error?.response ? message : errorMessage),
+	);
 };
 
 export default errorOnSnack;

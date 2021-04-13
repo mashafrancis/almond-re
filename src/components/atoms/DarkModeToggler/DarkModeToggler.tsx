@@ -1,57 +1,6 @@
-import * as React from 'react';
-import clsx from 'clsx';
+import { useState, useEffect, useMemo } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { makeStyles, colors } from '@material-ui/core';
 import { DarkModeTogglerProps } from '@components/atoms/DarkModeToggler/interfaces';
-
-const useStyles = makeStyles((theme) => ({
-	root: {
-		position: 'relative',
-	},
-	border: {
-		width: theme.spacing(5),
-		height: theme.spacing(2),
-		borderRadius: theme.spacing(3),
-		border: '3px solid',
-		borderColor: theme.palette.divider,
-		backgroundColor: 'transparent',
-		[theme.breakpoints.up('md')]: {
-			width: theme.spacing(6),
-			height: theme.spacing(3),
-		},
-	},
-	borderDark: {
-		borderColor: colors.indigo[700],
-	},
-	modeToggler: {
-		position: 'absolute',
-		top: `-${theme.spacing(1 / 2)}px`,
-		left: `-${theme.spacing(1 / 2)}px`,
-		width: theme.spacing(3),
-		height: theme.spacing(3),
-		borderRadius: '50%',
-		backgroundColor: theme.palette.text.primary,
-		transition: `transform .3s cubic-bezier(.4,.03,0,1)`,
-		cursor: 'pointer',
-		[theme.breakpoints.up('md')]: {
-			width: theme.spacing(4),
-			height: theme.spacing(4),
-		},
-	},
-	modeTogglerDark: {
-		transform: `translateX(${theme.spacing(3)}px)`,
-		backgroundColor: colors.indigo[900],
-	},
-	modeTogglerIcon: {
-		fill: theme.palette.secondary.main,
-		marginTop: theme.spacing(1 / 2),
-		marginLeft: theme.spacing(1 / 2),
-		[theme.breakpoints.up('md')]: {
-			marginTop: theme.spacing(1),
-			marginLeft: theme.spacing(1),
-		},
-	},
-}));
 
 export const defaultProperties = {
 	dark: {
@@ -75,7 +24,7 @@ export const defaultProperties = {
 		},
 		mask: {
 			cx: '100%',
-			cy: 0,
+			cy: '0%',
 		},
 		svg: {
 			transform: 'rotate(90deg)',
@@ -87,17 +36,18 @@ export const defaultProperties = {
 	springConfig: { mass: 4, tension: 250, friction: 35 },
 };
 
+let REACT_TOGGLE_DARK_MODE_GLOBAL_ID = 0;
+
 type SVGProps = Omit<React.HTMLAttributes<HTMLOrSVGElement>, 'onChange'>;
 interface Props extends SVGProps {
-	onChange: Function;
-	themeMode: string;
+	onChange: (checked: boolean) => void;
+	checked: boolean;
 	style?: React.CSSProperties;
 	size?: number;
 	animationProperties?: typeof defaultProperties;
 	moonColor?: string;
 	sunColor?: string;
 }
-
 /**
  * Component to display the dark mode toggler
  *
@@ -115,7 +65,14 @@ const DarkModeToggler = ({
 	className,
 	...rest
 }: DarkModeTogglerProps): JSX.Element => {
-	const properties = React.useMemo(() => {
+	const [id, setId] = useState(0);
+
+	useEffect(() => {
+		REACT_TOGGLE_DARK_MODE_GLOBAL_ID += 1;
+		setId(REACT_TOGGLE_DARK_MODE_GLOBAL_ID);
+	}, [setId]);
+
+	const properties = useMemo(() => {
 		if (animationProperties !== defaultProperties) {
 			return Object.assign(defaultProperties, animationProperties);
 		}
@@ -148,6 +105,8 @@ const DarkModeToggler = ({
 		onChange(themeMode === 'light');
 	};
 
+	const uniqueMaskId = `circle-mask-${id}`;
+
 	return (
 		<animated.svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -162,36 +121,29 @@ const DarkModeToggler = ({
 			stroke="currentColor"
 			onClick={toggle}
 			style={{
-				// @ts-ignore
 				cursor: 'pointer',
 				...svgContainerProps,
 				...style,
 			}}
 			{...rest}
 		>
-			<mask id="myMask2">
+			<mask id={uniqueMaskId}>
 				<rect x="0" y="0" width="100%" height="100%" fill="white" />
-				<animated.circle
-					// @ts-ignore
-					style={maskedCircleProps}
-					r="9"
-					fill="black"
-				/>
+				{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+				{/* @ts-ignore */}
+				<animated.circle style={maskedCircleProps} r="9" fill="black" />
 			</mask>
 
 			<animated.circle
 				cx="12"
 				cy="12"
 				fill={themeMode === 'dark' ? moonColor : sunColor}
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				style={centerCircleProps}
-				mask="url(#myMask2)"
+				mask={`url(#${uniqueMaskId})`}
 			/>
-			<animated.g
-				stroke="currentColor"
-				// @ts-ignore
-				style={linesProps}
-			>
+			<animated.g stroke="currentColor" style={linesProps}>
 				<line x1="12" y1="1" x2="12" y2="3" />
 				<line x1="12" y1="21" x2="12" y2="23" />
 				<line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />

@@ -20,6 +20,7 @@ import { UserDetails } from '@modules/user/interfaces';
 import { Action, AnyAction, Dispatch, Reducer } from 'redux';
 import { displaySnackMessage } from '@modules/snack';
 import errorOnSnack from '@utils/errorOnSnack';
+import authService from '@utils/auth';
 import { ErrorObject } from '../../../shared.interfaces';
 
 /**
@@ -84,12 +85,10 @@ export const createAccount = (user: IUserInputDTO) => (
 	getState: any,
 	http: any,
 ) => {
-	console.log('Class: , Function: , Line 87 user():', user);
 	dispatch(createAccountRequest());
 	return http
-		.post('register', user)
+		.post('auth/register', user)
 		.then((response: { data: any }) => {
-			console.log('Class: , Function: , Line 91 response():', response);
 			const {
 				data: { message },
 			} = response;
@@ -99,12 +98,11 @@ export const createAccount = (user: IUserInputDTO) => (
 		})
 		.catch((error) => {
 			dispatch(createAccountFailure(error.message));
-			dispatch(displaySnackMessage(error.message));
-			// errorOnSnack(
-			// 	error,
-			// 	dispatch,
-			// 	'creating your new account. Kindly try again.',
-			// );
+			errorOnSnack(
+				error,
+				dispatch,
+				'creating your new account. Kindly try again.',
+			);
 		});
 };
 
@@ -120,16 +118,18 @@ export const loginAccount = (user: Partial<IUserInputDTO>) => (
 			const {
 				data: { data, message },
 			} = response;
-			dispatch(loginAccountSuccess(data));
+			authService.saveToken(data.token.accessToken);
+			dispatch(loginAccountSuccess(data.user));
 			dispatch(displaySnackMessage(message));
+			window.location.replace('/');
 		})
-		.catch((error: ErrorObject) => {
+		.catch((error) => {
+			dispatch(loginAccountFailure(error.message));
 			errorOnSnack(
 				error,
 				dispatch,
 				'login in to your account. Kindly try again.',
 			);
-			dispatch(loginAccountFailure(error));
 		});
 };
 

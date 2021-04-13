@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -9,13 +9,10 @@ import {
 	InputAdornment,
 } from '@material-ui/core';
 import validate from 'validate.js';
-import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
+import { LearnMoreLink } from '@components/atoms';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { useDispatch } from 'react-redux';
-import { loginAccount } from '@modules/authentication';
 import { FormStateProps } from '../../../../types/FormStateProps';
-import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -27,19 +24,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = {
-	email: {
-		presence: { allowEmpty: false, message: 'is required' },
-		email: true,
-		length: {
-			maximum: 300,
-		},
-	},
 	password: {
+		presence: { allowEmpty: false, message: 'is required' },
+	},
+	confirmPassword: {
 		presence: { allowEmpty: false, message: 'is required' },
 	},
 };
 
-const Form = (): JSX.Element => {
+const PasswordResetForm = (): JSX.Element => {
 	const classes = useStyles();
 
 	const [formState, setFormState] = useState<FormStateProps>({
@@ -52,13 +45,17 @@ const Form = (): JSX.Element => {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
-	const dispatch = useDispatch();
+	const [isConfirmPasswordHidden, showConfirmPassword] = useState<boolean>(
+		false,
+	);
+	const toggleConfirmPassword = () =>
+		showConfirmPassword((prevState) => !prevState);
 
 	useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((state) => ({
-			...state,
+		setFormState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
@@ -67,17 +64,17 @@ const Form = (): JSX.Element => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
-		setFormState((state) => ({
-			...state,
+		setFormState((prevState) => ({
+			...prevState,
 			values: {
-				...state.values,
+				...prevState.values,
 				[event.target.name]:
 					event.target.type === 'checkbox'
 						? event.target.checked
 						: event.target.value,
 			},
 			touched: {
-				...state.touched,
+				...prevState.touched,
 				[event.target.name]: true,
 			},
 		}));
@@ -87,15 +84,15 @@ const Form = (): JSX.Element => {
 		event.preventDefault();
 
 		if (formState.isValid) {
-			const { email, password } = formState.values;
-			dispatch(loginAccount({ email, password }));
+			// :TODO: Implement change password dispatch
+			window.location.replace('/');
 		}
 
-		setFormState((state) => ({
-			...state,
+		setFormState((prevState) => ({
+			...prevState,
 			touched: {
-				...state.touched,
-				...state.errors,
+				...prevState.touched,
+				...prevState.errors,
 			},
 		}));
 	};
@@ -103,44 +100,10 @@ const Form = (): JSX.Element => {
 	const hasError = (field: string): boolean =>
 		!!(formState.touched[field] && formState.errors[field]);
 
-	const handleLogin = () =>
-		window.location.replace(`${process.env.ALMOND_API}/auth/google`);
-
 	return (
 		<div className={classes.root}>
 			<form name="password-reset-form" method="post" onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
-					<Grid item xs={12}>
-						<Button
-							size="large"
-							variant="outlined"
-							fullWidth
-							startIcon={<Image src={googleIcon} />}
-							onClick={handleLogin}
-						>
-							Continue with Google
-						</Button>
-					</Grid>
-
-					<Grid item xs={12}>
-						<DividerWithText>OR</DividerWithText>
-					</Grid>
-
-					<Grid item xs={12}>
-						<TextField
-							placeholder="Email"
-							label="Email *"
-							variant="outlined"
-							size="medium"
-							name="email"
-							fullWidth
-							helperText={hasError('email') ? formState.errors.email[0] : null}
-							error={hasError('email')}
-							onChange={handleChange}
-							type="email"
-							value={formState.values.email || ''}
-						/>
-					</Grid>
 					<Grid item xs={12}>
 						<TextField
 							placeholder="Password"
@@ -174,6 +137,40 @@ const Form = (): JSX.Element => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
+						<TextField
+							placeholder="Confirm Password"
+							label="Confirm Password *"
+							variant="outlined"
+							size="medium"
+							name="confirmPassword"
+							fullWidth
+							helperText={
+								hasError('confirmPassword')
+									? formState.errors.confirmPassword[0]
+									: null
+							}
+							error={hasError('confirmPassword')}
+							onChange={handleChange}
+							type={isConfirmPasswordHidden ? 'text' : 'password'}
+							value={formState.values.confirmPassword || ''}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment
+										className={classes.passwordIcon}
+										onClick={toggleConfirmPassword}
+										position="end"
+									>
+										{isConfirmPasswordHidden ? (
+											<VisibilityIcon />
+										) : (
+											<VisibilityOffIcon />
+										)}
+									</InputAdornment>
+								),
+							}}
+						/>
+					</Grid>
+					<Grid item xs={12}>
 						<Typography variant="subtitle2">
 							Fields that are marked with * sign are required.
 						</Typography>
@@ -186,7 +183,7 @@ const Form = (): JSX.Element => {
 							color="primary"
 							fullWidth
 						>
-							Login
+							Send
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
@@ -195,9 +192,8 @@ const Form = (): JSX.Element => {
 							color="textSecondary"
 							align="center"
 						>
-							Forgot your password?{' '}
-							<NavLink to="/password-reset">
-								<LearnMoreLink title="Reset password" />
+							<NavLink to="/login">
+								<LearnMoreLink title="Sign in here" href="/signin-cover" />
 							</NavLink>
 						</Typography>
 					</Grid>
@@ -207,4 +203,4 @@ const Form = (): JSX.Element => {
 	);
 };
 
-export default Form;
+export default PasswordResetForm;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, Button, TextField } from '@material-ui/core';
@@ -22,21 +22,21 @@ const schema = {
 	},
 };
 
-const Form = (): JSX.Element => {
+const PasswordResetForm = (): JSX.Element => {
 	const classes = useStyles();
 
-	const [formState, setFormState] = React.useState<FormStateProps>({
+	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
 		values: {},
 		touched: {},
 		errors: {},
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
@@ -45,34 +45,35 @@ const Form = (): JSX.Element => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			values: {
-				...formState.values,
+				...prevState.values,
 				[event.target.name]:
 					event.target.type === 'checkbox'
 						? event.target.checked
 						: event.target.value,
 			},
 			touched: {
-				...formState.touched,
+				...prevState.touched,
 				[event.target.name]: true,
 			},
 		}));
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (formState.isValid) {
+			// :TODO: Implement reset password dispatch
 			window.location.replace('/');
 		}
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			touched: {
-				...formState.touched,
-				...formState.errors,
+				...prevState.touched,
+				...prevState.errors,
 			},
 		}));
 	};
@@ -133,4 +134,4 @@ const Form = (): JSX.Element => {
 	);
 };
 
-export default Form;
+export default PasswordResetForm;

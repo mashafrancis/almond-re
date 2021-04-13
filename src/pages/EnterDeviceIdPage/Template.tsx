@@ -15,11 +15,10 @@ import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
 // modules
 import { verifyUserDevice } from '@modules/device';
-import { EnterDeviceIdPageProps, EnterDeviceIdPageState } from './interfaces';
-import { primaryColor } from '../../assets/tss/common';
 
 import deviceImage from '../../assets/images/illustration_device.svg';
 import { FormStateProps } from '../../types/FormStateProps';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -75,8 +74,8 @@ export const EnterDeviceIdTemplate = (): JSX.Element => {
 	useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
@@ -84,27 +83,22 @@ export const EnterDeviceIdTemplate = (): JSX.Element => {
 
 	const { activeDevice } = useContext(UserContext);
 	const dispatch = useDispatch();
-	// @ts-ignore
-	const { isLoading } = useSelector((state) => state?.device);
-	console.log(
-		'Class: , Function: EnterDeviceIdTemplate, Line 92 user():',
-		isLoading,
-	);
+	const { isLoading } = useSelector((state: IRootState) => state.device);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			values: {
-				...formState.values,
+				...prevState.values,
 				[event.target.name]:
 					event.target.type === 'checkbox'
 						? event.target.checked
 						: event.target.value,
 			},
 			touched: {
-				...formState.touched,
+				...prevState.touched,
 				[event.target.name]: true,
 			},
 		}));
@@ -118,11 +112,11 @@ export const EnterDeviceIdTemplate = (): JSX.Element => {
 			await dispatch(verifyUserDevice({ id: deviceId }));
 		}
 
-		setFormState((formState) => ({
-			...formState,
+		setFormState((prevState) => ({
+			...prevState,
 			touched: {
-				...formState.touched,
-				...formState.errors,
+				...prevState.touched,
+				...prevState.errors,
 			},
 		}));
 	};

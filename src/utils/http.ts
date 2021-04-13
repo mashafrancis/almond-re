@@ -24,7 +24,7 @@ const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-	if (authService.isExpired()) {
+	if (token && authService.isExpired()) {
 		return authService.redirectUser();
 	}
 	return config;

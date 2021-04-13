@@ -31,7 +31,7 @@ import useEffectAsync from '@hooks/useEffectAsync';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 // import 'swiper/css/swiper.min.css';
 // import 'aos/dist/aos.css';
-import './App.scss';
+// import './App.scss';
 // interfaces
 import { IClientOptions } from 'mqtt';
 import { AppState } from './interfaces';
@@ -73,7 +73,7 @@ export const App = (): JSX.Element => {
 		},
 	} = useSelector((globalState: IRootState) => globalState.user);
 	const [state, setState] = useState<AppState>({
-		isUserAuthenticated: authService.isAuthenticated(),
+		isUserAuthenticated: false,
 		loading: 'idle',
 		isAdmin: false,
 	});
@@ -81,6 +81,43 @@ export const App = (): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { search } = useLocation();
+
+	useEffect(() => {
+		setState((prevState) => ({
+			...prevState,
+			isUserAuthenticated: authService.isAuthenticated(),
+		}));
+	}, []);
+
+	useEffect(() => {
+		initializeGA();
+		logPageView(window.location.pathname);
+		// almondIssue()
+		// 	.then(() => console.log('Bug sent'))
+		// 	.catch((e) => console.error(e));
+	}, []);
+
+	useEffectAsync(async () => {
+		if (state.isUserAuthenticated) {
+			await dispatch(getUserDetails());
+		}
+	}, [state.isUserAuthenticated]);
+
+	useEffect(() => {
+		const { socialToken } = queryString.parse(search);
+
+		if (socialToken) {
+			authService.saveToken(socialToken);
+			window.location.replace(process.env.PUBLIC_URL as string);
+		}
+	}, []);
+
+	useEffect(
+		() => () => {
+			clearTimeout(timerRef.current);
+		},
+		[],
+	);
 
 	const { isUserAuthenticated } = state;
 	const userDetailsOnProvider = {
@@ -101,36 +138,6 @@ export const App = (): JSX.Element => {
 	// };
 
 	// const almondIssue = async () => GitHubCreateIssue(bugIssue);
-
-	useEffect(() => {
-		initializeGA();
-		logPageView(window.location.pathname);
-		// almondIssue()
-		// 	.then(() => console.log('Bug sent'))
-		// 	.catch((e) => console.error(e));
-	}, []);
-
-	useEffectAsync(async () => {
-		if (state.isUserAuthenticated) {
-			await dispatch(getUserDetails());
-		}
-	}, []);
-
-	useEffect(() => {
-		const { socialToken } = queryString.parse(search);
-
-		if (socialToken) {
-			authService.saveToken(socialToken);
-			window.location.replace(process.env.PUBLIC_URL as string);
-		}
-	}, []);
-
-	useEffect(
-		() => () => {
-			clearTimeout(timerRef.current);
-		},
-		[],
-	);
 
 	const bufferKey = Buffer.from(`${process.env.KEY}`).toString('utf-8');
 	const bufferCert = Buffer.from(`${process.env.CERT}`).toString('utf-8');
@@ -160,34 +167,34 @@ export const App = (): JSX.Element => {
 
 	return (
 		<ErrorBoundary FallbackComponent={ServerErrorPage}>
-			{/* <Connector */}
-			{/*	brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
-			{/*	opts={options} */}
-			{/* > */}
-			<UserContext.Provider value={userDetailsOnProvider}>
-				<ComponentProvider>
-					<ViewportProvider>
-						<SnackBar snack={snack} />
-						{window.location.pathname !== '/' && isUserAuthenticated}
-						<Suspense fallback={<LinearProgressBar />}>
-							{loading === 'requesting' ? (
-								<Backdrop
-									className={classes.backdrop}
-									open={loading === 'requesting'}
-								>
-									<CircularProgress
-										color="primary"
-										style={{ zIndex: 100000 }}
-									/>
-								</Backdrop>
-							) : (
-								<Routes />
-							)}
-						</Suspense>
-					</ViewportProvider>
-				</ComponentProvider>
-			</UserContext.Provider>
-			{/* </Connector> */}
+			<Connector
+				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
+				opts={options}
+			>
+				<UserContext.Provider value={userDetailsOnProvider}>
+					<ComponentProvider>
+						<ViewportProvider>
+							<SnackBar snack={snack} />
+							{window.location.pathname !== '/' && isUserAuthenticated}
+							<Suspense fallback={<LinearProgressBar />}>
+								{loading === 'requesting' ? (
+									<Backdrop
+										className={classes.backdrop}
+										open={loading === 'requesting'}
+									>
+										<CircularProgress
+											color="primary"
+											style={{ zIndex: 100000 }}
+										/>
+									</Backdrop>
+								) : (
+									<Routes />
+								)}
+							</Suspense>
+						</ViewportProvider>
+					</ComponentProvider>
+				</UserContext.Provider>
+			</Connector>
 		</ErrorBoundary>
 	);
 };

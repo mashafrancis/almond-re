@@ -26,7 +26,8 @@
     "analyze": "webpack --profile --json > stats.json",
     "workbox:inject": "workbox injectManifest workbox-config.js",
     "docker:build": "docker build -t almond-web .",
-    "docker:run": "docker run --env-file=.env -p 3000:80 almond-web"
+    "docker:run": "docker run --env-file=.env -p 3000:80 almond-web",
+    "husky": "pretty-quick --staged && yarn prettier && yarn tslint"
   },
   "repository": {
     "type": "git",
@@ -144,6 +145,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.1",
+    "@types/chart.js": "^2.9.32",
     "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.22",
     "@types/js-cookie": "^2.2.6",
@@ -272,11 +274,6 @@
       "@material/react-layout-grid",
       "@material/react-drawer"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn prettier && yarn tslint"
-    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [

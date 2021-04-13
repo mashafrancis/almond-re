@@ -2242,6 +2242,13 @@
     "@types/node" "*"
     "@types/responselike" "*"
 
+"@types/chart.js@^2.9.32":
+  version "2.9.32"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.32.tgz#b17d9a8c41ad348183a2ce041ebdeef892998251"
+  integrity sha512-d45JiRQwEOlZiKwukjqmqpbqbYzUX2yrXdH9qVn6kXpPDsTYCo6YbfFOlnUaJ8S/DhJwbBJiLsMjKpW5oP8B2A==
+  dependencies:
+    moment "^2.10.2"
+
 "@types/classnames@^2.2.11", "@types/classnames@^2.2.9":
   version "2.2.11"
   resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.11.tgz#2521cc86f69d15c5b90664e4829d84566052c1cf"

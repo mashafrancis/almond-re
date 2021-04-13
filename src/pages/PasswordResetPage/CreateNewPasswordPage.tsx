@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { HeroShaped } from '@components/organisms';
-import { PasswordResetForm } from '@pages/PasswordResetPage/components/Form';
+import { ChangePasswordForm } from '@pages/PasswordResetPage/components/Form';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
-const PasswordResetPage = (): JSX.Element => {
+const CreateNewPasswordPage = (): JSX.Element => {
 	const classes = useStyles();
 
 	return (
@@ -43,13 +43,13 @@ const PasswordResetPage = (): JSX.Element => {
 				leftSide={
 					<div className={classes.formContainer}>
 						<SectionHeader
-							title="Password reset"
-							subtitle="Enter your email to reset your password."
+							title="Create password"
+							subtitle="Enter your new password."
 							titleProps={{
 								variant: 'h3',
 							}}
 						/>
-						<PasswordResetForm />
+						<ChangePasswordForm />
 					</div>
 				}
 				rightSide={
@@ -64,4 +64,4 @@ const PasswordResetPage = (): JSX.Element => {
 	);
 };
 
-export default PasswordResetPage;
+export default CreateNewPasswordPage;
