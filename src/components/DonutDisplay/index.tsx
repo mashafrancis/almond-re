@@ -82,6 +82,7 @@ const DonutDisplay = ({
 		<Grid item xs={12}>
 			<Doughnut
 				data={donutDetails}
+				// @ts-ignore
 				options={donutDetails.options}
 				width={250}
 				height={250}

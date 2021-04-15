@@ -31,7 +31,7 @@ const TabPanel = ({
 			{...other}
 		>
 			{value === index && (
-				<Box className={classes.box} p={3}>
+				<Box className={classes.box} p={3} {...other}>
 					{children}
 				</Box>
 			)}

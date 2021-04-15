@@ -2,11 +2,11 @@
 import { useEffect, useContext } from 'react';
 
 // third-party libraries
-import { Snackbar } from '@material-ui/core';
+import { Snackbar, useMediaQuery } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { ComponentContext } from '@context/ComponentContext';
 import { useSnackStyles } from '@components/SnackBar/styles';
-import useViewport from '../../hooks/useViewport';
+import { useTheme } from '@material-ui/core/styles';
 
 // interfaces
 import { SnackMessageProps } from './interfaces';
@@ -24,8 +24,10 @@ export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 		setOpenSnack,
 	} = componentContext;
 
-	const { width } = useViewport();
-	const breakpoint = 539;
+	const theme = useTheme();
+	const isSm = useMediaQuery(theme.breakpoints.up('sm'), {
+		defaultMatches: true,
+	});
 
 	useEffect(() => {
 		const { message } = snack;
@@ -40,7 +42,7 @@ export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 		<div className={classes.root}>
 			<Snackbar
 				anchorOrigin={
-					width > breakpoint
+					isSm
 						? { vertical: 'top', horizontal: 'center' }
 						: { vertical: 'bottom', horizontal: 'center' }
 				}

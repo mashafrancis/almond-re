@@ -11,7 +11,10 @@ const MenuContent = (): JSX.Element => {
 
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
 
-	const handleOnChange = (event: ChangeEvent<{}>, value: number) => {
+	const handleOnChange = (
+		event: ChangeEvent<HTMLDivElement>,
+		value: number,
+	) => {
 		setSelectedIndex(value);
 	};
 

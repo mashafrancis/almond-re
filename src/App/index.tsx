@@ -73,7 +73,7 @@ export const App = (): JSX.Element => {
 		},
 	} = useSelector((globalState: IRootState) => globalState.user);
 	const [state, setState] = useState<AppState>({
-		isUserAuthenticated: false,
+		isUserAuthenticated: authService.isAuthenticated(),
 		loading: 'idle',
 		isAdmin: false,
 	});
@@ -81,13 +81,6 @@ export const App = (): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { search } = useLocation();
-
-	useEffect(() => {
-		setState((prevState) => ({
-			...prevState,
-			isUserAuthenticated: authService.isAuthenticated(),
-		}));
-	}, []);
 
 	useEffect(() => {
 		initializeGA();

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Image } from '@components/atoms';
@@ -63,11 +63,12 @@ interface Props {
 
 const Topbar = ({ themeMode, className, ...rest }: Props): JSX.Element => {
 	const classes = useStyles();
+	const location = useLocation();
 
 	return (
 		<Toolbar className={clsx(classes.toolbar, className)} {...rest}>
 			<div className={classes.logoContainer}>
-				<NavLink to="/">
+				<NavLink to={location.pathname === '/account' ? '/dashboard' : '/'}>
 					<Grid container className={classes.container}>
 						<IconButton
 							className={clsx('learn-more-link__icon-button', classes.icon)}
@@ -81,7 +82,7 @@ const Topbar = ({ themeMode, className, ...rest }: Props): JSX.Element => {
 							variant="h6"
 							color="textPrimary"
 						>
-							Home
+							{location.pathname === '/account' ? 'Back' : 'Home'}
 						</Typography>
 					</Grid>
 				</NavLink>
