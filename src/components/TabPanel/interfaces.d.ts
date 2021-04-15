@@ -1,7 +1,5 @@
-import { ReactNode } from 'react';
-
 export interface TabPanelProps {
-	children?: ReactNode;
-	index: number;
-	value: number;
+	children: JSX.Element;
+	value: string | string[] | number | null;
+	index: string | string[] | number | null;
 }

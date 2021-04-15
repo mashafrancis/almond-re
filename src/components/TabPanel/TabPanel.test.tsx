@@ -8,6 +8,7 @@ describe('TabPanel component', () => {
 	const props = {
 		index: 1,
 		value: 1,
+		children: <div />,
 	};
 
 	const { asFragment } = render(<TabPanel {...props} />);

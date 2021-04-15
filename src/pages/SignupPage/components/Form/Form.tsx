@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -6,8 +6,6 @@ import {
 	Grid,
 	Button,
 	TextField,
-	SvgIcon,
-	Divider,
 	InputAdornment,
 } from '@material-ui/core';
 import validate from 'validate.js';
@@ -86,7 +84,7 @@ const Form = (): JSX.Element => {
 		}));
 	}, [formState.values]);
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
 		setFormState((prevState) => ({
@@ -105,7 +103,7 @@ const Form = (): JSX.Element => {
 		}));
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (formState.isValid) {

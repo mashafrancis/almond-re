@@ -1,7 +1,7 @@
 import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Mood, ExitToApp, Help, OpenInNew, Settings } from '@material-ui/icons';
@@ -26,10 +26,11 @@ const useStyles = makeStyles({
 
 const CustomAvatar = (): JSX.Element => {
 	const { avatar, menuPopup } = useStyles();
-
 	const { name, photo } = useContext(UserContext);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+	const history = useHistory();
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -57,9 +58,9 @@ const CustomAvatar = (): JSX.Element => {
 	const location = useLocation();
 
 	let menuItems = [
-		{ name: 'Settings', icon: <Settings /> },
-		{ name: 'Help', icon: <Help /> },
-		{ name: 'Send Feedback', icon: <OpenInNew /> },
+		{ name: 'Settings', icon: <Settings />, link: 'account' },
+		{ name: 'Help', icon: <Help />, link: 'help' },
+		{ name: 'Send Feedback', icon: <OpenInNew />, link: 'send-feedback' },
 	];
 
 	if (location.pathname === '/') {
@@ -91,10 +92,10 @@ const CustomAvatar = (): JSX.Element => {
 				keepMounted
 				onClose={handleProfileClose}
 			>
-				{menuItems.map((item, index) => {
+				{menuItems.map((item) => {
 					const handleClick = () => {
 						handleProfileClose();
-						setSelectedIndex(index);
+						history.push(item.link);
 					};
 					return (
 						<MenuItem key={fancyId()} onClick={handleClick}>

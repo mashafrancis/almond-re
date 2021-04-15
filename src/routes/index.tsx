@@ -14,6 +14,8 @@ import {
 	CreateNewPasswordPage,
 } from '@pages/PasswordResetPage';
 import RegisterSuccessPage from '@pages/RegisterSuccessPage';
+import AccountSettingsPage from '@pages/AccountSettingsPage';
+
 import WithLayout from '../WithLayout';
 import {
 	Main as MainLayout,
@@ -116,6 +118,17 @@ const Routes = (): any => (
 				<WithLayout
 					{...matchProps}
 					component={NotFoundPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/account"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={AccountSettingsPage}
 					layout={MinimalLayout}
 				/>
 			)}
