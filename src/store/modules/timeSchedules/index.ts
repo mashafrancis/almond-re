@@ -453,7 +453,7 @@ export const toggleScheduleStatus = (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		patch: (
+		put: (
 			arg0: string,
 			arg1: any,
 		) => Promise<{ data: { data: Schedule; message: string } }>;
@@ -461,7 +461,7 @@ export const toggleScheduleStatus = (
 ) => {
 	dispatch(editScheduleRequest());
 	return http
-		.patch(`schedules/${id}`, payload)
+		.put(`schedules/${id}`, payload)
 		.then((response: { data: { data: Schedule; message: string } }) => {
 			const {
 				data: { data, message },

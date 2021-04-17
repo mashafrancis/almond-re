@@ -1,19 +1,10 @@
-// react libraries
-import { Location } from 'history';
-
 // third party
-import { render, screen } from '@testing-library/react';
-
+import { render } from '@testing-library/react';
 // components
-import {
-	EnergyMonitoringPage,
-	mapDispatchToProps,
-	mapStateToProps,
-} from './index';
-import { props } from './fixtures';
+import { EnergyMonitoringPage } from './index';
 
 describe('The EnergyMonitoring Page', () => {
-	const { asFragment } = render(<EnergyMonitoringPage {...props} />);
+	const { asFragment } = render(<EnergyMonitoringPage />);
 
 	it('should render properly', () => {
 		expect(asFragment()).toMatchSnapshot();
@@ -28,35 +19,4 @@ describe('The EnergyMonitoring Page', () => {
 	//   resizeWindow(500, 300);
 	//   expect(wrapper.find('.main-subheader')).toHaveLength(1);
 	// });
-
-	describe('mapStateToProps', () => {
-		const state = {
-			error: '',
-		};
-
-		const props = mapStateToProps(state);
-
-		it('should map energy monitoring props from state', () => {
-			expect(props.error).toEqual(state.error);
-		});
-	});
-
-	describe('mapDispatchToProps', () => {
-		let dispatch;
-		let props;
-
-		beforeEach(() => {
-			dispatch = jest.fn();
-			props = mapDispatchToProps(dispatch) as any;
-		});
-
-		afterEach(() => {
-			dispatch = props = null;
-		});
-
-		it('ensures displaySnackMessage is mapped to props', () => {
-			props.displaySnackMessage();
-			expect(dispatch).toHaveBeenCalled();
-		});
-	});
 });

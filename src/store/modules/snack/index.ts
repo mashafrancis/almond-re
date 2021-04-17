@@ -1,16 +1,19 @@
-import { DisplaySnackMessageAction } from './interfaces';
+import { DisplaySnackMessageAction, Severity } from './interfaces';
 import { DISPLAY_SNACK_MESSAGE } from './types';
 
 /**
  * Display snack message action creator.
  * @returns {DisplaySnackMessageAction}
  * @param message
+ * @param severity
  */
 export const displaySnackMessage = (
 	message: string,
+	severity?: Severity,
 ): DisplaySnackMessageAction => ({
 	snack: {
 		message,
+		severity,
 	},
 	type: DISPLAY_SNACK_MESSAGE,
 });

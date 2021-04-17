@@ -5,7 +5,7 @@ import { useEffect, useContext } from 'react';
 import { Snackbar, useMediaQuery } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { ComponentContext } from '@context/ComponentContext';
-import { useSnackStyles } from '@components/SnackBar/styles';
+import { useSnackStyles } from '@components/atoms/SnackBar/styles';
 import { useTheme } from '@material-ui/core/styles';
 
 // interfaces
@@ -28,9 +28,9 @@ export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 	const isSm = useMediaQuery(theme.breakpoints.up('sm'), {
 		defaultMatches: true,
 	});
+	const { message, severity } = snack;
 
 	useEffect(() => {
-		const { message } = snack;
 		setSnackMessage(message);
 		setOpenSnack(!!message);
 	}, [snack]);
@@ -51,7 +51,7 @@ export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 				onClose={handleCloseSnack}
 			>
 				<div data-testid="snack-message">
-					<Alert onClose={handleCloseSnack} severity="success">
+					<Alert onClose={handleCloseSnack} severity={severity ?? 'success'}>
 						{snackMessage}
 					</Alert>
 				</div>

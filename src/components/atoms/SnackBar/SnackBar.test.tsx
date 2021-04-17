@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { SnackBar } from './index';
 
 // helpers
-import { renderWithRedux } from '../../testHelpers';
+import { renderWithRedux } from '../../../testHelpers';
 
 describe('The SnackBar components', () => {
 	const SAMPLE_SNACK_MESSAGE = 'Time schedule created successfully.';

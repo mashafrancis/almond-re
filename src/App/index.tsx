@@ -10,7 +10,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // import { GitHubCreateIssue, issueBody, issueHeading } from 'git-bug-trace';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
-import SnackBar from '@components/SnackBar';
+import { SnackBar } from '@components/atoms/SnackBar';
 import ErrorFallback from '@components/ErrorBoundary';
 import LinearProgressBar from '@components/LinearProgressBar';
 import ServerErrorPage from '@pages/ServerErrorPage';
@@ -31,7 +31,6 @@ import useEffectAsync from '@hooks/useEffectAsync';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 // import 'swiper/css/swiper.min.css';
 // import 'aos/dist/aos.css';
-// import './App.scss';
 // interfaces
 import { IClientOptions } from 'mqtt';
 import { AppState } from './interfaces';

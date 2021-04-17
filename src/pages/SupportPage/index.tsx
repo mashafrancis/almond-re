@@ -1,21 +1,10 @@
 // react libraries
-import { lazy } from 'react';
-
-// third-party libraries
-import { connect } from 'react-redux';
 import SpaIcon from '@material-ui/icons/Spa';
-
-// interfaces
-import { SupportPageProps } from '@pages/SupportPage/interfaces';
-
-// thunk
-import { displaySnackMessage } from '@modules/snack';
 import Grid from '@material-ui/core/Grid';
-
 // components
-const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
+import { GeneralCardInfo } from '@components/molecules';
 
-export const SupportPage = (props: SupportPageProps) => (
+export const SupportPage = (): JSX.Element => (
 	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
 		<Grid
 			item
@@ -36,12 +25,4 @@ export const SupportPage = (props: SupportPageProps) => (
 	</Grid>
 );
 
-export const mapStateToProps = (state) => ({
-	error: state.error,
-});
-
-export const mapDispatchToProps = (dispatch) => ({
-	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SupportPage);
+export default SupportPage;

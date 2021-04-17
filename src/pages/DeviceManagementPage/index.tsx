@@ -8,6 +8,7 @@ import {
 } from 'react';
 // third-party libraries
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import validate from 'validate.js';
 import {
 	InputAdornment,
 	Chip,
@@ -25,14 +26,13 @@ import {
 	getAllDevices,
 } from '@modules/device';
 // components
-import Modal from '@components/Modal';
 import {
 	GridCellParams,
 	GridColDef,
 	DataGrid,
 	GridSortDirection,
 } from '@material-ui/data-grid';
-import { NoDataOverlay } from '@components/atoms';
+import { NoDataOverlay, Modal } from '@components/atoms';
 import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
 import { useTableStyles } from '@pages/WaterCyclesPage/styles';
 import { Device } from '@modules/device/interfaces';
@@ -41,9 +41,7 @@ import DashboardCard from '@components/DashboardCard';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 // styles
-import './DeviceManagementPage.scss';
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
-import validate from 'validate.js';
 // interfaces
 import { DeviceManagementState } from './interfaces';
 import { FormStateProps } from '../../types/FormStateProps';
@@ -293,16 +291,15 @@ export const DeviceManagementPage = (): JSX.Element => {
 				headerName: 'Status',
 				flex: 0.2,
 				headerClassName: 'table-header',
-				renderCell: (params: GridCellParams) =>
-					renderDeviceStatus(params.value),
+				renderCell: ({ value }: GridCellParams) => renderDeviceStatus(value),
 			},
 			{
 				field: 'actions',
 				headerName: 'Actions',
 				flex: 0.2,
 				headerClassName: 'table-header',
-				renderCell: (params: GridCellParams) =>
-					renderActionButtons(params.value as Device),
+				renderCell: ({ value }: GridCellParams) =>
+					renderActionButtons(value as Device),
 			},
 		];
 

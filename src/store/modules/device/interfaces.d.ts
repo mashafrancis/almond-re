@@ -19,6 +19,7 @@ import {
 	USER_VERIFY_DEVICE_SUCCESS,
 } from '@modules/device/types';
 import { UserDetails } from '@modules/user/interfaces';
+import { ErrorObject } from '../../../shared.interfaces';
 
 export interface AddDeviceActionRequest {
 	type: ADD_DEVICE_REQUEST;
@@ -33,7 +34,7 @@ export interface AddDeviceActionSuccess {
 
 export interface AddDeviceActionFailure {
 	type: ADD_DEVICE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -50,7 +51,7 @@ export interface UserVerifyDeviceActionSuccess {
 
 export interface UserVerifyDeviceActionFailure {
 	type: USER_VERIFY_DEVICE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -67,7 +68,7 @@ export interface ActivateDeviceActionSuccess {
 
 export interface ActivateDeviceActionFailure {
 	type: ACTIVATE_DEVICE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -84,7 +85,7 @@ export interface GetAllDevicesActionSuccess {
 
 export interface GetAllDevicesActionFailure {
 	type: GET_DEVICES_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -101,7 +102,7 @@ export interface DeleteDeviceActionSuccess {
 
 export interface DeleteDeviceActionFailure {
 	type: DELETE_DEVICE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -119,7 +120,7 @@ export interface EditDeviceActionSuccess {
 
 export interface EditDeviceActionFailure {
 	type: EDIT_DEVICE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -131,11 +132,14 @@ export interface VerifyDevice {
 	id: string;
 }
 
-export interface Device {
-	id: string;
+export interface UserDevice {
 	_id: string;
-	enabled: boolean;
+	id: string;
+}
+
+export interface Device extends UserDevice {
 	verified: boolean;
+	enabled: boolean;
 	user: Partial<UserDetails>;
 	updatedAt: string;
 }

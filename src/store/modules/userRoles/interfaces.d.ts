@@ -12,6 +12,7 @@ import {
 	EDIT_USER_ROLES_REQUEST,
 	EDIT_USER_ROLES_FAILURE,
 } from './types';
+import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetUserRolesActionRequest {
 	type: GET_USER_ROLES_REQUEST;
@@ -29,7 +30,7 @@ export interface GetUserRolesActionSuccess {
 export interface GetUserRolesActionFailure {
 	type: GET_USER_ROLES_FAILURE;
 	isLoading: boolean;
-	errors: any;
+	errors: ErrorObject | null;
 }
 
 export interface CreateUserRolesActionRequest {
@@ -45,7 +46,7 @@ export interface CreateUserRolesActionSuccess {
 
 export interface CreateUserRolesActionFailure {
 	type: CREATE_USER_ROLES_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -62,7 +63,7 @@ export interface DeleteUserRolesSuccess {
 
 export interface DeleteUserRolesFailure {
 	type: DELETE_USER_ROLES_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -81,7 +82,7 @@ export interface EditUserRolesSuccess {
 export interface EditUserRolesFailure {
 	type: EDIT_USER_ROLES_FAILURE;
 	isLoading: boolean;
-	errors: any;
+	errors: ErrorObject | null;
 }
 
 export interface Resource {
@@ -97,15 +98,16 @@ export interface Permission {
 export interface ResourceAccessLevel {
 	permissions: Permission[];
 	resource: Resource;
+	_id: string;
 
 	[key: string]: any;
 }
 
 export interface UserRole {
 	description: string;
-	users: number;
 	title: string;
 	_id: string;
 	resourceAccessLevels: ResourceAccessLevel[];
 	userCount: number;
+	deleted: boolean;
 }

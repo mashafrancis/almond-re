@@ -19,6 +19,7 @@ import {
 	TOGGLE_PUMP_STATUS_REQUEST,
 	TOGGLE_PUMP_STATUS_SUCCESS,
 } from './types';
+import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetAllSchedulesActionRequest {
 	type: GET_SCHEDULES_REQUEST;
@@ -33,7 +34,7 @@ export interface GetAllSchedulesActionSuccess {
 
 export interface GetAllSchedulesActionFailure {
 	type: GET_SCHEDULES_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -50,7 +51,7 @@ export interface AddScheduleActionSuccess {
 
 export interface AddSchedulesActionFailure {
 	type: ADD_SCHEDULES_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -67,7 +68,7 @@ export interface DeleteScheduleActionSuccess {
 
 export interface DeleteScheduleActionFailure {
 	type: DELETE_SCHEDULE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -85,7 +86,7 @@ export interface EditScheduleActionSuccess {
 
 export interface EditScheduleActionFailure {
 	type: EDIT_SCHEDULE_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -102,7 +103,7 @@ export interface TogglePumpStatusActionSuccess {
 
 export interface TogglePumpStatusActionFailure {
 	type: TOGGLE_PUMP_STATUS_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -119,7 +120,7 @@ export interface GetPumpStatusActionSuccess {
 
 export interface GetPumpStatusActionFailure {
 	type: GET_PUMP_STATUS_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 

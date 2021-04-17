@@ -16,7 +16,7 @@ import {
 	WithStyles,
 } from '@material-ui/core/styles';
 // interfaces
-import { ModalProps } from '@components/Modal/interfaces';
+import { ModalProps } from '@components/atoms/Modal/interfaces';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';

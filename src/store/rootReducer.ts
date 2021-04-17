@@ -20,6 +20,7 @@ import { State as Analytics } from '@modules/analytics/types';
 import { State as Devices } from '@modules/device/types';
 import { State as SensorData } from '@modules/sensorData/types';
 import { State as People } from '@modules/people/types';
+import { State as UserRoles } from '@modules/userRoles/types';
 
 export type IRootState = {
 	internalServerError: any;
@@ -27,7 +28,7 @@ export type IRootState = {
 	snack: any;
 	user: User;
 	device: Devices;
-	userRoles: any;
+	userRoles: UserRoles;
 	people: People;
 	activityLogs: any;
 	loading: any;

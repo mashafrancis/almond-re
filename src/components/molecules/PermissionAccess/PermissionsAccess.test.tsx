@@ -1,8 +1,7 @@
 // react libraries
 import { render, screen } from '@testing-library/react';
-
 // components
-import PermissionAccess from '@components/PermissionAccess';
+import PermissionAccess from '@components/molecules/PermissionAccess/index';
 
 describe('PermissionAccess', () => {
 	let props;

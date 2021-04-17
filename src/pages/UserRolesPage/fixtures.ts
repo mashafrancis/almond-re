@@ -27,14 +27,16 @@ export const userRoles = [
 					},
 				],
 				resource: {
-					_id: '-LPQEUR9VoWVCJVR338i',
+					_id: '5e45bc5228c0d70f4a9363ae',
 					name: 'People',
 				},
+				_id: '5e45bc5228c0d70f4a93g3a3',
 			},
 		],
 		title: 'User',
 		users: 1,
 		userCount: 1,
+		deleted: false,
 	},
 	{
 		description: 'default description',
@@ -67,11 +69,13 @@ export const userRoles = [
 					_id: '-LPQEUR9VoWVCJVR338i',
 					name: 'Devices',
 				},
+				_id: '5e45bc52f8c0d70f4a93g3a3',
 			},
 		],
 		title: 'Admin',
 		users: 1,
 		userCount: 1,
+		deleted: false,
 	},
 ];
 

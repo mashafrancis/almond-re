@@ -57,8 +57,8 @@ const Form = (): JSX.Element => {
 	useEffect(() => {
 		const errors = validate(formState.values, schema);
 
-		setFormState((state) => ({
-			...state,
+		setFormState((prevState) => ({
+			...prevState,
 			isValid: !errors,
 			errors: errors || {},
 		}));
