@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core';
 // interfaces
-import { TabPanelProps } from '@components/TabPanel/interfaces';
+import { TabPanelProps } from '@components/atoms/TabPanel/interfaces';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>

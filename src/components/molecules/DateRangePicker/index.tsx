@@ -15,7 +15,7 @@ import './styles.scss';
 import {
 	DateRangePickerProps,
 	DateRangePickerState,
-} from '@components/DateRangePicker/interfaces';
+} from '@components/molecules/DateRangePicker/interfaces';
 
 // const styles = (theme: Theme) =>
 //   createStyles({

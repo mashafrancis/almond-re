@@ -14,8 +14,7 @@ import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
 // icons
 import { Mood, Grain, Face, Add } from '@material-ui/icons';
 // components
-import DashboardCard from '@components/DashboardCard';
-import { PermissionAccess } from '@components/molecules';
+import { PermissionAccess, DashboardCard } from '@components/molecules';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@components/atoms/Modal';
 import Restrict from '@components/Restrict';

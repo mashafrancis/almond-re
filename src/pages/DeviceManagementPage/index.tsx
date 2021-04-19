@@ -37,7 +37,7 @@ import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
 import { useTableStyles } from '@pages/WaterCyclesPage/styles';
 import { Device } from '@modules/device/interfaces';
 import Grid from '@material-ui/core/Grid';
-import DashboardCard from '@components/DashboardCard';
+import { DashboardCard } from '@components/molecules';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 // styles

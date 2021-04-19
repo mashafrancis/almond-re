@@ -1,11 +1,15 @@
-import { useState, useEffect, ChangeEvent, lazy } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 // third-party libraries
-import { connect, shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { TextField, MenuItem, InputAdornment, Chip } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // icons
-import { Face, PeopleAltOutlined, ExpandMore, Add } from '@material-ui/icons';
+import { Face, ExpandMore } from '@material-ui/icons';
 // components
-import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
+import { DashboardCard } from '@components/molecules';
+import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
+import { NoDataOverlay } from '@components/atoms';
 import Modal from '@components/atoms/Modal';
 import {
 	GridCellParams,
@@ -18,22 +22,15 @@ import { getAllPeople, updatePerson } from '@modules/people';
 import { getUserRoles } from '@modules/userRoles';
 // styles
 import './PeoplePage.scss';
-
 // interfaces
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import useEffectAsync from '@hooks/useEffectAsync';
-import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import DashboardCard from '@components/DashboardCard';
-import { Device } from '@modules/device/interfaces';
-import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
-import { NoDataOverlay } from '@components/atoms';
 import { useTableStyles } from '@pages/WaterCyclesPage/styles';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import { UserDetails } from '@modules/user/interfaces';
 import { IRootState } from '../../store/rootReducer';
-import { PeoplePageProps, PeoplePageState } from './interfaces';
+import { PeoplePageState } from './interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

@@ -6,7 +6,7 @@ import EnterDeviceIdPage from '@pages/EnterDeviceIdPage';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import DashboardContainer from '@pages/DashboardContainer';
 import NotFoundPage from '@pages/NotFoundPage';
-import UnauthorizedUserModal from '@components/UnauthorizedUserModal';
+import { UnauthorizedUserModal } from '@components/molecules';
 import SignupPage from '@pages/SignupPage';
 import SigninPage from '@pages/SigninPage';
 import {

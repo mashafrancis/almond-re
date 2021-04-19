@@ -1,6 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
-import { DonutDisplayProps } from '@components/DonutDisplay/interfaces';
+import { DonutDisplayProps } from '@components/organisms/DonutDisplay/interfaces';
 import { Grid } from '@material-ui/core';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/

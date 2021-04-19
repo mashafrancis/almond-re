@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Hidden, Drawer, Toolbar, Container } from '@material-ui/core';
 import isArrayNotNull from '@utils/checkArrayEmpty';
-import MenuContent from '@components/MenuContent';
+import { MenuContent } from '@components/atoms';
 import { BottomNavigation } from '@components/molecules';
 import { Topbar } from './components';
 

@@ -12,7 +12,7 @@ import {
 import { ComponentContext } from '@context/ComponentContext';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AnalyticsCard from '@components/AnalyticsCard';
+import { AnalyticsCard } from '@components/molecules';
 import { getAdminStatistics } from '@modules/analytics';
 import { IRootState } from '../../store/rootReducer';
 

@@ -1,7 +1,7 @@
 // third party libraries
 import dayjs from '@utils/dayjsTime';
 // interface
-import { DateRanges } from '@components/DateRangePicker/interfaces';
+import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
 
 /**
  * This method return the data range

@@ -5,11 +5,7 @@ import {
 	CardContent,
 	CardHeader,
 } from '@material-ui/core';
-// interfaces
-// styles
-// import './DashboardCard.scss';
 import clsx from 'clsx';
-
 import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { DashboardCardProps } from './interfaces';

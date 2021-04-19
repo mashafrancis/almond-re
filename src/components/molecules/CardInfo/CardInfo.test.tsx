@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 // component
 import CardInfo from './index';
-import { WindowSize } from '../../testHelpers';
+import { WindowSize } from '../../../testHelpers';
 
 describe('CardInfo component', () => {
 	const props = {

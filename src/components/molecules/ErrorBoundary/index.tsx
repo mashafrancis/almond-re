@@ -1,4 +1,4 @@
-import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
+import InternalServerErrorMessage from '@components/molecules/InternalServerErrorMessage';
 import { ArrowBackRounded } from '@material-ui/icons';
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any): JSX.Element => {
