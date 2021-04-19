@@ -3,9 +3,8 @@ import { ChangeEvent, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 // components
-import DashboardCard from '@components/DashboardCard';
-import DonutDisplay from '@components/DonutDisplay';
-import { LineChartCard } from '@components/organisms';
+import { DashboardCard } from '@components/molecules';
+import { LineChartCard, DonutDisplay } from '@components/organisms';
 // thunks
 import { getAirTemperatureTrend } from '@modules/sensorData';
 // helpers
@@ -15,7 +14,7 @@ import fancyId from '@utils/fancyId';
 // interfaces
 import { EnvironmentControlPageState } from '@pages/EnvironmentControlPage/interfaces';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { DateRanges } from '@components/DateRangePicker/interfaces';
+import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
 import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>

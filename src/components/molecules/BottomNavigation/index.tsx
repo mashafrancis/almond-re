@@ -3,23 +3,18 @@ import { useContext } from 'react';
 import {
 	AdminBottomNavigationMenus,
 	BottomNavigationMenus,
-} from '@components/MenuRoutes';
+} from '@components/molecules';
 // third party
 import {
 	BottomNavigation,
 	BottomNavigationAction,
 	AppBar,
-	Toolbar,
 	Divider,
-	Grid,
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // components
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
-import isArrayNotNull from '@utils/checkArrayEmpty';
-// styles
-// import './BottomNavigation.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

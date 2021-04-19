@@ -20,7 +20,7 @@ import {
 import {
 	MenuBottomProps,
 	MenuComponentProps,
-} from '@components/MenuRoutes/interfaces';
+} from '@components/molecules/MenuRoutes/interfaces';
 
 // pages
 import AnalyticsPage from '@pages/AnalyticsPage';

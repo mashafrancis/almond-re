@@ -1,10 +1,9 @@
 import { SelectBox } from '@components/atoms';
-import DateRangePicker from '@components/DateRangePicker';
+import { DateRangePicker, DashboardCard } from '@components/molecules';
+import { BlankContent } from '@pages/WaterCyclesPage';
+import { AreaChartDisplay } from '@components/organisms';
 // utils
 import dayjs from '@utils/dayjsTime';
-import { BlankContent } from '@pages/WaterCyclesPage';
-import DashboardCard from '@components/DashboardCard';
-import AreaChardDisplay from '@components/AreaChartDisplay';
 // interfaces
 import { LineChartCardProps } from '@components/organisms/LineChartCard/intefaces';
 
@@ -69,7 +68,7 @@ const LineChartCard = ({
 			heading={heading}
 			body={
 				data.length !== 0 ? (
-					<AreaChardDisplay
+					<AreaChartDisplay
 						backgroundColor="rgba(25, 103, 210, 0.2)"
 						chartColor="#1967D2"
 						chartData={chartData}

@@ -19,9 +19,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // icons
 import { AllOutTwoTone, Face } from '@material-ui/icons';
 // components;
-import { AdminMenus, UserMenus } from '@components/MenuRoutes';
-import TabPanel from '@components/TabPanel';
-import { ActivityLogCard, Modal } from '@components/atoms';
+import { AdminMenus, UserMenus } from '@components/molecules';
+import { ActivityLogCard, Modal, TabPanel } from '@components/atoms';
 // utils
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';

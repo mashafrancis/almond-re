@@ -5,7 +5,7 @@ import Modal from '@components/atoms/Modal';
 // thunk action creators
 import { logoutUser } from '@modules/user';
 // interfaces
-import { UnauthorizedUserModalProps } from '@components/UnauthorizedUserModal/interfaces';
+import { UnauthorizedUserModalProps } from '@components/molecules/UnauthorizedUserModal/interfaces';
 
 export const UnauthorizedUserModal = ({
 	isModalOpen = false,

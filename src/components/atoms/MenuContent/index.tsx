@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext } from 'react';
 // components
-import { AdminMenus, UserMenus } from '@components/MenuRoutes';
+import { AdminMenus, UserMenus } from '@components/molecules/MenuRoutes';
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
-import { MenuTab, MenuTabs } from '@components/MenuTabs';
+import { MenuTab, MenuTabs } from '@components/atoms';
 
 const MenuContent = (): JSX.Element => {
 	const { selectedIndex, setSelectedIndex } = useContext(ComponentContext);
@@ -26,27 +26,25 @@ const MenuContent = (): JSX.Element => {
 	};
 
 	return (
-		<div className="menu-content">
-			<MenuTabs
-				value={selectedIndex}
-				onChange={handleOnChange}
-				orientation="vertical"
-				scrollButtons="off"
-				textColor="primary"
-				aria-label="menu tabs"
-			>
-				{checkIsAdmin()
-					.slice(0, 6)
-					.map((item) => (
-						<MenuTab
-							key={item.primaryText}
-							label={item.primaryText}
-							icon={item.icon}
-							{...a11yProps(selectedIndex)}
-						/>
-					))}
-			</MenuTabs>
-		</div>
+		<MenuTabs
+			value={selectedIndex}
+			onChange={handleOnChange}
+			orientation="vertical"
+			scrollButtons="off"
+			textColor="primary"
+			aria-label="menu tabs"
+		>
+			{checkIsAdmin()
+				.slice(0, 6)
+				.map((item) => (
+					<MenuTab
+						key={item.primaryText}
+						label={item.primaryText}
+						icon={item.icon}
+						{...a11yProps(selectedIndex)}
+					/>
+				))}
+		</MenuTabs>
 	);
 };
 

@@ -9,7 +9,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import { NoDataOverlay } from '@components/atoms';
+import { NoDataOverlay, LinearProgressBar } from '@components/atoms';
 import {
 	GridCellParams,
 	GridColDef,
@@ -19,15 +19,12 @@ import {
 } from '@material-ui/data-grid';
 // components
 import Modal from '@components/atoms/Modal';
-import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
-import DashboardCard from '@components/DashboardCard';
-import DonutDisplay from '@components/DonutDisplay';
-import { LineChartCard } from '@components/organisms';
+import { GeneralCardInfo, DashboardCard } from '@components/molecules';
+import { LineChartCard, DonutDisplay } from '@components/organisms';
 // icons
 import { BlurCircular, AddAlarmTwoTone, Add } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
-import LinearProgressBar from '@components/LinearProgressBar';
 // thunks
 import {
 	addNewSchedule,
@@ -47,7 +44,7 @@ import {
 import roundDigit from '@utils/roundDigit';
 import dayjs from '@utils/dayjsTime';
 import { ToggleSwitch, useTableStyles } from '@pages/WaterCyclesPage/styles';
-import { DateRanges } from '@components/DateRangePicker/interfaces';
+import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
 import getDateRange from '@utils/DateRangeSelect';
 // interfaces
 import { WaterCyclesPageState } from './interfaces';
@@ -480,7 +477,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const AddEditScheduleModal = (): JSX.Element => {
+	const renderAddEditScheduleModal = (): JSX.Element => {
 		const { isAddEditModalOpen, isEditMode, hasError } = state;
 		return (
 			<Modal
@@ -500,7 +497,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const DeleteScheduleModal = (): JSX.Element => (
+	const renderDeleteScheduleModal = (): JSX.Element => (
 		<Modal
 			isModalOpen={state.isDeleteModalOpen}
 			renderContent="Do you confirm deletion of time schedule?"
@@ -512,7 +509,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		/>
 	);
 
-	const ActionButtons = (schedule: string): JSX.Element => {
+	const renderActionButtons = (schedule: string): JSX.Element => {
 		const handleDelete = () =>
 			setState((prevState) => ({
 				...prevState,
@@ -573,7 +570,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 				flex: 0.4,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
-					ActionButtons(value as string),
+					renderActionButtons(value as string),
 			},
 			{
 				field: 'status',
@@ -601,6 +598,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 				<div style={{ display: 'flex', height: '100%' }}>
 					<div style={{ flexGrow: 1 }}>
 						<DataGrid
+							disableColumnMenu
 							className={tableClasses.root}
 							loading={isLoading}
 							rows={rows}
@@ -710,8 +708,8 @@ export const WaterCyclesPage = (): JSX.Element => {
 							/>
 						}
 					/>
-					{AddEditScheduleModal()}
-					{DeleteScheduleModal()}
+					{renderAddEditScheduleModal()}
+					{renderDeleteScheduleModal()}
 				</Grid>
 			</Grid>
 		</div>

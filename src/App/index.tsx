@@ -11,8 +11,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // components
 import { ErrorBoundary } from 'react-error-boundary';
 import { SnackBar } from '@components/atoms/SnackBar';
-import ErrorFallback from '@components/ErrorBoundary';
-import LinearProgressBar from '@components/LinearProgressBar';
+import { LinearProgressBar } from '@components/atoms';
 import ServerErrorPage from '@pages/ServerErrorPage';
 // thunk action creators
 import { getUserDetails } from '@modules/user';

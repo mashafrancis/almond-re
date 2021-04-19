@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-import { AreaChartDisplayProps } from '@components/AreaChartDisplay/interfaces';
+import { AreaChartDisplayProps } from '@components/organisms/AreaChartDisplay/interfaces';
 import { Grid } from '@material-ui/core';
 import * as Chart from 'chart.js';
 

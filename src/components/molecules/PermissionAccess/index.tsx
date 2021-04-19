@@ -7,7 +7,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { DataGrid, GridCellParams, GridColDef } from '@material-ui/data-grid';
 import Typography from '@material-ui/core/Typography';
 import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
-import DashboardCard from '@components/DashboardCard';
+import { DashboardCard } from '@components/molecules';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // helpers
 import capitalize from '@utils/capitalize';

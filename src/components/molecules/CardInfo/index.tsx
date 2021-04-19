@@ -1,6 +1,6 @@
 import { Button, ButtonBase, Card, Fab, Grid } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import useViewport from '../../hooks/useViewport';
+import useViewport from '@hooks/useViewport';
 // interfaces
 import { CardInfoProps } from './interfaces';
 // styles

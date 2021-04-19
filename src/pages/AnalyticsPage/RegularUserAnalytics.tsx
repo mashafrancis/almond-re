@@ -11,7 +11,7 @@ import {
 	BubbleChart,
 	HorizontalSplitTwoTone,
 } from '@material-ui/icons';
-import AnalyticsCard from '@components/AnalyticsCard';
+import { AnalyticsCard } from '@components/molecules';
 import { ComponentContext } from '@context/ComponentContext';
 import formatWaterLevelData from '@utils/formatWaterLevel';
 import { RegularUserAnalyticsProps } from '@pages/AnalyticsPage/interfaces';

@@ -2,15 +2,14 @@ import { ChangeEvent, createElement, useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Grid, useMediaQuery } from '@material-ui/core';
 import { SectionAlternate, CardBase } from '@components/organisms';
-import { MenuComponentProps } from '@components/MenuRoutes/interfaces';
+import { MenuComponentProps } from '@components/molecules/MenuRoutes/interfaces';
 import {
 	WidgetsRounded,
 	SecurityOutlined,
 	NotificationsNone,
 } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
-import TabPanel from '@components/TabPanel';
-import { MenuTab, MenuTabs } from '@components/MenuTabs';
+import { TabPanel, MenuTabs, MenuTab } from '@components/atoms';
 import { Hero, General, Security, Notifications } from './components';
 
 const useStyles = makeStyles((theme) => ({
