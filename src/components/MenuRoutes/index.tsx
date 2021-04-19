@@ -29,11 +29,11 @@ import EnvironmentControlPage from '@pages/EnvironmentControlPage';
 import QualityCheckPage from '@pages/QualityCheckPage';
 import EnergyMonitoringPage from '@pages/EnergyMonitoringPage';
 import SupportPage from '@pages/SupportPage';
-import SettingsPage from '@pages/SettingsPage';
 import HelpPage from '@pages/HelpPage';
 import DeviceManagementPage from '@pages/DeviceManagementPage';
 import PeoplePage from '@pages/PeoplePage';
 import UserRolesPage from '@pages/UserRolesPage';
+import AccountSettingsPage from '@pages/AccountSettingsPage';
 
 // :TODO: Implement React Suspense lazy loading once feature is released
 // pages
@@ -91,7 +91,7 @@ export const UserMenus: MenuComponentProps[] = [
 	{
 		icon: <Settings />,
 		primaryText: 'Settings',
-		component: SettingsPage,
+		component: AccountSettingsPage,
 		id: 'settings',
 	},
 	{

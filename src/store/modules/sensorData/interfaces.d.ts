@@ -25,7 +25,7 @@ export interface GetSensorDataSuccess {
 
 export interface GetSensorDataFailure {
 	type: GET_SENSOR_DATA_FAILURE;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 }
 
 export interface GetAirTemperatureDataRequest {
@@ -41,7 +41,7 @@ export interface GetAirTemperatureDataSuccess {
 
 export interface GetAirTemperatureDataFailure {
 	type: GET_AIR_TEMPERATURE_TREND_FAILURE;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -58,7 +58,7 @@ export interface GetWaterTemperatureDataSuccess {
 
 export interface GetWaterTemperatureDataFailure {
 	type: GET_WATER_TEMPERATURE_TREND_FAILURE;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 

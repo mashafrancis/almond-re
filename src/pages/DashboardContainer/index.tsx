@@ -21,14 +21,12 @@ import { AllOutTwoTone, Face } from '@material-ui/icons';
 // components;
 import { AdminMenus, UserMenus } from '@components/MenuRoutes';
 import TabPanel from '@components/TabPanel';
-import Modal from '@components/Modal';
-import { ActivityLogCard } from '@components/atoms';
+import { ActivityLogCard, Modal } from '@components/atoms';
 // utils
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 // interfaces
-import { Device } from '@modules/device/interfaces';
 import { IClientSubscribeOptions } from 'mqtt';
 // styles
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
@@ -198,7 +196,7 @@ const DashboardContainer = (): JSX.Element => {
 				),
 			}}
 		>
-			{devices.map((device: Device) => (
+			{devices.map((device) => (
 				<MenuItem key={device.id} value={device.id}>
 					<Typography variant="body1">{device.id}</Typography>
 				</MenuItem>

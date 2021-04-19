@@ -1,22 +1,13 @@
 // react libraries
-import { lazy } from 'react';
-
-// third-party libraries
-import { connect } from 'react-redux';
 
 // icons
 import { Help } from '@material-ui/icons';
-
-// thunks
-import { displaySnackMessage } from '@modules/snack';
-
 // interfaces
-import { HelpPageProps } from '@pages/HelpPage/interfaces';
 import Grid from '@material-ui/core/Grid';
 
-const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
+import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
 
-export const HelpPage = (props: HelpPageProps): JSX.Element => (
+export const HelpPage = (): JSX.Element => (
 	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
 		<Grid
 			item
@@ -37,12 +28,4 @@ export const HelpPage = (props: HelpPageProps): JSX.Element => (
 	</Grid>
 );
 
-export const mapStateToProps = (state) => ({
-	error: state.error,
-});
-
-export const mapDispatchToProps = (dispatch) => ({
-	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HelpPage);
+export default HelpPage;

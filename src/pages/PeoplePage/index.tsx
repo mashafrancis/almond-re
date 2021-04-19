@@ -5,8 +5,8 @@ import { TextField, MenuItem, InputAdornment, Chip } from '@material-ui/core';
 // icons
 import { Face, PeopleAltOutlined, ExpandMore, Add } from '@material-ui/icons';
 // components
-import GeneralCardInfo from '@components/GeneralCardInfo';
-import Modal from '@components/Modal';
+import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
+import Modal from '@components/atoms/Modal';
 import {
 	GridCellParams,
 	GridColDef,

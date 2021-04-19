@@ -22,7 +22,7 @@ export interface CreateAccountActionSuccess {
 export interface CreateAccountActionFailure {
 	type: CREATE_ACCOUNT_FAILURE;
 	isLoading: boolean;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 }
 
 export interface LoginActionRequest {
@@ -39,7 +39,7 @@ export interface LoginActionSuccess {
 export interface LoginActionFailure {
 	type: LOGIN_FAILURE;
 	isLoading: boolean;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 }
 
 export interface IUserInputDTO {

@@ -43,13 +43,24 @@ export const ToggleSwitch = withStyles({
 export const useTableStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			border: 'none',
+			border: 0,
+			WebkitFontSmoothing: 'auto',
+			'& .MuiDataGrid-iconSeparator': {
+				display: 'none',
+			},
+			// '& .MuiDataGrid-colCell, .MuiDataGrid-cell': {
+			// 	paddingLeft: 2,
+			// 	paddingRight: 2,
+			// },
+			'& .MuiPaginationItem-root': {
+				borderRadius: 0,
+			},
 			'& .table-header': {
 				color: theme.palette.primary.main,
 				// fontWeight: 500,
 			},
 			'& .table-cell': {
-				fontWeight: '500',
+				fontWeight: 500,
 				fontSize: 20,
 			},
 		},

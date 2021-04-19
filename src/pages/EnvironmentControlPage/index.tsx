@@ -1,29 +1,22 @@
-import { ChangeEvent, lazy, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 // third-party libraries
-import { connect, useSelector } from 'react-redux';
-import { FilterList } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
-// thunks
-import { displaySnackMessage } from '@modules/snack';
-// import { getEnvironmentData } from '@modules/sensorData';
-// helpers
-import roundDigit from '@utils/roundDigit';
-// styles
-import './EnvironmentControlPage.scss';
-import {
-	EnvironmentControlPageProps,
-	EnvironmentControlPageState,
-} from '@pages/EnvironmentControlPage/interfaces';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AreaChardDisplay from '@components/AreaChartDisplay';
+// components
 import DashboardCard from '@components/DashboardCard';
 import DonutDisplay from '@components/DonutDisplay';
 import { LineChartCard } from '@components/organisms';
-import { DateRanges } from '@components/DateRangePicker/interfaces';
-import getDateRange from '@utils/DateRangeSelect';
+// thunks
 import { getAirTemperatureTrend } from '@modules/sensorData';
+// helpers
+import roundDigit from '@utils/roundDigit';
+import getDateRange from '@utils/DateRangeSelect';
 import fancyId from '@utils/fancyId';
+// interfaces
+import { EnvironmentControlPageState } from '@pages/EnvironmentControlPage/interfaces';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { DateRanges } from '@components/DateRangePicker/interfaces';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -46,17 +39,21 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export const EnvironmentControlPage = ({
-	sensorData,
-	getAirTemperatureTrend,
-	airTemperatureTrend,
-}: EnvironmentControlPageProps): JSX.Element => {
-	const classes = useStyles();
+export const EnvironmentControlPage = (): JSX.Element => {
+	const { sensorData, airTemperatureTrend } = useSelector(
+		(globalState: IRootState) => globalState.sensorData,
+		shallowEqual,
+	);
+
 	const [state, setState] = useState<EnvironmentControlPageState>({
 		isDateRangeHidden: true,
 		currentDateInView: '',
 		airTemperatureCardDateRange: '',
 	});
+
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const { temperature, humidity } = sensorData;
 
 	// useEffect(() => {
 	// 	// const queryParams = {
@@ -75,9 +72,6 @@ export const EnvironmentControlPage = ({
 	// 		}));
 	// 	});
 	// }, []);
-
-	// :TODO: Implement useSelector method
-	const { temperature, humidity } = sensorData;
 
 	const currentTemperature = roundDigit(temperature, 1) || 0;
 	const currentHumidity = roundDigit(humidity, 1) || 0;
@@ -150,12 +144,8 @@ export const EnvironmentControlPage = ({
 		const queryParams = {
 			q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
 		};
-		getAirTemperatureTrend(queryParams).then(() => {
-			setState((prevState) => ({
-				...prevState,
-				isLoading: false,
-			}));
-		});
+
+		dispatch(getAirTemperatureTrend(queryParams));
 	};
 
 	return (
@@ -237,18 +227,4 @@ export const EnvironmentControlPage = ({
 	);
 };
 
-export const mapStateToProps = (state) => ({
-	sensorData: state.sensorData.sensorData,
-	airTemperatureTrend: state.sensorData.airTemperatureTrend,
-});
-
-export const mapDispatchToProps = (dispatch) => ({
-	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
-	getAirTemperatureTrend: (queryParams) =>
-		dispatch(getAirTemperatureTrend(queryParams)),
-});
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(EnvironmentControlPage);
+export default EnvironmentControlPage;

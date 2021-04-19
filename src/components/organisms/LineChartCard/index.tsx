@@ -1,5 +1,4 @@
-import { lazy } from 'react';
-import SelectBox from '@components/SelectBox';
+import { SelectBox } from '@components/atoms';
 import DateRangePicker from '@components/DateRangePicker';
 // utils
 import dayjs from '@utils/dayjsTime';

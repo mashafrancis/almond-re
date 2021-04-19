@@ -8,3 +8,5 @@ export { default as SwiperNumber } from './SwiperNumber';
 export { default as TypedText } from './TypedText';
 export { default as CustomAvatar } from './CustomAvatar';
 export { default as BottomNavigation } from './BottomNavigation';
+export { default as GeneralCardInfo } from './GeneralCardInfo';
+export { default as PermissionAccess } from './PermissionAccess';

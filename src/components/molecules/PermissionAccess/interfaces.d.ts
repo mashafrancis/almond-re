@@ -7,6 +7,10 @@ export interface PermissionAccessProps {
 }
 
 export interface PermissionAccessState {
-	resources: Resource[];
-	permissions: Permission[];
+	resources: any;
+	permissions: any;
+	mappedPermissions: {
+		[key: string]: string;
+	};
+	isResourcesUpdates: boolean;
 }

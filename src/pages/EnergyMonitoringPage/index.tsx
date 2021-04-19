@@ -1,20 +1,9 @@
-import { connect } from 'react-redux';
-import GeneralCardInfo from '@components/GeneralCardInfo';
+import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
 import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
-
-// thunks
-import { displaySnackMessage } from '@modules/snack';
-
-// styles
-import './EnergyMonitoringPage.scss';
-
 // interfaces
 import Grid from '@material-ui/core/Grid';
-import { EnergyMonitoringPageProps } from './interfaces';
 
-export const EnergyMonitoringPage = (
-	props: EnergyMonitoringPageProps,
-): JSX.Element => (
+export const EnergyMonitoringPage = (): JSX.Element => (
 	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
 		<Grid
 			item
@@ -35,15 +24,4 @@ export const EnergyMonitoringPage = (
 	</Grid>
 );
 
-export const mapStateToProps = (state) => ({
-	error: state.error,
-});
-
-export const mapDispatchToProps = (dispatch) => ({
-	displaySnackMessage: (message) => dispatch(displaySnackMessage(message)),
-});
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(EnergyMonitoringPage);
+export default EnergyMonitoringPage;

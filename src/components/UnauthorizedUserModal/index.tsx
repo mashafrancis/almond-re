@@ -1,7 +1,7 @@
 // react
 import { connect } from 'react-redux';
 // components
-import Modal from '@components/Modal';
+import Modal from '@components/atoms/Modal';
 // thunk action creators
 import { logoutUser } from '@modules/user';
 // interfaces

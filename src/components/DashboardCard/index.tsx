@@ -76,21 +76,23 @@ const DashboardCard = ({
 				data-testid="dashboard-card"
 				style={styles}
 			>
-				<CardHeader
-					classes={{
-						action: classes.action,
-					}}
-					title={
-						<Typography
-							className={classes.title}
-							variant="subtitle2"
-							color="primary"
-						>
-							{heading}
-						</Typography>
-					}
-					action={actionItem}
-				/>
+				{heading && (
+					<CardHeader
+						classes={{
+							action: classes.action,
+						}}
+						title={
+							<Typography
+								className={classes.title}
+								variant="subtitle2"
+								color="primary"
+							>
+								{heading}
+							</Typography>
+						}
+						action={actionItem}
+					/>
+				)}
 				<CardContent className={classes.content}>
 					<Grid
 						item

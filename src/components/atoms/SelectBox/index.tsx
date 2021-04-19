@@ -1,6 +1,6 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { MenuItem, TextField } from '@material-ui/core';
-import { SelectBoxProps } from '@components/SelectBox/interfaces';
+import { SelectBoxProps } from '@components/atoms/SelectBox/interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

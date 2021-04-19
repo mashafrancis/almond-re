@@ -12,6 +12,8 @@ const UserContext = createContext({
 			id: '',
 			verified: false,
 			enabled: false,
+			user: '',
+			updatedAt: '',
 		},
 	],
 	activeDevice: {

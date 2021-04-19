@@ -8,8 +8,6 @@ import {
 	Theme,
 	useTheme,
 } from '@material-ui/core/styles';
-// styles
-import './GeneralCardInfo.scss';
 import { GeneralCardInfoProps } from './interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -19,7 +19,7 @@ export interface GetAdminStatsSuccess {
 export interface GetAdminStatsFailure {
 	type: GET_ADMIN_STATS_FAILURE;
 	isLoading: boolean;
-	errors: ErrorObject;
+	errors: ErrorObject | null;
 }
 
 export interface StatsData {

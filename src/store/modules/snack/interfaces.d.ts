@@ -7,4 +7,7 @@ export interface DisplaySnackMessageAction {
 
 export interface SnackMessage {
 	message: string;
+	severity?: Severity;
 }
+
+export type Severity = 'success' | 'error';

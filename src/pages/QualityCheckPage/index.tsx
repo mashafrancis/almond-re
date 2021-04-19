@@ -15,7 +15,9 @@ import Grid from '@material-ui/core/Grid';
 import { QualityCheckPageProps } from './interfaces';
 
 // components
-const GeneralCardInfo = lazy(() => import('@components/GeneralCardInfo'));
+const GeneralCardInfo = lazy(
+	() => import('@components/molecules/GeneralCardInfo'),
+);
 
 export const QualityCheckPage = (props: QualityCheckPageProps): JSX.Element => (
 	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>

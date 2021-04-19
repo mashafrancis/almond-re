@@ -18,8 +18,8 @@ import {
 	GridOverlay,
 } from '@material-ui/data-grid';
 // components
-import Modal from '@components/Modal';
-import GeneralCardInfo from '@components/GeneralCardInfo';
+import Modal from '@components/atoms/Modal';
+import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
 import DashboardCard from '@components/DashboardCard';
 import DonutDisplay from '@components/DonutDisplay';
 import { LineChartCard } from '@components/organisms';
@@ -514,11 +514,12 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 	const ActionButtons = (schedule: string): JSX.Element => {
 		const handleDelete = () =>
-			setState({
-				...state,
+			setState((prevState) => ({
+				...prevState,
 				scheduleId: schedule,
-				isDeleteModalOpen: true,
-			});
+				isDeleteModalOpen: !prevState.isDeleteModalOpen,
+			}));
+
 		return (
 			<div className={classes.root} key={schedule}>
 				<Grid container spacing={3}>
@@ -557,7 +558,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const TableContent = (): JSX.Element => {
+	const renderTableContent = (): JSX.Element => {
 		const columns: GridColDef[] = [
 			{
 				field: 'time',
@@ -655,7 +656,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 					/>
 					<DashboardCard
 						heading="Water Schedules"
-						body={TableContent()}
+						body={renderTableContent()}
 						actionItem={
 							<Button
 								color="primary"

@@ -7,6 +7,7 @@ import {
 	UPDATE_PERSON_DETAILS_FAILURE,
 	UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
+import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetAllPeopleActionRequest {
 	type: GET_ALL_PEOPLE_REQUEST;
@@ -21,7 +22,7 @@ export interface GetAllPeopleActionSuccess {
 
 export interface GetAllPeopleActionFailure {
 	type: GET_ALL_PEOPLE_FAILURE;
-	errors: null;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }
 
@@ -33,6 +34,6 @@ export interface UpdatePersonSuccess {
 
 export interface UpdatePersonFailure {
 	type: UPDATE_PERSON_DETAILS_FAILURE;
-	errors: null;
+	errors: ErrorObject | null;
 	isLoading: boolean;
 }

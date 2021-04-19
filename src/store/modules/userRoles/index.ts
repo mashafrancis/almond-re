@@ -1,9 +1,8 @@
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-
 // interfaces
 import errorOnSnack from '@utils/errorOnSnack';
-import { Dispatch } from 'redux';
+import { Dispatch, Reducer } from 'redux';
 import {
 	CreateUserRolesActionFailure,
 	CreateUserRolesActionRequest,
@@ -19,7 +18,6 @@ import {
 	GetUserRolesActionSuccess,
 	UserRole,
 } from './interfaces';
-
 // types
 import {
 	CREATE_USER_ROLES_FAILURE,
@@ -34,6 +32,7 @@ import {
 	GET_USER_ROLES_FAILURE,
 	GET_USER_ROLES_REQUEST,
 	GET_USER_ROLES_SUCCESS,
+	State,
 } from './types';
 import { Action, ErrorObject } from '../../../shared.interfaces';
 
@@ -285,7 +284,9 @@ export const editUserRole = (updatedRolePayload) => (
 		})
 		.catch((error: ErrorObject) => {
 			error?.response?.status === 400
-				? dispatch(displaySnackMessage('Please format the fields properly'))
+				? dispatch(
+						displaySnackMessage('Please format the fields properly', 'error'),
+				  )
 				: errorOnSnack(error, dispatch, 'editing user role');
 			dispatch(editUserRoleFailure(error));
 		});
@@ -300,7 +301,10 @@ export const userRoleInitialState = {
 	errors: null,
 };
 
-export const reducer = (state: any = userRoleInitialState, action: Action) => {
+export const reducer: Reducer<State, Action> = (
+	state: State = userRoleInitialState,
+	action: Action,
+) => {
 	switch (action.type) {
 		case GET_USER_ROLES_REQUEST:
 			return {

@@ -17,7 +17,12 @@ import {
 } from '@modules/userRoles';
 
 // helpers
-import { newUserRole, userRolesResponse } from '@modules/userRoles/fixtures';
+import {
+	newUserRole,
+	permissions,
+	resources,
+	userRolesResponse,
+} from '@modules/userRoles/fixtures';
 import { errorMessage } from '../../../testHelpers';
 
 describe('User roles reducer:', () => {
@@ -115,8 +120,12 @@ describe('User roles reducer:', () => {
 		});
 
 		it('should dispatch EDIT_USER_ROLES_SUCCESS', () => {
-			const userRoleInitialState = {
+			const roleInitialState = {
+				resources,
+				permissions,
 				roles: userRolesResponse.data,
+				isLoading: false,
+				errors: null,
 			};
 
 			const userRoleToUpdate = {
@@ -130,7 +139,7 @@ describe('User roles reducer:', () => {
 				userRoleToUpdate._id,
 			);
 			const userRolesState = reducer(
-				userRoleInitialState,
+				roleInitialState,
 				editUserRolesSuccessAction,
 			);
 			const updatedUserRole = userRolesState.roles.find(
@@ -138,7 +147,7 @@ describe('User roles reducer:', () => {
 			);
 
 			expect(userRolesState.isLoading).toBeFalsy();
-			expect(updatedUserRole.title).toEqual('Random User');
+			expect(updatedUserRole?.title).toEqual('Random User');
 			expect(userRolesState.errors).toBe(null);
 		});
 
@@ -167,15 +176,19 @@ describe('User roles reducer:', () => {
 		});
 
 		it('should dispatch DELETE_USER_ROLES_SUCCESS', () => {
-			const userRoleInitialState = {
+			const roleInitialState = {
+				resources,
+				permissions,
 				roles: userRolesResponse.data,
+				isLoading: false,
+				errors: null,
 			};
 
 			const deleteUserRolesSuccessAction = deleteUserRolesSuccess(
 				'5e4703d62faee61d8ede2d65',
 			);
 			const userRolesState = reducer(
-				userRoleInitialState,
+				roleInitialState,
 				deleteUserRolesSuccessAction,
 			);
 

@@ -6,8 +6,7 @@ import {
 	GET_USER_DETAILS_FAILURE,
 	GET_USER_DETAILS_SUCCESS,
 } from './types';
-
-// import { Device } from '@modules/device/interfaces';
+import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetUserDetailsActionSuccess {
 	userDetails: UserDetails;
@@ -16,7 +15,7 @@ export interface GetUserDetailsActionSuccess {
 
 export interface GetUserDetailsActionFailure {
 	type: GET_USER_DETAILS_FAILURE;
-	errors: any;
+	errors: ErrorObject | null;
 }
 
 export interface EditUserDetailsSuccess {
@@ -25,7 +24,7 @@ export interface EditUserDetailsSuccess {
 }
 
 export interface EditUserDetailsFailure {
-	errors: any;
+	errors: ErrorObject | null;
 	type: EDIT_USER_DETAILS_FAILURE;
 }
 
@@ -36,37 +35,33 @@ export interface UserDetails {
 	email: string;
 	photo: string;
 	isVerified: boolean;
-	devices: Device[];
-	activeDevice: Device;
-	roles: Role[];
+	devices: Device[] | UserDevice[] | any;
+	activeDevice: string | Device | any;
+	roles: CurrentRole[] | Role[];
 	permissions?: FormattedPermissions;
 	currentRole: CurrentRole;
 	createdAt?: string;
 	updatedAt?: string;
 }
 
-export interface Device {
+export interface UserDevice {
 	_id: string;
 	id: string;
+}
+
+export interface Device extends UserDevice {
 	verified: boolean;
 	enabled: boolean;
 	user: string;
 	updatedAt: string;
 }
 
-// interface UserDevice extends Device{
-//   verified: boolean;
-//   devices: Device[]
-// }
-
 export interface CurrentRole {
 	_id: string;
 	title: string;
 }
 
-export interface Role {
+export interface Role extends CurrentRole {
 	description: string;
-	title: string;
-	_id: string;
 	resourceAccessLevels: ResourceAccessLevel[];
 }

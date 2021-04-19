@@ -103,14 +103,11 @@ export const getAllPeople = () => (
  * @param personId
  * @param personDetails
  */
-export const updatePerson = (
-	personId: string,
-	personDetails: any,
-): Function => (
+export const updatePerson = (personId: string, personDetails: any) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		patch: (
+		put: (
 			arg0: string,
 			arg1: any,
 		) => Promise<{ data: { data: UserDetails; message: string } }>;
@@ -118,7 +115,7 @@ export const updatePerson = (
 ) => {
 	dispatch(loadingRequest('requesting'));
 	return http
-		.patch(`people/${personId}`, personDetails)
+		.put(`people/${personId}`, personDetails)
 		.then((response: { data: { data: UserDetails; message: string } }) => {
 			const {
 				data: { data, message },
