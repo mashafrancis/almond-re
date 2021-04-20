@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // components
 import Grid from '@material-ui/core/Grid';
@@ -14,8 +14,11 @@ import {
 import { AnalyticsCard } from '@components/molecules';
 import { ComponentContext } from '@context/ComponentContext';
 import formatWaterLevelData from '@utils/formatWaterLevel';
-import { RegularUserAnalyticsProps } from '@pages/AnalyticsPage/interfaces';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllSchedules } from '@modules/timeSchedules';
+import { UserContext } from '@context/UserContext';
+import { getDiff } from '@utils/validateTimeOneHour';
+import dayjs from '@utils/dayjsTime';
 import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -29,9 +32,33 @@ const useStyles = makeStyles((theme: Theme) =>
 const RegularUserAnalytics = (): JSX.Element => {
 	const classes = useStyles();
 	const { setSelectedIndex } = useContext(ComponentContext);
+	const { activeDevice } = useContext(UserContext);
 	const { temperature, humidity, waterLevel } = useSelector(
 		(globalState: IRootState) => globalState.sensorData.sensorData,
 	);
+	const { schedules } = useSelector(
+		(globalState: IRootState) => globalState.timeSchedules,
+	);
+
+	const [nextTimeSchedule, setNextTimeSchedule] = useState('00:00');
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const getSchedules = async () =>
+			dispatch(getAllSchedules(activeDevice._id));
+		getSchedules().then(() => {
+			if (schedules.length > 0) {
+				const nextTime = schedules
+					.filter((t) => getDiff(dayjs(), t.schedule) > 0)
+					.reduce((accumulator, current) => {
+						const accumulatorDiff = getDiff(dayjs(), accumulator.schedule);
+						const currentDiff = getDiff(dayjs(), current.schedule);
+						return accumulatorDiff < currentDiff ? accumulator : current;
+					});
+				setNextTimeSchedule(nextTime.schedule);
+			}
+		});
+	}, [schedules]);
 
 	const handleCardClick = (index: number) => () => setSelectedIndex(index);
 
@@ -63,7 +90,7 @@ const RegularUserAnalytics = (): JSX.Element => {
 					colorClass="brownCard"
 					icon={<ScheduleTwoTone fontSize="large" />}
 					mainInfo="Next schedule"
-					subInfo="14:00"
+					subInfo={nextTimeSchedule}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(2)}

@@ -5,20 +5,22 @@ import { Schedule } from '@modules/timeSchedules/interfaces';
  * This function validates the new time schedules to be one hour apart
  * @returns boolean
  */
-export const validateNewOneHourTime = (
+const validateNewOneHourTime = (
 	schedules: string[],
 	newTime: string,
 ): boolean => {
 	if (schedules.length === 0) return true;
-	const diff = getDiff(newTime, schedules[schedules.length - 1]);
-	return diff <= -3600000;
+
+	return schedules.every(
+		(schedule) => Math.abs(getDiff(newTime, schedule)) >= 3_600_000,
+	);
 };
 
 /**
  * This function validates the edited time schedules to be one hour apart
  * @returns boolean
  */
-export const validateEditOneHourTime = (
+const validateEditOneHourTime = (
 	schedules: Schedule[],
 	scheduleId: string,
 	editTime: string,
@@ -34,12 +36,10 @@ export const validateEditOneHourTime = (
 			: schedules[editScheduleIndex + 1].schedule;
 
 	if (timeBefore) {
-		const diffBefore = getDiff(editTime, timeBefore);
-		if (diffBefore > -3600000) return false;
+		if (Math.abs(getDiff(editTime, timeBefore)) > 3_600_000) return false;
 	}
 	if (timeAfter) {
-		const diffAfter = getDiff(editTime, timeAfter);
-		if (diffAfter < 3600000) return false;
+		if (Math.abs(getDiff(editTime, timeAfter)) < 3_600_000) return false;
 	}
 	return true;
 };
@@ -48,7 +48,7 @@ export const validateEditOneHourTime = (
  * This function gets the time difference between the times passed in milliseconds
  * @returns number
  */
-const getDiff = (newTime: any, scheduleTime: string) => {
+const getDiff = (newTime: any, scheduleTime: string): number => {
 	const newTimeToSet = dayjs(newTime).second(0).millisecond(0);
 	const [h, m] = scheduleTime.split(':');
 	const scheduleTimeToCompare = dayjs()
@@ -58,3 +58,5 @@ const getDiff = (newTime: any, scheduleTime: string) => {
 		.millisecond(0);
 	return scheduleTimeToCompare.diff(newTimeToSet);
 };
+
+export { validateEditOneHourTime, validateNewOneHourTime, getDiff };

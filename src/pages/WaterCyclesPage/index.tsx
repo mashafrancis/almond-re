@@ -269,23 +269,18 @@ export const WaterCyclesPage = (): JSX.Element => {
 	};
 
 	const validateNewTime = (value) => {
-		const timeSchedules = schedules.map((item) => item?.schedule);
-		const validate = validateNewOneHourTime(timeSchedules, value);
-		if (!validate) {
-			setState((prevState) => ({ ...prevState, hasError: true }));
-		} else {
+		const timeSchedules = schedules.map((schedule) => schedule?.schedule);
+		const isNotWithinOneHour = validateNewOneHourTime(timeSchedules, value);
+		if (isNotWithinOneHour) {
 			setState((prevState) => ({ ...prevState, hasError: false }));
+		} else {
+			setState((prevState) => ({ ...prevState, hasError: true }));
 		}
 	};
 
 	const validateScheduleOnOpen = (): void => {
 		const { selectedTimeSchedule } = state;
 		validateNewTime(selectedTimeSchedule);
-		// switch (mode) {
-		// 	case 'Add': {
-		// 		validateNewTime(selectedTimeSchedule);
-		// 	}
-		// }
 	};
 
 	const handleEditTimeChange = (value): void => {
@@ -298,11 +293,16 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 	const validateEditTime = (value): void => {
 		const { scheduleId } = state;
-		const validate = validateEditOneHourTime(schedules, scheduleId, value);
-		if (!validate) {
-			setState((prevState) => ({ ...prevState, hasError: true }));
-		} else {
+		const isNotWithinOneHour = validateEditOneHourTime(
+			schedules,
+			scheduleId,
+			value,
+		);
+
+		if (isNotWithinOneHour) {
 			setState((prevState) => ({ ...prevState, hasError: false }));
+		} else {
+			setState((prevState) => ({ ...prevState, hasError: true }));
 		}
 	};
 
@@ -314,6 +314,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 			const [hour, minute] = time.split(':');
 			return dayjs().hour(hour).minute(minute).format();
 		};
+
 		switch (mode) {
 			case 'Add':
 				setState((prevState) => ({
@@ -343,9 +344,19 @@ export const WaterCyclesPage = (): JSX.Element => {
 		setState((prevState) => ({
 			...prevState,
 			isAddEditModalOpen: !prevState.isAddEditModalOpen,
-			hasError: false,
-			isEditMode: false,
 		}));
+
+		setTimeout(
+			() =>
+				setState((prevState) => ({
+					...prevState,
+					selectedTimeSchedule: dayjs(),
+					hasError: false,
+					isEditMode: false,
+					scheduleId: '',
+				})),
+			1000,
+		);
 	};
 
 	const toggleScheduleDeleteModal = (): void => {
@@ -444,9 +455,11 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 		return (
 			<>
-				{isEditMode
-					? 'Change the time schedule as per your preference for pumping.'
-					: 'Add a new time schedule as per your preference for pumping.'}
+				<Typography variant="body2" color="textSecondary" gutterBottom>
+					{`${
+						isEditMode ? 'Change the' : 'Add a'
+					} time schedule as per your preference for pumping.`}
+				</Typography>
 				<MuiPickersUtilsProvider utils={DateFnsUtils}>
 					<TimePicker
 						fullWidth
@@ -466,7 +479,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 							startAdornment: (
 								<InputAdornment position="start">
 									<IconButton>
-										<AddAlarmTwoTone color="primary" />
+										<AddAlarmTwoTone color={hasError ? 'error' : 'primary'} />
 									</IconButton>
 								</InputAdornment>
 							),
@@ -500,7 +513,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	const renderDeleteScheduleModal = (): JSX.Element => (
 		<Modal
 			isModalOpen={state.isDeleteModalOpen}
-			renderContent="Do you confirm deletion of time schedule?"
+			renderDialogText="Do you confirm deletion of time schedule?"
 			onClose={toggleScheduleDeleteModal}
 			renderHeader="Delete Time Schedule"
 			submitButtonName="Delete schedule"
