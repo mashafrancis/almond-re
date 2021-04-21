@@ -1,11 +1,9 @@
-import { useState, useEffect, FormEvent, ChangeEvent, useContext } from 'react';
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 // third-party libraries
 import { useDispatch, useSelector } from 'react-redux';
 import validate from 'validate.js';
 import { Button, Grid, InputAdornment, TextField } from '@material-ui/core';
 import { PhonelinkSetupSharp } from '@material-ui/icons';
-// components
-import { UserContext } from '@context/UserContext';
 // interfaces
 import { makeStyles } from '@material-ui/core/styles';
 import { Image } from '@components/atoms';
@@ -79,7 +77,6 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 		}));
 	}, [formState.values]);
 
-	const { activeDevice } = useContext(UserContext);
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state: IRootState) => state.device);
 

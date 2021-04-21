@@ -7,7 +7,7 @@ import { render, screen } from '@testing-library/react';
 // components
 import { DeviceManagementPage } from './index';
 
-describe('The DeviceManagement Page', () => {
+describe.skip('The DeviceManagement Page', () => {
 	const { asFragment } = render(
 		<Suspense fallback={<h1>test loading</h1>}>
 			<DeviceManagementPage />

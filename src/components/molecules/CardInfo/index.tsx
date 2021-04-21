@@ -1,3 +1,7 @@
+import clsx from 'clsx';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, ButtonBase, Card, Fab, Grid } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import useViewport from '@hooks/useViewport';
@@ -5,10 +9,6 @@ import useViewport from '@hooks/useViewport';
 import { CardInfoProps } from './interfaces';
 // styles
 import './CardInfo.scss';
-import clsx from 'clsx';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -56,7 +56,7 @@ const CardInfo = ({
 	icon,
 }: CardInfoProps): JSX.Element => {
 	const classes = useStyles();
-	const cardButton = () => (
+	const renderCardButton = () => (
 		<div className="card-content__button">
 			{width > breakpoint ? (
 				<Button color="primary" variant="contained" onClick={onClick}>
@@ -116,7 +116,7 @@ const CardInfo = ({
 							direction="column"
 							style={{ display: 'flex', width: '100%' }}
 						>
-							<Typography variant="h5" color="primary">
+							<Typography variant="h5" color="primary" data-testid="header">
 								{mainHeader}
 							</Typography>
 							<Typography
@@ -134,24 +134,12 @@ const CardInfo = ({
 							alignItems="center"
 							justify="flex-end"
 						>
-							<ButtonBase>{cardButton()}</ButtonBase>
+							{renderCardButton()}
 						</Grid>
 					</Grid>
 				</CardContent>
 			</Card>
 		</Grid>
-		// <div className="info-card">
-		// 	<div className="card-content">
-		// 		{icon}
-		// 		<div className="card-content__body">
-		// 			<div className="main" data-testid="header">
-		// 				{mainHeader}
-		// 			</div>
-		// 			<div className="sub-main">{subHeader}</div>
-		// 		</div>
-		// 		{cardButton()}
-		// 	</div>
-		// </div>
 	);
 };
 

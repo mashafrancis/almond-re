@@ -101,6 +101,7 @@ describe('User roles module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -172,6 +173,7 @@ describe('User roles module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -244,6 +246,7 @@ describe('User roles module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -291,6 +294,7 @@ describe('User roles module actions', () => {
 			{
 				snack: {
 					message: mockErrorResponse.response.data.message,
+					severity: 'error',
 				},
 				type: DISPLAY_SNACK_MESSAGE,
 			},
@@ -371,6 +375,7 @@ describe('User roles module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},

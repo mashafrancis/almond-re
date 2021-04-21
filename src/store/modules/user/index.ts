@@ -4,24 +4,25 @@ import { Action, AnyAction, Dispatch } from 'redux';
 // thunk action creators
 import authService from '@utils/auth';
 import formatPermissions from '@utils/FormatPermissions';
-import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
 import errorOnSnack from '@utils/errorOnSnack';
 import { displaySnackMessage } from '../snack';
 
 // interfaces
 import {
-	EditUserDetailsFailure,
-	EditUserDetailsSuccess,
+	EditUserDetailsActionFailure,
+	EditUserDetailsActionRequest,
+	EditUserDetailsActionSuccess,
 	GetUserDetailsActionFailure,
+	GetUserDetailsActionRequest,
 	GetUserDetailsActionSuccess,
 	UserDetails,
 } from './interfaces';
 
 // helper functions
-
 // types
 import {
 	EDIT_USER_DETAILS_FAILURE,
+	EDIT_USER_DETAILS_REQUEST,
 	EDIT_USER_DETAILS_SUCCESS,
 	GET_USER_DETAILS_FAILURE,
 	GET_USER_DETAILS_REQUEST,
@@ -32,6 +33,11 @@ import {
 
 import { ErrorObject } from '../../../shared.interfaces';
 
+export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
+	isLoading: true,
+	type: GET_USER_DETAILS_REQUEST,
+});
+
 /**
  * Get userDetails success action creator
  * @returns {GetUserDetailsActionSuccess}
@@ -40,6 +46,7 @@ export const getUserDetailsSuccess = (
 	userDetails: UserDetails,
 ): GetUserDetailsActionSuccess => ({
 	userDetails,
+	isLoading: false,
 	type: GET_USER_DETAILS_SUCCESS,
 });
 
@@ -48,31 +55,39 @@ export const getUserDetailsSuccess = (
  * @returns {GetUserDetailsActionFailure}
  */
 export const getUserDetailsFailure = (
-	errors: any,
+	errors: ErrorObject,
 ): GetUserDetailsActionFailure => ({
 	errors,
+	isLoading: false,
 	type: GET_USER_DETAILS_FAILURE,
+});
+
+export const editUserDetailsRequest = (): EditUserDetailsActionRequest => ({
+	isLoading: true,
+	type: EDIT_USER_DETAILS_REQUEST,
 });
 
 /**
  * Edit user success action creator
- * @returns {EditUserDetailsSuccess}
+ * @returns {EditUserDetailsActionSuccess}
  */
 export const editUserDetailsSuccess = (
 	userDetails: UserDetails,
-): EditUserDetailsSuccess => ({
+): EditUserDetailsActionSuccess => ({
 	userDetails,
+	isLoading: false,
 	type: EDIT_USER_DETAILS_SUCCESS,
 });
 
 /**
  * Edit user failure action creator
- * @returns {EditUserDetailsFailure}
+ * @returns {EditUserDetailsActionFailure}
  */
 export const editUserDetailsFailure = (
-	errors: any,
-): EditUserDetailsFailure => ({
+	errors: ErrorObject,
+): EditUserDetailsActionFailure => ({
 	errors,
+	isLoading: false,
 	type: EDIT_USER_DETAILS_FAILURE,
 });
 
@@ -91,17 +106,15 @@ export const getUserDetails = () => (
 	getState: any,
 	http: { get: (arg0: string) => Promise<{ data: { data: UserDetails } }> },
 ) => {
-	dispatch(loadingRequest('requesting'));
+	dispatch(getUserDetailsRequest());
 	return http
 		.get('me')
 		.then((response: { data: { data: UserDetails } }) => {
 			const { data } = response.data;
-			dispatch(loadingSuccess('success'));
 			return dispatch(getUserDetailsSuccess(data));
 		})
 		.catch((error: ErrorObject) => {
-			dispatch(loadingError('error'));
-			errorOnSnack(error, dispatch);
+			errorOnSnack(error, dispatch, 'fetching your details');
 			dispatch(getUserDetailsFailure(error));
 		});
 };
@@ -113,7 +126,7 @@ export const getUserDetails = () => (
  * @returns {Function}
  */
 export const editUserDetails = (userId: string, userDetails: any) => (
-	dispatch: any,
+	dispatch: Dispatch,
 	getState: any,
 	http: {
 		patch: (
@@ -122,17 +135,15 @@ export const editUserDetails = (userId: string, userDetails: any) => (
 		) => Promise<{ data: { data: any; message: any } }>;
 	},
 ) => {
-	dispatch(loadingRequest('requesting'));
+	dispatch(editUserDetailsRequest());
 	return http
 		.patch(`people/${userId}`, userDetails)
 		.then((response: { data: { data: any; message: any } }) => {
 			const { data, message } = response.data;
-			dispatch(loadingSuccess('success'));
 			dispatch(editUserDetailsSuccess(data));
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			dispatch(loadingError('error'));
 			errorOnSnack(error, dispatch, 'updating your details');
 			dispatch(editUserDetailsFailure(error));
 		});
@@ -151,6 +162,7 @@ export const userInitialState = {
 	userDetails: {} as any,
 	permissions: {} as any,
 	errors: null,
+	isLoading: false,
 };
 
 /**
@@ -161,25 +173,39 @@ export const userInitialState = {
  */
 export const reducer = (state: State = userInitialState, action: AnyAction) => {
 	switch (action.type) {
+		case GET_USER_DETAILS_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
 		case GET_USER_DETAILS_SUCCESS:
 			return {
 				...state,
+				isLoading: action.isLoading,
 				userDetails: action.userDetails,
 				permissions: formatPermissions(action.userDetails.roles[0]),
 			};
 		case GET_USER_DETAILS_FAILURE:
 			return {
 				...state,
+				isLoading: action.isLoading,
 				errors: action.errors,
+			};
+		case EDIT_USER_DETAILS_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
 			};
 		case EDIT_USER_DETAILS_SUCCESS:
 			return {
 				...state,
+				isLoading: action.isLoading,
 				userDetails: { ...state.userDetails, ...action.userDetails },
 			};
 		case EDIT_USER_DETAILS_FAILURE:
 			return {
 				...state,
+				isLoading: action.isLoading,
 				errors: action.errors,
 			};
 		default:

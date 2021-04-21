@@ -14,6 +14,7 @@ import { Router } from 'react-router-dom';
 import http from '@utils/http';
 
 import reducer from './store/rootReducer';
+import rootReducer from './store/rootReducer';
 
 const tokenString = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJy
 b2xlIjp7IlVzZXIiOiI1ZTQ3MDNkNjJmYWVlNjFkOGVkZTJkNjUiLCJBZG1pbiI6IjVlNTU1ODAxND
@@ -78,7 +79,7 @@ export const reduxMockStore = (mock = axiosMock('', {}), initialState = {}) =>
 export const renderWithRedux: any = (
 	ui: JSX.Element,
 	{
-		initialState = {},
+		initialState,
 		extraArgument = {},
 		store = mockStore(extraArgument, initialState),
 		...renderOptions
@@ -89,6 +90,25 @@ export const renderWithRedux: any = (
 	);
 	return render(ui, { wrapper: Wrapper, ...renderOptions });
 };
+
+// export const renderWithRedux: any = (
+// 	ui,
+// 	{ initialState = {}, store = createStore(rootReducer, initialState) } = {},
+// 	renderFn = render,
+// ) => {
+// 	// obj.rerenderWithRedux = (el, nextState) => {
+// 	// 	if (nextState) {
+// 	// 		store.replaceReducer(() => nextState);
+// 	// 		store.dispatch({ type: '__TEST_ACTION_REPLACE_STATE__' });
+// 	// 		store.replaceReducer(rootReducer);
+// 	// 	}
+// 	// 	return renderWithRedux(el, { store }, obj.rerender);
+// 	// };
+// 	return {
+// 		...renderFn(<Provider store={store}>{ui}</Provider>),
+// 		store,
+// 	};
+// };
 
 interface RenderWithRouterProps {
 	route?: string;

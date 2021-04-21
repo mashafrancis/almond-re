@@ -6,7 +6,7 @@ import DashboardCard from './index';
 
 describe('DashboardCard component', () => {
 	const props = {
-		heading: 'Heading',
+		heading: 'Header',
 		body: 'Body',
 		redirect: () => jest.fn(),
 		classes: '',
@@ -16,8 +16,8 @@ describe('DashboardCard component', () => {
 		const { asFragment } = render(<DashboardCard {...props} />);
 		expect(asFragment()).toMatchSnapshot();
 
-		const elemHeader = screen.getByTestId('heading');
-		expect(elemHeader.innerHTML).toBe('Heading');
+		const elemHeader = screen.getByTestId('header');
+		expect(elemHeader.innerHTML).toBe('Header');
 
 		const elemDetails = screen.getByTestId('body');
 		expect(elemDetails.innerHTML).toBe('Body');

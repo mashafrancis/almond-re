@@ -2,30 +2,46 @@ import { ResourceAccessLevel } from '@modules/userRoles/interfaces';
 import { FormattedPermissions } from '@utils/FormatPermissions/interfaces';
 import {
 	EDIT_USER_DETAILS_FAILURE,
+	EDIT_USER_DETAILS_REQUEST,
 	EDIT_USER_DETAILS_SUCCESS,
 	GET_USER_DETAILS_FAILURE,
+	GET_USER_DETAILS_REQUEST,
 	GET_USER_DETAILS_SUCCESS,
 } from './types';
 import { ErrorObject } from '../../../shared.interfaces';
 
+export interface GetUserDetailsActionRequest {
+	type: GET_USER_DETAILS_REQUEST;
+	isLoading: boolean;
+}
+
 export interface GetUserDetailsActionSuccess {
 	userDetails: UserDetails;
 	type: GET_USER_DETAILS_SUCCESS;
+	isLoading: boolean;
 }
 
 export interface GetUserDetailsActionFailure {
 	type: GET_USER_DETAILS_FAILURE;
 	errors: ErrorObject | null;
+	isLoading: boolean;
 }
 
-export interface EditUserDetailsSuccess {
+export interface EditUserDetailsActionRequest {
+	type: EDIT_USER_DETAILS_REQUEST;
+	isLoading: boolean;
+}
+
+export interface EditUserDetailsActionSuccess {
 	userDetails: UserDetails;
 	type: EDIT_USER_DETAILS_SUCCESS;
+	isLoading: boolean;
 }
 
-export interface EditUserDetailsFailure {
+export interface EditUserDetailsActionFailure {
 	errors: ErrorObject | null;
 	type: EDIT_USER_DETAILS_FAILURE;
+	isLoading: boolean;
 }
 
 export interface UserDetails {

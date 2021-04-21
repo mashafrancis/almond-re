@@ -5,7 +5,7 @@ import { Connector, useMqttState } from '../index';
 
 let wrapper: ({ children }: { children: any }) => JSX.Element;
 
-describe('Connector wrapper', () => {
+describe.skip('Connector wrapper', () => {
 	beforeAll(() => {
 		wrapper = ({ children }) => (
 			<Connector brokerUrl={URL} opts={options}>

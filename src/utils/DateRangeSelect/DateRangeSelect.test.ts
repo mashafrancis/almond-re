@@ -4,8 +4,8 @@ import dayjs from '@utils/dayjsTime';
 import getDateRange from '@utils/DateRangeSelect/index';
 
 describe('The getDateRange function', () => {
-	const startDate = (param) => dayjs().startOf(param).format('YYYY-MM-DD');
-	const endDate = (param) => dayjs().endOf(param).format('YYYY-MM-DD');
+	const startDate = (param) => dayjs().startOf(param).toISOString();
+	const endDate = (param) => dayjs().endOf(param).toISOString();
 	let DateRange;
 
 	const Range = {

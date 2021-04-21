@@ -8,14 +8,11 @@ import {
 
 // types
 import {
-	LOADING_ERROR,
-	LOADING_REQUEST,
-	LOADING_SUCCESS,
-} from '@modules/loading/types';
-import {
 	EDIT_USER_DETAILS_FAILURE,
+	EDIT_USER_DETAILS_REQUEST,
 	EDIT_USER_DETAILS_SUCCESS,
 	GET_USER_DETAILS_FAILURE,
+	GET_USER_DETAILS_REQUEST,
 	GET_USER_DETAILS_SUCCESS,
 	LOG_OUT_USER,
 } from '@modules/user/types';
@@ -42,16 +39,13 @@ describe('User module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
-				},
-				{
-					type: LOADING_SUCCESS,
-					loading: 'success',
+					type: GET_USER_DETAILS_REQUEST,
+					isLoading: true,
 				},
 				{
 					type: GET_USER_DETAILS_SUCCESS,
 					userDetails: userDetails.data,
+					isLoading: false,
 				},
 			];
 			const http = axiosMock('/me', mockResponse);
@@ -70,16 +64,13 @@ describe('User module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
-				},
-				{
-					type: LOADING_ERROR,
-					loading: 'error',
+					type: GET_USER_DETAILS_REQUEST,
+					isLoading: true,
 				},
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -92,6 +83,7 @@ describe('User module actions', () => {
 						},
 					},
 					type: GET_USER_DETAILS_FAILURE,
+					isLoading: false,
 				},
 			];
 			const http = axiosMock('/me', mockErrorResponse, false);
@@ -111,16 +103,13 @@ describe('User module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
-				},
-				{
-					type: LOADING_SUCCESS,
-					loading: 'success',
+					type: EDIT_USER_DETAILS_REQUEST,
+					isLoading: true,
 				},
 				{
 					type: EDIT_USER_DETAILS_SUCCESS,
 					userDetails: userDetails.data,
+					isLoading: false,
 				},
 				{
 					snack: {
@@ -149,16 +138,13 @@ describe('User module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
-				},
-				{
-					type: LOADING_ERROR,
-					loading: 'error',
+					type: EDIT_USER_DETAILS_REQUEST,
+					isLoading: true,
 				},
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -171,6 +157,7 @@ describe('User module actions', () => {
 						},
 					},
 					type: EDIT_USER_DETAILS_FAILURE,
+					isLoading: false,
 				},
 			];
 			const http = axiosMock(`people/${userId}`, mockErrorResponse, false);
@@ -193,6 +180,7 @@ describe('User module actions', () => {
 				},
 			];
 			const store = reduxMockStore({}, userInitialState);
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			store.dispatch(logoutUser());
 

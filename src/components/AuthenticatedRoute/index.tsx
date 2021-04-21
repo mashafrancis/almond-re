@@ -28,7 +28,7 @@ const AuthenticatedRoute = (props: any) => {
 	}
 
 	return (
-		<div data-testid="authenticated-route">
+		<div data-testid="authenticated-route" className="drawer-content">
 			<RestrictedRoute {...rest} render={renderComponent(Component)} />
 		</div>
 	);

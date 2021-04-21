@@ -98,6 +98,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -179,6 +180,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -221,6 +223,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -297,6 +300,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -339,6 +343,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -417,6 +422,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -459,6 +465,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -503,6 +510,11 @@ describe('Time schedules module actions', () => {
 				},
 				{
 					enabled: enabledStatus.enabled,
+					type: GET_PUMP_STATUS_SUCCESS,
+					isLoading: false,
+				},
+				{
+					enabled: enabledStatus.enabled,
 					type: TOGGLE_PUMP_STATUS_SUCCESS,
 					isLoading: false,
 				},
@@ -543,6 +555,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -585,6 +598,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -658,6 +672,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -740,6 +755,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -782,6 +798,7 @@ describe('Time schedules module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},

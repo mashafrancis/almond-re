@@ -126,12 +126,14 @@ const AnalyticsCard = ({
 								<Typography
 									className={clsx(classes.mainInfoText, colorClass)}
 									variant="body1"
+									data-testid="main-info"
 								>
 									{mainInfo}
 								</Typography>
 								<Typography
 									variant="h4"
 									className={clsx(classes.subInfoText, colorClass)}
+									data-testid="sub-info"
 								>
 									{subInfo}
 								</Typography>

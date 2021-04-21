@@ -1,20 +1,12 @@
 defaults: &defaults
   docker:
-    - image: circleci/node:14.7
+    - image: circleci/node:14.14.0
   working_directory: ~/almond-re
-
-cmd_install_yarn_berry: &cmd_install_yarn_berry
-  run:
-    name: Install yarn berry
-    command: |
-      rm -rf .yarnrc.yml
-      yarn set version berry
-      echo 'nodeLinker: node-modules' >> .yarnrc.yml
 
 cmd_install_dependencies: &cmd_install_dependencies
   run:
     name: Install project dependencies
-    command: yarn install
+    command: yarn install --frozen-lockfile
 
 cmd_restore_cache: &cmd_restore_cache
   restore_cache:
@@ -45,6 +37,14 @@ persist_to_workspace: &persist_to_workspace
     root: .
     paths: .
 
+filters: &filters
+  filters:
+    branches:
+      only:
+        - /^(.*?(\bcircleci\b)[^$]*)$/
+        - develop
+        - master
+
 # The CircleCi Jobs Tree
 version: 2
 jobs:
@@ -53,7 +53,6 @@ jobs:
     steps:
       - checkout
       - *cmd_restore_cache
-      - *cmd_install_yarn_berry
       - *cmd_install_dependencies
       - *cmd_save_cache
       - *persist_to_workspace
@@ -64,7 +63,6 @@ jobs:
     steps:
       - checkout
       - *cmd_restore_cache
-      - *cmd_install_yarn_berry
       - *cmd_install_dependencies
       - *cmd_download_cc_test_reporter
       - run:

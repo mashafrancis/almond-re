@@ -2,6 +2,7 @@
 import { render, screen } from '@testing-library/react';
 
 // component
+import dayjs from 'dayjs';
 import AnalyticsCard from './index';
 
 describe('AnalyticsCard component', () => {
@@ -16,6 +17,14 @@ describe('AnalyticsCard component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('analytics-card');
-		expect(elem).toHaveClass('analytics-card');
+		expect(elem).toHaveClass(
+			'MuiPaper-root MuiCard-root makeStyles-root-1 makeStyles-cardPaper-5 MuiPaper-outlined MuiPaper-rounded',
+		);
+
+		const elemHeader = screen.getByTestId('main-info');
+		expect(elemHeader.innerHTML).toBe('mainInfo');
+
+		const elemDetails = screen.getByTestId('sub-info');
+		expect(elemDetails.innerHTML).toBe('subInfo');
 	});
 });
