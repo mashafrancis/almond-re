@@ -19,15 +19,4 @@ describe('CardInfo component', () => {
 		const elem = screen.getByTestId('header');
 		expect(elem.innerHTML).toBe('mainHeader');
 	});
-
-	it('should render correctly with correct button on resize', () => {
-		window.resizeTo(800, 300);
-		render(<WindowSize />);
-		const { asFragment } = render(<CardInfo {...props} />);
-
-		expect(asFragment()).toMatchSnapshot();
-		// const elem = screen.getByTestId('fab');
-		//
-		// expect(elem.innerHTML).toBe('mainHeader');
-	});
 });

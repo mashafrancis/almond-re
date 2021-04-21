@@ -2,7 +2,6 @@
 import { UserDetails } from '@modules/user/interfaces';
 import { AnyAction, Dispatch } from 'redux';
 // thunk action creators
-import { loadingError, loadingRequest, loadingSuccess } from '@modules/loading';
 import errorOnSnack from '@utils/errorOnSnack';
 import { displaySnackMessage } from '../snack';
 // interfaces
@@ -11,6 +10,7 @@ import {
 	GetAllPeopleActionRequest,
 	GetAllPeopleActionSuccess,
 	UpdatePersonFailure,
+	UpdatePersonRequest,
 	UpdatePersonSuccess,
 } from './interfaces';
 // types
@@ -20,6 +20,7 @@ import {
 	GET_ALL_PEOPLE_SUCCESS,
 	State,
 	UPDATE_PERSON_DETAILS_FAILURE,
+	UPDATE_PERSON_DETAILS_REQUEST,
 	UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
 
@@ -51,11 +52,16 @@ export const getAllPeopleSuccess = (
  * @returns {GetAllPeopleActionFailure}
  */
 export const getAllPeopleFailure = (
-	errors: any,
+	errors: ErrorObject,
 ): GetAllPeopleActionFailure => ({
 	errors,
 	isLoading: false,
 	type: GET_ALL_PEOPLE_FAILURE,
+});
+
+export const updatePersonRequest = (): UpdatePersonRequest => ({
+	isLoading: true,
+	type: UPDATE_PERSON_DETAILS_REQUEST,
 });
 
 /**
@@ -70,7 +76,9 @@ export const updatePersonSuccess = (
 	type: UPDATE_PERSON_DETAILS_SUCCESS,
 });
 
-export const updatePersonFailure = (errors: any): UpdatePersonFailure => ({
+export const updatePersonFailure = (
+	errors: ErrorObject,
+): UpdatePersonFailure => ({
 	errors,
 	isLoading: false,
 	type: UPDATE_PERSON_DETAILS_FAILURE,
@@ -88,12 +96,12 @@ export const getAllPeople = () => (
 			dispatch(getAllPeopleSuccess(response.data.data));
 		})
 		.catch((error: ErrorObject) => {
-			dispatch(getAllPeopleFailure(error));
-			dispatch(
-				displaySnackMessage(
-					'Failed to fetch your all users. Kindly reload the page.',
-				),
+			errorOnSnack(
+				error,
+				dispatch,
+				'fetch your all users. Kindly reload the page.',
 			);
+			dispatch(getAllPeopleFailure(error));
 		});
 };
 
@@ -113,7 +121,7 @@ export const updatePerson = (personId: string, personDetails: any) => (
 		) => Promise<{ data: { data: UserDetails; message: string } }>;
 	},
 ) => {
-	dispatch(loadingRequest('requesting'));
+	dispatch(updatePersonRequest());
 	return http
 		.put(`people/${personId}`, personDetails)
 		.then((response: { data: { data: UserDetails; message: string } }) => {
@@ -121,13 +129,11 @@ export const updatePerson = (personId: string, personDetails: any) => (
 				data: { data, message },
 			} = response;
 			dispatch(updatePersonSuccess(data));
-			dispatch(loadingSuccess('success'));
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'fetching users');
+			errorOnSnack(error, dispatch, 'updating a user details');
 			dispatch(updatePersonFailure(error));
-			dispatch(loadingError('error'));
 		});
 };
 
@@ -145,6 +151,11 @@ export const peopleInitialState = {
  */
 export const reducer = (state: State = peopleInitialState, action: Action) => {
 	switch (action.type) {
+		case GET_ALL_PEOPLE_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
 		case GET_ALL_PEOPLE_SUCCESS:
 			return {
 				...state,
@@ -157,6 +168,11 @@ export const reducer = (state: State = peopleInitialState, action: Action) => {
 				...state,
 				isLoading: action.isLoading,
 				errors: action.errors,
+			};
+		case UPDATE_PERSON_DETAILS_REQUEST:
+			return {
+				...state,
+				isLoading: action.isLoading,
 			};
 		case UPDATE_PERSON_DETAILS_SUCCESS:
 			return {

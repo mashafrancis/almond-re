@@ -315,7 +315,7 @@ export const addNewSchedule = (schedule: SchedulePayload) => (
 			dispatch(displaySnackMessage(message));
 		})
 		.catch((error: ErrorObject) => {
-			// errorOnSnack(error, dispatch, 'creating your schedule');
+			errorOnSnack(error, dispatch, 'creating your schedule');
 			dispatch(addScheduleFailure(error));
 		});
 };
@@ -435,9 +435,7 @@ export const getPumpStatus = (deviceId: string) => (
 			dispatch(getPumpStatusSuccess(enabled));
 		})
 		.catch((error: ErrorObject) => {
-			// const errorMessage =
-			// 	'An error occurred while fetching pump status. Please try again';
-			// dispatch(displaySnackMessage(errorMessage));
+			errorOnSnack(error, dispatch, 'fetching pump status');
 			dispatch(getPumpStatusFailure(error));
 		});
 };

@@ -5,7 +5,6 @@ import analytics from '@modules/analytics';
 import authentication from '@modules/authentication';
 import device from '@modules/device';
 import internalServerError from '@modules/internalServerError';
-import loading from '@modules/loading';
 import people from '@modules/people';
 import sensorData from '@modules/sensorData';
 import snack from '@modules/snack';
@@ -31,7 +30,6 @@ export type IRootState = {
 	userRoles: UserRoles;
 	people: People;
 	activityLogs: any;
-	loading: any;
 	sensorData: SensorData;
 	authentication: Authentication;
 	analytics: Analytics;
@@ -46,7 +44,6 @@ const appReducer = combineReducers({
 	userRoles,
 	people,
 	activityLogs,
-	loading,
 	sensorData,
 	authentication,
 	analytics,

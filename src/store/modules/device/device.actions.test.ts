@@ -1,7 +1,3 @@
-// thunks
-
-// helper functions
-
 // types
 import {
 	ACTIVATE_DEVICE_FAILURE,
@@ -28,17 +24,18 @@ import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 // fixtures
 import {
 	devices,
-	devicePayload,
 	deviceIdPayload,
 	id,
 	activateDevicePayload,
 	addOrEditDeviceResponse,
 } from '@modules/device/fixtures';
+// helper functions
 import {
 	axiosMock,
 	dispatchMethodMock,
 	reduxMockStore,
 } from '../../../testHelpers';
+// thunks
 import {
 	activateDevice,
 	addNewDevice,
@@ -101,6 +98,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -178,6 +176,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -251,6 +250,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -314,6 +314,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -388,6 +389,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},
@@ -460,6 +462,7 @@ describe('Device module actions', () => {
 				{
 					snack: {
 						message: mockErrorResponse.response.data.message,
+						severity: 'error',
 					},
 					type: DISPLAY_SNACK_MESSAGE,
 				},

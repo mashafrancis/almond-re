@@ -17,6 +17,6 @@ describe('TabPanel component', () => {
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('tab-panel');
-		expect(elem).toHaveClass('tab-panel');
+		expect(elem).toHaveClass('MuiBox-root MuiBox-root-2 makeStyles-box-1');
 	});
 });

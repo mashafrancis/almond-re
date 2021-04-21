@@ -1,7 +1,9 @@
 name: CI
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+      - master
   pull_request:
     types: [opened, synchronize]
 
@@ -18,8 +20,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: rm -rf .yarnrc.yml
       - run: npm install -g yarn
-      - run: yarn set version berry
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - run: yarn test:unit

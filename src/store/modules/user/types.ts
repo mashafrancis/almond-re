@@ -5,6 +5,7 @@ export type State = {
 	userDetails: UserDetails;
 	permissions: FormattedPermissions;
 	errors: null;
+	isLoading: boolean;
 };
 
 export const GET_USER_DETAILS_REQUEST = 'almond/GET_USER_DETAILS_REQUEST';

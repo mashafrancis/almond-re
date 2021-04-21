@@ -7,7 +7,7 @@ const TOPIC = 'almond/test';
 
 let wrapper: ({ children }: { children: any }) => JSX.Element;
 
-describe('useSubscription', () => {
+describe.skip('useSubscription', () => {
 	beforeAll(() => {
 		wrapper = ({ children }) => (
 			<Connector brokerUrl={URL} opts={options}>

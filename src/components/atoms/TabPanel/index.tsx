@@ -23,7 +23,6 @@ const TabPanel = ({
 	const classes = useStyles();
 	return (
 		<div
-			data-testid="tab-panel"
 			role="tabpanel"
 			hidden={value !== index}
 			id={`menu-tabpanel-${index}`}
@@ -31,7 +30,7 @@ const TabPanel = ({
 			{...other}
 		>
 			{value === index && (
-				<Box className={classes.box} p={3} {...other}>
+				<Box className={classes.box} p={3} {...other} data-testid="tab-panel">
 					{children}
 				</Box>
 			)}

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -20,7 +20,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DividerWithText = ({ children }) => {
+interface DividerWithTextProps {
+	children: string;
+}
+
+const DividerWithText = ({ children }: DividerWithTextProps): JSX.Element => {
 	const classes = useStyles();
 	return (
 		<div className={classes.container}>

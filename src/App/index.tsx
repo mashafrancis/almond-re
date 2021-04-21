@@ -15,13 +15,12 @@ import { LinearProgressBar } from '@components/atoms';
 import ServerErrorPage from '@pages/ServerErrorPage';
 // thunk action creators
 import { getUserDetails } from '@modules/user';
-import { getSensorData } from '@modules/sensorData';
 // helper functions
 import authService from '@utils/auth';
 import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
-import { Connector, useSubscription } from '@hooks/mqtt';
+import { Connector } from '@hooks/mqtt';
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
@@ -55,7 +54,6 @@ const useStyles = makeStyles((theme: Theme) =>
 // };
 
 export const App = (): JSX.Element => {
-	const { loading } = useSelector((globalState: IRootState) => globalState);
 	const { snack } = useSelector((globalState: IRootState) => globalState);
 	const {
 		userDetails: {
@@ -69,6 +67,7 @@ export const App = (): JSX.Element => {
 			activeDevice,
 			currentRole,
 		},
+		isLoading,
 	} = useSelector((globalState: IRootState) => globalState.user);
 	const [state, setState] = useState<AppState>({
 		isUserAuthenticated: authService.isAuthenticated(),
@@ -168,11 +167,8 @@ export const App = (): JSX.Element => {
 							<SnackBar snack={snack} />
 							{window.location.pathname !== '/' && isUserAuthenticated}
 							<Suspense fallback={<LinearProgressBar />}>
-								{loading === 'requesting' ? (
-									<Backdrop
-										className={classes.backdrop}
-										open={loading === 'requesting'}
-									>
+								{isLoading ? (
+									<Backdrop className={classes.backdrop} open={isLoading}>
 										<CircularProgress
 											color="primary"
 											style={{ zIndex: 100000 }}

@@ -8,19 +8,15 @@ import {
 // types
 import {
 	GET_ALL_PEOPLE_FAILURE,
+	GET_ALL_PEOPLE_REQUEST,
 	GET_ALL_PEOPLE_SUCCESS,
 	UPDATE_PERSON_DETAILS_FAILURE,
+	UPDATE_PERSON_DETAILS_REQUEST,
 	UPDATE_PERSON_DETAILS_SUCCESS,
 } from '@modules/people/types';
 
-import {
-	LOADING_ERROR,
-	LOADING_REQUEST,
-	LOADING_SUCCESS,
-} from '@modules/loading/types';
-
 // helpers
-import { peopleResponse, personToUpdate } from '@modules/people/fixtures';
+import { peopleResponse } from '@modules/people/fixtures';
 import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 import {
 	axiosMock,
@@ -38,16 +34,13 @@ describe('People module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
+					type: GET_ALL_PEOPLE_REQUEST,
+					isLoading: true,
 				},
 				{
 					people: mockResponse.data.data,
 					type: GET_ALL_PEOPLE_SUCCESS,
-				},
-				{
-					type: LOADING_SUCCESS,
-					loading: 'success',
+					isLoading: false,
 				},
 			];
 			const http = axiosMock('/people', mockResponse);
@@ -60,14 +53,21 @@ describe('People module actions', () => {
 			const mockErrorResponse = {
 				response: {
 					data: {
-						message: 'Error on fetching people',
+						message: 'Failed to fetch your all users. Kindly reload the page.',
 					},
 				},
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
+					type: GET_ALL_PEOPLE_REQUEST,
+					isLoading: true,
+				},
+				{
+					snack: {
+						message: 'Failed to fetch your all users. Kindly reload the page.',
+						severity: 'error',
+					},
+					type: DISPLAY_SNACK_MESSAGE,
 				},
 				{
 					errors: {
@@ -78,16 +78,7 @@ describe('People module actions', () => {
 						},
 					},
 					type: GET_ALL_PEOPLE_FAILURE,
-				},
-				{
-					type: LOADING_ERROR,
-					loading: 'error',
-				},
-				{
-					snack: {
-						message: 'Failed to fetch your all users. Kindly reload the page.',
-					},
-					type: DISPLAY_SNACK_MESSAGE,
+					isLoading: false,
 				},
 			];
 			const http = axiosMock('/people', mockErrorResponse, false);
@@ -112,16 +103,13 @@ describe('People module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
+					type: UPDATE_PERSON_DETAILS_REQUEST,
+					isLoading: true,
 				},
 				{
 					person: mockResponse.data.data,
 					type: UPDATE_PERSON_DETAILS_SUCCESS,
-				},
-				{
-					type: LOADING_SUCCESS,
-					loading: 'success',
+					isLoading: false,
 				},
 				{
 					snack: {
@@ -150,8 +138,15 @@ describe('People module actions', () => {
 			};
 			const expectedActions = [
 				{
-					type: LOADING_REQUEST,
-					loading: 'requesting',
+					type: UPDATE_PERSON_DETAILS_REQUEST,
+					isLoading: true,
+				},
+				{
+					snack: {
+						message: mockErrorResponse.response.data.message,
+						severity: 'error',
+					},
+					type: DISPLAY_SNACK_MESSAGE,
 				},
 				{
 					errors: {
@@ -162,16 +157,7 @@ describe('People module actions', () => {
 						},
 					},
 					type: UPDATE_PERSON_DETAILS_FAILURE,
-				},
-				{
-					type: LOADING_ERROR,
-					loading: 'error',
-				},
-				{
-					snack: {
-						message: mockErrorResponse.response.data.message,
-					},
-					type: DISPLAY_SNACK_MESSAGE,
+					isLoading: false,
 				},
 			];
 			const http = axiosMock(`people/${personId}`, mockErrorResponse, false);

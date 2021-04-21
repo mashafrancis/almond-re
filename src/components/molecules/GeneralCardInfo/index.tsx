@@ -106,11 +106,12 @@ const GeneralCardInfo = ({
 							direction="column"
 							style={{ display: 'flex', width: '100%' }}
 						>
-							<Typography variant="h6" color="primary">
+							<Typography variant="h6" color="primary" data-testid="header">
 								{mainHeader}
 							</Typography>
 							<Typography
 								variant={isMd ? 'subtitle1' : 'body2'}
+								data-testid="sub-header"
 								// className={clsx(classes.subInfoText)}
 							>
 								{subHeader}

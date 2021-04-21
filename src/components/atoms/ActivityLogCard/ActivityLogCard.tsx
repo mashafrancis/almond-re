@@ -56,8 +56,14 @@ const ActivityLogCard = ({
 			)}
 		>
 			<CardContent className={classes.content}>
-				<Typography variant="body2">{log}</Typography>
-				<Typography variant="caption" style={{ fontWeight: 600 }}>
+				<Typography variant="body2" data-testid="header">
+					{log}
+				</Typography>
+				<Typography
+					variant="caption"
+					style={{ fontWeight: 600 }}
+					data-testid="details"
+				>
 					{`${dayjs(date).format('HH:mm:ss')}`}
 				</Typography>
 			</CardContent>

@@ -1,10 +1,4 @@
-import {
-	ButtonBase,
-	Card,
-	Grid,
-	CardContent,
-	CardHeader,
-} from '@material-ui/core';
+import { Card, Grid, CardContent, CardHeader } from '@material-ui/core';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -82,6 +76,7 @@ const DashboardCard = ({
 								className={classes.title}
 								variant="subtitle2"
 								color="primary"
+								data-testid="header"
 							>
 								{heading}
 							</Typography>
@@ -99,25 +94,13 @@ const DashboardCard = ({
 						spacing={2}
 						style={{ display: 'flex', textAlign: 'center', margin: 0 }}
 						xs={12}
+						data-testid="body"
 					>
 						{body}
 					</Grid>
 				</CardContent>
 			</Card>
 		</Grid>
-		// <Card variant="outlined" style={{ borderRadius: 16 }}>
-		// 	<div className="dashboard-card">
-		// 		<div className="card-header">
-		// 			<h5 data-testid="heading" className="card-header__title">
-		// 				{heading}
-		// 			</h5>
-		// 			<div className="card-header__right-header">{actionItem}</div>
-		// 		</div>
-		// 		<div data-testid="body" className={`${classes} card-body`}>
-		// 			{body}
-		// 		</div>
-		// 	</div>
-		// </Card>
 	);
 };
 

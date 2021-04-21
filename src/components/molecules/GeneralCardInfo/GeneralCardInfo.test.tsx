@@ -14,10 +14,10 @@ describe('GeneralCardInfo component', () => {
 		const { asFragment } = render(<GeneralCardInfo {...props} />);
 		expect(asFragment()).toMatchSnapshot();
 
-		const elemHeader = screen.getByTestId('heading');
+		const elemHeader = screen.getByTestId('header');
 		expect(elemHeader.innerHTML).toBe('mainHeader');
 
-		const elemDetails = screen.getByTestId('sub-heading');
+		const elemDetails = screen.getByTestId('sub-header');
 		expect(elemDetails.innerHTML).toBe('subHeader');
 	});
 });

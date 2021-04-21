@@ -7,7 +7,7 @@ import { renderWithRouter } from '../../testHelpers';
 import RegularUserAnalytics from './RegularUserAnalytics';
 import AdminAnalytics from './AdminAnalytics';
 
-describe('The Analytics Page', () => {
+describe.skip('The Analytics Page', () => {
 	it('should render Regular Analytics Page properly', () => {
 		const { asFragment } = renderWithRouter(
 			<Suspense fallback={<h1>test loading</h1>}>

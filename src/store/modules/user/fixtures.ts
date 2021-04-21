@@ -22,21 +22,21 @@ export const userDetails = {
 			{
 				_id: '5e4703d62faee61d8ede2d65',
 				title: 'User',
-				// description: 'Almond regular user with limited privileges',
-				// resourceAccessLevels: [
-				// 	{
-				// 		permissions: [
-				// 			{
-				// 				_id: '5e439ed9fd05da507ca0161c',
-				// 				type: 'Full Access',
-				// 			},
-				// 		],
-				// 		resource: {
-				// 			_id: '5e17d95fffb6541b6b909d3e',
-				// 			name: 'Analytics',
-				// 		},
-				// 	},
-				// ],
+				description: 'Almond regular user with limited privileges',
+				resourceAccessLevels: [
+					{
+						permissions: [
+							{
+								_id: '5e439ed9fd05da507ca0161c',
+								type: 'Full Access',
+							},
+						],
+						resource: {
+							_id: '5e17d95fffb6541b6b909d3e',
+							name: 'Analytics',
+						},
+					},
+				],
 			},
 		],
 		photo: 'peek-a-boo-photo',
