@@ -1,23 +1,31 @@
 import { MqttClient } from 'mqtt';
 
+export interface Error {
+	name: string;
+	message: string;
+	stack?: string;
+}
+
 export interface IMqttContext {
-	status: string;
-	mqtt: MqttClient | undefined;
+	connectionStatus: string | Error;
+	client: MqttClient | null;
+	message?: IMessage;
 }
 
 export interface IUseSubscription {
-	lastMessage?: IMessage;
-	topic: string;
-	mqtt?: MqttClient;
+	message?: IMessage;
+	topic: string | string[];
+	client?: MqttClient | null;
+	connectionStatus: string | Error;
 }
 
 export interface IMessageStructure {
-	[key: string]: string;
+	[key: string]: string | number;
 }
 
 export interface IMessage {
 	topic: string;
-	message?: any | IMessageStructure | SensorData;
+	message?: any | IMessageStructure | string;
 }
 
 type SensorData = {

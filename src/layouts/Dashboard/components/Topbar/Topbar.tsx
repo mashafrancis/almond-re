@@ -27,6 +27,7 @@ import {
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
+// import { useMqttState } from 'mqtt-react-hooks';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { CustomAvatar } from '@components/molecules';
 import { StyledBadge } from './styles';
@@ -245,30 +246,38 @@ const Topbar = ({
 		setDeviceModalOpen,
 	} = useContext(ComponentContext);
 
-	const { status } = useMqttState();
+	/*
+	 * Status list
+	 * - Offline
+	 * - Connected
+	 * - Reconnecting
+	 * - Closed
+	 * - Error
+	 */
+	const { connectionStatus } = useMqttState();
 
 	const { activeDevice, isAdmin } = useContext(UserContext);
 
 	const statusChange = (mqttStatus: string): string => {
 		switch (mqttStatus) {
-			case 'connected':
+			case 'Connected':
 				return connectedColor;
-			case 'reconnecting':
+			case 'Reconnecting':
 				return reconnectingColor;
-			case 'closed':
+			case 'Closed':
 				return closedColor;
-			case 'offline':
+			case 'Offline':
 				return offlineColor;
 			default:
-				return offlineColor;
+				return reconnectingColor;
 		}
 	};
 
 	const DeviceActiveBadge = withStyles((theme: Theme) =>
 		createStyles({
 			badge: {
-				backgroundColor: statusChange(status),
-				color: statusChange(status),
+				backgroundColor: statusChange(connectionStatus as string),
+				color: statusChange(connectionStatus as string),
 				boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
 				top: '50%',
 				left: '-12%',

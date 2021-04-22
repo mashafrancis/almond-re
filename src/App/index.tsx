@@ -21,6 +21,7 @@ import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
 import { Connector } from '@hooks/mqtt';
+// import { Connector } from 'mqtt-react-hooks';
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
@@ -136,7 +137,7 @@ export const App = (): JSX.Element => {
 	const options: IClientOptions = {
 		username: process.env.MQTT_USER,
 		password: process.env.MQTT_PASSWORD,
-		keepalive: 30,
+		keepalive: 0,
 		clientId: 'almond',
 		protocolId: 'MQTT',
 		protocolVersion: 4,
@@ -159,7 +160,7 @@ export const App = (): JSX.Element => {
 		<ErrorBoundary FallbackComponent={ServerErrorPage}>
 			<Connector
 				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
-				opts={options}
+				options={options}
 			>
 				<UserContext.Provider value={userDetailsOnProvider}>
 					<ComponentProvider>
