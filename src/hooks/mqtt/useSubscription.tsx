@@ -1,46 +1,32 @@
-import { useState, useContext, useEffect } from 'react';
-import MQTTPattern from 'mqtt-pattern';
+import { useContext, useEffect, useCallback } from 'react';
 
 import { IClientSubscribeOptions } from 'mqtt';
 import MqttContext from './Context';
-import { IMessage, IMqttContext as Context, IUseSubscription } from './types';
+import { IMqttContext as Context, IUseSubscription } from './types';
 
 const useSubscription = (
 	topic: string,
 	options: IClientSubscribeOptions = {} as IClientSubscribeOptions,
 ): IUseSubscription => {
-	const { mqtt } = useContext<Context>(MqttContext);
-	const [lastMessage, setMessage] = useState<IMessage | undefined>();
+	const { client, connectionStatus, message } = useContext<Context>(
+		MqttContext,
+	);
+
+	const subscribe = useCallback(async () => {
+		client?.subscribe(topic, options);
+	}, [client, options, topic]);
 
 	useEffect(() => {
-		mqtt?.subscribe(topic, options);
-		mqtt?.on('message', (t: string, message: { toString: () => string }) => {
-			let subMessage: string;
-			try {
-				subMessage = JSON.parse(message.toString());
-			} catch (e) {
-				subMessage = message.toString();
-			}
-
-			const packet = {
-				message: subMessage,
-				topic: t,
-			};
-
-			if (MQTTPattern.matches(topic, t)) {
-				setMessage(packet);
-			}
-		});
-
-		return () => {
-			mqtt?.unsubscribe(topic);
-		};
-	}, []);
+		if (client?.connected) {
+			subscribe();
+		}
+	}, [client, subscribe]);
 
 	return {
-		mqtt,
+		client,
 		topic,
-		lastMessage,
+		message,
+		connectionStatus,
 	};
 };
 

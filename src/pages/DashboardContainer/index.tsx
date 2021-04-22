@@ -85,28 +85,19 @@ const DashboardContainer = (): JSX.Element => {
 	const dispatch = useDispatch();
 	// :TODO: Reformat to get user specific device subscription
 	const userSensorSubscription = 'almond/data';
-	const { lastMessage, mqtt } = useSubscription(
-		userSensorSubscription,
-		options,
-	);
-
-	// useEffectAsync(async () => {
-	// 	const data = {
-	// 		temperature: lastMessage?.message?.temp,
-	// 		humidity: lastMessage?.message?.humid,
-	// 		waterLevel: lastMessage?.message?.water_level,
-	// 	};
-	// 	await dispatch(getSensorData(data));
-	// }, [lastMessage]);
+	const { message } = useSubscription(userSensorSubscription, options);
 
 	useEffect(() => {
-		const data = {
-			temperature: lastMessage?.message?.temp,
-			humidity: lastMessage?.message?.humid,
-			waterLevel: lastMessage?.message?.water_level,
-		};
-		dispatch(getSensorData(data));
-	}, [lastMessage]);
+		if (typeof message?.message === 'string') {
+			const parsedMessage = JSON.parse(message.message);
+			const data = {
+				temperature: parsedMessage?.temp,
+				humidity: parsedMessage?.humid,
+				waterLevel: parsedMessage?.water_level,
+			};
+			dispatch(getSensorData(data));
+		}
+	}, [message]);
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -116,10 +107,6 @@ const DashboardContainer = (): JSX.Element => {
 			roleSelected: currentRole.title,
 		}));
 	}, []);
-
-	// useEffectAsync(async () => {
-	// 	await dispatch(getUserDetails());
-	// }, []);
 
 	// const toggleRoleChangeDialog = () => {
 	// 	setState((prevState) => ({

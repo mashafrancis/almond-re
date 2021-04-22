@@ -69,6 +69,7 @@ module.exports = {
       'statements': 20,
     },
   },
+  // testTimeout: 30000,
   setupFiles: [
     // '<rootDir>/node_modules/regenerator-runtime/runtime',
     '<rootDir>/src/setupMocks.ts',

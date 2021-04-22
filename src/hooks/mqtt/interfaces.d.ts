@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 import { IClientOptions } from 'mqtt';
 
 export interface ConnectorProps {
-	brokerUrl?: string;
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	brokerUrl?: string | object;
 	children: ReactNode;
-	opts?: IClientOptions;
+	options?: IClientOptions;
+	parserMethod?: (message) => string;
 }

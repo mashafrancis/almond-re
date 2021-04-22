@@ -3,77 +3,65 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { URL, options } from './connection';
 import { Connector, useMqttState } from '../index';
 
-let wrapper: ({ children }: { children: any }) => JSX.Element;
+let wrapper;
 
 describe.skip('Connector wrapper', () => {
 	beforeAll(() => {
 		wrapper = ({ children }) => (
-			<Connector brokerUrl={URL} opts={options}>
+			<Connector brokerUrl={URL} options={options}>
 				{children}
 			</Connector>
 		);
 	});
 
 	it('should not connect with mqtt with a wrong url', async () => {
-		const { result, waitForNextUpdate } = renderHook(() => useMqttState(), {
+		const { result, waitForValueToChange } = renderHook(() => useMqttState(), {
 			wrapper: ({ children }) => (
-				<Connector brokerUrl="mqtt://192.168.1.12:1884">{children}</Connector>
-			),
-		});
-		await waitForNextUpdate();
-		act(() => {
-			result.current.mqtt?.end();
-		});
-		expect(result.current.status).toBe('closed');
-	}, 300000);
-
-	it('should connect with mqtt successfully', async () => {
-		const { result, waitFor } = renderHook(() => useMqttState(), {
-			wrapper,
-		});
-		await waitFor(() => result.current.mqtt?.connected === true);
-		expect(result.current.status).toBe('connected');
-
-		act(() => {
-			result.current.mqtt?.end();
-		});
-		await waitFor(() => result.current.mqtt?.connected === false);
-		expect(result.current.status).toBe('closed');
-	});
-
-	it('should connect with passing props', async () => {
-		const { result, waitFor } = renderHook(() => useMqttState(), {
-			wrapper: ({ children }) => (
-				<Connector brokerUrl={URL} opts={{ keepalive: 0 }}>
+				<Connector
+					brokerUrl="mqtt://test.mosqu.org:1884"
+					options={{ connectTimeout: 10_000 }}
+				>
 					{children}
 				</Connector>
 			),
 		});
-		await waitFor(() => result.current.mqtt?.connected === true);
-		expect(result.current.status).toBe('connected');
 
-		act(() => {
-			result.current.mqtt?.end();
-		});
-		await waitFor(() => result.current.mqtt?.connected === false);
-		expect(result.current.status).toBe('closed');
+		await waitForValueToChange(() => result.current.connectionStatus);
+		expect(result.current.connectionStatus).toBe(
+			'getaddrinfo ENOTFOUND test.mosqu.org',
+		);
+
+		await waitForValueToChange(() => result.current.connectionStatus);
+		expect(result.current.connectionStatus).toBe('Offline');
 	});
 
-	it('should get status reconnecting', async () => {
+	it('should connect with mqtt', async () => {
 		const { result, waitFor } = renderHook(() => useMqttState(), {
 			wrapper,
 		});
-		await waitFor(() => result.current.mqtt?.connected === true);
-		act(() => {
-			result.current.mqtt?.reconnect();
-		});
-		// await waitFor(() => result.current.mqtt?.reconnecting === true);
-		expect(result.current.status).toBe('reconnecting');
 
-		act(() => {
-			result.current.mqtt?.end();
+		await waitFor(() => result.current.client?.connected === true);
+		expect(result.current.connectionStatus).toBe('Connected');
+
+		await act(async () => {
+			await result.current.client?.end();
 		});
-		await waitFor(() => result.current.mqtt?.connected === false);
-		expect(result.current.status).toBe('closed');
-	});
+	}, 50_000);
+
+	it('should connect passing props', async () => {
+		const { result, waitFor } = renderHook(() => useMqttState(), {
+			wrapper: ({ children }) => (
+				<Connector brokerUrl={URL} options={{ keepalive: 0 }}>
+					{children}
+				</Connector>
+			),
+		});
+
+		await waitFor(() => result.current.client?.connected === true);
+		expect(result.current.connectionStatus).toBe('Connected');
+
+		await act(async () => {
+			await result.current.client?.end();
+		});
+	}, 50_000);
 });
