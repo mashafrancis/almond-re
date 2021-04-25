@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const paths = require('./paths')
 
 /**
@@ -69,7 +69,6 @@ const miniCssExtractPlugin = new MiniCssExtractPlugin({
   chunkFilename: '[id].[contenthash].css',
   ignoreOrder: true, // Enabled to remove warnings about conflicting order
 })
-const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin()
 
 // Copies files from target to destination folder
 const copyPlugin = new CopyWebpackPlugin({
@@ -116,18 +115,14 @@ const forkTsCheckerNotifierWebpackPlugin = new ForkTsCheckerNotifierWebpackPlugi
   },
 )
 
-const reactRefreshWebpackPlugin = new ReactRefreshWebpackPlugin()
-
 module.exports = {
   cleanWebpack,
   definePlugin,
   htmlWebpack,
   miniCssExtractPlugin,
-  hotModuleReplacementPlugin,
   copyPlugin,
   contextReplacementPlugin,
   providerPlugin,
   forkTsCheckerWebpackPlugin,
   forkTsCheckerNotifierWebpackPlugin,
-  reactRefreshWebpackPlugin,
 }

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
 import { Paper } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AOS from 'aos';
 import getTheme from './theme';
@@ -66,7 +65,6 @@ export default function WithLayout({
 
 	return (
 		<ThemeProvider theme={getTheme(themeMode)}>
-			{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 			<CssBaseline />
 			<Paper elevation={0}>
 				<Layout themeMode={themeMode} themeToggler={themeToggler}>

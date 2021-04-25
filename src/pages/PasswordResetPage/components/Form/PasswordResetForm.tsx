@@ -1,13 +1,15 @@
+import { FormEvent, ChangeEvent, useEffect, useState } from 'react';
+// third party libraries
+import { useHistory, NavLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import validate from 'validate.js';
+// components
 import { LearnMoreLink } from '@components/atoms';
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { passwordReset } from '@modules/authentication';
-import { FormEvent, useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { NavLink, Redirect } from 'react-router-dom';
-import validate from 'validate.js';
+// interfaces
 import { FormStateProps } from '../../../../types/FormStateProps';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -29,11 +31,10 @@ interface Props {
 	redirectLink: string;
 }
 
-// eslint-disable-next-line react/prop-types
 const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 	const classes = useStyles();
-
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
@@ -52,7 +53,13 @@ const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 		}));
 	}, [formState.values]);
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	useEffect(() => {
+		if (redirectLink) {
+			history.push(redirectLink);
+		}
+	}, [redirectLink]);
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
 		setFormState((prevState) => ({
@@ -71,18 +78,12 @@ const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 		}));
 	};
 
-	const history = useHistory();
-
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (formState.isValid) {
 			const { email } = formState.values;
 			dispatch(passwordReset(email));
-		}
-
-		if (redirectLink) {
-			history.push(redirectLink);
 		}
 
 		setFormState((prevState) => ({
@@ -128,6 +129,7 @@ const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
+							disabled={!formState.isValid}
 						>
 							Send
 						</Button>
@@ -150,8 +152,4 @@ const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 	);
 };
 
-export const mapStateToProps = (state) => ({
-	redirectTo: state.redirectTo,
-});
-
-export default connect(mapStateToProps)(PasswordResetForm);
+export default PasswordResetForm;

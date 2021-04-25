@@ -1,9 +1,10 @@
 import { LearnMoreLink } from '@components/atoms';
 import {
-	Button, Grid,
-
-
-	InputAdornment, TextField, Typography
+	Button,
+	Grid,
+	InputAdornment,
+	TextField,
+	Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -189,6 +190,7 @@ const PasswordResetForm = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
+							disabled={!formState.isValid}
 						>
 							Send
 						</Button>

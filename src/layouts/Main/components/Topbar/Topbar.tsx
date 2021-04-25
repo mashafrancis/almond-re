@@ -1,4 +1,4 @@
-import React, { useContext, useState, MouseEvent } from 'react';
+import { useContext, useState, MouseEvent } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {

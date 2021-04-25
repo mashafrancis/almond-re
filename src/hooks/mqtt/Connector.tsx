@@ -73,7 +73,7 @@ const Connector = ({
 
 		return () => {
 			// mountedRef.current = false;
-			client?.end(true);
+			client?.end();
 		};
 	}, [client, mqttConnect, parserMethod]);
 

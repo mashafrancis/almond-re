@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Chart } from 'chart.js';
+import Chart from 'chart.js';
 import { DonutDisplayProps } from '@components/organisms/DonutDisplay/interfaces';
 import { Grid } from '@material-ui/core';
 

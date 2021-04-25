@@ -1,5 +1,5 @@
 // react libraries
-import { useEffect, useState, Suspense, useRef } from 'react';
+import { useEffect, Suspense, useRef } from 'react';
 // third party libraries
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
@@ -70,15 +70,12 @@ export const App = (): JSX.Element => {
 		},
 		isLoading,
 	} = useSelector((globalState: IRootState) => globalState.user);
-	const [state, setState] = useState<AppState>({
-		isUserAuthenticated: authService.isAuthenticated(),
-		loading: 'idle',
-		isAdmin: false,
-	});
+
 	const timerRef = useRef<number>();
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { search } = useLocation();
+	const isAuthenticated = authService.isAuthenticated();
 
 	useEffect(() => {
 		initializeGA();
@@ -89,10 +86,10 @@ export const App = (): JSX.Element => {
 	}, []);
 
 	useEffectAsync(async () => {
-		if (state.isUserAuthenticated) {
+		if (isAuthenticated) {
 			await dispatch(getUserDetails());
 		}
-	}, [state.isUserAuthenticated]);
+	}, [isAuthenticated]);
 
 	useEffect(() => {
 		const { socialToken } = queryString.parse(search);
@@ -110,7 +107,6 @@ export const App = (): JSX.Element => {
 		[],
 	);
 
-	const { isUserAuthenticated } = state;
 	const userDetailsOnProvider = {
 		_id,
 		email,
@@ -166,7 +162,7 @@ export const App = (): JSX.Element => {
 					<ComponentProvider>
 						<ViewportProvider>
 							<SnackBar snack={snack} />
-							{window.location.pathname !== '/' && isUserAuthenticated}
+							{window.location.pathname !== '/' && isAuthenticated}
 							<Suspense fallback={<LinearProgressBar />}>
 								{isLoading ? (
 									<Backdrop className={classes.backdrop} open={isLoading}>

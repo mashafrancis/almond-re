@@ -129,7 +129,7 @@ export const editUserDetails = (userId: string, userDetails: any) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		patch: (
+		put: (
 			arg0: string,
 			arg1: any,
 		) => Promise<{ data: { data: any; message: any } }>;
@@ -137,7 +137,7 @@ export const editUserDetails = (userId: string, userDetails: any) => (
 ) => {
 	dispatch(editUserDetailsRequest());
 	return http
-		.patch(`people/${userId}`, userDetails)
+		.put(`people/${userId}`, userDetails)
 		.then((response: { data: { data: any; message: any } }) => {
 			const { data, message } = response.data;
 			dispatch(editUserDetailsSuccess(data));

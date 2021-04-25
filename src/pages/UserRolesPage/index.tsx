@@ -488,13 +488,19 @@ export const UserRolesPage = (): JSX.Element => {
 			{
 				field: 'title',
 				headerName: 'Role',
+				flex: 0.1,
+				headerClassName: 'table-header',
+			},
+			{
+				field: 'id',
+				headerName: 'Role ID',
 				flex: 0.2,
 				headerClassName: 'table-header',
 			},
 			{
 				field: 'description',
 				headerName: 'Description',
-				flex: 0.5,
+				flex: 0.4,
 				headerClassName: 'table-header',
 			},
 			{

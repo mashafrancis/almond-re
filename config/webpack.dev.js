@@ -1,8 +1,8 @@
 const { merge } = require('webpack-merge')
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const paths = require('./paths')
 const config = require('./webpack.config.js')
 const {
-  hotModuleReplacementPlugin,
   forkTsCheckerWebpackPlugin,
   forkTsCheckerNotifierWebpackPlugin,
   reactRefreshWebpackPlugin,
@@ -18,14 +18,13 @@ module.exports = merge(config, {
     proxy: {
       '/api': 'http://localhost:8080/',
     },
-    clientLogLevel: 'warning',
+    clientLogLevel: 'info',
     stats: 'errors-only',
     historyApiFallback: true,
     contentBase: paths.build,
     publicPath: 'http://froyo.almond.com:3000/',
     compress: true,
     hot: true,
-    // hmr: true,
     overlay: false,
     port: 3000,
     host: 'localhost',
@@ -37,9 +36,9 @@ module.exports = merge(config, {
     },
   },
   plugins: [
-    hotModuleReplacementPlugin,
+    new ReactRefreshPlugin(),
     reactRefreshWebpackPlugin,
     forkTsCheckerWebpackPlugin,
     forkTsCheckerNotifierWebpackPlugin,
-  ],
+  ].filter(Boolean),
 })

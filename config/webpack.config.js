@@ -1,3 +1,4 @@
+const ReactRefreshTypeScript = require('react-refresh-typescript').default
 const paths = require('./paths')
 const { importer } = require('./webpack.util')
 const {
@@ -9,7 +10,7 @@ const {
   providerPlugin,
 } = require('./webpack.plugins')
 
-const isDevMode = process.env.NODE_ENV !== 'production'
+const isDevMode = process.env.NODE_ENV === 'development'
 
 module.exports = {
   entry: {
@@ -66,26 +67,27 @@ module.exports = {
         use: [
           'style-loader',
           {
-            loader: require.resolve('css-loader'),
+            loader: 'css-loader',
             options: {
               sourceMap: true,
               importLoaders: 1,
+              import: true,
             },
           },
           {
-            loader: require.resolve('postcss-loader'),
+            loader: 'postcss-loader',
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: require.resolve('sass-loader'),
+            loader: 'sass-loader',
             options: {
               sourceMap: true,
               // Prefer `dart-sass`
               implementation: require('sass'),
               sassOptions: {
-                // fiber: require('fibers'),
+                fiber: false,
                 importer,
               },
             },
@@ -94,13 +96,15 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
+        include: paths.src,
         exclude: /node_modules/,
         use: {
-          loader: require.resolve('babel-loader'),
+          loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
             sourceMap: true,
             plugins: [
+              '@babel/plugin-transform-runtime',
               isDevMode && require.resolve('react-refresh/babel'),
             ].filter(Boolean),
           },
@@ -108,18 +112,21 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        loader: require.resolve('ts-loader'),
+        loader: 'ts-loader',
+        include: paths.src,
         exclude: /node_modules/,
-        options: { transpileOnly: true },
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: isDevMode ? [ReactRefreshTypeScript()] : [],
+          }),
+        },
       },
       {
         test: /\.js$/,
         enforce: 'pre',
         use: ['source-map-loader'],
-        exclude: [
-          /node_modules\/@material/,
-          /node_modules\/axios-cache-adapter/,
-        ],
+        exclude: /node_modules/,
       },
     ],
   },
@@ -130,5 +137,5 @@ module.exports = {
     copyPlugin,
     contextReplacementPlugin,
     providerPlugin,
-  ],
+  ].filter(Boolean),
 }

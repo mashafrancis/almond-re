@@ -316,7 +316,7 @@ export const activateDevice = (id: string) => (
 	dispatch: Dispatch,
 	getState: any,
 	http: {
-		patch: (
+		put: (
 			arg0: string,
 			arg1: { id: string },
 		) => Promise<{ data: { data: ActivateDevice; message: string } }>;
@@ -324,7 +324,7 @@ export const activateDevice = (id: string) => (
 ) => {
 	dispatch(activateDeviceRequest());
 	return http
-		.patch('active-device', { id })
+		.put('active-device', { id })
 		.then((response: { data: { data: ActivateDevice; message: string } }) => {
 			const {
 				data: { data, message },
