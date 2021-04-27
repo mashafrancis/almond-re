@@ -1,10 +1,13 @@
-import { useEffect, useState, FormEvent } from 'react';
-import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, Button, TextField } from '@material-ui/core';
-import validate from 'validate.js';
 import { LearnMoreLink } from '@components/atoms';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { passwordReset } from '@modules/authentication';
+import { FormEvent, useEffect, useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { NavLink, Redirect } from 'react-router-dom';
+import validate from 'validate.js';
 import { FormStateProps } from '../../../../types/FormStateProps';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -22,8 +25,15 @@ const schema = {
 	},
 };
 
-const PasswordResetForm = (): JSX.Element => {
+interface Props {
+	redirectLink: string;
+}
+
+// eslint-disable-next-line react/prop-types
+const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 	const classes = useStyles();
+
+	const dispatch = useDispatch();
 
 	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
@@ -61,12 +71,18 @@ const PasswordResetForm = (): JSX.Element => {
 		}));
 	};
 
+	const history = useHistory();
+
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (formState.isValid) {
-			// :TODO: Implement reset password dispatch
-			window.location.replace('/');
+			const { email } = formState.values;
+			dispatch(passwordReset(email));
+		}
+
+		if (redirectLink) {
+			history.push(redirectLink);
 		}
 
 		setFormState((prevState) => ({
@@ -134,4 +150,8 @@ const PasswordResetForm = (): JSX.Element => {
 	);
 };
 
-export default PasswordResetForm;
+export const mapStateToProps = (state) => ({
+	redirectTo: state.redirectTo,
+});
+
+export default connect(mapStateToProps)(PasswordResetForm);

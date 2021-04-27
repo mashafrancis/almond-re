@@ -1,17 +1,18 @@
-import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
-import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import {
-	Typography,
-	Grid,
-	Button,
-	TextField,
-	InputAdornment,
-} from '@material-ui/core';
-import validate from 'validate.js';
 import { LearnMoreLink } from '@components/atoms';
+import {
+	Button, Grid,
+
+
+	InputAdornment, TextField, Typography
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { passwordChange } from '@modules/authentication';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
+import validate from 'validate.js';
 import { FormStateProps } from '../../../../types/FormStateProps';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,8 @@ const schema = {
 
 const PasswordResetForm = (): JSX.Element => {
 	const classes = useStyles();
+
+	const dispatch = useDispatch();
 
 	const [formState, setFormState] = useState<FormStateProps>({
 		isValid: false,
@@ -80,12 +83,16 @@ const PasswordResetForm = (): JSX.Element => {
 		}));
 	};
 
+	const query = new URLSearchParams(useLocation().search);
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const token = query.get('token')!;
+
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (formState.isValid) {
-			// :TODO: Implement change password dispatch
-			window.location.replace('/');
+			const { password } = formState.values;
+			dispatch(passwordChange({ password, token }));
 		}
 
 		setFormState((prevState) => ({

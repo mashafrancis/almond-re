@@ -3,6 +3,8 @@ import { Button } from '@material-ui/core';
 import { LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'src/store/rootReducer';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -30,6 +32,10 @@ const useStyles = makeStyles((theme) => {
 const RegisterSuccessPage = (): JSX.Element => {
 	const classes = useStyles();
 
+	const { redirectMessage } = useSelector(
+		(globalState: IRootState) => globalState.redirect,
+	);
+
 	return (
 		<div>
 			<Section className={classes.section}>
@@ -37,12 +43,7 @@ const RegisterSuccessPage = (): JSX.Element => {
 					<SectionHeader
 						label="Hurray!!"
 						title="Account creation successful."
-						subtitle={
-							<span>
-								A confirmation email has been sent to your account. Kindly
-								confirm your account before proceeding.
-							</span>
-						}
+						subtitle={<span>{redirectMessage}</span>}
 						titleProps={{
 							variant: 'h4',
 							color: 'primary',
