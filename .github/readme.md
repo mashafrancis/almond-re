@@ -8,6 +8,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1787ab6745c18d366de9/test_coverage)](https://codeclimate.com/github/almond-hydroponics/almond-re/test_coverage)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/almond-hydroponics/almond-re.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/almond-hydroponics/almond-re/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/almond-hydroponics/almond-re.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/almond-hydroponics/almond-re/alerts/)
+[![Mark stale issues and pull requests](https://github.com/almond-hydroponics/almond-re/actions/workflows/stale.yml/badge.svg)](https://github.com/almond-hydroponics/almond-re/actions/workflows/stale.yml)
 
 </div>
 

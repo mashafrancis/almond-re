@@ -7,6 +7,7 @@ import {
 	Button,
 	TextField,
 	InputAdornment,
+	CircularProgress,
 } from '@material-ui/core';
 import validate from 'validate.js';
 import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
@@ -16,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { loginAccount } from '@modules/authentication';
 import { FormStateProps } from '../../../../types/FormStateProps';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
+import { whiteColor } from '../../../../assets/tss/common';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -185,6 +187,7 @@ const Form = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
+							disabled={!formState.isValid}
 						>
 							Login
 						</Button>

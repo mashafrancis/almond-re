@@ -43,19 +43,33 @@ const Routes = (): any => (
 				/>
 			)}
 		/>
-		<Route
+		<AuthenticatedRoute
 			exact
 			path="/dashboard"
-			// authorize="analytics:view"
-			render={(matchProps) => (
-				<WithLayout
-					{...matchProps}
-					component={DashboardContainer}
-					layout={DashboardLayout}
-				/>
-			)}
-			// fallbackView={<UnauthorizedUserModal isModalOpen />}
+			authorize="analytics:view"
+			component={DashboardContainer}
+			// render={(matchProps) => (
+			// 	<WithLayout
+			// 		{...matchProps}
+			// 		component={DashboardContainer}
+			// 		layout={DashboardLayout}
+			// 	/>
+			// )}
+			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
+		{/* <Route */}
+		{/*	exact */}
+		{/*	path="/dashboard" */}
+		{/*	// authorize="analytics:view" */}
+		{/*	render={(matchProps) => ( */}
+		{/*		<WithLayout */}
+		{/*			{...matchProps} */}
+		{/*			component={DashboardContainer} */}
+		{/*			layout={DashboardLayout} */}
+		{/*		/> */}
+		{/*	)} */}
+		{/*	// fallbackView={<UnauthorizedUserModal isModalOpen />} */}
+		{/* /> */}
 		<Route
 			exact
 			path="/register"

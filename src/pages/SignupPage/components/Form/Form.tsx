@@ -231,6 +231,7 @@ const Form = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
+							disabled={!formState.isValid}
 						>
 							Register
 						</Button>

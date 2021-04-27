@@ -9,7 +9,7 @@ import { Face, ExpandMore } from '@material-ui/icons';
 // components
 import { DashboardCard } from '@components/molecules';
 import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
-import { NoDataOverlay } from '@components/atoms';
+import { CustomPagination, NoDataOverlay } from '@components/atoms';
 import Modal from '@components/atoms/Modal';
 import {
 	GridCellParams,
@@ -44,6 +44,18 @@ const useStyles = makeStyles((theme: Theme) =>
 			position: 'fixed',
 			bottom: 0,
 			right: 0,
+		},
+		unverified: {
+			color: '#1967d2',
+			backgroundColor: 'rgba(66, 133, 244, 0.15)',
+		},
+		enabled: {
+			color: '#0e5827',
+			backgroundColor: 'rgba(14, 88, 39, 0.15)',
+		},
+		disabled: {
+			color: '#821721',
+			backgroundColor: 'rgba(210, 43, 53, 0.15)',
 		},
 	}),
 );
@@ -157,30 +169,40 @@ export const PeoplePage = (): JSX.Element => {
 		/>
 	);
 
-	const renderUserNamePhoto = ({ firstName, photo }) => (
+	const renderUserNamePhoto = ({ firstName, lastName, photo }) => (
 		<span className="mini-username">
 			<img className="mini-username__image" src={photo} alt="avatar" />
-			<span>{firstName || 'Anonymous'}</span>
+			<span>{`${firstName} ${lastName}` || 'Anonymous'}</span>
 		</span>
 	);
 
 	const rolesSelectMore = ({ currentRole, _id }) => (
-		<div className="table-roles" id={_id} onClick={toggleRoleSelectOpen}>
-			<Typography
-				style={{ cursor: 'pointer', paddingRight: 12 }}
-				id={_id}
-				variant="body2"
-				// onClick={showDeviceModal('Edit')}
-				// onKeyDown={showDeviceModal('Edit')}
-			>
-				{currentRole.title}
-			</Typography>
-			<ExpandMore id={_id} onClick={toggleRoleSelectOpen} />
+		<div className={classes.root} id={_id} onClick={toggleRoleSelectOpen}>
+			<Grid container spacing={3}>
+				<Grid
+					container
+					item
+					xs={12}
+					justify="flex-start"
+					alignItems="center"
+					direction="row"
+					spacing={2}
+					style={{ display: 'flex', width: '100%' }}
+				>
+					<ExpandMore id={_id} />
+					<Typography
+						style={{ cursor: 'pointer', paddingRight: 12 }}
+						id={_id}
+						variant="body2"
+					>
+						{currentRole.title}
+					</Typography>
+				</Grid>
+			</Grid>
 		</div>
 	);
 
-	const renderActionButtons = (user: UserDetails): JSX.Element => {
-		const { _id } = user;
+	const renderActionButtons = ({ _id }: UserDetails): JSX.Element => {
 		const handleDelete = () =>
 			setState((prevState) => ({
 				...prevState,
@@ -229,20 +251,18 @@ export const PeoplePage = (): JSX.Element => {
 	const renderUserStatus = (user: UserDetails): JSX.Element => {
 		const { isVerified } = user;
 		if (isVerified) {
-			return <Chip className="MuiChip-root-enabled" label="Active" />;
+			return <Chip className={classes.enabled} label="Active" />;
 		}
-		return <Chip className="MuiChip-root-unverified" label="Inactive" />;
+		return <Chip className={classes.unverified} label="Inactive" />;
 	};
 
 	const renderTableContent = () => {
-		const users = Object.entries(people);
-
 		const columns: GridColDef[] = [
 			{
 				field: 'name',
 				headerName: 'Name',
 				// width: 100,
-				flex: 0.2,
+				flex: 0.15,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					renderUserNamePhoto(value as UserDetails),
@@ -257,13 +277,13 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'devices',
 				headerName: 'Devices',
-				flex: 0.2,
+				flex: 0.1,
 				headerClassName: 'table-header',
 			},
 			{
 				field: 'role',
 				headerName: 'Role',
-				flex: 0.2,
+				flex: 0.1,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					rolesSelectMore(value as UserDetails),
@@ -271,7 +291,7 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'status',
 				headerName: 'Status',
-				flex: 0.2,
+				flex: 0.1,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					renderUserStatus(value as UserDetails),
@@ -286,15 +306,6 @@ export const PeoplePage = (): JSX.Element => {
 			},
 		];
 
-		console.log(
-			'Class: , Function: renderTableContent, Line 280 people():',
-			people,
-		);
-		console.log(
-			'Class: , Function: renderTableContent, Line 280 users():',
-			users,
-		);
-
 		const rows = people.map((user: UserDetails) => ({
 			id: user._id,
 			name: user,
@@ -305,34 +316,32 @@ export const PeoplePage = (): JSX.Element => {
 		}));
 
 		return (
-			<div className={tableClasses.root} style={{ height: 700, width: '100%' }}>
-				<div style={{ display: 'flex', height: '100%' }}>
-					<div style={{ flexGrow: 1 }}>
-						<DataGrid
-							// autoHeight
-							// autoPageSize
-							// pagination
-							className={tableClasses.root}
-							loading={isLoading}
-							rows={rows}
-							pageSize={10}
-							columns={columns.map((column) => ({
-								...column,
-								disableClickEventBubbling: true,
-							}))}
-							components={{
-								LoadingOverlay: CustomLoadingOverlay,
-								NoRowsOverlay: NoDataOverlay,
-							}}
-							sortModel={[
-								{
-									field: 'name',
-									sort: 'asc' as GridSortDirection,
-								},
-							]}
-						/>
-					</div>
-				</div>
+			<div style={{ height: 700, width: '100%' }}>
+				<DataGrid
+					// autoHeight
+					// autoPageSize
+					disableColumnMenu
+					pagination
+					className={tableClasses.root}
+					loading={isLoading}
+					rows={rows}
+					pageSize={10}
+					columns={columns.map((column) => ({
+						...column,
+						disableClickEventBubbling: true,
+					}))}
+					components={{
+						LoadingOverlay: CustomLoadingOverlay,
+						NoRowsOverlay: NoDataOverlay,
+						Pagination: CustomPagination,
+					}}
+					sortModel={[
+						{
+							field: 'name',
+							sort: 'asc' as GridSortDirection,
+						},
+					]}
+				/>
 			</div>
 		);
 	};

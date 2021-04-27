@@ -2,11 +2,13 @@ import { REDIRECT, State } from '@modules/redirect/types';
 
 import { RedirectAction } from '@modules/redirect/interfaces.d';
 
-export const redirect = (redirectLink, redirectMessage): RedirectAction => ({
+export const redirect = (
+	redirectLink: string,
+	redirectMessage: string,
+): RedirectAction => ({
 	type: REDIRECT,
 	redirectLink,
 	redirectMessage,
-
 });
 
 const initialState = {

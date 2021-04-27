@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import { useSelector } from 'react-redux';
 import { Form } from './components';
+import { IRootState } from '../../store/rootReducer';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;

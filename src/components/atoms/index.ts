@@ -15,3 +15,4 @@ export { default as ToggleButton } from './ToggleButton';
 export { default as TabPanel } from './TabPanel';
 export { MenuTabs, MenuTab } from './MenuTabs';
 export { default as MenuContent } from './MenuContent';
+export { default as CustomPagination } from './CustomPagination';

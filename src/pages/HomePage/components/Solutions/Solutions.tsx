@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Button, Typography } from '@material-ui/core';
 

@@ -60,6 +60,18 @@ const useStyles = makeStyles((theme: Theme) =>
 			bottom: 0,
 			right: 0,
 		},
+		unverified: {
+			color: '#1967d2',
+			backgroundColor: 'rgba(66, 133, 244, 0.15)',
+		},
+		enabled: {
+			color: '#0e5827',
+			backgroundColor: 'rgba(14, 88, 39, 0.15)',
+		},
+		disabled: {
+			color: '#821721',
+			backgroundColor: 'rgba(210, 43, 53, 0.15)',
+		},
 	}),
 );
 
@@ -258,10 +270,9 @@ export const DeviceManagementPage = (): JSX.Element => {
 	const renderDeviceStatus = (device): JSX.Element => {
 		const { verified, enabled } = device;
 		if (!verified)
-			return <Chip className="MuiChip-root-unverified" label="Not Verified" />;
-		if (!enabled)
-			return <Chip className="MuiChip-root-disabled" label="Disabled" />;
-		return <Chip className="MuiChip-root-enabled" label="Enabled" />;
+			return <Chip className={classes.unverified} label="Not Verified" />;
+		if (!enabled) return <Chip className={classes.disabled} label="Disabled" />;
+		return <Chip className={classes.enabled} label="Enabled" />;
 	};
 
 	const renderTableContent = (): JSX.Element => {
@@ -270,7 +281,7 @@ export const DeviceManagementPage = (): JSX.Element => {
 				field: 'deviceId',
 				headerName: 'Device',
 				// width: 100,
-				flex: 0.2,
+				flex: 0.1,
 				headerClassName: 'table-header',
 			},
 			{
@@ -289,7 +300,7 @@ export const DeviceManagementPage = (): JSX.Element => {
 			{
 				field: 'status',
 				headerName: 'Status',
-				flex: 0.2,
+				flex: 0.1,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) => renderDeviceStatus(value),
 			},
@@ -321,6 +332,7 @@ export const DeviceManagementPage = (): JSX.Element => {
 							// autoHeight
 							// autoPageSize
 							// pagination
+							disableColumnMenu
 							className={tableClasses.root}
 							loading={isLoading}
 							rows={rows}

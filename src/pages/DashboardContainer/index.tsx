@@ -97,7 +97,7 @@ const DashboardContainer = (): JSX.Element => {
 			};
 			dispatch(getSensorData(data));
 		}
-	}, [message]);
+	}, [message?.message]);
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -151,7 +151,7 @@ const DashboardContainer = (): JSX.Element => {
 		await dispatch(editUserDetails(_id, { role: roleId }));
 		closeRoleChangeDialog();
 		window.localStorage.removeItem('selectedIndex');
-		window.location.reload();
+		// window.location.reload();
 	};
 
 	const renderSelectDeviceContent = () => (

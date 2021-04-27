@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const AdminAnalytics = (): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const { data } = useSelector(
-		(globalState: IRootState) => globalState.analytics,
+	const { users, devices } = useSelector(
+		(globalState: IRootState) => globalState.analytics.data,
 		shallowEqual,
 	);
 
@@ -53,14 +53,14 @@ const AdminAnalytics = (): JSX.Element => {
 					colorClass="blueCard"
 					icon={<AllOutTwoTone fontSize="large" />}
 					mainInfo="Devices"
-					subInfo={data.devices}
+					subInfo={devices}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
 					colorClass="yellowCard"
 					icon={<GroupTwoTone fontSize="large" />}
 					mainInfo="People"
-					subInfo={data.users}
+					subInfo={users}
 				/>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
