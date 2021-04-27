@@ -11,6 +11,7 @@ import snack from '@modules/snack';
 import timeSchedules from '@modules/timeSchedules';
 import user from '@modules/user';
 import userRoles from '@modules/userRoles';
+import redirect from '@modules/redirect';
 // types
 import { State as TimeSchedules } from '@modules/timeSchedules/types';
 import { State as User, LOG_OUT_USER } from '@modules/user/types';
@@ -20,6 +21,7 @@ import { State as Devices } from '@modules/device/types';
 import { State as SensorData } from '@modules/sensorData/types';
 import { State as People } from '@modules/people/types';
 import { State as UserRoles } from '@modules/userRoles/types';
+import { State as Redirect } from '@modules/redirect/types';
 
 export type IRootState = {
 	internalServerError: any;
@@ -33,6 +35,7 @@ export type IRootState = {
 	sensorData: SensorData;
 	authentication: Authentication;
 	analytics: Analytics;
+	redirect: Redirect;
 };
 
 const appReducer = combineReducers({
@@ -47,6 +50,7 @@ const appReducer = combineReducers({
 	sensorData,
 	authentication,
 	analytics,
+	redirect,
 });
 
 const rootReducer = (state: Partial<IRootState> | any, action: AnyAction) => {
