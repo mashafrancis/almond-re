@@ -37,12 +37,15 @@ const MenuTab = withStyles((theme: Theme) =>
 			].join(','),
 			'&:hover': {
 				color: theme.palette.primary.main,
-				backgroundColor: theme.palette.background.level2,
+				backgroundColor: theme.palette.background.level1,
 				opacity: 1,
+				borderRadius: theme.shape.borderRadius,
 			},
 			'&$selected': {
 				color: theme.palette.primary.main,
 				fontWeight: theme.typography.fontWeightMedium,
+				backgroundColor: theme.palette.background.level2,
+				borderRadius: theme.shape.borderRadius,
 			},
 			'&:focus': {
 				color: theme.palette.primary.main,

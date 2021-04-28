@@ -19,6 +19,7 @@ import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import { CustomAvatar } from '@components/molecules';
 
+import Logo from '@components/atoms/Logo';
 import { PagesProps } from '../../../interfaces';
 
 const logo = 'https://static.almondhydroponics.com/static/logo.png';
@@ -134,10 +135,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
 	className?: string;
-	onSidebarOpen: Function;
+	onSidebarOpen: () => void;
 	pages: PagesProps;
 	themeMode: string;
-	themeToggler: Function;
+	themeToggler: () => void;
 }
 
 const Topbar = ({
@@ -203,25 +204,7 @@ const Topbar = ({
 			{...rest}
 			variant="dense"
 		>
-			<div className={classes.logoContainer}>
-				<NavLink to="/">
-					<Grid container className={classes.container}>
-						<Image
-							className={classes.logoImage}
-							src={themeMode === 'light' ? logo : logo}
-							alt="almond"
-							lazy={false}
-						/>
-						<Typography
-							variant="h5"
-							color="textPrimary"
-							style={{ fontWeight: 600, fontSize: '16px', padding: '8px' }}
-						>
-							Almond
-						</Typography>
-					</Grid>
-				</NavLink>
-			</div>
+			<Logo themeMode={themeMode} displayText />
 			<div className={classes.flexGrowLeft}>
 				<Hidden smDown>
 					<List disablePadding className={classes.navigationContainer}>

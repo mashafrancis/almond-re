@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
 	children: ReactNode;
-	themeToggler: Function;
+	themeToggler: () => void;
 	themeMode: string;
 }
 
@@ -125,6 +125,8 @@ const Main = ({ children, themeToggler, themeMode }: Props): JSX.Element => {
 				open={open}
 				variant="temporary"
 				pages={pages}
+				themeMode={themeMode}
+				themeToggler={themeToggler}
 			/>
 			<main>
 				<Divider />

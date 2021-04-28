@@ -21,10 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
 	className?: string;
-	onClose: Function;
+	onClose: () => void;
 	open: boolean;
 	variant: 'permanent' | 'persistent' | 'temporary' | undefined;
 	pages: PagesProps;
+	themeMode: string;
+	themeToggler: () => void;
 }
 
 const Sidebar = ({
@@ -33,6 +35,8 @@ const Sidebar = ({
 	variant,
 	onClose,
 	className,
+	themeMode,
+	themeToggler,
 	...rest
 }: Props): JSX.Element => {
 	const classes = useStyles();
@@ -46,7 +50,13 @@ const Sidebar = ({
 			variant={variant}
 		>
 			<div {...rest} className={clsx(classes.root, className)}>
-				<SidebarNav className={classes.nav} pages={pages} onClose={onClose} />
+				<SidebarNav
+					className={classes.nav}
+					pages={pages}
+					onClose={onClose}
+					themeMode={themeMode}
+					themeToggler={themeToggler}
+				/>
 			</div>
 		</Drawer>
 	);

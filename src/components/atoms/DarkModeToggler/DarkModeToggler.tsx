@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, CSSProperties } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { DarkModeTogglerProps } from '@components/atoms/DarkModeToggler/interfaces';
 
@@ -42,7 +42,7 @@ type SVGProps = Omit<React.HTMLAttributes<HTMLOrSVGElement>, 'onChange'>;
 interface Props extends SVGProps {
 	onChange: (checked: boolean) => void;
 	checked: boolean;
-	style?: React.CSSProperties;
+	style?: CSSProperties;
 	size?: number;
 	animationProperties?: typeof defaultProperties;
 	moonColor?: string;

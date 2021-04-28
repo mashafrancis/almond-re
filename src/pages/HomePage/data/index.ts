@@ -46,7 +46,7 @@ export const features = [
 			'You get to choose the produce you want to grow and harvest in your farm. ' +
 			'Every plant is the same price, whether it’s cherry tomatoes or berries with free shipping always included.',
 		illustration:
-			'https://static.almondhydroponics.com/static/images/home_feature1.svg',
+			'https://static.almondhydroponics.com/static/images/feature1.svg',
 	},
 	{
 		title: 'Plant Your Pod',
@@ -54,7 +54,7 @@ export const features = [
 			'You take the plant pods which come with the seeds and drop them in your garden holes. It’s like a lego system for planting. ' +
 			'The water and nutrients automatically circulate and the plants begin their germination.',
 		illustration:
-			'https://static.almondhydroponics.com/static/images/home_feature2.svg',
+			'https://static.almondhydroponics.com/static/images/feature2.svg',
 	},
 	{
 		title: 'Add Nutrients Every Few Weeks',
@@ -62,7 +62,7 @@ export const features = [
 			'You will only need to add water and nutrients every few weeks. Grown plants on your farm may require more ' +
 			'frequent refills depending on indoor temperature or humidity. Kids will enjoy watching the plants grow and participating in the process.',
 		illustration:
-			'https://static.almondhydroponics.com/static/images/home_feature3.svg',
+			'https://static.almondhydroponics.com/static/images/feature3.svg',
 	},
 	{
 		title: 'Harvest Only What You Need',
@@ -70,7 +70,7 @@ export const features = [
 			'You never waste food with the farm because you simply take what you need. The rest of the plant keeps growing in your farm ' +
 			'until the next time you want it for a meal. The second harvest will be as fresh and delicious as the first.',
 		illustration:
-			'https://static.almondhydroponics.com/static/images/home_feature4.svg',
+			'https://static.almondhydroponics.com/static/images/feature4.svg',
 	},
 	{
 		title: 'Yummy! Eat and Enjoy',
@@ -78,6 +78,6 @@ export const features = [
 			'You will be surprised at how fragrant and tasty freshly picked vegetables and berries can be. ' +
 			'Almond-grown produce reminds many people of family gardens of their childhood.',
 		illustration:
-			'https://static.almondhydroponics.com/static/images/home_feature4.svg',
+			'https://static.almondhydroponics.com/static/images/feature5.svg',
 	},
 ];

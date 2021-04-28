@@ -1,7 +1,7 @@
 import { ComponentContext } from '@context/ComponentContext';
 import { UserContext } from '@context/UserContext';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@material-ui/core';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Mood, ExitToApp, Help, OpenInNew, Settings } from '@material-ui/icons';
@@ -25,18 +25,15 @@ const useStyles = makeStyles({
 });
 
 const CustomAvatar = (): JSX.Element => {
+	const history = useHistory();
+	const dispatch = useDispatch();
 	const { avatar, menuPopup } = useStyles();
 	const { name, photo } = useContext(UserContext);
-
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-	const history = useHistory();
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
-
-	const { setSelectedIndex } = useContext(ComponentContext);
 
 	const handleProfileClose = () => setAnchorEl(null);
 
@@ -46,8 +43,6 @@ const CustomAvatar = (): JSX.Element => {
 		handleProfileClose();
 		toggleRoleChangeDialog();
 	};
-
-	const dispatch = useDispatch();
 
 	const logoutActiveUser = async (): Promise<void> => {
 		await window.location.replace('/');
