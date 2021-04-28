@@ -32,7 +32,6 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 // import 'aos/dist/aos.css';
 // interfaces
 import { IClientOptions } from 'mqtt';
-import { AppState } from './interfaces';
 import Routes from '../routes';
 import { IRootState } from '../store/rootReducer';
 
