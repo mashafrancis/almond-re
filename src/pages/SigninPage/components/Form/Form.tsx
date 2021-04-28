@@ -1,23 +1,21 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-	Typography,
-	Grid,
 	Button,
-	TextField,
+	Grid,
 	InputAdornment,
-	CircularProgress,
+	TextField,
+	Typography,
 } from '@material-ui/core';
-import validate from 'validate.js';
 import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useDispatch } from 'react-redux';
 import { loginAccount } from '@modules/authentication';
-import { FormStateProps } from '../../../../types/FormStateProps';
+import validate from 'validate.js';
+import useFormState from '@hooks/useFormState';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
-import { whiteColor } from '../../../../assets/tss/common';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -44,73 +42,30 @@ const schema = {
 const Form = (): JSX.Element => {
 	const classes = useStyles();
 
-	const [formState, setFormState] = useState<FormStateProps>({
-		isValid: false,
-		values: {},
-		touched: {},
-		errors: {},
-	});
-
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const errors = validate(formState.values, schema);
-
-		setFormState((prevState) => ({
-			...prevState,
-			isValid: !errors,
-			errors: errors || {},
-		}));
-	}, [formState.values]);
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		event.persist();
-
-		setFormState((state) => ({
-			...state,
-			values: {
-				...state.values,
-				[event.target.name]:
-					event.target.type === 'checkbox'
-						? event.target.checked
-						: event.target.value,
-			},
-			touched: {
-				...state.touched,
-				[event.target.name]: true,
-			},
-		}));
-	};
-
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		if (formState.isValid) {
-			const { email, password } = formState.values;
-			dispatch(loginAccount({ email, password }));
-		}
-
-		setFormState((state) => ({
-			...state,
-			touched: {
-				...state.touched,
-				...state.errors,
-			},
-		}));
-	};
-
-	const hasError = (field: string): boolean =>
-		!!(formState.touched[field] && formState.errors[field]);
+	const {
+		values,
+		isValid,
+		errors,
+		hasError,
+		handleFormChange,
+		handleSubmit,
+	} = useFormState({
+		onSubmit: ({ email, password }) =>
+			dispatch(loginAccount({ email, password })),
+		formErrors: (formValues) => validate(formValues, schema),
+	});
 
 	const handleLogin = () =>
 		window.location.replace(`${process.env.ALMOND_API}/auth/google`);
 
 	return (
 		<div className={classes.root}>
-			<form name="password-reset-form" method="post" onSubmit={handleSubmit}>
+			<form name="login-form" method="post" onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<Button
@@ -136,11 +91,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="email"
 							fullWidth
-							helperText={hasError('email') ? formState.errors.email[0] : null}
+							helperText={hasError('email') ? errors.email[0] : null}
 							error={hasError('email')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type="email"
-							value={formState.values.email || ''}
+							value={values.email || ''}
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -151,13 +106,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="password"
 							fullWidth
-							helperText={
-								hasError('password') ? formState.errors.password[0] : null
-							}
+							helperText={hasError('password') ? errors.password[0] : null}
 							error={hasError('password')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type={isPasswordHidden ? 'text' : 'password'}
-							value={formState.values.password || ''}
+							value={values.password || ''}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -187,7 +140,7 @@ const Form = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
-							disabled={!formState.isValid}
+							disabled={!isValid}
 						>
 							Login
 						</Button>

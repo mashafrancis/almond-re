@@ -36,6 +36,7 @@ import {
 import { displaySnackMessage } from '@modules/snack';
 // styles
 import { useTableStyles } from '@pages/WaterCyclesPage/styles';
+import useFormState from '@hooks/useFormState';
 // interfaces
 import { UserRole } from '@modules/userRoles/interfaces';
 import Typography from '@material-ui/core/Typography';
@@ -43,7 +44,6 @@ import { red } from '@material-ui/core/colors';
 import validate from 'validate.js';
 import { UserRolesPageState } from './interfaces';
 import { IRootState } from '../../store/rootReducer';
-import { FormStateProps } from '../../types/FormStateProps';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -88,14 +88,14 @@ const CustomTextField = withStyles((theme: Theme) => ({
 }))(TextField);
 
 const schema = {
-	role_name: {
+	roleName: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
 			maximum: 50,
 			message: 'description should not be more than 50 characters',
 		},
 	},
-	role_description: {
+	roleDescription: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
 			maximum: 100,
@@ -121,13 +121,6 @@ export const UserRolesPage = (): JSX.Element => {
 		roleId: '',
 	});
 
-	const [formState, setFormState] = useState<FormStateProps>({
-		isValid: false,
-		values: {},
-		touched: {},
-		errors: {},
-	});
-
 	const dispatch = useDispatch();
 	const tableClasses = useTableStyles();
 	const classes = useStyles();
@@ -147,19 +140,49 @@ export const UserRolesPage = (): JSX.Element => {
 		}));
 	}, [resources, permissions]);
 
+	const {
+		values,
+		isValid,
+		errors,
+		hasError,
+		handleFormChange,
+		handleSubmit,
+	} = useFormState({
+		onSubmit: ({ roleName, roleDescription }) => {
+			const updatedResources = state.resources
+				.filter(
+					(resource) =>
+						resource.permissionIds !== undefined &&
+						resource.permissionIds.length !== 0,
+				)
+				.map((resource) => ({
+					resourceId: resource._id,
+					name: resource.name,
+					permissionIds: resource.permissionIds,
+				}));
+
+			const userRole = {
+				title: roleName,
+				description: roleDescription,
+				resourceAccessLevels: updatedResources,
+			};
+
+			if (updatedResources.length === 0) {
+				return dispatch(
+					displaySnackMessage('Please, check at least one permission'),
+				);
+			}
+
+			dispatch(createUserRole(userRole));
+			onResetPermission();
+			toggleAddRoleModal();
+		},
+		formErrors: (formValues) => validate(formValues, schema),
+	});
+
 	useEffect(() => {
 		onResetPermission();
 	}, [state.isAddEditModalOpen]);
-
-	useEffect(() => {
-		const errors = validate(formState.values, schema);
-
-		setFormState((prevState) => ({
-			...prevState,
-			isValid: !errors,
-			errors: errors || {},
-		}));
-	}, [formState.values]);
 
 	// const setResourcesPermissions = () => {
 	// 	setState((prevState) => ({
@@ -168,25 +191,6 @@ export const UserRolesPage = (): JSX.Element => {
 	// 		resources,
 	// 	}));
 	// };
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		event.persist();
-
-		setFormState((prevState) => ({
-			...prevState,
-			values: {
-				...prevState.values,
-				[event.target.name]:
-					event.target.type === 'checkbox'
-						? event.target.checked
-						: event.target.value,
-			},
-			touched: {
-				...prevState.touched,
-				[event.target.name]: true,
-			},
-		}));
-	};
 
 	const toggleAddRoleModal = () => {
 		setState((prevState) => ({
@@ -239,36 +243,36 @@ export const UserRolesPage = (): JSX.Element => {
 		}));
 	};
 
-	const handleAddNewRole = () => {
-		const updatedResources = state.resources
-			.filter(
-				(resource) =>
-					resource.permissionIds !== undefined &&
-					resource.permissionIds.length !== 0,
-			)
-			.map((resource) => ({
-				resourceId: resource._id,
-				name: resource.name,
-				permissionIds: resource.permissionIds,
-			}));
-
-		const userRole = {
-			title: formState.values.role_name,
-			description: formState.values.role_description,
-			resourceAccessLevels: updatedResources,
-		};
-
-		if (updatedResources.length === 0) {
-			return dispatch(
-				displaySnackMessage('Please, check at least one permission'),
-			);
-		}
-
-		dispatch(createUserRole(userRole));
-
-		onResetPermission();
-		toggleAddRoleModal();
-	};
+	// const handleAddNewRole = () => {
+	// 	const updatedResources = state.resources
+	// 		.filter(
+	// 			(resource) =>
+	// 				resource.permissionIds !== undefined &&
+	// 				resource.permissionIds.length !== 0,
+	// 		)
+	// 		.map((resource) => ({
+	// 			resourceId: resource._id,
+	// 			name: resource.name,
+	// 			permissionIds: resource.permissionIds,
+	// 		}));
+	//
+	// 	const userRole = {
+	// 		title: formState.values.role_name,
+	// 		description: formState.values.role_description,
+	// 		resourceAccessLevels: updatedResources,
+	// 	};
+	//
+	// 	if (updatedResources.length === 0) {
+	// 		return dispatch(
+	// 			displaySnackMessage('Please, check at least one permission'),
+	// 		);
+	// 	}
+	//
+	// 	dispatch(createUserRole(userRole));
+	//
+	// 	onResetPermission();
+	// 	toggleAddRoleModal();
+	// };
 
 	const handleRoleUpdate = () => {
 		const { _id, title, description } = roles.filter(
@@ -327,9 +331,6 @@ export const UserRolesPage = (): JSX.Element => {
 		setState((prevState) => ({ ...prevState, resources: allResources }));
 	};
 
-	const hasError = (field: string): boolean =>
-		!!(formState.touched[field] && formState.errors[field]);
-
 	const renderModalContent = () => {
 		return (
 			<Grid container spacing={2}>
@@ -338,15 +339,13 @@ export const UserRolesPage = (): JSX.Element => {
 						label="Role name *"
 						variant="outlined"
 						size="small"
-						name="role_name"
+						name="roleName"
 						fullWidth
-						helperText={
-							hasError('role_name') ? formState.errors.role_name[0] : null
-						}
-						error={hasError('role_name')}
-						onChange={handleChange}
+						helperText={hasError('roleName') ? errors.roleName[0] : null}
+						error={hasError('roleName')}
+						onChange={handleFormChange}
 						type="text"
-						value={formState.values.role_name || ''}
+						value={values.roleName || ''}
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -361,17 +360,15 @@ export const UserRolesPage = (): JSX.Element => {
 						label="Role description *"
 						variant="outlined"
 						size="small"
-						name="role_description"
+						name="roleDescription"
 						fullWidth
 						helperText={
-							hasError('role_description')
-								? formState.errors.role_description[0]
-								: null
+							hasError('roleDescription') ? errors.roleDescription[0] : null
 						}
-						error={hasError('role_description')}
-						onChange={handleChange}
+						error={hasError('roleDescription')}
+						onChange={handleFormChange}
 						type="text"
-						value={formState.values.role_description || ''}
+						value={values.roleDescription || ''}
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -398,10 +395,10 @@ export const UserRolesPage = (): JSX.Element => {
 				isModalOpen={isAddEditModalOpen}
 				renderContent={renderModalContent()}
 				onClose={toggleAddRoleModal}
-				disabled={!formState.isValid}
+				disabled={!isValid}
 				renderHeader={isEditMode ? 'Edit user role' : 'Create a new role'}
 				submitButtonName={isEditMode ? 'Update role' : 'Create role'}
-				onSubmit={isEditMode ? handleRoleUpdate : handleAddNewRole}
+				onSubmit={isEditMode ? handleRoleUpdate : handleSubmit}
 				onDismiss={toggleAddRoleModal}
 			/>
 		);

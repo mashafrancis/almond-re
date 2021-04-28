@@ -12,6 +12,8 @@ import { Section } from '@components/organisms';
 // modules
 import { verifyUserDevice } from '@modules/device';
 
+import useFormState from '@hooks/useFormState';
+import { passwordReset } from '@modules/authentication';
 import deviceImage from '../../assets/images/illustration_device.svg';
 import { FormStateProps } from '../../types/FormStateProps';
 import { IRootState } from '../../store/rootReducer';
@@ -60,66 +62,24 @@ const schema = {
 
 export const EnterDeviceIdPage = (): JSX.Element => {
 	const classes = useStyles();
-	const [formState, setFormState] = useState<FormStateProps>({
-		isValid: false,
-		values: {},
-		touched: {},
-		errors: {},
-	});
-
-	useEffect(() => {
-		const errors = validate(formState.values, schema);
-
-		setFormState((prevState) => ({
-			...prevState,
-			isValid: !errors,
-			errors: errors || {},
-		}));
-	}, [formState.values]);
 
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state: IRootState) => state.device);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		event.persist();
+	const {
+		values,
+		isValid,
+		errors,
+		hasError,
+		handleFormChange,
+		handleSubmit,
+	} = useFormState({
+		onSubmit: async ({ deviceId }) =>
+			dispatch(verifyUserDevice({ id: deviceId })),
+		formErrors: (formValues) => validate(formValues, schema),
+	});
 
-		setFormState((prevState) => ({
-			...prevState,
-			values: {
-				...prevState.values,
-				[event.target.name]:
-					event.target.type === 'checkbox'
-						? event.target.checked
-						: event.target.value,
-			},
-			touched: {
-				...prevState.touched,
-				[event.target.name]: true,
-			},
-		}));
-	};
-
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		if (formState.isValid) {
-			const { deviceId } = formState.values;
-			await dispatch(verifyUserDevice({ id: deviceId }));
-		}
-
-		setFormState((prevState) => ({
-			...prevState,
-			touched: {
-				...prevState.touched,
-				...prevState.errors,
-			},
-		}));
-	};
-
-	const hasError = (field: string): boolean =>
-		!!(formState.touched[field] && formState.errors[field]);
-
-	const DeviceForm = () => (
+	const renderDeviceForm = () => (
 		<div className={classes.root}>
 			<form name="enter-device-form" method="post" onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
@@ -130,13 +90,11 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 							variant="outlined"
 							size="medium"
 							fullWidth
-							helperText={
-								hasError('deviceId') ? formState.errors.deviceId[0] : null
-							}
+							helperText={hasError('deviceId') ? errors.deviceId[0] : null}
 							error={hasError('deviceId')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type="text"
-							value={formState.values.deviceId || ''}
+							value={values.deviceId || ''}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -153,6 +111,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
+							disabled={!isValid}
 						>
 							{isLoading ? 'Adding...' : 'Verify your device'}
 						</Button>
@@ -186,7 +145,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 						subtitleProps={{
 							variant: 'body2',
 						}}
-						ctaGroup={[DeviceForm()]}
+						ctaGroup={[renderDeviceForm()]}
 						disableGutter
 					/>
 				</div>

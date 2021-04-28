@@ -1,5 +1,5 @@
-import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Typography,
@@ -13,8 +13,8 @@ import { DividerWithText, Image, LearnMoreLink } from '@components/atoms';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useDispatch } from 'react-redux';
+import useFormState from '@hooks/useFormState';
 import { createAccount } from '@modules/authentication';
-import { FormStateProps } from '../../../../types/FormStateProps';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,68 +61,23 @@ const schema = {
 const Form = (): JSX.Element => {
 	const classes = useStyles();
 
-	const [formState, setFormState] = useState<FormStateProps>({
-		isValid: false,
-		values: {},
-		touched: {},
-		errors: {},
-	});
-
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
 	const dispatch = useDispatch();
-	const history = useHistory();
 
-	useEffect(() => {
-		const errors = validate(formState.values, schema);
-
-		setFormState((prevState) => ({
-			...prevState,
-			isValid: !errors,
-			errors: errors || {},
-		}));
-	}, [formState.values]);
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		event.persist();
-
-		setFormState((prevState) => ({
-			...prevState,
-			values: {
-				...prevState.values,
-				[event.target.name]:
-					event.target.type === 'checkbox'
-						? event.target.checked
-						: event.target.value,
-			},
-			touched: {
-				...prevState.touched,
-				[event.target.name]: true,
-			},
-		}));
-	};
-
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		if (formState.isValid) {
-			const { firstName, lastName, email, password } = formState.values;
-			dispatch(createAccount({ firstName, lastName, email, password }));
-			// history.push('register-success');
-		}
-
-		setFormState((prevState) => ({
-			...prevState,
-			touched: {
-				...prevState.touched,
-				...prevState.errors,
-			},
-		}));
-	};
-
-	const hasError = (field: string): boolean =>
-		!!(formState.touched[field] && formState.errors[field]);
+	const {
+		values,
+		isValid,
+		errors,
+		hasError,
+		handleFormChange,
+		handleSubmit,
+	} = useFormState({
+		onSubmit: ({ firstName, lastName, email, password }) =>
+			dispatch(createAccount({ firstName, lastName, email, password })),
+		formErrors: (formValues) => validate(formValues, schema),
+	});
 
 	const handleLogin = () =>
 		window.location.replace(`${process.env.ALMOND_API}/auth/google`);
@@ -154,13 +109,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="firstName"
 							fullWidth
-							helperText={
-								hasError('firstName') ? formState.errors.firstName[0] : null
-							}
+							helperText={hasError('firstName') ? errors.firstName[0] : null}
 							error={hasError('firstName')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type="text"
-							value={formState.values.firstName || ''}
+							value={values.firstName || ''}
 						/>
 					</Grid>
 					<Grid item xs={6}>
@@ -170,13 +123,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="lastName"
 							fullWidth
-							helperText={
-								hasError('lastName') ? formState.errors.lastName[0] : null
-							}
+							helperText={hasError('lastName') ? errors.lastName[0] : null}
 							error={hasError('lastName')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type="text"
-							value={formState.values.lastName || ''}
+							value={values.lastName || ''}
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -186,11 +137,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="email"
 							fullWidth
-							helperText={hasError('email') ? formState.errors.email[0] : null}
+							helperText={hasError('email') ? errors.email[0] : null}
 							error={hasError('email')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type="email"
-							value={formState.values.email || ''}
+							value={values.email || ''}
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -200,13 +151,11 @@ const Form = (): JSX.Element => {
 							size="medium"
 							name="password"
 							fullWidth
-							helperText={
-								hasError('password') ? formState.errors.password[0] : null
-							}
+							helperText={hasError('password') ? errors.password[0] : null}
 							error={hasError('password')}
-							onChange={handleChange}
+							onChange={handleFormChange}
 							type={isPasswordHidden ? 'text' : 'password'}
-							value={formState.values.password || ''}
+							value={values.password || ''}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -231,7 +180,7 @@ const Form = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							fullWidth
-							disabled={!formState.isValid}
+							disabled={!isValid}
 						>
 							Register
 						</Button>

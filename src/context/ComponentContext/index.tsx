@@ -3,7 +3,6 @@ import {
 	ComponentContextProps,
 	ComponentContextState,
 } from '@context/ComponentContext/interfaces';
-import isArrayNotNull from '@utils/checkArrayEmpty';
 
 const selectedIndex = JSON.parse(
 	window.localStorage.getItem('selectedIndex') as string,

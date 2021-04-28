@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import { LearnMoreLink } from '@components/atoms';
+import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'src/store/rootReducer';
+import registerSuccessImage from '../../assets/images/success.svg';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -26,6 +27,12 @@ const useStyles = makeStyles((theme) => {
 		label: {
 			fontWeight: 'bold',
 		},
+		image: {
+			[theme.breakpoints.down('sm')]: {
+				maxWidth: 500,
+			},
+			marginBottom: 26,
+		},
 	};
 });
 
@@ -40,6 +47,11 @@ const RegisterSuccessPage = (): JSX.Element => {
 		<div>
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
+					<Image
+						src={registerSuccessImage}
+						alt="Almond Hydroponics"
+						className={classes.image}
+					/>
 					<SectionHeader
 						label="Hurray!!"
 						title="Account creation successful."
