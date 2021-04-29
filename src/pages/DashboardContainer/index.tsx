@@ -32,7 +32,7 @@ import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import Typography from '@material-ui/core/Typography';
 import { BlankContent } from '@pages/WaterCyclesPage';
 import { useHistory } from 'react-router-dom';
-import { editUserDetails, getUserDetails } from '@modules/user';
+import { editUserDetails } from '@modules/user';
 import { activateDevice } from '@modules/device';
 import { DashboardContainerState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';

@@ -1,21 +1,18 @@
-// react library
-import { ReactNode } from 'react';
 // jest mocks
 import '../../../tests/__mocks__/storeWithPartialPermissions';
 // third-party libraries
 import { render, screen } from '@testing-library/react';
 // components
-import { Restrict } from '@components/Restrict';
+import Restrict from '@components/Restrict';
 
 describe('The Restrict component', () => {
 	const props = {
-		authorize: '',
 		children: null,
 		strict: false,
 	};
 	it('should render children prop if user has required access', () => {
 		render(
-			<Restrict authorize={['analytics:edit']}>
+			<Restrict authorize={['analytics:edit']} {...props}>
 				<button className="button" data-testid="button" />
 			</Restrict>,
 		);
@@ -26,7 +23,7 @@ describe('The Restrict component', () => {
 
 	it.skip('should not render children prop if user does not have required access', () => {
 		render(
-			<Restrict authorize={['people:edit']}>
+			<Restrict authorize={['people:edit']} {...props}>
 				<button className="button" data-testid="button" />
 			</Restrict>,
 		);
@@ -40,6 +37,7 @@ describe('The Restrict component', () => {
 			<Restrict
 				authorize={['people:edit']}
 				fallback={<span className="span" data-testid="span" />}
+				{...props}
 			>
 				<button />
 			</Restrict>,

@@ -6,7 +6,7 @@ import Logo from './index';
 
 describe.skip('Logo component', () => {
 	it('should render correctly', () => {
-		const { asFragment } = render(<Logo />);
+		const { asFragment } = render(<Logo themeMode="light" />);
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('logo');

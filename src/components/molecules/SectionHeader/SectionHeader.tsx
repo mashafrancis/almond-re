@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { SectionHeaderProps } from '@components/molecules/SectionHeader/interfaces';
+import fancyId from '@utils/fancyId';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -137,9 +138,9 @@ const SectionHeader = ({
 						wrap="nowrap"
 						className="section-header__cta-container"
 					>
-						{ctaGroup.map((item, index) => (
+						{ctaGroup.map((item) => (
 							<div
-								key={index}
+								key={fancyId()}
 								className={clsx(
 									'section-header__cta-item-wrapper',
 									classes.cta,

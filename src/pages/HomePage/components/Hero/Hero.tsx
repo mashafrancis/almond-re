@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
 		// background:
 		// 	'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat left bottom',
 		backgroundSize: 'contain',
-		// backgroundColor: theme.palette.alternate.main,
+		backgroundColor: 'rgb(247, 249, 252)',
+		// height: '100vh',
 	},
 	pagePaddingTop: {
-		paddingTop: theme.spacing(3),
+		paddingTop: theme.spacing(4),
 		[theme.breakpoints.up('md')]: {
 			paddingTop: theme.spacing(5),
 		},

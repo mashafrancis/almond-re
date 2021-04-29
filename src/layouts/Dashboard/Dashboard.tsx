@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
 	children: ReactNode;
-	themeToggler: Function;
+	themeToggler: () => void;
 	themeMode: string;
 }
 

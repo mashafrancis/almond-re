@@ -1,6 +1,11 @@
 import { useContext, cloneElement } from 'react';
 import clsx from 'clsx';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import {
+	createStyles,
+	makeStyles,
+	Theme,
+	useTheme,
+} from '@material-ui/core/styles';
 import {
 	Toolbar,
 	Hidden,
@@ -14,13 +19,14 @@ import {
 	AppBar,
 	useScrollTrigger,
 	Divider,
+	useMediaQuery,
 } from '@material-ui/core';
-import { Image, DarkModeToggler } from '@components/atoms';
+import { DarkModeToggler } from '@components/atoms';
 import { UserContext } from '@context/UserContext';
-import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import {
-	ArrowDropDown,
+	ArrowDropDownTwoTone,
+	ArrowDropUpTwoTone,
 	Notifications,
 	NotificationsNone,
 	Timeline,
@@ -30,6 +36,7 @@ import { useMqttState } from '@hooks/mqtt';
 // import { useMqttState } from 'mqtt-react-hooks';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { CustomAvatar } from '@components/molecules';
+import Logo from '@components/atoms/Logo';
 import { StyledBadge } from './styles';
 import {
 	closedColor,
@@ -38,8 +45,6 @@ import {
 	reconnectingColor,
 } from '../../../../assets/tss/common';
 import { ElevationBarProps } from './interfaces';
-
-const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -129,8 +134,12 @@ const useStyles = makeStyles((theme) => ({
 		flexFlow: 'row',
 	},
 	logoImage: {
-		width: '100%',
-		height: '100%',
+		width: '60%',
+		height: '60%',
+		minWidth: 32,
+		// fontWeight: theme.typography.fontWeightMedium,
+		// fontSize: '13px',
+		// marginRight: theme.spacing(4),
 		// [theme.breakpoints.up('md')]: {
 		// 	width: '60%',
 		// 	height: '60%',
@@ -167,9 +176,12 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	deviceText: {
-		color: '#fff',
+		margin: 0,
+		padding: 0,
+		fontWeight: theme.typography.fontWeightMedium,
+		fontSize: '13px',
 		[theme.breakpoints.up('sm')]: {
-			fontWeight: 500,
+			color: '#fff',
 		},
 	},
 	topDevice: {
@@ -224,9 +236,9 @@ const ElevationScroll = ({
 
 interface Props {
 	className?: string;
-	onSidebarOpen?: Function;
+	onSidebarOpen?: () => void;
 	themeMode: string;
-	themeToggler: Function;
+	themeToggler: () => void;
 	isActivityLogsEmpty: any;
 }
 
@@ -239,11 +251,17 @@ const Topbar = ({
 	...rest
 }: Props): JSX.Element => {
 	const classes = useStyles();
+	const themePoint = useTheme();
+
+	const isSm = useMediaQuery(themePoint.breakpoints.down('sm'), {
+		defaultMatches: true,
+	});
 
 	const {
 		activityLogsViewed,
 		toggleActivityDrawer,
 		setDeviceModalOpen,
+		isSelectDeviceModalOpen,
 	} = useContext(ComponentContext);
 
 	/*
@@ -278,7 +296,9 @@ const Topbar = ({
 			badge: {
 				backgroundColor: statusChange(connectionStatus as string),
 				color: statusChange(connectionStatus as string),
-				boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+				boxShadow: `0 0 0 1px ${
+					isSm ? 'rgba(38,38,38,0.32)' : theme.palette.background.paper
+				}`,
 				top: '50%',
 				left: '-12%',
 				'&::after': {
@@ -294,19 +314,35 @@ const Topbar = ({
 		}),
 	)(Badge);
 
+	const renderMoreButton = (handleClick) =>
+		isSelectDeviceModalOpen ? (
+			<ArrowDropUpTwoTone
+				style={{
+					color: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
+				}}
+			/>
+		) : (
+			<ArrowDropDownTwoTone
+				onClick={handleClick}
+				style={{
+					color: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
+				}}
+			/>
+		);
+
 	const renderDeviceDisplay = (): JSX.Element => {
 		const handleClick = (): void => setDeviceModalOpen(true);
 		const handleDeviceModal = (): void => setDeviceModalOpen(true);
 		return (
 			<Button
-				variant="contained"
+				variant={isSm ? 'outlined' : 'contained'}
 				size="small"
 				onClick={handleClick}
 				onKeyDown={handleDeviceModal}
 				style={{
 					paddingLeft: 36,
-					marginLeft: '15%',
-					backgroundColor: 'rgba(17, 17, 17, 0.8)',
+					marginLeft: `${isSm ? '15' : '19'}%`,
+					backgroundColor: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
 				}}
 			>
 				<Grid
@@ -334,13 +370,23 @@ const Topbar = ({
 							style={{ margin: 0, padding: 0 }}
 						>
 							<Typography
-								variant="body2"
+								variant="subtitle2"
 								className={clsx(classes.listItemText, classes.deviceText)}
-								style={{ margin: 0, padding: 0 }}
+								style={{ fontWeight: 400 }}
 							>
-								{`Device ID: ${activeDevice?.id}`}
+								Device ID:
 							</Typography>
-							<ArrowDropDown onClick={handleClick} style={{ color: '#fff' }} />
+							<Typography
+								variant="subtitle2"
+								className={clsx(classes.listItemText, classes.deviceText)}
+								style={{
+									paddingLeft: 6,
+									fontWeight: 500,
+								}}
+							>
+								{activeDevice?.id}
+							</Typography>
+							{renderMoreButton(handleClick)}
 						</Grid>
 					</DeviceActiveBadge>
 				</Grid>
@@ -403,19 +449,8 @@ const Topbar = ({
 						variant="dense"
 					>
 						<div className={classes.leftContainer}>
-							<div className={classes.logoContainer}>
-								<NavLink to="/">
-									<Grid container className={classes.container}>
-										<Image
-											className={classes.logoImage}
-											src={themeMode === 'light' ? logo : logo}
-											alt="almond"
-											lazy={false}
-										/>
-									</Grid>
-								</NavLink>
-							</div>
-							<Hidden smDown>{!isAdmin && renderDeviceDisplay()}</Hidden>
+							<Logo themeMode={themeMode} />
+							{!isAdmin && renderDeviceDisplay()}
 						</div>
 						<div className={classes.flexGrow} />
 						<Hidden smDown>
@@ -443,14 +478,10 @@ const Topbar = ({
 							</List>
 						</Hidden>
 						<Hidden mdUp>
-							<DarkModeToggler
-								themeMode={themeMode}
-								onChange={() => themeToggler()}
-								size={24}
-							/>
+							<CustomAvatar />
 						</Hidden>
 					</Toolbar>
-					<Divider />
+					{/* <Divider /> */}
 				</AppBar>
 			</ElevationScroll>
 		</>

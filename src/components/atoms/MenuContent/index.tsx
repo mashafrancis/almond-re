@@ -27,6 +27,7 @@ const MenuContent = (): JSX.Element => {
 
 	return (
 		<MenuTabs
+			style={{ padding: 20 }}
 			value={selectedIndex}
 			onChange={handleOnChange}
 			orientation="vertical"

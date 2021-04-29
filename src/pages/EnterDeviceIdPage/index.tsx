@@ -1,4 +1,3 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 // third-party libraries
 import { useDispatch, useSelector } from 'react-redux';
 import validate from 'validate.js';
@@ -11,12 +10,11 @@ import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
 // modules
 import { verifyUserDevice } from '@modules/device';
-
 import useFormState from '@hooks/useFormState';
-import { passwordReset } from '@modules/authentication';
-import deviceImage from '../../assets/images/illustration_device.svg';
-import { FormStateProps } from '../../types/FormStateProps';
 import { IRootState } from '../../store/rootReducer';
+
+const deviceImage =
+	'https://storage.googleapis.com/static.almondhydroponics.com/static/images/illustration_my_device.svg';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -45,6 +43,7 @@ const useStyles = makeStyles((theme) => {
 			[theme.breakpoints.down('sm')]: {
 				maxWidth: 500,
 			},
+			width: '70%',
 			marginBottom: 26,
 		},
 	};

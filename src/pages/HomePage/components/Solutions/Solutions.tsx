@@ -1,8 +1,8 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Button, Typography } from '@material-ui/core';
-
 import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
+import fancyId from '@utils/fancyId';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	image: {
-		width: '100%',
+		width: '70%',
+		[theme.breakpoints.up('md')]: {
+			width: '55%',
+		},
 	},
 }));
 
@@ -47,7 +50,7 @@ const Solutions = ({
 			<Grid container justify="center">
 				{data.map((item: any, index: number) => (
 					<Grid
-						key={index}
+						key={fancyId()}
 						item
 						container
 						spacing={isMd ? 4 : 2}
@@ -60,17 +63,28 @@ const Solutions = ({
 						<Grid item xs={12} sm={6}>
 							<SectionHeader
 								titleVariant="h6"
-								subtitleVariant="body1"
+								subtitleVariant={isMd ? 'h6' : 'h6'}
 								title={item.title}
 								subtitle={item.description}
 								ctaGroup={[
-									<LearnMoreLink title="Learn more" variant="body1" />,
+									<LearnMoreLink
+										key={fancyId()}
+										title="Learn more"
+										variant="body1"
+									/>,
 								]}
 								align="left"
 								disableGutter
 							/>
 						</Grid>
-						<Grid item container justify="center" xs={12} sm={6}>
+						<Grid
+							item
+							container
+							justify="center"
+							alignItems="center"
+							xs={12}
+							sm={6}
+						>
 							<Image
 								src={item.illustration}
 								alt={item.label}
