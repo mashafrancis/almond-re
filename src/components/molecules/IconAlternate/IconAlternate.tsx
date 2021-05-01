@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import { Icon } from '@components/atoms';
 import { IconAlternateProps } from '@components/molecules/IconAlternate/interfaces';
+import { PeopleAltTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	extraSmall: {
@@ -35,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {Object} props
  */
 const IconAlternate = ({
-	iconProps,
-	fontIconClass,
+	avatarIcon,
 	size = 'medium',
 	color = [],
 	shape = 'square',
@@ -62,13 +62,7 @@ const IconAlternate = ({
 			)}
 			{...rest}
 		>
-			<Icon
-				size={size}
-				fontIconClass={fontIconClass}
-				fontIconColor={color[500]}
-				className="icon-alternate__icon"
-				{...iconProps}
-			/>
+			{avatarIcon}
 		</Avatar>
 	);
 };

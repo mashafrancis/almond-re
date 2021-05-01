@@ -1,6 +1,6 @@
-import { useContext, useEffect, useCallback } from 'react';
-
+import { useContext, useCallback } from 'react';
 import { IClientSubscribeOptions } from 'mqtt';
+import useEffectAsync from '@hooks/useEffectAsync';
 import MqttContext from './Context';
 import { IMqttContext as Context, IUseSubscription } from './types';
 
@@ -16,10 +16,14 @@ const useSubscription = (
 		client?.subscribe(topic, options);
 	}, [client, options, topic]);
 
-	useEffect(() => {
+	useEffectAsync(async () => {
 		if (client?.connected) {
-			subscribe();
+			await subscribe();
 		}
+
+		return () => {
+			client?.unsubscribe(topic);
+		};
 	}, [client, subscribe]);
 
 	return {

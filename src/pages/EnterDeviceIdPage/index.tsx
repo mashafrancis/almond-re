@@ -1,17 +1,8 @@
-// third-party libraries
-import { useDispatch, useSelector } from 'react-redux';
-import validate from 'validate.js';
-import { Button, Grid, InputAdornment, TextField } from '@material-ui/core';
-import { PhonelinkSetupSharp } from '@material-ui/icons';
-// interfaces
 import { makeStyles } from '@material-ui/core/styles';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
-// modules
-import { verifyUserDevice } from '@modules/device';
-import useFormState from '@hooks/useFormState';
-import { IRootState } from '../../store/rootReducer';
+import { Form } from '@pages/EnterDeviceIdPage/components';
 
 const deviceImage =
 	'https://storage.googleapis.com/static.almondhydroponics.com/static/images/illustration_my_device.svg';
@@ -49,76 +40,8 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
-const schema = {
-	deviceId: {
-		presence: { allowEmpty: false, message: 'is required' },
-		length: {
-			maximum: 20,
-			minimum: 6,
-		},
-	},
-};
-
 export const EnterDeviceIdPage = (): JSX.Element => {
 	const classes = useStyles();
-
-	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state: IRootState) => state.device);
-
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: async ({ deviceId }) =>
-			dispatch(verifyUserDevice({ id: deviceId })),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
-
-	const renderDeviceForm = () => (
-		<div className={classes.root}>
-			<form name="enter-device-form" method="post" onSubmit={handleSubmit}>
-				<Grid container spacing={2}>
-					<Grid item xs={12}>
-						<TextField
-							label="Enter device ID"
-							name="deviceId"
-							variant="outlined"
-							size="medium"
-							fullWidth
-							helperText={hasError('deviceId') ? errors.deviceId[0] : null}
-							error={hasError('deviceId')}
-							onChange={handleFormChange}
-							type="text"
-							value={values.deviceId || ''}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<PhonelinkSetupSharp color="primary" />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<Button
-							size="large"
-							variant="contained"
-							type="submit"
-							color="primary"
-							fullWidth
-							disabled={!isValid}
-						>
-							{isLoading ? 'Adding...' : 'Verify your device'}
-						</Button>
-					</Grid>
-				</Grid>
-			</form>
-		</div>
-	);
 
 	return (
 		<div>
@@ -144,9 +67,9 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 						subtitleProps={{
 							variant: 'body2',
 						}}
-						ctaGroup={[renderDeviceForm()]}
 						disableGutter
 					/>
+					<Form />
 				</div>
 			</Section>
 		</div>

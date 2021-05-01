@@ -21,7 +21,6 @@ import checkUserRole from '@utils/checkUserRole';
 import { initializeGA, logPageView } from '@utils/googleAnalytics';
 // context
 import { Connector } from '@hooks/mqtt';
-// import { Connector } from 'mqtt-react-hooks';
 import { UserContext } from '@context/UserContext';
 import { ViewportProvider } from '@context/ViewportContext';
 import { ComponentProvider } from '@context/ComponentContext';
@@ -132,19 +131,19 @@ export const App = (): JSX.Element => {
 	const options: IClientOptions = {
 		username: process.env.MQTT_USER,
 		password: process.env.MQTT_PASSWORD,
-		keepalive: 0,
-		clientId: 'almond',
-		protocolId: 'MQTT',
-		protocolVersion: 4,
-		clean: true,
-		reconnectPeriod: 1000,
-		connectTimeout: 30 * 1000,
-		will: {
-			topic: 'almond/lastWill',
-			payload: 'Connection Closed abnormally..!',
-			qos: 2,
-			retain: false,
-		},
+		// keepalive: 0,
+		// clientId: 'almond',
+		// protocolId: 'MQTT',
+		// protocolVersion: 4,
+		// clean: true,
+		// reconnectPeriod: 1000,
+		// connectTimeout: 30 * 1000,
+		// will: {
+		// 	topic: 'almond/lastWill',
+		// 	payload: 'Connection Closed abnormally..!',
+		// 	qos: 2,
+		// 	retain: false,
+		// },
 		// key: bufferKey,
 		// cert: bufferCert,
 		// ca: bufferCA,
@@ -152,10 +151,14 @@ export const App = (): JSX.Element => {
 	};
 
 	return (
-		<ErrorBoundary FallbackComponent={ServerErrorPage}>
+		<ErrorBoundary
+			FallbackComponent={ServerErrorPage}
+			onReset={() => window.location.replace('/')}
+		>
 			<Connector
 				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
 				options={options}
+				parserMethod={(msg) => msg}
 			>
 				<UserContext.Provider value={userDetailsOnProvider}>
 					<ComponentProvider>

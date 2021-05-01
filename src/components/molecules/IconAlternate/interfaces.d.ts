@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface IconAlternateProps {
 	/**
 	 * External classes
@@ -6,7 +8,11 @@ export interface IconAlternateProps {
 	/**
 	 * The classes of the font icon
 	 */
-	fontIconClass: string;
+	fontIconClass?: string;
+	/**
+	 * The classes of the font icon
+	 */
+	avatarIcon?: ReactNode;
 	/**
 	 * Sizes of the icon
 	 */

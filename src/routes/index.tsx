@@ -13,8 +13,9 @@ import {
 	PasswordResetPage,
 	CreateNewPasswordPage,
 } from '@pages/PasswordResetPage';
-import RegisterSuccessPage from '@pages/RegisterSuccessPage';
+import SuccessPage from '@pages/SuccessPage';
 import AccountSettingsPage from '@pages/AccountSettingsPage';
+import AboutPage from '@pages/AboutPage';
 
 import WithLayout from '../WithLayout';
 import {
@@ -34,6 +35,13 @@ const Routes = (): any => (
 		/>
 		<Route
 			exact
+			path="/about"
+			render={(matchProps) => (
+				<WithLayout {...matchProps} component={AboutPage} layout={MainLayout} />
+			)}
+		/>
+		<Route
+			exact
 			path="/my-device"
 			render={(matchProps) => (
 				<WithLayout
@@ -48,28 +56,8 @@ const Routes = (): any => (
 			path="/dashboard"
 			authorize="analytics:view"
 			component={DashboardContainer}
-			// render={(matchProps) => (
-			// 	<WithLayout
-			// 		{...matchProps}
-			// 		component={DashboardContainer}
-			// 		layout={DashboardLayout}
-			// 	/>
-			// )}
 			fallbackView={<UnauthorizedUserModal isModalOpen />}
 		/>
-		{/* <Route */}
-		{/*	exact */}
-		{/*	path="/dashboard" */}
-		{/*	// authorize="analytics:view" */}
-		{/*	render={(matchProps) => ( */}
-		{/*		<WithLayout */}
-		{/*			{...matchProps} */}
-		{/*			component={DashboardContainer} */}
-		{/*			layout={DashboardLayout} */}
-		{/*		/> */}
-		{/*	)} */}
-		{/*	// fallbackView={<UnauthorizedUserModal isModalOpen />} */}
-		{/* /> */}
 		<Route
 			exact
 			path="/register"
@@ -116,22 +104,11 @@ const Routes = (): any => (
 		/>
 		<Route
 			exact
-			path="/register-success"
+			path="/success"
 			render={(matchProps) => (
 				<WithLayout
 					{...matchProps}
-					component={RegisterSuccessPage}
-					layout={MinimalLayout}
-				/>
-			)}
-		/>
-		<Route
-			exact
-			path="/404"
-			render={(matchProps) => (
-				<WithLayout
-					{...matchProps}
-					component={NotFoundPage}
+					component={SuccessPage}
 					layout={MinimalLayout}
 				/>
 			)}
@@ -143,6 +120,17 @@ const Routes = (): any => (
 				<WithLayout
 					{...matchProps}
 					component={AccountSettingsPage}
+					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/404"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={NotFoundPage}
 					layout={MinimalLayout}
 				/>
 			)}

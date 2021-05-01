@@ -3,25 +3,31 @@ import { makeStyles } from '@material-ui/core/styles';
 // components
 import { Section, SectionAlternate } from '@components/organisms';
 import {
+	AboutBottom,
 	Farming,
 	Hero,
+	HeroAlt,
 	Overview,
 	Solutions,
 	Story,
+	Services,
 } from '@pages/HomePage/components';
 // data
-import { farming, features } from '@pages/HomePage/data';
+import { farming, features, services } from '@pages/HomePage/data';
 
 const useStyles = makeStyles((theme) => ({
 	sectionFarming: {
-		maxWidth: '100%',
+		// maxWidth: '100%',
 		paddingRight: 0,
 		paddingLeft: 0,
 	},
-	featuresSection: {
+	servicesSection: {
 		background:
 			'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat center',
-		backgroundSize: 'contain',
+		backgroundSize: 'cover',
+		[theme.breakpoints.down('sm')]: {
+			backgroundSize: 'contain',
+		},
 	},
 	integrationsSection: {
 		background: '#0c133e',
@@ -38,23 +44,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const HomePage = (): JSX.Element => {
-	const classes = useStyles();
+	const { servicesSection } = useStyles();
 
 	return (
-		<div data-testid="homepage">
-			<Hero />
+		<div data-testid="homepage" className="homepage">
+			<HeroAlt />
+			<Section className={servicesSection}>
+				<Services data={services} />
+			</Section>
+			{/* <Hero /> */}
 			{/* <Section className={classes.sectionNoPaddingTop}> */}
 			{/*	<Overview /> */}
 			{/* </Section> */}
 			{/* <Section className={classes.sectionFarming}> */}
 			{/*	<Farming data={farming} /> */}
 			{/* </Section> */}
-			<SectionAlternate>
-				<Solutions data={features} />
-			</SectionAlternate>
 			{/* <SectionAlternate> */}
-			{/*  <Story /> */}
+			{/*	<Solutions data={features} /> */}
 			{/* </SectionAlternate> */}
+			<Section>
+				<AboutBottom />
+			</Section>
 		</div>
 	);
 };

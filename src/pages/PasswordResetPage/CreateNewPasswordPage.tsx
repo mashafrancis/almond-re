@@ -1,41 +1,17 @@
-import { makeStyles } from '@material-ui/core/styles';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { HeroShaped } from '@components/organisms';
 import { ChangePasswordForm } from '@pages/PasswordResetPage/components/Form';
-
-const useStyles = makeStyles((theme) => {
-	const toolbar = theme.mixins.toolbar as any;
-	return {
-		root: {
-			'& .hero-shaped': {
-				borderBottom: 0,
-			},
-			'& .hero-shaped__wrapper': {
-				[theme.breakpoints.up('md')]: {
-					minHeight: `calc(100vh - ${toolbar['@media (min-width:600px)'].minHeight}px)`,
-				},
-			},
-		},
-		formContainer: {
-			height: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			[theme.breakpoints.down('sm')]: {
-				maxWidth: 500,
-				margin: `0 auto`,
-			},
-		},
-		image: {
-			objectFit: 'cover',
-		},
-	};
-});
+import { useStyles } from '@pages/PasswordResetPage/PasswordResetPage';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../store/rootReducer';
 
 const CreateNewPasswordPage = (): JSX.Element => {
 	const classes = useStyles();
+
+	const { isLoading } = useSelector(
+		(globalState: IRootState) => globalState.authentication,
+	);
 
 	return (
 		<div className={classes.root}>
@@ -49,7 +25,7 @@ const CreateNewPasswordPage = (): JSX.Element => {
 								variant: 'h3',
 							}}
 						/>
-						<ChangePasswordForm />
+						<ChangePasswordForm isLoading={isLoading} />
 					</div>
 				}
 				rightSide={

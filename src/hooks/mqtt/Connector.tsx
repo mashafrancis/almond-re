@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connect, MqttClient } from 'mqtt';
-
 import { Error, IMessage } from '@hooks/mqtt/types';
+import useDeepCompareEffect from '@hooks/useDeepEffect';
+import useEffectAsync from '@hooks/useEffectAsync';
 import MqttContext from './Context';
 import { ConnectorProps } from './interfaces';
 
@@ -11,7 +12,7 @@ const Connector = ({
 	options = { keepalive: 0 },
 	parserMethod,
 }: ConnectorProps) => {
-	const mountedRef = useRef(true);
+	const mountedRef = useRef<boolean>(true);
 	const [connectionStatus, setStatus] = useState<string | Error>('Offline');
 	const [client, setClient] = useState<MqttClient | null>(null);
 	const [message, setMessage] = useState<IMessage>();
@@ -42,25 +43,19 @@ const Connector = ({
 					setStatus('Offline');
 				}
 			});
-			// mqtt.on('end', () => {
-			// 	if (mountedRef.current) {
-			// 		setStatus('Offline');
-			// 	}
-			// });
+			mqtt.on('end', () => {
+				if (mountedRef.current) {
+					setStatus('Offline');
+				}
+			});
 		} catch (error) {
 			setStatus(error);
 		}
-	}, [brokerUrl, options]);
+	}, [brokerUrl, options, client]);
 
-	useEffect(() => {
-		return () => {
-			mountedRef.current = false;
-		};
-	}, []);
-
-	useEffect(() => {
+	useDeepCompareEffect(() => {
 		if (client) {
-			client.on('message', (topic, msg) => {
+			client?.on('message', (topic, msg) => {
 				const payload = {
 					topic,
 					message: parserMethod?.(msg) || msg.toString(),
@@ -71,10 +66,10 @@ const Connector = ({
 			mqttConnect();
 		}
 
-		return () => {
-			// mountedRef.current = false;
-			client?.end();
-		};
+		// return () => {
+		// 	mountedRef.current = false;
+		// 	client?.end();
+		// };
 	}, [client, mqttConnect, parserMethod]);
 
 	return (

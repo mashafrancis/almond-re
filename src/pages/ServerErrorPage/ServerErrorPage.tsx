@@ -1,45 +1,17 @@
-import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
 import Typography from '@material-ui/core/Typography';
+import fancyId from '@utils/fancyId';
+import { useAuthStyles } from '@pages/SignupPage/styles';
 import serverErrorImage from '../../assets/images/illustration_500.svg';
 
-const useStyles = makeStyles((theme) => {
-	const toolbar = theme.mixins.toolbar as any;
-	return {
-		formContainer: {
-			height: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			minHeight: `calc(100vh - ${toolbar['@media (min-width:600px)'].minHeight}px)`,
-			maxWidth: 500,
-			margin: `0 auto`,
-		},
-		section: {
-			paddingTop: 0,
-			paddingBottom: 0,
-		},
-		label: {
-			fontWeight: 'bold',
-		},
-		image: {
-			[theme.breakpoints.down('sm')]: {
-				maxWidth: 500,
-			},
-		},
-	};
-});
-
 const ServerErrorPage = ({ error, resetErrorBoundary }: any): JSX.Element => {
-	const classes = useStyles();
-	console.log('Class: , Function: ServerErrorPage, Line 39 error():', error);
+	const classes = useAuthStyles();
 
 	return (
-		<div>
+		<div role="alert">
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
 					<Image
@@ -68,6 +40,7 @@ const ServerErrorPage = ({ error, resetErrorBoundary }: any): JSX.Element => {
 						}}
 						ctaGroup={[
 							<Button
+								key={fancyId()}
 								size="medium"
 								variant="contained"
 								color="primary"
