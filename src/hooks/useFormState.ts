@@ -22,6 +22,7 @@ const useFormState = ({ onSubmit, formErrors }: FormProps) => {
 
 	useEffect(() => {
 		const errors = formErrors(state.values);
+
 		setState((prevState) => ({
 			...prevState,
 			isValid: !errors,

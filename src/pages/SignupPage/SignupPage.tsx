@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'src/store/rootReducer';
 import { Form } from './components';
 
 const useStyles = makeStyles((theme) => {
@@ -27,6 +29,9 @@ const useStyles = makeStyles((theme) => {
 const SignupPage = (): JSX.Element => {
 	const classes = useStyles();
 
+	const { redirect, authentication } = useSelector(
+		(globalState: IRootState) => globalState,
+	);
 	return (
 		<div>
 			<Section className={classes.section}>
@@ -37,7 +42,10 @@ const SignupPage = (): JSX.Element => {
 							variant: 'h3',
 						}}
 					/>
-					<Form />
+					<Form
+						redirectLink={redirect.redirectLink}
+						isLoading={authentication.isLoading}
+					/>
 				</div>
 			</Section>
 		</div>

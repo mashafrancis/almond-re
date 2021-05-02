@@ -13,7 +13,7 @@ import {
 	PasswordResetPage,
 	CreateNewPasswordPage,
 } from '@pages/PasswordResetPage';
-import RegisterSuccessPage from '@pages/RegisterSuccessPage';
+import SuccessPage from '@pages/SuccessPage';
 import AccountSettingsPage from '@pages/AccountSettingsPage';
 
 import WithLayout from '../WithLayout';
@@ -116,11 +116,11 @@ const Routes = (): any => (
 		/>
 		<Route
 			exact
-			path="/register-success"
+			path="/success"
 			render={(matchProps) => (
 				<WithLayout
 					{...matchProps}
-					component={RegisterSuccessPage}
+					component={SuccessPage}
 					layout={MinimalLayout}
 				/>
 			)}

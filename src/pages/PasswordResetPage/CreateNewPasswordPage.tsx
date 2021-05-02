@@ -3,6 +3,8 @@ import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { HeroShaped } from '@components/organisms';
 import { ChangePasswordForm } from '@pages/PasswordResetPage/components/Form';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'src/store/rootReducer';
 
 const useStyles = makeStyles((theme) => {
 	const toolbar = theme.mixins.toolbar as any;
@@ -37,6 +39,10 @@ const useStyles = makeStyles((theme) => {
 const CreateNewPasswordPage = (): JSX.Element => {
 	const classes = useStyles();
 
+	const { isLoading } = useSelector(
+		(globalState: IRootState) => globalState.authentication,
+	);
+
 	return (
 		<div className={classes.root}>
 			<HeroShaped
@@ -49,7 +55,7 @@ const CreateNewPasswordPage = (): JSX.Element => {
 								variant: 'h3',
 							}}
 						/>
-						<ChangePasswordForm />
+						<ChangePasswordForm isLoading={isLoading} />
 					</div>
 				}
 				rightSide={

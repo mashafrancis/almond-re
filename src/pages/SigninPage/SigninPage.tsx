@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => {
 const SigninPage = (): JSX.Element => {
 	const classes = useStyles();
 
+	const { authentication } = useSelector(
+		(globalState: IRootState) => globalState,
+	);
+
 	return (
 		<div>
 			<Section className={classes.section}>
@@ -52,7 +56,7 @@ const SigninPage = (): JSX.Element => {
 							variant: 'h3',
 						}}
 					/>
-					<Form />
+					<Form isLoading={authentication.isLoading} />
 				</div>
 			</Section>
 		</div>

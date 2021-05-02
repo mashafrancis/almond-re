@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
-const RegisterSuccessPage = (): JSX.Element => {
+const SuccessPage = (): JSX.Element => {
 	const classes = useStyles();
 
 	const { redirectMessage } = useSelector(
@@ -54,7 +54,7 @@ const RegisterSuccessPage = (): JSX.Element => {
 					/>
 					<SectionHeader
 						label="Hurray!!"
-						title="Account creation successful."
+						title=""
 						subtitle={<span>{redirectMessage}</span>}
 						titleProps={{
 							variant: 'h4',
@@ -73,4 +73,4 @@ const RegisterSuccessPage = (): JSX.Element => {
 	);
 };
 
-export default RegisterSuccessPage;
+export default SuccessPage;

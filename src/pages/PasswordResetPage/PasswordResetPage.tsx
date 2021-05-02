@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => {
 const PasswordResetPage = (): JSX.Element => {
 	const classes = useStyles();
 
-	const { redirectLink } = useSelector(
-		(globalState: IRootState) => globalState.redirect,
+	const { redirect, authentication } = useSelector(
+		(globalState: IRootState) => globalState,
 	);
 
 	return (
@@ -55,7 +55,10 @@ const PasswordResetPage = (): JSX.Element => {
 								variant: 'h3',
 							}}
 						/>
-						<PasswordResetForm redirectLink={redirectLink} />
+						<PasswordResetForm
+							redirectLink={redirect.redirectLink}
+							isLoading={authentication.isLoading}
+						/>
 					</div>
 				}
 				rightSide={

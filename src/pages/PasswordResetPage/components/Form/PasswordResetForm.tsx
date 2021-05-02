@@ -10,10 +10,14 @@ import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { passwordReset } from '@modules/authentication';
 // hooks
 import useFormState from '@hooks/useFormState';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
+	},
+	progressIcon: {
+		color: theme.palette.primary.contrastText,
 	},
 }));
 
@@ -29,9 +33,11 @@ const schema = {
 
 interface Props {
 	redirectLink: string;
+	isLoading: boolean;
 }
 
-const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
+// eslint-disable-next-line react/prop-types
+const PasswordResetForm = ({ redirectLink, isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -87,7 +93,11 @@ const PasswordResetForm = ({ redirectLink }: Props): JSX.Element => {
 							fullWidth
 							disabled={!isValid}
 						>
-							Send
+							{isLoading ? (
+								<CircularProgress className={classes.progressIcon} size="2em" />
+							) : (
+								'Send'
+							)}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
