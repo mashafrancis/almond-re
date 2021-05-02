@@ -6,16 +6,12 @@ import HomePage from './index';
 
 describe.skip('Home Page', () => {
 	it('should be rendered properly', () => {
-		const { asFragment } = render(
-			<Suspense fallback={<h1>test loading</h1>}>
-				<HomePage />
-			</Suspense>,
-		);
+		const { asFragment } = render(<HomePage />);
 		// expect(wrapper.find('button').exists).toBeTruthy();
 		expect(asFragment()).toMatchSnapshot();
 
 		const elem = screen.getByTestId('homepage');
-		expect(elem).toHaveClass('background-cover');
+		expect(elem).toHaveClass('homepage');
 	});
 
 	// it('should render dashboard button which redirects to "/dashboard', () => {

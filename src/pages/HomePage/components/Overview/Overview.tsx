@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button, IconButton } from '@material-ui/core';
 import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { NavLink } from 'react-router-dom';
+import fancyId from '@utils/fancyId';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
 import productImage1 from '../../../../assets/images/product-2.png';
@@ -75,9 +75,9 @@ const Overview = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 							</span>
 						}
 						ctaGroup={[
-							<NavLink to="/resources">
+							<NavLink key={fancyId()} to="/resources">
 								<Button variant="contained" color="default" size="medium">
-									<LearnMoreLink title="Learn More" />
+									<LearnMoreLink title="Learn More" href="about" />
 								</Button>
 							</NavLink>,
 						]}

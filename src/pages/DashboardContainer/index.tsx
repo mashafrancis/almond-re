@@ -88,7 +88,7 @@ const DashboardContainer = (): JSX.Element => {
 	const { message } = useSubscription(userSensorSubscription, options);
 
 	useEffect(() => {
-		if (typeof message?.message === 'string') {
+		if (message) {
 			const parsedMessage = JSON.parse(message.message);
 			const data = {
 				temperature: parsedMessage?.temp,
@@ -97,7 +97,7 @@ const DashboardContainer = (): JSX.Element => {
 			};
 			dispatch(getSensorData(data));
 		}
-	}, [message?.message]);
+	}, [message]);
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -278,22 +278,34 @@ const DashboardContainer = (): JSX.Element => {
 			onOpen={handleActivityDrawer('open')}
 			disableBackdropTransition={!iOS}
 			disableDiscovery={iOS}
-			style={{ paddingLeft: 16, paddingRight: 16 }}
+			style={{
+				paddingLeft: 16,
+				paddingRight: 16,
+				marginLeft: 16,
+				marginRight: 16,
+			}}
 		>
-			<Typography variant="h5" gutterBottom style={{ marginTop: 20 }}>
+			<Typography
+				variant="h5"
+				gutterBottom
+				style={{ marginTop: 20, paddingLeft: 16, paddingRight: 16 }}
+			>
 				Recent Activities
 			</Typography>
 			{isArrayNotNull(activityLogs) ? (
 				activityLogs.map((logs) => (
-					<ActivityLogCard
-						key={logs._id}
-						log={logs.actionDesc}
-						date={logs.createdAt}
-						type="info"
-					/>
+					<div key={logs._id} style={{ paddingLeft: 12, paddingRight: 12 }}>
+						<ActivityLogCard
+							log={logs.actionDesc}
+							date={logs.createdAt}
+							type="info"
+						/>
+					</div>
 				))
 			) : (
-				<BlankContent message="No Logs Found!" />
+				<div style={{ paddingLeft: 12, paddingRight: 12 }}>
+					<BlankContent message="No Logs Found!" />
+				</div>
 			)}
 		</SwipeableDrawer>
 	);

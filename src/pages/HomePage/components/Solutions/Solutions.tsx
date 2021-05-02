@@ -63,7 +63,8 @@ const Solutions = ({
 						<Grid item xs={12} sm={6}>
 							<SectionHeader
 								titleVariant="h6"
-								subtitleVariant={isMd ? 'h6' : 'h6'}
+								subtitleVariant="body1"
+								subtitleColor="textPrimary"
 								title={item.title}
 								subtitle={item.description}
 								ctaGroup={[
@@ -71,6 +72,7 @@ const Solutions = ({
 										key={fancyId()}
 										title="Learn more"
 										variant="body1"
+										href={item.href}
 									/>,
 								]}
 								align="left"

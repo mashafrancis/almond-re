@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Typography,
@@ -12,9 +13,11 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
 import { Image } from '@components/atoms';
-import logo from '../../../../assets/images/logo.png';
 
+import fancyId from '@utils/fancyId';
 import { MenuGroupProps, PagesProps } from '../../../interfaces';
+
+const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -60,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 	socialIcon: {
 		padding: 0,
 		marginRight: theme.spacing(1),
-		color: 'rgba(255,255,255,.6)',
+		// color: 'rgba(255,255,255,.6)',
 		'&:hover': {
 			background: 'transparent',
 		},
@@ -91,14 +94,15 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	menuGroupTitle: {
-		textTransform: 'uppercase',
-		color: 'white',
+		color: theme.palette.text.primary,
+		fontWeight: 'bold',
 	},
 	divider: {
 		width: '100%',
 	},
 	navLink: {
-		color: 'rgba(255,255,255,.6)',
+		color: theme.palette.text.primary,
+		fontSize: 13,
 	},
 }));
 
@@ -115,20 +119,24 @@ const Footer = ({ pages, className, ...rest }: Props): JSX.Element => {
 	const MenuGroup = ({ item }: MenuGroupProps): JSX.Element => (
 		<List disablePadding className={classes.menuItem}>
 			<ListItem disableGutters className={classes.menuGroupItem}>
-				<Typography variant="body2" className={classes.menuGroupTitle}>
+				<Typography variant="body1" className={classes.menuGroupTitle}>
 					{item.groupTitle}
 				</Typography>
 			</ListItem>
-			{item.pages.map((page, i) => (
-				<ListItem disableGutters key={i} className={classes.menuGroupItem}>
-					<Typography
-						variant="body2"
-						component="a"
-						href={page.href}
-						className={clsx(classes.navLink, 'submenu-item')}
-					>
-						{page.title}
-					</Typography>
+			{item.pages.map((page) => (
+				<ListItem
+					disableGutters
+					key={fancyId()}
+					className={classes.menuGroupItem}
+				>
+					<NavLink to={page.href}>
+						<Typography
+							variant="body1"
+							className={clsx(classes.navLink, 'submenu-item')}
+						>
+							{page.title}
+						</Typography>
+					</NavLink>
 				</ListItem>
 			))}
 		</List>
@@ -175,14 +183,14 @@ const Footer = ({ pages, className, ...rest }: Props): JSX.Element => {
 						<List disablePadding>
 							<ListItem disableGutters className={classes.logoContainerItem}>
 								<div className={classes.logoContainer}>
-									<a href="/" title="almond">
+									<NavLink to="/">
 										<Image
 											className={classes.logoImage}
 											src={logo}
 											alt="almond"
 											lazy={false}
 										/>
-									</a>
+									</NavLink>
 								</div>
 							</ListItem>
 							<ListItem disableGutters>
@@ -199,7 +207,7 @@ const Footer = ({ pages, className, ...rest }: Props): JSX.Element => {
 						</List>
 					</Grid>
 					<Grid item xs={12} md={10} className={classes.menuListContainer}>
-						<Grid container spacing={0}>
+						<Grid container spacing={0} justify="space-evenly">
 							<Grid item>
 								<DiscoverPages />
 							</Grid>

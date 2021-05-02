@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Grid, Typography } from '@material-ui/core';
 import { Image } from '@components/atoms';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ const logo = 'https://static.almondhydroponics.com/static/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	logoContainer: {
+		cursor: 'pointer',
 		width: '10%',
 		height: '10%',
 		[theme.breakpoints.up('md')]: {
@@ -43,27 +44,32 @@ const Logo = ({
 	displayText = false,
 }: Props): JSX.Element => {
 	const classes = useStyles();
+	const history = useHistory();
 	return (
-		<div className={classes.logoContainer} data-testid="logo">
-			<NavLink to="/">
-				<Grid container className={classes.container}>
-					<Image
-						className={classes.logoImage}
-						src={themeMode === 'light' ? logo : logo}
-						alt="almond"
-						lazy={false}
-					/>
-					{displayText && (
-						<Typography
-							variant="h5"
-							color="textPrimary"
-							style={{ fontWeight: 600, fontSize: '16px', padding: '8px' }}
-						>
-							Almond
-						</Typography>
-					)}
-				</Grid>
-			</NavLink>
+		<div
+			className={classes.logoContainer}
+			data-testid="logo"
+			onClick={() => history.push('/')}
+			onKeyDown={() => history.push('/')}
+			role="presentation"
+		>
+			<Grid container className={classes.container}>
+				<Image
+					className={classes.logoImage}
+					src={themeMode === 'light' ? logo : logo}
+					alt="almond"
+					lazy={false}
+				/>
+				{displayText && (
+					<Typography
+						variant="h5"
+						color="textPrimary"
+						style={{ fontWeight: 600, fontSize: '16px', padding: '8px' }}
+					>
+						Almond
+					</Typography>
+				)}
+			</Grid>
 		</div>
 	);
 };

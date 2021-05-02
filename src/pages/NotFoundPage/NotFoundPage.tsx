@@ -3,49 +3,23 @@ import { Button } from '@material-ui/core';
 import { Image, LearnMoreLink } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
 import { Section } from '@components/organisms';
-import homeImage from '../../assets/images/illustration_404.svg';
-
-const useStyles = makeStyles((theme) => {
-	const toolbar = theme.mixins.toolbar as any;
-	return {
-		formContainer: {
-			height: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			minHeight: `calc(100vh - ${toolbar['@media (min-width:600px)'].minHeight}px)`,
-			maxWidth: 500,
-			margin: `0 auto`,
-		},
-		section: {
-			paddingTop: 0,
-			paddingBottom: 0,
-		},
-		label: {
-			fontWeight: 'bold',
-		},
-		image: {
-			[theme.breakpoints.down('sm')]: {
-				maxWidth: 500,
-			},
-		},
-	};
-});
+import fancyId from '@utils/fancyId';
+import { useAuthStyles } from '@pages/SignupPage/styles';
+import notFoundImage from '../../assets/images/illustration_404.svg';
 
 const NotFoundPage = (): JSX.Element => {
-	const classes = useStyles();
+	const classes = useAuthStyles();
 
 	const handleClick = (): void => {
 		window.history.back();
 	};
 
 	return (
-		<div>
-			<Section className={classes.section}>
+		<>
+			<Section className={classes.section} data-testid="not-found">
 				<div className={classes.formContainer}>
 					<Image
-						src={homeImage}
+						src={notFoundImage}
 						alt="Almond Hydroponics"
 						className={classes.image}
 					/>
@@ -66,6 +40,7 @@ const NotFoundPage = (): JSX.Element => {
 						}}
 						ctaGroup={[
 							<Button
+								key={fancyId()}
 								size="medium"
 								variant="contained"
 								color="primary"
@@ -78,7 +53,7 @@ const NotFoundPage = (): JSX.Element => {
 					/>
 				</div>
 			</Section>
-		</div>
+		</>
 	);
 };
 

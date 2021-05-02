@@ -655,7 +655,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 					<GeneralCardInfo
 						mainHeader="Manual Override"
 						subHeader="Pump water directly into the system"
-						icon={<BlurCircular fontSize="large" />}
+						icon={<BlurCircular />}
 						actionItem={
 							<PumpSwitch
 								className="manual-override"

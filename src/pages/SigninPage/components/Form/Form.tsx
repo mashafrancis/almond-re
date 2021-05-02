@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Button,
@@ -15,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { loginAccount } from '@modules/authentication';
 import validate from 'validate.js';
 import useFormState from '@hooks/useFormState';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	passwordIcon: {
 		cursor: 'pointer',
+	},
+	progressIcon: {
+		color: theme.palette.primary.contrastText,
 	},
 }));
 
@@ -39,7 +42,11 @@ const schema = {
 	},
 };
 
-const Form = (): JSX.Element => {
+interface Props {
+	isLoading: boolean;
+}
+
+const Form = ({ isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
 
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
@@ -142,7 +149,11 @@ const Form = (): JSX.Element => {
 							fullWidth
 							disabled={!isValid}
 						>
-							Login
+							{isLoading ? (
+								<CircularProgress className={classes.progressIcon} size="2em" />
+							) : (
+								'Login'
+							)}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
@@ -152,9 +163,7 @@ const Form = (): JSX.Element => {
 							align="center"
 						>
 							Forgot your password?{' '}
-							<NavLink to="/password-reset">
-								<LearnMoreLink title="Reset password" />
-							</NavLink>
+							<LearnMoreLink title="Reset password" href="password-reset" />
 						</Typography>
 					</Grid>
 				</Grid>

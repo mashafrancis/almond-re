@@ -1,4 +1,3 @@
-import { GridColumnsToolbarButton } from '@material-ui/data-grid';
 import {
 	CreateAccountActionFailure,
 	CreateAccountActionRequest,
@@ -129,7 +128,7 @@ export const passwordResetFailure = (
  */
 export const passwordChangeRequest = (): PasswordChangeActionRequest => ({
 	type: PASSWORD_CHANGE_REQUEST,
-	isLoading: false,
+	isLoading: true,
 });
 
 /**
@@ -166,8 +165,7 @@ export const createAccount = (user: Partial<IUserInputDTO>) => (
 				data: { message },
 			} = response;
 			dispatch(createAccountSuccess());
-			dispatch(displaySnackMessage(message));
-			window.location.replace('/register-success');
+			dispatch(redirect('/success', message));
 		})
 		.catch((error) => {
 			dispatch(createAccountFailure(error.message));
@@ -219,7 +217,7 @@ export const passwordReset = (email: string) => (
 				data: { message },
 			} = response;
 			dispatch(passwordResetSuccess());
-			dispatch(redirect('/register-success', message));
+			dispatch(redirect('/success', message));
 		})
 		.catch((error) => {
 			dispatch(passwordResetFailure(error.message));

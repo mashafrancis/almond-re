@@ -38,7 +38,7 @@ export const light = {
 		default: '#fff',
 		level2: '#62a1e81f',
 		level1: '#fff',
-		footer: '#142542',
+		footer: '#f2f2f2',
 		activeDevice: 'rgba(17, 17, 17, 0.8)',
 	},
 };

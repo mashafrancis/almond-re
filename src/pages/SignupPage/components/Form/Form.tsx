@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Typography,
@@ -15,6 +15,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useDispatch } from 'react-redux';
 import useFormState from '@hooks/useFormState';
 import { createAccount } from '@modules/authentication';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import googleIcon from '../../../../assets/images/icons/google-login-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	passwordIcon: {
 		cursor: 'pointer',
+	},
+	progressIcon: {
+		color: theme.palette.primary.contrastText,
 	},
 }));
 
@@ -58,13 +62,26 @@ const schema = {
 	},
 };
 
-const Form = (): JSX.Element => {
+interface Props {
+	redirectLink: string;
+	isLoading: boolean;
+}
+
+const Form = ({ redirectLink, isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
 
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
 	const dispatch = useDispatch();
+
+	const history = useHistory();
+
+	useEffect(() => {
+		if (redirectLink) {
+			history.push(redirectLink);
+		}
+	}, [redirectLink]);
 
 	const {
 		values,
@@ -182,7 +199,11 @@ const Form = (): JSX.Element => {
 							fullWidth
 							disabled={!isValid}
 						>
-							Register
+							{isLoading ? (
+								<CircularProgress className={classes.progressIcon} size="2em" />
+							) : (
+								'Register'
+							)}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
@@ -192,9 +213,7 @@ const Form = (): JSX.Element => {
 							align="center"
 						>
 							Already have an account?{' '}
-							<NavLink to="/login">
-								<LearnMoreLink title="Sign in" />
-							</NavLink>
+							<LearnMoreLink title="Sign in" href="login" />
 						</Typography>
 					</Grid>
 				</Grid>

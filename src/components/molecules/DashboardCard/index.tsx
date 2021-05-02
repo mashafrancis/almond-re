@@ -8,7 +8,10 @@ const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			flexGrow: 1,
+			// width: '-webkit-fit-content',
 			height: '-webkit-fit-content',
+			// height: '-moz-available',
+			// height: 'fill-available',
 		},
 		details: {
 			display: 'flex',

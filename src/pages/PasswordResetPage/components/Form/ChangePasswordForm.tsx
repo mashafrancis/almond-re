@@ -12,9 +12,10 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { passwordChange } from '@modules/authentication';
 import { useDispatch } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import validate from 'validate.js';
 import useFormState from '@hooks/useFormState';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	passwordIcon: {
 		cursor: 'pointer',
+	},
+	progressIcon: {
+		color: theme.palette.primary.contrastText,
 	},
 }));
 
@@ -34,7 +38,11 @@ const schema = {
 	},
 };
 
-const PasswordResetForm = (): JSX.Element => {
+interface Props {
+	isLoading: boolean;
+}
+
+const PasswordResetForm = ({ isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
@@ -143,7 +151,11 @@ const PasswordResetForm = (): JSX.Element => {
 							fullWidth
 							disabled={!isValid}
 						>
-							Send
+							{isLoading ? (
+								<CircularProgress className={classes.progressIcon} size="2em" />
+							) : (
+								'Send'
+							)}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
@@ -152,9 +164,7 @@ const PasswordResetForm = (): JSX.Element => {
 							color="textSecondary"
 							align="center"
 						>
-							<NavLink to="/login">
-								<LearnMoreLink title="Sign in here" href="/signin-cover" />
-							</NavLink>
+							<LearnMoreLink title="Sign in here" href="/login" />
 						</Typography>
 					</Grid>
 				</Grid>

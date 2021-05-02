@@ -1,3 +1,10 @@
+import {
+	DevicesOtherTwoTone,
+	HomeTwoTone,
+	NaturePeopleTwoTone,
+	PeopleAltTwoTone,
+} from '@material-ui/icons';
+
 export const farming = [
 	{
 		icon: 'fas fa-layer-group',
@@ -79,5 +86,26 @@ export const features = [
 			'Almond-grown produce reminds many people of family gardens of their childhood.',
 		illustration:
 			'https://static.almondhydroponics.com/static/images/feature5.svg',
+	},
+];
+
+export const services = [
+	{
+		icon: <HomeTwoTone color="primary" fontSize="large" />,
+		title: 'Built for home',
+		subtitle:
+			'Almond is built for use at the comfort of your home with little expense.',
+	},
+	{
+		icon: <NaturePeopleTwoTone color="primary" fontSize="large" />,
+		title: 'Designed for space',
+		subtitle:
+			'Designed for limited space with no compromise of quality and quantity.',
+	},
+	{
+		icon: <DevicesOtherTwoTone color="primary" fontSize="large" />,
+		title: 'Monitoring of growth',
+		subtitle:
+			'We have an intelligent engine to take care of the plant growth in the background.',
 	},
 ];
