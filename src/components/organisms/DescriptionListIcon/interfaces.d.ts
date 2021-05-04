@@ -23,7 +23,6 @@ export interface DescriptionListIconProps {
 	 * Title variant
 	 */
 	titleVariant?:
-		| 'inherit'
 		| 'button'
 		| 'overline'
 		| 'caption'
@@ -36,14 +35,11 @@ export interface DescriptionListIconProps {
 		| 'subtitle1'
 		| 'subtitle2'
 		| 'body1'
-		| 'body2'
-		| 'srOnly'
-		| undefined;
+		| 'body2';
 	/**
 	 * Subtitle variant
 	 */
 	subtitleVariant?:
-		| 'inherit'
 		| 'button'
 		| 'overline'
 		| 'caption'
@@ -56,9 +52,7 @@ export interface DescriptionListIconProps {
 		| 'subtitle1'
 		| 'subtitle2'
 		| 'body1'
-		| 'body2'
-		| 'srOnly'
-		| undefined;
+		| 'body2';
 	/**
 	 * Additional props to pass to the title Typography component
 	 */

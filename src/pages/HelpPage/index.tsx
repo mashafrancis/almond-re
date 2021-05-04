@@ -13,7 +13,7 @@ export const HelpPage = (): JSX.Element => (
 			item
 			container
 			direction="column"
-			justify="flex-start"
+			justifyContent="flex-start"
 			alignItems="stretch"
 			spacing={1}
 			xs

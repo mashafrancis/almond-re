@@ -54,7 +54,7 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 	return (
 		<div className={clsx(classes.root, className)} {...rest}>
 			<Section className={classes.pagePaddingTop}>
-				<Grid container justify="space-between" spacing={isMd ? 4 : 2}>
+				<Grid container justifyContent="space-between" spacing={isMd ? 4 : 2}>
 					<Grid item xs={12} md={6} data-aos="fade-up">
 						<SectionHeader
 							title={
@@ -96,7 +96,7 @@ const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 					<Grid
 						item
 						container
-						justify="center"
+						justifyContent="center"
 						alignItems="center"
 						xs={12}
 						md={6}

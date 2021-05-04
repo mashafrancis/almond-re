@@ -46,7 +46,7 @@ const DescriptionCta = ({
 		<Grid
 			container
 			spacing={2}
-			justify="space-between"
+			justifyContent="space-between"
 			alignItems="center"
 			className={clsx('description-cta', className)}
 			{...rest}
@@ -76,7 +76,7 @@ const DescriptionCta = ({
 			<Grid item>
 				<Grid
 					container
-					justify={justifyGrid ?? 'center'}
+					justifyContent={justifyGrid ?? 'center'}
 					spacing={1}
 					className="description-cta__button-group"
 					{...buttonGroupProps}

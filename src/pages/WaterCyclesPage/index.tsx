@@ -537,7 +537,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 						container
 						item
 						xs={12}
-						justify="flex-start"
+						justifyContent="flex-start"
 						alignItems="center"
 						direction="row"
 						spacing={2}
@@ -637,8 +637,6 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const handleDeviceModalOpen = (): void => setDeviceModalOpen(true);
-
 	return (
 		<div className={classes.root} data-testid="water-cycles-page">
 			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
@@ -646,7 +644,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 					item
 					container
 					direction="column"
-					justify="center"
+					justifyContent="center"
 					alignItems="stretch"
 					spacing={2}
 					xs
@@ -684,7 +682,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 				<Grid
 					item
 					container
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="stretch"
 					spacing={2}
 					xs
@@ -703,7 +701,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 				<Grid
 					item
 					container
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="stretch"
 					spacing={2}
 					xs

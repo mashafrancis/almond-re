@@ -183,7 +183,7 @@ export const PeoplePage = (): JSX.Element => {
 					container
 					item
 					xs={12}
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="center"
 					direction="row"
 					spacing={2}
@@ -217,7 +217,7 @@ export const PeoplePage = (): JSX.Element => {
 						container
 						item
 						xs={12}
-						justify="flex-start"
+						justifyContent="flex-start"
 						alignItems="center"
 						direction="row"
 						spacing={2}
@@ -353,7 +353,7 @@ export const PeoplePage = (): JSX.Element => {
 					item
 					container
 					direction="column"
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="stretch"
 					spacing={1}
 					xs

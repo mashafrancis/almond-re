@@ -105,7 +105,7 @@ const AnalyticsCard = ({
 						item
 						container
 						direction="row"
-						justify="space-between"
+						justifyContent="space-between"
 						alignItems="center"
 						spacing={2}
 						style={{ display: 'flex' }}
@@ -118,7 +118,7 @@ const AnalyticsCard = ({
 							<Grid
 								item
 								container
-								justify="space-between"
+								justifyContent="space-between"
 								alignItems="center"
 								direction="row"
 								style={{ display: 'flex', width: '100%' }}

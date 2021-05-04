@@ -79,7 +79,7 @@ const GeneralCardInfo = ({
 						item
 						container
 						direction="row"
-						justify="space-between"
+						justifyContent="space-between"
 						alignItems="center"
 						// spacing={2}
 						style={{ display: 'flex' }}
@@ -92,7 +92,7 @@ const GeneralCardInfo = ({
 							xs={2}
 							direction="row"
 							alignItems="center"
-							justify="center"
+							justifyContent="center"
 						>
 							<ButtonBase className={classes.iconBase}>{icon}</ButtonBase>
 						</Grid>
@@ -101,7 +101,7 @@ const GeneralCardInfo = ({
 							container
 							// xl={8}
 							xs={7}
-							justify="space-between"
+							justifyContent="space-between"
 							alignItems="flex-start"
 							direction="column"
 							style={{ display: 'flex', width: '100%' }}
@@ -124,7 +124,7 @@ const GeneralCardInfo = ({
 							xs={3}
 							direction="row"
 							alignItems="center"
-							justify="flex-end"
+							justifyContent="flex-end"
 						>
 							{actionItem}
 						</Grid>

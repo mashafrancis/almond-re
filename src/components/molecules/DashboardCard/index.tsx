@@ -92,7 +92,7 @@ const DashboardCard = ({
 						item
 						container
 						direction="column"
-						justify="center"
+						justifyContent="center"
 						alignItems="center"
 						spacing={2}
 						style={{ display: 'flex', textAlign: 'center', margin: 0 }}

@@ -33,7 +33,6 @@ import {
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
-// import { useMqttState } from 'mqtt-react-hooks';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { CustomAvatar } from '@components/molecules';
 import Logo from '@components/atoms/Logo';
@@ -348,14 +347,14 @@ const Topbar = ({
 				<Grid
 					container
 					direction="row"
-					justify="space-evenly"
+					justifyContent="space-evenly"
 					alignItems="center"
 					spacing={2}
 					style={{ margin: 0, padding: 0 }}
 				>
 					<DeviceActiveBadge
 						variant="dot"
-						overlap="circle"
+						overlap="circular"
 						anchorOrigin={{
 							vertical: 'top',
 							horizontal: 'left',
@@ -364,7 +363,7 @@ const Topbar = ({
 						<Grid
 							container
 							direction="row"
-							justify="space-evenly"
+							justifyContent="space-evenly"
 							alignItems="center"
 							spacing={2}
 							style={{ margin: 0, padding: 0 }}

@@ -76,7 +76,7 @@ const Overview = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						}
 						ctaGroup={[
 							<NavLink key={fancyId()} to="/resources">
-								<Button variant="contained" color="default" size="medium">
+								<Button variant="contained" color="primary" size="medium">
 									<LearnMoreLink title="Learn More" href="about" />
 								</Button>
 							</NavLink>,
@@ -85,7 +85,7 @@ const Overview = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						disableGutter
 					/>
 				</Grid>
-				<Grid item container justify="flex-end" xs={12} md={4}>
+				<Grid item container justifyContent="flex-end" xs={12} md={4}>
 					<Image
 						src={plant1}
 						srcSet={plant1}

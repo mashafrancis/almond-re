@@ -95,7 +95,7 @@ const Notifications = ({
 						</div>
 					</div>
 				</Grid>
-				<Grid item container justify="flex-start" xs={12}>
+				<Grid item container justifyContent="flex-start" xs={12}>
 					<Button
 						variant="contained"
 						type="submit"

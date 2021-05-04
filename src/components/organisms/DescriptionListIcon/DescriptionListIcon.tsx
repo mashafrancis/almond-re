@@ -53,7 +53,7 @@ const DescriptionListIcon = ({
 			<Grid
 				item
 				container
-				justify={gridJustify}
+				justifyContent={gridJustify}
 				xs={12}
 				className="description-list-icon__icon-wrapper"
 			>
