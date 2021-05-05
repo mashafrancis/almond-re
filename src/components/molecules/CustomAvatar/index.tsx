@@ -24,11 +24,15 @@ const useStyles = makeStyles({
 	},
 });
 
-const CustomAvatar = (): JSX.Element => {
+interface Props {
+	hasMultipleRoles?: boolean;
+}
+
+const CustomAvatar = ({ hasMultipleRoles = false }: Props): JSX.Element => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { avatar, menuPopup } = useStyles();
-	const { name, photo } = useContext(UserContext);
+	const { name, photo, isAdmin } = useContext(UserContext);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
@@ -99,7 +103,7 @@ const CustomAvatar = (): JSX.Element => {
 						</MenuItem>
 					);
 				})}
-				{location.pathname === '/dashboard' && (
+				{location.pathname === '/dashboard' && hasMultipleRoles && (
 					<MenuItem onClick={handleRoleModal}>
 						<ListItemIcon style={{ minWidth: 40 }}>
 							<Mood />

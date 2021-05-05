@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			height: '-webkit-fit-content',
 			[theme.breakpoints.down('sm')]: {
 				paddingTop: '0 !important',
+				marginBottom: 8,
 			},
 		},
 		action: {

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { ButtonBase, Card, Grid } from '@material-ui/core';
+import { ButtonBase, Card, Grid, Stack } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		mainCard: {
 			[theme.breakpoints.down('sm')]: {
 				paddingTop: '0 !important',
+				marginBottom: 8,
 			},
 		},
 		yellowCard: {
@@ -101,15 +102,11 @@ const AnalyticsCard = ({
 				data-testid="analytics-card"
 			>
 				<CardContent className={classes.content}>
-					<Grid
-						item
-						container
+					<Stack
 						direction="row"
 						justifyContent="space-between"
 						alignItems="center"
 						spacing={2}
-						style={{ display: 'flex' }}
-						xs={12}
 					>
 						<Grid item xs={1} md={2}>
 							<ButtonBase>{icon}</ButtonBase>
@@ -139,7 +136,7 @@ const AnalyticsCard = ({
 								</Typography>
 							</Grid>
 						</Grid>
-					</Grid>
+					</Stack>
 				</CardContent>
 			</Card>
 		</Grid>

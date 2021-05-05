@@ -1,7 +1,12 @@
-import { Box } from '@material-ui/core';
+import { Box, useMediaQuery } from '@material-ui/core';
 // interfaces
 import { TabPanelProps } from '@components/atoms/TabPanel/interfaces';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import {
+	createStyles,
+	makeStyles,
+	Theme,
+	useTheme,
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -21,6 +26,11 @@ const TabPanel = ({
 	...other
 }: TabPanelProps): JSX.Element => {
 	const classes = useStyles();
+
+	const themePoint = useTheme();
+	const isSm = useMediaQuery(themePoint.breakpoints.down('sm'), {
+		defaultMatches: true,
+	});
 	return (
 		<div
 			role="tabpanel"
@@ -30,7 +40,15 @@ const TabPanel = ({
 			{...other}
 		>
 			{value === index && (
-				<Box className={classes.box} p={3} {...other} data-testid="tab-panel">
+				<Box
+					sx={{
+						padding: `${isSm ? '0' : '0'}`,
+						marginBottom: `${isSm ? '60px' : '60px'}`,
+					}}
+					p={3}
+					{...other}
+					data-testid="tab-panel"
+				>
 					{children}
 				</Box>
 			)}

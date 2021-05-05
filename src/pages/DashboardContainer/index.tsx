@@ -229,6 +229,7 @@ const DashboardContainer = (): JSX.Element => {
 	const renderSelectDeviceModal = (): JSX.Element => (
 		<Modal
 			isModalOpen={isSelectDeviceModalOpen}
+			renderDialogText="Select the device you want to use."
 			renderHeader="Select the device ID"
 			renderContent={renderSelectDeviceContent()}
 			onClose={handleSelectDeviceModal}
@@ -241,6 +242,7 @@ const DashboardContainer = (): JSX.Element => {
 	const renderChangeUserRoleDialog = (): JSX.Element => (
 		<Modal
 			isModalOpen={isChangeRoleDialogOpen}
+			renderDialogText="Select the role you want to perform."
 			renderHeader="Confirm change of role"
 			renderContent={renderSelectChangeRoleContent()}
 			onClose={toggleRoleChangeDialog}
