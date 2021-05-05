@@ -16,7 +16,7 @@ const CustomPagination = () => {
 		<Pagination
 			className={classes.root}
 			color="primary"
-			shape="round"
+			shape="circular"
 			size="small"
 			variant="outlined"
 			count={state.pagination.pageCount}

@@ -31,7 +31,7 @@ const MenuContent = (): JSX.Element => {
 			value={selectedIndex}
 			onChange={handleOnChange}
 			orientation="vertical"
-			scrollButtons="off"
+			scrollButtons={false}
 			textColor="primary"
 			aria-label="menu tabs"
 		>

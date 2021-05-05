@@ -156,7 +156,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 						item
 						container
 						direction="row"
-						justify="center"
+						justifyContent="center"
 						alignItems="center"
 						spacing={2}
 						xs
@@ -181,7 +181,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 					item
 					container
 					direction="row"
-					justify="center"
+					justifyContent="center"
 					alignItems="center"
 					spacing={2}
 					xs={12}
@@ -203,7 +203,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 					item
 					container
 					direction="row"
-					justify="center"
+					justifyContent="center"
 					alignItems="center"
 					spacing={2}
 					xs={12}

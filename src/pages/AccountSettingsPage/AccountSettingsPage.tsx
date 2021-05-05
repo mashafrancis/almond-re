@@ -133,7 +133,7 @@ const AccountSettingsPage = (): JSX.Element => {
 								value={selectedTabIndex}
 								onChange={handleOnChange}
 								orientation={isSm ? 'vertical' : 'horizontal'}
-								scrollButtons="off"
+								scrollButtons={false}
 								textColor="primary"
 								aria-label="menu tabs"
 							>

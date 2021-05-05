@@ -1,12 +1,21 @@
 import { useState, useEffect, useContext, ChangeEvent } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // third-party libraries
-import DateFnsUtils from '@date-io/date-fns';
-import { Button, IconButton, InputAdornment, Switch } from '@material-ui/core';
-import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import TimePicker from '@material-ui/lab/TimePicker';
+import {
+	Grid,
+	Stack,
+	Button,
+	IconButton,
+	InputAdornment,
+	Switch,
+	TextField,
+} from '@material-ui/core';
+// import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import { NoDataOverlay, LinearProgressBar } from '@components/atoms';
@@ -455,37 +464,28 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 		return (
 			<>
-				<Typography variant="body2" color="textSecondary" gutterBottom>
-					{`${
-						isEditMode ? 'Change the' : 'Add a'
-					} time schedule as per your preference for pumping.`}
-				</Typography>
-				<MuiPickersUtilsProvider utils={DateFnsUtils}>
+				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<TimePicker
-						fullWidth
-						style={{ marginTop: 12 }}
-						name="time_schedule"
-						inputVariant="outlined"
 						label="time schedule"
 						value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
 						onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
-						{...(hasError ? { error: true } : {})}
-						{...(hasError
-							? {
-									helperText: 'Schedule time has to be at least one hour apart',
-							  }
-							: {})}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<IconButton>
-										<AddAlarmTwoTone color={hasError ? 'error' : 'primary'} />
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
+						renderInput={(params) => (
+							<TextField
+								{...params}
+								fullWidth
+								style={{ marginTop: 12 }}
+								name="time_schedule"
+								{...(hasError ? { error: true } : {})}
+								{...(hasError
+									? {
+											helperText:
+												'Schedule time has to be at least one hour apart',
+									  }
+									: {})}
+							/>
+						)}
 					/>
-				</MuiPickersUtilsProvider>
+				</LocalizationProvider>
 			</>
 		);
 	};
@@ -497,6 +497,9 @@ export const WaterCyclesPage = (): JSX.Element => {
 				isModalOpen={isAddEditModalOpen}
 				renderContent={renderTimeScheduleForm()}
 				onClose={closeScheduleModal}
+				renderDialogText={`${
+					isEditMode ? 'Change the' : 'Add a'
+				} time schedule as per your preference for pumping.`}
 				renderHeader={
 					isEditMode ? 'Edit time schedule' : 'Create a new time schedule'
 				}
@@ -532,38 +535,27 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 		return (
 			<div className={classes.root} key={schedule}>
-				<Grid container spacing={3}>
-					<Grid
-						container
-						item
-						xs={12}
-						justify="flex-start"
-						alignItems="center"
-						direction="row"
-						spacing={2}
-						style={{ display: 'flex', width: '100%' }}
+				<Stack direction="row" spacing={1}>
+					<Typography
+						style={{ cursor: 'pointer', paddingRight: 12 }}
+						id={schedule}
+						variant="body2"
+						color="primary"
+						onClick={showScheduleModal('Edit')}
+						onKeyDown={showScheduleModal('Edit')}
 					>
-						<Typography
-							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={schedule}
-							variant="body2"
-							color="primary"
-							onClick={showScheduleModal('Edit')}
-							onKeyDown={showScheduleModal('Edit')}
-						>
-							Edit
-						</Typography>
-						<Typography
-							style={{ cursor: 'pointer', color: red[900] }}
-							id={schedule}
-							variant="body2"
-							onClick={handleDelete}
-							onKeyDown={handleDelete}
-						>
-							Delete
-						</Typography>
-					</Grid>
-				</Grid>
+						Edit
+					</Typography>
+					<Typography
+						style={{ cursor: 'pointer', color: red[900] }}
+						id={schedule}
+						variant="body2"
+						onClick={handleDelete}
+						onKeyDown={handleDelete}
+					>
+						Delete
+					</Typography>
+				</Stack>
 			</div>
 		);
 	};
@@ -637,54 +629,54 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const handleDeviceModalOpen = (): void => setDeviceModalOpen(true);
-
 	return (
 		<div className={classes.root} data-testid="water-cycles-page">
-			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+			<Grid container item xs={12}>
 				<Grid
 					item
 					container
 					direction="column"
-					justify="center"
+					justifyContent="center"
 					alignItems="stretch"
 					spacing={2}
 					xs
 					style={{ margin: 0, padding: 0, height: '-webkit-fit-content' }}
 				>
-					<GeneralCardInfo
-						mainHeader="Manual Override"
-						subHeader="Pump water directly into the system"
-						icon={<BlurCircular />}
-						actionItem={
-							<PumpSwitch
-								className="manual-override"
-								onChange={handleTogglePumpOnChange}
-								checked={enabled}
-								inputProps={{ 'aria-label': 'primary checkbox' }}
-							/>
-						}
-					/>
-					<DashboardCard
-						heading="Water Schedules"
-						body={renderTableContent()}
-						actionItem={
-							<Button
-								color="primary"
-								size="small"
-								variant="outlined"
-								onClick={showScheduleModal('Add')}
-							>
-								<Add fontSize="small" />
-								Add schedule
-							</Button>
-						}
-					/>
+					<Stack spacing={2}>
+						<GeneralCardInfo
+							mainHeader="Manual Override"
+							subHeader="Pump water directly into the system"
+							icon={<BlurCircular />}
+							actionItem={
+								<PumpSwitch
+									className="manual-override"
+									onChange={handleTogglePumpOnChange}
+									checked={enabled}
+									inputProps={{ 'aria-label': 'primary checkbox' }}
+								/>
+							}
+						/>
+						<DashboardCard
+							heading="Water Schedules"
+							body={renderTableContent()}
+							actionItem={
+								<Button
+									color="primary"
+									size="small"
+									variant="outlined"
+									onClick={showScheduleModal('Add')}
+								>
+									<Add fontSize="small" />
+									Add schedule
+								</Button>
+							}
+						/>
+					</Stack>
 				</Grid>
 				<Grid
 					item
 					container
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="stretch"
 					spacing={2}
 					xs
@@ -703,7 +695,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 				<Grid
 					item
 					container
-					justify="flex-start"
+					justifyContent="flex-start"
 					alignItems="stretch"
 					spacing={2}
 					xs

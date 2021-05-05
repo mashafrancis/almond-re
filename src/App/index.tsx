@@ -31,6 +31,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 // import 'aos/dist/aos.css';
 // interfaces
 import { IClientOptions } from 'mqtt';
+import { StyledEngineProvider } from '@material-ui/core';
 import Routes from '../routes';
 import { IRootState } from '../store/rootReducer';
 
@@ -163,20 +164,22 @@ export const App = (): JSX.Element => {
 				<UserContext.Provider value={userDetailsOnProvider}>
 					<ComponentProvider>
 						<ViewportProvider>
-							<SnackBar snack={snack} />
-							{window.location.pathname !== '/' && isAuthenticated}
-							<Suspense fallback={<LinearProgressBar />}>
-								{isLoading ? (
-									<Backdrop className={classes.backdrop} open={isLoading}>
-										<CircularProgress
-											color="primary"
-											style={{ zIndex: 100000 }}
-										/>
-									</Backdrop>
-								) : (
-									<Routes />
-								)}
-							</Suspense>
+							<StyledEngineProvider injectFirst>
+								<SnackBar snack={snack} />
+								{window.location.pathname !== '/' && isAuthenticated}
+								<Suspense fallback={<LinearProgressBar />}>
+									{isLoading ? (
+										<Backdrop className={classes.backdrop} open={isLoading}>
+											<CircularProgress
+												color="primary"
+												style={{ zIndex: 100000 }}
+											/>
+										</Backdrop>
+									) : (
+										<Routes />
+									)}
+								</Suspense>
+							</StyledEngineProvider>
 						</ViewportProvider>
 					</ComponentProvider>
 				</UserContext.Provider>

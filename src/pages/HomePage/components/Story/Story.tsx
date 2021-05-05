@@ -43,7 +43,7 @@ const Story = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						align="left"
 					/>
 				</Grid>
-				<Grid item container justify="center" xs={12} data-aos="fade-up">
+				<Grid item container justifyContent="center" xs={12} data-aos="fade-up">
 					<Button variant="outlined" color="primary">
 						Learn more
 					</Button>

@@ -1,4 +1,10 @@
-import { ButtonBase, Card, Grid, useMediaQuery } from '@material-ui/core';
+import {
+	ButtonBase,
+	Card,
+	Grid,
+	Stack,
+	useMediaQuery,
+} from '@material-ui/core';
 import clsx from 'clsx';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -44,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			paddingBottom: 0,
 			[theme.breakpoints.down('sm')]: {
 				paddingTop: '0 !important',
+				marginBottom: 8,
 			},
 		},
 		iconBase: {
@@ -79,7 +86,7 @@ const GeneralCardInfo = ({
 						item
 						container
 						direction="row"
-						justify="space-between"
+						justifyContent="space-between"
 						alignItems="center"
 						// spacing={2}
 						style={{ display: 'flex' }}
@@ -92,7 +99,7 @@ const GeneralCardInfo = ({
 							xs={2}
 							direction="row"
 							alignItems="center"
-							justify="center"
+							justifyContent="center"
 						>
 							<ButtonBase className={classes.iconBase}>{icon}</ButtonBase>
 						</Grid>
@@ -100,31 +107,33 @@ const GeneralCardInfo = ({
 							item
 							container
 							// xl={8}
-							xs={7}
-							justify="space-between"
-							alignItems="flex-start"
-							direction="column"
-							style={{ display: 'flex', width: '100%' }}
+							xs={8}
+							// justifyContent="space-between"
+							// alignItems="flex-start"
+							// direction="column"
+							// style={{ display: 'flex', width: '100%' }}
 						>
-							<Typography variant="h6" color="primary" data-testid="header">
-								{mainHeader}
-							</Typography>
-							<Typography
-								variant={isMd ? 'subtitle1' : 'body2'}
-								data-testid="sub-header"
-								// className={clsx(classes.subInfoText)}
-							>
-								{subHeader}
-							</Typography>
+							<Stack spacing={0}>
+								<Typography variant="h6" color="primary" data-testid="header">
+									{mainHeader}
+								</Typography>
+								<Typography
+									variant={isMd ? 'subtitle1' : 'body2'}
+									data-testid="sub-header"
+									// className={clsx(classes.subInfoText)}
+								>
+									{subHeader}
+								</Typography>
+							</Stack>
 						</Grid>
 						<Grid
 							item
 							container
 							// xl={3}
-							xs={3}
+							xs={2}
 							direction="row"
 							alignItems="center"
-							justify="flex-end"
+							justifyContent="flex-end"
 						>
 							{actionItem}
 						</Grid>

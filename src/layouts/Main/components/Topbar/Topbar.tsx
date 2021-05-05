@@ -9,10 +9,9 @@ import {
 	Typography,
 	IconButton,
 	Button,
-	Grid,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Image, DarkModeToggler } from '@components/atoms';
+import { DarkModeToggler } from '@components/atoms';
 import authService from '@utils/auth';
 import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
@@ -20,11 +19,12 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import { CustomAvatar } from '@components/molecules';
 
 import Logo from '@components/atoms/Logo';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { shallowEqual, useSelector } from 'react-redux';
 import { PagesProps } from '../../../interfaces';
+import { IRootState } from '../../../../store/rootReducer';
 
-const logo = 'https://static.almondhydroponics.com/static/logo.png';
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	flexGrow: {
 		flexGrow: 1,
 	},
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginLeft: 100,
+		marginLeft: '100px',
 	},
 	toolbar: {
 		zIndex: 999,
@@ -205,7 +205,7 @@ const Topbar = ({
 			variant="dense"
 		>
 			<Logo themeMode={themeMode} displayText />
-			<div className={classes.flexGrowLeft}>
+			<div>
 				<Hidden smDown>
 					<List disablePadding className={classes.navigationContainer}>
 						<NavLink to="/resources">

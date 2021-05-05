@@ -91,7 +91,7 @@ const CardInfo = ({
 						item
 						container
 						direction="row"
-						justify="space-between"
+						justifyContent="space-between"
 						alignItems="center"
 						spacing={2}
 						style={{ display: 'flex' }}
@@ -103,7 +103,7 @@ const CardInfo = ({
 							xs={2}
 							direction="row"
 							alignItems="center"
-							justify="center"
+							justifyContent="center"
 						>
 							<ButtonBase>{icon}</ButtonBase>
 						</Grid>
@@ -111,7 +111,7 @@ const CardInfo = ({
 							item
 							container
 							xs={8}
-							justify="space-between"
+							justifyContent="space-between"
 							alignItems="flex-start"
 							direction="column"
 							style={{ display: 'flex', width: '100%' }}
@@ -132,7 +132,7 @@ const CardInfo = ({
 							xs={2}
 							direction="row"
 							alignItems="center"
-							justify="flex-end"
+							justifyContent="flex-end"
 						>
 							{renderCardButton()}
 						</Grid>

@@ -207,7 +207,7 @@ const Footer = ({ pages, className, ...rest }: Props): JSX.Element => {
 						</List>
 					</Grid>
 					<Grid item xs={12} md={10} className={classes.menuListContainer}>
-						<Grid container spacing={0} justify="space-evenly">
+						<Grid container spacing={0} justifyContent="space-evenly">
 							<Grid item>
 								<DiscoverPages />
 							</Grid>

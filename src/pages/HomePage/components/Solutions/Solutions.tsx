@@ -47,7 +47,7 @@ const Solutions = ({
 				subtitle="Join the food revolution as we bring the farm next to you. Here’s how you can go about with it:"
 				fadeUp
 			/>
-			<Grid container justify="center">
+			<Grid container justifyContent="center">
 				{data.map((item: any, index: number) => (
 					<Grid
 						key={fancyId()}
@@ -56,7 +56,7 @@ const Solutions = ({
 						spacing={isMd ? 4 : 2}
 						data-aos="fade-up"
 						alignItems="center"
-						justify="space-between"
+						justifyContent="space-between"
 						direction={index % 2 === 1 ? 'row-reverse' : 'row'}
 						className={classes.listGrid}
 					>
@@ -82,7 +82,7 @@ const Solutions = ({
 						<Grid
 							item
 							container
-							justify="center"
+							justifyContent="center"
 							alignItems="center"
 							xs={12}
 							sm={6}
@@ -95,7 +95,7 @@ const Solutions = ({
 						</Grid>
 					</Grid>
 				))}
-				<Grid item container justify="center" xs={12}>
+				<Grid item container justifyContent="center" xs={12}>
 					<Button
 						variant="contained"
 						color="primary"

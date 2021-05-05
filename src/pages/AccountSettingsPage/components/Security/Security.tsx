@@ -83,22 +83,22 @@ const Security = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 				<Grid item xs={12}>
 					<Divider />
 				</Grid>
-				<Grid item xs={12}>
-					<FormControlLabel
-						control={<Switch color="primary" />}
-						label={
-							<Typography
-								variant="subtitle1"
-								color="textPrimary"
-								className={classes.switchTitle}
-							>
-								Expose your email
-							</Typography>
-						}
-						labelPlacement="end"
-					/>
-				</Grid>
-				<Grid item container justify="flex-start" xs={12}>
+				{/* <Grid item xs={12}> */}
+				{/*	<FormControlLabel */}
+				{/*		control={<Switch color="primary" />} */}
+				{/*		label={ */}
+				{/*			<Typography */}
+				{/*				variant="subtitle1" */}
+				{/*				color="textPrimary" */}
+				{/*				className={classes.switchTitle} */}
+				{/*			> */}
+				{/*				Expose your email */}
+				{/*			</Typography> */}
+				{/*		} */}
+				{/*		labelPlacement="end" */}
+				{/*	/> */}
+				{/* </Grid> */}
+				<Grid item container justifyContent="flex-start" xs={12}>
 					<Button
 						variant="contained"
 						type="submit"

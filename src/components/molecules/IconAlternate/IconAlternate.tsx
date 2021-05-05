@@ -1,9 +1,7 @@
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
-import { Icon } from '@components/atoms';
 import { IconAlternateProps } from '@components/molecules/IconAlternate/interfaces';
-import { PeopleAltTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	extraSmall: {
@@ -46,7 +44,7 @@ const IconAlternate = ({
 	const classes = useStyles();
 	const useBackgroundStyles = makeStyles(() => ({
 		background: {
-			background: color[50],
+			backgroundColor: `${color[50]} !important`,
 		},
 	}));
 	const backgroundClasses = useBackgroundStyles();

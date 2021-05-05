@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			height: '-webkit-fit-content',
 			[theme.breakpoints.down('sm')]: {
 				paddingTop: '0 !important',
+				marginBottom: 8,
 			},
 		},
 		action: {
@@ -92,7 +93,7 @@ const DashboardCard = ({
 						item
 						container
 						direction="column"
-						justify="center"
+						justifyContent="center"
 						alignItems="center"
 						spacing={2}
 						style={{ display: 'flex', textAlign: 'center', margin: 0 }}

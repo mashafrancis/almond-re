@@ -1,5 +1,6 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Grid, colors } from '@material-ui/core';
+import { useMediaQuery, Grid } from '@material-ui/core';
+import { indigo } from '@material-ui/core/colors';
 import { IconAlternate } from '@components/molecules';
 import { DescriptionListIcon } from '@components/organisms';
 import fancyId from '@utils/fancyId';
@@ -33,7 +34,8 @@ const Services = ({
 								<IconAlternate
 									avatarIcon={item.icon}
 									size="medium"
-									color={colors.indigo}
+									color={indigo}
+									sx={{ width: 70, height: 70 }}
 								/>
 							}
 						/>

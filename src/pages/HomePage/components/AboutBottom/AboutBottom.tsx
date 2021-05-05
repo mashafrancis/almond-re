@@ -31,7 +31,7 @@ const AboutBottom = ({
 				<Grid
 					item
 					container
-					justify={isMd ? 'flex-start' : 'center'}
+					justifyContent={isMd ? 'flex-start' : 'center'}
 					xs={12}
 					md={6}
 				>

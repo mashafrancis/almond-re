@@ -33,10 +33,10 @@ import {
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
-// import { useMqttState } from 'mqtt-react-hooks';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { CustomAvatar } from '@components/molecules';
 import Logo from '@components/atoms/Logo';
+import { shallowEqual, useSelector } from 'react-redux';
 import { StyledBadge } from './styles';
 import {
 	closedColor,
@@ -45,8 +45,9 @@ import {
 	reconnectingColor,
 } from '../../../../assets/tss/common';
 import { ElevationBarProps } from './interfaces';
+import { IRootState } from '../../../../store/rootReducer';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	root: {
 		display: 'flex',
 	},
@@ -264,6 +265,11 @@ const Topbar = ({
 		isSelectDeviceModalOpen,
 	} = useContext(ComponentContext);
 
+	const { roles } = useSelector(
+		(globalState: IRootState) => globalState.user.userDetails,
+		shallowEqual,
+	);
+
 	/*
 	 * Status list
 	 * - Offline
@@ -348,14 +354,14 @@ const Topbar = ({
 				<Grid
 					container
 					direction="row"
-					justify="space-evenly"
+					justifyContent="space-evenly"
 					alignItems="center"
 					spacing={2}
 					style={{ margin: 0, padding: 0 }}
 				>
 					<DeviceActiveBadge
 						variant="dot"
-						overlap="circle"
+						overlap="circular"
 						anchorOrigin={{
 							vertical: 'top',
 							horizontal: 'left',
@@ -364,7 +370,7 @@ const Topbar = ({
 						<Grid
 							container
 							direction="row"
-							justify="space-evenly"
+							justifyContent="space-evenly"
 							alignItems="center"
 							spacing={2}
 							style={{ margin: 0, padding: 0 }}
@@ -397,40 +403,33 @@ const Topbar = ({
 	const renderTimeLineIcon = (): JSX.Element => {
 		const handleClick = () => toggleActivityDrawer(true, true);
 		return (
-			<StyledBadge
-				overlap="circle"
+			<Badge
+				overlap="circular"
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'right',
 				}}
 				variant="dot"
-				invisible={isActivityLogsEmpty !== activityLogsViewed}
+				// invisible={isActivityLogsEmpty !== activityLogsViewed}
 			>
 				<Timeline color="primary" onClick={handleClick} />
-			</StyledBadge>
+			</Badge>
 		);
 	};
 
-	// :TODO: Remove this after demoing the feature to be
-	const notifications = ['true'];
-
-	const renderNotificationsIcon = (): JSX.Element =>
-		isArrayNotNull(notifications.length) ? (
-			<NotificationsNone />
-		) : (
-			<StyledBadge
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right',
-				}}
-				overlap="circle"
-				invisible={isArrayNotNull(notifications.length)}
-				variant="dot"
-				color="primary"
-			>
-				<Notifications color="primary" />
-			</StyledBadge>
-		);
+	const renderNotificationsIcon = (): JSX.Element => (
+		// :TODO: Implement notifications function
+		<Badge
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'right',
+			}}
+			color="primary"
+			badgeContent={3}
+		>
+			<Notifications color="primary" />
+		</Badge>
+	);
 
 	return (
 		<>
@@ -462,23 +461,25 @@ const Topbar = ({
 										size={24}
 									/>
 								</ListItem>
-								<ListItem
-									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-								>
-									<Hidden smDown>{!isAdmin && renderTimeLineIcon()}</Hidden>
-								</ListItem>
+								{!isAdmin && (
+									<ListItem
+										className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+									>
+										<Hidden smDown>{renderTimeLineIcon()}</Hidden>
+									</ListItem>
+								)}
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 								>
 									{renderNotificationsIcon()}
 								</ListItem>
 								<ListItem className={clsx(classes.listItem)}>
-									<CustomAvatar />
+									<CustomAvatar hasMultipleRoles={roles.length > 1} />
 								</ListItem>
 							</List>
 						</Hidden>
 						<Hidden mdUp>
-							<CustomAvatar />
+							<CustomAvatar hasMultipleRoles={roles.length > 1} />
 						</Hidden>
 					</Toolbar>
 					{/* <Divider /> */}

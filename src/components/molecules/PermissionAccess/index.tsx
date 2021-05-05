@@ -24,7 +24,7 @@ function customCheckbox(theme: Theme) {
 			height: 16,
 			backgroundColor: 'transparent',
 			border: `1px solid ${
-				theme.palette.type === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'
+				theme.palette.mode === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'
 			}`,
 			borderRadius: 2,
 		},
@@ -342,58 +342,6 @@ const PermissionAccess = ({
 				}
 			/>
 		</>
-		// <>
-		// 	<Typography variant="body1" color="textPrimary">
-		// 		Permission access
-		// 	</Typography>
-		//
-		// 	<div className="permissions">
-		// 		<div className="permissions__tbl-header">
-		// 			<div className="permissions__tbl-header__column access-levels">
-		// 				Access levels
-		// 			</div>
-		// 			{Object.keys(mappedPermissions).map((permissionString) => (
-		// 				<div
-		// 					key={permissionString}
-		// 					className="permissions__tbl-header__column"
-		// 				>
-		// 					{`${capitalize(permissionString)}`}
-		// 				</div>
-		// 			))}
-		// 		</div>
-		//
-		// 		<div className="permissions__tbl-body">
-		// 			{state.resources.map((resource: Resource) => (
-		// 				<div key={resource.name} className="permissions__tbl-row">
-		// 					<div className="permissions__tbl-row__item header">
-		// 						{resource.name}
-		// 					</div>
-		// 					{Object.keys(mappedPermissions).map((permission) => (
-		// 						<div
-		// 							key={`${resource.name}-${permission}}`}
-		// 							className="permissions__tbl-row__item"
-		// 						>
-		// 							<Checkbox
-		// 								color="primary"
-		// 								icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-		// 								checkedIcon={<CheckBoxIcon fontSize="small" />}
-		// 								checked={
-		// 									resources.length > 0 &&
-		// 									isResourcePermissionActive(
-		// 										resource?._id,
-		// 										mappedPermissions[permission],
-		// 									)
-		// 								}
-		// 								name={`${resource.name}-${permission}`}
-		// 								onChange={togglePermission(resource._id, permission)}
-		// 							/>
-		// 						</div>
-		// 					))}
-		// 				</div>
-		// 			))}
-		// 		</div>
-		// 	</div>
-		// </>
 	);
 };
 

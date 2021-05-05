@@ -20,8 +20,11 @@ import { ModalProps } from '@components/atoms/Modal/interfaces';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';
+import { StyleRules } from '@material-ui/styles';
 
-const styles = (theme: Theme) =>
+const styles = (
+	theme: Theme,
+): StyleRules<{}, 'closeButton' | 'root' | 'modalPaper' | 'title'> =>
 	createStyles({
 		root: {
 			margin: 0,
@@ -121,7 +124,7 @@ const Modal = withStyles(styles)(
 				<DialogContent>
 					<DialogContentText
 						gutterBottom
-						style={{ marginBottom: 0, paddingBottom: 10 }}
+						style={{ marginBottom: 2, paddingBottom: 10 }}
 					>
 						{renderDialogText}
 					</DialogContentText>
