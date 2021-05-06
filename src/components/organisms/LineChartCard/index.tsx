@@ -9,6 +9,10 @@ import { LineChartCardProps } from '@components/organisms/LineChartCard/inteface
 
 const dateSelectOptions = [
 	{
+		value: 'Today',
+		label: 'Today',
+	},
+	{
 		value: 'This Week',
 		label: 'This Week',
 	},
@@ -52,7 +56,7 @@ const LineChartCard = ({
 		}
 	};
 	const labels = data.map((element) => formatTime(element.time));
-	const chartData = data.map((element) => Number(element.mean));
+	const chartData = data.map((element) => Number(element.value));
 
 	// const labels = () => {
 	//   switch (selectedValue) {

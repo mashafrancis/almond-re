@@ -30,6 +30,7 @@ import {
 } from '@modules/sensorData/types';
 
 import { Action, AnyAction, Dispatch, Reducer } from 'redux';
+import { fromFlux } from '@influxdata/giraffe';
 import generateUrlWithQuery from '@utils/generateUrlWithQuery';
 import influxHttp from '@utils/influxHttp';
 import { displaySnackMessage } from '@modules/snack';
@@ -182,6 +183,7 @@ export const getAirTemperatureTrend = (queryParams: QueryParams) => (
 	return influxHttp
 		.get(endpoint)
 		.then((response) => {
+			// const results = fromFlux(response.data.csv);
 			const {
 				data: { data },
 			} = response;

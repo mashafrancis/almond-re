@@ -8,6 +8,9 @@ const getTheme = (mode) =>
 			layout: {
 				contentWidth: 1236,
 			},
+			shape: {
+				borderRadius: 8,
+			},
 			typography: {
 				fontFamily: 'Google Sans, Roboto, Helvetica Neue, sans-serif',
 				button: {

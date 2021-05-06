@@ -1617,6 +1617,13 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@influxdata/giraffe@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@influxdata/giraffe/-/giraffe-2.9.0.tgz#396e10264d86c16a930b10aa2f53da4417c460d3"
+  integrity sha512-hC4Kx7qGQ6UhlXrottt/w3m0yGsHqhPE1UUtc6aRlXJc9iro1nBeI0wm6DagaAjvvV4fBy3rQwdFqqoaVW4LmA==
+  dependencies:
+    merge-images "^2.0.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -10604,6 +10611,11 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
+
+merge-images@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/merge-images/-/merge-images-2.0.0.tgz#4d68d6d90ad8c33a91aced0b5d8660983bf4db3a"
+  integrity sha512-bpI4j54n/Zl6ZTgxaR3xWou/lqI53RAAt8peXijW37BKqoON83LQ7XCZqtFiwzBfEXIws1isYyR06584yffAyA==
 
 merge-stream@^2.0.0:
   version "2.0.0"

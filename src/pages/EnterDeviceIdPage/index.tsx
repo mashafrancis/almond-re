@@ -44,7 +44,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 	const classes = useStyles();
 
 	return (
-		<div>
+		<>
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
 					<Image
@@ -72,7 +72,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 					<Form />
 				</div>
 			</Section>
-		</div>
+		</>
 	);
 };
 

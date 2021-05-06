@@ -20,7 +20,7 @@ const GeneralCardInfo = lazy(
 );
 
 export const QualityCheckPage = (props: QualityCheckPageProps): JSX.Element => (
-	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+	<Grid container item xs={12}>
 		<Grid
 			item
 			container

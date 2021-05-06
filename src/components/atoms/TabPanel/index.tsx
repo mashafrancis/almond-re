@@ -11,9 +11,13 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		box: {
+			margin: 20,
 			[theme.breakpoints.down('sm')]: {
 				padding: 0,
 				marginBottom: 60,
+				marginLeft: 0,
+				marginRight: 0,
+				marginTop: 0,
 			},
 		},
 	}),
@@ -44,6 +48,9 @@ const TabPanel = ({
 					sx={{
 						padding: `${isSm ? '0' : '0'}`,
 						marginBottom: `${isSm ? '60px' : '60px'}`,
+						marginTop: `${isSm ? '0' : '20px'}`,
+						marginLeft: `${isSm ? '0' : '20px'}`,
+						marginRight: `${isSm ? '0' : '20px'}`,
 					}}
 					p={3}
 					{...other}

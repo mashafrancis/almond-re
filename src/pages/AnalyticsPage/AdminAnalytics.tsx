@@ -41,13 +41,7 @@ const AdminAnalytics = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="admin-analytics-page">
-			<Grid
-				container
-				item
-				xs={12}
-				spacing={2}
-				style={{ margin: 0, padding: 0 }}
-			>
+			<Grid container item xs={12} spacing={2}>
 				<AnalyticsCard
 					onClick={handleCardClick(1)}
 					colorClass="blueCard"

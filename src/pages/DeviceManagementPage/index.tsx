@@ -432,7 +432,7 @@ export const DeviceManagementPage = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="device-management-page">
-			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+			<Grid container item xs={12}>
 				<Grid
 					item
 					container

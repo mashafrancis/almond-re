@@ -113,7 +113,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		(globalState: IRootState) => globalState.sensorData?.sensorData,
 		shallowEqual,
 	);
-	const { waterTemperatureTrend } = useSelector(
+	const { airTemperatureTrend } = useSelector(
 		(globalState: IRootState) => globalState.sensorData,
 		shallowEqual,
 	);
@@ -175,23 +175,18 @@ export const WaterCyclesPage = (): JSX.Element => {
 		dispatch(getPumpStatus(activeDevice?._id));
 	}, [activeDevice?._id]);
 
-	// useEffect(() => {
-	// 	// const queryParams = {
-	// 	// 	db: 'almond_db',
-	// 	// 	q:
-	// 	// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
-	// 	// 	epoch: 'ms',
-	// 	// };
-	// 	const queryParams = {
-	// 		q: 'time >= now() - 7d',
-	// 	};
-	// 	getAirTemperatureTrend(queryParams).then(() => {
-	// 		setState((prevState) => ({
-	// 			...prevState,
-	// 			isLoading: false,
-	// 		}));
-	// 	});
-	// }, []);
+	useEffect(() => {
+		// const queryParams = {
+		// 	db: 'almond_db',
+		// 	q:
+		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
+		// 	epoch: 'ms',
+		// };
+		const queryParams = {
+			q: '-7d',
+		};
+		dispatch(getAirTemperatureTrend(queryParams));
+	}, []);
 
 	// useEffect(() => {
 	//   props.getWaterData();
@@ -429,6 +424,30 @@ export const WaterCyclesPage = (): JSX.Element => {
 		}));
 	};
 
+	const pickDate = (params: string) => {
+		let selectedRange: string;
+		switch (params) {
+			case 'Today':
+				selectedRange = '-1d';
+				break;
+			case 'This Week':
+				selectedRange = '-7d';
+				break;
+			case 'This Month':
+				selectedRange = '-30d';
+				break;
+			case 'Quaterly':
+				selectedRange = '-30d';
+				break;
+			case 'This Year':
+				selectedRange = '-1y';
+				break;
+			default:
+				selectedRange = '-1d';
+		}
+		return selectedRange;
+	};
+
 	const handleDateSelect = (event: ChangeEvent<{ value: unknown }>) => {
 		const { value: param } = event.target;
 		if (param === 'Pick a date') {
@@ -447,10 +466,16 @@ export const WaterCyclesPage = (): JSX.Element => {
 			startDate: new Date(),
 			endDate: new Date(),
 		};
-		const date = getDateRange(param, range, currentDateView);
+		// const date = getDateRange(param, range, currentDateView);
+		// const queryParams = {
+		// 	q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
+		// };
+		const dateParams = pickDate(param as string);
+
 		const queryParams = {
-			q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
+			q: dateParams,
 		};
+
 		dispatch(getAirTemperatureTrend(queryParams));
 	};
 
@@ -640,7 +665,12 @@ export const WaterCyclesPage = (): JSX.Element => {
 					alignItems="stretch"
 					spacing={2}
 					xs
-					style={{ margin: 0, padding: 0, height: '-webkit-fit-content' }}
+					style={{
+						margin: 0,
+						padding: 0,
+						paddingTop: 16,
+						height: '-webkit-fit-content',
+					}}
 				>
 					<Stack spacing={2}>
 						<GeneralCardInfo
@@ -689,7 +719,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 						isDateRangeHidden={state.isDateRangeHidden}
 						onDateRangeChange={onDateRangeChange}
 						handleDateRangeModal={handleDateRangeModal}
-						data={waterTemperatureTrend}
+						data={airTemperatureTrend}
 					/>
 				</Grid>
 				<Grid

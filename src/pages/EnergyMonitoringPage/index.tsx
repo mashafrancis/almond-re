@@ -4,7 +4,7 @@ import MemoryTwoToneIcon from '@material-ui/icons/MemoryTwoTone';
 import Grid from '@material-ui/core/Grid';
 
 export const EnergyMonitoringPage = (): JSX.Element => (
-	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+	<Grid container item xs={12}>
 		<Grid
 			item
 			container
