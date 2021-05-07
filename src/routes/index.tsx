@@ -37,7 +37,11 @@ const Routes = (): any => (
 			exact
 			path="/about"
 			render={(matchProps) => (
-				<WithLayout {...matchProps} component={AboutPage} layout={MainLayout} />
+				<WithLayout
+					{...matchProps}
+					component={AboutPage}
+					layout={MainLayout}
+				/>
 			)}
 		/>
 		<Route

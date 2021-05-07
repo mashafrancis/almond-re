@@ -24,7 +24,9 @@ describe.skip('useSubscription', () => {
 			},
 		);
 
-		await waitForValueToChange(() => result.current.client?.connected === true);
+		await waitForValueToChange(
+			() => result.current.client?.connected === true,
+		);
 
 		const message = 'testing message';
 		result.current.client?.publish(TOPIC, message);

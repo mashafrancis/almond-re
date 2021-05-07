@@ -243,7 +243,9 @@ const PermissionAccess = ({
 	const isResourcePermissionActive = (resourceId, permissionId) => {
 		let isActive = false;
 		// get the resource in question
-		const resource = state.resources.filter((res) => res._id === resourceId)[0];
+		const resource = state.resources.filter(
+			(res) => res._id === resourceId,
+		)[0];
 
 		/*
 		 * it's active if it has the 'full access' toggled on or
@@ -261,32 +263,34 @@ const PermissionAccess = ({
 		return isActive;
 	};
 
-	const headerPermissions = Object.keys(mappedPermissions).map((permission) => {
-		return {
-			field: permission,
-			headerName: capitalize(permission),
-			flex: 0.2,
-			headerClassName: 'table-header',
-			renderCell: ({ value }: GridCellParams) => (
-				<Checkbox
-					key={`${value}-${permission}}`}
-					color="primary"
-					size="small"
-					icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-					checkedIcon={<CheckBoxIcon fontSize="small" />}
-					checked={
-						resources &&
-						isResourcePermissionActive(
-							value,
-							state.mappedPermissions[permission],
-						)
-					}
-					name={`${value}-${permission}`}
-					onChange={togglePermission(value, permission)}
-				/>
-			),
-		};
-	});
+	const headerPermissions = Object.keys(mappedPermissions).map(
+		(permission) => {
+			return {
+				field: permission,
+				headerName: capitalize(permission),
+				flex: 0.2,
+				headerClassName: 'table-header',
+				renderCell: ({ value }: GridCellParams) => (
+					<Checkbox
+						key={`${value}-${permission}}`}
+						color="primary"
+						size="small"
+						icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+						checkedIcon={<CheckBoxIcon fontSize="small" />}
+						checked={
+							resources &&
+							isResourcePermissionActive(
+								value,
+								state.mappedPermissions[permission],
+							)
+						}
+						name={`${value}-${permission}`}
+						onChange={togglePermission(value, permission)}
+					/>
+				),
+			};
+		},
+	);
 
 	const columns: GridColDef[] = [
 		{

@@ -4,7 +4,13 @@ import { Avatar, Menu, MenuItem, ListItemIcon } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Mood, ExitToApp, Help, OpenInNew, Settings } from '@material-ui/icons';
+import {
+	Mood,
+	ExitToApp,
+	Help,
+	OpenInNew,
+	Settings,
+} from '@material-ui/icons';
 import { logoutUser } from '@modules/user';
 import fancyId from '@utils/fancyId';
 import { useContext, useState, MouseEvent } from 'react';

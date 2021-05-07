@@ -1,5 +1,11 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { MenuItem, TextField } from '@material-ui/core';
+import {
+	MenuItem,
+	TextField,
+	Select,
+	FormControl,
+	InputLabel,
+} from '@material-ui/core';
 import { SelectBoxProps } from '@components/atoms/SelectBox/interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,6 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		selectEmpty: {
 			marginTop: theme.spacing(2),
 		},
+		formControl: {
+			margin: theme.spacing(1),
+			minWidth: 80,
+		},
 	}),
 );
 
@@ -29,23 +39,26 @@ const SelectBox = ({
 	const classes = useStyles();
 
 	return (
-		<TextField
-			className={classes.root}
-			id={`select-${title}`}
-			select
-			size="small"
-			label={title}
-			value={selectedValue}
-			defaultValue={defaultValue}
-			onChange={handleDateSelect}
-			variant="outlined"
-		>
-			{options.map((option) => (
-				<MenuItem key={option.value} value={option.value}>
-					{option.label}
-				</MenuItem>
-			))}
-		</TextField>
+		<FormControl className={classes.formControl}>
+			<InputLabel id={`select-${title}`}>{defaultValue ?? title}</InputLabel>
+			<Select
+				labelId={`select-${title}`}
+				id={`select-${title}`}
+				value={selectedValue}
+				defaultValue={defaultValue}
+				onChange={handleDateSelect}
+				variant="outlined"
+				autoWidth
+				label={title}
+				size="small"
+			>
+				{options.map((option) => (
+					<MenuItem key={option.value} value={option.value}>
+						{option.label}
+					</MenuItem>
+				))}
+			</Select>
+		</FormControl>
 	);
 };
 

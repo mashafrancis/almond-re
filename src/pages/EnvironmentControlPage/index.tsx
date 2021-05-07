@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 // third-party libraries
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Stack } from '@material-ui/core';
 // components
 import { DashboardCard } from '@components/molecules';
 import { LineChartCard, DonutDisplay } from '@components/organisms';
@@ -45,7 +45,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 	);
 
 	const [state, setState] = useState<EnvironmentControlPageState>({
-		isDateRangeHidden: true,
+		isDateRangeHidden: false,
 		currentDateInView: '',
 		airTemperatureCardDateRange: '',
 	});
@@ -149,7 +149,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="environment-page">
-			<Grid container item xs={12}>
+			<Grid container item xs={12} spacing={2}>
 				{donutData.map((data) => (
 					<Grid
 						key={fancyId()}
@@ -160,7 +160,6 @@ export const EnvironmentControlPage = (): JSX.Element => {
 						alignItems="center"
 						spacing={2}
 						xs
-						style={{ margin: 0, padding: 0 }}
 					>
 						<DashboardCard
 							key={fancyId()}
@@ -177,50 +176,48 @@ export const EnvironmentControlPage = (): JSX.Element => {
 						/>
 					</Grid>
 				))}
-				<Grid
-					item
-					container
-					direction="row"
-					justifyContent="center"
-					alignItems="center"
-					spacing={2}
-					xs={12}
-					sm={12}
-					md={6}
-					style={{ margin: 0, padding: 0 }}
-				>
-					<LineChartCard
-						heading="Daily Temperature Chart"
-						selectedValue={state.airTemperatureCardDateRange}
-						handleDateSelect={handleDateSelect}
-						isDateRangeHidden={state.isDateRangeHidden}
-						onDateRangeChange={onDateRangeChange}
-						handleDateRangeModal={handleDateRangeModal}
-						data={airTemperatureTrend}
-					/>
-				</Grid>
-				<Grid
-					item
-					container
-					direction="row"
-					justifyContent="center"
-					alignItems="center"
-					spacing={2}
-					xs={12}
-					sm={12}
-					md={6}
-					style={{ margin: 0, padding: 0 }}
-				>
-					<LineChartCard
-						heading="Daily Humidity Chart"
-						selectedValue={state.airTemperatureCardDateRange}
-						handleDateSelect={handleDateSelect}
-						isDateRangeHidden={state.isDateRangeHidden}
-						onDateRangeChange={onDateRangeChange}
-						handleDateRangeModal={handleDateRangeModal}
-						data={airTemperatureTrend}
-					/>
-				</Grid>
+				{/* <Grid */}
+				{/*	item */}
+				{/*	container */}
+				{/*	direction="row" */}
+				{/*	justifyContent="center" */}
+				{/*	alignItems="center" */}
+				{/*	spacing={2} */}
+				{/*	xs={12} */}
+				{/*	style={{ margin: 0, padding: 0 }} */}
+				{/* > */}
+				{/*	<LineChartCard */}
+				{/*		heading="Daily Temperature Chart" */}
+				{/*		selectedValue={state.airTemperatureCardDateRange} */}
+				{/*		handleDateSelect={handleDateSelect} */}
+				{/*		isDateRangeHidden={state.isDateRangeHidden} */}
+				{/*		onDateRangeChange={onDateRangeChange} */}
+				{/*		handleDateRangeModal={handleDateRangeModal} */}
+				{/*		data={airTemperatureTrend} */}
+				{/*	/> */}
+				{/* </Grid> */}
+				{/* <Grid */}
+				{/*	item */}
+				{/*	container */}
+				{/*	direction="row" */}
+				{/*	justifyContent="center" */}
+				{/*	alignItems="center" */}
+				{/*	spacing={2} */}
+				{/*	xs={12} */}
+				{/*	sm={12} */}
+				{/*	md={6} */}
+				{/*	style={{ margin: 0, padding: 0 }} */}
+				{/* > */}
+				{/*	<LineChartCard */}
+				{/*		heading="Daily Humidity Chart" */}
+				{/*		selectedValue={state.airTemperatureCardDateRange} */}
+				{/*		handleDateSelect={handleDateSelect} */}
+				{/*		isDateRangeHidden={state.isDateRangeHidden} */}
+				{/*		onDateRangeChange={onDateRangeChange} */}
+				{/*		handleDateRangeModal={handleDateRangeModal} */}
+				{/*		data={airTemperatureTrend} */}
+				{/*	/> */}
+				{/* </Grid> */}
 			</Grid>
 		</div>
 	);

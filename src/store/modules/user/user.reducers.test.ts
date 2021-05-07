@@ -38,14 +38,22 @@ describe('User reducer', () => {
 	describe('Edit user', () => {
 		it('should dispatch EDIT_USER_DETAILS_SUCCESS', () => {
 			const editUserDetailsSuccessAction = editUserDetailsSuccess(data);
-			const userState = reducer(userInitialState, editUserDetailsSuccessAction);
+			const userState = reducer(
+				userInitialState,
+				editUserDetailsSuccessAction,
+			);
 
 			expect(userState.errors).toBe(null);
 		});
 
 		it('should dispatch EDIT_USER_DETAILS_FAILURE', () => {
-			const editUserDetailsFailureAction = editUserDetailsFailure(errorMessage);
-			const userState = reducer(userInitialState, editUserDetailsFailureAction);
+			const editUserDetailsFailureAction = editUserDetailsFailure(
+				errorMessage,
+			);
+			const userState = reducer(
+				userInitialState,
+				editUserDetailsFailureAction,
+			);
 
 			expect(userState.errors).toBe(errorMessage);
 		});

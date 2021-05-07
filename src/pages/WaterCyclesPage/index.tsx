@@ -2,8 +2,7 @@ import { useState, useEffect, useContext, ChangeEvent } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // third-party libraries
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import TimePicker from '@material-ui/lab/TimePicker';
+import { MobileTimePicker, LocalizationProvider } from '@material-ui/lab';
 import {
 	Grid,
 	Stack,
@@ -28,7 +27,11 @@ import {
 } from '@material-ui/data-grid';
 // components
 import Modal from '@components/atoms/Modal';
-import { GeneralCardInfo, DashboardCard } from '@components/molecules';
+import {
+	GeneralCardInfo,
+	DashboardCard,
+	DateRangePicker,
+} from '@components/molecules';
 import { LineChartCard, DonutDisplay } from '@components/organisms';
 // icons
 import { BlurCircular, AddAlarmTwoTone, Add } from '@material-ui/icons';
@@ -60,14 +63,17 @@ import { WaterCyclesPageState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
 import { IRootState } from '../../store/rootReducer';
 
+const cardPumpIllustration =
+	'https://storage.googleapis.com/static.almondhydroponics.com/static/images/aeroponics.jpeg';
+
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			flexGrow: 1,
 		},
 		blankContent: {
-			marginTop: 40,
-			marginBottom: 40,
+			// marginTop: 40,
+			// marginBottom: 40,
 			fontFamily: 'San Francisco, serif !important',
 			fontSize: 30,
 			fontWeight: 300,
@@ -81,7 +87,11 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export const BlankContent = ({ message }: { message: string }): JSX.Element => {
+export const BlankContent = ({
+	message,
+}: {
+	message: string;
+}): JSX.Element => {
 	const classes = useStyles();
 	return (
 		<Typography
@@ -128,7 +138,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		scheduleToEdit: '',
 		isActionDone: false,
 		isLoading: false,
-		isDateRangeHidden: true,
+		isDateRangeHidden: false,
 		currentDateInView: '',
 		waterCardDateRange: 'This Week',
 		selectedTimeSchedule: dayjs(),
@@ -176,14 +186,12 @@ export const WaterCyclesPage = (): JSX.Element => {
 	}, [activeDevice?._id]);
 
 	useEffect(() => {
-		// const queryParams = {
-		// 	db: 'almond_db',
-		// 	q:
-		// 		'SELECT mean("temperature") FROM "data" WHERE time >= now() - 7d GROUP BY time(10s) fill(null)',
-		// 	epoch: 'ms',
-		// };
+		const ranges = getDateRange('Today');
+
 		const queryParams = {
-			q: '-7d',
+			start: ranges.startDate,
+			stop: ranges.endDate,
+			measurement: 'temperature',
 		};
 		dispatch(getAirTemperatureTrend(queryParams));
 	}, []);
@@ -417,12 +425,12 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
-	const currentDateView = (frequency: string) => {
-		setState((prevState) => ({
-			...prevState,
-			currentDateInView: frequency,
-		}));
-	};
+	// const currentDateView = (frequency: string) => {
+	// 	setState((prevState) => ({
+	// 		...prevState,
+	// 		currentDateInView: frequency,
+	// 	}));
+	// };
 
 	const pickDate = (params: string) => {
 		let selectedRange: string;
@@ -442,6 +450,11 @@ export const WaterCyclesPage = (): JSX.Element => {
 			case 'This Year':
 				selectedRange = '-1y';
 				break;
+			case 'Pick a date': {
+				handleDateRangeModal();
+				selectedRange = '-1d';
+				break;
+			}
 			default:
 				selectedRange = '-1d';
 		}
@@ -450,22 +463,19 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 	const handleDateSelect = (event: ChangeEvent<{ value: unknown }>) => {
 		const { value: param } = event.target;
-		if (param === 'Pick a date') {
-			setState((prevState) => ({
-				...prevState,
-				isDateRangeHidden: false,
-			}));
-		}
 
-		setState((prevState) => ({
-			...prevState,
-			waterCardDateRange: param as string,
-		}));
-
-		const range = {
-			startDate: new Date(),
-			endDate: new Date(),
-		};
+		const ranges = getDateRange(param);
+		// if (param === 'Pick a date') {
+		// 	setState((prevState) => ({
+		// 		...prevState,
+		// 		isDateRangeHidden: prevState.isDateRangeHidden,
+		// 	}));
+		// }
+		//
+		// const range = {
+		// 	startDate: new Date(),
+		// 	endDate: new Date(),
+		// };
 		// const date = getDateRange(param, range, currentDateView);
 		// const queryParams = {
 		// 	q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
@@ -473,7 +483,9 @@ export const WaterCyclesPage = (): JSX.Element => {
 		const dateParams = pickDate(param as string);
 
 		const queryParams = {
-			q: dateParams,
+			start: ranges.startDate,
+			stop: ranges.endDate,
+			measurement: 'temperature',
 		};
 
 		dispatch(getAirTemperatureTrend(queryParams));
@@ -490,10 +502,12 @@ export const WaterCyclesPage = (): JSX.Element => {
 		return (
 			<>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
-					<TimePicker
+					<MobileTimePicker
 						label="time schedule"
 						value={isEditMode ? scheduleToEdit : selectedTimeSchedule}
-						onChange={isEditMode ? handleEditTimeChange : handleAddTimeSchedule}
+						onChange={
+							isEditMode ? handleEditTimeChange : handleAddTimeSchedule
+						}
 						renderInput={(params) => (
 							<TextField
 								{...params}
@@ -507,6 +521,17 @@ export const WaterCyclesPage = (): JSX.Element => {
 												'Schedule time has to be at least one hour apart',
 									  }
 									: {})}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<IconButton>
+												<AddAlarmTwoTone
+													color={hasError ? 'error' : 'primary'}
+												/>
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
 							/>
 						)}
 					/>
@@ -624,7 +649,10 @@ export const WaterCyclesPage = (): JSX.Element => {
 		}));
 
 		return (
-			<div className={tableClasses.root} style={{ height: 400, width: '100%' }}>
+			<div
+				className={tableClasses.root}
+				style={{ height: 400, width: '100%' }}
+			>
 				<div style={{ display: 'flex', height: '100%' }}>
 					<div style={{ flexGrow: 1 }}>
 						<DataGrid
@@ -654,98 +682,78 @@ export const WaterCyclesPage = (): JSX.Element => {
 		);
 	};
 
+	const firstColumn = () => (
+		<Grid item container xs spacing={2}>
+			<GeneralCardInfo
+				mainHeader="Manual Override"
+				subHeader="Pump water directly into the system"
+				icon={cardPumpIllustration}
+				actionItem={
+					<PumpSwitch
+						className="manual-override"
+						onChange={handleTogglePumpOnChange}
+						checked={enabled}
+						inputProps={{ 'aria-label': 'primary checkbox' }}
+					/>
+				}
+			/>
+			<DashboardCard
+				heading="Water Schedules"
+				body={renderTableContent()}
+				actionItem={
+					<Button
+						color="primary"
+						size="small"
+						variant="outlined"
+						onClick={showScheduleModal('Add')}
+					>
+						<Add fontSize="small" />
+						Add schedule
+					</Button>
+				}
+			/>
+		</Grid>
+	);
+
+	const secondColumn = () => (
+		<Grid item container xs spacing={2}>
+			<LineChartCard
+				heading="Water Temperature"
+				selectedValue={state.waterCardDateRange}
+				handleDateSelect={handleDateSelect}
+				isDateRangeHidden={state.isDateRangeHidden}
+				onDateRangeChange={onDateRangeChange}
+				handleDateRangeModal={handleDateRangeModal}
+				data={airTemperatureTrend}
+			/>
+		</Grid>
+	);
+
+	const thirdColumn = () => (
+		<Grid item container xs spacing={2}>
+			<DashboardCard
+				heading="Water Tank Level"
+				body={
+					<DonutDisplay
+						backgroundColor={['#CCCCCC', '#36A2EB']}
+						hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
+						data={[waterLevelData, heightOfTank - waterLevelData]}
+						donutInfo={`${heightOfWater}%`}
+						halfDonut={false}
+					/>
+				}
+			/>
+		</Grid>
+	);
+
 	return (
 		<div className={classes.root} data-testid="water-cycles-page">
-			<Grid container item xs={12}>
-				<Grid
-					item
-					container
-					direction="column"
-					justifyContent="center"
-					alignItems="stretch"
-					spacing={2}
-					xs
-					style={{
-						margin: 0,
-						padding: 0,
-						paddingTop: 16,
-						height: '-webkit-fit-content',
-					}}
-				>
-					<Stack spacing={2}>
-						<GeneralCardInfo
-							mainHeader="Manual Override"
-							subHeader="Pump water directly into the system"
-							icon={<BlurCircular />}
-							actionItem={
-								<PumpSwitch
-									className="manual-override"
-									onChange={handleTogglePumpOnChange}
-									checked={enabled}
-									inputProps={{ 'aria-label': 'primary checkbox' }}
-								/>
-							}
-						/>
-						<DashboardCard
-							heading="Water Schedules"
-							body={renderTableContent()}
-							actionItem={
-								<Button
-									color="primary"
-									size="small"
-									variant="outlined"
-									onClick={showScheduleModal('Add')}
-								>
-									<Add fontSize="small" />
-									Add schedule
-								</Button>
-							}
-						/>
-					</Stack>
-				</Grid>
-				<Grid
-					item
-					container
-					justifyContent="flex-start"
-					alignItems="stretch"
-					spacing={2}
-					xs
-					style={{ margin: 0, padding: 0 }}
-				>
-					<LineChartCard
-						heading="Water Temperature"
-						selectedValue={state.waterCardDateRange}
-						handleDateSelect={handleDateSelect}
-						isDateRangeHidden={state.isDateRangeHidden}
-						onDateRangeChange={onDateRangeChange}
-						handleDateRangeModal={handleDateRangeModal}
-						data={airTemperatureTrend}
-					/>
-				</Grid>
-				<Grid
-					item
-					container
-					justifyContent="flex-start"
-					alignItems="stretch"
-					spacing={2}
-					xs
-					style={{ margin: 0, padding: 0 }}
-				>
-					<DashboardCard
-						heading="Water Tank Level"
-						body={
-							<DonutDisplay
-								backgroundColor={['#CCCCCC', '#36A2EB']}
-								hoverBackgroundColor={['#CCCCCC', '#2d9fec']}
-								data={[waterLevelData, heightOfTank - waterLevelData]}
-								donutInfo={`${heightOfWater}%`}
-								halfDonut={false}
-							/>
-						}
-					/>
-					{renderAddEditScheduleModal()}
-					{renderDeleteScheduleModal()}
-				</Grid>
+			<Grid container spacing={2}>
+				{firstColumn()}
+				{secondColumn()}
+				{thirdColumn()}
+				{renderAddEditScheduleModal()}
+				{renderDeleteScheduleModal()}
 			</Grid>
 		</div>
 	);

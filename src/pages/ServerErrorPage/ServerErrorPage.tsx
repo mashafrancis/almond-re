@@ -23,8 +23,8 @@ const ServerErrorPage = ({ error, resetErrorBoundary }: any): JSX.Element => {
 						title="Internal Server error!"
 						subtitle={
 							<span>
-								We are experiencing an internal server problem. Please try again
-								later or{' '}
+								We are experiencing an internal server problem. Please try
+								again later or{' '}
 								<LearnMoreLink
 									title="contact support"
 									href="mailto:almond.froyo@gmail.com"

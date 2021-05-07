@@ -178,7 +178,9 @@ export const getDevicesSuccess = (
  * Get all devices failure
  * @returns {GetAllDevicesActionFailure}
  */
-export const getDevicesFailure = (errors: any): GetAllDevicesActionFailure => ({
+export const getDevicesFailure = (
+	errors: any,
+): GetAllDevicesActionFailure => ({
 	errors,
 	type: GET_DEVICES_FAILURE,
 	isLoading: false,

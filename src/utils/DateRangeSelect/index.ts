@@ -1,7 +1,10 @@
 // third party libraries
 import dayjs from '@utils/dayjsTime';
 // interface
-import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
+import {
+	DateRanges,
+	Param,
+} from '@components/molecules/DateRangePicker/interfaces';
 
 /**
  * This method return the data range
@@ -12,7 +15,7 @@ import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
  * @returns {object}
  */
 const getDateRange = (
-	param: unknown,
+	param: Param | unknown,
 	range?: DateRanges,
 	currentDateInView?: (date: string) => any,
 ): any => {
@@ -21,8 +24,8 @@ const getDateRange = (
 			currentDateInView(date);
 		}
 		return {
-			endDate: dayjs().endOf(rangeValue).toISOString(),
-			startDate: dayjs().startOf(rangeValue).toISOString(),
+			endDate: dayjs().endOf(rangeValue).unix(),
+			startDate: dayjs().startOf(rangeValue).unix(),
 			frequency: date,
 		};
 	};
@@ -43,8 +46,8 @@ const getDateRange = (
 		case 'Pick a date':
 			returnedRange = {
 				frequency: 'day',
-				startDate: dayjs(range?.startDate).toISOString(),
-				endDate: dayjs(range?.endDate).toISOString(),
+				startDate: dayjs((range?.startDate as unknown) as string).unix(),
+				endDate: dayjs((range?.endDate as unknown) as string).unix(),
 			};
 			break;
 		default:

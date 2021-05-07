@@ -68,39 +68,39 @@ const LineChartCard = ({
 	// }
 
 	return (
-		<DashboardCard
-			heading={heading}
-			body={
-				data.length !== 0 ? (
-					<AreaChartDisplay
-						backgroundColor="rgba(25, 103, 210, 0.2)"
-						chartColor="#1967D2"
-						chartData={chartData}
-						labels={labels}
-					/>
-				) : (
-					<BlankContent message="No data to display" />
-				)
-			}
-			actionItem={
-				<>
-					<SelectBox
-						title="select date"
-						selectedValue={selectedValue}
-						handleDateSelect={handleDateSelect}
-						options={dateSelectOptions}
-					/>
-					<div className={`${isDateRangeHidden && 'hide'}`}>
-						<DateRangePicker
-							isOpen={!isDateRangeHidden}
-							onChange={onDateRangeChange}
-							onClose={handleDateRangeModal}
-							onDismiss={handleDateRangeModal}
+		<>
+			<DashboardCard
+				heading={heading}
+				body={
+					data.length !== 0 ? (
+						<AreaChartDisplay
+							backgroundColor="rgba(25, 103, 210, 0.2)"
+							chartColor="#1967D2"
+							chartData={chartData}
+							labels={labels}
 						/>
-					</div>
-				</>
-			}
-		/>
+					) : (
+						<BlankContent message="No data to display" />
+					)
+				}
+				actionItem={
+					<>
+						<SelectBox
+							title="select date"
+							selectedValue={selectedValue}
+							handleDateSelect={handleDateSelect}
+							options={dateSelectOptions}
+						/>
+					</>
+				}
+			/>
+			<DateRangePicker
+				isOpen={isDateRangeHidden}
+				onChange={onDateRangeChange}
+				onClose={handleDateRangeModal}
+				onDismiss={handleDateRangeModal}
+			/>
+		</>
 	);
 };
 

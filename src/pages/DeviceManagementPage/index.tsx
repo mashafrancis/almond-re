@@ -15,6 +15,8 @@ import {
 	TextField,
 	Button,
 	IconButton,
+	Stack,
+	Grid,
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Add, PhonelinkSetupSharp } from '@material-ui/icons';
@@ -36,7 +38,6 @@ import { NoDataOverlay, Modal } from '@components/atoms';
 import { CustomLoadingOverlay } from '@pages/WaterCyclesPage';
 import { useTableStyles } from '@pages/WaterCyclesPage/styles';
 import { Device } from '@modules/device/interfaces';
-import Grid from '@material-ui/core/Grid';
 import { DashboardCard } from '@components/molecules';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
@@ -231,38 +232,27 @@ export const DeviceManagementPage = (): JSX.Element => {
 
 		return (
 			<div className={classes.root} key={_id}>
-				<Grid container spacing={3}>
-					<Grid
-						container
-						item
-						xs={12}
-						justifyContent="flex-start"
-						alignItems="center"
-						direction="row"
-						spacing={2}
-						style={{ display: 'flex', width: '100%' }}
+				<Stack direction="row" spacing={1}>
+					<Typography
+						style={{ cursor: 'pointer', paddingRight: 12 }}
+						id={_id}
+						variant="body2"
+						color="primary"
+						onClick={showDeviceModal('Edit')}
+						onKeyDown={showDeviceModal('Edit')}
 					>
-						<Typography
-							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={_id}
-							variant="body2"
-							color="primary"
-							onClick={showDeviceModal('Edit')}
-							onKeyDown={showDeviceModal('Edit')}
-						>
-							Edit
-						</Typography>
-						<Typography
-							style={{ cursor: 'pointer', color: red[900] }}
-							id={_id}
-							variant="body2"
-							onClick={handleDelete}
-							onKeyDown={handleDelete}
-						>
-							Delete
-						</Typography>
-					</Grid>
-				</Grid>
+						Edit
+					</Typography>
+					<Typography
+						style={{ cursor: 'pointer', color: red[900] }}
+						id={_id}
+						variant="body2"
+						onClick={handleDelete}
+						onKeyDown={handleDelete}
+					>
+						Delete
+					</Typography>
+				</Stack>
 			</div>
 		);
 	};
@@ -271,7 +261,8 @@ export const DeviceManagementPage = (): JSX.Element => {
 		const { verified, enabled } = device;
 		if (!verified)
 			return <Chip className={classes.unverified} label="Not Verified" />;
-		if (!enabled) return <Chip className={classes.disabled} label="Disabled" />;
+		if (!enabled)
+			return <Chip className={classes.disabled} label="Disabled" />;
 		return <Chip className={classes.enabled} label="Enabled" />;
 	};
 
@@ -325,7 +316,10 @@ export const DeviceManagementPage = (): JSX.Element => {
 		}));
 
 		return (
-			<div className={tableClasses.root} style={{ height: 700, width: '100%' }}>
+			<div
+				className={tableClasses.root}
+				style={{ height: 700, width: '100%' }}
+			>
 				<div style={{ display: 'flex', height: '100%' }}>
 					<div style={{ flexGrow: 1 }}>
 						<DataGrid
@@ -432,33 +426,22 @@ export const DeviceManagementPage = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="device-management-page">
-			<Grid container item xs={12}>
-				<Grid
-					item
-					container
-					direction="column"
-					justifyContent="flex-start"
-					alignItems="stretch"
-					spacing={1}
-					xs
-					style={{ margin: 0, padding: 0 }}
-				>
-					<DashboardCard
-						heading="Device Management"
-						body={renderTableContent()}
-						actionItem={
-							<Button
-								color="primary"
-								size="small"
-								variant="outlined"
-								onClick={showDeviceModal('Add')}
-							>
-								<Add fontSize="small" />
-								Add device
-							</Button>
-						}
-					/>
-				</Grid>
+			<Grid container item xs={12} spacing={2}>
+				<DashboardCard
+					heading="Device Management"
+					body={renderTableContent()}
+					actionItem={
+						<Button
+							color="primary"
+							size="small"
+							variant="outlined"
+							onClick={showDeviceModal('Add')}
+						>
+							<Add fontSize="small" />
+							Add device
+						</Button>
+					}
+				/>
 			</Grid>
 			{renderAddEditDeviceModal()}
 			{renderDeleteDeviceModal()}

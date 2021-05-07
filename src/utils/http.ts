@@ -40,7 +40,9 @@ http.interceptors.response.use(
 			CacheHandler.cacheInvalidationRegister[endpoint] = requestTimestamp;
 
 			if (endpoint === '/dashboard') {
-				CacheHandler.cacheInvalidationRegister['/dashboard'] = requestTimestamp;
+				CacheHandler.cacheInvalidationRegister[
+					'/dashboard'
+				] = requestTimestamp;
 			}
 		}
 

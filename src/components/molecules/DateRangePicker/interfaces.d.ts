@@ -1,6 +1,6 @@
 export interface DateRanges {
-	startDate: Date;
-	endDate: Date;
+	startDate: Date | null;
+	endDate: Date | null;
 }
 
 export interface DateRangePickerProps {
@@ -17,3 +17,11 @@ export interface DateRangePickerState {
 		key?: string;
 	};
 }
+
+export type Param =
+	| 'Today'
+	| 'This Week'
+	| 'This Month'
+	| 'Quarterly'
+	| 'This Year'
+	| 'Pick a date';

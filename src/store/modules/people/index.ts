@@ -24,7 +24,7 @@ import {
 	UPDATE_PERSON_DETAILS_SUCCESS,
 } from './types';
 
-import { Action, ErrorObject } from '../../../shared.interfaces';
+import { ErrorObject } from '../../../shared.interfaces';
 
 /**
  * Get userDetails request action creator
@@ -149,7 +149,10 @@ export const peopleInitialState = {
  * @param {AnyAction} action
  * @returns {Object} state
  */
-export const reducer = (state: State = peopleInitialState, action: Action) => {
+export const reducer = (
+	state: State = peopleInitialState,
+	action: AnyAction,
+) => {
 	switch (action.type) {
 		case GET_ALL_PEOPLE_REQUEST:
 			return {

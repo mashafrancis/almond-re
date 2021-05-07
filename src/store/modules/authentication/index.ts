@@ -78,7 +78,9 @@ export const loginAccountRequest = (): LoginActionRequest => ({
  * Login account success
  * @returns {LoginActionSuccess}
  */
-export const loginAccountSuccess = (user: UserDetails): LoginActionSuccess => ({
+export const loginAccountSuccess = (
+	user: UserDetails,
+): LoginActionSuccess => ({
 	user,
 	type: LOGIN_SUCCESS,
 	isLoading: false,

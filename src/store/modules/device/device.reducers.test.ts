@@ -204,7 +204,9 @@ describe('Device reducer', () => {
 		});
 
 		it('should dispatch DELETE_DEVICE_FAILURE', () => {
-			const deleteDeviceFailureAction = deleteSingleDeviceFailure(errorMessage);
+			const deleteDeviceFailureAction = deleteSingleDeviceFailure(
+				errorMessage,
+			);
 			const deviceState = reducer(
 				deviceInitialState,
 				deleteDeviceFailureAction,

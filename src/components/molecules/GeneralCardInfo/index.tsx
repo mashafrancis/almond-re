@@ -14,6 +14,7 @@ import {
 	Theme,
 	useTheme,
 } from '@material-ui/core/styles';
+import { Image } from '@components/atoms';
 import { GeneralCardInfoProps } from './interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -74,6 +75,13 @@ const GeneralCardInfo = ({
 		defaultMatches: true,
 	});
 
+	const renderIcon = (param) => {
+		if (typeof param === 'string' || param instanceof String) {
+			return <Image src={param as string} alt="almond" lazy={false} />;
+		}
+		return <ButtonBase className={classes.iconBase}>{param}</ButtonBase>;
+	};
+
 	return (
 		<Grid item xs={12} className={classes.mainCard}>
 			<Card
@@ -95,24 +103,14 @@ const GeneralCardInfo = ({
 						<Grid
 							item
 							container
-							// xl={1}
 							xs={2}
 							direction="row"
 							alignItems="center"
 							justifyContent="center"
 						>
-							<ButtonBase className={classes.iconBase}>{icon}</ButtonBase>
+							{renderIcon(icon)}
 						</Grid>
-						<Grid
-							item
-							container
-							// xl={8}
-							xs={8}
-							// justifyContent="space-between"
-							// alignItems="flex-start"
-							// direction="column"
-							// style={{ display: 'flex', width: '100%' }}
-						>
+						<Grid item container xs={8}>
 							<Stack spacing={0}>
 								<Typography variant="h6" color="primary" data-testid="header">
 									{mainHeader}

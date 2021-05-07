@@ -54,7 +54,9 @@ const getFormattedPermission = (
  */
 const formatPermissions = (role: UserRole): FormattedPermissions =>
 	role.resourceAccessLevels.reduce((resources, accessLevel) => {
-		const formattedPermission = getFormattedPermission(accessLevel.permissions);
+		const formattedPermission = getFormattedPermission(
+			accessLevel.permissions,
+		);
 
 		return {
 			...resources,
