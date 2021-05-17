@@ -1,6 +1,7 @@
 export interface AreaChartDisplayProps {
-	chartData: number[] | null[];
+	chartData: any[];
 	chartColor: string;
 	backgroundColor: string;
 	labels: string[] | any;
+	duration?: number;
 }

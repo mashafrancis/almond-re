@@ -76,10 +76,11 @@ export const getSensorDataFailure = (
  * Get air temperature trend request
  * @returns {GetAirTemperatureDataRequest}
  */
-export const getAirTemperatureTrendRequest = (): GetAirTemperatureDataRequest => ({
-	type: GET_AIR_TEMPERATURE_TREND_REQUEST,
-	isLoading: true,
-});
+export const getAirTemperatureTrendRequest =
+	(): GetAirTemperatureDataRequest => ({
+		type: GET_AIR_TEMPERATURE_TREND_REQUEST,
+		isLoading: true,
+	});
 
 /**
  * Get air temperature trend success
@@ -111,10 +112,11 @@ export const getAirTemperatureTrendFailure = (
  * Get water temperature trend request
  * @returns {GetWaterTemperatureDataRequest}
  */
-export const getWaterTemperatureTrendRequest = (): GetWaterTemperatureDataRequest => ({
-	type: GET_WATER_TEMPERATURE_TREND_REQUEST,
-	isLoading: true,
-});
+export const getWaterTemperatureTrendRequest =
+	(): GetWaterTemperatureDataRequest => ({
+		type: GET_WATER_TEMPERATURE_TREND_REQUEST,
+		isLoading: true,
+	});
 
 /**
  * Get water temperature trend success
@@ -146,10 +148,11 @@ export const getWaterTemperatureTrendFailure = (
  * Get plant humidity trend request
  * @returns {GetPlantHumidityDataRequest}
  */
-export const getPlantHumidityTrendRequest = (): GetPlantHumidityDataRequest => ({
-	type: GET_PLANT_HUMIDITY_TREND_REQUEST,
-	isLoading: true,
-});
+export const getPlantHumidityTrendRequest =
+	(): GetPlantHumidityDataRequest => ({
+		type: GET_PLANT_HUMIDITY_TREND_REQUEST,
+		isLoading: true,
+	});
 
 /**
  * Get plant humidity trend success
@@ -197,73 +200,81 @@ export const getSensorDataFromInflux = () => (dispatch: Dispatch) => {
 			dispatch(getSensorDataSuccess(data));
 		})
 		.catch((error) => {
-			dispatch(displaySnackMessage('Error fetching sensor data', 'error'));
+			// dispatch(displaySnackMessage('Error fetching sensor data', 'error'));
 			dispatch(getSensorDataFailure(error));
 		});
 };
 
-export const getAirTemperatureTrend = (queryParams: QueryParams) => (
-	dispatch: Dispatch,
-) => {
-	dispatch(getAirTemperatureTrendRequest());
-	const endpoint = generateUrlWithQuery('/range-data', {
-		...queryParams,
-	});
-	return influxHttp
-		.get(endpoint)
-		.then((response) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getAirTemperatureTrendSuccess(data ?? []));
-		})
-		.catch((error) => {
-			dispatch(displaySnackMessage('Error fetching air temperature data'));
-			dispatch(getAirTemperatureTrendFailure(error));
+export const getAirTemperatureTrend =
+	(queryParams: QueryParams) => (dispatch: Dispatch) => {
+		dispatch(getAirTemperatureTrendRequest());
+		const endpoint = generateUrlWithQuery('/range-data', {
+			...queryParams,
 		});
-};
+		return influxHttp
+			.get(endpoint)
+			.then((response) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(
+					getAirTemperatureTrendSuccess(
+						data.map((element) => ({
+							x: element._time,
+							y: element._value,
+						})) ?? [],
+					),
+				);
+			})
+			.catch((error) => {
+				// dispatch(
+				// 	displaySnackMessage('Error fetching air temperature data', 'error'),
+				// );
+				dispatch(getAirTemperatureTrendFailure(error));
+			});
+	};
 
-export const getWaterTemperatureTrend = (queryParams: QueryParams) => (
-	dispatch: Dispatch,
-) => {
-	dispatch(getWaterTemperatureTrendRequest());
-	const endpoint = generateUrlWithQuery('/range-data', {
-		...queryParams,
-	});
-	return influxHttp
-		.get(endpoint)
-		.then((response) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getWaterTemperatureTrendSuccess(data));
-		})
-		.catch((error) => {
-			dispatch(displaySnackMessage('Error fetching water temperature data'));
-			dispatch(getWaterTemperatureTrendFailure(error));
+export const getWaterTemperatureTrend =
+	(queryParams: QueryParams) => (dispatch: Dispatch) => {
+		dispatch(getWaterTemperatureTrendRequest());
+		const endpoint = generateUrlWithQuery('/range-data', {
+			...queryParams,
 		});
-};
+		return influxHttp
+			.get(endpoint)
+			.then((response) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(getWaterTemperatureTrendSuccess(data));
+			})
+			.catch((error) => {
+				// dispatch(displaySnackMessage('Error fetching water temperature data'));
+				dispatch(getWaterTemperatureTrendFailure(error));
+			});
+	};
 
-export const getPlantHumidityTrend = (queryParams: QueryParams) => (
-	dispatch: Dispatch,
-) => {
-	dispatch(getPlantHumidityTrendRequest());
-	const endpoint = generateUrlWithQuery('/range-data', {
-		...queryParams,
-	});
-	return influxHttp
-		.get(endpoint)
-		.then((response) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getPlantHumidityTrendSuccess(data));
-		})
-		.catch((error) => {
-			dispatch(displaySnackMessage('Error fetching plant humidity data'));
-			dispatch(getPlantHumidityTrendFailure(error));
+export const getPlantHumidityTrend =
+	(queryParams: QueryParams) => (dispatch: Dispatch) => {
+		dispatch(getPlantHumidityTrendRequest());
+		const endpoint = generateUrlWithQuery('/range-data', {
+			...queryParams,
 		});
-};
+		return influxHttp
+			.get(endpoint)
+			.then((response) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(getPlantHumidityTrendSuccess(data));
+			})
+			.catch((error) => {
+				// dispatch(
+				// 	displaySnackMessage('Error fetching plant humidity data', 'error'),
+				// );
+				dispatch(getPlantHumidityTrendFailure(error));
+			});
+	};
 
 export const sensorDataInitialState = {
 	sensorData: {

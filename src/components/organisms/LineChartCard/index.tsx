@@ -1,38 +1,11 @@
 import { SelectBox } from '@components/atoms';
 import { DateRangePicker, DashboardCard } from '@components/molecules';
-import { BlankContent } from '@pages/WaterCyclesPage';
 import { AreaChartDisplay } from '@components/organisms';
 // utils
 import dayjs from '@utils/dayjsTime';
 // interfaces
 import { LineChartCardProps } from '@components/organisms/LineChartCard/intefaces';
-
-const dateSelectOptions = [
-	{
-		value: 'Today',
-		label: 'Today',
-	},
-	{
-		value: 'This Week',
-		label: 'This Week',
-	},
-	{
-		value: 'This Month',
-		label: 'This Month',
-	},
-	{
-		value: 'This Year',
-		label: 'This Year',
-	},
-	{
-		value: 'Quarterly',
-		label: 'Quarterly',
-	},
-	{
-		value: 'Pick a date',
-		label: 'Pick a date',
-	},
-];
+import { dateSelectOptions } from '@components/organisms/LineChartCard/fixtures';
 
 const LineChartCard = ({
 	heading,
@@ -42,6 +15,7 @@ const LineChartCard = ({
 	onDateRangeChange,
 	handleDateRangeModal,
 	data,
+	duration,
 }: LineChartCardProps): JSX.Element => {
 	const formatTime = (time: string) => {
 		switch (selectedValue) {
@@ -72,16 +46,13 @@ const LineChartCard = ({
 			<DashboardCard
 				heading={heading}
 				body={
-					data.length !== 0 ? (
-						<AreaChartDisplay
-							backgroundColor="rgba(25, 103, 210, 0.2)"
-							chartColor="#1967D2"
-							chartData={chartData}
-							labels={labels}
-						/>
-					) : (
-						<BlankContent message="No data to display" />
-					)
+					<AreaChartDisplay
+						backgroundColor="rgba(25, 103, 210, 0.2)"
+						chartColor="#1967D2"
+						chartData={data}
+						labels={labels}
+						duration={duration}
+					/>
 				}
 				actionItem={
 					<>

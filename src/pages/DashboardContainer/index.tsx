@@ -10,6 +10,7 @@ import {
 	Grid,
 	InputAdornment,
 	MenuItem,
+	Stack,
 	SwipeableDrawer,
 	TextField,
 } from '@material-ui/core';
@@ -87,20 +88,20 @@ const DashboardContainer = (): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-	const TIME_MS = 10_000;
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			dispatch(getSensorDataFromInflux());
-		}, TIME_MS);
-
-		return () => clearInterval(interval);
-	}, []);
+	// const TIME_MS = 10_000;
+	//
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		dispatch(getSensorDataFromInflux());
+	// 	}, TIME_MS);
+	//
+	// 	return () => clearInterval(interval);
+	// }, []);
 
 	// :TODO: Reformat to get user specific device subscription
-	// const userSensorSubscription = 'almond/data';
-	// const { message } = useSubscription(userSensorSubscription, options);
-	//
+	const userSensorSubscription = 'almond/data';
+	const { message } = useSubscription(userSensorSubscription, options);
+
 	// useEffect(() => {
 	// 	if (message) {
 	// 		const parsedMessage = JSON.parse(message.message);
@@ -109,7 +110,7 @@ const DashboardContainer = (): JSX.Element => {
 	// 			humidity: parsedMessage?.humid,
 	// 			waterLevel: parsedMessage?.water_level,
 	// 		};
-	// 		dispatch(getSensorData(data));
+	// 		dispatch(getSensorDataFromMqtt(data));
 	// 	}
 	// }, [message]);
 
@@ -319,9 +320,17 @@ const DashboardContainer = (): JSX.Element => {
 					</div>
 				))
 			) : (
-				<div style={{ paddingLeft: 12, paddingRight: 12 }}>
+				<Stack
+					direction="column"
+					justifyContent="center"
+					alignItems="center"
+					spacing={3}
+				>
+					<p aria-hidden="true" className={classes.blankState}>
+						¯\_(ツ)_/¯{' '}
+					</p>
 					<BlankContent message="No Logs Found!" />
-				</div>
+				</Stack>
 			)}
 		</SwipeableDrawer>
 	);

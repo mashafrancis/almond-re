@@ -59,6 +59,11 @@ import { ToggleSwitch, useTableStyles } from '@pages/WaterCyclesPage/styles';
 import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
 import getDateRange from '@utils/DateRangeSelect';
 // interfaces
+import {
+	dateObjectValues,
+	dateSelectOptions,
+	timeWindowRange,
+} from '@components/organisms/LineChartCard/fixtures';
 import { WaterCyclesPageState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
 import { IRootState } from '../../store/rootReducer';
@@ -127,6 +132,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		(globalState: IRootState) => globalState.sensorData,
 		shallowEqual,
 	);
+
 	const dispatch = useDispatch();
 	const [state, setState] = useState<WaterCyclesPageState>({
 		isEditMode: false,
@@ -140,7 +146,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 		isLoading: false,
 		isDateRangeHidden: false,
 		currentDateInView: '',
-		waterCardDateRange: 'This Week',
+		waterCardDateRange: 'Last 4 hours',
 		selectedTimeSchedule: dayjs(),
 		hasError: false,
 		schedules: [
@@ -188,9 +194,13 @@ export const WaterCyclesPage = (): JSX.Element => {
 	useEffect(() => {
 		const ranges = getDateRange('Today');
 
+		// http://localhost:8081/api/range-data?start=-1d&measurement=temperature&type=window&window=10h
+
 		const queryParams = {
-			start: ranges.startDate,
-			stop: ranges.endDate,
+			start: '-1d',
+			type: 'window',
+			window: '10h',
+			// stop: ranges.endDate,
 			measurement: 'temperature',
 		};
 		dispatch(getAirTemperatureTrend(queryParams));
@@ -318,39 +328,41 @@ export const WaterCyclesPage = (): JSX.Element => {
 		}
 	};
 
-	const showScheduleModal = (mode: string) => (event): void => {
-		event.preventDefault();
-		const { id } = event.target;
-		const schedule = schedules.filter((obj) => obj._id === id);
-		const setEditTimeValue = (time) => {
-			const [hour, minute] = time.split(':');
-			return dayjs().hour(hour).minute(minute).format();
-		};
+	const showScheduleModal =
+		(mode: string) =>
+		(event): void => {
+			event.preventDefault();
+			const { id } = event.target;
+			const schedule = schedules.filter((obj) => obj._id === id);
+			const setEditTimeValue = (time) => {
+				const [hour, minute] = time.split(':');
+				return dayjs().hour(hour).minute(minute).format();
+			};
 
-		switch (mode) {
-			case 'Add':
-				setState((prevState) => ({
-					...prevState,
-					isAddEditModalOpen: !prevState.isAddEditModalOpen,
-					isEditMode: false,
-				}));
-				break;
-			case 'Edit':
-				setState((prevState) => ({
-					...prevState,
-					scheduleId: id,
-					scheduleToEdit: setEditTimeValue(schedule[0].schedule),
-					isAddEditModalOpen: !prevState.isAddEditModalOpen,
-					isEditMode: true,
-				}));
-				break;
-			default:
-				setState((prevState) => ({
-					...prevState,
-				}));
-		}
-		validateScheduleOnOpen();
-	};
+			switch (mode) {
+				case 'Add':
+					setState((prevState) => ({
+						...prevState,
+						isAddEditModalOpen: !prevState.isAddEditModalOpen,
+						isEditMode: false,
+					}));
+					break;
+				case 'Edit':
+					setState((prevState) => ({
+						...prevState,
+						scheduleId: id,
+						scheduleToEdit: setEditTimeValue(schedule[0].schedule),
+						isAddEditModalOpen: !prevState.isAddEditModalOpen,
+						isEditMode: true,
+					}));
+					break;
+				default:
+					setState((prevState) => ({
+						...prevState,
+					}));
+			}
+			validateScheduleOnOpen();
+		};
 
 	const closeScheduleModal = (): void => {
 		setState((prevState) => ({
@@ -386,12 +398,8 @@ export const WaterCyclesPage = (): JSX.Element => {
 
 	const onAddEditScheduleSubmit = (event): void => {
 		event.preventDefault();
-		const {
-			isEditMode,
-			scheduleId,
-			scheduleToEdit,
-			selectedTimeSchedule,
-		} = state;
+		const { isEditMode, scheduleId, scheduleToEdit, selectedTimeSchedule } =
+			state;
 		const timeValueString = (value) => dayjs(value).format('HH:mm');
 
 		const schedule = {
@@ -432,55 +440,31 @@ export const WaterCyclesPage = (): JSX.Element => {
 	// 	}));
 	// };
 
-	const pickDate = (params: string) => {
-		let selectedRange: string;
-		switch (params) {
-			case 'Today':
-				selectedRange = '-1d';
-				break;
-			case 'This Week':
-				selectedRange = '-7d';
-				break;
-			case 'This Month':
-				selectedRange = '-30d';
-				break;
-			case 'Quaterly':
-				selectedRange = '-30d';
-				break;
-			case 'This Year':
-				selectedRange = '-1y';
-				break;
-			case 'Pick a date': {
-				handleDateRangeModal();
-				selectedRange = '-1d';
-				break;
-			}
-			default:
-				selectedRange = '-1d';
+	const handleDateSelect = (index) => {
+		const value = dateSelectOptions[index.group][index.item];
+
+		setState((prevState) => ({
+			...prevState,
+			waterCardDateRange: value,
+		}));
+
+		if (value === 'Pick a date') {
+			setState((prevState) => ({
+				...prevState,
+				isDateRangeHidden: !prevState.isDateRangeHidden,
+			}));
 		}
-		return selectedRange;
-	};
 
-	const handleDateSelect = (event: ChangeEvent<{ value: unknown }>) => {
-		const { value: param } = event.target;
-
-		const ranges = getDateRange(param);
-		// if (param === 'Pick a date') {
-		// 	setState((prevState) => ({
-		// 		...prevState,
-		// 		isDateRangeHidden: prevState.isDateRangeHidden,
-		// 	}));
-		// }
-		//
-		// const range = {
-		// 	startDate: new Date(),
-		// 	endDate: new Date(),
-		// };
+		const range = {
+			startDate: new Date(),
+			endDate: new Date(),
+		};
 		// const date = getDateRange(param, range, currentDateView);
 		// const queryParams = {
-		// 	q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
+		// q: `time >= '${date.startDate}' and time <= '${date.endDate}'`,
 		// };
-		const dateParams = pickDate(param as string);
+		const dateParams = dateObjectValues[value as string];
+		const ranges = getDateRange(value);
 
 		const queryParams = {
 			start: ranges.startDate,
@@ -492,12 +476,8 @@ export const WaterCyclesPage = (): JSX.Element => {
 	};
 
 	const renderTimeScheduleForm = (): JSX.Element => {
-		const {
-			isEditMode,
-			selectedTimeSchedule,
-			scheduleToEdit,
-			hasError,
-		} = state;
+		const { isEditMode, selectedTimeSchedule, scheduleToEdit, hasError } =
+			state;
 
 		return (
 			<>
@@ -683,11 +663,11 @@ export const WaterCyclesPage = (): JSX.Element => {
 	};
 
 	const firstColumn = () => (
-		<Grid item container xs spacing={2}>
+		<Grid item container xs={4} spacing={2}>
 			<GeneralCardInfo
 				mainHeader="Manual Override"
 				subHeader="Pump water directly into the system"
-				icon={cardPumpIllustration}
+				icon={<BlurCircular />}
 				actionItem={
 					<PumpSwitch
 						className="manual-override"
@@ -716,7 +696,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	);
 
 	const secondColumn = () => (
-		<Grid item container xs spacing={2}>
+		<Grid item container xs={6} spacing={2}>
 			<LineChartCard
 				heading="Water Temperature"
 				selectedValue={state.waterCardDateRange}
@@ -725,12 +705,13 @@ export const WaterCyclesPage = (): JSX.Element => {
 				onDateRangeChange={onDateRangeChange}
 				handleDateRangeModal={handleDateRangeModal}
 				data={airTemperatureTrend}
+				duration={timeWindowRange[state.waterCardDateRange]}
 			/>
 		</Grid>
 	);
 
 	const thirdColumn = () => (
-		<Grid item container xs spacing={2}>
+		<Grid item container xs={2} spacing={2}>
 			<DashboardCard
 				heading="Water Tank Level"
 				body={

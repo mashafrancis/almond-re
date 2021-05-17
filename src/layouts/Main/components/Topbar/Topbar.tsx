@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Toolbar,
-	Hidden,
 	List,
 	ListItem,
 	Typography,
@@ -206,80 +205,84 @@ const Topbar = ({
 		>
 			<Logo themeMode={themeMode} displayText />
 			<div>
-				<Hidden smDown>
-					<List disablePadding className={classes.navigationContainer}>
-						<NavLink to="/resources">
-							<ListItem
-								aria-describedby="resources"
-								className={clsx(classes.listItem)}
+				<List
+					disablePadding
+					className={classes.navigationContainer}
+					sx={{ display: { xl: 'none', xs: 'block' } }}
+				>
+					<NavLink to="/resources">
+						<ListItem
+							aria-describedby="resources"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
 							>
-								<Typography
-									variant="body1"
-									color="textPrimary"
-									className={clsx(classes.listItemText, 'menu-item')}
-								>
-									Resources
-								</Typography>
-							</ListItem>
-						</NavLink>
+								Resources
+							</Typography>
+						</ListItem>
+					</NavLink>
 
-						<NavLink to="/shop">
-							<ListItem
-								aria-describedby="shop"
-								className={clsx(classes.listItem)}
+					<NavLink to="/shop">
+						<ListItem
+							aria-describedby="shop"
+							className={clsx(classes.listItem)}
+						>
+							<Typography
+								variant="body1"
+								color="textPrimary"
+								className={clsx(classes.listItemText, 'menu-item')}
 							>
-								<Typography
-									variant="body1"
-									color="textPrimary"
-									className={clsx(classes.listItemText, 'menu-item')}
-								>
-									Shop
-								</Typography>
-							</ListItem>
-						</NavLink>
-					</List>
-				</Hidden>
+								Shop
+							</Typography>
+						</ListItem>
+					</NavLink>
+				</List>
 			</div>
 			<div className={classes.flexGrow} />
-			<Hidden smDown>
-				<List disablePadding className={classes.navigationContainer}>
-					<ListItem
-						aria-describedby="dashboard"
-						onClick={(e) => handleClick(e, 'store')}
-						className={clsx(classes.listItem)}
-					>
-						{authService.isAuthenticated() && (
-							<NavLink
-								to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}
-							>
-								<Button color="primary">Dashboard</Button>
-							</NavLink>
-						)}
-					</ListItem>
-					<ListItem className="menu-item--no-dropdown">
-						<DarkModeToggler
-							themeMode={themeMode}
-							onChange={() => themeToggler()}
-							size={24}
-						/>
-					</ListItem>
-					{renderAuthButtons()}
-				</List>
-			</Hidden>
-			<Hidden mdUp>
-				<DarkModeToggler
-					themeMode={themeMode}
-					onChange={() => themeToggler()}
-					size={24}
-				/>
-				<IconButton
-					className={classes.iconButton}
-					onClick={() => onSidebarOpen()}
-					aria-label="Menu"
+			<List
+				disablePadding
+				className={classes.navigationContainer}
+				sx={{ display: { xl: 'none', xs: 'block' } }}
+			>
+				<ListItem
+					aria-describedby="dashboard"
+					onClick={(e) => handleClick(e, 'store')}
+					className={clsx(classes.listItem)}
 				>
-					<MenuIcon />
-				</IconButton>
-			</Hidden>
+					{authService.isAuthenticated() && (
+						<NavLink
+							to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}
+						>
+							<Button color="primary">Dashboard</Button>
+						</NavLink>
+					)}
+				</ListItem>
+				<ListItem className="menu-item--no-dropdown">
+					<DarkModeToggler
+						themeMode={themeMode}
+						onChange={() => themeToggler()}
+						size={24}
+					/>
+				</ListItem>
+				{renderAuthButtons()}
+			</List>
+			<DarkModeToggler
+				themeMode={themeMode}
+				onChange={() => themeToggler()}
+				size={24}
+				sx={{ display: { xl: 'none', xs: 'block' } }}
+			/>
+			<IconButton
+				className={classes.iconButton}
+				onClick={() => onSidebarOpen()}
+				aria-label="Menu"
+				sx={{ display: { xl: 'none', xs: 'block' } }}
+			>
+				<MenuIcon />
+			</IconButton>
 		</Toolbar>
 	);
 };

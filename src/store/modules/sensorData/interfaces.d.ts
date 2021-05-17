@@ -90,5 +90,5 @@ export interface SensorData {
 
 export interface ChartDataTrend {
 	time: string;
-	value: string;
+	value: string | number;
 }

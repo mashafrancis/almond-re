@@ -19,9 +19,24 @@ export interface DateRangePickerState {
 }
 
 export type Param =
+	| 'Pick a date'
+	| '30 second window'
+	| '1 minutes window'
+	| '5 minute window'
+	| '30 minutes window'
+	| '1 hour window'
+	| 'All time'
 	| 'Today'
-	| 'This Week'
-	| 'This Month'
-	| 'Quarterly'
-	| 'This Year'
-	| 'Pick a date';
+	| 'Week to date'
+	| 'Month to date'
+	| 'Year to date'
+	| 'Yesterday'
+	| 'Previous week'
+	| 'Previous month'
+	| 'Previous year'
+	| 'Last 15 minutes'
+	| 'Last 60 minutes'
+	| 'Last 4 hours'
+	| 'Last 24 hours'
+	| 'Last 7 days'
+	| 'Last 30 days';
