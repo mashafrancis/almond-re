@@ -93,7 +93,8 @@
 		"no-use-before-define": "off",
 		"react/require-default-props": "off",
 		"react/jsx-uses-react": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+    "no-tabs": ["error", { "allowIndentationTabs": true }]
 	},
 	"globals": {
 		"window": true,

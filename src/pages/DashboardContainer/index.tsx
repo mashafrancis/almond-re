@@ -87,15 +87,15 @@ const DashboardContainer = (): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-	const TIME_MS = 10_000;
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			dispatch(getSensorDataFromInflux());
-		}, TIME_MS);
-
-		return () => clearInterval(interval);
-	}, []);
+	// const TIME_MS = 10_000;
+	//
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		dispatch(getSensorDataFromInflux());
+	// 	}, TIME_MS);
+	//
+	// 	return () => clearInterval(interval);
+	// }, []);
 
 	// :TODO: Reformat to get user specific device subscription
 	// const userSensorSubscription = 'almond/data';

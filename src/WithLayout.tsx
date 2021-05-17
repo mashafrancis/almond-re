@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper, PaletteMode } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useDarkMode from '@hooks/useDarkMode';
@@ -38,7 +38,7 @@ export default function WithLayout({
 	if (!mountedComponent) return <div />;
 
 	return (
-		<ThemeProvider theme={getTheme(themeMode)}>
+		<ThemeProvider theme={getTheme(themeMode as PaletteMode)}>
 			<CssBaseline />
 			<Paper elevation={0}>
 				<Layout themeMode={themeMode} themeToggler={themeToggler}>

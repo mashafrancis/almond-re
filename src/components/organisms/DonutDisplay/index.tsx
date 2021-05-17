@@ -4,32 +4,32 @@ import { DonutDisplayProps } from '@components/organisms/DonutDisplay/interfaces
 import { Grid } from '@material-ui/core';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
-const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
-Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
-	draw() {
-		originalDoughnutDraw.apply(this, arguments);
-
-		const { chart } = this.chart;
-		const { ctx } = chart;
-		const { width } = chart;
-		const { height } = chart;
-
-		const fontSize = (height / 80).toFixed(2);
-		ctx.font = `${fontSize}em Google Sans,Roboto,Helvetica Neue,sans-serif`;
-		ctx.textBaseline = 'middle';
-
-		const centerConfig = chart.config.options.elements.center;
-		const { text } = centerConfig;
-		const color = centerConfig.color || '#343434';
-		const textYHeight = centerConfig.textYHeight || 2;
-
-		const textX = Math.round((width - ctx.measureText(text).width) / 2);
-		const textY = height / textYHeight;
-
-		ctx.fillStyle = color;
-		ctx.fillText(text, textX, textY);
-	},
-});
+// const originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
+// Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
+// 	draw() {
+// 		originalDoughnutDraw.apply(this, arguments);
+//
+// 		const { chart } = this.chart;
+// 		const { ctx } = chart;
+// 		const { width } = chart;
+// 		const { height } = chart;
+//
+// 		const fontSize = (height / 80).toFixed(2);
+// 		ctx.font = `${fontSize}em Google Sans,Roboto,Helvetica Neue,sans-serif`;
+// 		ctx.textBaseline = 'middle';
+//
+// 		const centerConfig = chart.config.options.elements.center;
+// 		const { text } = centerConfig;
+// 		const color = centerConfig.color || '#343434';
+// 		const textYHeight = centerConfig.textYHeight || 2;
+//
+// 		const textX = Math.round((width - ctx.measureText(text).width) / 2);
+// 		const textY = height / textYHeight;
+//
+// 		ctx.fillStyle = color;
+// 		ctx.fillText(text, textX, textY);
+// 	},
+// });
 
 const DonutDisplay = ({
 	backgroundColor,
@@ -67,7 +67,7 @@ const DonutDisplay = ({
 			segmentShowStroke: true,
 			segmentStrokeColor: '#fff',
 			segmentStrokeWidth: 2,
-			percentageInnerCutout: 50,
+			// percentageInnerCutout: 50,
 			animationSteps: 100,
 			animationEasing: 'easeOutBounce',
 			animateRotate: true,
@@ -75,6 +75,8 @@ const DonutDisplay = ({
 			responsive: true,
 			showScale: true,
 			maintainAspectRatio: false,
+			cutout: '50%',
+			radius: '50%',
 		},
 	};
 
@@ -82,10 +84,12 @@ const DonutDisplay = ({
 		<Grid item xs={12}>
 			<Doughnut
 				data={donutDetails}
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				options={donutDetails.options}
 				width={250}
 				height={250}
+				type="doughnut"
 			/>
 		</Grid>
 	);

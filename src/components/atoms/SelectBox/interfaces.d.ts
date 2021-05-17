@@ -1,7 +1,7 @@
 export interface SelectBoxProps {
 	title: string;
 	defaultValue?: string;
-	options: Option[];
+	options: string[][];
 	handleDateSelect?: any;
 	selectedValue: string;
 }
