@@ -70,8 +70,8 @@ const Overview = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						}
 						subtitle={
 							<span className={classes.textWhite}>
-								The AI-powered vertical indoor garden system will let you choose
-								from more than 20 fruits, vegetables, herbs and greens.
+								The AI-powered vertical indoor garden system will let you
+								choose from more than 20 fruits, vegetables, herbs and greens.
 							</span>
 						}
 						ctaGroup={[

@@ -122,7 +122,9 @@ export const deleteUserRolesRequest = (): DeleteUserRolesRequest => ({
  * @returns {DeleteUserRolesSuccess}
  * @param id
  */
-export const deleteUserRolesSuccess = (id: string): DeleteUserRolesSuccess => ({
+export const deleteUserRolesSuccess = (
+	id: string,
+): DeleteUserRolesSuccess => ({
 	id,
 	type: DELETE_USER_ROLES_SUCCESS,
 	isLoading: false,

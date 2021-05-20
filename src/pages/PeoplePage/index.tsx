@@ -348,30 +348,9 @@ export const PeoplePage = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="user-roles-page">
-			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
-				<Grid
-					item
-					container
-					direction="column"
-					justifyContent="flex-start"
-					alignItems="stretch"
-					spacing={1}
-					xs
-					style={{ margin: 0, padding: 0 }}
-				>
-					{/* <GeneralCardInfo */}
-					{/*	mainHeader="People" */}
-					{/*	subHeader="List of all users under Almond" */}
-					{/*	icon={ */}
-					{/*		<PeopleAltOutlined className="content-icon general-info-icon" /> */}
-					{/*	} */}
-					{/* /> */}
-					<DashboardCard
-						heading="User Management"
-						body={renderTableContent()}
-					/>
-					{renderSelectRoleModal()}
-				</Grid>
+			<Grid container item xs={12} spacing={2}>
+				<DashboardCard heading="User Management" body={renderTableContent()} />
+				{renderSelectRoleModal()}
 			</Grid>
 		</div>
 	);

@@ -16,16 +16,19 @@ import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetSensorDataRequest {
 	type: GET_SENSOR_DATA_REQUEST;
+	isLoading: boolean;
 }
 
 export interface GetSensorDataSuccess {
 	type: GET_SENSOR_DATA_SUCCESS;
 	sensorData: SensorData;
+	isLoading: boolean;
 }
 
 export interface GetSensorDataFailure {
 	type: GET_SENSOR_DATA_FAILURE;
 	errors: ErrorObject | null;
+	isLoading: boolean;
 }
 
 export interface GetAirTemperatureDataRequest {
@@ -87,5 +90,5 @@ export interface SensorData {
 
 export interface ChartDataTrend {
 	time: string;
-	mean: string;
+	value: string | number;
 }

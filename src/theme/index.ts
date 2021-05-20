@@ -1,12 +1,20 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import {
+	createMuiTheme,
+	responsiveFontSizes,
+	PaletteMode,
+	Theme,
+} from '@material-ui/core';
 import { light, dark } from './palette';
 
-const getTheme = (mode) =>
+const getTheme = (mode: PaletteMode): Theme =>
 	responsiveFontSizes(
 		createMuiTheme({
 			palette: mode === 'light' ? light : dark,
 			layout: {
 				contentWidth: 1236,
+			},
+			shape: {
+				borderRadius: 8,
 			},
 			typography: {
 				fontFamily: 'Google Sans, Roboto, Helvetica Neue, sans-serif',

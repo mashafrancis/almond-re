@@ -152,7 +152,10 @@ const PasswordResetForm = ({ isLoading }: Props): JSX.Element => {
 							disabled={!isValid}
 						>
 							{isLoading ? (
-								<CircularProgress className={classes.progressIcon} size="2em" />
+								<CircularProgress
+									className={classes.progressIcon}
+									size="2em"
+								/>
 							) : (
 								'Send'
 							)}

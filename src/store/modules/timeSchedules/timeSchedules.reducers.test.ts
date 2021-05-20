@@ -44,7 +44,10 @@ describe('Time Schedules reducer: ', () => {
 	describe('Get schedules', () => {
 		it('should dispatch GET_SCHEDULE_REQUEST', () => {
 			const getSchedulesRequestAction = getSchedulesRequest();
-			scheduleState = reducer(schedulesInitialState, getSchedulesRequestAction);
+			scheduleState = reducer(
+				schedulesInitialState,
+				getSchedulesRequestAction,
+			);
 
 			expect(scheduleState.isLoading).toBeTruthy();
 			expect(scheduleState.errors).toBe(null);
@@ -52,7 +55,10 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch GET_SCHEDULE_SUCCESS', () => {
 			const getSchedulesSuccessAction = getSchedulesSuccess(data);
-			scheduleState = reducer(schedulesInitialState, getSchedulesSuccessAction);
+			scheduleState = reducer(
+				schedulesInitialState,
+				getSchedulesSuccessAction,
+			);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toBe(null);
@@ -60,7 +66,10 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch GET_SCHEDULES_FAILURE', () => {
 			const getSchedulesFailureAction = getSchedulesFailure(errorMessage);
-			scheduleState = reducer(schedulesInitialState, getSchedulesFailureAction);
+			scheduleState = reducer(
+				schedulesInitialState,
+				getSchedulesFailureAction,
+			);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toEqual(errorMessage);
@@ -86,7 +95,10 @@ describe('Time Schedules reducer: ', () => {
 
 		it('should dispatch ADD_SCHEDULES_FAILURE', () => {
 			const addSchedulesFailureAction = addScheduleFailure(errorMessage);
-			scheduleState = reducer(schedulesInitialState, addSchedulesFailureAction);
+			scheduleState = reducer(
+				schedulesInitialState,
+				addSchedulesFailureAction,
+			);
 
 			expect(scheduleState.isLoading).toBeFalsy();
 			expect(scheduleState.errors).toEqual(errorMessage);
@@ -96,7 +108,10 @@ describe('Time Schedules reducer: ', () => {
 	describe('Edit schedule', () => {
 		it('should dispatch EDIT_SCHEDULE_REQUEST', () => {
 			const editScheduleRequestAction = editScheduleRequest();
-			scheduleState = reducer(schedulesInitialState, editScheduleRequestAction);
+			scheduleState = reducer(
+				schedulesInitialState,
+				editScheduleRequestAction,
+			);
 
 			expect(scheduleState.isLoading).toBeTruthy();
 			expect(scheduleState.errors).toBe(null);

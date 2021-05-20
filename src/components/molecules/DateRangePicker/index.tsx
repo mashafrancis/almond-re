@@ -1,35 +1,10 @@
 import { useState } from 'react';
-import { DateRange } from 'react-date-range';
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	useMediaQuery,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-// styles
-import './default.scss';
-import './styles.scss';
-import {
-	DateRangePickerProps,
-	DateRangePickerState,
-} from '@components/molecules/DateRangePicker/interfaces';
-
-// const styles = (theme: Theme) =>
-//   createStyles({
-//     root: {
-//       margin: 0,
-//       padding: theme.spacing(2),
-//     },
-//     closeButton: {
-//       position: 'absolute',
-//       right: theme.spacing(1),
-//       top: theme.spacing(1),
-//       color: theme.palette.grey[500],
-//     },
-//   });
+import { TextField, Box } from '@material-ui/core';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import { MobileDateRangePicker, LocalizationProvider } from '@material-ui/lab';
+import { DateRangePickerProps } from '@components/molecules/DateRangePicker/interfaces';
+import { DateRange } from '@material-ui/lab/DateRangePicker';
+import Modal from '../../atoms/Modal';
 
 const DateRangePicker = ({
 	onChange,
@@ -37,63 +12,49 @@ const DateRangePicker = ({
 	onClose,
 	onDismiss,
 }: DateRangePickerProps): JSX.Element => {
-	const [state, setState] = useState<DateRangePickerState>({
-		selection: {
-			startDate: new Date(),
-			endDate: new Date(),
-			key: 'selection',
-		},
-	});
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const [value, setValue] = useState<DateRange<Date>>([null, null]);
 
-	const handleRangeChange = (payload: DateRangePickerState) => {
-		const {
-			selection: { startDate, endDate },
-		} = payload;
-		setState((prevState) => ({
-			selection: {
-				...prevState.selection,
-				startDate,
-				endDate,
-			},
-		}));
+	const handleRangeChange = (payload: DateRange<Date>) => {
+		setValue(() => payload);
+	};
 
+	const onSubmit = () => {
 		onChange({
-			startDate,
-			endDate,
+			startDate: value[0],
+			endDate: value[1],
 		});
 	};
 
-	const { startDate } = state.selection;
+	const renderDatePicker = () => (
+		<LocalizationProvider dateAdapter={AdapterDateFns}>
+			<MobileDateRangePicker
+				startText="Start date"
+				endText="End date"
+				value={value}
+				onChange={handleRangeChange}
+				renderInput={(startProps, endProps) => (
+					<>
+						<TextField {...startProps} variant="outlined" size="small" />
+						<Box sx={{ mx: 2 }}> to </Box>
+						<TextField {...endProps} variant="outlined" size="small" />
+					</>
+				)}
+			/>
+		</LocalizationProvider>
+	);
 
 	return (
-		<Dialog
-			open={isOpen}
-			className="modal-date-range"
-			fullScreen={fullScreen}
+		<Modal
+			isModalOpen={isOpen}
+			renderContent={renderDatePicker()}
 			onClose={onClose}
-			aria-labelledby="responsive-dialog-title"
-		>
-			<DialogTitle data-testid="header" id="responsive-dialog-title">
-				<p className="headline-3 modal-header">Pick a date</p>
-			</DialogTitle>
-			<DialogContent className="modal-content">
-				<DateRange
-					className="date-range-picker"
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
-					onChange={handleRangeChange}
-					ranges={[state.selection]}
-					shownDate={startDate}
-					moveRangeOnFirstSelection={false}
-					editableDateInputs
-				/>
-			</DialogContent>
-			<DialogActions>
-				<Button name="Dismiss" onClick={onDismiss} variant="text" />
-			</DialogActions>
-		</Dialog>
+			renderDialogText="Select your date range"
+			renderHeader="Pick a date"
+			submitButtonName="Select range"
+			onSubmit={onSubmit}
+			onDismiss={onDismiss}
+			// disabled={hasError}
+		/>
 	);
 };
 

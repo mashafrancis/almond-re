@@ -37,7 +37,10 @@ interface Props {
 }
 
 // eslint-disable-next-line react/prop-types
-const PasswordResetForm = ({ redirectLink, isLoading }: Props): JSX.Element => {
+const PasswordResetForm = ({
+	redirectLink,
+	isLoading,
+}: Props): JSX.Element => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -94,7 +97,10 @@ const PasswordResetForm = ({ redirectLink, isLoading }: Props): JSX.Element => {
 							disabled={!isValid}
 						>
 							{isLoading ? (
-								<CircularProgress className={classes.progressIcon} size="2em" />
+								<CircularProgress
+									className={classes.progressIcon}
+									size="2em"
+								/>
 							) : (
 								'Send'
 							)}

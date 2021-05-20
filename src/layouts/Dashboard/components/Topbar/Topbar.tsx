@@ -463,7 +463,10 @@ const Topbar = ({
 								</ListItem>
 								{!isAdmin && (
 									<ListItem
-										className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+										className={clsx(
+											classes.listItem,
+											'menu-item--no-dropdown',
+										)}
 									>
 										<Hidden smDown>{renderTimeLineIcon()}</Hidden>
 									</ListItem>

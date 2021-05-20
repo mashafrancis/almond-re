@@ -10,11 +10,15 @@ import {
 	Grid,
 	InputAdornment,
 	MenuItem,
+	Stack,
 	SwipeableDrawer,
 	TextField,
 } from '@material-ui/core';
 import { useSubscription } from '@hooks/mqtt';
-import { getSensorData } from '@modules/sensorData';
+import {
+	getSensorDataFromInflux,
+	getSensorDataFromMqtt,
+} from '@modules/sensorData';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // icons
 import { AllOutTwoTone, Face } from '@material-ui/icons';
@@ -83,21 +87,32 @@ const DashboardContainer = (): JSX.Element => {
 	};
 
 	const dispatch = useDispatch();
+
+	// const TIME_MS = 10_000;
+	//
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		dispatch(getSensorDataFromInflux());
+	// 	}, TIME_MS);
+	//
+	// 	return () => clearInterval(interval);
+	// }, []);
+
 	// :TODO: Reformat to get user specific device subscription
 	const userSensorSubscription = 'almond/data';
 	const { message } = useSubscription(userSensorSubscription, options);
 
-	useEffect(() => {
-		if (message) {
-			const parsedMessage = JSON.parse(message.message);
-			const data = {
-				temperature: parsedMessage?.temp,
-				humidity: parsedMessage?.humid,
-				waterLevel: parsedMessage?.water_level,
-			};
-			dispatch(getSensorData(data));
-		}
-	}, [message]);
+	// useEffect(() => {
+	// 	if (message) {
+	// 		const parsedMessage = JSON.parse(message.message);
+	// 		const data = {
+	// 			temperature: parsedMessage?.temp,
+	// 			humidity: parsedMessage?.humid,
+	// 			waterLevel: parsedMessage?.water_level,
+	// 		};
+	// 		dispatch(getSensorDataFromMqtt(data));
+	// 	}
+	// }, [message]);
 
 	useEffect(() => {
 		setState((prevState) => ({
@@ -305,9 +320,17 @@ const DashboardContainer = (): JSX.Element => {
 					</div>
 				))
 			) : (
-				<div style={{ paddingLeft: 12, paddingRight: 12 }}>
+				<Stack
+					direction="column"
+					justifyContent="center"
+					alignItems="center"
+					spacing={3}
+				>
+					<p aria-hidden="true" className={classes.blankState}>
+						¯\_(ツ)_/¯{' '}
+					</p>
 					<BlankContent message="No Logs Found!" />
-				</div>
+				</Stack>
 			)}
 		</SwipeableDrawer>
 	);

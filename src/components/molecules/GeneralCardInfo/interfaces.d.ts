@@ -4,5 +4,5 @@ export interface GeneralCardInfoProps {
 	mainHeader: string;
 	subHeader?: string;
 	actionItem?: ReactNode;
-	icon?: ReactNode;
+	icon?: ReactNode | string;
 }

@@ -529,7 +529,10 @@ export const UserRolesPage = (): JSX.Element => {
 		}));
 
 		return (
-			<div className={tableClasses.root} style={{ height: 400, width: '100%' }}>
+			<div
+				className={tableClasses.root}
+				style={{ height: 400, width: '100%' }}
+			>
 				<div style={{ display: 'flex', height: '100%' }}>
 					<div style={{ flexGrow: 1 }}>
 						<DataGrid
@@ -561,7 +564,7 @@ export const UserRolesPage = (): JSX.Element => {
 
 	return (
 		<div className="user-roles-page">
-			<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
+			<Grid container item xs={12}>
 				<Grid
 					item
 					container

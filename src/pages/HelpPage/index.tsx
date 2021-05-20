@@ -8,23 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import GeneralCardInfo from '@components/molecules/GeneralCardInfo';
 
 export const HelpPage = (): JSX.Element => (
-	<Grid container item xs={12} style={{ margin: 0, padding: 0 }}>
-		<Grid
-			item
-			container
-			direction="column"
-			justifyContent="flex-start"
-			alignItems="stretch"
-			spacing={1}
-			xs
-			style={{ margin: 0, padding: 0 }}
-		>
-			<GeneralCardInfo
-				mainHeader="Help"
-				subHeader="Get more information more about the system"
-				icon={<Help className="content-icon general-info-icon" />}
-			/>
-		</Grid>
+	<Grid container item xs={12} spacing={2}>
+		<GeneralCardInfo
+			mainHeader="Help"
+			subHeader="Get more information more about the system"
+			icon={<Help className="content-icon general-info-icon" />}
+		/>
 	</Grid>
 );
 

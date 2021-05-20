@@ -31,7 +31,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 // import 'aos/dist/aos.css';
 // interfaces
 import { IClientOptions } from 'mqtt';
-import { StyledEngineProvider } from '@material-ui/core';
+import { LinearProgress, StyledEngineProvider } from '@material-ui/core';
 import Routes from '../routes';
 import { IRootState } from '../store/rootReducer';
 
@@ -140,10 +140,10 @@ export const App = (): JSX.Element => {
 		// reconnectPeriod: 1000,
 		// connectTimeout: 30 * 1000,
 		// will: {
-		// 	topic: 'almond/lastWill',
-		// 	payload: 'Connection Closed abnormally..!',
-		// 	qos: 2,
-		// 	retain: false,
+		// topic: 'almond/lastWill',
+		// payload: 'Connection Closed abnormally..!',
+		// qos: 2,
+		// retain: false,
 		// },
 		// key: bufferKey,
 		// cert: bufferCert,
@@ -168,16 +168,7 @@ export const App = (): JSX.Element => {
 								<SnackBar snack={snack} />
 								{window.location.pathname !== '/' && isAuthenticated}
 								<Suspense fallback={<LinearProgressBar />}>
-									{isLoading ? (
-										<Backdrop className={classes.backdrop} open={isLoading}>
-											<CircularProgress
-												color="primary"
-												style={{ zIndex: 100000 }}
-											/>
-										</Backdrop>
-									) : (
-										<Routes />
-									)}
+									{isLoading ? <LinearProgress color="primary" /> : <Routes />}
 								</Suspense>
 							</StyledEngineProvider>
 						</ViewportProvider>

@@ -50,7 +50,10 @@ const LearnMoreLink = ({
 				color={color || 'primary'}
 				{...typographyProps}
 			>
-				<NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={href}>
+				<NavLink
+					style={{ textDecoration: 'none', color: 'inherit' }}
+					to={href}
+				>
 					{title}
 				</NavLink>
 			</Typography>

@@ -2,7 +2,7 @@
 	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
 		"target": "es5",
-		"lib": ["es6", "es2017", "esnext.asynciterable", "dom"],
+		"lib": ["es6", "es2017", "es2019", "esnext.asynciterable", "dom"],
 		"typeRoots": ["./node_modules/@types"],
 		"types": ["@types/jest", "@types/node", "react"],
 		"downlevelIteration": true,

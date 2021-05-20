@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -69,6 +69,25 @@ interface Props {
 
 const Form = ({ redirectLink, isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
+	const [field, useField] = useState<string>('');
+
+	const allowedFields: string[] = [];
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		useField(() => event.target.name);
+		handleFormChange(event);
+	};
+
+	useEffect(() => {
+		allowedFields.push(field);
+	}, [field]);
+
+	const filtered = Object.keys(schema)
+		.filter((key) => allowedFields.includes(key))
+		.reduce((obj, key) => {
+			obj[key] = schema[key];
+			return obj;
+		}, {});
 
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
@@ -83,18 +102,12 @@ const Form = ({ redirectLink, isLoading }: Props): JSX.Element => {
 		}
 	}, [redirectLink]);
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: ({ firstName, lastName, email, password }) =>
-			dispatch(createAccount({ firstName, lastName, email, password })),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: ({ firstName, lastName, email, password }) =>
+				dispatch(createAccount({ firstName, lastName, email, password })),
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	const handleLogin = () =>
 		window.location.replace(`${process.env.ALMOND_API}/auth/google`);
@@ -128,7 +141,7 @@ const Form = ({ redirectLink, isLoading }: Props): JSX.Element => {
 							fullWidth
 							helperText={hasError('firstName') ? errors.firstName[0] : null}
 							error={hasError('firstName')}
-							onChange={handleFormChange}
+							onChange={handleChange}
 							type="text"
 							value={values.firstName || ''}
 						/>
@@ -200,7 +213,10 @@ const Form = ({ redirectLink, isLoading }: Props): JSX.Element => {
 							disabled={!isValid}
 						>
 							{isLoading ? (
-								<CircularProgress className={classes.progressIcon} size="2em" />
+								<CircularProgress
+									className={classes.progressIcon}
+									size="2em"
+								/>
 							) : (
 								'Register'
 							)}

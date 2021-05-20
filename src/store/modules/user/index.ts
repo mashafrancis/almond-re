@@ -171,7 +171,10 @@ export const userInitialState = {
  * @param {AnyAction} action
  * @returns {Object} state
  */
-export const reducer = (state: State = userInitialState, action: AnyAction) => {
+export const reducer = (
+	state: State = userInitialState,
+	action: AnyAction,
+) => {
 	switch (action.type) {
 		case GET_USER_DETAILS_REQUEST:
 			return {

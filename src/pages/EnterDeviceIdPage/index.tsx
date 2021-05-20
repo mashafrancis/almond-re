@@ -44,7 +44,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 	const classes = useStyles();
 
 	return (
-		<div>
+		<>
 			<Section className={classes.section}>
 				<div className={classes.formContainer}>
 					<Image
@@ -57,8 +57,9 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 						subtitle={
 							<span>
 								The device ID will help you to control your purchased device
-								from Almond. Kindly enter the 6 digit figure to start using your
-								system. Configuration with the device might take a few minutes.
+								from Almond. Kindly enter the 6 digit figure to start using
+								your system. Configuration with the device might take a few
+								minutes.
 							</span>
 						}
 						titleProps={{
@@ -72,7 +73,7 @@ export const EnterDeviceIdPage = (): JSX.Element => {
 					<Form />
 				</div>
 			</Section>
-		</div>
+		</>
 	);
 };
 

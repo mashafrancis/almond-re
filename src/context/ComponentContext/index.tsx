@@ -60,7 +60,10 @@ const ComponentProvider = ({
 
 	const setSelectedIndex = (selectedIndex: number) => {
 		setState((prevState) => ({ ...prevState, selectedIndex }));
-		window.localStorage.setItem('selectedIndex', JSON.stringify(selectedIndex));
+		window.localStorage.setItem(
+			'selectedIndex',
+			JSON.stringify(selectedIndex),
+		);
 	};
 
 	const setDeviceModalOpen = (isModalOpen: boolean) => {

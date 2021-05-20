@@ -55,7 +55,9 @@ const HeroAlt = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 								key={fancyId()}
 								to={
 									isAuthed
-										? `${isArrayNotNull(devices) ? '/dashboard' : '/my-device'}`
+										? `${
+												isArrayNotNull(devices) ? '/dashboard' : '/my-device'
+										  }`
 										: '/store'
 								}
 							>

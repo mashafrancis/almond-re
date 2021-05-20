@@ -48,6 +48,11 @@ export const useTableStyles = makeStyles((theme: Theme) =>
 			'& .MuiDataGrid-iconSeparator': {
 				display: 'none',
 			},
+			'& .MuiDataGrid-cell:focus-within': {
+				// outline: 'solid #1967D2 0.8px',
+				outlineOffset: '-1px',
+				outline: 'none',
+			},
 			// '& .MuiDataGrid-colCell, .MuiDataGrid-cell': {
 			// 	paddingLeft: 2,
 			// 	paddingRight: 2,

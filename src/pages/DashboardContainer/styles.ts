@@ -24,5 +24,11 @@ export const useDashboardContainerStyles = makeStyles((theme: Theme) =>
 			// color: '#fff',
 			backgroundColor: 'rgba(0, 0, 0, 0.1)',
 		},
+		blankState: {
+			font: '300 36px/44px Google Sans,Helvetica Neue,sans-serif',
+			letterSpacing: 'normal',
+			marginBottom: 24,
+			color: theme.palette.text.secondary,
+		},
 	}),
 );

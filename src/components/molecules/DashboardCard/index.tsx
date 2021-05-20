@@ -88,20 +88,8 @@ const DashboardCard = ({
 						action={actionItem}
 					/>
 				)}
-				<CardContent className={classes.content}>
-					<Grid
-						item
-						container
-						direction="column"
-						justifyContent="center"
-						alignItems="center"
-						spacing={2}
-						style={{ display: 'flex', textAlign: 'center', margin: 0 }}
-						xs={12}
-						data-testid="body"
-					>
-						{body}
-					</Grid>
+				<CardContent className={classes.content} data-testid="body">
+					{body}
 				</CardContent>
 			</Card>
 		</Grid>

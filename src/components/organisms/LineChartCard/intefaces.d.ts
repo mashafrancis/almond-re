@@ -7,5 +7,6 @@ export interface LineChartCardProps {
 	isDateRangeHidden: boolean;
 	onDateRangeChange: any;
 	handleDateRangeModal: any;
-	data: ChartDataTrend[];
+	data: any;
+	duration?: number;
 }
