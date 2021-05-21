@@ -80,9 +80,8 @@ const DarkModeToggler = ({
 		return animationProperties;
 	}, [animationProperties]);
 
-	const { circle, svg, lines, mask } = properties[
-		themeMode === 'dark' ? 'dark' : 'light'
-	];
+	const { circle, svg, lines, mask } =
+		properties[themeMode === 'dark' ? 'dark' : 'light'];
 
 	const svgContainerProps = useSpring({
 		...svg,

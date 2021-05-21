@@ -16,6 +16,7 @@ import {
 import SuccessPage from '@pages/SuccessPage';
 import AccountSettingsPage from '@pages/AccountSettingsPage';
 import AboutPage from '@pages/AboutPage';
+import CompanyTerms from '@pages/CompanyTerms';
 
 import WithLayout from '../WithLayout';
 import {
@@ -125,6 +126,17 @@ const Routes = (): any => (
 					{...matchProps}
 					component={AccountSettingsPage}
 					layout={MinimalLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/terms-of-services"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={CompanyTerms}
+					layout={MainLayout}
 				/>
 			)}
 		/>

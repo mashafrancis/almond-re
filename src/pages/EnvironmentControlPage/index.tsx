@@ -2,6 +2,8 @@ import { ChangeEvent, useState } from 'react';
 // third-party libraries
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Grid, Stack } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 // components
 import { DashboardCard } from '@components/molecules';
 import { LineChartCard, DonutDisplay } from '@components/organisms';
@@ -13,7 +15,6 @@ import getDateRange from '@utils/DateRangeSelect';
 import fancyId from '@utils/fancyId';
 // interfaces
 import { EnvironmentControlPageState } from '@pages/EnvironmentControlPage/interfaces';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { DateRanges } from '@components/molecules/DateRangePicker/interfaces';
 import { IRootState } from '../../store/rootReducer';
 

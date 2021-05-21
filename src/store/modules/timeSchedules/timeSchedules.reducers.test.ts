@@ -182,9 +182,8 @@ describe('Time Schedules reducer: ', () => {
 		});
 
 		it('should dispatch DELETE_SCHEDULE_FAILURE', () => {
-			const deleteScheduleFailureAction = deleteSingleScheduleFailure(
-				errorMessage,
-			);
+			const deleteScheduleFailureAction =
+				deleteSingleScheduleFailure(errorMessage);
 			scheduleState = reducer(
 				schedulesInitialState,
 				deleteScheduleFailureAction,

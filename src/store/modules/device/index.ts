@@ -261,158 +261,174 @@ export const editDeviceFailure = (errors: any): EditDeviceActionFailure => ({
  * Add a new device
  * @returns {Function} action type and payload
  */
-export const addNewDevice = (device: { id: string }) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		post: (
-			arg0: string,
-			arg1: { id: string },
-		) => Promise<{ data: { data: NewDevice; message: string } }>;
-	},
-) => {
-	dispatch(addDeviceRequest());
-	return http
-		.post('devices', device)
-		.then((response: { data: { data: NewDevice; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(addDeviceSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'adding new device');
-			dispatch(addDeviceFailure(error));
-		});
-};
+export const addNewDevice =
+	(device: { id: string }) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			post: (
+				arg0: string,
+				arg1: { id: string },
+			) => Promise<{ data: { data: NewDevice; message: string } }>;
+		},
+	) => {
+		dispatch(addDeviceRequest());
+		return http
+			.post('devices', device)
+			.then((response: { data: { data: NewDevice; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(addDeviceSuccess(data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'adding new device');
+				dispatch(addDeviceFailure(error));
+			});
+	};
 
-export const verifyUserDevice = (device: { id: string }) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		post: (
-			arg0: string,
-			arg1: { id: string },
-		) => Promise<{ data: { data: VerifyDevice; message: string } }>;
-	},
-) => {
-	dispatch(verifyDeviceRequest());
-	return http
-		.post('my-device', device)
-		.then((response: { data: { data: VerifyDevice; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(verifyDeviceSuccess(data));
-			dispatch(displaySnackMessage(message));
-			window.location.replace('/dashboard');
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'verifying device');
-			dispatch(verifyDeviceFailure(error));
-		});
-};
+export const verifyUserDevice =
+	(device: { id: string }) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			post: (
+				arg0: string,
+				arg1: { id: string },
+			) => Promise<{ data: { data: VerifyDevice; message: string } }>;
+		},
+	) => {
+		dispatch(verifyDeviceRequest());
+		return http
+			.post('my-device', device)
+			.then((response: { data: { data: VerifyDevice; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(verifyDeviceSuccess(data));
+				dispatch(displaySnackMessage(message));
+				window.location.replace('/dashboard');
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'verifying device');
+				dispatch(verifyDeviceFailure(error));
+			});
+	};
 
-export const activateDevice = (id: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		put: (
-			arg0: string,
-			arg1: { id: string },
-		) => Promise<{ data: { data: ActivateDevice; message: string } }>;
-	},
-) => {
-	dispatch(activateDeviceRequest());
-	return http
-		.put('active-device', { id })
-		.then((response: { data: { data: ActivateDevice; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(activateDeviceSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'activating your device');
-			dispatch(activateDeviceFailure(error));
-		});
-};
+export const activateDevice =
+	(id: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			put: (
+				arg0: string,
+				arg1: { id: string },
+			) => Promise<{ data: { data: ActivateDevice; message: string } }>;
+		},
+	) => {
+		dispatch(activateDeviceRequest());
+		return http
+			.put('active-device', { id })
+			.then(
+				(response: { data: { data: ActivateDevice; message: string } }) => {
+					const {
+						data: { data, message },
+					} = response;
+					dispatch(activateDeviceSuccess(data));
+					dispatch(displaySnackMessage(message));
+				},
+			)
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'activating your device');
+				dispatch(activateDeviceFailure(error));
+			});
+	};
 
-export const getAllDevices = () => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		get: (
-			arg0: string,
-			arg1: { signal: AbortSignal },
-		) => Promise<{ data: { data: Device[] } }>;
-	},
-) => {
-	dispatch(getDevicesRequest());
-	const abortController = new AbortController();
-	const { signal } = abortController;
-	return http
-		.get('devices', { signal })
-		.then((response: { data: { data: Device[] } }) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getDevicesSuccess(data));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'getting devices');
-			dispatch(getDevicesFailure(error));
-		});
-};
+export const getAllDevices =
+	() =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			get: (
+				arg0: string,
+				arg1: { signal: AbortSignal },
+			) => Promise<{ data: { data: Device[] } }>;
+		},
+	) => {
+		dispatch(getDevicesRequest());
+		const abortController = new AbortController();
+		const { signal } = abortController;
+		return http
+			.get('devices', { signal })
+			.then((response: { data: { data: Device[] } }) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(getDevicesSuccess(data));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'getting devices');
+				dispatch(getDevicesFailure(error));
+			});
+	};
 
-export const editDevice = (id: string, device: any) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		patch: (
-			arg0: string,
-			arg1: any,
-		) => Promise<{ data: { data: { id: string }; message: string } }>;
-	},
-) => {
-	dispatch(editDeviceRequest());
-	return http
-		.patch(`devices/${id}`, device)
-		.then((response: { data: { data: { id: string }; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(editDeviceSuccess(id, data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'editing device');
-			dispatch(editDeviceFailure(error));
-		});
-};
+export const editDevice =
+	(id: string, device: any) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			patch: (
+				arg0: string,
+				arg1: any,
+			) => Promise<{ data: { data: { id: string }; message: string } }>;
+		},
+	) => {
+		dispatch(editDeviceRequest());
+		return http
+			.patch(`devices/${id}`, device)
+			.then(
+				(response: { data: { data: { id: string }; message: string } }) => {
+					const {
+						data: { data, message },
+					} = response;
+					dispatch(editDeviceSuccess(id, data));
+					dispatch(displaySnackMessage(message));
+				},
+			)
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'editing device');
+				dispatch(editDeviceFailure(error));
+			});
+	};
 
-export const deleteDevice = (id: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { delete: (arg0: string) => Promise<{ data: { message: string } }> },
-) => {
-	dispatch(deleteSingleDeviceRequest());
-	return http
-		.delete(`devices/${id}`)
-		.then((response: { data: { message: string } }) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(deleteSingleDeviceSuccess(id));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'deleting device');
-			dispatch(deleteSingleDeviceFailure(error));
-		});
-};
+export const deleteDevice =
+	(id: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: { delete: (arg0: string) => Promise<{ data: { message: string } }> },
+	) => {
+		dispatch(deleteSingleDeviceRequest());
+		return http
+			.delete(`devices/${id}`)
+			.then((response: { data: { message: string } }) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(deleteSingleDeviceSuccess(id));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'deleting device');
+				dispatch(deleteSingleDeviceFailure(error));
+			});
+	};
 
 export const deviceInitialState = {
 	isLoading: false,

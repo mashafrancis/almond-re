@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	navLink: {
 		color: theme.palette.text.primary,
-		fontSize: 13,
+		fontSize: 14,
 	},
 }));
 

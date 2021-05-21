@@ -8,12 +8,8 @@ import {
 import clsx from 'clsx';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {
-	createStyles,
-	makeStyles,
-	Theme,
-	useTheme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme, useTheme } from '@material-ui/core/styles';
 import { Image } from '@components/atoms';
 import { GeneralCardInfoProps } from './interfaces';
 

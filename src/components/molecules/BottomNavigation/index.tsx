@@ -11,7 +11,8 @@ import {
 	AppBar,
 	Divider,
 } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui//styles';
+import { Theme } from '@material-ui/core/styles';
 // components
 import { UserContext } from '@context/UserContext';
 import { ComponentContext } from '@context/ComponentContext';

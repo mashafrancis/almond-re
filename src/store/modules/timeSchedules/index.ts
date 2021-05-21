@@ -128,10 +128,11 @@ export const addScheduleFailure = (
  * Delete single schedule request
  * @returns {DeleteScheduleActionRequest}
  */
-export const deleteSingleScheduleRequest = (): DeleteScheduleActionRequest => ({
-	type: DELETE_SCHEDULE_REQUEST,
-	isLoading: true,
-});
+export const deleteSingleScheduleRequest =
+	(): DeleteScheduleActionRequest => ({
+		type: DELETE_SCHEDULE_REQUEST,
+		isLoading: true,
+	});
 
 /**
  * Delete single schedule success
@@ -268,210 +269,221 @@ export const getPumpStatusFailure = (
  * Get all schedules
  * @returns {Function} action type and payload
  */
-export const getAllSchedules = (deviceId: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		get: (
-			arg0: string,
-			arg1: { cache: boolean },
-		) => Promise<{ data: { data: any } }>;
-	},
-) => {
-	dispatch(getSchedulesRequest());
-	return http
-		.get(`/schedules?device=${deviceId}`, { cache: true })
-		.then((response: { data: { data: any } }) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getSchedulesSuccess(data));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'fetching your schedule');
-			dispatch(getSchedulesFailure(error));
-		});
-};
+export const getAllSchedules =
+	(deviceId: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			get: (
+				arg0: string,
+				arg1: { cache: boolean },
+			) => Promise<{ data: { data: any } }>;
+		},
+	) => {
+		dispatch(getSchedulesRequest());
+		return http
+			.get(`/schedules?device=${deviceId}`, { cache: true })
+			.then((response: { data: { data: any } }) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(getSchedulesSuccess(data));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'fetching your schedule');
+				dispatch(getSchedulesFailure(error));
+			});
+	};
 
 /**
  * Add a new schedule
  * @returns {Function} action type and payload
  */
-export const addNewSchedule = (schedule: SchedulePayload) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		post: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
-	},
-) => {
-	dispatch(addScheduleRequest());
-	return http
-		.post('schedules', schedule)
-		.then((response: { data: any }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(addScheduleSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'creating your schedule');
-			dispatch(addScheduleFailure(error));
-		});
-};
+export const addNewSchedule =
+	(schedule: SchedulePayload) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			post: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
+		},
+	) => {
+		dispatch(addScheduleRequest());
+		return http
+			.post('schedules', schedule)
+			.then((response: { data: any }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(addScheduleSuccess(data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'creating your schedule');
+				dispatch(addScheduleFailure(error));
+			});
+	};
 
 /**
  * Delete a schedule
  * @returns {Function} action type and payload
  */
-export const deleteSingleSchedule = (id: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { delete: (arg0: string) => Promise<{ data: { message: any } }> },
-) => {
-	dispatch(deleteSingleScheduleRequest());
-	return http
-		.delete(`schedules/${id}`)
-		.then((response: { data: { message: string } }) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(deleteSingleScheduleSuccess(id));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'deleting your schedule');
-			dispatch(deleteSingleScheduleFailure(error));
-		});
-};
+export const deleteSingleSchedule =
+	(id: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: { delete: (arg0: string) => Promise<{ data: { message: any } }> },
+	) => {
+		dispatch(deleteSingleScheduleRequest());
+		return http
+			.delete(`schedules/${id}`)
+			.then((response: { data: { message: string } }) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(deleteSingleScheduleSuccess(id));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'deleting your schedule');
+				dispatch(deleteSingleScheduleFailure(error));
+			});
+	};
 
 /**
  * Edit a schedule
  * @returns {Function} action type and payload
  */
-export const editSchedule = (id: string, schedule: SchedulePayload) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		patch: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
-	},
-) => {
-	dispatch(editScheduleRequest());
-	return http
-		.patch(`schedules/${id}`, schedule)
-		.then((response: { data: any }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(editScheduleSuccess(id, data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'editing your schedule');
-			dispatch(editScheduleFailure(error));
-		});
-};
+export const editSchedule =
+	(id: string, schedule: SchedulePayload) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			patch: (arg0: string, arg1: SchedulePayload) => Promise<{ data: any }>;
+		},
+	) => {
+		dispatch(editScheduleRequest());
+		return http
+			.patch(`schedules/${id}`, schedule)
+			.then((response: { data: any }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(editScheduleSuccess(id, data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'editing your schedule');
+				dispatch(editScheduleFailure(error));
+			});
+	};
 
 /**
  * Toggle a pump manually
  * @returns {Function} action type and payload
  */
-export const togglePump = (payload: ToggleSchedulePayload) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		put: (arg0: string, arg1: { enabled: any }) => Promise<{ data: any }>;
-	},
-) => {
-	dispatch(togglePumpStatusRequest());
-	return http
-		.put('pump', payload)
-		.then((response: { data: any }) => {
-			const {
-				data: {
+export const togglePump =
+	(payload: ToggleSchedulePayload) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			put: (arg0: string, arg1: { enabled: any }) => Promise<{ data: any }>;
+		},
+	) => {
+		dispatch(togglePumpStatusRequest());
+		return http
+			.put('pump', payload)
+			.then((response: { data: any }) => {
+				const {
 					data: {
-						scheduleOverride: { enabled },
-						activityHistory,
+						data: {
+							scheduleOverride: { enabled },
+							activityHistory,
+						},
+						message,
 					},
-					message,
-				},
-			} = response;
-			// const data = response.data.data.scheduleOverride.enabled;
-			dispatch(getPumpStatusSuccess(enabled));
-			dispatch(togglePumpStatusSuccess(enabled));
-			dispatch(logActivity(activityHistory));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(
-				error,
-				dispatch,
-				`turning pump ${payload.enabled ? 'ON' : 'OFF'}`,
-			);
-			dispatch(togglePumpStatusFailure(error));
-		});
-};
+				} = response;
+				// const data = response.data.data.scheduleOverride.enabled;
+				dispatch(getPumpStatusSuccess(enabled));
+				dispatch(togglePumpStatusSuccess(enabled));
+				dispatch(logActivity(activityHistory));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(
+					error,
+					dispatch,
+					`turning pump ${payload.enabled ? 'ON' : 'OFF'}`,
+				);
+				dispatch(togglePumpStatusFailure(error));
+			});
+	};
 
 /**
  * Get pump status
  * @returns {Function} action type and payload
  */
-export const getPumpStatus = (deviceId: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		get: (arg0: string) => Promise<{ data: { data: { enabled: boolean } } }>;
-	},
-) => {
-	dispatch(getPumpStatusRequest());
-	return http
-		.get(`/pump?device=${deviceId}`)
-		.then((response: { data: { data: { enabled: boolean } } }) => {
-			const {
-				data: {
-					data: { enabled },
-				},
-			} = response;
-			dispatch(getPumpStatusSuccess(enabled));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'fetching pump status');
-			dispatch(getPumpStatusFailure(error));
-		});
-};
+export const getPumpStatus =
+	(deviceId: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			get: (arg0: string) => Promise<{ data: { data: { enabled: boolean } } }>;
+		},
+	) => {
+		dispatch(getPumpStatusRequest());
+		return http
+			.get(`/pump?device=${deviceId}`)
+			.then((response: { data: { data: { enabled: boolean } } }) => {
+				const {
+					data: {
+						data: { enabled },
+					},
+				} = response;
+				dispatch(getPumpStatusSuccess(enabled));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'fetching pump status');
+				dispatch(getPumpStatusFailure(error));
+			});
+	};
 
 /**
  * Set a pump manually
  * @returns {Function} action type and payload
  */
-export const toggleScheduleStatus = (
-	id: string,
-	payload: ToggleSchedulePayload,
-) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		put: (
-			arg0: string,
-			arg1: any,
-		) => Promise<{ data: { data: Schedule; message: string } }>;
-	},
-) => {
-	dispatch(editScheduleRequest());
-	return http
-		.put(`schedules/${id}`, payload)
-		.then((response: { data: { data: Schedule; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(editScheduleSuccess(id, data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'changing the time schedule');
-			dispatch(editScheduleFailure(error));
-		});
-};
+export const toggleScheduleStatus =
+	(id: string, payload: ToggleSchedulePayload) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			put: (
+				arg0: string,
+				arg1: any,
+			) => Promise<{ data: { data: Schedule; message: string } }>;
+		},
+	) => {
+		dispatch(editScheduleRequest());
+		return http
+			.put(`schedules/${id}`, payload)
+			.then((response: { data: { data: Schedule; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(editScheduleSuccess(id, data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'changing the time schedule');
+				dispatch(editScheduleFailure(error));
+			});
+	};
 
 export const schedulesInitialState = {
 	schedules: [],

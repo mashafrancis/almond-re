@@ -47,9 +47,8 @@ describe('User reducer', () => {
 		});
 
 		it('should dispatch EDIT_USER_DETAILS_FAILURE', () => {
-			const editUserDetailsFailureAction = editUserDetailsFailure(
-				errorMessage,
-			);
+			const editUserDetailsFailureAction =
+				editUserDetailsFailure(errorMessage);
 			const userState = reducer(
 				userInitialState,
 				editUserDetailsFailureAction,

@@ -2,7 +2,8 @@ import { Card } from '@material-ui/core';
 import dayjs from 'dayjs';
 // interfaces
 import CardContent from '@material-ui/core/CardContent';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { ActivityLogCardProps } from './interfaces';

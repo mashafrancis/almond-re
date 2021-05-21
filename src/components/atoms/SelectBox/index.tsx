@@ -1,5 +1,6 @@
 import { useState, MouseEvent } from 'react';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import {
 	MenuItem,
 	Menu,

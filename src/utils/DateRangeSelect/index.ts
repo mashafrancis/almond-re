@@ -46,8 +46,8 @@ const getDateRange = (
 		case 'Pick a date':
 			returnedRange = {
 				frequency: 'day',
-				startDate: dayjs((range?.startDate as unknown) as string).unix(),
-				endDate: dayjs((range?.endDate as unknown) as string).unix(),
+				startDate: dayjs(range?.startDate as unknown as string).unix(),
+				endDate: dayjs(range?.endDate as unknown as string).unix(),
 			};
 			break;
 		default:

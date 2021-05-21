@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 // import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import { NoDataOverlay, LinearProgressBar } from '@components/atoms';
@@ -64,6 +64,7 @@ import {
 	dateSelectOptions,
 	timeWindowRange,
 } from '@components/organisms/LineChartCard/fixtures';
+import { Theme } from '@material-ui/core/styles';
 import { WaterCyclesPageState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
 import { IRootState } from '../../store/rootReducer';
@@ -615,7 +616,9 @@ export const WaterCyclesPage = (): JSX.Element => {
 				renderCell: ({ value, getValue }: GridCellParams) => (
 					<ToggleSwitch
 						checked={value as boolean}
-						onChange={(e) => handleToggleStatusChange(e, getValue('actions'))}
+						onChange={(e) =>
+							handleToggleStatusChange(e, getValue('actions', 'status'))
+						}
 					/>
 				),
 			},

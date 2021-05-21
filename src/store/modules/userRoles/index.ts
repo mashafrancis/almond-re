@@ -183,116 +183,127 @@ export const editUserRoleFailure = (
  * Get user roles thunk
  * @returns {Function}
  */
-export const getUserRoles = () => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { get: (arg0: string) => Promise<any> },
-) => {
-	dispatch(getUserRolesRequest());
-	return http
-		.get('/roles?include=permissions&include=resources')
-		.then((response) => {
-			const { data } = response;
-			dispatch(getUserRolesSuccess(data));
-		})
-		.catch((error) => {
-			errorOnSnack(error, dispatch, 'fetching user roles');
-			dispatch(getUserRolesFailure(error));
-		});
-};
+export const getUserRoles =
+	() =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: { get: (arg0: string) => Promise<any> },
+	) => {
+		dispatch(getUserRolesRequest());
+		return http
+			.get('/roles?include=permissions&include=resources')
+			.then((response) => {
+				const { data } = response;
+				dispatch(getUserRolesSuccess(data));
+			})
+			.catch((error) => {
+				errorOnSnack(error, dispatch, 'fetching user roles');
+				dispatch(getUserRolesFailure(error));
+			});
+	};
 
 /**
  * Create user role thunk
  * @param {Object} userRole
  * @returns {Function}
  */
-export const createUserRole = (userRole: any) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		post: (
-			arg0: string,
-			arg1: any,
-		) => Promise<{ data: { data: any; message: string } }>;
-	},
-) => {
-	dispatch(createUserRoleRequest());
-	return http
-		.post('/roles', userRole)
-		.then((response: { data: { data: any; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(createUserRoleSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'creating new user role');
-			dispatch(createUserRoleFailure(error));
-		});
-};
+export const createUserRole =
+	(userRole: any) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			post: (
+				arg0: string,
+				arg1: any,
+			) => Promise<{ data: { data: any; message: string } }>;
+		},
+	) => {
+		dispatch(createUserRoleRequest());
+		return http
+			.post('/roles', userRole)
+			.then((response: { data: { data: any; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(createUserRoleSuccess(data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'creating new user role');
+				dispatch(createUserRoleFailure(error));
+			});
+	};
 
 /**
  * Delete user roles thunk
  * @returns {Function}
  * @param id
  */
-export const deleteUserRole = (id: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { delete: (arg0: string) => Promise<any> },
-) => {
-	dispatch(deleteUserRolesRequest());
-	return http
-		.delete(`/roles/${id}`)
-		.then((response) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(deleteUserRolesSuccess(id));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'deleting user role');
-			dispatch(deleteUserRolesFailure(error));
-		});
-};
+export const deleteUserRole =
+	(id: string) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: { delete: (arg0: string) => Promise<any> },
+	) => {
+		dispatch(deleteUserRolesRequest());
+		return http
+			.delete(`/roles/${id}`)
+			.then((response) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(deleteUserRolesSuccess(id));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'deleting user role');
+				dispatch(deleteUserRolesFailure(error));
+			});
+	};
 
 /**
  * Edit a user role thunk
  * @param {Object} updatedRolePayload
  * @returns {Function}
  */
-export const editUserRole = (updatedRolePayload) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		patch: (
-			arg0: string,
-			arg1: { _id: string },
-		) => Promise<{ data: { data: any } }>;
-	},
-) => {
-	const { _id } = updatedRolePayload;
-	dispatch(editUserRoleRequest());
-	return http
-		.patch(`/roles/${_id}`, updatedRolePayload)
-		.then((response: { data: { data: any; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(editUserRoleSuccess(data, _id));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			error?.response?.status === 400
-				? dispatch(
-						displaySnackMessage('Please format the fields properly', 'error'),
-				  )
-				: errorOnSnack(error, dispatch, 'editing user role');
-			dispatch(editUserRoleFailure(error));
-		});
-};
+export const editUserRole =
+	(updatedRolePayload) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			patch: (
+				arg0: string,
+				arg1: { _id: string },
+			) => Promise<{ data: { data: any } }>;
+		},
+	) => {
+		const { _id } = updatedRolePayload;
+		dispatch(editUserRoleRequest());
+		return http
+			.patch(`/roles/${_id}`, updatedRolePayload)
+			.then((response: { data: { data: any; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(editUserRoleSuccess(data, _id));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				error?.response?.status === 400
+					? dispatch(
+							displaySnackMessage(
+								'Please format the fields properly',
+								'error',
+							),
+					  )
+					: errorOnSnack(error, dispatch, 'editing user role');
+				dispatch(editUserRoleFailure(error));
+			});
+	};
 
 // Set the initial role state
 export const userRoleInitialState = {

@@ -1,5 +1,5 @@
 import {
-	createMuiTheme,
+	createTheme,
 	responsiveFontSizes,
 	PaletteMode,
 	Theme,
@@ -8,7 +8,7 @@ import { light, dark } from './palette';
 
 const getTheme = (mode: PaletteMode): Theme =>
 	responsiveFontSizes(
-		createMuiTheme({
+		createTheme({
 			palette: mode === 'light' ? light : dark,
 			layout: {
 				contentWidth: 1236,

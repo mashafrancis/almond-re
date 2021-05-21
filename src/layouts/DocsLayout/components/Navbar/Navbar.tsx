@@ -2,7 +2,6 @@ import {
 	Box,
 	Button,
 	Drawer,
-	Hidden,
 	List,
 	Typography,
 	ListItem,
@@ -102,27 +101,25 @@ const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 
 	return (
 		<>
-			<Hidden mdUp>
-				<Drawer
-					anchor="left"
-					classes={{ paper: classes.mobileDrawer }}
-					onClose={() => onMobileClose()}
-					open={openMobile}
-					variant="temporary"
-				>
-					{content}
-				</Drawer>
-			</Hidden>
-			<Hidden smDown>
-				<Drawer
-					anchor="left"
-					classes={{ paper: classes.desktopDrawer }}
-					open
-					variant="persistent"
-				>
-					{content}
-				</Drawer>
-			</Hidden>
+			<Drawer
+				anchor="left"
+				classes={{ paper: classes.mobileDrawer }}
+				onClose={() => onMobileClose()}
+				open={openMobile}
+				variant="temporary"
+				sx={{ display: { xl: 'none', xs: 'block' } }}
+			>
+				{content}
+			</Drawer>
+			<Drawer
+				anchor="left"
+				classes={{ paper: classes.desktopDrawer }}
+				open
+				variant="persistent"
+				sx={{ display: { xl: 'none', xs: 'block' } }}
+			>
+				{content}
+			</Drawer>
 		</>
 	);
 };
