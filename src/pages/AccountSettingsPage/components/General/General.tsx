@@ -4,18 +4,26 @@ import {
 } from '@material-ui/core/styles';
 import {
 	useMediaQuery,
-	Stack,
 	Grid,
 	Typography,
 	TextField,
+	OutlinedInput,
 	Button,
 	Divider,
 	Avatar,
 	Badge,
 	IconButton,
+	InputLabel,
+	FormControl,
+	InputAdornment,
 } from '@material-ui/core';
 import { shallowEqual, useSelector } from 'react-redux';
-import { CameraAlt } from '@material-ui/icons';
+import {
+	AlternateEmailTwoTone,
+	CameraAlt,
+	EmailTwoTone,
+	FaceTwoTone,
+} from '@material-ui/icons';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 import { IRootState } from '../../../../store/rootReducer';
 
@@ -35,27 +43,46 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 	});
 
 	const renderUploadPhotoButton = () => (
-		<Stack direction="row" alignItems="center" spacing={2}>
-			<Typography>Change profile photo</Typography>
-			<Badge
-				overlap="circular"
-				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-				badgeContent={
-					<label htmlFor="icon-button-file">
-						<Input accept="image/*" id="icon-button-file" type="file" />
-						<IconButton
-							color="primary"
-							aria-label="upload picture"
-							component="span"
-						>
-							<CameraAlt color="primary" />
+		<FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+			<InputLabel htmlFor="outlined-adornment-password">
+				Change profile photo
+			</InputLabel>
+			<OutlinedInput
+				id="change-profile-photo"
+				type="text"
+				value="Change profile photo"
+				onChange={() => {}}
+				endAdornment={
+					<InputAdornment position="end">
+						<IconButton aria-label="change profile photo" edge="end">
+							<Badge
+								overlap="circular"
+								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+								badgeContent={
+									<label htmlFor="icon-button-file">
+										<Input
+											accept="image/*"
+											id="icon-button-file"
+											type="file"
+										/>
+										<IconButton
+											color="primary"
+											aria-label="upload picture"
+											component="span"
+										>
+											<CameraAlt color="primary" />
+										</IconButton>
+									</label>
+								}
+							>
+								<Avatar alt={firstName} src={photo} />
+							</Badge>
 						</IconButton>
-					</label>
+					</InputAdornment>
 				}
-			>
-				<Avatar alt={firstName} src={photo} />
-			</Badge>
-		</Stack>
+				label="Change profile photo"
+			/>
+		</FormControl>
 	);
 
 	return (
@@ -78,6 +105,15 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						fullWidth
 						type="text"
 						defaultValue={firstName ?? ''}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="firstName" edge="end">
+										<FaceTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -89,6 +125,15 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						fullWidth
 						type="text"
 						defaultValue={lastName ?? ''}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="lastName" edge="end">
+										<FaceTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -100,6 +145,15 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						fullWidth
 						type="email"
 						defaultValue={email ?? ''}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="email" edge="end">
+										<AlternateEmailTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
