@@ -4,11 +4,12 @@ import {
 	Grid,
 	Typography,
 	TextField,
-	FormControlLabel,
-	Switch,
 	Button,
 	Divider,
+	InputAdornment,
+	IconButton,
 } from '@material-ui/core';
+import { VisibilityOffTwoTone, VisibilityTwoTone } from '@material-ui/icons';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +59,15 @@ const Security = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						name="oldPassword"
 						fullWidth
 						type="password"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="old-password" edge="end">
+										<VisibilityTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -68,6 +78,15 @@ const Security = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						name="newPassword"
 						fullWidth
 						type="password"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="old-password" edge="end">
+										<VisibilityOffTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -78,6 +97,15 @@ const Security = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 						name="repeatPassword"
 						fullWidth
 						type="password"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton aria-label="old-password" edge="end">
+										<VisibilityOffTwoTone color="primary" />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12}>

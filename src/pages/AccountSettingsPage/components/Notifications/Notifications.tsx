@@ -45,12 +45,12 @@ const Notifications = ({
 				<Grid item xs={12}>
 					<Divider />
 				</Grid>
-				<Grid item xs={12} md={6}>
+				<Grid item xs={12} md={4}>
 					<Typography variant="h6" gutterBottom>
 						System settings
 					</Typography>
 					<Typography variant="caption" gutterBottom>
-						You will receive emails in your email address
+						Receive emails to your email address
 					</Typography>
 					<div>
 						<div>
@@ -73,12 +73,34 @@ const Notifications = ({
 						</div>
 					</div>
 				</Grid>
-				<Grid item xs={12} md={6}>
+				<Grid item xs={12} md={4}>
+					<Typography variant="h6" gutterBottom>
+						Device settings
+					</Typography>
+					<Typography variant="caption" gutterBottom>
+						Receive alerts from your device
+					</Typography>
+					<div>
+						<div>
+							<FormControlLabel
+								control={<Checkbox defaultChecked color="primary" />}
+								label="Health checks"
+							/>
+						</div>
+						<div>
+							<FormControlLabel
+								control={<Checkbox defaultChecked color="primary" />}
+								label="Device alerts"
+							/>
+						</div>
+					</div>
+				</Grid>
+				<Grid item xs={12} md={4}>
 					<Typography variant="h6" gutterBottom>
 						Chat settings
 					</Typography>
 					<Typography variant="caption" gutterBottom>
-						You will receive emails in your email address
+						Receive info about your chats
 					</Typography>
 					<div>
 						<div>
