@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Section, SectionAlternate } from '@components/organisms';
 import {
 	AboutBottom,
+	AboutMiddle,
+	Features,
 	Farming,
 	Hero,
 	HeroAlt,
@@ -52,6 +54,10 @@ export const HomePage = (): JSX.Element => {
 			<Section className={servicesSection}>
 				<Services data={services} />
 			</Section>
+			<Section>
+				<Features data={features} />
+			</Section>
+			<AboutMiddle />
 			{/* <Hero /> */}
 			{/* <Section className={classes.sectionNoPaddingTop}> */}
 			{/*	<Overview /> */}

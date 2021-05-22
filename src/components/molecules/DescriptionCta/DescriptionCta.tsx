@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Grid, Typography } from '@material-ui/core';
+import { useMediaQuery, Grid, Typography, Divider } from '@material-ui/core';
 import { DescriptionCtaProps } from '@components/molecules/DescriptionCta/interfaces';
 
 /**

@@ -6,9 +6,13 @@ import {
 	Typography,
 	ListItem,
 	makeStyles,
+	useMediaQuery,
+	Divider,
 } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
+import { NavLink } from 'react-router-dom';
+import { plantPortfolio } from '@pages/PlantResourcesPage/data';
 import NavItem from './components/NavItem';
-import { components } from './data';
 
 const useStyles = makeStyles((theme) => ({
 	mobileDrawer: {
@@ -29,33 +33,39 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	navGroupTitle: {
-		paddingBottom: 0,
+		// paddingBottom: 0,
+		color: theme.palette.primary.main,
+		fontWeight: theme.typography.fontWeightMedium,
+		backgroundColor: theme.palette.background.level2,
+		borderRadius: theme.shape.borderRadius,
 	},
 }));
 
 interface Props {
-	onMobileClose: Function;
+	onMobileClose: () => void;
 	openMobile: boolean;
 }
 
 const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 	const classes = useStyles();
+	const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
 	const content = (
 		<Box height="100%" display="flex" flexDirection="column">
 			<Box p={2} paddingBottom={0}>
 				<List>
-					{components.map((item) => (
+					{plantPortfolio.map((item) => (
 						<div key={item.id}>
 							<ListItem className={classes.navGroupTitle}>
 								<Typography
-									variant="button"
-									color="textSecondary"
+									variant="body1"
+									color="primary"
 									className={classes.title}
 								>
 									{item.title}
 								</Typography>
 							</ListItem>
+							<Divider sx={{ marginTop: 1 }} />
 							<List disablePadding className={classes.navGroup}>
 								{item.pages.map((page) => (
 									<NavItem
@@ -73,27 +83,18 @@ const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 			<Box flexGrow={1} />
 			<Box p={2} paddingTop={0}>
 				<Box display="flex" justifyContent="center" mt={2}>
-					<Button
-						color="primary"
-						component="a"
-						href="/"
-						variant="outlined"
-						fullWidth
-					>
-						SEE ALL PAGES
-					</Button>
+					<NavLink to="/store" style={{ width: '100%' }}>
+						<Button color="primary" variant="outlined" fullWidth>
+							View demo
+						</Button>
+					</NavLink>
 				</Box>
 				<Box display="flex" justifyContent="center" mt={2}>
-					<Button
-						color="primary"
-						component="a"
-						href="https://material-ui.com/store/items/the-front-landing-page/"
-						variant="contained"
-						target="blank"
-						fullWidth
-					>
-						BUY NOW
-					</Button>
+					<NavLink to="/store" style={{ width: '100%' }}>
+						<Button variant="contained" color="primary" fullWidth>
+							Buy now
+						</Button>
+					</NavLink>
 				</Box>
 			</Box>
 		</Box>
@@ -101,25 +102,26 @@ const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 
 	return (
 		<>
-			<Drawer
-				anchor="left"
-				classes={{ paper: classes.mobileDrawer }}
-				onClose={() => onMobileClose()}
-				open={openMobile}
-				variant="temporary"
-				sx={{ display: { xl: 'none', xs: 'block' } }}
-			>
-				{content}
-			</Drawer>
-			<Drawer
-				anchor="left"
-				classes={{ paper: classes.desktopDrawer }}
-				open
-				variant="persistent"
-				sx={{ display: { xl: 'none', xs: 'block' } }}
-			>
-				{content}
-			</Drawer>
+			{hidden ? (
+				<Drawer
+					anchor="left"
+					classes={{ paper: classes.mobileDrawer }}
+					onClose={() => onMobileClose()}
+					open={openMobile}
+					variant="temporary"
+				>
+					{content}
+				</Drawer>
+			) : (
+				<Drawer
+					anchor="left"
+					classes={{ paper: classes.desktopDrawer }}
+					open
+					variant="persistent"
+				>
+					{content}
+				</Drawer>
+			)}
 		</>
 	);
 };

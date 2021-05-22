@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 import {
 	AppBar,
 	Box,
@@ -8,9 +9,14 @@ import {
 	ListItem,
 	Button,
 	makeStyles,
+	useMediaQuery,
 } from '@material-ui/core';
 import { Image, DarkModeToggler } from '@components/atoms';
 import MenuIcon from '@material-ui/icons/Menu';
+import Logo from '@components/atoms/Logo';
+import fancyId from '@utils/fancyId';
+import NavigateNextRoundedIcon from '@material-ui/icons/NavigateNextRounded';
+import { Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -66,6 +72,8 @@ const TopBar = ({
 	...rest
 }: Props): JSX.Element => {
 	const classes = useStyles();
+	const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+
 	return (
 		<AppBar
 			className={clsx(classes.root, className)}
@@ -75,18 +83,7 @@ const TopBar = ({
 		>
 			<Toolbar>
 				<div className={classes.logoContainer}>
-					<a href="/" title="almond">
-						<Image
-							className={classes.logoImage}
-							src={
-								themeMode === 'light'
-									? 'https://assets.maccarianagency.com/the-front/logos/logo.svg'
-									: 'https://assets.maccarianagency.com/the-front/logos/logo-negative.svg'
-							}
-							alt="almond"
-							lazy={false}
-						/>
-					</a>
+					<Logo themeMode={themeMode} />
 				</div>
 				<Box flexGrow={1} />
 				<DarkModeToggler
@@ -94,47 +91,29 @@ const TopBar = ({
 					onChange={() => themeToggler()}
 					size={24}
 				/>
-				<List
-					disablePadding
-					className={classes.navigationContainer}
-					sx={{ display: { xl: 'none', xs: 'block' } }}
-				>
-					<ListItem
-						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-					>
-						<Button
-							className={classes.listItemText}
-							component="a"
-							href="/"
-							variant="outlined"
+				{hidden ? (
+					<List disablePadding className={classes.navigationContainer}>
+						<ListItem
+							className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 						>
-							SEE ALL PAGES
-						</Button>
-					</ListItem>
-					<ListItem
-						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+							<NavLink key={fancyId()} to="/store">
+								<Button variant="contained" color="primary">
+									Visit our store
+									<NavigateNextRoundedIcon />
+								</Button>
+							</NavLink>
+						</ListItem>
+					</List>
+				) : (
+					<IconButton
+						onClick={() => onMobileNavOpen()}
+						className={classes.iconButton}
+						aria-label="Menu"
+						disableRipple
 					>
-						<Button
-							variant="contained"
-							color="primary"
-							component="a"
-							target="blank"
-							href="https://material-ui.com/store/items/the-front-landing-page/"
-							className={classes.listItemButton}
-						>
-							Buy Now
-						</Button>
-					</ListItem>
-				</List>
-				<IconButton
-					onClick={() => onMobileNavOpen()}
-					className={classes.iconButton}
-					aria-label="Menu"
-					disableRipple
-					sx={{ display: { xl: 'none', xs: 'block' } }}
-				>
-					<MenuIcon />
-				</IconButton>
+						<MenuIcon />
+					</IconButton>
+				)}
 			</Toolbar>
 		</AppBar>
 	);

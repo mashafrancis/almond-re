@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 import { parse } from 'query-string';
 import { Typography, ListItem, makeStyles } from '@material-ui/core';
 
@@ -41,20 +42,20 @@ const NavItem = ({
 	const classes = useStyles();
 
 	return (
-		<ListItem
-			className={clsx(
-				classes.item,
-				getComponentId() === id ? classes.itemActive : '',
-				className,
-			)}
-			component="a"
-			href={href}
-			{...rest}
-		>
-			<Typography variant="body2" component="span">
-				{title}
-			</Typography>
-		</ListItem>
+		<NavLink to={href}>
+			<ListItem
+				className={clsx(
+					classes.item,
+					getComponentId() === id ? classes.itemActive : '',
+					className,
+				)}
+				{...rest}
+			>
+				<Typography variant="body2" component="span">
+					{title}
+				</Typography>
+			</ListItem>
+		</NavLink>
 	);
 };
 

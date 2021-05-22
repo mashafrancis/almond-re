@@ -38,7 +38,7 @@ const Main = ({ children, themeToggler, themeMode }: Props): JSX.Element => {
 						},
 						{
 							title: 'What to grow',
-							href: '/what-to-grow',
+							href: '/plant-resources',
 						},
 						{
 							title: 'How it works',
@@ -65,7 +65,7 @@ const Main = ({ children, themeToggler, themeMode }: Props): JSX.Element => {
 						},
 						{
 							title: 'Resources',
-							href: '/resources',
+							href: '/plant-resources',
 						},
 					],
 				},

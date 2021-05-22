@@ -46,7 +46,7 @@ export const features_alt = [
 	},
 ];
 
-export const features = [
+export const feature = [
 	{
 		title: 'Select Your Produce',
 		description:
@@ -87,6 +87,14 @@ export const features = [
 		illustration:
 			'https://static.almondhydroponics.com/static/images/feature5.svg',
 	},
+];
+
+export const features = [
+	'Select Your Produce',
+	'Plant Your Pod',
+	'Add Nutrients Every Few Weeks',
+	'Harvest Only What You Need',
+	'Yummy! Eat and Enjoy',
 ];
 
 export const services = [
