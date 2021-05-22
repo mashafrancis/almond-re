@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { ReactNode } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface DividerWithTextProps {
-	children: string;
+	children: string | ReactNode;
 }
 
 const DividerWithText = ({ children }: DividerWithTextProps): JSX.Element => {
@@ -29,7 +30,12 @@ const DividerWithText = ({ children }: DividerWithTextProps): JSX.Element => {
 	return (
 		<div className={classes.container}>
 			<div className={classes.border} />
-			<span className={classes.content}>{children}</span>
+			{/* <span className={classes.content}>{children}</span> */}
+			{typeof children === 'string' || children instanceof String ? (
+				<span className={classes.content}>{children}</span>
+			) : (
+				children
+			)}
 			<div className={classes.border} />
 		</div>
 	);

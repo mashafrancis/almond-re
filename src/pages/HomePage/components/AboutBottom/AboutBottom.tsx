@@ -1,7 +1,9 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Grid } from '@material-ui/core';
+import { useMediaQuery, Grid, Button } from '@material-ui/core';
 import { Image } from '@components/atoms';
 import { SectionHeader } from '@components/molecules';
+import fancyId from '@utils/fancyId';
+import { NavLink } from 'react-router-dom';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +29,24 @@ const AboutBottom = ({
 
 	return (
 		<div className={className} {...rest}>
-			<Grid container spacing={isMd ? 4 : 2}>
+			<Grid container spacing={4} direction={isMd ? 'row' : 'column-reverse'}>
+				<Grid item container alignItems="center" xs={12} md={6}>
+					<SectionHeader
+						title="Try one of our produce."
+						subtitle="With our hydroponics home farm, we grow sweet strawberries, perfect for eating anytime."
+						// subtitleVariant="body1"
+						// subtitleColor="textPrimary"
+						data-aos="fade-up"
+						align="left"
+						ctaGroup={[
+							<NavLink key={fancyId()} to="/store">
+								<Button variant="contained" color="primary">
+									Order now!
+								</Button>
+							</NavLink>,
+						]}
+					/>
+				</Grid>
 				<Grid
 					item
 					container
@@ -39,16 +58,6 @@ const AboutBottom = ({
 						src="https://storage.googleapis.com/static.almondhydroponics.com/static/images/hydroponic-strawberries.jpg"
 						srcSet="https://storage.googleapis.com/static.almondhydroponics.com/static/images/hydroponic-strawberries.jpg 2x"
 						className={classes.image}
-					/>
-				</Grid>
-				<Grid item container alignItems="center" xs={12} md={6}>
-					<SectionHeader
-						title="Hydroponics technology designed for home."
-						subtitle="Keep track of what's happening with your data, change permissions, and run reports against your data anywhere in the world."
-						subtitleVariant="body1"
-						// subtitleColor="textPrimary"
-						data-aos="fade-up"
-						align="left"
 					/>
 				</Grid>
 			</Grid>

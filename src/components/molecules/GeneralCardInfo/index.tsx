@@ -96,17 +96,19 @@ const GeneralCardInfo = ({
 						style={{ display: 'flex' }}
 						xs={12}
 					>
-						<Grid
-							item
-							container
-							xs={2}
-							direction="row"
-							alignItems="center"
-							justifyContent="center"
-						>
-							{renderIcon(icon)}
-						</Grid>
-						<Grid item container xs={8}>
+						{icon && (
+							<Grid
+								item
+								container
+								xs={2}
+								direction="row"
+								alignItems="center"
+								justifyContent="center"
+							>
+								{renderIcon(icon)}
+							</Grid>
+						)}
+						<Grid item container xs={icon ? 8 : 12}>
 							<Stack spacing={0}>
 								<Typography variant="h6" color="primary" data-testid="header">
 									{mainHeader}

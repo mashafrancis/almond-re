@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import * as React from 'react';
+import { useState, ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Topbar, Navbar } from './components';
 
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-	children: React.ReactNode;
+	children: ReactNode;
 	themeToggler: Function;
 	themeMode: string;
 }

@@ -208,7 +208,7 @@ const Topbar = ({
 			<Logo themeMode={themeMode} displayText />
 			{hidden && (
 				<List disablePadding className={classes.navigationContainer}>
-					<NavLink to="/resources">
+					<NavLink to="/plant-resources">
 						<ListItem
 							aria-describedby="resources"
 							className={clsx(classes.listItem)}

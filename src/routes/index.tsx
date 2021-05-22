@@ -17,12 +17,14 @@ import SuccessPage from '@pages/SuccessPage';
 import AccountSettingsPage from '@pages/AccountSettingsPage';
 import AboutPage from '@pages/AboutPage';
 import CompanyTerms from '@pages/CompanyTerms';
+import PlantResourcesPage from '@pages/PlantResourcesPage';
 
 import WithLayout from '../WithLayout';
 import {
 	Main as MainLayout,
 	Minimal as MinimalLayout,
 	Dashboard as DashboardLayout,
+	DocsLayout,
 } from '../layouts';
 
 const Routes = (): any => (
@@ -137,6 +139,17 @@ const Routes = (): any => (
 					{...matchProps}
 					component={CompanyTerms}
 					layout={MainLayout}
+				/>
+			)}
+		/>
+		<Route
+			exact
+			path="/plant-resources"
+			render={(matchProps) => (
+				<WithLayout
+					{...matchProps}
+					component={PlantResourcesPage}
+					layout={DocsLayout}
 				/>
 			)}
 		/>
