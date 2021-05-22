@@ -58,6 +58,9 @@ export const HomePage = (): JSX.Element => {
 				<Features data={features} />
 			</Section>
 			<AboutMiddle />
+			<Section>
+				<AboutBottom />
+			</Section>
 			{/* <Hero /> */}
 			{/* <Section className={classes.sectionNoPaddingTop}> */}
 			{/*	<Overview /> */}
@@ -68,9 +71,6 @@ export const HomePage = (): JSX.Element => {
 			{/* <SectionAlternate> */}
 			{/*	<Solutions data={features} /> */}
 			{/* </SectionAlternate> */}
-			<Section>
-				<AboutBottom />
-			</Section>
 		</div>
 	);
 };

@@ -7,10 +7,11 @@ import {
 	WidgetsRounded,
 	SecurityOutlined,
 	NotificationsNone,
+	AllOut,
 } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { TabPanel, MenuTabs, MenuTab } from '@components/atoms';
-import { Hero, General, Security, Notifications } from './components';
+import { Hero, General, Security, Notifications, Device } from './components';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -78,6 +79,12 @@ const subPages: MenuComponentProps[] = [
 		primaryText: 'Security',
 		component: Security,
 		icon: <SecurityOutlined />,
+	},
+	{
+		id: 'device',
+		primaryText: 'Device',
+		component: Device,
+		icon: <AllOut />,
 	},
 	{
 		id: 'notifications',
