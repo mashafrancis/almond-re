@@ -11,9 +11,8 @@ describe('Internal Server Error Reducer', () => {
 	});
 
 	it('should handle INTERNAL_SERVER_ERROR_MESSAGE', () => {
-		const displayInternalServerErrorMessageAction = displayInternalServerErrorMessage(
-			true,
-		);
+		const displayInternalServerErrorMessageAction =
+			displayInternalServerErrorMessage(true);
 
 		const newDisplayInternalServerErrorMessageState = reducer(
 			initialState,

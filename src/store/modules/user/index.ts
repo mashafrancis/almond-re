@@ -101,23 +101,25 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * Gets user details
  * @returns {Function}
  */
-export const getUserDetails = () => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { get: (arg0: string) => Promise<{ data: { data: UserDetails } }> },
-) => {
-	dispatch(getUserDetailsRequest());
-	return http
-		.get('me')
-		.then((response: { data: { data: UserDetails } }) => {
-			const { data } = response.data;
-			return dispatch(getUserDetailsSuccess(data));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'fetching your details');
-			dispatch(getUserDetailsFailure(error));
-		});
-};
+export const getUserDetails =
+	() =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: { get: (arg0: string) => Promise<{ data: { data: UserDetails } }> },
+	) => {
+		dispatch(getUserDetailsRequest());
+		return http
+			.get('me')
+			.then((response: { data: { data: UserDetails } }) => {
+				const { data } = response.data;
+				return dispatch(getUserDetailsSuccess(data));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'fetching your details');
+				dispatch(getUserDetailsFailure(error));
+			});
+	};
 
 /**
  * Edits user center details
@@ -125,38 +127,42 @@ export const getUserDetails = () => (
  * @param userDetails
  * @returns {Function}
  */
-export const editUserDetails = (userId: string, userDetails: any) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		put: (
-			arg0: string,
-			arg1: any,
-		) => Promise<{ data: { data: any; message: any } }>;
-	},
-) => {
-	dispatch(editUserDetailsRequest());
-	return http
-		.put(`people/${userId}`, userDetails)
-		.then((response: { data: { data: any; message: any } }) => {
-			const { data, message } = response.data;
-			dispatch(editUserDetailsSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'updating your details');
-			dispatch(editUserDetailsFailure(error));
-		});
-};
+export const editUserDetails =
+	(userId: string, userDetails: any) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			put: (
+				arg0: string,
+				arg1: any,
+			) => Promise<{ data: { data: any; message: any } }>;
+		},
+	) => {
+		dispatch(editUserDetailsRequest());
+		return http
+			.put(`people/${userId}`, userDetails)
+			.then((response: { data: { data: any; message: any } }) => {
+				const { data, message } = response.data;
+				dispatch(editUserDetailsSuccess(data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'updating your details');
+				dispatch(editUserDetailsFailure(error));
+			});
+	};
 
 /**
  * Log-out user action creator
  * @returns {Function}
  */
-export const logoutUser = () => (dispatch: Dispatch): void => {
-	dispatch(logoutUserAction());
-	authService.logoutUser();
-};
+export const logoutUser =
+	() =>
+	(dispatch: Dispatch): void => {
+		dispatch(logoutUserAction());
+		authService.logoutUser();
+	};
 
 export const userInitialState = {
 	userDetails: {} as any,

@@ -50,26 +50,20 @@ const PasswordResetForm = ({ isLoading }: Props): JSX.Element => {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
-	const [isConfirmPasswordHidden, showConfirmPassword] = useState<boolean>(
-		false,
-	);
+	const [isConfirmPasswordHidden, showConfirmPassword] =
+		useState<boolean>(false);
 	const toggleConfirmPassword = () =>
 		showConfirmPassword((prevState) => !prevState);
 
 	const query = new URLSearchParams(useLocation().search);
 	const token: string = query?.get('token') ?? 'invalid-token';
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: ({ password }) => dispatch(passwordChange({ password, token })),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: ({ password }) =>
+				dispatch(passwordChange({ password, token })),
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	return (
 		<div className={classes.root}>

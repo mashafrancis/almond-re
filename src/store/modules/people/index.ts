@@ -84,26 +84,30 @@ export const updatePersonFailure = (
 	type: UPDATE_PERSON_DETAILS_FAILURE,
 });
 
-export const getAllPeople = () => (
-	dispatch: Dispatch,
-	getState: any,
-	http: { get: (arg0: string) => Promise<{ data: { data: UserDetails[] } }> },
-) => {
-	dispatch(getAllPeopleRequest());
-	return http
-		.get('people')
-		.then((response: { data: { data: UserDetails[] } }) => {
-			dispatch(getAllPeopleSuccess(response.data.data));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(
-				error,
-				dispatch,
-				'fetch your all users. Kindly reload the page.',
-			);
-			dispatch(getAllPeopleFailure(error));
-		});
-};
+export const getAllPeople =
+	() =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			get: (arg0: string) => Promise<{ data: { data: UserDetails[] } }>;
+		},
+	) => {
+		dispatch(getAllPeopleRequest());
+		return http
+			.get('people')
+			.then((response: { data: { data: UserDetails[] } }) => {
+				dispatch(getAllPeopleSuccess(response.data.data));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(
+					error,
+					dispatch,
+					'fetch your all users. Kindly reload the page.',
+				);
+				dispatch(getAllPeopleFailure(error));
+			});
+	};
 
 /**
  * Update user details
@@ -111,31 +115,33 @@ export const getAllPeople = () => (
  * @param personId
  * @param personDetails
  */
-export const updatePerson = (personId: string, personDetails: any) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		put: (
-			arg0: string,
-			arg1: any,
-		) => Promise<{ data: { data: UserDetails; message: string } }>;
-	},
-) => {
-	dispatch(updatePersonRequest());
-	return http
-		.put(`people/${personId}`, personDetails)
-		.then((response: { data: { data: UserDetails; message: string } }) => {
-			const {
-				data: { data, message },
-			} = response;
-			dispatch(updatePersonSuccess(data));
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'updating a user details');
-			dispatch(updatePersonFailure(error));
-		});
-};
+export const updatePerson =
+	(personId: string, personDetails: any) =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			put: (
+				arg0: string,
+				arg1: any,
+			) => Promise<{ data: { data: UserDetails; message: string } }>;
+		},
+	) => {
+		dispatch(updatePersonRequest());
+		return http
+			.put(`people/${personId}`, personDetails)
+			.then((response: { data: { data: UserDetails; message: string } }) => {
+				const {
+					data: { data, message },
+				} = response;
+				dispatch(updatePersonSuccess(data));
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'updating a user details');
+				dispatch(updatePersonFailure(error));
+			});
+	};
 
 export const peopleInitialState = {
 	people: [],

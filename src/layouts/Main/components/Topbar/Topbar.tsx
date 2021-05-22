@@ -1,6 +1,7 @@
 import { useContext, useState, MouseEvent } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import {
 	Toolbar,
 	List,
@@ -8,6 +9,7 @@ import {
 	Typography,
 	IconButton,
 	Button,
+	useMediaQuery,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { DarkModeToggler } from '@components/atoms';
@@ -16,9 +18,7 @@ import { UserContext } from '@context/UserContext';
 import { NavLink } from 'react-router-dom';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import { CustomAvatar } from '@components/molecules';
-
 import Logo from '@components/atoms/Logo';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { shallowEqual, useSelector } from 'react-redux';
 import { PagesProps } from '../../../interfaces';
 import { IRootState } from '../../../../store/rootReducer';
@@ -154,6 +154,8 @@ const Topbar = ({
 	const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
 	const { devices } = useContext(UserContext);
 
+	const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+
 	const handleClick = (
 		event: MouseEvent<HTMLElement>,
 		popoverId: string | null,
@@ -204,12 +206,8 @@ const Topbar = ({
 			variant="dense"
 		>
 			<Logo themeMode={themeMode} displayText />
-			<div>
-				<List
-					disablePadding
-					className={classes.navigationContainer}
-					sx={{ display: { xl: 'none', xs: 'block' } }}
-				>
+			{hidden && (
+				<List disablePadding className={classes.navigationContainer}>
 					<NavLink to="/resources">
 						<ListItem
 							aria-describedby="resources"
@@ -225,9 +223,9 @@ const Topbar = ({
 						</ListItem>
 					</NavLink>
 
-					<NavLink to="/shop">
+					<NavLink to="/store">
 						<ListItem
-							aria-describedby="shop"
+							aria-describedby="store"
 							className={clsx(classes.listItem)}
 						>
 							<Typography
@@ -235,54 +233,54 @@ const Topbar = ({
 								color="textPrimary"
 								className={clsx(classes.listItemText, 'menu-item')}
 							>
-								Shop
+								Store
 							</Typography>
 						</ListItem>
 					</NavLink>
 				</List>
-			</div>
+			)}
 			<div className={classes.flexGrow} />
-			<List
-				disablePadding
-				className={classes.navigationContainer}
-				sx={{ display: { xl: 'none', xs: 'block' } }}
-			>
-				<ListItem
-					aria-describedby="dashboard"
-					onClick={(e) => handleClick(e, 'store')}
-					className={clsx(classes.listItem)}
+			{hidden && (
+				<List disablePadding className={classes.navigationContainer}>
+					<ListItem
+						aria-describedby="dashboard"
+						onClick={(e) => handleClick(e, 'store')}
+						className={clsx(classes.listItem)}
+					>
+						{authService.isAuthenticated() && (
+							<NavLink
+								to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}
+							>
+								<Button color="primary">Dashboard</Button>
+							</NavLink>
+						)}
+					</ListItem>
+					<ListItem className="menu-item--no-dropdown">
+						<DarkModeToggler
+							themeMode={themeMode}
+							onChange={() => themeToggler()}
+							size={24}
+						/>
+					</ListItem>
+					{renderAuthButtons()}
+				</List>
+			)}
+			{/* <DarkModeToggler */}
+			{/*	themeMode={themeMode} */}
+			{/*	onChange={() => themeToggler()} */}
+			{/*	size={24} */}
+			{/*	sx={{ display: { xl: 'block', xs: 'none' } }} */}
+			{/* /> */}
+			{hidden ? null : (
+				<IconButton
+					className={classes.iconButton}
+					onClick={() => onSidebarOpen()}
+					aria-label="Menu"
+					sx={{ display: { xl: 'block', sm: 'block' } }}
 				>
-					{authService.isAuthenticated() && (
-						<NavLink
-							to={isArrayNotNull(devices) ? '/dashboard' : '/my-device'}
-						>
-							<Button color="primary">Dashboard</Button>
-						</NavLink>
-					)}
-				</ListItem>
-				<ListItem className="menu-item--no-dropdown">
-					<DarkModeToggler
-						themeMode={themeMode}
-						onChange={() => themeToggler()}
-						size={24}
-					/>
-				</ListItem>
-				{renderAuthButtons()}
-			</List>
-			<DarkModeToggler
-				themeMode={themeMode}
-				onChange={() => themeToggler()}
-				size={24}
-				sx={{ display: { xl: 'none', xs: 'block' } }}
-			/>
-			<IconButton
-				className={classes.iconButton}
-				onClick={() => onSidebarOpen()}
-				aria-label="Menu"
-				sx={{ display: { xl: 'none', xs: 'block' } }}
-			>
-				<MenuIcon />
-			</IconButton>
+					<MenuIcon />
+				</IconButton>
+			)}
 		</Toolbar>
 	);
 };

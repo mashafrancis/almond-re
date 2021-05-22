@@ -86,9 +86,8 @@ describe('Device reducer', () => {
 		});
 
 		it('should dispatch USER_VERIFY_DEVICE_SUCCESS', () => {
-			const userVerifyDeviceSuccessAction = verifyDeviceSuccess(
-				deviceIdPayload,
-			);
+			const userVerifyDeviceSuccessAction =
+				verifyDeviceSuccess(deviceIdPayload);
 			const deviceState = reducer(
 				deviceInitialState,
 				userVerifyDeviceSuccessAction,
@@ -204,9 +203,8 @@ describe('Device reducer', () => {
 		});
 
 		it('should dispatch DELETE_DEVICE_FAILURE', () => {
-			const deleteDeviceFailureAction = deleteSingleDeviceFailure(
-				errorMessage,
-			);
+			const deleteDeviceFailureAction =
+				deleteSingleDeviceFailure(errorMessage);
 			const deviceState = reducer(
 				deviceInitialState,
 				deleteDeviceFailureAction,

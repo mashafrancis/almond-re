@@ -1,14 +1,9 @@
 import { useContext, cloneElement } from 'react';
 import clsx from 'clsx';
-import {
-	createStyles,
-	makeStyles,
-	Theme,
-	useTheme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, withStyles } from '@material-ui/styles';
+import { Theme, useTheme } from '@material-ui/core/styles';
 import {
 	Toolbar,
-	Hidden,
 	List,
 	ListItem,
 	Typography,
@@ -23,7 +18,6 @@ import {
 } from '@material-ui/core';
 import { DarkModeToggler } from '@components/atoms';
 import { UserContext } from '@context/UserContext';
-import isArrayNotNull from '@utils/checkArrayEmpty';
 import {
 	ArrowDropDownTwoTone,
 	ArrowDropUpTwoTone,
@@ -33,11 +27,9 @@ import {
 } from '@material-ui/icons';
 import { ComponentContext } from '@context/ComponentContext';
 import { useMqttState } from '@hooks/mqtt';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { CustomAvatar } from '@components/molecules';
 import Logo from '@components/atoms/Logo';
 import { shallowEqual, useSelector } from 'react-redux';
-import { StyledBadge } from './styles';
 import {
 	closedColor,
 	connectedColor,
@@ -254,7 +246,7 @@ const Topbar = ({
 	const classes = useStyles();
 	const themePoint = useTheme();
 
-	const isSm = useMediaQuery(themePoint.breakpoints.down('sm'), {
+	const isSm = useMediaQuery(themePoint.breakpoints.up('sm'), {
 		defaultMatches: true,
 	});
 
@@ -303,7 +295,7 @@ const Topbar = ({
 				backgroundColor: statusChange(connectionStatus as string),
 				color: statusChange(connectionStatus as string),
 				boxShadow: `0 0 0 1px ${
-					isSm ? 'rgba(38,38,38,0.32)' : theme.palette.background.paper
+					isSm ? theme.palette.background.paper : 'rgba(38,38,38,0.32)'
 				}`,
 				top: '50%',
 				left: '-12%',
@@ -324,14 +316,14 @@ const Topbar = ({
 		isSelectDeviceModalOpen ? (
 			<ArrowDropUpTwoTone
 				style={{
-					color: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
+					color: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
 				}}
 			/>
 		) : (
 			<ArrowDropDownTwoTone
 				onClick={handleClick}
 				style={{
-					color: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
+					color: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
 				}}
 			/>
 		);
@@ -341,14 +333,14 @@ const Topbar = ({
 		const handleDeviceModal = (): void => setDeviceModalOpen(true);
 		return (
 			<Button
-				variant={isSm ? 'outlined' : 'contained'}
+				variant={isSm ? 'contained' : 'outlined'}
 				size="small"
 				onClick={handleClick}
 				onKeyDown={handleDeviceModal}
 				style={{
 					paddingLeft: 36,
-					marginLeft: `${isSm ? '15' : '19'}%`,
-					backgroundColor: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
+					marginLeft: `${isSm ? '19' : '15'}%`,
+					backgroundColor: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
 				}}
 			>
 				<Grid
@@ -452,7 +444,7 @@ const Topbar = ({
 							{!isAdmin && renderDeviceDisplay()}
 						</div>
 						<div className={classes.flexGrow} />
-						<Hidden smDown>
+						{isSm && (
 							<List disablePadding className={classes.navigationContainer}>
 								<ListItem className="menu-item--no-dropdown">
 									<DarkModeToggler
@@ -468,7 +460,7 @@ const Topbar = ({
 											'menu-item--no-dropdown',
 										)}
 									>
-										<Hidden smDown>{renderTimeLineIcon()}</Hidden>
+										{renderTimeLineIcon()}
 									</ListItem>
 								)}
 								<ListItem
@@ -480,10 +472,10 @@ const Topbar = ({
 									<CustomAvatar hasMultipleRoles={roles.length > 1} />
 								</ListItem>
 							</List>
-						</Hidden>
-						<Hidden mdUp>
+						)}
+						{isSm ? null : (
 							<CustomAvatar hasMultipleRoles={roles.length > 1} />
-						</Hidden>
+						)}
 					</Toolbar>
 					{/* <Divider /> */}
 				</AppBar>

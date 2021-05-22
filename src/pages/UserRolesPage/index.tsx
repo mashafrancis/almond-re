@@ -2,7 +2,13 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 // Third party libraries
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Button, Chip, InputAdornment, TextField } from '@material-ui/core';
+import {
+	Button,
+	Chip,
+	InputAdornment,
+	TextField,
+	useMediaQuery,
+} from '@material-ui/core';
 import {
 	DataGrid,
 	GridCellParams,
@@ -18,14 +24,8 @@ import { PermissionAccess, DashboardCard } from '@components/molecules';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@components/atoms/Modal';
 import Restrict from '@components/Restrict';
-import {
-	createStyles,
-	makeStyles,
-	Theme,
-	useTheme,
-	withStyles,
-} from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createStyles, makeStyles, withStyles } from '@material-ui/styles';
+import { Theme, useTheme } from '@material-ui/core/styles';
 // thunks
 import {
 	createUserRole,
@@ -140,45 +140,39 @@ export const UserRolesPage = (): JSX.Element => {
 		}));
 	}, [resources, permissions]);
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: ({ roleName, roleDescription }) => {
-			const updatedResources = state.resources
-				.filter(
-					(resource) =>
-						resource.permissionIds !== undefined &&
-						resource.permissionIds.length !== 0,
-				)
-				.map((resource) => ({
-					resourceId: resource._id,
-					name: resource.name,
-					permissionIds: resource.permissionIds,
-				}));
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: ({ roleName, roleDescription }) => {
+				const updatedResources = state.resources
+					.filter(
+						(resource) =>
+							resource.permissionIds !== undefined &&
+							resource.permissionIds.length !== 0,
+					)
+					.map((resource) => ({
+						resourceId: resource._id,
+						name: resource.name,
+						permissionIds: resource.permissionIds,
+					}));
 
-			const userRole = {
-				title: roleName,
-				description: roleDescription,
-				resourceAccessLevels: updatedResources,
-			};
+				const userRole = {
+					title: roleName,
+					description: roleDescription,
+					resourceAccessLevels: updatedResources,
+				};
 
-			if (updatedResources.length === 0) {
-				return dispatch(
-					displaySnackMessage('Please, check at least one permission'),
-				);
-			}
+				if (updatedResources.length === 0) {
+					return dispatch(
+						displaySnackMessage('Please, check at least one permission'),
+					);
+				}
 
-			dispatch(createUserRole(userRole));
-			onResetPermission();
-			toggleAddRoleModal();
-		},
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+				dispatch(createUserRole(userRole));
+				onResetPermission();
+				toggleAddRoleModal();
+			},
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	useEffect(() => {
 		onResetPermission();
@@ -298,7 +292,7 @@ export const UserRolesPage = (): JSX.Element => {
 			resourceAccessLevels: updatedResources,
 		};
 
-		dispatch(editUserRole((roleUpdatePayload as unknown) as UserRole));
+		dispatch(editUserRole(roleUpdatePayload as unknown as UserRole));
 
 		onResetPermission();
 		toggleAddRoleModal();

@@ -51,17 +51,11 @@ const PasswordResetForm = ({
 		}
 	}, [redirectLink]);
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: ({ email }) => dispatch(passwordReset(email)),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: ({ email }) => dispatch(passwordReset(email)),
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	return (
 		<div className={classes.root}>

@@ -47,30 +47,32 @@ export const getAdminStatsFailure = (
 	isLoading: false,
 });
 
-export const getAdminStatistics = () => (
-	dispatch: Dispatch,
-	getState: any,
-	http: {
-		get: (
-			arg0: string,
-			arg1: { cache: boolean },
-		) => Promise<{ data: { data: any } }>;
-	},
-) => {
-	dispatch(getAdminStatsRequest());
-	return http
-		.get('dashboard', { cache: true })
-		.then((response: { data: { data: any } }) => {
-			const {
-				data: { data },
-			} = response;
-			dispatch(getAdminStatsSuccess(data));
-		})
-		.catch((error: ErrorObject) => {
-			errorOnSnack(error, dispatch, 'fetching admin statistics');
-			dispatch(getAdminStatsFailure(error));
-		});
-};
+export const getAdminStatistics =
+	() =>
+	(
+		dispatch: Dispatch,
+		getState: any,
+		http: {
+			get: (
+				arg0: string,
+				arg1: { cache: boolean },
+			) => Promise<{ data: { data: any } }>;
+		},
+	) => {
+		dispatch(getAdminStatsRequest());
+		return http
+			.get('dashboard', { cache: true })
+			.then((response: { data: { data: any } }) => {
+				const {
+					data: { data },
+				} = response;
+				dispatch(getAdminStatsSuccess(data));
+			})
+			.catch((error: ErrorObject) => {
+				errorOnSnack(error, dispatch, 'fetching admin statistics');
+				dispatch(getAdminStatsFailure(error));
+			});
+	};
 
 export const analyticsInitialState = {
 	data: {

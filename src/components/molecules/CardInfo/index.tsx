@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import { Button, ButtonBase, Card, Fab, Grid } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import useViewport from '@hooks/useViewport';

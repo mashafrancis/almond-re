@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import { Hidden, Drawer, Toolbar, Container } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Drawer, Toolbar, Container, useMediaQuery } from '@material-ui/core';
 import isArrayNotNull from '@utils/checkArrayEmpty';
 import { MenuContent } from '@components/atoms';
 import { BottomNavigation } from '@components/molecules';
@@ -53,6 +53,7 @@ const Dashboard = ({
 	themeMode,
 }: Props): JSX.Element => {
 	const classes = useStyles();
+	const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
 	return (
 		<div
@@ -65,7 +66,7 @@ const Dashboard = ({
 				themeToggler={themeToggler}
 				isActivityLogsEmpty={!isArrayNotNull(activityLogs)}
 			/>
-			<Hidden smDown>
+			{hidden && (
 				<Drawer
 					variant="permanent"
 					className={classes.drawer}
@@ -76,16 +77,14 @@ const Dashboard = ({
 					<Toolbar />
 					<MenuContent />
 				</Drawer>
-			</Hidden>
+			)}
 			<main className={classes.content}>
 				<Container maxWidth="xl" className={classes.container}>
 					<Toolbar />
 					{children}
 				</Container>
 			</main>
-			<Hidden mdUp>
-				<BottomNavigation />
-			</Hidden>
+			{hidden ? null : <BottomNavigation />}
 		</div>
 	);
 };

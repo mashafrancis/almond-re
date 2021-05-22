@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import {
 	AppBar,
 	Box,
-	Hidden,
 	IconButton,
 	Toolbar,
 	List,
@@ -76,7 +75,7 @@ const TopBar = ({
 		>
 			<Toolbar>
 				<div className={classes.logoContainer}>
-					<a href="/" title="thefront">
+					<a href="/" title="almond">
 						<Image
 							className={classes.logoImage}
 							src={
@@ -84,7 +83,7 @@ const TopBar = ({
 									? 'https://assets.maccarianagency.com/the-front/logos/logo.svg'
 									: 'https://assets.maccarianagency.com/the-front/logos/logo-negative.svg'
 							}
-							alt="thefront"
+							alt="almond"
 							lazy={false}
 						/>
 					</a>
@@ -95,46 +94,47 @@ const TopBar = ({
 					onChange={() => themeToggler()}
 					size={24}
 				/>
-				<Hidden smDown>
-					<List disablePadding className={classes.navigationContainer}>
-						<ListItem
-							className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-						>
-							<Button
-								className={classes.listItemText}
-								component="a"
-								href="/"
-								variant="outlined"
-							>
-								SEE ALL PAGES
-							</Button>
-						</ListItem>
-						<ListItem
-							className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-						>
-							<Button
-								variant="contained"
-								color="primary"
-								component="a"
-								target="blank"
-								href="https://material-ui.com/store/items/the-front-landing-page/"
-								className={classes.listItemButton}
-							>
-								Buy Now
-							</Button>
-						</ListItem>
-					</List>
-				</Hidden>
-				<Hidden mdUp>
-					<IconButton
-						onClick={() => onMobileNavOpen()}
-						className={classes.iconButton}
-						aria-label="Menu"
-						disableRipple
+				<List
+					disablePadding
+					className={classes.navigationContainer}
+					sx={{ display: { xl: 'none', xs: 'block' } }}
+				>
+					<ListItem
+						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 					>
-						<MenuIcon />
-					</IconButton>
-				</Hidden>
+						<Button
+							className={classes.listItemText}
+							component="a"
+							href="/"
+							variant="outlined"
+						>
+							SEE ALL PAGES
+						</Button>
+					</ListItem>
+					<ListItem
+						className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+					>
+						<Button
+							variant="contained"
+							color="primary"
+							component="a"
+							target="blank"
+							href="https://material-ui.com/store/items/the-front-landing-page/"
+							className={classes.listItemButton}
+						>
+							Buy Now
+						</Button>
+					</ListItem>
+				</List>
+				<IconButton
+					onClick={() => onMobileNavOpen()}
+					className={classes.iconButton}
+					aria-label="Menu"
+					disableRipple
+					sx={{ display: { xl: 'none', xs: 'block' } }}
+				>
+					<MenuIcon />
+				</IconButton>
 			</Toolbar>
 		</AppBar>
 	);

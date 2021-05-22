@@ -181,7 +181,7 @@ const DashboardContainer = (): JSX.Element => {
 			onChange={handleDeviceInputChange}
 			SelectProps={{
 				classes: {
-					selectMenu: classes.selectHeight,
+					select: classes.selectHeight,
 				},
 			}}
 			InputLabelProps={{
@@ -217,7 +217,7 @@ const DashboardContainer = (): JSX.Element => {
 			onChange={handleRoleInputChange}
 			SelectProps={{
 				classes: {
-					selectMenu: classes.selectHeight,
+					select: classes.selectHeight,
 				},
 			}}
 			InputLabelProps={{

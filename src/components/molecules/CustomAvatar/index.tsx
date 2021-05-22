@@ -32,9 +32,13 @@ const useStyles = makeStyles({
 
 interface Props {
 	hasMultipleRoles?: boolean;
+	[x: string]: any;
 }
 
-const CustomAvatar = ({ hasMultipleRoles = false }: Props): JSX.Element => {
+const CustomAvatar = ({
+	hasMultipleRoles = false,
+	...rest
+}: Props): JSX.Element => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { avatar, menuPopup } = useStyles();
@@ -85,6 +89,7 @@ const CustomAvatar = ({ hasMultipleRoles = false }: Props): JSX.Element => {
 				aria-controls="menu-popover"
 				aria-haspopup="true"
 				typeof="button"
+				{...rest}
 			/>
 			<Menu
 				id="menu-popover"

@@ -154,100 +154,91 @@ export const passwordChangeFailure = (
 	isLoading: false,
 });
 
-export const createAccount = (user: Partial<IUserInputDTO>) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: any,
-) => {
-	dispatch(createAccountRequest());
-	return http
-		.post('auth/register', user)
-		.then((response: { data: any }) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(createAccountSuccess());
-			dispatch(redirect('/success', message));
-		})
-		.catch((error) => {
-			dispatch(createAccountFailure(error.message));
-			errorOnSnack(
-				error,
-				dispatch,
-				'creating your new account. Kindly try again.',
-			);
-		});
-};
+export const createAccount =
+	(user: Partial<IUserInputDTO>) =>
+	(dispatch: Dispatch, getState: any, http: any) => {
+		dispatch(createAccountRequest());
+		return http
+			.post('auth/register', user)
+			.then((response: { data: any }) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(createAccountSuccess());
+				dispatch(redirect('/success', message));
+			})
+			.catch((error) => {
+				dispatch(createAccountFailure(error.message));
+				errorOnSnack(
+					error,
+					dispatch,
+					'creating your new account. Kindly try again.',
+				);
+			});
+	};
 
-export const loginAccount = (user: Partial<IUserInputDTO>) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: any,
-) => {
-	dispatch(loginAccountRequest());
-	return http
-		.post('auth/login', user)
-		.then((response: { data: any }) => {
-			const {
-				data: { data, message },
-			} = response;
-			authService.saveToken(data.token.accessToken);
-			dispatch(loginAccountSuccess(data.user));
-			dispatch(displaySnackMessage(message));
-			window.location.replace('/');
-		})
-		.catch((error) => {
-			dispatch(loginAccountFailure(error.message));
-			errorOnSnack(
-				error,
-				dispatch,
-				'login in to your account. Kindly try again.',
-			);
-		});
-};
+export const loginAccount =
+	(user: Partial<IUserInputDTO>) =>
+	(dispatch: Dispatch, getState: any, http: any) => {
+		dispatch(loginAccountRequest());
+		return http
+			.post('auth/login', user)
+			.then((response: { data: any }) => {
+				const {
+					data: { data, message },
+				} = response;
+				authService.saveToken(data.token.accessToken);
+				dispatch(loginAccountSuccess(data.user));
+				dispatch(displaySnackMessage(message));
+				window.location.replace('/');
+			})
+			.catch((error) => {
+				dispatch(loginAccountFailure(error.message));
+				errorOnSnack(
+					error,
+					dispatch,
+					'login in to your account. Kindly try again.',
+				);
+			});
+	};
 
-export const passwordReset = (email: string) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: any,
-) => {
-	dispatch(passwordResetRequest());
-	return http
-		.post('recover/password', { email })
-		.then((response: { data: any }) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(passwordResetSuccess());
-			dispatch(redirect('/success', message));
-		})
-		.catch((error) => {
-			dispatch(passwordResetFailure(error.message));
-			errorOnSnack(error, dispatch, 'Password reset failed');
-		});
-};
+export const passwordReset =
+	(email: string) => (dispatch: Dispatch, getState: any, http: any) => {
+		dispatch(passwordResetRequest());
+		return http
+			.post('recover/password', { email })
+			.then((response: { data: any }) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(passwordResetSuccess());
+				dispatch(redirect('/success', message));
+			})
+			.catch((error) => {
+				dispatch(passwordResetFailure(error.message));
+				errorOnSnack(error, dispatch, 'Password reset failed');
+			});
+	};
 
-export const passwordChange = (passwordDetails: Partial<IUserInputDTO>) => (
-	dispatch: Dispatch,
-	getState: any,
-	http: any,
-) => {
-	dispatch(passwordChangeRequest());
-	return http
-		.post('recover/change_password', passwordDetails)
-		.then((response: { data: any }) => {
-			const {
-				data: { message },
-			} = response;
-			dispatch(passwordChangeSuccess());
-			window.location.replace('/login');
-			dispatch(displaySnackMessage(message));
-		})
-		.catch((error) => {
-			dispatch(passwordResetFailure(error.message));
-			errorOnSnack(error, dispatch, 'Password change failed');
-		});
-};
+export const passwordChange =
+	(passwordDetails: Partial<IUserInputDTO>) =>
+	(dispatch: Dispatch, getState: any, http: any) => {
+		dispatch(passwordChangeRequest());
+		return http
+			.post('recover/change_password', passwordDetails)
+			.then((response: { data: any }) => {
+				const {
+					data: { message },
+				} = response;
+				dispatch(passwordChangeSuccess());
+				window.location.replace('/login');
+				dispatch(displaySnackMessage(message));
+			})
+			.catch((error) => {
+				dispatch(passwordResetFailure(error.message));
+				errorOnSnack(error, dispatch, 'Password change failed');
+			});
+	};
 
 export const userAccountInitialState = {
 	user: {} as any,

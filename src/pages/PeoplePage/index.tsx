@@ -3,7 +3,8 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { TextField, MenuItem, InputAdornment, Chip } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 // icons
 import { Face, ExpandMore } from '@material-ui/icons';
 // components
@@ -20,8 +21,6 @@ import {
 // thunks
 import { getAllPeople, updatePerson } from '@modules/people';
 import { getUserRoles } from '@modules/userRoles';
-// styles
-import './PeoplePage.scss';
 // interfaces
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
 import useEffectAsync from '@hooks/useEffectAsync';
@@ -132,7 +131,7 @@ export const PeoplePage = (): JSX.Element => {
 			onChange={handleRoleSelect}
 			SelectProps={{
 				classes: {
-					selectMenu: styles.selectHeight,
+					select: styles.selectHeight,
 				},
 			}}
 			InputLabelProps={{

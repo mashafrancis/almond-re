@@ -1,6 +1,7 @@
 import { GridOverlay } from '@material-ui/data-grid';
-import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

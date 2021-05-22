@@ -54,18 +54,12 @@ const Form = ({ isLoading }: Props): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: ({ email, password }) =>
-			dispatch(loginAccount({ email, password })),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: ({ email, password }) =>
+				dispatch(loginAccount({ email, password })),
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	const handleLogin = () =>
 		window.location.replace(`${process.env.ALMOND_API}/auth/google`);

@@ -1,6 +1,7 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Switch } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 import { primaryColor } from '../../assets/tss/common';
 
 export const useWaterCyclesPageStyles = makeStyles((theme: Theme) =>

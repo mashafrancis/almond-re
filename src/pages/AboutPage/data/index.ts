@@ -2,8 +2,7 @@ export const team = [
 	{
 		title: 'Software Engineer',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg 2x',
 		},
@@ -12,8 +11,7 @@ export const team = [
 	{
 		title: 'Accounts Manager',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg 2x',
 		},
@@ -22,8 +20,7 @@ export const team = [
 	{
 		title: 'Project Manager',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg 2x',
 		},
@@ -32,8 +29,7 @@ export const team = [
 	{
 		title: 'Scrum Master',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg 2x',
 		},
@@ -42,8 +38,7 @@ export const team = [
 	{
 		title: 'Web Frontend Developer',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg 2x',
 		},
@@ -52,8 +47,7 @@ export const team = [
 	{
 		title: 'Backend Developer',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg 2x',
 		},
@@ -62,8 +56,7 @@ export const team = [
 	{
 		title: 'Hydroponics Expert',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_female.svg 2x',
 		},
@@ -72,8 +65,7 @@ export const team = [
 	{
 		title: 'Software Engineer',
 		authorPhoto: {
-			src:
-				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
+			src: 'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg',
 			srcSet:
 				'https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg 2x',
 		},

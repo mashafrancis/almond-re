@@ -1,7 +1,8 @@
 import { Card, Grid, CardContent, CardHeader } from '@material-ui/core';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import { DashboardCardProps } from './interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>

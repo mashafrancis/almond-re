@@ -29,18 +29,12 @@ const Form = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state: IRootState) => state.device);
 
-	const {
-		values,
-		isValid,
-		errors,
-		hasError,
-		handleFormChange,
-		handleSubmit,
-	} = useFormState({
-		onSubmit: async ({ deviceId }) =>
-			dispatch(verifyUserDevice({ id: deviceId })),
-		formErrors: (formValues) => validate(formValues, schema),
-	});
+	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
+		useFormState({
+			onSubmit: async ({ deviceId }) =>
+				dispatch(verifyUserDevice({ id: deviceId })),
+			formErrors: (formValues) => validate(formValues, schema),
+		});
 
 	return (
 		<div className={classes.root}>

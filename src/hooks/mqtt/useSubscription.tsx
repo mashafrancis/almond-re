@@ -8,9 +8,8 @@ const useSubscription = (
 	topic: string,
 	options: IClientSubscribeOptions = {} as IClientSubscribeOptions,
 ): IUseSubscription => {
-	const { client, connectionStatus, message } = useContext<Context>(
-		MqttContext,
-	);
+	const { client, connectionStatus, message } =
+		useContext<Context>(MqttContext);
 
 	const subscribe = useCallback(async () => {
 		client?.subscribe(topic, options);
