@@ -329,7 +329,7 @@ const DashboardContainer = (): JSX.Element => {
 					<p aria-hidden="true" className={classes.blankState}>
 						¯\_(ツ)_/¯{' '}
 					</p>
-					<BlankContent message="No Logs Found!" />
+					<BlankContent message="No logs found!" />
 				</Stack>
 			)}
 		</SwipeableDrawer>
