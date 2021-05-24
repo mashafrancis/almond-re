@@ -47,7 +47,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginLeft: 100,
+		// marginLeft: 100,
 	},
 	toolbar: {
 		zIndex: 999,
@@ -167,6 +167,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		padding: 0,
 		fontWeight: theme.typography.fontWeightMedium,
 		fontSize: '13px',
+		color: '#fff',
 		[theme.breakpoints.up('sm')]: {
 			color: '#fff',
 		},

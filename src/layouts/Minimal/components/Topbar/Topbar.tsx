@@ -1,11 +1,16 @@
 import clsx from 'clsx';
 import { NavLink, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
-import { Image } from '@components/atoms';
-import { SectionHeader } from '@components/molecules';
+import {
+	Grid,
+	IconButton,
+	Toolbar,
+	Typography,
+	AppBar,
+	CssBaseline,
+} from '@material-ui/core';
 import { ArrowBackRounded } from '@material-ui/icons';
-import logo from '../../../../assets/images/logo.png';
+import { ElevationScroll } from '../../../Dashboard/components/Topbar/Topbar';
 
 const useStyles = makeStyles((theme) => ({
 	toolbar: {
@@ -16,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.up('sm')]: {
 			padding: theme.spacing(0, 8),
 		},
+	},
+	appBar: {
+		backgroundColor: theme.palette.background.default,
+		zIndex: theme.zIndex.drawer + 1,
 	},
 	logoContainer: {
 		width: '100%',
@@ -66,28 +75,48 @@ const Topbar = ({ themeMode, className, ...rest }: Props): JSX.Element => {
 	const location = useLocation();
 
 	return (
-		<Toolbar className={clsx(classes.toolbar, className)} {...rest}>
-			<div className={classes.logoContainer}>
-				<NavLink to={location.pathname === '/account' ? '/dashboard' : '/'}>
-					<Grid container className={classes.container}>
-						<IconButton
-							className={clsx('learn-more-link__icon-button', classes.icon)}
-							color="primary"
-						>
-							<ArrowBackRounded className="learn-more-link__arrow" />
-						</IconButton>
-						<Typography
-							component="span"
-							className={clsx('learn-more-link__typography', classes.title)}
-							variant="h6"
-							color="textPrimary"
-						>
-							{location.pathname === '/account' ? 'Back' : 'Home'}
-						</Typography>
-					</Grid>
-				</NavLink>
-			</div>
-		</Toolbar>
+		<>
+			<CssBaseline />
+			<ElevationScroll {...rest}>
+				<AppBar
+					className={classes.appBar}
+					position="fixed"
+					elevation={0}
+					data-testid="top-bar"
+				>
+					<Toolbar className={clsx(classes.toolbar, className)} {...rest}>
+						<div className={classes.logoContainer}>
+							<NavLink
+								to={location.pathname === '/account' ? '/dashboard' : '/'}
+							>
+								<Grid container className={classes.container}>
+									<IconButton
+										className={clsx(
+											'learn-more-link__icon-button',
+											classes.icon,
+										)}
+										color="primary"
+									>
+										<ArrowBackRounded className="learn-more-link__arrow" />
+									</IconButton>
+									<Typography
+										component="span"
+										className={clsx(
+											'learn-more-link__typography',
+											classes.title,
+										)}
+										variant="h6"
+										color="textPrimary"
+									>
+										{location.pathname === '/account' ? 'Back' : 'Home'}
+									</Typography>
+								</Grid>
+							</NavLink>
+						</div>
+					</Toolbar>
+				</AppBar>
+			</ElevationScroll>
+		</>
 	);
 };
 

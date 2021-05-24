@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 interface CardBaseProps {
 	/**
 	 * External classes
@@ -37,4 +39,6 @@ interface CardBaseProps {
 	cardContentProps?: object;
 	// All other props
 	[x: string]: any;
+	heading?: string;
+	actionItem?: ReactNode;
 }

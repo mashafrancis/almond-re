@@ -23,6 +23,9 @@ const useStyles = makeStyles(() => ({
 		maxWidth: 350,
 		borderRadius: 10,
 	},
+	titleClass: {
+		fontWeight: 'normal',
+	},
 }));
 
 const Device = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
@@ -60,6 +63,7 @@ const Device = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 							variant: 'body2',
 							color: 'textSecondary',
 						}}
+						titleClasses={classes.titleClass}
 					/>
 					<Form />
 				</Grid>

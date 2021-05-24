@@ -40,9 +40,9 @@ const AreaChardDisplay = ({
 		labels,
 		datasets: [
 			{
-				label: 'Temperature',
-				fill: false,
-				// lineTension: 0.5,
+				// label: 'Temperature',
+				fill: true,
+				lineTension: 0,
 				showLine: false,
 				backgroundColor,
 				borderColor: chartColor,
@@ -57,13 +57,19 @@ const AreaChardDisplay = ({
 				pointHoverBackgroundColor: chartColor,
 				pointHoverBorderColor: 'rgba(220,220,220,1)',
 				pointHoverBorderWidth: 0.8,
-				pointRadius: 0.1,
+				pointRadius: 0.5,
 				// pointHitRadius: 10,
-				// tension: 5,
+				tension: 0,
 				data: chartData,
+				bezierCurve: false,
 			},
 		],
 		options: {
+			elements: {
+				line: {
+					tension: 0,
+				},
+			},
 			plugins: {
 				// streaming: {
 				// 	frameRate: 60, // chart is drawn 5 times every second
@@ -134,7 +140,7 @@ const AreaChardDisplay = ({
 							chart.data.datasets.forEach((dataset) => {
 								dataset.data.push({
 									x: Date.now(),
-									y: Math.floor(Math.random() * (28 - 22) + 22),
+									y: Math.random(),
 								});
 							});
 						},
@@ -142,11 +148,11 @@ const AreaChardDisplay = ({
 				},
 				y: {
 					title: {
-						display: true,
-						text: 'Temperature',
+						display: false,
+						// text: 'Temperature',
 					},
-					min: 20,
-					max: 30,
+					// min: 20,
+					// max: 30,
 				},
 			},
 			interaction: {

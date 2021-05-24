@@ -13,7 +13,6 @@ import { BlankContent } from '@pages/WaterCyclesPage';
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
 import { Notifications, NotificationsNone } from '@material-ui/icons';
-import { GeneralCardInfo } from '@components/molecules';
 import { notificationsUnread } from '../../../layouts/Dashboard/components/Topbar/fixtures';
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -25,6 +24,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		letterSpacing: 'normal',
 		marginBottom: 24,
 		color: theme.palette.text.secondary,
+	},
+	swipeableHeading: {
+		background: theme.palette.alternate.main,
+		padding: 10,
+		borderRadius: 4,
 	},
 }));
 
@@ -68,42 +72,23 @@ const NotificationsPanel = (): JSX.Element => {
 		>
 			<div style={{ margin: 10 }}>
 				<Stack
-					direction="column"
-					justifyContent="space-around"
-					alignItems="flex-start"
+					direction="row"
+					justifyContent="center"
+					alignItems="center"
 					spacing={1}
-					sx={{
-						backgroundColor: colors.blue[100],
-						padding: 2,
-						borderRadius: '8px',
-					}}
+					className={classes.swipeableHeading}
 				>
-					<Stack
-						direction="row"
-						justifyContent="center"
-						alignItems="center"
-						spacing={1}
-					>
-						<Typography variant="h6" gutterBottom={false} color="primary">
-							Recent notifications
-						</Typography>
-						<Notifications color="primary" />
-					</Stack>
 					<Typography
 						variant="body1"
-						gutterBottom
-						// sx={{ marginTop: '20px', paddingLeft: '16px', paddingRight: '16px' }}
+						gutterBottom={false}
+						sx={{ paddingLeft: 3, paddingRight: 3, fontWeight: 500 }}
 					>
-						{`You have ${notificationsUnread.length} notifications unread`}
+						Recent notifications
 					</Typography>
+					<Notifications color="primary" />
 				</Stack>
 				<Divider sx={{ marginTop: 2 }} />
 			</div>
-
-			{/* <GeneralCardInfo */}
-			{/*	mainHeader="Notifications" */}
-			{/*	subHeader={`You have ${notificationsUnread.length} notifications unread`} */}
-			{/* /> */}
 
 			{notificationsUnread.length !== 0 ? (
 				notificationsUnread.map((notification: any) => (

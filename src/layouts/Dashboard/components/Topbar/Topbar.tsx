@@ -1,6 +1,6 @@
 import { useContext, cloneElement } from 'react';
 import clsx from 'clsx';
-import { createStyles, makeStyles, withStyles } from '@material-ui/styles';
+import { createStyles, withStyles } from '@material-ui/styles';
 import { Theme, useTheme } from '@material-ui/core/styles';
 import {
 	Toolbar,
@@ -44,7 +44,7 @@ import { IRootState } from '../../../../store/rootReducer';
 import { notificationsUnread } from './fixtures';
 import { useStyles } from './styles';
 
-const ElevationScroll = ({
+export const ElevationScroll = ({
 	window,
 	children,
 }: ElevationBarProps): JSX.Element => {
@@ -148,14 +148,14 @@ const Topbar = ({
 		isSelectDeviceModalOpen ? (
 			<ArrowDropUpTwoTone
 				style={{
-					color: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
+					color: '#fff',
 				}}
 			/>
 		) : (
 			<ArrowDropDownTwoTone
 				onClick={handleClick}
 				style={{
-					color: `${isSm ? '#fff' : 'rgba(17, 17, 17, 0.8)'}`,
+					color: '#fff',
 				}}
 			/>
 		);
@@ -172,7 +172,7 @@ const Topbar = ({
 				style={{
 					paddingLeft: 36,
 					marginLeft: `${isSm ? '19' : '15'}%`,
-					backgroundColor: `${isSm ? 'rgba(17, 17, 17, 0.8)' : '#fff'}`,
+					backgroundColor: 'rgba(17, 17, 17, 0.8)',
 				}}
 			>
 				<Grid
@@ -199,13 +199,15 @@ const Topbar = ({
 							spacing={2}
 							style={{ margin: 0, padding: 0 }}
 						>
-							<Typography
-								variant="subtitle2"
-								className={clsx(classes.listItemText, classes.deviceText)}
-								style={{ fontWeight: 400 }}
-							>
-								Device ID:
-							</Typography>
+							{isSm && (
+								<Typography
+									variant="subtitle2"
+									className={clsx(classes.listItemText, classes.deviceText)}
+									style={{ fontWeight: 400 }}
+								>
+									Device ID:
+								</Typography>
+							)}
 							<Typography
 								variant="subtitle2"
 								className={clsx(classes.listItemText, classes.deviceText)}
@@ -262,8 +264,8 @@ const Topbar = ({
 							{!isAdmin && renderDeviceDisplay()}
 						</div>
 						<div className={classes.flexGrow} />
-						{isSm && (
-							<List disablePadding className={classes.navigationContainer}>
+						<List disablePadding className={classes.navigationContainer}>
+							{isSm && (
 								<ListItem className="menu-item--no-dropdown">
 									<DarkModeToggler
 										themeMode={themeMode}
@@ -271,31 +273,42 @@ const Topbar = ({
 										size={24}
 									/>
 								</ListItem>
-								{!isAdmin && (
-									<ListItem
-										className={clsx(
-											classes.listItem,
-											'menu-item--no-dropdown',
-										)}
-									>
-										{renderTimeLineIcon()}
-									</ListItem>
-								)}
+							)}
+							{!isAdmin && isSm && (
 								<ListItem
 									className={clsx(classes.listItem, 'menu-item--no-dropdown')}
 								>
-									<NotificationsPanel />
+									{renderTimeLineIcon()}
 								</ListItem>
-								<ListItem className={clsx(classes.listItem)}>
-									<CustomAvatar hasMultipleRoles={roles.length > 1} />
-								</ListItem>
-							</List>
-						)}
-						{isSm ? null : (
-							<CustomAvatar hasMultipleRoles={roles.length > 1} />
-						)}
+							)}
+							<ListItem
+								className={clsx(classes.listItem, 'menu-item--no-dropdown')}
+							>
+								<NotificationsPanel />
+							</ListItem>
+							<ListItem className={clsx(classes.listItem)}>
+								<CustomAvatar hasMultipleRoles={roles.length > 1} />
+							</ListItem>
+						</List>
+						{/* {isSm ? null : ( */}
+						{/*	<> */}
+						{/*		<List disablePadding className={classes.navigationContainer}> */}
+						{/*			<ListItem */}
+						{/*				className={clsx( */}
+						{/*					classes.listItem, */}
+						{/*					'menu-item--no-dropdown', */}
+						{/*				)} */}
+						{/*			> */}
+						{/*				<NotificationsPanel /> */}
+						{/*			</ListItem> */}
+						{/*			<ListItem className={clsx(classes.listItem)}> */}
+						{/*				<CustomAvatar hasMultipleRoles={roles.length > 1} /> */}
+						{/*			</ListItem> */}
+						{/*		</List> */}
+						{/*	</> */}
+						{/* )} */}
 					</Toolbar>
-					{/* <Divider /> */}
+					<Divider />
 				</AppBar>
 			</ElevationScroll>
 		</>

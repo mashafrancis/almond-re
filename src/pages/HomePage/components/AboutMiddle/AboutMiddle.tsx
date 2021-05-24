@@ -8,6 +8,8 @@ import { Theme } from '@material-ui/core/styles';
 import fancyId from '@utils/fancyId';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 
+import image from '../../../../assets/images/people-in-sofa.svg';
+
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
 		background: theme.palette.primary.dark,
@@ -65,11 +67,7 @@ const AboutMiddle = ({
 					data-aos="fade-up"
 				/>
 			</Section>
-			<Image
-				src="https://assets.maccarianagency.com/the-front/illustrations/people-in-sofa.svg"
-				className={classes.image}
-				data-aos="fade-up"
-			/>
+			<Image src={image} className={classes.image} data-aos="fade-up" />
 		</div>
 	);
 };

@@ -122,6 +122,7 @@ const Notifications = ({
 				</Grid>
 				<Grid item container justifyContent="flex-start" xs={12}>
 					<Button
+						fullWidth={!isMd}
 						variant="contained"
 						type="submit"
 						color="primary"

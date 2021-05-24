@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			height: 128,
 		},
 		subInfoText: {
-			fontWeight: 500,
+			fontSize: 14,
 			// [theme.breakpoints.up('xl')]: {
 			//   fontSize: 12
 			// },
@@ -116,7 +116,7 @@ const GeneralCardInfo = ({
 								<Typography
 									variant={isMd ? 'subtitle1' : 'body2'}
 									data-testid="sub-header"
-									// className={clsx(classes.subInfoText)}
+									className={classes.subInfoText}
 								>
 									{subHeader}
 								</Typography>
@@ -125,7 +125,6 @@ const GeneralCardInfo = ({
 						<Grid
 							item
 							container
-							// xl={3}
 							xs={2}
 							direction="row"
 							alignItems="center"

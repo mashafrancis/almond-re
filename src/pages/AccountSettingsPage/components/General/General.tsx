@@ -43,7 +43,7 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 	});
 
 	const renderUploadPhotoButton = () => (
-		<FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+		<FormControl fullWidth variant="outlined">
 			<InputLabel htmlFor="outlined-adornment-password">
 				Change profile photo
 			</InputLabel>
@@ -70,7 +70,7 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 											aria-label="upload picture"
 											component="span"
 										>
-											<CameraAlt color="primary" />
+											<CameraAlt />
 										</IconButton>
 									</label>
 								}
@@ -164,6 +164,7 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 				</Grid>
 				<Grid item container justifyContent="flex-start" xs={12}>
 					<Button
+						fullWidth={!isMd}
 						variant="contained"
 						type="submit"
 						color="primary"

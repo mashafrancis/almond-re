@@ -46,11 +46,11 @@ const TabPanel = ({
 			{value === index && (
 				<Box
 					sx={{
-						padding: `${isSm ? '0' : '0'}`,
-						marginBottom: `${isSm ? '60px' : '60px'}`,
-						marginTop: `${isSm ? '0' : '20px'}`,
-						marginLeft: `${isSm ? '0' : '20px'}`,
-						marginRight: `${isSm ? '0' : '20px'}`,
+						padding: 0,
+						marginBottom: 0,
+						marginTop: '20px',
+						marginLeft: 0,
+						marginRight: 0,
 					}}
 					p={3}
 					{...other}

@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		mainInfoText: {
 			fontWeight: 500,
+			fontSize: 18,
+			[theme.breakpoints.down('sm')]: {
+				fontSize: 14,
+			},
 		},
 		subInfoText: {
 			fontWeight: 600,

@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 	icon: {
 		borderRadius: theme.spacing(0, 1),
 	},
+	listText: {
+		color: theme.palette.text.secondary,
+	},
 }));
 
 const Features = ({
@@ -70,7 +73,7 @@ const Features = ({
 										className={classes.icon}
 									/>
 								</ListItemAvatar>
-								<ListItemText primary={item} />
+								<ListItemText primary={item} className={classes.listText} />
 							</ListItem>
 						))}
 					</List>

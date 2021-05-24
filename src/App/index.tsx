@@ -156,25 +156,25 @@ export const App = (): JSX.Element => {
 			FallbackComponent={ServerErrorPage}
 			onReset={() => window.location.replace('/')}
 		>
-			<Connector
-				brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`}
-				options={options}
-				parserMethod={(msg) => msg}
-			>
-				<UserContext.Provider value={userDetailsOnProvider}>
-					<ComponentProvider>
-						<ViewportProvider>
-							<StyledEngineProvider injectFirst>
-								<SnackBar snack={snack} />
-								{window.location.pathname !== '/' && isAuthenticated}
-								<Suspense fallback={<LinearProgressBar />}>
-									{isLoading ? <LinearProgress color="primary" /> : <Routes />}
-								</Suspense>
-							</StyledEngineProvider>
-						</ViewportProvider>
-					</ComponentProvider>
-				</UserContext.Provider>
-			</Connector>
+			{/* <Connector */}
+			{/*	brokerUrl={`wss://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`} */}
+			{/*	options={options} */}
+			{/*	parserMethod={(msg) => msg} */}
+			{/* > */}
+			<UserContext.Provider value={userDetailsOnProvider}>
+				<ComponentProvider>
+					<ViewportProvider>
+						<StyledEngineProvider injectFirst>
+							<SnackBar snack={snack} />
+							{window.location.pathname !== '/' && isAuthenticated}
+							<Suspense fallback={<LinearProgressBar />}>
+								{isLoading ? <LinearProgress color="primary" /> : <Routes />}
+							</Suspense>
+						</StyledEngineProvider>
+					</ViewportProvider>
+				</ComponentProvider>
+			</UserContext.Provider>
+			{/* </Connector> */}
 		</ErrorBoundary>
 	);
 };
