@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
 			padding: '6px 20px',
 			borderRadius: 6,
 			width: 'fit-content',
+			[theme.breakpoints.down('sm')]: {
+				fontSize: 11,
+				paddingLeft: 12,
+				paddingRight: 12,
+			},
 		},
 		cardPaper: {
 			borderRadius: 16,

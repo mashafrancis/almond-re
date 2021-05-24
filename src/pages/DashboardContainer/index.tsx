@@ -7,6 +7,7 @@ import {
 } from 'react';
 // third-party libraries
 import {
+	Divider,
 	Grid,
 	InputAdornment,
 	MenuItem,
@@ -21,7 +22,12 @@ import {
 } from '@modules/sensorData';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // icons
-import { AllOutTwoTone, Face } from '@material-ui/icons';
+import {
+	AllOutTwoTone,
+	Face,
+	Notifications,
+	Timeline,
+} from '@material-ui/icons';
 // components;
 import { AdminMenus, UserMenus } from '@components/molecules';
 import { ActivityLogCard, Modal, TabPanel } from '@components/atoms';
@@ -33,6 +39,7 @@ import isArrayNotNull from '@utils/checkArrayEmpty';
 import { IClientSubscribeOptions } from 'mqtt';
 // styles
 import { useDashboardContainerStyles } from '@pages/DashboardContainer/styles';
+import { SectionAlternate } from '@components/organisms';
 import Typography from '@material-ui/core/Typography';
 import { BlankContent } from '@pages/WaterCyclesPage';
 import { useHistory } from 'react-router-dom';
@@ -302,13 +309,32 @@ const DashboardContainer = (): JSX.Element => {
 				marginRight: 16,
 			}}
 		>
-			<Typography
-				variant="h5"
-				gutterBottom
-				style={{ marginTop: 20, paddingLeft: 16, paddingRight: 16 }}
-			>
-				Recent Activities
-			</Typography>
+			<div style={{ margin: 10 }}>
+				<Stack
+					direction="row"
+					justifyContent="center"
+					alignItems="center"
+					spacing={1}
+					className={classes.swipeableHeading}
+				>
+					<Typography
+						variant="body1"
+						gutterBottom={false}
+						sx={{ paddingLeft: 3, paddingRight: 3, fontWeight: 500 }}
+					>
+						Recent Activities
+					</Typography>
+					<Timeline color="primary" />
+				</Stack>
+				<Divider sx={{ marginTop: 2 }} />
+			</div>
+			{/* <Typography */}
+			{/*	variant="h5" */}
+			{/*	gutterBottom */}
+			{/*	style={{ marginTop: 20, paddingLeft: 16, paddingRight: 16 }} */}
+			{/* > */}
+			{/*	Recent Activities */}
+			{/* </Typography> */}
 			{isArrayNotNull(activityLogs) ? (
 				activityLogs.map((logs) => (
 					<div key={logs._id} style={{ paddingLeft: 12, paddingRight: 12 }}>
@@ -329,7 +355,7 @@ const DashboardContainer = (): JSX.Element => {
 					<p aria-hidden="true" className={classes.blankState}>
 						¯\_(ツ)_/¯{' '}
 					</p>
-					<BlankContent message="No Logs Found!" />
+					<BlankContent message="No logs found!" />
 				</Stack>
 			)}
 		</SwipeableDrawer>
@@ -338,19 +364,21 @@ const DashboardContainer = (): JSX.Element => {
 	const checkIsAdmin = () => (isAdmin ? AdminMenus : UserMenus);
 
 	return (
-		<div data-testid="dashboard">
-			<Grid container>
-				<Grid item xs={12} md={12}>
-					<TabPanel index={selectedIndex} value={selectedIndex}>
-						{createElement(checkIsAdmin()[selectedIndex].component, {
-							history,
-						})}
-					</TabPanel>
-					{renderSelectDeviceModal()}
-					{renderChangeUserRoleDialog()}
-					{renderActivityDrawer()}
+		<div data-testid="dashboard" className={classes.root}>
+			<SectionAlternate className={classes.section}>
+				<Grid container spacing={4}>
+					<Grid item xs={12} md={12}>
+						<TabPanel index={selectedIndex} value={selectedIndex}>
+							{createElement(checkIsAdmin()[selectedIndex].component, {
+								history,
+							})}
+						</TabPanel>
+						{renderSelectDeviceModal()}
+						{renderChangeUserRoleDialog()}
+						{renderActivityDrawer()}
+					</Grid>
 				</Grid>
-			</Grid>
+			</SectionAlternate>
 		</div>
 	);
 };

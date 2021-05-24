@@ -7,23 +7,23 @@ import { MenuContent } from '@components/atoms';
 import { BottomNavigation } from '@components/molecules';
 import { Topbar } from './components';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	root: {
 		height: '100vh',
+		background: theme.palette.alternate.main,
 		[theme.breakpoints.up('md')]: {
 			display: 'flex',
 		},
-		// flexGrow: 1,
 	},
 	content: {
 		flexGrow: 2,
-		// padding: theme.spacing(3),
 	},
 	container: {
-		paddingLeft: 60,
-		paddingRight: 60,
+		paddingLeft: 0,
+		paddingRight: 0,
 		[theme.breakpoints.down('md')]: {
-			padding: 10,
+			paddingLeft: 0,
+			paddingRight: 0,
 			marginTop: 8,
 			marginBottom: 30,
 		},

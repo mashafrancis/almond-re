@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, CardHeader } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import { CardBaseProps } from '@components/organisms/CardBase/interfaces';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -57,6 +59,16 @@ const useStyles = makeStyles((theme) => ({
 	center: {
 		alignItems: 'center',
 	},
+	action: {
+		margin: 0,
+	},
+	title: {
+		fontWeight: 500,
+		backgroundColor: 'rgba(25, 103, 210, 0.11)',
+		padding: '6px 20px',
+		borderRadius: 6,
+		width: 'fit-content',
+	},
 }));
 
 /**
@@ -74,6 +86,8 @@ const CardBase = ({
 	align = 'center',
 	className,
 	cardContentProps = {},
+	heading,
+	actionItem,
 	...rest
 }: CardBaseProps): JSX.Element => {
 	const classes = useStyles();
@@ -92,6 +106,24 @@ const CardBase = ({
 			)}
 			{...rest}
 		>
+			{heading && (
+				<CardHeader
+					classes={{
+						action: classes.action,
+					}}
+					title={
+						<Typography
+							className={classes.title}
+							variant="subtitle2"
+							color="primary"
+							data-testid="header"
+						>
+							{heading}
+						</Typography>
+					}
+					action={actionItem}
+				/>
+			)}
 			<CardContent
 				className={clsx('card-base__content', classes.content, classes[align])}
 				{...cardContentProps}

@@ -23,3 +23,4 @@ export {
 	UserMenus,
 } from './MenuRoutes';
 export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as NotificationsPanel } from './NotificationsPanel';

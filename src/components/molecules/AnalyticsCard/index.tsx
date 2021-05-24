@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		mainInfoText: {
 			fontWeight: 500,
+			fontSize: 18,
+			[theme.breakpoints.down('sm')]: {
+				fontSize: 14,
+			},
 		},
 		subInfoText: {
 			fontWeight: 600,
@@ -123,7 +127,7 @@ const AnalyticsCard = ({
 							>
 								<Typography
 									className={clsx(classes.mainInfoText, colorClass)}
-									variant="body1"
+									variant="h6"
 									data-testid="main-info"
 								>
 									{mainInfo}

@@ -6,7 +6,7 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
 // components
 import { DashboardCard } from '@components/molecules';
-import { LineChartCard, DonutDisplay } from '@components/organisms';
+import { LineChartCard, DonutDisplay, CardBase } from '@components/organisms';
 // thunks
 import { getAirTemperatureTrend } from '@modules/sensorData';
 // helpers
@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			flexGrow: 1,
+		},
+		menu: {
+			height: 'auto',
 		},
 		blankContent: {
 			marginTop: 40,
@@ -91,13 +94,13 @@ export const EnvironmentControlPage = (): JSX.Element => {
 			data: [currentHumidity, 100 - currentHumidity],
 			donutInfo: `${currentHumidity}%`,
 		},
-		{
-			heading: 'Water Temperature',
-			backgroundColor: ['#7ad283', '#CCCCCC'],
-			hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
-			data: [currentHumidity, 100 - currentHumidity],
-			donutInfo: `${currentHumidity}%`,
-		},
+		// {
+		// 	heading: 'Water Temperature',
+		// 	backgroundColor: ['#7ad283', '#CCCCCC'],
+		// 	hoverBackgroundColor: ['#7ad283', '#CCCCCC'],
+		// 	data: [currentHumidity, 100 - currentHumidity],
+		// 	donutInfo: `${currentHumidity}%`,
+		// },
 	];
 
 	const handleDateRangeModal = () => {
@@ -150,7 +153,7 @@ export const EnvironmentControlPage = (): JSX.Element => {
 
 	return (
 		<div className={classes.root} data-testid="environment-page">
-			<Grid container item xs={12} spacing={2}>
+			<Grid container spacing={2}>
 				{donutData.map((data) => (
 					<Grid
 						key={fancyId()}
@@ -159,8 +162,9 @@ export const EnvironmentControlPage = (): JSX.Element => {
 						direction="row"
 						justifyContent="center"
 						alignItems="center"
-						spacing={2}
-						xs
+						spacing={1}
+						xs={6}
+						md={2}
 					>
 						<DashboardCard
 							key={fancyId()}

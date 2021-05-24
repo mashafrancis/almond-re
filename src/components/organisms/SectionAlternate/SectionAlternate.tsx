@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { SectionAlternateProps } from '@components/organisms/SectionAlternate/interfaces';
+import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	root: {
 		background: theme.palette.alternate.main,
 	},

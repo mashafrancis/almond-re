@@ -99,7 +99,7 @@ const SidebarNav = ({
 			<div className={classes.menu}>
 				<div className={classes.menuItem}>
 					<List component="nav" aria-label="resource portfolio">
-						<NavLink to="/resources">
+						<NavLink to="/plant-resources">
 							<ListItem aria-describedby="resources">
 								<ListItemIcon style={{ minWidth: 40 }}>
 									<DashboardTwoTone color="primary" />

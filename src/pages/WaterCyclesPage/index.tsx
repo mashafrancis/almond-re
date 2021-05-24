@@ -666,7 +666,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	};
 
 	const firstColumn = () => (
-		<Grid item container xs={4} spacing={2}>
+		<Grid item container xs={12} md={4} spacing={2}>
 			<GeneralCardInfo
 				mainHeader="Manual Override"
 				subHeader="Pump water directly into the system"
@@ -699,7 +699,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	);
 
 	const secondColumn = () => (
-		<Grid item container xs={6} spacing={2}>
+		<Grid item container xs={12} md={5} spacing={2}>
 			<LineChartCard
 				heading="Water Temperature"
 				selectedValue={state.waterCardDateRange}
@@ -714,7 +714,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	);
 
 	const thirdColumn = () => (
-		<Grid item container xs={2} spacing={2}>
+		<Grid item container xs={12} md={3} spacing={2}>
 			<DashboardCard
 				heading="Water Tank Level"
 				body={

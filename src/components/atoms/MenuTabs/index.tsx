@@ -27,7 +27,7 @@ const MenuTab = withStyles((theme: Theme) =>
 			textTransform: 'none',
 			minWidth: 72,
 			fontWeight: theme.typography.fontWeightMedium,
-			fontSize: '13px',
+			fontSize: 13,
 			// marginRight: theme.spacing(4),
 			fontFamily: [
 				'"Google Sans"',
