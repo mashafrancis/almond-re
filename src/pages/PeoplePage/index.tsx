@@ -1,7 +1,14 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 // third-party libraries
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { TextField, MenuItem, InputAdornment, Chip } from '@material-ui/core';
+import {
+	TextField,
+	MenuItem,
+	InputAdornment,
+	Chip,
+	Stack,
+	Avatar,
+} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
@@ -169,35 +176,29 @@ export const PeoplePage = (): JSX.Element => {
 	);
 
 	const renderUserNamePhoto = ({ firstName, lastName, photo }) => (
-		<span className="mini-username">
-			<img className="mini-username__image" src={photo} alt="avatar" />
-			<span>{`${firstName} ${lastName}` || 'Anonymous'}</span>
-		</span>
+		<Stack direction="row" spacing={1}>
+			<Avatar alt="avatar" src={photo} />
+			<span>{`${firstName} ${lastName}` ?? 'Anonymous'}</span>
+		</Stack>
 	);
 
 	const rolesSelectMore = ({ currentRole, _id }) => (
-		<div className={classes.root} id={_id} onClick={toggleRoleSelectOpen}>
-			<Grid container spacing={3}>
-				<Grid
-					container
-					item
-					xs={12}
-					justifyContent="flex-start"
-					alignItems="center"
-					direction="row"
-					spacing={2}
-					style={{ display: 'flex', width: '100%' }}
+		<div
+			className={classes.root}
+			id={_id}
+			onClick={toggleRoleSelectOpen}
+			role="presentation"
+		>
+			<Stack direction="row" spacing={1}>
+				<ExpandMore id={_id} />
+				<Typography
+					style={{ cursor: 'pointer', paddingRight: 12 }}
+					id={_id}
+					variant="body2"
 				>
-					<ExpandMore id={_id} />
-					<Typography
-						style={{ cursor: 'pointer', paddingRight: 12 }}
-						id={_id}
-						variant="body2"
-					>
-						{currentRole.title}
-					</Typography>
-				</Grid>
-			</Grid>
+					{currentRole.title}
+				</Typography>
+			</Stack>
 		</div>
 	);
 
@@ -211,38 +212,27 @@ export const PeoplePage = (): JSX.Element => {
 
 		return (
 			<div className={classes.root} key={_id}>
-				<Grid container spacing={3}>
-					<Grid
-						container
-						item
-						xs={12}
-						justifyContent="flex-start"
-						alignItems="center"
-						direction="row"
-						spacing={2}
-						style={{ display: 'flex', width: '100%' }}
+				<Stack direction="row" spacing={1}>
+					<Typography
+						style={{ cursor: 'pointer', paddingRight: 12 }}
+						id={_id}
+						variant="body2"
+						color="primary"
+						// onClick={showDeviceModal('Edit')}
+						// onKeyDown={showDeviceModal('Edit')}
 					>
-						<Typography
-							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={_id}
-							variant="body2"
-							color="primary"
-							// onClick={showDeviceModal('Edit')}
-							// onKeyDown={showDeviceModal('Edit')}
-						>
-							Edit
-						</Typography>
-						<Typography
-							style={{ cursor: 'pointer', color: red[900] }}
-							id={_id}
-							variant="body2"
-							onClick={handleDelete}
-							onKeyDown={handleDelete}
-						>
-							Delete
-						</Typography>
-					</Grid>
-				</Grid>
+						Edit
+					</Typography>
+					<Typography
+						style={{ cursor: 'pointer', color: red[900] }}
+						id={_id}
+						variant="body2"
+						onClick={handleDelete}
+						onKeyDown={handleDelete}
+					>
+						Delete
+					</Typography>
+				</Stack>
 			</div>
 		);
 	};

@@ -1,5 +1,5 @@
 // react libraries
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, useEffect } from 'react';
 // Third party libraries
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,6 +8,7 @@ import {
 	InputAdornment,
 	TextField,
 	useMediaQuery,
+	Stack,
 } from '@material-ui/core';
 import {
 	DataGrid,
@@ -438,38 +439,27 @@ export const UserRolesPage = (): JSX.Element => {
 
 		return (
 			<div className={classes.root} key={role}>
-				<Grid container spacing={3}>
-					<Grid
-						container
-						item
-						xs={12}
-						justifyContent="flex-start"
-						alignItems="center"
-						direction="row"
-						spacing={2}
-						style={{ display: 'flex', width: '100%' }}
+				<Stack direction="row" spacing={1}>
+					<Typography
+						style={{ cursor: 'pointer', paddingRight: 12 }}
+						id={role}
+						variant="body2"
+						color="primary"
+						onClick={toggleEditRoleModal(role)}
+						onKeyDown={toggleEditRoleModal(role)}
 					>
-						<Typography
-							style={{ cursor: 'pointer', paddingRight: 12 }}
-							id={role}
-							variant="body2"
-							color="primary"
-							onClick={toggleEditRoleModal(role)}
-							onKeyDown={toggleEditRoleModal(role)}
-						>
-							Edit
-						</Typography>
-						<Typography
-							style={{ cursor: 'pointer', color: red[900] }}
-							id={role}
-							variant="body2"
-							onClick={handleDelete}
-							onKeyDown={handleDelete}
-						>
-							Delete
-						</Typography>
-					</Grid>
-				</Grid>
+						Edit
+					</Typography>
+					<Typography
+						style={{ cursor: 'pointer', color: red[900] }}
+						id={role}
+						variant="body2"
+						onClick={handleDelete}
+						onKeyDown={handleDelete}
+					>
+						Delete
+					</Typography>
+				</Stack>
 			</div>
 		);
 	};
