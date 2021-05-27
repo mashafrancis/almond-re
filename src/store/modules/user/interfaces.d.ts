@@ -7,6 +7,9 @@ import {
 	GET_USER_DETAILS_FAILURE,
 	GET_USER_DETAILS_REQUEST,
 	GET_USER_DETAILS_SUCCESS,
+	EDIT_USER_ROLE_FAILURE,
+	EDIT_USER_ROLE_REQUEST,
+	EDIT_USER_ROLE_SUCCESS,
 } from './types';
 import { ErrorObject } from '../../../shared.interfaces';
 
@@ -41,6 +44,23 @@ export interface EditUserDetailsActionSuccess {
 export interface EditUserDetailsActionFailure {
 	errors: ErrorObject | null;
 	type: EDIT_USER_DETAILS_FAILURE;
+	isLoading: boolean;
+}
+
+export interface EditUserRoleActionRequest {
+	type: EDIT_USER_ROLE_REQUEST;
+	isLoading: boolean;
+}
+
+export interface EditUserRoleActionSuccess {
+	userDetails: UserDetails;
+	type: EDIT_USER_ROLE_SUCCESS;
+	isLoading: boolean;
+}
+
+export interface EditUserRoleActionFailure {
+	errors: ErrorObject | null;
+	type: EDIT_USER_ROLE_FAILURE;
 	isLoading: boolean;
 }
 

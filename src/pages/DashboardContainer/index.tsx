@@ -43,7 +43,7 @@ import { SectionAlternate } from '@components/organisms';
 import Typography from '@material-ui/core/Typography';
 import { BlankContent } from '@pages/WaterCyclesPage';
 import { useHistory } from 'react-router-dom';
-import { editUserDetails } from '@modules/user';
+import { editUserDetails, editUserRole } from '@modules/user';
 import { activateDevice } from '@modules/device';
 import { DashboardContainerState } from './interfaces';
 import { primaryColor } from '../../assets/tss/common';
@@ -126,21 +126,16 @@ const DashboardContainer = (): JSX.Element => {
 			...prevState,
 			activeDevice,
 			device: activeDevice.id,
-			roleSelected: currentRole.title,
+			roleSelected: currentRole?.title,
 		}));
 	}, []);
 
-	// const toggleRoleChangeDialog = () => {
-	// 	setState((prevState) => ({
-	// 		...prevState,
-	// 		isChangeRoleDialogOpen: !prevState.isChangeRoleDialogOpen,
-	// 		anchorEl: null,
-	// 	}));
-	// };
-
 	const closeRoleChangeDialog = () => {
 		toggleRoleChangeDialog();
-		setState((prevState) => ({ ...prevState, roleSelected: '' }));
+		setState((prevState) => ({
+			...prevState,
+			roleSelected: currentRole?.title,
+		}));
 	};
 
 	const handleSelectDevice = async () => {
@@ -170,7 +165,7 @@ const DashboardContainer = (): JSX.Element => {
 	const handleChangeRole = async (event: ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		const { roleId } = state;
-		await dispatch(editUserDetails(_id, { role: roleId }));
+		if (roleId) await dispatch(editUserRole(_id, { role: roleId }));
 		closeRoleChangeDialog();
 		window.localStorage.removeItem('selectedIndex');
 		// window.location.reload();
@@ -328,13 +323,6 @@ const DashboardContainer = (): JSX.Element => {
 				</Stack>
 				<Divider sx={{ marginTop: 2 }} />
 			</div>
-			{/* <Typography */}
-			{/*	variant="h5" */}
-			{/*	gutterBottom */}
-			{/*	style={{ marginTop: 20, paddingLeft: 16, paddingRight: 16 }} */}
-			{/* > */}
-			{/*	Recent Activities */}
-			{/* </Typography> */}
 			{isArrayNotNull(activityLogs) ? (
 				activityLogs.map((logs) => (
 					<div key={logs._id} style={{ paddingLeft: 12, paddingRight: 12 }}>
