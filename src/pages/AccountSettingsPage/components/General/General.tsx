@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import {
 	useTheme,
 	experimentalStyled as styled,
+	makeStyles,
 } from '@material-ui/core/styles';
 import {
 	useMediaQuery,
@@ -18,6 +20,7 @@ import {
 	InputAdornment,
 } from '@material-ui/core';
 import validate from 'validate.js';
+import Axios from 'axios';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import {
 	AlternateEmailTwoTone,
@@ -26,9 +29,16 @@ import {
 } from '@material-ui/icons';
 import useFormState from '@hooks/useFormState';
 import { editUserDetails } from '@modules/user';
-import { ChangeEvent, useState } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import authService from '@utils/auth';
 import { ViewComponentProps } from '../../../../types/ViewComponentProps';
 import { IRootState } from '../../../../store/rootReducer';
+
+const useStyles = makeStyles((theme) => ({
+	progressIcon: {
+		color: theme.palette.primary.contrastText,
+	},
+}));
 
 const Input = styled('input')({
 	display: 'none',
@@ -54,25 +64,37 @@ const schema = {
 			maximum: 120,
 		},
 	},
+	photo: {
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 120,
+		},
+	},
 };
 
 const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
-	const { _id, firstName, lastName, email, photo } = useSelector(
-		(globalState: IRootState) => globalState.user.userDetails,
-		shallowEqual,
-	);
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const [allowedFields, useAllowedFields] = useState<string[]>([]);
+	const [selectedPhoto, setSelectedPhoto] = useState<any>();
+	const [isPhotoPicked, setIsPhotoPicked] = useState<boolean>(false);
+
+	const {
+		userDetails: { _id, firstName, lastName, email, photo },
+		isLoading,
+	} = useSelector((globalState: IRootState) => globalState.user, shallowEqual);
 
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up('md'), {
 		defaultMatches: true,
 	});
 
-	const dispatch = useDispatch();
-
-	const [allowedFields, useAllowedFields] = useState<string[]>([]);
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event) => {
 		useAllowedFields((prevState) => [...prevState, event.target.name]);
+		if (event.target.name === 'photo') {
+			setSelectedPhoto(() => event.target.files[0]);
+			setIsPhotoPicked(() => true);
+		}
 		handleFormChange(event);
 	};
 
@@ -86,22 +108,88 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 			{},
 		);
 
+	const getUserProfilePhotoUrl = async (): Promise<string> => {
+		const formData = new FormData();
+		formData.append('file', selectedPhoto);
+
+		try {
+			const response = await Axios.post(
+				`${process.env.ALMOND_API}/upload_photo`,
+				formData,
+				{
+					headers: {
+						Authorization: `Basic ${authService.getToken()}`,
+					},
+				},
+			);
+			return response.data.data as string;
+		} catch (e) {
+			return e.response ? e.response : e;
+		}
+	};
+
 	const { values, isValid, errors, hasError, handleFormChange, handleSubmit } =
 		useFormState({
-			onSubmit: (userDetails) => dispatch(editUserDetails(_id, userDetails)),
+			onSubmit: async (userDetails) =>
+				dispatch(
+					editUserDetails(_id, {
+						...userDetails,
+						...(values.photo && { photo: await getUserProfilePhotoUrl() }),
+					}),
+				),
 			formErrors: (formValues) => validate(formValues, filteredSchema),
 		});
 
 	const renderUploadPhotoButton = () => (
+		// <Button
+		// 	fullWidth
+		// 	name="photo"
+		// 	variant="text"
+		// 	type="button"
+		// 	color="primary"
+		// 	size="medium"
+		// 	endIcon={
+		// 		<IconButton aria-label="change profile photo" edge="end">
+		// 			<Badge
+		// 				overlap="circular"
+		// 				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+		// 				badgeContent={
+		// 					<label htmlFor="upload-photo">
+		// 						<Input
+		// 							name="photo"
+		// 							accept="image/*"
+		// 							id="upload-photo"
+		// 							type="file"
+		// 							onChange={handleChange}
+		// 							value={values.photo ?? ''}
+		// 						/>
+		// 						<IconButton
+		// 							color="primary"
+		// 							aria-label="upload picture"
+		// 							component="span"
+		// 						>
+		// 							<CameraAlt />
+		// 						</IconButton>
+		// 					</label>
+		// 				}
+		// 			>
+		// 				<Avatar alt={firstName} src={photo} />
+		// 			</Badge>
+		// 		</IconButton>
+		// 	}
+		// >
+		// 	{isPhotoPicked ? selectedPhoto.name : 'Change profile photo'}
+		// </Button>
 		<FormControl fullWidth variant="outlined">
 			<InputLabel htmlFor="outlined-adornment-password">
 				Change profile photo
 			</InputLabel>
 			<OutlinedInput
+				name="photo"
 				id="change-profile-photo"
 				type="text"
-				value="Change profile photo"
-				onChange={handleFormChange}
+				value={isPhotoPicked ? selectedPhoto.name : 'Change profile photo'}
+				onChange={handleChange}
 				endAdornment={
 					<InputAdornment position="end">
 						<IconButton aria-label="change profile photo" edge="end">
@@ -109,11 +197,14 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 								overlap="circular"
 								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 								badgeContent={
-									<label htmlFor="icon-button-file">
+									<label htmlFor="upload-photo">
 										<Input
+											name="photo"
 											accept="image/*"
-											id="icon-button-file"
+											id="upload-photo"
 											type="file"
+											onChange={handleChange}
+											value={values.profilePhoto ?? ''}
 										/>
 										<IconButton
 											color="primary"
@@ -137,7 +228,7 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 
 	return (
 		<div className={className} {...rest}>
-			<form method="post" onSubmit={handleSubmit} noValidate>
+			<form method="post" onSubmit={handleSubmit}>
 				<Grid container spacing={isMd ? 4 : 2}>
 					<Grid item xs={12}>
 						<Typography variant="h6" color="textPrimary">
@@ -229,8 +320,16 @@ const General = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
 							type="submit"
 							color="primary"
 							size="large"
+							disabled={!isValid}
 						>
-							Save
+							{isLoading ? (
+								<CircularProgress
+									className={classes.progressIcon}
+									size="2em"
+								/>
+							) : (
+								'Send'
+							)}
 						</Button>
 					</Grid>
 				</Grid>

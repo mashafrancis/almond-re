@@ -10,6 +10,7 @@ import {
 	Divider,
 	Grid,
 	InputAdornment,
+	LinearProgress,
 	MenuItem,
 	Stack,
 	SwipeableDrawer,
@@ -54,10 +55,10 @@ const DashboardContainer = (): JSX.Element => {
 		(globalState: IRootState) => globalState,
 		shallowEqual,
 	);
-	const { _id, roles, currentRole } = useSelector(
-		(globalState: IRootState) => globalState.user.userDetails,
-		shallowEqual,
-	);
+	const {
+		userDetails: { _id, currentRole, roles },
+		isLoading,
+	} = useSelector((globalState: IRootState) => globalState.user);
 	const [state, setState] = useState<DashboardContainerState>({
 		isOpen: false,
 		isLoading: true,
@@ -79,6 +80,7 @@ const DashboardContainer = (): JSX.Element => {
 	const { activeDevice, devices, isAdmin } = useContext(UserContext);
 	const {
 		selectedIndex,
+		setSelectedIndex,
 		toggleRoleChangeDialog,
 		handleCloseDeviceModal,
 		handleSelectDeviceModal,
@@ -126,17 +128,15 @@ const DashboardContainer = (): JSX.Element => {
 			...prevState,
 			activeDevice,
 			device: activeDevice.id,
-			roleSelected: currentRole?.title,
 		}));
 	}, []);
 
-	const closeRoleChangeDialog = () => {
-		toggleRoleChangeDialog();
+	useEffect(() => {
 		setState((prevState) => ({
 			...prevState,
 			roleSelected: currentRole?.title,
 		}));
-	};
+	}, [currentRole]);
 
 	const handleSelectDevice = async () => {
 		const deviceId = devices.filter((device) => device.id === state.device);
@@ -165,9 +165,12 @@ const DashboardContainer = (): JSX.Element => {
 	const handleChangeRole = async (event: ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		const { roleId } = state;
-		if (roleId) await dispatch(editUserRole(_id, { role: roleId }));
-		closeRoleChangeDialog();
-		window.localStorage.removeItem('selectedIndex');
+		toggleRoleChangeDialog();
+		if (roleId) {
+			await dispatch(editUserRole(_id, { role: roleId }));
+		}
+		// window.localStorage.removeItem('selectedIndex');
+		setSelectedIndex(0);
 		// window.location.reload();
 	};
 
@@ -357,9 +360,13 @@ const DashboardContainer = (): JSX.Element => {
 				<Grid container spacing={4}>
 					<Grid item xs={12} md={12}>
 						<TabPanel index={selectedIndex} value={selectedIndex}>
-							{createElement(checkIsAdmin()[selectedIndex].component, {
-								history,
-							})}
+							{isLoading ? (
+								<LinearProgress color="primary" />
+							) : (
+								createElement(checkIsAdmin()[selectedIndex].component, {
+									history,
+								})
+							)}
 						</TabPanel>
 						{renderSelectDeviceModal()}
 						{renderChangeUserRoleDialog()}

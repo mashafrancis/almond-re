@@ -63,12 +63,6 @@ const NotificationsPanel = (): JSX.Element => {
 			onOpen={handleNotificationsDrawer(true)}
 			disableBackdropTransition={!iOS}
 			disableDiscovery={iOS}
-			// sx={{
-			// 	paddingLeft: 16,
-			// 	paddingRight: 16,
-			// 	marginLeft: 16,
-			// 	marginRight: 16,
-			// }}
 		>
 			<div style={{ margin: 10 }}>
 				<Stack

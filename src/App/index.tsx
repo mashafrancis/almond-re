@@ -67,7 +67,7 @@ export const App = (): JSX.Element => {
 			activeDevice,
 			currentRole,
 		},
-		isLoading,
+		isFetchingDetails,
 	} = useSelector((globalState: IRootState) => globalState.user);
 
 	const timerRef = useRef<number>();
@@ -167,7 +167,11 @@ export const App = (): JSX.Element => {
 								<SnackBar snack={snack} />
 								{window.location.pathname !== '/' && isAuthenticated}
 								<Suspense fallback={<LinearProgressBar />}>
-									{isLoading ? <LinearProgress color="primary" /> : <Routes />}
+									{isFetchingDetails ? (
+										<LinearProgress color="primary" />
+									) : (
+										<Routes />
+									)}
 								</Suspense>
 							</StyledEngineProvider>
 						</ViewportProvider>

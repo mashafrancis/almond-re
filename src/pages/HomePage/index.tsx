@@ -26,10 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	servicesSection: {
 		background:
 			'url(https://assets.maccarianagency.com/the-front/illustrations/patterns-bg.svg) no-repeat center',
-		backgroundSize: 'cover',
-		[theme.breakpoints.down('sm')]: {
-			backgroundSize: 'contain',
-		},
+		backgroundSize: 'contain',
 	},
 	integrationsSection: {
 		background: '#0c133e',
