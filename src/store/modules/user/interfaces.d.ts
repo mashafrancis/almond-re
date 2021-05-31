@@ -15,19 +15,19 @@ import { ErrorObject } from '../../../shared.interfaces';
 
 export interface GetUserDetailsActionRequest {
 	type: GET_USER_DETAILS_REQUEST;
-	isLoading: boolean;
+	isFetchingDetails: boolean;
 }
 
 export interface GetUserDetailsActionSuccess {
 	userDetails: UserDetails;
 	type: GET_USER_DETAILS_SUCCESS;
-	isLoading: boolean;
+	isFetchingDetails: boolean;
 }
 
 export interface GetUserDetailsActionFailure {
 	type: GET_USER_DETAILS_FAILURE;
 	errors: ErrorObject | null;
-	isLoading: boolean;
+	isFetchingDetails: boolean;
 }
 
 export interface EditUserDetailsActionRequest {

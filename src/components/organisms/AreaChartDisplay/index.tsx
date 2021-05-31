@@ -136,14 +136,14 @@ const AreaChardDisplay = ({
 						// 		chartData,
 						// 	);
 						// },
-						onRefresh: (chart: { data: { datasets: any[] } }) => {
-							chart.data.datasets.forEach((dataset) => {
-								dataset.data.push({
-									x: Date.now(),
-									y: Math.random(),
-								});
-							});
-						},
+						// onRefresh: (chart: { data: { datasets: any[] } }) => {
+						// 	chart.data.datasets.forEach((dataset) => {
+						// 		dataset.data.push({
+						// 			x: Date.now(),
+						// 			y: Math.random(),
+						// 		});
+						// 	});
+						// },
 					},
 				},
 				y: {

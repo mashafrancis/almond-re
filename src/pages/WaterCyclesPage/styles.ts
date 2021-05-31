@@ -69,6 +69,11 @@ export const useTableStyles = makeStyles((theme: Theme) =>
 				fontWeight: 500,
 				fontSize: 20,
 			},
+			'& .MuiDataGrid-cell': {
+				[theme.breakpoints.down('sm')]: {
+					fontSize: 12,
+				},
+			},
 		},
 	}),
 );

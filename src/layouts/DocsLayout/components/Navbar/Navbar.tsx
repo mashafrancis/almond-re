@@ -8,13 +8,13 @@ import {
 	makeStyles,
 	useMediaQuery,
 	Divider,
+	Theme,
 } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import { plantPortfolio } from '@pages/PlantResourcesPage/data';
 import NavItem from './components/NavItem';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	mobileDrawer: {
 		width: 256,
 	},
@@ -34,10 +34,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 	navGroupTitle: {
 		// paddingBottom: 0,
-		color: theme.palette.primary.main,
+		color: theme.palette.text.primary,
 		fontWeight: theme.typography.fontWeightMedium,
-		backgroundColor: theme.palette.background.level2,
+		// backgroundColor: theme.palette.background.level2,
 		borderRadius: theme.shape.borderRadius,
+		backgroundColor: theme.palette.alternate.main,
+		// padding: 10,
+	},
+	bottomBtn: {
+		backgroundColor: theme.palette.background.paper,
+		position: 'sticky',
+		bottom: 0,
 	},
 }));
 
@@ -57,11 +64,7 @@ const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 					{plantPortfolio.map((item) => (
 						<div key={item.id}>
 							<ListItem className={classes.navGroupTitle}>
-								<Typography
-									variant="body1"
-									color="primary"
-									className={classes.title}
-								>
+								<Typography variant="body1" className={classes.title}>
 									{item.title}
 								</Typography>
 							</ListItem>
@@ -81,7 +84,7 @@ const Navbar = ({ onMobileClose, openMobile = false }: Props): JSX.Element => {
 				</List>
 			</Box>
 			<Box flexGrow={1} />
-			<Box p={2} paddingTop={0}>
+			<Box p={2} paddingTop={0} className={classes.bottomBtn}>
 				<Box display="flex" justifyContent="center" mt={2}>
 					<NavLink to="/store" style={{ width: '100%' }}>
 						<Button color="primary" variant="outlined" fullWidth>

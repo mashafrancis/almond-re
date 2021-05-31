@@ -714,7 +714,7 @@ export const WaterCyclesPage = (): JSX.Element => {
 	);
 
 	const thirdColumn = () => (
-		<Grid item container xs={12} md={3} spacing={2}>
+		<Grid item container xs={12} md={2} spacing={2}>
 			<DashboardCard
 				heading="Water Tank Level"
 				body={

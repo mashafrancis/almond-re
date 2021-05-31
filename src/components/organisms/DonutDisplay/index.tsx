@@ -196,8 +196,8 @@ const Donut = ({
 			<Doughnut
 				data={donutDetails}
 				// options={donutDetails.options}
-				width={250}
-				height={250}
+				width={200}
+				height={200}
 				type="doughnut"
 			/>
 		</Grid>

@@ -40,7 +40,7 @@ import {
 import { ErrorObject } from '../../../shared.interfaces';
 
 export const getUserDetailsRequest = (): GetUserDetailsActionRequest => ({
-	isLoading: true,
+	isFetchingDetails: true,
 	type: GET_USER_DETAILS_REQUEST,
 });
 
@@ -52,7 +52,7 @@ export const getUserDetailsSuccess = (
 	userDetails: UserDetails,
 ): GetUserDetailsActionSuccess => ({
 	userDetails,
-	isLoading: false,
+	isFetchingDetails: false,
 	type: GET_USER_DETAILS_SUCCESS,
 });
 
@@ -64,7 +64,7 @@ export const getUserDetailsFailure = (
 	errors: ErrorObject,
 ): GetUserDetailsActionFailure => ({
 	errors,
-	isLoading: false,
+	isFetchingDetails: false,
 	type: GET_USER_DETAILS_FAILURE,
 });
 
@@ -236,6 +236,7 @@ export const userInitialState = {
 	permissions: {} as any,
 	errors: null,
 	isLoading: false,
+	isFetchingDetails: false,
 };
 
 /**
@@ -252,19 +253,19 @@ export const reducer = (
 		case GET_USER_DETAILS_REQUEST:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				isFetchingDetails: action.isFetchingDetails,
 			};
 		case GET_USER_DETAILS_SUCCESS:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				isFetchingDetails: action.isFetchingDetails,
 				userDetails: action.userDetails,
 				permissions: formatPermissions(action.userDetails.roles[0]),
 			};
 		case GET_USER_DETAILS_FAILURE:
 			return {
 				...state,
-				isLoading: action.isLoading,
+				isFetchingDetails: action.isFetchingDetails,
 				errors: action.errors,
 			};
 		case EDIT_USER_DETAILS_REQUEST:

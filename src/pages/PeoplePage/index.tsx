@@ -8,10 +8,11 @@ import {
 	Chip,
 	Stack,
 	Avatar,
+	useMediaQuery,
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/styles';
-import { Theme } from '@material-ui/core/styles';
+import { Theme, useTheme } from '@material-ui/core/styles';
 // icons
 import { Face, ExpandMore } from '@material-ui/icons';
 // components
@@ -63,6 +64,13 @@ const useStyles = makeStyles((theme: Theme) =>
 			color: '#821721',
 			backgroundColor: 'rgba(210, 43, 53, 0.15)',
 		},
+		selectMore: {
+			cursor: 'pointer',
+			paddingRight: 12,
+			[theme.breakpoints.down('sm')]: {
+				fontSize: 12,
+			},
+		},
 	}),
 );
 
@@ -87,8 +95,12 @@ export const PeoplePage = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const tableClasses = useTableStyles();
-
 	const styles = useDashboardContainerStyles();
+	const themePoint = useTheme();
+
+	const isSm = useMediaQuery(themePoint.breakpoints.down('sm'), {
+		defaultMatches: true,
+	});
 
 	useEffectAsync(async () => {
 		await dispatch(getAllPeople());
@@ -176,8 +188,13 @@ export const PeoplePage = (): JSX.Element => {
 	);
 
 	const renderUserNamePhoto = ({ firstName, lastName, photo }) => (
-		<Stack direction="row" spacing={1}>
-			<Avatar alt="avatar" src={photo} />
+		<Stack
+			direction="row"
+			spacing={1}
+			justifyContent="center"
+			alignItems="center"
+		>
+			<Avatar alt="avatar" sx={{ width: 30, height: 30 }} src={photo} />
 			<span>{`${firstName} ${lastName}` ?? 'Anonymous'}</span>
 		</Stack>
 	);
@@ -191,11 +208,7 @@ export const PeoplePage = (): JSX.Element => {
 		>
 			<Stack direction="row" spacing={1}>
 				<ExpandMore id={_id} />
-				<Typography
-					style={{ cursor: 'pointer', paddingRight: 12 }}
-					id={_id}
-					variant="body2"
-				>
+				<Typography className={classes.selectMore} id={_id} variant="body2">
 					{currentRole.title}
 				</Typography>
 			</Stack>
@@ -214,7 +227,7 @@ export const PeoplePage = (): JSX.Element => {
 			<div className={classes.root} key={_id}>
 				<Stack direction="row" spacing={1}>
 					<Typography
-						style={{ cursor: 'pointer', paddingRight: 12 }}
+						className={classes.selectMore}
 						id={_id}
 						variant="body2"
 						color="primary"
@@ -224,6 +237,7 @@ export const PeoplePage = (): JSX.Element => {
 						Edit
 					</Typography>
 					<Typography
+						className={classes.selectMore}
 						style={{ cursor: 'pointer', color: red[900] }}
 						id={_id}
 						variant="body2"
@@ -250,8 +264,8 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'name',
 				headerName: 'Name',
-				// width: 100,
-				flex: 0.15,
+				width: isSm ? 150 : undefined,
+				flex: !isSm ? 0.15 : undefined,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					renderUserNamePhoto(value as UserDetails),
@@ -259,20 +273,23 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'id',
 				headerName: 'User ID',
-				// width: 100,
-				flex: 0.2,
+				width: isSm ? 150 : undefined,
+				flex: !isSm ? 0.2 : undefined,
+				// flex: 0.2,
 				headerClassName: 'table-header',
 			},
 			{
 				field: 'devices',
 				headerName: 'Devices',
-				flex: 0.1,
+				width: isSm ? 150 : undefined,
+				flex: !isSm ? 0.1 : undefined,
 				headerClassName: 'table-header',
 			},
 			{
 				field: 'role',
 				headerName: 'Role',
-				flex: 0.1,
+				width: isSm ? 100 : undefined,
+				flex: !isSm ? 0.1 : undefined,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					rolesSelectMore(value as UserDetails),
@@ -280,7 +297,8 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'status',
 				headerName: 'Status',
-				flex: 0.1,
+				width: isSm ? 100 : undefined,
+				flex: !isSm ? 0.1 : undefined,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					renderUserStatus(value as UserDetails),
@@ -288,7 +306,8 @@ export const PeoplePage = (): JSX.Element => {
 			{
 				field: 'actions',
 				headerName: 'Actions',
-				flex: 0.2,
+				width: isSm ? 150 : undefined,
+				flex: !isSm ? 0.2 : undefined,
 				headerClassName: 'table-header',
 				renderCell: ({ value }: GridCellParams) =>
 					renderActionButtons(value as UserDetails),
@@ -322,7 +341,7 @@ export const PeoplePage = (): JSX.Element => {
 					components={{
 						LoadingOverlay: CustomLoadingOverlay,
 						NoRowsOverlay: NoDataOverlay,
-						Pagination: CustomPagination,
+						// Pagination: CustomPagination,
 					}}
 					sortModel={[
 						{

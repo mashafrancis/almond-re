@@ -44,7 +44,6 @@ interface Props {
 
 const PasswordResetForm = ({ isLoading }: Props): JSX.Element => {
 	const classes = useStyles();
-
 	const dispatch = useDispatch();
 
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
