@@ -15959,10 +15959,10 @@ svgo@^2.3.0:
     csso "^4.2.0"
     stable "^0.1.8"
 
-swiper@^6.6.2:
-  version "6.6.2"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.6.2.tgz#461d6657b53eefe59c6e852a5187c2cfd4e6a8c1"
-  integrity sha512-l9ICRsPtK92fF1nzR/r56bNE9A8ufz99yr810+IgQTfnKWVDIE/DD/uQKtIRpbFAIeuesU/J4F1ziIC/jBug7g==
+swiper@^6.7.0:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.7.1.tgz#bfea8b9262a9898740dc64390ca681b131223fb7"
+  integrity sha512-r5Xr0WdQ7CuQiomb/8A+j9QsIl2ClQk5KoJU1jWp8/OP4OS/0ZJf5tKLWlJMPRHafy1oRsmv1lSSyzJad6XoRg==
   dependencies:
     dom7 "^3.0.0"
     ssr-window "^3.0.0"
