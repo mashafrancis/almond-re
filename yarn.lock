@@ -5157,10 +5157,10 @@ chartjs-adapter-luxon@^1.0.0:
   resolved "https://registry.yarnpkg.com/chartjs-adapter-luxon/-/chartjs-adapter-luxon-1.0.0.tgz#4f37164295859a468b64cc24ec2718356aa63d94"
   integrity sha512-oy4iH4o6+8FqDoHYsEmUAB8+q8QO+vERDDHkmODm+MwWW1cet02wHN2KYvidwgBLYUX0laNWaWGN7l8Thac2Zg==
 
-chartjs-plugin-streaming@^2.0.0-beta.2:
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/chartjs-plugin-streaming/-/chartjs-plugin-streaming-2.0.0-beta.2.tgz#2c007dec6970c10e0faad695f18b5827547a12bc"
-  integrity sha512-sz19LSt7tp04P0BgkEE2hSGrwu3epEA9DeNh5SD9OVRmIYDpyr3UMYbCjCm8+tqetY3rRAdL+Pwdg5O/er2+5Q==
+chartjs-plugin-streaming@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/chartjs-plugin-streaming/-/chartjs-plugin-streaming-2.0.0.tgz#daa2124ed3b3069bad92d24c07dbb0e6b1774635"
+  integrity sha512-oBwHRmovGbPDS1h8PhpttnlKjI6eiJO13v4h+xz+mfbHhIc+iNF9xuMobCIFMKFH7rlVWi5TJAOIxoXyGElYYg==
 
 check-more-types@2.24.0:
   version "2.24.0"
